@@ -2,9 +2,445 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Putain de code !</title>
-        <description>On voulait mettre une baseline mais on a pas été foutu d'en trouver une</description>
+        <description>On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</description>
         <link>/</link>
-        <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-        
+        <generator>happyplan 0.4.0-alpha.5</generator>
+        <lastBuildDate>Mon, 04 November 2013 00:00:00 +0100</lastBuildDate>
+
+          <item>
+              <title>Vagrant, enlarge your VM</title>
+              <description>
+
+{{#markdown}}
+Vagrant, au cas ou tu ne connaîtrais pas encore, permet de fournir des
+environnements de développements reproductibles, facilement configurables et
+qui se partagent entre les membres de l’équipe. En gros tu vas pouvoir décrire
+et configurer des machines virtuelles (VM) depuis un seul fichier texte,
+le &#x60;Vagrantfile&#x60;.  Plutôt pratique pour avoir un environnement de dev
+équivalent à celui de la prod. Et tout cela avec un processus simplifié
+à l&#x27;extrême.
+
+# Et c’est pour qui le beau joujou ?
+Vagrant s’adresse principalement à toi, mais aussi à un public
+de **développeurs** qui souhaitent pouvoir mettre en place rapidement
+un environnement de dev avec une machine virtuelle (genre apache-php-*sql)
+sans y passer trop de temps.
+Vagrant, c’est aussi pour des **devops** qui voudrait tester la mise en
+place et le provisioning de leur infra.
+Dans la doc, ils disent même que ça s’adresse aux designers
+(pour dire si c’est simple) mais faut pas déconner non plus,
+on a jamais vu un designer dégainer une console :)
+
+Globalement le workflow vagrant se résume à 2-3 commandes,
+  1. &#x60;vagrant init&#x60; au début du projet
+Puis
+  2. &#x60;vagrant up&#x60; pour lancer la VM.
+  1. &#x60;vagrant halt&#x60;pour l’arrêter.
+
+# Etape 1 - vagrant init
+Vagrant fournit un support pour les principales plateformes de virtualisation,
+appelées Provider dans la langue de Justin Bieber et avec par défaut celui
+pour virtualbox.  Et  cerise sur le clafoutis, tu as aussi la possibilité
+de configurer / provisionner tes box avec des scripts Chef ou Puppet
+(ou juste un script shell si t’es old-school \o/ ).
+
+Bon, je suppose que c’est encore un peu flou, alors voilà comme ça se présente.
+Une fois installé ( http://downloads.vagrantup.com/ ), tu devrais avoir
+une nouvelle commande de dispo.
+Alors dégaine ton terminal et envoie un &#x60;vagrant init&#x60;. Ça devrait créer
+un fichier &#x60;Vagrantfile&#x60;  qui va décrire ta machine virtuelle
+(ne t’inquiète pas, c’est juste écrit en Ruby).
+En gros de quelle box de base tu pars, comment tu la configures (réseaux,
+dossier partagé entre la VM et le Host, ta machine réelle) et comment tu
+la provisionnes (via un shell, avec un script Puppet...)
+
+## La config de la box
+Ensuite voilà les quelques points à paramétrer.
+- &#x60;config.vm.box = &quot;base&quot;&#x60;pour spécifier le nom d’une box préalablement
+téléchargée.
+- &#x60;config.vm.box_url = &quot;http://domain.com/path/to/above.box&quot;&#x60; Tu remplaces
+par l’url de la box de tes rêves. Tu peux trouver une liste assez complètes
+de box plus ou moins configurées sur le site http://www.vagrantbox.es/
+( ProTip™: Choisis bien le provider correspondant à ton gestionnaire de VM)
+- &#x60;config.vm.network :forwarded_port, guest: 80, host: 8080&#x60; Pratique
+pour accéder au serveur qui tourne sur la VM. Après tu retrouve un peu
+les même options de config réseaux qu’avec virtualbox
+(réseaux privés, connexion par pont...)
+- &#x60;# config.vm.synced_folder &quot;../data&quot;, &quot;/vagrant_data&quot;&#x60; Avec ça,
+tu vas pouvoir ajouter un répertoire qui sera partagé
+avec ta machine virtuelle.
+Par défaut, Vagrant te permet d’accéder au répertoire courant
+depuis &#x60;/home/vagrant&#x60; dans la VM.
+
+## le provisioning de box
+Alors attention, c&#x27;est un des trucs cools avec vagrant. Avant, quand tu
+voulais te monter une VM pour travailler, il fallait aussi la configurer,
+installer les bonnes versions de chaque brique que le projet utilisé. Ça‎
+pouvait être long, pénible, et surtout prendre du temps.
+Avec Vagrant, tu peux automatiser cette partie, soit en utilisant simplement
+un script, soit avec un moyen moderne comme Chef ou Puppet. Et si jamais t&#x27;as
+besoin d&#x27;un truc particulier, une config que tu utilises souvent, tu peux
+toujours packager la box que t&#x27;as configuré avec amour pour pouvoir la
+réutiliser dès que l&#x27;occasion se présente. Sinon tu peux déjà trouver pas mal
+de box déjà prêtes à l&#x27;emploi, avec ou sans support pour puppet, chef...
+
+La suite du fichier contient des exemples de type de provisioning
+(Puppet, Chef solo ou Chef server)
+Et si jamais tu souhaites lancer un script de provisioning :
+
+&#x60;&#x60;&#x60;ruby
+Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.provision &quot;shell&quot;, path: &quot;provision.sh&quot;
+end
+&#x60;&#x60;&#x60;
+
+&gt; Vagrant te permet aussi de créer tes propres box déjà provisionnées via
+la commande vagrant package. C’est assez pratique quand tu dois
+télécharger-compiler-installer tout l’internet
+
+# Etape 2 - vagrant up
+Bon, la première fois risque de prendre du temps, parce que vagrant
+va télécharger ta box, puis lancer le provisioning. Profites en pour faire
+un tour sur http://vim-adventures.com/ et jouer un peu en attendant.
+
+Une fois terminé, tu as maintenant une box dispo avec laquelle travailler.
+
+# Etape 3 - Joie \o/.
+Je pensais faire une troisième partie sur comment arrêter la VM mais
+ça présente pas vraiment d’intérêt car ça tient en une ligne de commande.
+
+Bref, le point important de tout ça, c’est que les autres relous de ton équipe
+ne pourront plus dire que pourtant ça marche bien chez eux, et qu’ils
+comprennent pas, c’est vraiment étrange... enfin sauf si ils sont
+de mauvaise foi :)
+- L’intégrateur n’aura plus à se taper 14 installations de trucs en
+ligne de commande qu’il ne retient jamais, pour rajouter un bout de css
+ou de js.
+(ProTip™: là, ça rentre sur un post-it !)
+- Le dev backend n’aura plus à pleurer quand on lui demande de remettre le nez
+dans une projet vieux de 2 ans avec que des versions de php / ruby ou mysql
+dépassées qui vont casser la superbe config qu’il a mis 1 semaine à fignoler
+avec les dernières techno à la mode.
+- l’admin sys pourra packager les box de chaque projets, provisionnées
+et configurées et pour éviter d’avoir à configurer les postes des autres
+dev à chaque changement de projet.
+
+# Quelques commande pratiques
+&gt; &#x60;vagrant ssh&#x60; te permet de te connecter en mode terminal
+&gt; &#x60;vagrant status&#x60; pour les têtes ~~à claques~~ en l’air
+
+# Quelques liens
+* [la documentation officielle de ~~viagra~~ vagrant](http://docs.vagrantup.com/v2/)
+* [Virtualisation sur OSx et accès à localhost](https://github.com/putaindecode/propositions-de-posts/issues/4)
+* [Cuisinez vos serveurs comme un Chef – Première partie](http://jolicode.com/blog/cuisinez-vos-serveurs-comme-un-chef-premiere-partie)
+{{/markdown}}
+</description>
+              <pubDate>Mon, 04 November 2013 15:34:53 +0100</pubDate>
+              <link>/posts/env/vagrant-enlarge-your-vm/index.html</link>
+              <guid isPermaLink="true">/posts/env/vagrant-enlarge-your-vm/index.html</guid>
+          </item>
+
+          <item>
+              <title>This is a fucking example</title>
+              <description>
+
+{{#markdown}}
+
+{{/markdown}}
+</description>
+              <pubDate>Mon, 04 November 2013 15:34:53 +0100</pubDate>
+              <link>/en/posts/example.html</link>
+              <guid isPermaLink="true">/en/posts/example.html</guid>
+          </item>
+
+          <item>
+              <title>Ceci est un putain de post</title>
+              <description>
+
+{{#markdown}}
+
+{{/markdown}}
+</description>
+              <pubDate>Mon, 04 November 2013 15:34:53 +0100</pubDate>
+              <link>/posts/exemple.html</link>
+              <guid isPermaLink="true">/posts/exemple.html</guid>
+          </item>
+
+          <item>
+              <title>HTML ? Hâche-Thé-Aime-Elle vous dites ?</title>
+              <description>
+
+{{#markdown}}
+Ahh, le HTML. LE [H.T.M.L](http://fr.wikipedia.org/wiki/HTML). Sacré langage hein ?
+
+On le connais tous ce fameux truc qu&#x27;on retrouve dans pas mal d&#x27;url : &#x60;.html&#x60;.
+Oui d&#x27;accord par le passé on avait l&#x27;extension de radin &#x60;.htm&#x60;, mais elle n&#x27;a
+clairement pas duré.
+
+Vous vous demandez déjà ce que y&#x27;a à raconter sur l&#x27;HTML peut être ? Et bien, 
+je ne suis pas là pour vous apprendre toutes les balises, leurs enfants, parents,
+les cousins cousines, patati patata... Ah ça non, j&#x27;ai autre chose à faire,
+et vous aussi. Et si c&#x27;est ce que vous cherchez, vous trouverez ce qu&#x27;il vaut
+faut sur [tout](http://docs.webplatform.org/wiki/html/elements)
+[un](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
+[tas](http://www.w3.org/html/wg/drafts/html/CR/dom.html#elements)
+[d&#x27;autres](http://en.wikipedia.org/wiki/HTML_element)
+[sites](http://www.vectorskin.com/referentiels-standards-w3c/balises-html5/).
+
+Ce que je vais faire par contre, c&#x27;est tenter de partager un document sérieux
+(dans le fond hein) avec tous pleins de conseils super pertinent pour que vous
+écriviez de l&#x27;HTML comme personne.  
+Non je déconne. En fait, ça va être la grosse marrade avec les trucs
+les plus nazes que je peux vous raconter. C&#x27;est partie mon jQuéri.
+
+## L&#x27;ancien testament
+
+Si vous avez ouvert ne serait-ce que quelques documents HTML dans votre vie,
+vous avez du croiser ce qu&#x27;on appelle un [doctype](http://fr.wikipedia.org/wiki/Doctype)
+qui ressemble à ça:
+
+&#x60;&#x60;&#x60;html
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
+   &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&#x60;&#x60;&#x60;
+
+Vous pourrez remarquez dans ce ~~petit~~ gros bout de code bien relou qu&#x27;il y&#x27;a
+une [url](http://fr.wikipedia.org/wiki/Uniform_Resource_Locator):
+c&#x27;est tout simplement la DTD (doctype) du langage en question.
+Avec les spécifications pour la validation, toussa toussa...
+Si vous avez 2 minutes, aller jeter un coup d&#x27;oeil.
+
+Je ne vais pas vous le cacher, et même si en théorie, par héritage de SGML/XML
+ça par d&#x27;une bonne intention, dans la pratique ça sert juste à se toucher la
+nouille sur la validation.  
+Car aujourd&#x27;hui HTML (5) n&#x27;est clairement plus du XML.
+
+Oui bon ok, moi même à une époque j&#x27;ai eu ma passe où je collais ce petit badge
+partout dans mes footers:
+
+&lt;figure&gt;
+  &lt;a href=&quot;http://validator.w3.org/check?uri=referer&quot;&gt;
+    &lt;img src=&quot;http://www.w3.org/Icons/valid-xhtml10&quot;
+        alt=&quot;Valid XHTML 1.0 Transitional&quot; height=&quot;31&quot; width=&quot;88&quot; /&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Ça pête la classe hein ?&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+Mais bon les conneries, ça va un moment.  
+Pour info, j&#x27;ai du valider le code suivant pour obtenir ce logo:
+
+&#x60;&#x60;&#x60;html
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
+   &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+ &lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+  &lt;title&gt; &lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+&#x60;&#x60;&#x60;
+
+Ben dites donc, c&#x27;est propre tout ça. Un petit document tout vide mais déjà 
+bien rempli.
+Mais attendez en 2013, on peut pas faire mieux ? Oh si !
+
+## Le nouveau testament
+
+&#x60;&#x60;&#x60;html
+&lt;!doctype html&gt;
+&lt;title&gt; &lt;/title&gt;
+&#x60;&#x60;&#x60;
+
+Il faut savoir qu&#x27;un simple document _valide_, peut se résumer à ça.  
+Oui oui mes cocos, ce document est parfaitement valide. Voilà j&#x27;voulais vous le
+dire. Arrêtez d&#x27;utiliser des doctypes dans tous les sens, ça ne sert à rien.
+Sachant la qualité du code qu&#x27;on trouve sur les internets, les navigateurs
+s&#x27;arrêtent au parsing lorsqu&#x27;il voit ça &#x60;&lt;!doctype html&#x60;
+(C&#x27;est [Paul Rouget](http://paulrouget.com/) qui me l&#x27;a dit, je le crois donc
+sur parole).
+Et après ma petite parenthèse ci dessous, je vais vous expliquer
+pourquoi.
+
+Car je sais ce que certains vont me rétorquer.
+
+&gt; Oui mais moi monsieur, je valide en **XHTML 1.1 Strict Turbo X Prime Ultra**  
+&gt; Puis ton document valide là, il sera valide quand HTML5 sera finalisé...
+
+Dans un sens ils n&#x27;auraient pas tord. Mais dans la pratique, les navigateurs
+s&#x27;en contre branlent de savoir quel type d&#x27;HTML vous utilisez
+&lt;small&gt;(à moins que vous aimiez jouer avec la mort et que vous utilisez le
+prologue XML lorsque vous servez de l&#x27;XHTML...)&lt;/small&gt;.
+Car quand bien même vous utilisez un doctype à rallonge, il est tout à fait
+possible que vous vous chiez, et que vous laissiez des erreurs.
+Oui, l&#x27;erreur est humaine...
+Puis HTML 5 est déjà bien implémenté dans les grandes lignes.
+Et ça car il est presque rétrocompatible.
+Vous devriez le comprendre d&#x27;ici la fin de cet écrit. Ou pas. Mais je vous le
+dit, il a été pensé dans ce sens.
+
+Revenons à la validation. Du coup à quoi ça sert de valider ?
+On va voir ça par un exemple digne des plus grands diplômes.
+
+## Ce &#x60;&lt;p&gt;&#x60; fout la merde.
+
+Prenons le code suivant:
+
+&#x60;&#x60;&#x60;html
+{{include &quot;src/posts/html/hache-the-aime-elle-vous-dites/notvalid.html.hbs&quot; }}
+&#x60;&#x60;&#x60;
+
+Certains d&#x27;entre vous ont du remarquer la coquille.
+Celle-là, mes élèves qui découvrent le HTML me la fond à chaque fois lorsqu&#x27;ils
+codent leur super CV
+(super exercice tavu, ils apprécient particulièrement le titre).
+
+Toi là au fond, t&#x27;as pas repéré le souci encore ?
+
+Regarde plutôt le rendu:
+
+&lt;iframe
+  class=&quot;putainde-Post-iframe&quot;
+  height=&quot;350&quot;
+  src=&quot;/posts/html/hache-the-aime-elle-vous-dites/notvalid.html&quot;&gt;
+&lt;/iframe&gt;
+
+&gt; WAT ?  
+&gt; ET MON MARGIN BOTTOM KESSIFÉLÀ EN DEUBEULE ?
+
+Le rapport avec la validation me direz-vous ? Et bien plutôt que de perdre du
+temps à comprendre le pourquoi du comment, en validant le code si dessus,
+l&#x27;erreur vous est implicitement expliqué
+(oui ce code n&#x27;a qu&#x27;une seul erreur à la validation).
+
+&gt; Line 17, Column 4: **No p element in scope but a p end tag seen.**
+
+Typiquement, il faut savoir comprendre un message d&#x27;erreur et savoir lire entre
+les lignes. Pas faire &quot;mais monsieur, j&#x27;comprends pas là&quot; (d&#x27;ailleurs mes élèves
+valident tous leur code, pour apprendre sur le tas, c&#x27;est une bonne façon).
+
+Celui là nous dit en gros: _je ne vois pas d&#x27;element **p** à fermer dans le coin_.
+Ca veut dire que... Ça veut dire que mon **p** ouvert n&#x27;est pas reconnu ?
+Mais attend qu&#x27;est-ce que c&#x27;est que cette histoire ?!
+
+Si vous prenez 10 secondes pour inspecter ce code, vous allez vite vous
+aperçevoir qu&#x27;il est parsé ainsi:
+
+&#x60;&#x60;&#x60;html
+&lt;p&gt;...&lt;/p&gt;
+&lt;ul&gt;...&lt;/ul&gt;
+&lt;p&gt;&lt;/p&gt;
+&#x60;&#x60;&#x60;
+
+_Mais qu&#x27;est-ce que... ? Hein ? Mais ? Quoi ? Comment ?_
+
+Oui vous avez bien vu. L&#x27;HTML est parsé n&#x27;importe comment. Enfin non il est parsé
+comme il peut, au mieux.
+Je pense que là vous commencez à comprendre ?
+
+Ce que j&#x27;essaye de vous montrer par là, ce qu&#x27;il faut toujours faire attention
+entre ce qu&#x27;on écrit et ce qu&#x27;on pense avoir comme résultat, même avec du 
+_simple_ HTML.
+
+**Bon après j&#x27;espère qu&#x27;en 2013, vous avez tous le reflex d&#x27;inspecter
+l&#x27;HTML dès que vous avez un truc bizarre en CSS ou en JavaScript... Si
+c&#x27;est pas encore le cas, prenez l&#x27;habitude.**
+
+## Mais du coup le navigateur il fait n&#x27;importe quoi ?
+
+Le navigateur essaye clairement de faire au mieux.
+Si vous inspecter l&#x27;exemple précédent, vous vous apercevrez aussi que je n&#x27;ai
+ mis aucune balise &#x60;&lt;html&gt;&#x60;, &#x60;&lt;head&gt;&#x60; et &#x60;&lt;body&gt;&#x60;.  
+Pourquoi ? Ben car le parseur le fait à ma place.
+Mais pourquoi il fait ça ?
+Tout simplement car on oublie (très - trop ?) souvent de bien écrire.
+Comme quand j&#x27;écris en.
+
+La balise [&#x60;&lt;tbody&gt;&#x60;](https://developer.mozilla.org/fr/docs/Web/HTML/Element/tbody)
+est un bon exemple.
+Si vous inspectez vos tableaux HTML, vous verrez vite fait que cette balise, que
+quasiment personne ne connait/utilise, est pourtant nécessaire/utile.
+Mais du coup, si je met fais une petite requête JavaScript
+&#x60;document.querySelectorAll(&#x27;table &gt; tr&#x27;)&#x60;,
+il est fort possible que je n&#x27;ai pas ce que je souhaites.  
+[La preuve](http://codepen.io/MoOx/pen/esFjx).
+
+Voyons une autre exemple: mettons nous à la place d&#x27;un navigateur si,
+alors que je suis en XHTML 1.1 Strict, je lui glisse une balise &#x60;&lt;center&gt;&#x60;.
+
+- **Cas 1.** Je n&#x27;ai pas fais attention au doctype et je veux vraiment une balise
+ &#x60;&lt;center&gt;&#x60;: bah là, rien à dire à part _Merci_. Le navigateur essaye clairement
+ de faire au mieux, et dans un cas comme celui là, on ne peut que le remercier.
+
+- **Cas 2.** Je sais exactement dans quel doctype je suis, j&#x27;ai conscience de ce
+que je fais: je joue au con, tant pis pour ma gueule !
+
+Dans tous les cas, le navigateur va laisser passer cette balise au cas où que.
+Puis bon faut avouer que c&#x27;est super pratique cette balise hein ?
+Comme &#x60;&lt;blink&gt;&#x60; et &#x60;&lt;marquee&gt;&#x60; quoi. ❤
+
+&lt;figure&gt;
+  ![Can&#x27;t handle my swag]({{happyplan.baseUrls.media}}/memes/canthandlemyswag.gif)
+  &lt;figcaption&gt;&lt;marquee&gt;Marquee for the win.&lt;/marquee&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+## Note de service
+
+S&#x27;il vous plaît mesdames messieurs, lorsque vous faites du CSS inline, ou que
+vous incorporez un JavaScript, arrêtez vous à des choses simples,
+qui fonctionnent:
+
+- &#x60;&lt;style&gt;&#x60; suffit. Pas besoin de mettre un type, un langage etc. Et ça vous
+évitera des [prises de têtes à la con](http://codepen.io/MoOx/pen/sEzuJ).
+Puis vous avez déjà utilisé autre chose que du CSS vous ?!
+
+- &#x60;&lt;script&gt;&#x60;, idem, même sur IE 6.
+Pareil que précédement, pas besoin de mettre un hideux
+&#x60;&lt;script type=&quot;text/javascript&quot; language=&quot;JavaScript 1.1&quot;&gt;&#x60;.
+La moindre faute de frappe ne pardonne pas.
+Aucun intêret de se fatiguer, sauf si votre [script n&#x27;est pas du JavaScript](https://code.google.com/p/ruby-in-browser/).
+
+## Ce qu&#x27;il faut retenir
+
+Ne soyez jamais sûr de vous, que ce soit pour écrire de l&#x27;HTML ou faire une mise
+en prod&#x27; un vendredi soir à [17h30](http://www.miximum.fr/tranche_vie/62-le-bug-de-17h30).
+Faites pas les malins. Ne sous-etimez pas HTML.
+Si ça merde quelque part, vérifiez plus loin que le bout de votre nez, que votre
+règle CSS qui marche pas, ou votre morceau de JavaScript buggé.
+
+## [Aller plus loiiin, allez plus hauaauuut... !](https://www.youtube.com/watch?v=BCYLQUdsN5g&amp;t=39s)
+
+* &lt;a href=&quot;https://github.com/necolas/idiomatic-html&quot; lang=&quot;en&quot;&gt;idiomatic-html&lt;/a&gt;
+([ceci n&#x27;est pas une contraction d&#x27;_idiot_ et d&#x27;_automatique_](http://fr.wikipedia.org/wiki/Idiomatique)).
+* &lt;a href=&quot;https://github.com/necolas/idiomatic-css&quot; lang=&quot;en&quot;&gt;idiomatic-css&lt;/a&gt; (traduction incluse)
+* Validation automatique dans un workflow Grunt:
+  * [praveenvijayan/grunt-html-validation](https://github.com/praveenvijayan/grunt-html-validation)
+  * [jzaefferer/grunt-html](https://github.com/jzaefferer/grunt-html) (basé sur validator.nu)
+
+{{/markdown}}
+</description>
+              <pubDate>Mon, 04 November 2013 15:34:53 +0100</pubDate>
+              <link>/posts/html/hache-the-aime-elle-vous-dites/index.html</link>
+              <guid isPermaLink="true">/posts/html/hache-the-aime-elle-vous-dites/index.html</guid>
+          </item>
+
+          <item>
+              <title>Pull request</title>
+              <description>
+
+{{#markdown}}
+## Une poule request vous dites ?
+
+## Faire une PR rapidement et proprement, pour les nuls.
+
+
+{{/markdown}}
+</description>
+              <pubDate>Mon, 04 November 2013 15:34:53 +0100</pubDate>
+              <link>/posts/pull-request.html</link>
+              <guid isPermaLink="true">/posts/pull-request.html</guid>
+          </item>
+
     </channel>
 </rss>
