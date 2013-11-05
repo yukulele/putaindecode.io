@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+<!--
+  HEY YOU, STOP LOOKING AT MY SOURCE CODE
+  Just check it out directly on Github :
+
+  https://github.com/putaindecode/website.git
+-->
+<html lang="fr" class="no-js no-touch ">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<script>(function(docEl) {
+  docEl.className = docEl.className.replace(/\bno-js\b/, 'js');
+  if ('ontouchstart' in docEl) { docEl.className = docEl.className.replace(/\bno-touch\b/, 'touch'); }
+})(document.documentElement);</script>
+
+<meta charset="utf-8">
+<title>HTML ? Hâche-Thé-Aime-Elle vous dites ?</title>
+<meta name="description" content="">
+<base href="/" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="feed.xml" rel="alternate" type="application/rss+xml">
+
+<link rel="stylesheet" href="/assets/css/putaindecode.css?20131105152230">
+
+
+
+
+</head>
+<body>
+
+<div class="">
+  <nav class="putainde-Nav">
+	<div class="grid">
+		<div class="grid__cell">
+			<a class="putainde-SiteTitle" href="/">
+				<img class="putainde-Logo" alt="Putain de Code !" src="/assets/img/p!-logo.svg" />
+				Putain de Code !
+			</a>
+
+			<span class="putainde-Baseline">On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</span>
+
+			<ul class="putainde-Nav-list">
+				<li class=""><a class="putainde-Nav-list-item " href="/">Home</a>
+				<li class=""><a class="putainde-Nav-list-item " href="c-est-quoi-putaindecode">Putain de ... ?</a>
+				<li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+				<li class=""><a class="putainde-Nav-list-item " href="le-crew">Le Crew</a>
+			</ul>
+		</div>
+	</div>
+</nav>
+ 
+  <article class="putainde-Content grid putainde-Post">
+    <header class="putainde-Content-header grid__cell unit-1-1">
+      <h1 class="putainde-Content-title">HTML ? Hâche-Thé-Aime-Elle vous dites ?</h1>
+      <div class="putainde-Content-metas">
+        <span class="putainde-Content-author">Par <span class="putainde-Author">MoOx</span></span>
+        <span class="putainde-Content-readingTime">Temps de lecture: environ 7min</span>
+        <span class="putainde-Content-tags">Tags: html</span>
+      </div>
+    </header>
+    <div class="putainde-Content-body grid__cell unit-3-4--m">
+    
+
+
+<p>Ahh, le HTML. LE <a href="http://fr.wikipedia.org/wiki/HTML">H.T.M.L</a>. Sacré langage hein ?</p>
+<p>On le connait tous ce fameux truc qu&#39;on retrouve dans pas mal d&#39;URLs : <code>.html</code>.
+Oui d&#39;accord par le passé on avait l&#39;extension de radin <code>.htm</code>, mais elle n&#39;a
+clairement pas duré.</p>
+<p>Vous vous demandez déjà ce qu&#39;il-y-a à raconter sur l&#39;HTML peut être ? Et bien,
+je ne suis pas là pour vous apprendre toutes les balises, leurs enfants, parents,
+les cousins cousines, patati patata… Ah ça non, j&#39;ai autre chose à faire,
+et vous aussi. Et si c&#39;est ce que vous cherchez, vous trouverez ce qu&#39;il vous
+faut sur <a href="http://docs.webplatform.org/wiki/html/elements">tout</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">un</a>
+<a href="http://www.w3.org/html/wg/drafts/html/CR/dom.html#elements">tas</a>
+<a href="http://en.wikipedia.org/wiki/HTML_element">d&#39;autres</a>
+<a href="http://www.vectorskin.com/referentiels-standards-w3c/balises-html5/">sites</a>.</p>
+<p>Ce que je vais faire par contre, c&#39;est tenter de partager un document sérieux
+(dans le fond hein) avec tout pleins de conseils super pertinents pour que vous
+écriviez de l&#39;HTML comme personne.
+Non je déconne. En fait, ça va être la grosse marrade avec les trucs
+les plus nazes que je peux vous raconter. C&#39;est partie mon jQuéri.</p>
+<h2 id="l-ancien-testament">L&#39;ancien testament</h2>
+<p>Si vous avez ouvert ne serait-ce que quelques documents HTML dans votre vie,
+vous avez du croiser ce qu&#39;on appelle un <a href="http://fr.wikipedia.org/wiki/Doctype">doctype</a>
+qui ressemble à ça:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
+   &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</code></pre>
+<p>Vous pourrez remarquer dans ce <del>petit</del> gros bout de code bien relou qu&#39;il y&#39;a
+une <a href="http://fr.wikipedia.org/wiki/Uniform_Resource_Locator">URL</a>:
+c&#39;est tout simplement la DTD (doctype) du langage en question.
+Avec les spécifications pour la validation, toussa toussa…
+Si vous avez 2 minutes, allez jeter un coup d&#39;oeil.</p>
+<p>Je ne vais pas vous le cacher, et même si en théorie, par héritage de SGML/XML
+ça part d&#39;une bonne intention, dans la pratique ça sert juste à se toucher la
+nouille sur la validation.
+Car aujourd&#39;hui HTML (5) n&#39;est clairement plus du XML.</p>
+<p>Oui bon ok, moi même à une époque j&#39;ai eu ma passe où je collais ce petit badge
+partout dans mes footers:</p>
+<figure>
+  <a href="http://validator.w3.org/check?uri=referer">
+    <img src="http://www.w3.org/Icons/valid-xhtml10"
+        alt="Valid XHTML 1.0 Transitional" height="31" width="88" />
+  </a>
+  <figcaption>Ça pète la classe hein ?</figcaption>
+</figure>
+
+<p>Mais bon les conneries, ça va un moment.
+Pour info, j&#39;ai du valider le code suivant pour obtenir ce logo:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
+   &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+ &lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+  &lt;title&gt; &lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>Ben dites donc, c&#39;est propre tout ça. Un petit document tout vide mais déjà
+bien rempli.
+Mais attendez en 2013, on peut pas faire mieux ? Oh si !</p>
+<h2 id="le-nouveau-testament">Le nouveau testament</h2>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;title&gt; &lt;/title&gt;</code></pre>
+<p>Il faut savoir qu&#39;un simple document <em>valide</em>, peut se résumer à ça.
+Oui oui mes cocos, ce document est parfaitement valide. Voilà j&#39;voulais vous le
+dire. Arrêtez d&#39;utiliser des doctypes dans tous les sens, ça ne sert à rien.
+Sachant la qualité du code qu&#39;on trouve sur les internets, les navigateurs
+s&#39;arrêtent au parsing lorsqu&#39;ils voient ça <code>&lt;!doctype html</code>
+(C&#39;est <a href="http://paulrouget.com/">Paul Rouget</a> qui me l&#39;a dit, je le crois donc
+sur parole).
+Et après ma petite parenthèse ci dessous, je vais vous expliquer pourquoi.</p>
+<p>Car je sais ce que certains vont me rétorquer.</p>
+<blockquote>
+<p>Oui mais moi monsieur, je valide en <strong>XHTML 1.1 Strict Turbo X Prime Ultra</strong><br />
+Puis ton document valide là, il sera valide quand HTML5 sera finalisé…</p>
+</blockquote>
+<p>Dans un sens ils n&#39;auraient pas tort. Mais dans la pratique, les navigateurs
+s&#39;en contre branlent de savoir quel type d&#39;HTML vous utilisez
+<small>(à moins que vous aimiez jouer avec la mort et que vous utilisez le
+prologue XML lorsque vous servez de l&#39;XHTML…)</small>.
+Car quand bien même vous utilisez un doctype à rallonge, il est tout à fait
+possible que vous vous chiiez, et que vous laissiez des erreurs.
+Oui, l&#39;erreur est humaine…
+Puis HTML 5 est déjà bien implémenté dans les grandes lignes. Et ça car il est
+presque rétrocompatible.
+Vous devriez le comprendre d&#39;ici la fin de cet écrit. Ou pas. Mais je vous le
+dit, il a été pensé dans ce sens.</p>
+<p>Revenons à la validation. Du coup à quoi ça sert de valider ?
+On va voir ça par un exemple digne des plus grands diplômes.</p>
+<h2 id="ce-p-fout-la-merde-">Ce <code>&lt;p&gt;</code> fout la merde.</h2>
+<p>Prenons le code suivant:</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;title&gt;Putain de page&lt;/title&gt;
+&lt;style&gt;
+  p {
+    margin-top: 2em;
+    margin-bottom: 10em;
+  }
+&lt;/style&gt;
+&lt;h1&gt;Ma première putain de page html&lt;/h1&gt;
+&lt;p&gt;
+  Ouais mec t&#39;as vu ce code de ouf ?
+  Il est trop bien parce que:
+  &lt;ul&gt;
+    &lt;li&gt;Il est &lt;del&gt;valide&lt;/del&gt;&lt;/li&gt;
+    &lt;li&gt;Il est beau&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/p&gt;</code></pre>
+<p>Certains d&#39;entre vous ont du remarquer la coquille.
+Celle-là, mes élèves qui découvrent le HTML me la font à chaque fois lorsqu&#39;ils
+codent leur super CV
+(super exercice tavu, ils apprécient particulièrement le titre).</p>
+<p>Toi là au fond, t&#39;as pas repéré le souci encore ?</p>
+<p>Regarde plutôt le rendu:</p>
+<iframe
+  class="putainde-Post-iframe"
+  height="350"
+  src="/posts/html/hache-the-aime-elle-vous-dites/notvalid.html">
+</iframe>
+
+<blockquote>
+<p>WAT ?
+ET MON MARGIN BOTTOM KESSIFÉLÀ EN DEUBEULE ?</p>
+</blockquote>
+<p>Le rapport avec la validation me direz-vous ? Et bien plutôt que de perdre du
+temps à comprendre le pourquoi du comment, en validant le code si dessus,
+l&#39;erreur vous est implicitement expliquée
+(oui ce code n&#39;a qu&#39;une seule erreur à la validation).</p>
+<blockquote>
+<p>Line 17, Column 4: <strong>No p element in scope but a p end tag seen.</strong></p>
+</blockquote>
+<p>Typiquement, il faut savoir comprendre un message d&#39;erreur et savoir lire entre
+les lignes. Pas faire &quot;mais monsieur, j&#39;comprends pas là&quot; (d&#39;ailleurs mes élèves
+valident tous leur code, pour apprendre sur le tas, c&#39;est une bonne façon).</p>
+<p>Celui là nous dit en gros : <em>je ne vois pas d&#39;element <strong>p</strong> à fermer dans le coin</em>.
+Ca veut dire que… Ça veut dire que mon <strong>p</strong> ouvert n&#39;est pas reconnu ?
+Mais attend qu&#39;est-ce que c&#39;est que cette histoire ?!</p>
+<p>Si vous prenez 10 secondes pour inspecter ce code, vous allez vite vous
+aperçevoir qu&#39;il est parsé ainsi:</p>
+<pre><code class="language-html">&lt;p&gt;…&lt;/p&gt;
+&lt;ul&gt;…&lt;/ul&gt;
+&lt;p&gt;&lt;/p&gt;</code></pre>
+<p><em>Mais qu&#39;est-ce que… ? Hein ? Mais ? Quoi ? Comment ?</em></p>
+<p>Oui vous avez bien vu. L&#39;HTML est parsé n&#39;importe comment. Enfin non il est parsé
+comme il peut, au mieux.
+Je pense que là vous commencez à comprendre ?</p>
+<p>Ce que j&#39;essaye de vous montrer par là, ce qu&#39;il faut toujours faire attention
+entre ce qu&#39;on écrit et ce qu&#39;on pense avoir comme résultat, même avec du
+<em>simple</em> HTML.</p>
+<p><strong>Bon après j&#39;espère qu&#39;en 2013, vous avez tous le réflexe d&#39;inspecter
+l&#39;HTML dès que vous avez un truc bizarre en CSS ou en JavaScript… Si
+c&#39;est pas encore le cas, prenez l&#39;habitude.</strong></p>
+<h2 id="mais-du-coup-le-navigateur-il-fait-n-importe-quoi-">Mais du coup le navigateur il fait n&#39;importe quoi ?</h2>
+<p>Le navigateur essaye clairement de faire au mieux.
+Si vous inspectez l&#39;exemple précédent, vous vous apercevrez aussi que je n&#39;ai
+mis aucune balise <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> ou <code>&lt;body&gt;</code>.
+Pourquoi ? Ben car le parseur le fait à ma place.
+Mais pourquoi il fait ça ?
+Tout simplement car on oublie (très - trop ?) souvent de bien écrire.
+Comme quand j&#39;écris en.</p>
+<p>La balise <a href="https://developer.mozilla.org/fr/docs/Web/HTML/Element/tbody"><code>&lt;tbody&gt;</code></a>
+est un bon exemple.
+Si vous inspectez vos tableaux HTML, vous verrez vite fait que cette balise, que
+quasiment personne ne connait/utilise, est pourtant nécessaire/utile.
+Mais du coup, si je me fais une petite requête JavaScript
+<code>document.querySelectorAll(&#39;table &gt; tr&#39;)</code>,
+il est fort possible que je n&#39;aie pas ce que je souhaite.
+<a href="http://codepen.io/MoOx/pen/esFjx">La preuve</a>.</p>
+<p>Voyons une autre exemple: mettons nous à la place d&#39;un navigateur si,
+alors que je suis en XHTML 1.1 Strict, je lui glisse une balise <code>&lt;center&gt;</code>.</p>
+<ul>
+<li><p><strong>Cas 1.</strong> Je n&#39;ai pas fait attention au doctype et je veux vraiment une balise
+<code>&lt;center&gt;</code> : bah là, rien à dire à part <em>Merci</em>. Le navigateur essaye clairement
+de faire au mieux, et dans un cas comme celui là, on ne peut que le remercier.</p>
+</li>
+<li><p><strong>Cas 2.</strong> Je sais exactement dans quel doctype je suis, j&#39;ai conscience de ce
+que je fais: je joue au con, tant pis pour ma gueule !</p>
+</li>
+</ul>
+<p>Dans tous les cas, le navigateur va laisser passer cette balise au cas où que.
+Puis bon faut avouer que c&#39;est super pratique cette balise hein ?
+Comme <code>&lt;blink&gt;</code> et <code>&lt;marquee&gt;</code> quoi. ❤</p>
+<figure>
+  <img src="/media/memes/canthandlemyswag.gif" alt="Can&#39;t handle my swag">
+  <figcaption><marquee>Marquee for the win.</marquee></figcaption>
+</figure>
+
+<h2 id="note-de-service">Note de service</h2>
+<p>S&#39;il vous plaît mesdames messieurs, lorsque vous faites du CSS inline, ou que
+vous incorporez un JavaScript, arrêtez vous à des choses simples,
+qui fonctionnent :</p>
+<ul>
+<li><p><code>&lt;style&gt;</code> suffit. Pas besoin de mettre un type, un langage etc. Et ça vous
+évitera des <a href="http://codepen.io/MoOx/pen/sEzuJ">prises de têtes à la con</a>.
+Puis vous avez déjà utilisé autre chose que du CSS vous ?!</p>
+</li>
+<li><p><code>&lt;script&gt;</code>, idem, même sur IE 6.
+Pareil que précédement, pas besoin de mettre un hideux
+<code>&lt;script type=&quot;text/javascript&quot; language=&quot;JavaScript 1.1&quot;&gt;</code>.
+La moindre faute de frappe ne pardonne pas.
+Aucun intêret de se fatiguer, sauf si votre <a href="https://code.google.com/p/ruby-in-browser/">script n&#39;est pas du JavaScript</a>.</p>
+</li>
+</ul>
+<h2 id="ce-qu-il-faut-retenir">Ce qu&#39;il faut retenir</h2>
+<p>Ne soyez jamais sûr de vous, que ce soit pour écrire de l&#39;HTML ou faire une mise
+en prod&#39; un vendredi soir à <a href="http://www.miximum.fr/tranche_vie/62-le-bug-de-17h30">17h30</a>.
+Faites pas les malins. Ne sous-estimez pas HTML.
+Si ça merde quelque part, vérifiez plus loin que le bout de votre nez, que votre
+règle CSS qui marche pas, ou votre morceau de JavaScript buggé.</p>
+<h2 id="-aller-plus-loiiin-allez-plus-haaauuut-https-www-youtube-com-watch-v-bcylqudsn5g-t-39s-"><a href="https://www.youtube.com/watch?v=BCYLQUdsN5g&amp;t=39s">Aller plus loiiin, allez plus haaauuut… !</a></h2>
+<ul>
+<li><a href="https://github.com/necolas/idiomatic-html" lang="en">idiomatic-html</a>
+(<a href="http://fr.wikipedia.org/wiki/Idiomatique">ceci n&#39;est pas une contraction d&#39;<em>idiot</em> et d&#39;<em>automatique</em></a>).</li>
+<li><a href="https://github.com/necolas/idiomatic-css" lang="en">idiomatic-css</a> (traduction incluse)</li>
+<li>Validation automatique dans un workflow Grunt:<ul>
+<li><a href="https://github.com/praveenvijayan/grunt-html-validation">praveenvijayan/grunt-html-validation</a></li>
+<li><a href="https://github.com/jzaefferer/grunt-html">jzaefferer/grunt-html</a> (basé sur validator.nu)</li>
+</ul>
+</li>
+</ul>
+
+
+
+<section class="putainde-AboutTheAuthor">
+  
+    
+    <a class="putainde-AboutTheAuthor-avatar putainde-Author-avatar" href="http://moox.io">
+      <img src="https://gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d?s=300&amp;d=https%3A%2F%2Fidenticons.github.com%2Fc0863a4414cba6aa95014df9e3d9f6a5.png" />
+    </a>
+    
+  
+  <h1 class="putainde-AboutTheAuthor-title">
+    Écrit par
+    <strong class="putainde-AboutTheAuthor-name">MoOx</strong>
+    <a class="putainde-AboutTheAuthor-url" href="http://moox.io"><i class="icon icon_home"> </i></a>
+    <a class="putainde-AboutTheAuthor-twitter" href="https://twitter.com/MoOx"><i class="icon icon_twitter"> </i></a>
+    <a class="putainde-AboutTheAuthor-github" href="https://github.com/MoOx"><i class="icon icon_github"> </i></a>
+  </h1>
+  
+    
+    <div class="putainde-AboutTheAuthor-bio--long"><p>Développeur web front-end (100% bio), vivant dans la campagne près de Toulouse. Il joue avec CSS &amp; et JavaScript en temps que Freelance.
+Lorsqu&#x27;il n&#x27;est pas derrière son écran tel un geek, il adore bricoler dans sa maison en bois et se marrer avec sa merveilleuse femme, quand il n&#x27;est pas en train de se promener dans la forêt.</p>
+</div>
+  
+</section>
+
+
+
+<section class="putainde-Comments">
+  <h1 class="putainde-Comments-title">Comments</h1>
+  <div id="disqus_thread" aria-live="polite">
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+
+    </div>
+    
+    <aside class="putainde-Sidebar grid__cell unit-1-4--m">
+    <aside class="putainde-Sidebar-block">
+	<h1 class="putainde-Sidebar-block-title">On est partout !</h1>
+	<ul class="putainde-Sidebar-block-list--nobullet">
+		<li><a href="https://github.com/putaindecode"><i class="icon icon_github"></i> Github</a></li>
+		<li><a href="https://twitter.com/putaindecode"><i class="icon icon_twitter"></i> Twitter</a></li>
+		<li><a href="#derriere-toi,-c'est-affreux!" onclick="if (confirm('Attention Benjamin...!')) window.location = 'http://www.youtube.com/watch?v=MEKHaG9FxKY#t=44s'; return false;"><i class="icon icon_eye"></i> Derrière toi</a></li>
+	</ul>
+</aside>
+<aside class="putainde-Sidebar-block">
+	<h1 class="putainde-Sidebar-block-title">À avoir sous la main</h1>
+	<ul class="putainde-Sidebar-block-list--nobullet">
+		<li><a href="https://github.com/putaindecode/website/issues/new"><i class="icon icon_pencil"></i> Proposer un article</a></li>
+		<li><a href="https://github.com/putaindecode/website/issues?labels=post&state=open"><i class="icon icon_bookmarks"></i> Voir les propositions</a></li>
+		<li><a href="#@todo"><i class="icon icon_edit"></i> Modifier cette page</a></li>
+	</ul>
+</aside>
+
+
+    </aside>
+    
+  </article>
+  
+    <footer class="putainde-Footer">
+
+    <div class="putainde-Footer-colophon grid">
+      <div class="putainde-Footer-colophon-left grid__cell unit-5-12--m">
+        © 1970 - 2013 Putain de code
+      </div>
+      <div class="putainde-Footer-colophon-center grid__cell unit-2-12--m">
+        <img class="putainde-Footer-logo" alt="Putain de code !" src="/assets/img/p!-logo.svg" />
+      </div>
+      <div class="putainde-Footer-colophon-right grid__cell unit-5-12--m">
+        <span class="putainde-Footer-colophon-item">Made with ❤ by <a href="/le-crew/">le crew</a></span>
+        |
+        <a class="putainde-Footer-colophon-item" href="projets/">Projets</a>
+        |
+        <a class="putainde-Footer-colophon-item" href="https://github.com/putaindecode">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  
+</div>
+<script src="/assets/js/putaindecode.js?20131105152230"></script>
+
+
+	
+	<script>
+		var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src='//www.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+	
+
+
+
+
+
+  <script>
+  var disqus_shortname = 'putaindecode',
+  
+  
+  
+  disqus_identifier = '',
+  disqus_url = '',
+  disqus_script = 'embed.js';
+  
+  (function(d,s) {
+  s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+  (d.getElementsByTagName('head')[0]).appendChild(s);
+  })(document);
+  </script>
+
+
+
+</body>
+</html>
+
