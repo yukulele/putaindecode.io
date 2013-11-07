@@ -21,7 +21,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="feed.xml" rel="alternate" type="application/rss+xml">
 
-<link rel="stylesheet" href="/assets/css/putaindecode.css?20131106153447">
+<link rel="stylesheet" href="/assets/css/putaindecode.css?20131107162918">
 
 
 
@@ -146,18 +146,16 @@ introduisent une modification simple. Ça évite de se retrouver avec un commit
 mammouth qui change tout le programme d&#39;un coup et qui est un enfer pour le
 futur développeur qui revient sur le code et qui cherche à comprendre la logique
 de sa construction. Ce développeur, c&#39;est vous dans 1 ou 2 semaines.</p>
-<p>Pour info, vous verrez parfois <em>l&#39;Index</em> appellé <em>Staging Area</em>.</p>
+<p>Pour info, vous verrez parfois <em>l&#39;Index</em> appellé <em>Staging Area</em>, ou encore
+<em>Cache</em>.</p>
 <p>Git fournit des commandes pour passer les fichiers d&#39;un état à l&#39;autre. Elles
 sont certes parfois un peu obscures, mais dans l&#39;ensemble c&#39;est pas si
 difficile.</p>
 <p>Dans notre cas, notre fichier n&#39;est même pas encore suivi par Git ! Vous pouvez
-vérifier ça en utilisant <code>git status</code>,dont vous ne pourrez bientôt plus vous
+vérifier ça en utilisant <code>git status</code>, dont vous ne pourrez bientôt plus vous
 passer :</p>
-<p>Pour pallier celà, on utilise <code>git add</code> pour l&#39;ajouter direct à l&#39;index.</p>
-<p>Dans notre cas, ça donne <code>git add putain_de_hello_world.rb</code></p>
-<p>On peut utilise <code>git add</code> pour ajouter des dossiers entiers, des motifs, … Mais
-soyez vigilants, c&#39;est une bonne source d&#39;erreurs souvent chiantes.</p>
-<pre><code class="language-console"># Sur la branche master
+<pre><code class="language-console">$ git status
+# Sur la branche master
 #
 # Validation initiale.
 #
@@ -166,6 +164,10 @@ soyez vigilants, c&#39;est une bonne source d&#39;erreurs souvent chiantes.</p>
 #
 #    putain_de_hello_world.rb
 Aucune modification indexée mais des fichiers non suivis sont présents (utilisez &quot;git add&quot; pour les suivre)</code></pre>
+<p>Pour pallier celà, on utilise <code>git add</code> pour l&#39;ajouter direct à l&#39;index.</p>
+<p>Dans notre cas, ça donne <code>git add putain_de_hello_world.rb</code></p>
+<p>On peut utilise <code>git add</code> pour ajouter des dossiers entiers, des motifs, … Mais
+soyez vigilants, c&#39;est une bonne source d&#39;erreurs souvent chiantes.</p>
 <p>Vous pouvez vérifier que <code>git add</code> a bien marché avec la commande <code>git status</code>,</p>
 <pre><code class="language-console">$ git status
 # Sur la branche master
@@ -255,9 +257,9 @@ un petit asterisque devant c&#39;est la branche courante.</p>
 <p>Essayons ça avec notre petit dépôt :</p>
 <pre><code class="language-console">$ git branch
 * master
-prout (master:8120de7) $ git checkout -b add-shebang
+$ git checkout -b add-shebang
 Basculement sur la nouvelle branche &#39;add-shebang&#39;
-$ vi putain_de_hello_world.rb
+$ vim putain_de_hello_world.rb
 $ git status
 # Sur la branche add-shebang
 # Modifications qui ne seront pas validées :
@@ -338,6 +340,17 @@ Spécialiste en développement d&#x27;applications inutiles.</p>
 
 
 
+  <h2>Contributeurs</h2>
+  <ul>
+  
+    <li><a href="http://github.com/MoOx">@MoOx</a></li>
+  
+    <li><a href="http://github.com/Dridi">@Dridi</a></li>
+  
+  </ul>
+
+
+
 <section class="putainde-Comments">
   <h1 class="putainde-Comments-title">Comments</h1>
   <div id="disqus_thread" aria-live="polite">
@@ -393,7 +406,7 @@ Spécialiste en développement d&#x27;applications inutiles.</p>
 
   
 </div>
-<script src="/assets/js/putaindecode.js?20131106153447"></script>
+<script src="/assets/js/putaindecode.js?20131107162918"></script>
 
 
 	
