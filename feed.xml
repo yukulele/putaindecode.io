@@ -78,13 +78,11 @@ rapport avec le repo principal, on l&#39;appelle souvent <em>upstream</em></p>
 que notre site pète la classe, et qu&#39;on l&#39;a fait en utilisant quand même des
 technos ultra cool genre <a href="https://github.com/happyplan/happyplan">HappyPlan</a>
 (un truc fait par @_kud et @MoOx, t&#39;en profiteras pour aller jeter un oeil,
-fais pas ton rat, t&#39;es pas pressé), node, bower, toussa, il va falloir que
-t&#39;installes les dépendances, les requirements, et toute la ribambelle de
-fichiers qui vont bien. Pour faire ça, c&#39;est pas compliqué, tu vas lire le
+fais pas ton rat, t&#39;es pas pressé), node, bower, toussa.
+Pour faire ça, c&#39;est finalement pas si compliqué, tu vas lire le
 README.md à la racine du repo. On fait exprès de pas te le dire ici parce
-que c&#39;est un peu une convention pour tous les projets susceptibles d&#39;être
-utilisés en Open Source, et que ça te fait pas de mal de commencer à
-apprendre à bien bosser.</p>
+que c&#39;est un peu une convention pour tous les projets Open Source, et que ça
+te fait pas de mal de commencer à apprendre à bien bosser.</p>
 </li>
 <li><p>Une fois ton site tout installé, t&#39;as plus qu&#39;à aller dans ton dossier grâce
 à la ligne de commande, et à taper <code>$ happyplan</code>, tu verras tout un tas de
@@ -255,6 +253,133 @@ message avec ta PR ou ton issue en lien, histoire de nous mettre la pression.</p
               <pubDate>Tue, 05 November 2013 01:00:00 +0100</pubDate>
               <link>/dist/posts/comment-contribuer/index.html</link>
               <guid isPermaLink="true">/dist/posts/comment-contribuer/index.html</guid>
+          </item>
+
+          <item>
+              <title>Vagrant, enlarge your VM</title>
+              <description><![CDATA[
+
+<p>Vagrant, au cas ou tu ne connaîtrais pas encore, permet de fournir des
+environnements de développements reproductibles, facilement configurables et
+qui se partagent entre les membres de l’équipe. En gros tu vas pouvoir décrire
+et configurer des machines virtuelles (VM) depuis un seul fichier texte,
+le <code>Vagrantfile</code>.  Plutôt pratique pour avoir un environnement de dev
+équivalent à celui de la prod. Et tout cela avec un processus simplifié
+à l&#39;extrême.</p>
+<h1 id="et-c-est-pour-qui-le-beau-joujou-">Et c’est pour qui le beau joujou ?</h1>
+<p>Vagrant s’adresse principalement à toi, mais aussi à un public
+de <strong>développeurs</strong> qui souhaitent pouvoir mettre en place rapidement
+un environnement de dev avec une machine virtuelle (genre apache-php-<em>sql)
+sans y passer trop de temps.
+Vagrant, c’est aussi pour des <em>*devops</em></em> qui voudrait tester la mise en
+place et le provisioning de leur infra.
+Dans la doc, ils disent même que ça s’adresse aux designers
+(pour dire si c’est simple) mais faut pas déconner non plus,
+on a jamais vu un designer dégainer une console :)</p>
+<p>Globalement le workflow vagrant se résume à 2-3 commandes,</p>
+<ol>
+<li><code>vagrant init</code> au début du projet
+Puis</li>
+<li><code>vagrant up</code> pour lancer la VM.</li>
+<li><code>vagrant halt</code>pour l’arrêter.</li>
+</ol>
+<h1 id="etape-1-vagrant-init">Etape 1 - vagrant init</h1>
+<p>Vagrant fournit un support pour les principales plateformes de virtualisation,
+appelées Provider dans la langue de Justin Bieber et avec par défaut celui
+pour virtualbox.  Et  cerise sur le clafoutis, tu as aussi la possibilité
+de configurer / provisionner tes box avec des scripts Chef ou Puppet
+(ou juste un script shell si t’es old-school \o/ ).</p>
+<p>Bon, je suppose que c’est encore un peu flou, alors voilà comme ça se présente.
+Une fois installé ( <a href="http://downloads.vagrantup.com/">http://downloads.vagrantup.com/</a> ), tu devrais avoir
+une nouvelle commande de dispo.
+Alors dégaine ton terminal et envoie un <code>vagrant init</code>. Ça devrait créer
+un fichier <code>Vagrantfile</code>  qui va décrire ta machine virtuelle
+(ne t’inquiète pas, c’est juste écrit en Ruby).
+En gros de quelle box de base tu pars, comment tu la configures (réseaux,
+dossier partagé entre la VM et le Host, ta machine réelle) et comment tu
+la provisionnes (via un shell, avec un script Puppet...)</p>
+<h2 id="la-config-de-la-box">La config de la box</h2>
+<p>Ensuite voilà les quelques points à paramétrer.</p>
+<ul>
+<li><code>config.vm.box = &quot;base&quot;</code>pour spécifier le nom d’une box préalablement
+téléchargée.</li>
+<li><code>config.vm.box_url = &quot;http://domain.com/path/to/above.box&quot;</code> Tu remplaces
+par l’url de la box de tes rêves. Tu peux trouver une liste assez complètes
+de box plus ou moins configurées sur le site <a href="http://www.vagrantbox.es/">http://www.vagrantbox.es/</a>
+( ProTip™: Choisis bien le provider correspondant à ton gestionnaire de VM)</li>
+<li><code>config.vm.network :forwarded_port, guest: 80, host: 8080</code> Pratique
+pour accéder au serveur qui tourne sur la VM. Après tu retrouve un peu
+les même options de config réseaux qu’avec virtualbox
+(réseaux privés, connexion par pont...)</li>
+<li><code># config.vm.synced_folder &quot;../data&quot;, &quot;/vagrant_data&quot;</code> Avec ça,
+tu vas pouvoir ajouter un répertoire qui sera partagé
+avec ta machine virtuelle.
+Par défaut, Vagrant te permet d’accéder au répertoire courant
+depuis <code>/home/vagrant</code> dans la VM.</li>
+</ul>
+<h2 id="le-provisioning-de-box">le provisioning de box</h2>
+<p>Alors attention, c&#39;est un des trucs cools avec vagrant. Avant, quand tu
+voulais te monter une VM pour travailler, il fallait aussi la configurer,
+installer les bonnes versions de chaque brique que le projet utilisé. Ça‎
+pouvait être long, pénible, et surtout prendre du temps.
+Avec Vagrant, tu peux automatiser cette partie, soit en utilisant simplement
+un script, soit avec un moyen moderne comme Chef ou Puppet. Et si jamais t&#39;as
+besoin d&#39;un truc particulier, une config que tu utilises souvent, tu peux
+toujours packager la box que t&#39;as configuré avec amour pour pouvoir la
+réutiliser dès que l&#39;occasion se présente. Sinon tu peux déjà trouver pas mal
+de box déjà prêtes à l&#39;emploi, avec ou sans support pour puppet, chef...</p>
+<p>La suite du fichier contient des exemples de type de provisioning
+(Puppet, Chef solo ou Chef server)
+Et si jamais tu souhaites lancer un script de provisioning :</p>
+<pre><code class="language-ruby"><span class="constant">Vagrant</span>.configure(<span class="string">"2"</span>) <span class="keyword">do</span> |config|
+  config.vm.provision <span class="string">"shell"</span>, <span class="symbol">path:</span> <span class="string">"provision.sh"</span>
+<span class="keyword">end</span></code></pre>
+<blockquote>
+<p>Vagrant te permet aussi de créer tes propres box déjà provisionnées via
+la commande vagrant package. C’est assez pratique quand tu dois
+télécharger-compiler-installer tout l’internet</p>
+</blockquote>
+<h1 id="etape-2-vagrant-up">Etape 2 - vagrant up</h1>
+<p>Bon, la première fois risque de prendre du temps, parce que vagrant
+va télécharger ta box, puis lancer le provisioning. Profites en pour faire
+un tour sur <a href="http://vim-adventures.com/">http://vim-adventures.com/</a> et jouer un peu en attendant.</p>
+<p>Une fois terminé, tu as maintenant une box dispo avec laquelle travailler.</p>
+<h1 id="etape-3-joie-o-">Etape 3 - Joie \o/.</h1>
+<p>Je pensais faire une troisième partie sur comment arrêter la VM mais
+ça présente pas vraiment d’intérêt car ça tient en une ligne de commande.</p>
+<p>Bref, le point important de tout ça, c’est que les autres relous de ton équipe
+ne pourront plus dire que pourtant ça marche bien chez eux, et qu’ils
+comprennent pas, c’est vraiment étrange... enfin sauf si ils sont
+de mauvaise foi :)</p>
+<ul>
+<li>L’intégrateur n’aura plus à se taper 14 installations de trucs en
+ligne de commande qu’il ne retient jamais, pour rajouter un bout de css
+ou de js.
+(ProTip™: là, ça rentre sur un post-it !)</li>
+<li>Le dev backend n’aura plus à pleurer quand on lui demande de remettre le nez
+dans une projet vieux de 2 ans avec que des versions de php / ruby ou mysql
+dépassées qui vont casser la superbe config qu’il a mis 1 semaine à fignoler
+avec les dernières techno à la mode.</li>
+<li>l’admin sys pourra packager les box de chaque projets, provisionnées
+et configurées et pour éviter d’avoir à configurer les postes des autres
+dev à chaque changement de projet.</li>
+</ul>
+<h1 id="quelques-commande-pratiques">Quelques commande pratiques</h1>
+<blockquote>
+<p><code>vagrant ssh</code> te permet de te connecter en mode terminal
+<code>vagrant status</code> pour les têtes <del>à claques</del> en l’air</p>
+</blockquote>
+<h1 id="quelques-liens">Quelques liens</h1>
+<ul>
+<li><a href="http://docs.vagrantup.com/v2/">la documentation officielle de <del>viagra</del> vagrant</a></li>
+<li><a href="https://github.com/putaindecode/propositions-de-posts/issues/4">Virtualisation sur OSx et accès à localhost</a></li>
+<li><a href="http://jolicode.com/blog/cuisinez-vos-serveurs-comme-un-chef-premiere-partie">Cuisinez vos serveurs comme un Chef – Première partie</a></li>
+</ul>
+
+]]></description>
+              <pubDate>Fri, 08 November 2013 01:00:00 +0100</pubDate>
+              <link>/dist/posts/env/vagrant-enlarge-your-vm/index.html</link>
+              <guid isPermaLink="true">/dist/posts/env/vagrant-enlarge-your-vm/index.html</guid>
           </item>
 
           <item>
