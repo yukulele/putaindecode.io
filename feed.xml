@@ -8,6 +8,533 @@
         <lastBuildDate>Sat, 16 November 2013 00:00:00 +0100</lastBuildDate>
 
           <item>
+              <title>Premiers pas avec Grunt</title>
+              <description><![CDATA[
+
+<div style="float: left"><img src="/media/gruntjs.png"></div>
+
+<p>Vous avez sûrement déjà entendu parler de <strong>Grunt</strong> à droite à gauche, en conférence, voire votre boite l&#39;utilise déjà mais vous ne savez toujours pas trop ce qui se cache derrière ce terme saugrenu digne d&#39;un personnage de Warcraft. Soit, ce n&#39;est pas bien grave. <strong>Grunt</strong> est simplement un <em>JavaScript Task Runner</em>, un outil vous permettant de créer des tâches automatisées en JavaScript. Forcément ce n&#39;est pas très parlant mais c&#39;est tout l&#39;intérêt de cet article, vous expliquer ce qu&#39;est <strong>Grunt</strong> et pourquoi il peut vous être utile dans un <em>workflow</em> de front-end dev.</p>
+<h1 id="commen-ons">Commençons</h1>
+<p>Vous est-il déjà arrivé(e) de devoir régulièrement lancer, lancer et relancer des processus tels que <em>Sass</em>, <em>LESS</em>, <em>uglify</em> - en somme des préprocesseurs ou des minifiers - régulièrement à la main ? N&#39;est-ce pas pénible ? N&#39;est-ce pas aussi pénible de devoir indiquer à tous ses collègues comment ils doivent bosser pour que vous soyez tous cohérents ? Oui ? <strong>Grunt</strong> permet de résoudre ce genre de choses : respecter un putain de <em>workflow</em> en s&#39;assurant que le parcours soit le même pour tout le monde et d&#39;exécuter tout ça en lançant une seule commande. N&#39;est-ce pas fucking aweeeeesome dude ? Bref.</p>
+<p>Voici un <em>workflow</em> assez classique :</p>
+<ul>
+<li>Compiler mes <code>.scss</code> en <code>.css</code>;</li>
+<li>Concaténer mes <code>*.js</code> en un seul fichier;</li>
+<li>Minifier (avec <em>uglify</em> par exemple) la résultante de l&#39;action précédente.</li>
+</ul>
+<p>Voyons maintenant comment l&#39;on peut mettre en place ceci via <strong>Grunt</strong>.</p>
+<h2 id="installation">Installation</h2>
+<p>Tout d&#39;abord, installons <strong>Grunt</strong>. Notez que <strong>Grunt</strong> est en <em>nodejs</em> et que je considère que vous avez déjà <em>nodejs</em> d&#39;installé.</p>
+<p>En premier lieu, il faut installer le <em>package</em> qui permet de gérer <strong>Grunt</strong> en ligne de commande. C&#39;est le <em>commander</em> de <strong>Grunt</strong> en gros.</p>
+<pre><code class="language-shell">$ npm install -g grunt-cli</code></pre>
+<p>Une fois cela fait, installez <strong>Grunt</strong> en local dans votre projet.</p>
+<pre><code class="language-shell">$ npm install grunt --save-dev</code></pre>
+<p>Ni plus ni moins, <strong>Grunt</strong> est enfin installé dans votre projet.</p>
+<h2 id="initialisation">Initialisation</h2>
+<p>Maintenant, il est nécessaire de créer un fichier de configuration <strong>Grunt</strong>. Pour cela, nous allons créer un fichier nommé <code>Gruntfile.js</code> à la racine de votre projet.</p>
+<pre><code class="language-shell">$ touch Gruntfile.js</code></pre>
+<p>Fait ? Voici maintenant à quoi doit ressembler la base d&#39;une configuration <strong>Grunt</strong>.</p>
+<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+
+  <span class="comment">// Configuration de Grunt</span>
+  grunt.initConfig({
+    pkg: grunt.file.readJSON(<span class="string">'package.json'</span>)
+  })
+
+  <span class="comment">// Définition des tâches Grunt</span>
+  grunt.registerTask(<span class="string">'default'</span>, <span class="string">''</span>)
+
+}</code></pre>
+<p>Nous avons maintenant tout le nécessaire pour débuter notre projet. Nous allons enfin pouvoir attaquer les choses sérieuses. Revenons un peu en arrière où nous expliquions que nous voulons en tout premier lieu compiler nos <code>.scss</code> en <code>.css</code>.</p>
+<h2 id="cr-er-sa-premi-re-t-che">Créer sa première tâche</h2>
+<p>Une petite recherche sur votre moteur de recherche préféré en tapant <code>grunt sass</code> et vous trouverez le projet <a href="https://github.com/gruntjs/grunt-contrib-sass"><code>grunt-contrib-sass</code></a>.</p>
+<p>Toute documentation pour installer une tâche <strong>Grunt</strong> est indiquée sur chaque <code>README.md</code> du projet mais pour un souci de clarté et de compréhension, je vais tout de même vous expliquer ici comment faire.</p>
+<p>D&#39;abord, installons le package pour <em>Sass</em>.</p>
+<pre><code class="language-shell">$ npm install grunt-contrib-sass --save-dev</code></pre>
+<p>Ceci va installer le <em>package</em> <code>grunt-contrib-sass</code> dans votre dossier <code>node_modules</code> où vous pourrez l&#39;utiliser en l&#39;important dans votre <code>Gruntfile.js</code>.</p>
+<p>Un exemple d&#39;utilisation :</p>
+<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+
+  grunt.initConfig({
+    sass: {                              <span class="comment">// Nom de la tâche</span>
+      dist: {                            <span class="comment">// Nom de la sous-tâche</span>
+        options: {                       <span class="comment">// Options</span>
+          style: <span class="string">'expanded'</span>
+        },
+        files: {                         <span class="comment">// Liste des fichiers</span>
+          <span class="string">'main.css'</span>: <span class="string">'main.scss'</span>,       <span class="comment">// 'destination': 'source'</span>
+          <span class="string">'widgets.css'</span>: <span class="string">'widgets.scss'</span>
+        }
+      }
+    }
+  })
+
+  <span class="comment">// Import du package</span>
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
+
+  <span class="comment">// Redéfinition de la tâche `default` qui est la tâche lancée dès que vous lancez Grunt sans rien spécifier.</span>
+  <span class="comment">// Note : ici, nous définissons sass comme une tâche à lancer si on lance la tâche `default`.</span>
+  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>])
+}</code></pre>
+<p>Nous avons maintenant tout le nécessaire pour pouvoir compiler nos <code>.scss</code> en  <code>.css</code>.</p>
+<p>Vous vous demandez peut-être comment vous pouvez généraliser vos sources plutôt que les définir une par une. Pas de souci.</p>
+<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+
+  grunt.initConfig({
+    sass: {
+      dist: {
+        options: {
+          style: <span class="string">'expanded'</span>
+        },
+        files: { <span class="comment">// C'est ici que l'on définit le dossier que l'on souhaite importer</span>
+          <span class="string">"expand"</span>: <span class="literal">true</span>,
+          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
+          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
+          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
+          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        }
+      }
+    }
+  })
+
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
+
+  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>])
+}</code></pre>
+<h2 id="deuxi-me-t-che-concat-ner-ses-fichiers-javascript">Deuxième tâche : concaténer ses fichiers JavaScript</h2>
+<p>Passons maintenant à la concaténation des fichiers JavaScripts.</p>
+<p>Comme pour la majorité des tâches que vous aurez besoin avec <strong>Grunt</strong>, un <em>package</em> <strong>Grunt</strong> existe déjà pour ce travail demandé.</p>
+<p>-&gt; <a href="https://github.com/gruntjs/grunt-contrib-concat"><code>grunt-contrib-concat</code></a></p>
+<p>Installation : <code>npm install grunt-contrib-concat --save-dev</code> (<code>--save-dev</code> permet de sauvegarder le package dans <code>package.json</code> pour pouvoir à tut moment le réinstaller en faisant <code>npm install</code>)</p>
+<p>On ajoute alors à notre configuration <strong>Grunt</strong> l&#39;importation de <code>grunt-contrib-concat</code> :</p>
+<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+
+  grunt.initConfig({
+    sass: {
+      dist: {
+        options: {
+          style: <span class="string">'expanded'</span>
+        },
+        files: {
+          <span class="string">"expand"</span>: <span class="literal">true</span>,
+          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
+          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
+          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
+          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        }
+      }
+    }
+  })
+
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>);
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>); <span class="comment">// Voilà l'ajout.</span>
+
+  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>])
+}</code></pre>
+<p>Puis on ajoute notre tâche :</p>
+<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+
+  grunt.initConfig({
+    sass: {
+      dist: {
+        options: {
+          style: <span class="string">'expanded'</span>
+        },
+        files: {
+          <span class="string">"expand"</span>: <span class="literal">true</span>,
+          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
+          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
+          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
+          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        }
+      }
+    },
+    concat: {
+      options: {
+        separator: <span class="string">';'</span>, <span class="comment">// permet d'ajouter un point-virgule entre chaque fichier concaténé.</span>
+      },
+      dist: {
+        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>], <span class="comment">// la source</span>
+        dest: <span class="string">'dist/built.js'</span> <span class="comment">// la destination finale</span>
+      }
+    }
+  })
+
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>);
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>);
+
+  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>])
+}</code></pre>
+<p>Ne pas oublier d&#39;ajouter la tâche de concaténation à notre tâche par défaut :</p>
+<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+
+  grunt.initConfig({
+    sass: {
+      dist: {
+        options: {
+          style: <span class="string">'expanded'</span>
+        },
+        files: {
+          <span class="string">"expand"</span>: <span class="literal">true</span>,
+          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
+          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
+          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
+          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        }
+      }
+    },
+    concat: {
+      options: {
+        separator: <span class="string">';'</span>, <span class="comment">// permet d'ajouter un point-virgule entre chaque fichier concaténé.</span>
+      },
+      dist: {
+        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>], <span class="comment">// la source</span>
+        dest: <span class="string">'dist/built.js'</span> <span class="comment">// la destination finale</span>
+      }
+    }
+  })
+
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>);
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>);
+
+  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'concat:dist'</span>]) <span class="comment">// ici même.</span>
+}</code></pre>
+<h2 id="compressons-le-tout-">Compressons le tout !</h2>
+<p>Pour finir, compressons nos fichiers JavaScript ! Pour cela : <a href="https://github.com/gruntjs/grunt-contrib-uglify"><code>grunt-contrib-uglify</code></a> fera l&#39;affaire.</p>
+<p>Je vous passe les détails pour l&#39;installer, si vous avez bien suivi cet article, vous ne devriez avoir aucun problème pour l&#39;installer.</p>
+<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+
+  grunt.initConfig({
+    sass: {
+      dist: {
+        options: {
+          style: <span class="string">'expanded'</span>
+        },
+        files: {
+          <span class="string">"expand"</span>: <span class="literal">true</span>,
+          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
+          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
+          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
+          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        }
+      }
+    },
+    concat: {
+      options: {
+        separator: <span class="string">';'</span>
+      },
+      dist: {
+        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>],
+        dest: <span class="string">'dist/built.js'</span>
+      }
+    },
+    uglify: {
+      options: {
+        separator: <span class="string">';'</span>
+      },
+      dist: {
+        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>]
+        dest: <span class="string">'dist/built.js'</span>
+      }
+    }
+  })
+
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>)
+
+  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'concat:dist'</span>])
+}</code></pre>
+<p>Ne constatez vous pas un souci ici ? Oui, nous ne voulons sûrement pas à la fois concaténer nos fichiers et les compresser. Alors comment faire ? Pas d&#39;inquiètude, il suffit de créer des tâches d&#39;environnement ou de contexte. On pourrait par exemple créer une tâche développement et une tâche de production, qu&#39;en pensez-vous ? Pas mal non ? :)</p>
+<h2 id="optimisons-">Optimisons !</h2>
+<p>Supprimons alors dans un premier temps notre tâche par défaut et créons deux tâches : <code>dev</code> et <code>dist</code>.</p>
+<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+
+  grunt.initConfig({
+    sass: {
+      dist: {
+        options: {
+          style: <span class="string">'expanded'</span>
+        },
+        files: {
+          <span class="string">"expand"</span>: <span class="literal">true</span>,
+          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
+          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
+          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
+          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        }
+      }
+    },
+    concat: {
+      options: {
+        separator: <span class="string">';'</span>
+      },
+      dist: {
+        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>],
+        dest: <span class="string">'dist/built.js'</span>
+      }
+    },
+    uglify: {
+      options: {
+        separator: <span class="string">';'</span>
+      },
+      dist: {
+        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>]
+        dest: <span class="string">'dist/built.js'</span>
+      }
+    }
+  })
+
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>)
+
+  grunt.registerTask(<span class="string">'dev'</span>, [])
+  grunt.registerTask(<span class="string">'dist'</span>, [])
+}</code></pre>
+<p>Sauf que comme ça, vous le voyez, cela ne va pas faire grand chose, voire rien du tout. Agrémentons alors nos deux tâches par ce qu&#39;on souhaite faire.</p>
+<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+
+  grunt.initConfig({
+    sass: {
+      dist: {
+        options: {
+          style: <span class="string">'expanded'</span>
+        },
+        files: {
+          <span class="string">"expand"</span>: <span class="literal">true</span>,
+          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
+          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
+          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
+          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        }
+      }
+    },
+    concat: {
+      options: {
+        separator: <span class="string">';'</span>
+      },
+      dist: {
+        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>],
+        dest: <span class="string">'dist/built.js'</span>
+      }
+    },
+    uglify: {
+      options: {
+        separator: <span class="string">';'</span>
+      },
+      dist: {
+        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>]
+        dest: <span class="string">'dist/built.js'</span>
+      }
+    }
+  })
+
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>)
+
+  grunt.registerTask(<span class="string">'dev'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'concat:dist'</span>]) <span class="comment">// C'est pas chouette ça ?</span>
+  grunt.registerTask(<span class="string">'dist'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'uglify:dist'</span>]) <span class="comment">// Et hop, je compresse si je lance $ grunt dist</span>
+}</code></pre>
+<p>Ha ! Nous y voilà ! Nous avons alors deux tâches <code>grunt dev</code> et <code>grunt dist</code> qui nous permettent dans tous les cas de générer nos css et dans un cas concaténer nos js, dans l&#39;autre les compresser (la compression fait aussi la concaténation implicitement).</p>
+<p>Sauf que comme tout bon(ne) développeur/euse, vous êtes une grosse feignasse et compiler à chaque fois que vous faites des modifications sur vos fichiers va vite être saoulant.</p>
+<p>Pour cela, une tâche existe, elle s&#39;appelle <code>watch</code> (via le package <a href="https://github.com/gruntjs/grunt-contrib-watch/"><code>grunt-contrib-watch</code></a>).</p>
+<h2 id="regarde-ce-fichier-que-je-ne-euh-bref-">Regarde ce fichier que je ne... euh bref.</h2>
+<p>Très simple, <code>watch</code> va vous permettre de &quot;regarder&quot; vos fichiers, savoir lesquels ont changé et donc lancer une action en fonction du type de fichiers.</p>
+<p>Imaginons que l&#39;on veut par exemple compiler nos css à chaque fois que l&#39;on change un fichier <em>Sass</em>. Ou encore que l&#39;on concatène nos fichiers JavaScript dès que l&#39;on touche à l&#39;un d&#39;entre eux.</p>
+<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+
+  grunt.initConfig({
+    sass: {
+      dist: {
+        options: {
+          style: <span class="string">'expanded'</span>
+        },
+        files: {
+          <span class="string">"expand"</span>: <span class="literal">true</span>,
+          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
+          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
+          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
+          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        }
+      }
+    },
+    concat: {
+      options: {
+        separator: <span class="string">';'</span>
+      },
+      dist: {
+        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>],
+        dest: <span class="string">'dist/built.js'</span>
+      }
+    },
+    uglify: {
+      options: {
+        separator: <span class="string">';'</span>
+      },
+      dist: {
+        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>]
+        dest: <span class="string">'dist/built.js'</span>
+      }
+    },
+    watch: {
+      scripts: {
+        files: <span class="string">'**/*.js'</span>, <span class="comment">// tous les fichiers JavaScript de n'importe quel dossier</span>
+        tasks: [<span class="string">'concat:dist'</span>]
+      },
+      styles: {
+        files: <span class="string">'**/*.scss'</span>, <span class="comment">// tous les fichiers Sass de n'importe quel dossier</span>
+        tasks: [<span class="string">'sass:dist'</span>]
+      }
+    }
+  })
+
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>)
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-watch'</span>)
+
+  grunt.registerTask(<span class="string">'dev'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'concat:dist'</span>])
+  grunt.registerTask(<span class="string">'dist'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'uglify:dist'</span>])
+}</code></pre>
+<p>Maintenant, vous êtes capable à tout moment de compiler automatiquement vos fichiers en lançant simplement <code>$ grunt watch</code>.</p>
+<p>Oui, comprenez bien que lorsque vous ajoutez une tâche dans la définition de la configuration de <strong>Grunt</strong>, elle est appelable directement. Typiquement, vous pouvez faire <code>$ grunt premier-niveau:deuxieme-niveau</code> soit par exemple <code>$ grunt sass:dist</code>. Vous n&#39;êtes pas obligé(e) de (re)définir chaque tâche via <code>grunt.registerTask()</code>.</p>
+<p>Je ne sais pas si vous vous rappelez mais nous avions crée une tâche de base s&#39;appelant <code>default</code>. Cette tâche se lance dès que vous ne passez aucun paramètre à <strong>Grunt</strong> soit <code>$ grunt</code>. Vous pouvez aussi l&#39;appeler via <code>$ grunt default</code> mais aucun intérêt.</p>
+<p>Tout ça pour dire qu&#39;il est serait sûrement intéressant de lancer la tâche <code>watch</code> dès qu&#39;on souhaite lancer <strong>Grunt</strong> étant donné que c&#39;est sûrement la tâche la plus récurrente que vous utiliserez.</p>
+<p>C&#39;est parti !</p>
+<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+
+  grunt.initConfig({
+    sass: {
+      dist: {
+        options: {
+          style: <span class="string">'expanded'</span>
+        },
+        files: {
+          <span class="string">"expand"</span>: <span class="literal">true</span>,
+          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
+          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
+          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
+          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        }
+      }
+    },
+    concat: {
+      options: {
+        separator: <span class="string">';'</span>
+      },
+      dist: {
+        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>],
+        dest: <span class="string">'dist/built.js'</span>
+      }
+    },
+    uglify: {
+      options: {
+        separator: <span class="string">';'</span>
+      },
+      dist: {
+        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>]
+        dest: <span class="string">'dist/built.js'</span>
+      }
+    },
+    watch: {
+      scripts: {
+        files: <span class="string">'**/*.js'</span>, <span class="comment">// tous les fichiers JavaScript de n'importe quel dossier</span>
+        tasks: [<span class="string">'concat:dist'</span>]
+      },
+      styles: {
+        files: <span class="string">'**/*.scss'</span>, <span class="comment">// tous les fichiers Sass de n'importe quel dossier</span>
+        tasks: [<span class="string">'sass:dist'</span>]
+      }
+    }
+  })
+
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>)
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-watch'</span>)
+
+  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'dev'</span>, <span class="string">'watch'</span>]) <span class="comment">// Oui, je conseille de toujours compiler une fois avant de lancer watch.</span>
+  grunt.registerTask(<span class="string">'dev'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'concat:dist'</span>])
+  grunt.registerTask(<span class="string">'dist'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'uglify:dist'</span>])
+}</code></pre>
+<p>That&#39;s it. Nous avons maintenant tout le nécessaire pour compiler des css, du js, l&#39;optimiser, ainsi qu&#39;avoir une commande de développement avec compilation automatique.</p>
+<p>Et puisque je suis maniaque, nous allons ranger un peu :</p>
+<pre><code class="language-javascript">module.exports = function(grunt) {
+
+  // Je préfère définir mes imports tout en haut
+  grunt.loadNpmTasks(&#39;grunt-contrib-sass&#39;)
+  grunt.loadNpmTasks(&#39;grunt-contrib-concat&#39;)
+  grunt.loadNpmTasks(&#39;grunt-contrib-watch&#39;)
+
+  var jsSrc = [&#39;src/intro.js&#39;, &#39;src/project.js&#39;, &#39;src/outro.js&#39;]
+    , jsDist = &#39;dist/built.js
+
+  // Configuration de Grunt
+  grunt.initConfig({
+    sass: {
+      dist: {
+        options: {
+          style: &#39;expanded&#39;
+        },
+        files: {
+          &quot;expand&quot;: true,
+          &quot;cwd&quot;: &quot;src/styles/&quot;,
+          &quot;src&quot;: [&quot;*.scss&quot;],
+          &quot;dest&quot;: &quot;dist/styles/&quot;,
+          &quot;ext&quot;: &quot;.css&quot;
+        }
+      },
+      dev: {} // A vous de le faire ! vous verrez que certaines options Sass sont plus intéressantes en mode dev que d&#39;autres.
+    },
+    concat: {
+      options: {
+        separator: &#39;;&#39;
+      },
+      compile: { // On renomme vu qu&#39;on a pas de mode dev/dist. Dist étant une autre tâche : uglify
+        src: jsSrc, // Vu qu&#39;on doit l&#39;utiliser deux fois, autant en faire une variable.
+        dest: jsDist // Il existe des hacks plus intéressants mais ce n&#39;est pas le sujet du post.
+      }
+    },
+    uglify: {
+      options: {
+        separator: &#39;;&#39;
+      },
+      compile: {
+        src: jsSrc,
+        dest: jsDist
+      }
+    },
+    watch: {
+      scripts: {
+        files: &#39;**/*.js&#39;,
+        tasks: [&#39;scripts:dev&#39;]
+      },
+      styles: {
+        files: &#39;**/*.scss&#39;,
+        tasks: [&#39;styles:dev&#39;]
+      }
+    }
+  })
+
+  grunt.registerTask(&#39;default&#39;, [&#39;dev&#39;, &#39;watch&#39;])
+  grunt.registerTask(&#39;dev&#39;, [&#39;styles:dev&#39;, &#39;scripts:dev&#39;])
+  grunt.registerTask(&#39;dist&#39;, [&#39;styles:dist&#39;, &#39;scripts:dist&#39;])
+
+  // J&#39;aime bien avoir des noms génériques
+  grunt.registerTask(&#39;scripts:dev&#39;, [&#39;concat:compile&#39;])
+  grunt.registerTask(&#39;scripts:dist&#39;, [&#39;uglify:compile&#39;])
+
+  grunt.registerTask(&#39;styles:dev&#39;, [&#39;sass:dev&#39;])
+  grunt.registerTask(&#39;styles:dist&#39;, [&#39;sass:dist&#39;])
+}</code></pre>
+<p>Avec ça, je pense qu&#39;on est pas trop mal. Il reste des optimisations éventuelles à faire et nombreuses autres tâches intéressantes peuvent être ajoutées comme <a href="https://github.com/gruntjs/grunt-contrib-jshint/">jshint</a>. Cela fera probablement office d&#39;un autre article.</p>
+<p>J&#39;espère que vous y voyez maintenant un peu plus clair dans <strong>Grunt</strong> ainsi que dans la compilation côté front-end. <strong>Grunt</strong> est un excellent produit, avec une communauté réactive et il est rare qu&#39;une tâche que vous souhaitiez mettre en place n&#39;existe pas.</p>
+<p>Bon workflow !</p>
+
+]]></description>
+              <pubDate>Sat, 16 November 2013 01:00:00 +0100</pubDate>
+              <link>/dist/posts/js/premiers-pas-avec-grunt/index.html</link>
+              <guid isPermaLink="true">/dist/posts/js/premiers-pas-avec-grunt/index.html</guid>
+          </item>
+
+          <item>
               <title>Structurer son projet avec Revel et Mgo</title>
               <description><![CDATA[
 
