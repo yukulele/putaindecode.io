@@ -26,13 +26,13 @@
 <h2 id="installation">Installation</h2>
 <p>Tout d&#39;abord, installons <strong>Grunt</strong>. Notez que <strong>Grunt</strong> est en <em>nodejs</em> et que je considère que vous avez déjà <em>nodejs</em> d&#39;installé.</p>
 <p>En premier lieu, il faut installer le <em>package</em> qui permet de gérer <strong>Grunt</strong> en ligne de commande. C&#39;est le <em>commander</em> de <strong>Grunt</strong> en gros.</p>
-<pre><code class="language-shell">$ npm install -g grunt-cli</code></pre>
+<pre><code class="language-bash">$ npm install -g grunt-cli</code></pre>
 <p>Une fois cela fait, installez <strong>Grunt</strong> en local dans votre projet.</p>
-<pre><code class="language-shell">$ npm install grunt --save-dev</code></pre>
+<pre><code class="language-bash">$ npm install grunt --save-dev</code></pre>
 <p>Ni plus ni moins, <strong>Grunt</strong> est enfin installé dans votre projet.</p>
 <h2 id="initialisation">Initialisation</h2>
 <p>Maintenant, il est nécessaire de créer un fichier de configuration <strong>Grunt</strong>. Pour cela, nous allons créer un fichier nommé <code>Gruntfile.js</code> à la racine de votre projet.</p>
-<pre><code class="language-shell">$ touch Gruntfile.js</code></pre>
+<pre><code class="language-bash">$ touch Gruntfile.js</code></pre>
 <p>Fait ? Voici maintenant à quoi doit ressembler la base d&#39;une configuration <strong>Grunt</strong>.</p>
 <pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
 
@@ -50,7 +50,7 @@
 <p>Une petite recherche sur votre moteur de recherche préféré en tapant <code>grunt sass</code> et vous trouverez le projet <a href="https://github.com/gruntjs/grunt-contrib-sass"><code>grunt-contrib-sass</code></a>.</p>
 <p>Toute documentation pour installer une tâche <strong>Grunt</strong> est indiquée sur chaque <code>README.md</code> du projet mais pour un souci de clarté et de compréhension, je vais tout de même vous expliquer ici comment faire.</p>
 <p>D&#39;abord, installons le package pour <em>Sass</em>.</p>
-<pre><code class="language-shell">$ npm install grunt-contrib-sass --save-dev</code></pre>
+<pre><code class="language-bash">$ npm install grunt-contrib-sass --save-dev</code></pre>
 <p>Ceci va installer le <em>package</em> <code>grunt-contrib-sass</code> dans votre dossier <code>node_modules</code> où vous pourrez l&#39;utiliser en l&#39;important dans votre <code>Gruntfile.js</code>.</p>
 <p>Un exemple d&#39;utilisation :</p>
 <pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
@@ -961,7 +961,7 @@ les plus nazes que je peux vous raconter. C&#39;est parti mon jQuéri.</p>
 <p>Si vous avez ouvert ne serait-ce que quelques documents HTML dans votre vie,
 vous avez du croiser ce qu&#39;on appelle un <a href="http://fr.wikipedia.org/wiki/Doctype">doctype</a>
 qui ressemble à ça:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
+<pre><code class="language-markup">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
    &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</code></pre>
 <p>Vous pourrez remarquer dans ce <del>petit</del> gros bout de code bien relou qu&#39;il y&#39;a
 une <a href="http://fr.wikipedia.org/wiki/Uniform_Resource_Locator">URL</a>:
@@ -984,7 +984,7 @@ partout dans mes footers:</p>
 
 <p>Mais bon les conneries, ça va un moment.
 Pour info, j&#39;ai du valider le code suivant pour obtenir ce logo:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
+<pre><code class="language-markup">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
    &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
  &lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
 &lt;head&gt;
@@ -998,7 +998,7 @@ Pour info, j&#39;ai du valider le code suivant pour obtenir ce logo:</p>
 bien rempli.
 Mais attendez en 2013, on peut pas faire mieux ? Oh si !</p>
 <h2 id="le-nouveau-testament">Le nouveau testament</h2>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<pre><code class="language-markup">&lt;!doctype html&gt;
 &lt;title&gt; &lt;/title&gt;</code></pre>
 <p>Il faut savoir qu&#39;un simple document <em>valide</em>, peut se résumer à ça.
 Oui oui mes cocos, ce document est parfaitement valide. Voilà j&#39;voulais vous le
@@ -1028,7 +1028,7 @@ dit, il a été pensé dans ce sens.</p>
 On va voir ça par un exemple digne des plus grands diplômes.</p>
 <h2 id="ce-p-fout-la-merde-">Ce <code>&lt;p&gt;</code> fout la merde.</h2>
 <p>Prenons le code suivant:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<pre><code class="language-markup">&lt;!doctype html&gt;
 &lt;title&gt;Putain de page&lt;/title&gt;
 &lt;style&gt;
   p {
@@ -1076,7 +1076,7 @@ Ca veut dire que… Ça veut dire que mon <strong>p</strong> ouvert n&#39;est pa
 Mais attend qu&#39;est-ce que c&#39;est que cette histoire ?!</p>
 <p>Si vous prenez 10 secondes pour inspecter ce code, vous allez vite vous
 aperçevoir qu&#39;il est parsé ainsi:</p>
-<pre><code class="language-html">&lt;p&gt;…&lt;/p&gt;
+<pre><code class="language-markup">&lt;p&gt;…&lt;/p&gt;
 &lt;ul&gt;…&lt;/ul&gt;
 &lt;p&gt;&lt;/p&gt;</code></pre>
 <p><em>Mais qu&#39;est-ce que… ? Hein ? Mais ? Quoi ? Comment ?</em></p>
@@ -1225,7 +1225,7 @@ nom local pour le dépôt. Il va récupérer le dépôt à l&#39;adresse spécif
 bien foutu hein ?) puis le mettre soit dans un dossier du même nom soit dans un
 dossier du nom spécifié en dernier argument.</p>
 <p>Par exemple, si je veux cloner le dépôt du site :</p>
-<pre><code class="language-console">$ git clone https://github.com/putaindecode/website.git</code></pre>
+<pre><code class="language-bash">$ git clone https://github.com/putaindecode/website.git</code></pre>
 <p>Ça va créer un dossier <code>website</code> avec le contenu du dépôt.</p>
 <p><code>clone</code> accepte plusieurs types d&#39;adresse : HTTP(S), SSH, protocole Git dédié et
 même des chemins locaux pour cloner un dépôt situé ailleurs sur le système de
@@ -1235,8 +1235,8 @@ bien pour lancer les vraies commandes intéressantes de Git.</p>
 <h2 id="premiers-commits">Premiers commits</h2>
 <p>Pour commencer à s&#39;amuser, écrivez un bout de code dans un fichier et
 sauvegardez le :</p>
-<pre><code class="language-console">$ cat &gt; putain_de_hello_world.rb
-puts &quot;Hello, putain de codeur !&quot;
+<pre><code class="language-bash">$ cat &gt; putain_de_hello_world.rb
+puts <span class="string">"Hello, putain de codeur !"</span>
 ^D</code></pre>
 <p>On va tout se suite introduire l&#39;un des concepts déroutants de Git, <em>l&#39;Index</em>.
 Git utilise trois zones distinctes pour les fichiers : le dossier de travail
@@ -1259,31 +1259,31 @@ difficile.</p>
 <p>Dans notre cas, notre fichier n&#39;est même pas encore suivi par Git ! Vous pouvez
 vérifier ça en utilisant <code>git status</code>, dont vous ne pourrez bientôt plus vous
 passer :</p>
-<pre><code class="language-console">$ git status
-# Sur la branche master
-#
-# Validation initiale.
-#
-# Fichiers non suivis:
-#   (utilisez &quot;git add &lt;fichier&gt;...&quot; pour inclure dans ce qui sera validé)
-#
-#    putain_de_hello_world.rb
-Aucune modification indexée mais des fichiers non suivis sont présents (utilisez &quot;git add&quot; pour les suivre)</code></pre>
+<pre><code class="language-bash">$ git status
+<span class="comment"># Sur la branche master</span>
+<span class="comment">#</span>
+<span class="comment"># Validation initiale.</span>
+<span class="comment">#</span>
+<span class="comment"># Fichiers non suivis:</span>
+<span class="comment">#   (utilisez "git add &lt;fichier&gt;..." pour inclure dans ce qui sera validé)</span>
+<span class="comment">#</span>
+<span class="comment">#    putain_de_hello_world.rb</span>
+Aucune modification indexée mais des fichiers non suivis sont présents (utilisez <span class="string">"git add"</span> pour les suivre)</code></pre>
 <p>Pour pallier celà, on utilise <code>git add</code> pour l&#39;ajouter direct à l&#39;index.</p>
 <p>Dans notre cas, ça donne <code>git add putain_de_hello_world.rb</code></p>
 <p>On peut utilise <code>git add</code> pour ajouter des dossiers entiers, des motifs, … Mais
 soyez vigilants, c&#39;est une bonne source d&#39;erreurs souvent chiantes.</p>
 <p>Vous pouvez vérifier que <code>git add</code> a bien marché avec la commande <code>git status</code>,</p>
-<pre><code class="language-console">$ git status
-# Sur la branche master
-#
-# Validation initiale.
-#
-# Modifications qui seront validées :
-#   (utilisez &quot;git rm --cached &lt;fichier&gt;...&quot; pour désindexer)
-#
-#    nouveau : putain_de_hello_world.rb
-#</code></pre>
+<pre><code class="language-bash">$ git status
+<span class="comment"># Sur la branche master</span>
+<span class="comment">#</span>
+<span class="comment"># Validation initiale.</span>
+<span class="comment">#</span>
+<span class="comment"># Modifications qui seront validées :</span>
+<span class="comment">#   (utilisez "git rm --cached &lt;fichier&gt;..." pour désindexer)</span>
+<span class="comment">#</span>
+<span class="comment">#    nouveau : putain_de_hello_world.rb</span>
+<span class="comment">#</span></code></pre>
 <p>Ok c&#39;est prêt ! On lance maintenant <code>git commit</code> pour créer notre premier commit
 (pas con le <em>naming</em> de la commande hein ?). Si tout se passe bien vous devriez
 avoir un éditeur qui s&#39;ouvre pour écrire un message de commit. Prenez l&#39;habitude
@@ -1291,8 +1291,8 @@ de décrire votre changement sur la première ligne succintement et, si vous ave
 besoin de détails, sautez une ligne et détaillez les modifications.</p>
 <p>Un petit <code>git status</code> nous confirme qu&#39;on s&#39;est pas foiré (la preuve, tout est
 propre) :</p>
-<pre><code class="language-console">$ git status
-# Sur la branche master
+<pre><code class="language-bash">$ git status
+<span class="comment"># Sur la branche master</span>
 rien à valider, la copie de travail est propre</code></pre>
 <h2 id="inspecter">Inspecter</h2>
 <p>Bon, c&#39;est bien beau de commiter, mais à un moment on arrive sur un projet en
@@ -1303,30 +1303,30 @@ Windows) ou retrousser vos poils de barbe et sortir le bon vieux <code>git log</
 de votre dépôt, avec des options en veux-tu en voilà pour personnaliser
 l&#39;affichage.</p>
 <p>Un <code>git log</code> basique ça ressemble à ça :</p>
-<pre><code class="language-console">$ git log
-commit 8120de7b7139e46b9cbc1c3ee89a02962dbc198e
+<pre><code class="language-bash">$ git log
+commit <span class="number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
 Author: madx &lt;madx+github@yapok.org&gt;
-Date:   Mon Nov 4 23:28:11 2013 +0100
+Date:   Mon Nov <span class="number">4</span> <span class="number">23</span>:<span class="number">28</span>:<span class="number">11</span> <span class="number">2013</span> +<span class="number">0100</span>
 
     Premier commit</code></pre>
 <p>Oui, c&#39;est le commit que je viens de faire dans la partie précédente. Comment
 j&#39;en suis sûr ? Car je peux utiliser <code>git show</code> pour afficher les détails d&#39;un
 objet Git (il n&#39;y a pas que des commits, mais on verra ça une prochaine fois).</p>
 <p><code>git show</code> prend en argument le fameux <code>SHA1</code> du commit :</p>
-<pre><code class="language-console">$ git show 8120de7b7139e46b9cbc1c3ee89a02962dbc198e
-commit 8120de7b7139e46b9cbc1c3ee89a02962dbc198e
+<pre><code class="language-bash">$ git show <span class="number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
+commit <span class="number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
 Author: madx &lt;madx+github@yapok.org&gt;
-Date:   Mon Nov 4 23:28:11 2013 +0100
+Date:   Mon Nov <span class="number">4</span> <span class="number">23</span>:<span class="number">28</span>:<span class="number">11</span> <span class="number">2013</span> +<span class="number">0100</span>
 
     Premier commit
 
 diff --git a/putain_de_hello_world.rb b/putain_de_hello_world.rb
-new file mode 100644
-index 0000000..ded37dc
+new file mode <span class="number">100644</span>
+index <span class="number">0000000</span>..ded37dc
 --- /dev/null
 +++ b/putain_de_hello_world.rb
-@@ -0,0 +1 @@
-+puts &quot;Hello, putain de codeur !!!&quot;</code></pre>
+@@ -<span class="number">0</span>,<span class="number">0</span> +<span class="number">1</span> @@
++puts <span class="string">"Hello, putain de codeur !!!"</span></code></pre>
 <p>Dit comme ça, ça a pas l&#39;air de casser trois pattes à un canard, mais c&#39;est la
 base de la base de la praticité. Je vous fait pas l&#39;insulte de vous expliquer le
 détails, vous êtes sans doute assez malins pour comprendre ce que git raconte
@@ -1360,20 +1360,20 @@ cette branche.</p>
 <p>On peut utiliser <code>git branch</code> sans argument pour lister les branches, celle avec
 un petit asterisque devant c&#39;est la branche courante.</p>
 <p>Essayons ça avec notre petit dépôt :</p>
-<pre><code class="language-console">$ git branch
+<pre><code class="language-bash">$ git branch
 * master
 $ git checkout -b add-shebang
-Basculement sur la nouvelle branche &#39;add-shebang&#39;
+Basculement sur la nouvelle branche <span class="string">'add-shebang'</span>
 $ vim putain_de_hello_world.rb
 $ git status
-# Sur la branche add-shebang
-# Modifications qui ne seront pas validées :
-#   (utilisez &quot;git add &lt;fichier&gt;...&quot; pour mettre à jour ce qui sera validé)
-#   (utilisez &quot;git checkout -- &lt;fichier&gt;...&quot; pour annuler les modifications dans la copie de travail)
-#
-#    modifié : putain_de_hello_world.rb
-#
-aucune modification n&#39;a été ajoutée au commit (utilisez &quot;git add&quot; ou &quot;git commit -a&quot;)
+<span class="comment"># Sur la branche add-shebang</span>
+<span class="comment"># Modifications qui ne seront pas validées :</span>
+<span class="comment">#   (utilisez "git add &lt;fichier&gt;..." pour mettre à jour ce qui sera validé)</span>
+<span class="comment">#   (utilisez "git checkout -- &lt;fichier&gt;..." pour annuler les modifications dans la copie de travail)</span>
+<span class="comment">#</span>
+<span class="comment">#    modifié : putain_de_hello_world.rb</span>
+<span class="comment">#</span>
+aucune modification n<span class="string">'a été ajoutée au commit (utilisez "git add" ou "git commit -a")
 $ git add putain_de_hello_world.rb
 $ git commit
 [add-shebang 5d48735] Add shebang
@@ -1390,13 +1390,13 @@ base fournie par Git, <code>master</code>, reste au commit précédent.</p>
 la branche dans laquelle on va fusionner et en passant en argument la branche à
 fusionner.</p>
 <p>Si vous avez bien suivi, on va donc faire les choses suivantes :</p>
-<pre><code class="language-console">$ git checkout master
-Basculement sur la branche &#39;master&#39;
+<pre><code class="language-bash">$ git checkout master
+Basculement sur la branche <span class="string">'master'</span>
 $ git merge add-shebang
-Updating 8120de7..5d48735
+Updating <span class="number">8120</span>de7..<span class="number">5</span>d48735
 Fast-forward
- putain_de_hello_world.rb | 1 +
- 1 file changed, 1 insertion(+)</code></pre>
+ putain_de_hello_world.rb | <span class="number">1</span> +
+ <span class="number">1</span> file changed, <span class="number">1</span> insertion(+)</code></pre>
 <p>Vous remarquez que Git signale <em>Fast-forward</em>. Comme le commit pointé par
 <code>add-shebang</code> est un fils direct de celui de <code>master</code>, Git se contente de faire
 pointer <code>master</code> sur celui-ci, ce qui est beaucoup plus rapide.</p>
