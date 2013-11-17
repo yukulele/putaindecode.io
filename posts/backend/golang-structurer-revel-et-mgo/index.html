@@ -21,7 +21,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="feed.xml" rel="alternate" type="application/rss+xml">
 
-<link rel="stylesheet" href="/assets/css/putaindecode.css?20131116015346">
+<link rel="stylesheet" href="/assets/css/putaindecode.css?20131117175329">
 
 
 
@@ -153,104 +153,104 @@ revel, quelque chose comme ça:</p>
  En fait ce n’est rien de plus qu’un binding entre Revel et Mgo. La technique 
  utilisée pour brancher ce binding côté Revel est celle des 
  <a href="http://robfig.github.io/revel/manual/interceptors.html">interceptors</a>.</p>
-<pre><code class="language-go"><span class="keyword">package</span> mongo
+<pre><code>package mongo
 
-<span class="keyword">import</span> (
-    <span class="string">"github.com/robfig/revel"</span>
-    <span class="string">"labix.org/v2/mgo"</span>
-    <span class="string">"sync"</span>
+import (
+    &quot;github.com/robfig/revel&quot;
+    &quot;labix.org/v2/mgo&quot;
+    &quot;sync&quot;
 )
 
-<span class="comment">// Extension du controlleur.</span>
-<span class="keyword">type</span> Mongo <span class="keyword">struct</span> {
+// Extension du controlleur.
+type Mongo struct {
     *revel.Controller
     MongoSession  *mgo.Session
     MongoDatabase *mgo.Database
 }
 
-<span class="comment">// Stockage global de la session dont la visibilité est restreinte au package.</span>
-<span class="keyword">var</span> session *mgo.Session
+// Stockage global de la session dont la visibilité est restreinte au package.
+var session *mgo.Session
 
-<span class="comment">// Singleton</span>
-<span class="keyword">var</span> dial sync.Once
+// Singleton
+var dial sync.Once
 
-<span class="comment">// Renvoie la session mgo en cours, si aucune n'existe, elle est créée.</span>
-<span class="keyword">func</span> GetSession() *mgo.Session {
+// Renvoie la session mgo en cours, si aucune n&#39;existe, elle est créée.
+func GetSession() *mgo.Session {
 
-    host, _ := revel.Config.String(<span class="string">"mongo.host"</span>)
+    host, _ := revel.Config.String(&quot;mongo.host&quot;)
 
-    <span class="comment">// Grâce au package sync cette fonction n'est appelée</span>
-    <span class="comment">// qu'une seule fois et de manière synchrone.</span>
-    dial.Do(<span class="keyword">func</span>() {
-        <span class="keyword">var</span> err error
+    // Grâce au package sync cette fonction n&#39;est appelée
+    // qu&#39;une seule fois et de manière synchrone.
+    dial.Do(func() {
+        var err error
         session, err = mgo.Dial(host)
-        <span class="keyword">if</span> err != <span class="constant">nil</span> {
-            <span class="built_in">panic</span>(err)
+        if err != nil {
+            panic(err)
         }
     })
 
-    <span class="keyword">return</span> session
+    return session
 }
 
-<span class="comment">// Alimente les propriétés affectées au controlleur en clonant la session mongo.</span>
-<span class="keyword">func</span> (c *Mongo) Bind() revel.Result {
-    <span class="comment">// Oublie pas de mettre mongo.database dans le app.conf, genre "localhost"</span>
-    databaseName, _ := revel.Config.String(<span class="string">"mongo.database"</span>)
+// Alimente les propriétés affectées au controlleur en clonant la session mongo.
+func (c *Mongo) Bind() revel.Result {
+    // Oublie pas de mettre mongo.database dans le app.conf, genre &quot;localhost&quot;
+    databaseName, _ := revel.Config.String(&quot;mongo.database&quot;)
 
     c.MongoSession = GetSession().Clone()
     c.MongoDatabase = c.MongoSession.DB(databaseName)
 
-    <span class="keyword">return</span> <span class="constant">nil</span>
+    return nil
 }
 
-<span class="comment">// Ferme un clone</span>
-<span class="keyword">func</span> (c *Mongo) Close() revel.Result {
+// Ferme un clone
+func (c *Mongo) Close() revel.Result {
 
-    <span class="keyword">if</span> c.MongoSession != <span class="constant">nil</span> {
+    if c.MongoSession != nil {
         c.MongoSession.Close()
     }
 
-    <span class="keyword">return</span> <span class="constant">nil</span>
+    return nil
 }
 
-<span class="comment">// Fonction appelée au chargement de l'application.</span>
-<span class="comment">// Elle effectue un appel a notre fonction Bind avant</span>
-<span class="comment">// chaque execution du controlleur.</span>
-<span class="keyword">func</span> init() {
+// Fonction appelée au chargement de l&#39;application.
+// Elle effectue un appel a notre fonction Bind avant
+// chaque execution du controlleur.
+func init() {
     revel.InterceptMethod((*Mongo).Bind, revel.BEFORE)
     revel.InterceptMethod((*Mongo).Close, revel.AFTER)
-    <span class="comment">// On veut aussi fermer le clone si le controlleur plante.</span>
+    // On veut aussi fermer le clone si le controlleur plante.
     revel.InterceptMethod((*Mongo).Close, revel.PANIC)
 }</code></pre>
 <p>On a créé notre connexion à mongo, mais maintenant on va aussi l’utiliser. Dans
 le contrôleur, rien de plus simple :</p>
-<pre><code class="language-go"><span class="keyword">import</span> (
-    <span class="string">"github.com/robfig/revel"</span>
-    <span class="string">"github.com/OwlyCode/PutainDeProjet/app/modules/mongo"</span>
+<pre><code>import (
+    &quot;github.com/robfig/revel&quot;
+    &quot;github.com/OwlyCode/PutainDeProjet/app/modules/mongo&quot;
 )
 
-<span class="keyword">type</span> AppController <span class="keyword">struct</span> {
+type AppController struct {
     *revel.Controller
-    mongo.Mongo <span class="comment">// Le controlleur doit étendre notre type Mongo.</span>
+    mongo.Mongo // Le controlleur doit étendre notre type Mongo.
 }
 
-<span class="keyword">func</span> (c *AppController) Index() revel.Result {
-    usersCollection := c.MongoDatabase.C(<span class="string">"users"</span>)
-    <span class="comment">// tu peux maintenant manipuler ta mgo.Collection.</span>
-    <span class="comment">// [ ... ]</span>
+func (c *AppController) Index() revel.Result {
+    usersCollection := c.MongoDatabase.C(&quot;users&quot;)
+    // tu peux maintenant manipuler ta mgo.Collection.
+    // [ ... ]
 }</code></pre>
 <p>Mais tu peux aussi l’appeler ailleurs dans le projet, par exemple dans un autre
 module :</p>
-<pre><code class="language-go"><span class="keyword">import</span> (
-    <span class="string">"github.com/OwlyCode/PutainDeProjet/app/modules/mongo"</span>
+<pre><code>import (
+    &quot;github.com/OwlyCode/PutainDeProjet/app/modules/mongo&quot;
 )
 
-<span class="keyword">func</span> DoStuff(user *models.User) {
+func DoStuff(user *models.User) {
     session := mongo.GetSession()
-    <span class="keyword">defer</span> session.Close() <span class="comment">// Oublie pas de fermer le robinet à la fin!</span>
+    defer session.Close() // Oublie pas de fermer le robinet à la fin!
 
-    <span class="comment">// tu peux maintenant manipuler ta mgo.Session.</span>
-    <span class="comment">// [ ... ]</span>
+    // tu peux maintenant manipuler ta mgo.Session.
+    // [ ... ]
 }</code></pre>
 <p><strong>C&#39;est bien beau de copier coller mais ...</strong></p>
 <p>... tu te demandes certainement pourquoi on a créé un dossier <code>app/modules</code>, si
@@ -412,7 +412,7 @@ Amateur de science fiction, d&#x27;insectes et reste sur Windows pour Starcraft 
 
   
 </div>
-<script src="/assets/js/putaindecode.js?20131116015346"></script>
+<script src="/assets/js/putaindecode.js?20131117175329"></script>
 
 
 	
