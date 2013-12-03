@@ -21,7 +21,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="feed.xml" rel="alternate" type="application/rss+xml">
 
-<link rel="stylesheet" href="/assets/css/putaindecode.css?20131117175329">
+<link rel="stylesheet" href="/assets/css/putaindecode.css?20131203195144">
 
 
 
@@ -76,7 +76,8 @@
 </ul>
 <p>Voyons maintenant comment l&#39;on peut mettre en place ceci via <strong>Grunt</strong>.</p>
 <h2 id="installation">Installation</h2>
-<p>Tout d&#39;abord, installons <strong>Grunt</strong>. Notez que <strong>Grunt</strong> est en <em>nodejs</em> et que je considère que vous avez déjà <em>nodejs</em> d&#39;installé.</p>
+<p>Tout d&#39;abord, installons <strong>Grunt</strong>. Notez que <strong>Grunt</strong> est en <em>nodejs</em> et que je considère que vous avez déjà <em>nodejs</em> d&#39;installé. D&#39;autre part, nous allons créer un nouveau projet <strong>npm</strong> afin d&#39;enregistrer tous les packages que vous allez installer. Je vous explique par la suite pourquoi nous faisons ça.</p>
+<pre><code class="language-bash">$ npm init // puis plusieurs fois entrée</code></pre>
 <p>En premier lieu, il faut installer le <em>package</em> qui permet de gérer <strong>Grunt</strong> en ligne de commande. C&#39;est le <em>commander</em> de <strong>Grunt</strong> en gros.</p>
 <pre><code class="language-bash">$ npm install -g grunt-cli</code></pre>
 <p>Une fois cela fait, installez <strong>Grunt</strong> en local dans votre projet.</p>
@@ -89,9 +90,7 @@
 <pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
 
   <span class="comment">// Configuration de Grunt</span>
-  grunt.initConfig({
-    pkg: grunt.file.readJSON(<span class="string">'package.json'</span>)
-  })
+  grunt.initConfig({})
 
   <span class="comment">// Définition des tâches Grunt</span>
   grunt.registerTask(<span class="string">'default'</span>, <span class="string">''</span>)
@@ -157,7 +156,7 @@
 <p>Passons maintenant à la concaténation des fichiers JavaScripts.</p>
 <p>Comme pour la majorité des tâches que vous aurez besoin avec <strong>Grunt</strong>, un <em>package</em> <strong>Grunt</strong> existe déjà pour ce travail demandé.</p>
 <p>-&gt; <a href="https://github.com/gruntjs/grunt-contrib-concat"><code>grunt-contrib-concat</code></a></p>
-<p>Installation : <code>npm install grunt-contrib-concat --save-dev</code> (<code>--save-dev</code> permet de sauvegarder le package dans <code>package.json</code> pour pouvoir à tut moment le réinstaller en faisant <code>npm install</code>)</p>
+<p>Installation : <code>npm install grunt-contrib-concat --save-dev</code> (<code>--save-dev</code> permet de sauvegarder le package dans <code>package.json</code> pour pouvoir à tout moment le réinstaller en faisant <code>npm install</code>)</p>
 <p>On ajoute alors à notre configuration <strong>Grunt</strong> l&#39;importation de <code>grunt-contrib-concat</code> :</p>
 <pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
 
@@ -663,7 +662,7 @@
 
   
 </div>
-<script src="/assets/js/putaindecode.js?20131117175329"></script>
+<script src="/assets/js/putaindecode.js?20131203195144"></script>
 
 
 	
