@@ -5,7 +5,90 @@
         <description>On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</description>
         <link>/</link>
         <generator>happyplan 0.4.0-alpha.10</generator>
-        <lastBuildDate>Tue, 03 December 2013 00:00:00 +0100</lastBuildDate>
+        <lastBuildDate>Thu, 05 December 2013 00:00:00 +0100</lastBuildDate>
+
+          <item>
+              <title>ExtercalInterface.call() de Flash (et Backbone), toute une histoire</title>
+              <description><![CDATA[
+
+<div style="float: left; margin-right: 15px;"><img src="/media/occupyflash.png"></div>
+
+<p>Je voulais vous parler d&#39;un bug qui m&#39;a bien emmerdé récemment et comme j&#39;aimerais que vous ne perdiez pas de temps avec cela, un article s&#39;imposait.</p>
+<p><em>Note de la direction : j&#39;y connais rien en Flash (et je ne crois pas avoir trop envie de connaître en fait).</em></p>
+<p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu&#39;il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d&#39;un autre article. (Je dis ça à chaque fois, haha).</p>
+<h2 id="le-pitch">Le pitch</h2>
+<p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu&#39;il le souhaite afin de communiquer avec l&#39;application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l&#39;avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d&#39;évènement mais vous en avez d&#39;<a href="http://microjs.com/#event">autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
+<pre><code class="language-javascript"> <span class="comment">// on crée un objet vide</span>
+App.FlashManager.Events = {}
+
+<span class="comment">// on lui ajoute les fonctionnalités des events Backbone</span>
+_.extend(App.FlashManager.Events, Backbone.Events)</code></pre>
+<p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d&#39;évènement façon Backbone</a>. Il pourra alors s&#39;écouter lui même, écouter un autre objet, mais aussi déclencher des évènements.</p>
+<h2 id="c-t-flash">Côté Flash</h2>
+<p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l&#39;objet <code>ExternalInterface</code> :</p>
+<pre><code class="language-javascript">ExternalInterface.call(<span class="string">"window.App.FlashManager.Events.trigger"</span>, <span class="string">"my-event"</span>)
+<span class="comment">// http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html#call</span></code></pre>
+<p>Et là, bug.</p>
+<h2 id="pourquoi-bug-">Pourquoi bug ?</h2>
+<p>Parce que <code>ExtercalInterface.call()</code> ne s&#39;attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l&#39;<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153">objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur faisant tout bonnement une boucle infinie d&#39;appel à la méthode interne de Flash <code>__flash__toXML</code> :</p>
+<pre><code class="language-javascript">__flash__toXML
+  __flash__toXML
+    __flash__toXML
+      __flash__toXML
+        __flash__toXML
+          __flash__toXML
+           __flash__toXML
+            __flash__toXML
+              __flash__toXML
+                __flash__toXML
+                  __flash__toXML
+                    __flash__toXML</code></pre>
+<p>Peut-être que vous allez vous empresser de regarder si une autre méthode qu&#39;<code>ExtercalInterface.call()</code> existe pour faire un appel à JavaScript (vous vous trompez) ou encore d&#39;aller insulter Adobe sur son bugtracker en leur disant &quot;c&#39;est quoi c&#39;bordel ?!&quot; (vous n&#39;auriez pas forcément tort, quand bien même ce n&#39;est pas vraiment de leur faute dans le cas présent). Nope, c&#39;est du côté JavaScript qu&#39;il faut régler ça.</p>
+<h2 id="c-t-javascript">Côté JavaScript</h2>
+<p>Comme je vous disais, <strong>Backbone.js</strong> renvoie lorsqu&#39;on utilise <code>.trigger()</code> l&#39;instance en cours de l&#39;objet, provoquant un bug dû à une <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Une_r%C3%A9introduction_%C3%A0_JavaScript#Fuites_de_m.C3.A9moire">référence circulaire</a>. En gros, ici nous sommes en train de retourner l&#39;élément Flash (<code>&lt;object|embed&gt;</code>).</p>
+<p>Pour contrer cela, je vous propose la solution suivante qui est de ne pas utiliser directement l&#39;objet <code>Backbone.Events|View</code> mais plutôt de passer par une interface, un objet proxy.</p>
+<p>Voici le schéma :</p>
+<ul>
+<li>Créer un objet simple qui contient les mêmes noms de méthodes que les objets évènements <strong>Backbone.js</strong> (en gros, se mapper sur l&#39;API Backbone)</li>
+<li>Utiliser <strong>Backbone.js</strong> dans les méthodes de cet objet <em>Proxy</em></li>
+</ul>
+<p>Exemple :</p>
+<pre><code class="language-javascript"><span class="comment">// Bridge between flash and js</span>
+App.FlashManager = {}
+App.FlashManager.Events = {}
+
+<span class="comment">// Backbone events used for Flash</span>
+App.InternalFlashManager = {}
+App.InternalFlashManager.Events = {}
+
+_.extend(App.InternalFlashManager.Events, Backbone.Events)
+
+App.FlashManager.Events.trigger = <span class="function"><span class="keyword">function</span><span class="params">(name, opts)</span> {</span>
+    App.InternalFlashManager.Events.trigger(name, opts)
+
+    <span class="comment">// Must return nothing not to loop JavaScript engine, important!</span>
+    <span class="keyword">return</span>
+}</code></pre>
+<h2 id="a-creuser">A creuser</h2>
+<p>Note de <a href="https://twitter.com/b_lionel">@b_lionel</a> : Pour le problème de référence circulaire, il est possible que ce soit dû au fait de renvoyer un objet ayant une référence vers un object qui lui même à une référence sur le premier objet :</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> obj1 = {label: <span class="string">'objet1'</span>}
+  ,  obj2 = {label: <span class="string">'objet2'</span>}
+obj1.child = obj2
+obj2.child = obj1
+
+<span class="keyword">return</span> obj1</code></pre>
+<p>...ce qui fait que le sérialiseur se prend probablement les pieds dans le tapis.</p>
+<h2 id="oh-et-">Oh et...</h2>
+<p>...il existe une version similaire de cet article en anglais disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript ne retourne pas l&#39;élément Flash lui-même (<code>&lt;object|embed&gt;</code>).</p>
+<p>Merci à <a href="https://twitter.com/zr0z">@zr0z</a> et à <a href="https://twitter.com/alexmex_">@alexmex_</a> pour la relecture.</p>
+
+]]></description>
+              <pubDate>Thu, 05 December 2013 01:00:00 +0100</pubDate>
+              <link>/dist/posts/js/extercalinterface-call-flash-backbone-toute-une-histoire/index.html</link>
+              <guid isPermaLink="true">/dist/posts/js/extercalinterface-call-flash-backbone-toute-une-histoire/index.html</guid>
+          </item>
 
           <item>
               <title>Premiers pas avec Grunt</title>
