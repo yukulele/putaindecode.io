@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+<!--
+  HEY YOU, STOP LOOKING AT MY SOURCE CODE
+  Just check it out directly on Github :
+
+  https://github.com/putaindecode/website.git
+-->
+<html lang="fr" class="no-js no-touch ">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<script>(function(docEl) {
+  docEl.className = docEl.className.replace(/\bno-js\b/, 'js');
+  if ('ontouchstart' in docEl) { docEl.className = docEl.className.replace(/\bno-touch\b/, 'touch'); }
+})(document.documentElement);</script>
+
+<meta charset="utf-8">
+<title>Comment se passer de libraries/frameworks JavaScript</title>
+<meta name="description" content="">
+<base href="/" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="feed.xml" rel="alternate" type="application/rss+xml">
+
+<link rel="stylesheet" href="/assets/css/putaindecode.css?20131207131920">
+
+
+
+
+</head>
+<body>
+
+<div class="">
+  <nav class="putainde-Nav">
+	<div class="grid">
+		<div class="grid__cell">
+			<a class="putainde-SiteTitle" href="/">
+				<img class="putainde-Logo" alt="Putain de Code !" src="/assets/img/p!-logo.svg" />
+				Putain de Code !
+			</a>
+
+			<span class="putainde-Baseline">On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</span>
+
+			<ul class="putainde-Nav-list">
+				<li class=""><a class="putainde-Nav-list-item " href="/">Home</a>
+				<li class=""><a class="putainde-Nav-list-item " href="c-est-quoi-putaindecode">Putain de ... ?</a>
+				<li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+				<li class=""><a class="putainde-Nav-list-item " href="le-crew">Le Crew</a>
+			</ul>
+		</div>
+	</div>
+</nav>
+ 
+  <article class="putainde-Content grid putainde-Post">
+    <header class="putainde-Content-header grid__cell unit-1-1">
+      <h1 class="putainde-Content-title">Comment se passer de libraries/frameworks JavaScript</h1>
+      <div class="putainde-Content-metas">
+        <span class="putainde-Content-author">Par <span class="putainde-Author">bloodyowl</span></span>
+        
+        <span class="putainde-Content-tags">Tags: javascript,frameworks,libraries</span>
+      </div>
+    </header>
+    <div class="putainde-Content-body grid__cell unit-3-4--m">
+    
+
+
+<p><strong> Petite note préalable </strong> : Évidemment que ça ne marche pas sous les vieux navigateurs, cet article s&#39;adresse principalement à toi pour te faire comprendre comment les choses marchent.</p>
+<p>De plus en plus, le besoin de légèreté se fait sentir sur les pages. En dépit d&#39;un web plus rapide sur desktop, on a maintenant beaucoup de devices connectés via 3G ou Edge (un petit coucou au métro parisien). Du coup, tu te rendras vite compte qu&#39;embarquer jQuery + jQuery Mobile + jQuery UI et un tas d&#39;autres plug-ins grapillés sur le web, ça commence à peser.</p>
+<h2 id="pour-la-s-lection-d-lements">Pour la sélection d&#39;élements</h2>
+<p>Pour remplacer ton bon vieux <code>$</code> magique, <code>document.querySelectorAll</code> semble faire l&#39;affaire. En revanche, il retourne une instance de <code>NodeList</code>, pas d&#39;<code>Array</code>, ce qui ne nous arrange pas des masses.</p>
+<p>Du coup, on peut écrire une petite function toute con, qui nous retourne un <code>Array</code> et ses méthodes bien utiles.</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> nativeSlice = [].slice <span class="comment">// la méthode de conversion</span>
+
+<span class="function"><span class="keyword">function</span> <span class="title">$</span><span class="params">(selector)</span>{</span>
+  <span class="keyword">var</span> list = document.querySelectorAll(selector)
+  <span class="keyword">return</span> nativeSlice.call(list)
+}</code></pre>
+<p>Alternativement, tu peux utiliser <code>Array.apply(null, list)</code> plutôt que <code>nativeSlice.call(list)</code>, si vraiment ça te fait plaisir.</p>
+<p>Une troisième solution, un peu plus chiante au quotidien (et terriblement laide), c&#39;est d&#39;utiliser directement les méthodes qui t&#39;intéressent (ex. <code>[].forEach</code>) de cette façon :</p>
+<pre><code class="language-javascript">;[].forEach.call(document.querySelectorAll(selector), <span class="function"><span class="keyword">function</span><span class="params">(element)</span>{</span>
+  <span class="comment">// do something w/ element</span>
+})</code></pre>
+<p>Pour en revenir à notre petite méthode <code>$</code>, on peut du coup faire :</p>
+<pre><code class="language-javascript"><span class="comment">// prends bien l'habitude de garder</span>
+<span class="comment">// tes nodeLists si tu les réutilises</span>
+
+<span class="keyword">var</span> elements = $(<span class="string">".my-elements-className"</span>)
+
+elements.forEach(<span class="function"><span class="keyword">function</span><span class="params">(element)</span>{</span>
+  <span class="comment">// do something w/ element</span>
+})</code></pre>
+<h3 id="pour-l-event-delegation">Pour l&#39;event delegation</h3>
+<p>L&#39;event delegation, c&#39;est bien, mangez-en. Ça permet entre autres de ne pas attacher 150 listeners uniques à 150 elements différents, mais à attacher un seul listener sur un parent commun, et analyser les sources des évenements à l&#39;intérieur en se basant sur le bubbling (remontée d&#39;évenement de la source au plus haut parent) ou capturing (descente d&#39;évenement du plus haut parent à la source, avant même que la source ne le reçoive).</p>
+<p>Pour faire de la délégation, on va procéder en trois temps :</p>
+<ul>
+<li>Choper <code>event.target</code></li>
+<li>Vérifier que le sélecteur qui nous intéresse correspond bien à <code>event.target</code> ou un de ses parents (dans le cas où l&#39;on clique sur le <code>.icon-Arrow</code> dans <code>.js-Button-action</code>)</li>
+<li>Si ça match, on garde l&#39;élement correspondant au sélecteur, sinon, exit</li>
+</ul>
+<p>Les browsers relativement récents possèdent une méthode : <code>matchesSelector</code> (et tous ses alias préfixés). Ce qu&#39;on peut donc faire, c&#39;est ceci :</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> docEl = document.documentElement
+    <span class="comment">// si c'est dans docEl, c'est que c'est dispo</span>
+  , nativeMatchesSelector =
+      docEl.matchesSelector ||
+      docEl.webkitMatchesSelector ||
+      docEl.mozMatchesSelector ||
+      docEl.oMatchesSelector ||
+      docEl.msMatchesSelector
+  , matchesSelector = nativeMatchesSelector || matchesPolyfill
+
+<span class="comment">// le polyfill utilise querySelectorAll</span>
+<span class="comment">// et cherche dans le parent de l'élement</span>
+<span class="function"><span class="keyword">function</span> <span class="title">matchesPolyfill</span><span class="params">(selector)</span>{</span>
+  <span class="keyword">var</span> node = <span class="keyword">this</span>
+    , parent = node.parentNode
+    , query, index, length
+  <span class="keyword">if</span>(!parent || parent.nodeType != <span class="number">1</span>) {
+    <span class="keyword">return</span> <span class="literal">false</span>
+  }
+  query = parent.querySelectorAll(selector)
+  index = -<span class="number">1</span>
+  length = query.length
+  <span class="keyword">while</span>(++index &lt; length) {
+    <span class="keyword">if</span>(query[index] == node) <span class="keyword">return</span> <span class="literal">true</span>
+  }
+  <span class="keyword">return</span> <span class="literal">false</span>
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">getCurrentTarget</span><span class="params">(node, selector)</span>{</span>
+  <span class="keyword">if</span>(matchesSelector.call(node, selector)) <span class="keyword">return</span> node
+  <span class="keyword">while</span>(node = node.parentNode) {
+    <span class="keyword">if</span>(node.nodeType != <span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>
+    <span class="keyword">if</span>(matchesSelector.call(node, selector)) <span class="keyword">return</span> node
+  }
+  <span class="keyword">return</span> <span class="literal">false</span>
+}</code></pre>
+<p>Dès lors, dans nos listeners, on pourra directement procéder ainsi :</p>
+<pre><code class="language-javascript">element.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span><span class="params">(evt)</span>{</span>
+  <span class="keyword">var</span> currentTarget = getCurrentTarget(evt.target, <span class="string">".Button-action"</span>)
+  <span class="keyword">if</span>(!currentTarget) <span class="keyword">return</span>
+  <span class="comment">// all good with currentTarget</span>
+})</code></pre>
+<h3 id="pour-l-ajax">Pour l&#39;Ajax</h3>
+<p>Pourquoi est-ce que l&#39;on appelle ça encore Ajax, d&#39;ailleurs ? Bref.</p>
+<p>Simple comme bonjour :</p>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">isSuccessStatus</span><span class="params">(status)</span>{</span>
+  <span class="keyword">return</span> status &gt;= <span class="number">200</span> &amp;&amp; status &lt; <span class="number">300</span> || status == <span class="number">304</span>
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">ajax</span><span class="params">(options)</span>{</span>
+  <span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest()
+    , done = <span class="literal">false</span>
+    , async = options.hasOwnProperty(<span class="string">"async"</span>) ? options.async : <span class="literal">true</span>
+
+  xhr.open(options.method || <span class="string">"GET"</span>, options.url, async)
+
+  xhr.onreadystatechange = <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
+    <span class="keyword">if</span>(done) <span class="keyword">return</span>
+    <span class="keyword">if</span>(<span class="keyword">this</span>.readyState != <span class="number">4</span>) <span class="keyword">return</span>
+    done = <span class="literal">true</span>
+
+    <span class="keyword">if</span>(isSuccessStatus(<span class="keyword">this</span>.status)) {
+      <span class="keyword">if</span>(options.success) {
+        options.success.call(<span class="keyword">this</span>)
+      }
+      <span class="keyword">return</span>
+    }
+
+    <span class="keyword">if</span>(options.error) {
+      options.error.call(<span class="keyword">this</span>)
+    }
+  }
+  Object.keys(options.headers || {})
+    .forEach(<span class="function"><span class="keyword">function</span><span class="params">(key)</span>{</span>
+      xhr.setRequestHeader(key, options.headers[key])
+    })
+  xhr.send(options.data || <span class="literal">null</span>)
+  <span class="keyword">return</span> xhr
+}</code></pre>
+<p>Cette fonction offre un support basique de XHR :</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> myXHR = ajax({
+    url : <span class="string">"api/users"</span>
+  , success : <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
+      doStuff(<span class="keyword">this</span>.responseText)
+    }
+  , error : <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
+      showError(<span class="keyword">this</span>.status)
+    }
+})</code></pre>
+<h3 id="es5-magic">ES5 magic</h3>
+<p>EcmaScript 5 délivre des petites méthodes très intéressantes pour se simplifier la vie, fortement inspirées par ce qu&#39;on a l&#39;habitude de trouver dans les bibliothèques ayant connu l&#39;âge d&#39;or, comme <a href="http://prototypejs.org">PrototypeJS</a> ou <a href="http://mootools.net">MooTools</a>.</p>
+<p>Dès lors, plutôt qu&#39;un ennuyeux :</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> key, item
+<span class="keyword">for</span>(key <span class="keyword">in</span> myObject) {
+  <span class="keyword">if</span>(myObject.hasOwnProperty(key)) {
+    item = myObject[key]
+    <span class="comment">// do something</span>
+  }
+}</code></pre>
+<p>on peut se contenter d&#39;un :</p>
+<pre><code class="language-javascript">Object.keys(myObject)
+  .forEach(<span class="function"><span class="keyword">function</span><span class="params">(key)</span>{</span>
+    <span class="keyword">var</span> item = myObject[i]
+    <span class="comment">// do something</span>
+  })</code></pre>
+<p>De même, on bénéficie de méthodes s&#39;avérant très utiles, comme <a href="http://developer.mozilla.org/en-US/docs/[Web/JavaScript/Reference/Global_Objects/Array/prototype"><code>Array.prototype.map</code>, <code>Array.prototype.reduce</code>, <code>Array.prototype.filter</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object"><code>Object.create</code>, <code>Object.getPrototypeOf</code>, <code>Object.getOwnPropertyNames</code>, <code>Object.defineProperty</code></a> dont je t&#39;invite, si cela t&#39;intéresse, à te renseigner sur ces méthodes. Et si tu veux avoir plus de détails, read the fucking manual : <a href="http://es5.github.io"><a href="http://es5.github.io">http://es5.github.io</a></a>.</p>
+<h3 id="des-petits-d-tails-cools-du-c-t-des-events">Des petits détails cools du côté des events</h3>
+<p>Avec <code>addEventListener</code>, on peut aussi passer un objet comme listener, avec <code>handleEvent</code> pour interface :</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> myElementClickEvents = {
+    element : myElement
+  , callbacks : []
+  , handleEvent : <span class="function"><span class="keyword">function</span><span class="params">(evt)</span>{</span>
+      <span class="keyword">var</span> self = <span class="keyword">this</span>
+      <span class="keyword">this</span>.callbacks.forEach(<span class="function"><span class="keyword">function</span><span class="params">(item)</span>{</span>
+        item.call(self.element, evt)
+      })
+    }
+}
+myElement.addEventListener(<span class="string">"click"</span>, myElementClickEvents)
+
+myElementClickEvents.callbacks.push(<span class="function"><span class="keyword">function</span><span class="params">(evt)</span>{</span>
+  console.log(evt)
+})</code></pre>
+<p>Avec ça, on peut facilement garder une trace de ce qu&#39;on passé comme listeners.</p>
+<h3 id="du-type-checking-">Du type checking ?</h3>
+<pre><code class="language-javascript"><span class="keyword">var</span> getClass = <span class="function"><span class="keyword">function</span><span class="params">(o)</span>{</span> <span class="keyword">return</span> Object.prototype.toString.call(o) }
+  , someString = <span class="keyword">new</span> String(<span class="string">"foo"</span>)
+
+<span class="keyword">typeof</span> someString <span class="comment">// "object"</span>
+getClass(someString) <span class="comment">// "[object String]", sounds more reasonable</span></code></pre>
+<h3 id="petit-bonus">Petit bonus</h3>
+<p>Un petit bonus rien que pour toi : pour avoir une syntaxe plus sympathique et plus claire que les prototypes.</p>
+<p>En principe, on fait comme ça :</p>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span><span class="params">(name)</span>{</span>
+  <span class="keyword">this</span>.name = name
+}
+
+Animal.prototype.getName = <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
+  <span class="keyword">return</span> <span class="keyword">this</span>.name
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">Cat</span><span class="params">(name)</span>{</span>
+  Animal.call(<span class="keyword">this</span>, name)
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">K</span><span class="params">()</span>{</span>}
+K.prototype = Animal.prototype
+
+Cat.prototype = <span class="keyword">new</span> K
+Cat.prototype.constructor = Cat
+Cat.prototype.type = <span class="string">"cat"</span>
+
+<span class="keyword">var</span> myAnimal = <span class="keyword">new</span> Animal(<span class="string">"Foo"</span>)
+  , myCat = <span class="keyword">new</span> Cat(<span class="string">"Bar"</span>)
+
+myCat <span class="keyword">instanceof</span> Cat <span class="comment">// true</span>
+myCat <span class="keyword">instanceof</span> Animal <span class="comment">// true</span></code></pre>
+<p>Maintenant, à l&#39;aide de deux petites méthodes :</p>
+<pre><code class="language-javascript"><span class="comment">// wow</span>
+<span class="comment">//         many magic</span>
+<span class="comment">//   very es5</span>
+<span class="comment">//            wow</span>
+<span class="function"><span class="keyword">function</span> <span class="title">extend</span><span class="params">(object)</span>{</span>
+  <span class="keyword">var</span> self = Object.create(<span class="keyword">this</span>)
+  <span class="keyword">if</span>(!object) <span class="keyword">return</span> self
+  Object.keys(object)
+    .forEach(<span class="function"><span class="keyword">function</span><span class="params">(key)</span>{</span>
+      self[key] = object[key]
+    })
+  <span class="keyword">return</span> self
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">create</span><span class="params">()</span>{</span>
+  <span class="keyword">var</span> self = Object.create(<span class="keyword">this</span>)
+  <span class="keyword">if</span>(<span class="keyword">typeof</span> self.constructor == <span class="string">"function"</span>) {
+    self.constructor.apply(self, arguments)
+  }
+  <span class="keyword">return</span> self
+}
+
+<span class="keyword">var</span> klass = {
+    create : create
+  , extend : extend
+}</code></pre>
+<p>Tu peux faire ça :</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> animal = klass.extend({
+    constructor : <span class="function"><span class="keyword">function</span><span class="params">(name)</span>{</span>
+      <span class="keyword">this</span>.name = name
+    }
+  , getName : <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
+      <span class="keyword">return</span> <span class="keyword">this</span>.name
+    }
+})
+
+<span class="keyword">var</span> cat = animal.extend({
+    constructor : <span class="function"><span class="keyword">function</span><span class="params">(name)</span>{</span>
+      animal.constructor.call(<span class="keyword">this</span>, name)
+    }
+  , type : <span class="string">"cat"</span>
+})
+
+<span class="keyword">var</span> myAnimal = animal.create(<span class="string">"Foo"</span>)
+  , myCat = cat.create(<span class="string">"Bar"</span>)
+
+cat.isPrototypeOf(myCat) <span class="comment">// true</span>
+animal.isPrototypeOf(myCat) <span class="comment">// true</span></code></pre>
+<p>Voilà, j&#39;espère que cela a pu attiser ta curiosité d&#39;en apprendre plus sur le langage lui-même et le DOM.</p>
+
+
+
+<section class="putainde-AboutTheAuthor">
+  
+    
+    <a class="putainde-AboutTheAuthor-avatar putainde-Author-avatar" href="http://bloodyowl.github.io">
+      <img src="https://gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5?s=300&amp;d=https%3A%2F%2Fidenticons.github.com%2Fc0863a4414cba6aa95014df9e3d9f6a5.png" />
+    </a>
+    
+  
+  <h1 class="putainde-AboutTheAuthor-title">
+    Écrit par
+    <strong class="putainde-AboutTheAuthor-name">bloodyowl</strong>
+    <a class="putainde-AboutTheAuthor-url" href="http://bloodyowl.github.io"><i class="icon icon_home"> </i></a>
+    <a class="putainde-AboutTheAuthor-twitter" href="https://twitter.com/bloodyowl"><i class="icon icon_twitter"> </i></a>
+    <a class="putainde-AboutTheAuthor-github" href="https://github.com/bloodyowl"><i class="icon icon_github"> </i></a>
+  </h1>
+  
+    
+    <div class="putainde-AboutTheAuthor-bio--long"><p>Développeur front-end, aime la bonne bière artisanale, la musique, et JavaScript; n&#x27;aime ni les points virgules, ni les gens</p>
+</div>
+  
+</section>
+
+
+
+
+
+<section class="putainde-Comments">
+  <h1 class="putainde-Comments-title">Comments</h1>
+  <div id="disqus_thread" aria-live="polite">
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+
+    </div>
+    
+    <aside class="putainde-Sidebar grid__cell unit-1-4--m">
+    <aside class="putainde-Sidebar-block">
+	<h1 class="putainde-Sidebar-block-title">On est partout !</h1>
+	<ul class="putainde-Sidebar-block-list--nobullet">
+		<li><a href="https://github.com/putaindecode"><i class="icon icon_github"></i> Github</a></li>
+		<li><a href="https://twitter.com/putaindecode"><i class="icon icon_twitter"></i> Twitter</a></li>
+		<li><a href="#derriere-toi,-c'est-affreux!" onclick="if (confirm('Attention Benjamin...!')) window.location = 'http://www.youtube.com/watch?v=MEKHaG9FxKY&t=44s'; return false;"><i class="icon icon_eye"></i> Derrière toi</a></li>
+	</ul>
+</aside>
+<aside class="putainde-Sidebar-block">
+	<h1 class="putainde-Sidebar-block-title">À avoir sous la main</h1>
+	<ul class="putainde-Sidebar-block-list--nobullet">
+		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues/new"><i class="icon icon_pencil"></i> Proposer un article</a></li>
+		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues?labels=post&state=open"><i class="icon icon_bookmarks"></i> Voir les propositions</a></li>
+		<li><a href="https://github.com/putaindecode/website/blob/master/src/posts/js/comment-se-passer-de-libraries-frameworks-javascript/index.html.hbs"><i class="icon icon_edit"></i> Modifier cette page</a></li>
+	</ul>
+</aside>
+
+
+    </aside>
+    
+  </article>
+  
+    <footer class="putainde-Footer">
+
+    <div class="putainde-Footer-colophon grid">
+      <div class="putainde-Footer-colophon-left grid__cell unit-5-12--m">
+        © 1970 - 2013 Putain de code
+      </div>
+      <div class="putainde-Footer-colophon-center grid__cell unit-2-12--m">
+        <img class="putainde-Footer-logo" alt="Putain de code !" src="/assets/img/p!-logo.svg" />
+      </div>
+      <div class="putainde-Footer-colophon-right grid__cell unit-5-12--m">
+        <span class="putainde-Footer-colophon-item">Made with ❤ by <a href="/le-crew/">le crew</a></span>
+        |
+        <a class="putainde-Footer-colophon-item" href="projets/">Projets</a>
+        |
+        <a class="putainde-Footer-colophon-item" href="https://github.com/putaindecode">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  
+</div>
+<script src="/assets/js/putaindecode.js?20131207131920"></script>
+
+
+	
+	<script>
+		var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src='//www.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+	
+
+
+
+
+
+  <script>
+  var disqus_shortname = 'putaindecode',
+  
+  
+  
+  disqus_identifier = '',
+  disqus_url = '',
+  disqus_script = 'embed.js';
+  
+  (function(d,s) {
+  s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+  (d.getElementsByTagName('head')[0]).appendChild(s);
+  })(document);
+  </script>
+
+
+
+</body>
+</html>
+
