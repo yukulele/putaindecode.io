@@ -21,7 +21,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="feed.xml" rel="alternate" type="application/rss+xml">
 
-<link rel="stylesheet" href="/assets/css/putaindecode.css?20131207131920">
+<link rel="stylesheet" href="/assets/css/putaindecode.css?20131226224840">
 
 
 
@@ -41,9 +41,9 @@
 			<span class="putainde-Baseline">On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</span>
 
 			<ul class="putainde-Nav-list">
-				<li class=""><a class="putainde-Nav-list-item " href="/">Home</a>
 				<li class=""><a class="putainde-Nav-list-item " href="c-est-quoi-putaindecode">Putain de ... ?</a>
-				<li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+        <li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+				<li class=""><a class="putainde-Nav-list-item " href="posts/comment-contribuer/">Comment Contribuer ?</a>
 				<li class=""><a class="putainde-Nav-list-item " href="le-crew">Le Crew</a>
 			</ul>
 		</div>
@@ -77,23 +77,23 @@
 <p>Voyons maintenant comment l&#39;on peut mettre en place ceci via <strong>Grunt</strong>.</p>
 <h2 id="installation">Installation</h2>
 <p>Tout d&#39;abord, installons <strong>Grunt</strong>. Notez que <strong>Grunt</strong> est en <em>nodejs</em> et que je considère que vous avez déjà <em>nodejs</em> d&#39;installé. D&#39;autre part, nous allons créer un nouveau projet <strong>npm</strong> afin d&#39;enregistrer tous les packages que vous allez installer. Je vous explique par la suite pourquoi nous faisons ça.</p>
-<pre><code class="language-bash">$ npm init // puis plusieurs fois entrée</code></pre>
+<pre><code class="language-bash"><span class="cm-def">$ npm</span> init // puis plusieurs fois entrée</code></pre>
 <p>En premier lieu, il faut installer le <em>package</em> qui permet de gérer <strong>Grunt</strong> en ligne de commande. C&#39;est le <em>commander</em> de <strong>Grunt</strong> en gros.</p>
-<pre><code class="language-bash">$ npm install -g grunt-cli</code></pre>
+<pre><code class="language-bash"><span class="cm-def">$ npm</span> install <span class="cm-attribute">-g</span> grunt-cli</code></pre>
 <p>Une fois cela fait, installez <strong>Grunt</strong> en local dans votre projet.</p>
-<pre><code class="language-bash">$ npm install grunt --save-dev</code></pre>
+<pre><code class="language-bash"><span class="cm-def">$ npm</span> install grunt <span class="cm-attribute">--save</span><span class="cm-attribute">-dev</span></code></pre>
 <p>Ni plus ni moins, <strong>Grunt</strong> est enfin installé dans votre projet.</p>
 <h2 id="initialisation">Initialisation</h2>
 <p>Maintenant, il est nécessaire de créer un fichier de configuration <strong>Grunt</strong>. Pour cela, nous allons créer un fichier nommé <code>Gruntfile.js</code> à la racine de votre projet.</p>
-<pre><code class="language-bash">$ touch Gruntfile.js</code></pre>
+<pre><code class="language-bash"><span class="cm-def">$ touch</span> Gruntfile.js</code></pre>
 <p>Fait ? Voici maintenant à quoi doit ressembler la base d&#39;une configuration <strong>Grunt</strong>.</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  <span class="comment">// Configuration de Grunt</span>
-  grunt.initConfig({})
+  <span class="cm-comment">// Configuration de Grunt</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({})
 
-  <span class="comment">// Définition des tâches Grunt</span>
-  grunt.registerTask(<span class="string">'default'</span>, <span class="string">''</span>)
+  <span class="cm-comment">// Définition des tâches Grunt</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, <span class="cm-string">&#39;&#39;</span>)
 
 }</code></pre>
 <p>Nous avons maintenant tout le nécessaire pour débuter notre projet. Nous allons enfin pouvoir attaquer les choses sérieuses. Revenons un peu en arrière où nous expliquions que nous voulons en tout premier lieu compiler nos <code>.scss</code> en <code>.css</code>.</p>
@@ -101,56 +101,56 @@
 <p>Une petite recherche sur votre moteur de recherche préféré en tapant <code>grunt sass</code> et vous trouverez le projet <a href="https://github.com/gruntjs/grunt-contrib-sass"><code>grunt-contrib-sass</code></a>.</p>
 <p>Toute documentation pour installer une tâche <strong>Grunt</strong> est indiquée sur chaque <code>README.md</code> du projet mais pour un souci de clarté et de compréhension, je vais tout de même vous expliquer ici comment faire.</p>
 <p>D&#39;abord, installons le package pour <em>Sass</em>.</p>
-<pre><code class="language-bash">$ npm install grunt-contrib-sass --save-dev</code></pre>
+<pre><code class="language-bash"><span class="cm-def">$ npm</span> install grunt-contrib-sass <span class="cm-attribute">--save</span><span class="cm-attribute">-dev</span></code></pre>
 <p>Ceci va installer le <em>package</em> <code>grunt-contrib-sass</code> dans votre dossier <code>node_modules</code> où vous pourrez l&#39;utiliser en l&#39;important dans votre <code>Gruntfile.js</code>.</p>
 <p>Un exemple d&#39;utilisation :</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {                              <span class="comment">// Nom de la tâche</span>
-      dist: {                            <span class="comment">// Nom de la sous-tâche</span>
-        options: {                       <span class="comment">// Options</span>
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {                              <span class="cm-comment">// Nom de la tâche</span>
+      <span class="cm-property">dist</span>: {                            <span class="cm-comment">// Nom de la sous-tâche</span>
+        <span class="cm-property">options</span>: {                       <span class="cm-comment">// Options</span>
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {                         <span class="comment">// Liste des fichiers</span>
-          <span class="string">'main.css'</span>: <span class="string">'main.scss'</span>,       <span class="comment">// 'destination': 'source'</span>
-          <span class="string">'widgets.css'</span>: <span class="string">'widgets.scss'</span>
+        <span class="cm-property">files</span>: {                         <span class="cm-comment">// Liste des fichiers</span>
+          <span class="cm-stringcm-property">&#39;main.css&#39;</span>: <span class="cm-string">&#39;main.scss&#39;</span>,       <span class="cm-comment">// &#39;destination&#39;: &#39;source&#39;</span>
+          <span class="cm-stringcm-property">&#39;widgets.css&#39;</span>: <span class="cm-string">&#39;widgets.scss&#39;</span>
         }
       }
     }
   })
 
-  <span class="comment">// Import du package</span>
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
+  <span class="cm-comment">// Import du package</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>)
 
-  <span class="comment">// Redéfinition de la tâche `default` qui est la tâche lancée dès que vous lancez Grunt sans rien spécifier.</span>
-  <span class="comment">// Note : ici, nous définissons sass comme une tâche à lancer si on lance la tâche `default`.</span>
-  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>])
+  <span class="cm-comment">// Redéfinition de la tâche `default` qui est la tâche lancée dès que vous lancez Grunt sans rien spécifier.</span>
+  <span class="cm-comment">// Note : ici, nous définissons sass comme une tâche à lancer si on lance la tâche `default`.</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>])
 }</code></pre>
 <p>Nous avons maintenant tout le nécessaire pour pouvoir compiler nos <code>.scss</code> en  <code>.css</code>.</p>
 <p>Vous vous demandez peut-être comment vous pouvez généraliser vos sources plutôt que les définir une par une. Pas de souci.</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: { <span class="comment">// C'est ici que l'on définit le dossier que l'on souhaite importer</span>
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: { <span class="cm-comment">// C&#39;est ici que l&#39;on définit le dossier que l&#39;on souhaite importer</span>
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>)
 
-  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>])
 }</code></pre>
 <h2 id="deuxi-me-t-che-concat-ner-ses-fichiers-javascript">Deuxième tâche : concaténer ses fichiers JavaScript</h2>
 <p>Passons maintenant à la concaténation des fichiers JavaScripts.</p>
@@ -158,232 +158,232 @@
 <p>-&gt; <a href="https://github.com/gruntjs/grunt-contrib-concat"><code>grunt-contrib-concat</code></a></p>
 <p>Installation : <code>npm install grunt-contrib-concat --save-dev</code> (<code>--save-dev</code> permet de sauvegarder le package dans <code>package.json</code> pour pouvoir à tout moment le réinstaller en faisant <code>npm install</code>)</p>
 <p>On ajoute alors à notre configuration <strong>Grunt</strong> l&#39;importation de <code>grunt-contrib-concat</code> :</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>);
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>); <span class="comment">// Voilà l'ajout.</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>);
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>); <span class="cm-comment">// Voilà l&#39;ajout.</span>
 
-  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>])
 }</code></pre>
 <p>Puis on ajoute notre tâche :</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     },
-    concat: {
-      options: {
-        separator: <span class="string">';'</span>, <span class="comment">// permet d'ajouter un point-virgule entre chaque fichier concaténé.</span>
+    <span class="cm-property">concat</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>, <span class="cm-comment">// permet d&#39;ajouter un point-virgule entre chaque fichier concaténé.</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>], <span class="comment">// la source</span>
-        dest: <span class="string">'dist/built.js'</span> <span class="comment">// la destination finale</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>], <span class="cm-comment">// la source</span>
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span> <span class="cm-comment">// la destination finale</span>
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>);
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>);
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>);
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>);
 
-  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>])
 }</code></pre>
 <p>Ne pas oublier d&#39;ajouter la tâche de concaténation à notre tâche par défaut :</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     },
-    concat: {
-      options: {
-        separator: <span class="string">';'</span>, <span class="comment">// permet d'ajouter un point-virgule entre chaque fichier concaténé.</span>
+    <span class="cm-property">concat</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>, <span class="cm-comment">// permet d&#39;ajouter un point-virgule entre chaque fichier concaténé.</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>], <span class="comment">// la source</span>
-        dest: <span class="string">'dist/built.js'</span> <span class="comment">// la destination finale</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>], <span class="cm-comment">// la source</span>
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span> <span class="cm-comment">// la destination finale</span>
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>);
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>);
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>);
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>);
 
-  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'concat:dist'</span>]) <span class="comment">// ici même.</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>, <span class="cm-string">&#39;concat:dist&#39;</span>]) <span class="cm-comment">// ici même.</span>
 }</code></pre>
 <h2 id="compressons-le-tout-">Compressons le tout !</h2>
 <p>Pour finir, compressons nos fichiers JavaScript ! Pour cela : <a href="https://github.com/gruntjs/grunt-contrib-uglify"><code>grunt-contrib-uglify</code></a> fera l&#39;affaire.</p>
 <p>Je vous passe les détails pour l&#39;installer, si vous avez bien suivi cet article, vous ne devriez avoir aucun problème pour l&#39;installer.</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     },
-    concat: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">concat</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>],
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>],
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     },
-    uglify: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">uglify</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>]
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>],
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>)
 
-  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'concat:dist'</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>, <span class="cm-string">&#39;concat:dist&#39;</span>])
 }</code></pre>
 <p>Ne constatez vous pas un souci ici ? Oui, nous ne voulons sûrement pas à la fois concaténer nos fichiers et les compresser. Alors comment faire ? Pas d&#39;inquiètude, il suffit de créer des tâches d&#39;environnement ou de contexte. On pourrait par exemple créer une tâche développement et une tâche de production, qu&#39;en pensez-vous ? Pas mal non ? :)</p>
 <h2 id="optimisons-">Optimisons !</h2>
 <p>Supprimons alors dans un premier temps notre tâche par défaut et créons deux tâches : <code>dev</code> et <code>dist</code>.</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     },
-    concat: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">concat</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>],
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>],
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     },
-    uglify: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">uglify</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>]
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>],
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>)
 
-  grunt.registerTask(<span class="string">'dev'</span>, [])
-  grunt.registerTask(<span class="string">'dist'</span>, [])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dev&#39;</span>, [])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-variable">registerTask</span>(<span class="cm-string">&#39;dist&#39;</span>, [])
 }</code></pre>
 <p>Sauf que comme ça, vous le voyez, cela ne va pas faire grand chose, voire rien du tout. Agrémentons alors nos deux tâches par ce qu&#39;on souhaite faire.</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     },
-    concat: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">concat</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>],
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>],
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     },
-    uglify: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">uglify</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>]
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>],
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>)
 
-  grunt.registerTask(<span class="string">'dev'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'concat:dist'</span>]) <span class="comment">// C'est pas chouette ça ?</span>
-  grunt.registerTask(<span class="string">'dist'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'uglify:dist'</span>]) <span class="comment">// Et hop, je compresse si je lance $ grunt dist</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dev&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>, <span class="cm-string">&#39;concat:dist&#39;</span>]) <span class="cm-comment">// C&#39;est pas chouette ça ?</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dist&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>, <span class="cm-string">&#39;uglify:dist&#39;</span>]) <span class="cm-comment">// Et hop, je compresse si je lance $ grunt dist</span>
 }</code></pre>
 <p>Ha ! Nous y voilà ! Nous avons alors deux tâches <code>grunt dev</code> et <code>grunt dist</code> qui nous permettent dans tous les cas de générer nos css et dans un cas concaténer nos js, dans l&#39;autre les compresser (la compression fait aussi la concaténation implicitement).</p>
 <p>Sauf que comme tout bon(ne) développeur/euse, vous êtes une grosse feignasse et compiler à chaque fois que vous faites des modifications sur vos fichiers va vite être saoulant.</p>
@@ -391,189 +391,189 @@
 <h2 id="regarde-ce-fichier-que-je-ne-euh-bref-">Regarde ce fichier que je ne... euh bref.</h2>
 <p>Très simple, <code>watch</code> va vous permettre de &quot;regarder&quot; vos fichiers, savoir lesquels ont changé et donc lancer une action en fonction du type de fichiers.</p>
 <p>Imaginons que l&#39;on veut par exemple compiler nos css à chaque fois que l&#39;on change un fichier <em>Sass</em>. Ou encore que l&#39;on concatène nos fichiers JavaScript dès que l&#39;on touche à l&#39;un d&#39;entre eux.</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     },
-    concat: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">concat</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>],
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>],
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     },
-    uglify: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">uglify</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>]
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>]
+        <span class="cm-variable">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     },
-    watch: {
-      scripts: {
-        files: <span class="string">'**/*.js'</span>, <span class="comment">// tous les fichiers JavaScript de n'importe quel dossier</span>
-        tasks: [<span class="string">'concat:dist'</span>]
+    <span class="cm-property">watch</span>: {
+      <span class="cm-property">scripts</span>: {
+        <span class="cm-property">files</span>: <span class="cm-string">&#39;**/*.js&#39;</span>, <span class="cm-comment">// tous les fichiers JavaScript de n&#39;importe quel dossier</span>
+        <span class="cm-property">tasks</span>: [<span class="cm-string">&#39;concat:dist&#39;</span>]
       },
-      styles: {
-        files: <span class="string">'**/*.scss'</span>, <span class="comment">// tous les fichiers Sass de n'importe quel dossier</span>
-        tasks: [<span class="string">'sass:dist'</span>]
+      <span class="cm-property">styles</span>: {
+        <span class="cm-property">files</span>: <span class="cm-string">&#39;**/*.scss&#39;</span>, <span class="cm-comment">// tous les fichiers Sass de n&#39;importe quel dossier</span>
+        <span class="cm-property">tasks</span>: [<span class="cm-string">&#39;sass:dist&#39;</span>]
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>)
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-watch'</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-watch&#39;</span>)
 
-  grunt.registerTask(<span class="string">'dev'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'concat:dist'</span>])
-  grunt.registerTask(<span class="string">'dist'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'uglify:dist'</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dev&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>, <span class="cm-string">&#39;concat:dist&#39;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dist&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>, <span class="cm-string">&#39;uglify:dist&#39;</span>])
 }</code></pre>
 <p>Maintenant, vous êtes capable à tout moment de compiler automatiquement vos fichiers en lançant simplement <code>$ grunt watch</code>.</p>
 <p>Oui, comprenez bien que lorsque vous ajoutez une tâche dans la définition de la configuration de <strong>Grunt</strong>, elle est appelable directement. Typiquement, vous pouvez faire <code>$ grunt premier-niveau:deuxieme-niveau</code> soit par exemple <code>$ grunt sass:dist</code>. Vous n&#39;êtes pas obligé(e) de (re)définir chaque tâche via <code>grunt.registerTask()</code>.</p>
 <p>Je ne sais pas si vous vous rappelez mais nous avions crée une tâche de base s&#39;appelant <code>default</code>. Cette tâche se lance dès que vous ne passez aucun paramètre à <strong>Grunt</strong> soit <code>$ grunt</code>. Vous pouvez aussi l&#39;appeler via <code>$ grunt default</code> mais aucun intérêt.</p>
 <p>Tout ça pour dire qu&#39;il est serait sûrement intéressant de lancer la tâche <code>watch</code> dès qu&#39;on souhaite lancer <strong>Grunt</strong> étant donné que c&#39;est sûrement la tâche la plus récurrente que vous utiliserez.</p>
 <p>C&#39;est parti !</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     },
-    concat: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">concat</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>],
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>],
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     },
-    uglify: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">uglify</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>]
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>]
+        <span class="cm-variable">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     },
-    watch: {
-      scripts: {
-        files: <span class="string">'**/*.js'</span>, <span class="comment">// tous les fichiers JavaScript de n'importe quel dossier</span>
-        tasks: [<span class="string">'concat:dist'</span>]
+    <span class="cm-property">watch</span>: {
+      <span class="cm-property">scripts</span>: {
+        <span class="cm-property">files</span>: <span class="cm-string">&#39;**/*.js&#39;</span>, <span class="cm-comment">// tous les fichiers JavaScript de n&#39;importe quel dossier</span>
+        <span class="cm-property">tasks</span>: [<span class="cm-string">&#39;concat:dist&#39;</span>]
       },
-      styles: {
-        files: <span class="string">'**/*.scss'</span>, <span class="comment">// tous les fichiers Sass de n'importe quel dossier</span>
-        tasks: [<span class="string">'sass:dist'</span>]
+      <span class="cm-property">styles</span>: {
+        <span class="cm-property">files</span>: <span class="cm-string">&#39;**/*.scss&#39;</span>, <span class="cm-comment">// tous les fichiers Sass de n&#39;importe quel dossier</span>
+        <span class="cm-property">tasks</span>: [<span class="cm-string">&#39;sass:dist&#39;</span>]
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>)
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-watch'</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-watch&#39;</span>)
 
-  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'dev'</span>, <span class="string">'watch'</span>]) <span class="comment">// Oui, je conseille de toujours compiler une fois avant de lancer watch.</span>
-  grunt.registerTask(<span class="string">'dev'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'concat:dist'</span>])
-  grunt.registerTask(<span class="string">'dist'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'uglify:dist'</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, [<span class="cm-string">&#39;dev&#39;</span>, <span class="cm-string">&#39;watch&#39;</span>]) <span class="cm-comment">// Oui, je conseille de toujours compiler une fois avant de lancer watch.</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dev&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>, <span class="cm-string">&#39;concat:dist&#39;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dist&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>, <span class="cm-string">&#39;uglify:dist&#39;</span>])
 }</code></pre>
 <p>That&#39;s it. Nous avons maintenant tout le nécessaire pour compiler des css, du js, l&#39;optimiser, ainsi qu&#39;avoir une commande de développement avec compilation automatique.</p>
 <p>Et puisque je suis maniaque, nous allons ranger un peu :</p>
-<pre><code class="language-javascript">module.exports = function(grunt) {
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  // Je préfère définir mes imports tout en haut
-  grunt.loadNpmTasks(&#39;grunt-contrib-sass&#39;)
-  grunt.loadNpmTasks(&#39;grunt-contrib-concat&#39;)
-  grunt.loadNpmTasks(&#39;grunt-contrib-watch&#39;)
+  <span class="cm-comment">// Je préfère définir mes imports tout en haut</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-watch&#39;</span>)
 
-  var jsSrc = [&#39;src/intro.js&#39;, &#39;src/project.js&#39;, &#39;src/outro.js&#39;]
-    , jsDist = &#39;dist/built.js
+  <span class="cm-keyword">var</span> <span class="cm-def">jsSrc</span> = [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>]
+    , <span class="cm-def">jsDist</span> = <span class="cm-string">&#39;dist/built.js&#39;</span>
 
-  // Configuration de Grunt
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: &#39;expanded&#39;
+  <span class="cm-comment">// Configuration de Grunt</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          &quot;expand&quot;: true,
-          &quot;cwd&quot;: &quot;src/styles/&quot;,
-          &quot;src&quot;: [&quot;*.scss&quot;],
-          &quot;dest&quot;: &quot;dist/styles/&quot;,
-          &quot;ext&quot;: &quot;.css&quot;
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       },
-      dev: {} // A vous de le faire ! vous verrez que certaines options Sass sont plus intéressantes en mode dev que d&#39;autres.
+      <span class="cm-property">dev</span>: {} <span class="cm-comment">// A vous de le faire ! vous verrez que certaines options Sass sont plus intéressantes en mode dev que d&#39;autres.</span>
     },
-    concat: {
-      options: {
-        separator: &#39;;&#39;
+    <span class="cm-property">concat</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      compile: { // On renomme vu qu&#39;on a pas de mode dev/dist. Dist étant une autre tâche : uglify
-        src: jsSrc, // Vu qu&#39;on doit l&#39;utiliser deux fois, autant en faire une variable.
-        dest: jsDist // Il existe des hacks plus intéressants mais ce n&#39;est pas le sujet du post.
+      <span class="cm-property">compile</span>: { <span class="cm-comment">// On renomme vu qu&#39;on a pas de mode dev/dist. Dist étant une autre tâche : uglify</span>
+        <span class="cm-property">src</span>: <span class="cm-variable-2">jsSrc</span>, <span class="cm-comment">// Vu qu&#39;on doit l&#39;utiliser deux fois, autant en faire une variable.</span>
+        <span class="cm-property">dest</span>: <span class="cm-variable-2">jsDist</span> <span class="cm-comment">// Il existe des hacks plus intéressants mais ce n&#39;est pas le sujet du post.</span>
       }
     },
-    uglify: {
-      options: {
-        separator: &#39;;&#39;
+    <span class="cm-property">uglify</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      compile: {
-        src: jsSrc,
-        dest: jsDist
+      <span class="cm-property">compile</span>: {
+        <span class="cm-property">src</span>: <span class="cm-variable-2">jsSrc</span>,
+        <span class="cm-property">dest</span>: <span class="cm-variable-2">jsDist</span>
       }
     },
-    watch: {
-      scripts: {
-        files: &#39;**/*.js&#39;,
-        tasks: [&#39;scripts:dev&#39;]
+    <span class="cm-property">watch</span>: {
+      <span class="cm-property">scripts</span>: {
+        <span class="cm-property">files</span>: <span class="cm-string">&#39;**/*.js&#39;</span>,
+        <span class="cm-property">tasks</span>: [<span class="cm-string">&#39;scripts:dev&#39;</span>]
       },
-      styles: {
-        files: &#39;**/*.scss&#39;,
-        tasks: [&#39;styles:dev&#39;]
+      <span class="cm-property">styles</span>: {
+        <span class="cm-property">files</span>: <span class="cm-string">&#39;**/*.scss&#39;</span>,
+        <span class="cm-property">tasks</span>: [<span class="cm-string">&#39;styles:dev&#39;</span>]
       }
     }
   })
 
-  grunt.registerTask(&#39;default&#39;, [&#39;dev&#39;, &#39;watch&#39;])
-  grunt.registerTask(&#39;dev&#39;, [&#39;styles:dev&#39;, &#39;scripts:dev&#39;])
-  grunt.registerTask(&#39;dist&#39;, [&#39;styles:dist&#39;, &#39;scripts:dist&#39;])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, [<span class="cm-string">&#39;dev&#39;</span>, <span class="cm-string">&#39;watch&#39;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dev&#39;</span>, [<span class="cm-string">&#39;styles:dev&#39;</span>, <span class="cm-string">&#39;scripts:dev&#39;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dist&#39;</span>, [<span class="cm-string">&#39;styles:dist&#39;</span>, <span class="cm-string">&#39;scripts:dist&#39;</span>])
 
-  // J&#39;aime bien avoir des noms génériques
-  grunt.registerTask(&#39;scripts:dev&#39;, [&#39;concat:compile&#39;])
-  grunt.registerTask(&#39;scripts:dist&#39;, [&#39;uglify:compile&#39;])
+  <span class="cm-comment">// J&#39;aime bien avoir des noms génériques</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;scripts:dev&#39;</span>, [<span class="cm-string">&#39;concat:compile&#39;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;scripts:dist&#39;</span>, [<span class="cm-string">&#39;uglify:compile&#39;</span>])
 
-  grunt.registerTask(&#39;styles:dev&#39;, [&#39;sass:dev&#39;])
-  grunt.registerTask(&#39;styles:dist&#39;, [&#39;sass:dist&#39;])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;styles:dev&#39;</span>, [<span class="cm-string">&#39;sass:dev&#39;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;styles:dist&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>])
 }</code></pre>
 <p>Avec ça, je pense qu&#39;on est pas trop mal. Il reste des optimisations éventuelles à faire et nombreuses autres tâches intéressantes peuvent être ajoutées comme <a href="https://github.com/gruntjs/grunt-contrib-jshint/">jshint</a>. Cela fera probablement office d&#39;un autre article.</p>
 <p>J&#39;espère que vous y voyez maintenant un peu plus clair dans <strong>Grunt</strong> ainsi que dans la compilation côté front-end. <strong>Grunt</strong> est un excellent produit, avec une communauté réactive et il est rare qu&#39;une tâche que vous souhaitiez mettre en place n&#39;existe pas.</p>
@@ -662,7 +662,7 @@
 
   
 </div>
-<script src="/assets/js/putaindecode.js?20131207131920"></script>
+<script src="/assets/js/putaindecode.js?20131226224840"></script>
 
 
 	

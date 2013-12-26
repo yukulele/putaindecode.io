@@ -21,7 +21,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="feed.xml" rel="alternate" type="application/rss+xml">
 
-<link rel="stylesheet" href="/assets/css/putaindecode.css?20131207131920">
+<link rel="stylesheet" href="/assets/css/putaindecode.css?20131226224840">
 
 
 
@@ -41,9 +41,9 @@
 			<span class="putainde-Baseline">On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</span>
 
 			<ul class="putainde-Nav-list">
-				<li class=""><a class="putainde-Nav-list-item " href="/">Home</a>
 				<li class=""><a class="putainde-Nav-list-item " href="c-est-quoi-putaindecode">Putain de ... ?</a>
-				<li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+        <li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+				<li class=""><a class="putainde-Nav-list-item " href="posts/comment-contribuer/">Comment Contribuer ?</a>
 				<li class=""><a class="putainde-Nav-list-item " href="le-crew">Le Crew</a>
 			</ul>
 		</div>
@@ -132,7 +132,7 @@ tes pauses cafés aux prétextes douteux.</p>
 <p>On va partir du principe que tu as Go et Revel prêts pour la baston. On attaque
 direct à sec par le classique “revel new” puisqu&#39;on va partir de la structure de
 base.</p>
-<pre><code>revel new github.com/OwlyCode/PutainDeProjet</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ revel</span> new github.com/OwlyCode/PutainDeProjet</code></pre>
 <p>Là théoriquement, tu te retrouves avec la structure par défaut du boilerplate
 revel, quelque chose comme ça:</p>
 <ul>
@@ -153,104 +153,104 @@ revel, quelque chose comme ça:</p>
  En fait ce n’est rien de plus qu’un binding entre Revel et Mgo. La technique 
  utilisée pour brancher ce binding côté Revel est celle des 
  <a href="http://robfig.github.io/revel/manual/interceptors.html">interceptors</a>.</p>
-<pre><code>package mongo
+<pre><code class="language-go"><span class="cm-keyword">package</span> <span class="cm-variable">mongo</span>
 
-import (
-    &quot;github.com/robfig/revel&quot;
-    &quot;labix.org/v2/mgo&quot;
-    &quot;sync&quot;
+<span class="cm-keyword">import</span> (
+    <span class="cm-string">&quot;github.com/robfig/revel&quot;</span>
+    <span class="cm-string">&quot;labix.org/v2/mgo&quot;</span>
+    <span class="cm-string">&quot;sync&quot;</span>
 )
 
-// Extension du controlleur.
-type Mongo struct {
-    *revel.Controller
-    MongoSession  *mgo.Session
-    MongoDatabase *mgo.Database
+<span class="cm-comment">// Extension du controlleur.</span>
+<span class="cm-keyword">type</span> <span class="cm-variable">Mongo</span> <span class="cm-keyword">struct</span> {
+    <span class="cm-operator">*</span><span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">Controller</span>
+    <span class="cm-variable">MongoSession</span>  <span class="cm-operator">*</span><span class="cm-variable">mgo</span><span class="cm-number">.</span><span class="cm-variable">Session</span>
+    <span class="cm-variable">MongoDatabase</span> <span class="cm-operator">*</span><span class="cm-variable">mgo</span><span class="cm-number">.</span><span class="cm-variable">Database</span>
 }
 
-// Stockage global de la session dont la visibilité est restreinte au package.
-var session *mgo.Session
+<span class="cm-comment">// Stockage global de la session dont la visibilité est restreinte au package.</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">session</span> <span class="cm-operator">*</span><span class="cm-variable">mgo</span><span class="cm-number">.</span><span class="cm-variable">Session</span>
 
-// Singleton
-var dial sync.Once
+<span class="cm-comment">// Singleton</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">dial</span> <span class="cm-variable">sync</span><span class="cm-number">.</span><span class="cm-variable">Once</span>
 
-// Renvoie la session mgo en cours, si aucune n&#39;existe, elle est créée.
-func GetSession() *mgo.Session {
+<span class="cm-comment">// Renvoie la session mgo en cours, si aucune n&#39;existe, elle est créée.</span>
+<span class="cm-keyword">func</span> <span class="cm-variable">GetSession</span>() <span class="cm-operator">*</span><span class="cm-variable">mgo</span><span class="cm-number">.</span><span class="cm-variable">Session</span> {
 
-    host, _ := revel.Config.String(&quot;mongo.host&quot;)
+    <span class="cm-variable">host</span>, <span class="cm-variable">_</span> :<span class="cm-operator">=</span> <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">Config</span><span class="cm-number">.</span><span class="cm-variable">String</span>(<span class="cm-string">&quot;mongo.host&quot;</span>)
 
-    // Grâce au package sync cette fonction n&#39;est appelée
-    // qu&#39;une seule fois et de manière synchrone.
-    dial.Do(func() {
-        var err error
-        session, err = mgo.Dial(host)
-        if err != nil {
-            panic(err)
+    <span class="cm-comment">// Grâce au package sync cette fonction n&#39;est appelée</span>
+    <span class="cm-comment">// qu&#39;une seule fois et de manière synchrone.</span>
+    <span class="cm-variable">dial</span><span class="cm-number">.</span><span class="cm-variable">Do</span>(<span class="cm-keyword">func</span>() {
+        <span class="cm-keyword">var</span> <span class="cm-variable">err</span> <span class="cm-variable">error</span>
+        <span class="cm-variable">session</span>, <span class="cm-variable">err</span> <span class="cm-operator">=</span> <span class="cm-variable">mgo</span><span class="cm-number">.</span><span class="cm-variable">Dial</span>(<span class="cm-variable">host</span>)
+        <span class="cm-keyword">if</span> <span class="cm-variable">err</span> <span class="cm-operator">!=</span> <span class="cm-atom">nil</span> {
+            <span class="cm-atom">panic</span>(<span class="cm-variable">err</span>)
         }
     })
 
-    return session
+    <span class="cm-keyword">return</span> <span class="cm-variable">session</span>
 }
 
-// Alimente les propriétés affectées au controlleur en clonant la session mongo.
-func (c *Mongo) Bind() revel.Result {
-    // Oublie pas de mettre mongo.database dans le app.conf, genre &quot;localhost&quot;
-    databaseName, _ := revel.Config.String(&quot;mongo.database&quot;)
+<span class="cm-comment">// Alimente les propriétés affectées au controlleur en clonant la session mongo.</span>
+<span class="cm-keyword">func</span> (<span class="cm-variable">c</span> <span class="cm-operator">*</span><span class="cm-variable">Mongo</span>) <span class="cm-variable">Bind</span>() <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">Result</span> {
+    <span class="cm-comment">// Oublie pas de mettre mongo.database dans le app.conf, genre &quot;localhost&quot;</span>
+    <span class="cm-variable">databaseName</span>, <span class="cm-variable">_</span> :<span class="cm-operator">=</span> <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">Config</span><span class="cm-number">.</span><span class="cm-variable">String</span>(<span class="cm-string">&quot;mongo.database&quot;</span>)
 
-    c.MongoSession = GetSession().Clone()
-    c.MongoDatabase = c.MongoSession.DB(databaseName)
+    <span class="cm-variable">c</span><span class="cm-number">.</span><span class="cm-variable">MongoSession</span> <span class="cm-operator">=</span> <span class="cm-variable">GetSession</span>()<span class="cm-number">.</span><span class="cm-variable">Clone</span>()
+    <span class="cm-variable">c</span><span class="cm-number">.</span><span class="cm-variable">MongoDatabase</span> <span class="cm-operator">=</span> <span class="cm-variable">c</span><span class="cm-number">.</span><span class="cm-variable">MongoSession</span><span class="cm-number">.</span><span class="cm-variable">DB</span>(<span class="cm-variable">databaseName</span>)
 
-    return nil
+    <span class="cm-keyword">return</span> <span class="cm-atom">nil</span>
 }
 
-// Ferme un clone
-func (c *Mongo) Close() revel.Result {
+<span class="cm-comment">// Ferme un clone</span>
+<span class="cm-keyword">func</span> (<span class="cm-variable">c</span> <span class="cm-operator">*</span><span class="cm-variable">Mongo</span>) <span class="cm-variable">Close</span>() <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">Result</span> {
 
-    if c.MongoSession != nil {
-        c.MongoSession.Close()
+    <span class="cm-keyword">if</span> <span class="cm-variable">c</span><span class="cm-number">.</span><span class="cm-variable">MongoSession</span> <span class="cm-operator">!=</span> <span class="cm-atom">nil</span> {
+        <span class="cm-variable">c</span><span class="cm-number">.</span><span class="cm-variable">MongoSession</span><span class="cm-number">.</span><span class="cm-variable">Close</span>()
     }
 
-    return nil
+    <span class="cm-keyword">return</span> <span class="cm-atom">nil</span>
 }
 
-// Fonction appelée au chargement de l&#39;application.
-// Elle effectue un appel a notre fonction Bind avant
-// chaque execution du controlleur.
-func init() {
-    revel.InterceptMethod((*Mongo).Bind, revel.BEFORE)
-    revel.InterceptMethod((*Mongo).Close, revel.AFTER)
-    // On veut aussi fermer le clone si le controlleur plante.
-    revel.InterceptMethod((*Mongo).Close, revel.PANIC)
+<span class="cm-comment">// Fonction appelée au chargement de l&#39;application.</span>
+<span class="cm-comment">// Elle effectue un appel a notre fonction Bind avant</span>
+<span class="cm-comment">// chaque execution du controlleur.</span>
+<span class="cm-keyword">func</span> <span class="cm-variable">init</span>() {
+    <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">InterceptMethod</span>((<span class="cm-operator">*</span><span class="cm-variable">Mongo</span>)<span class="cm-number">.</span><span class="cm-variable">Bind</span>, <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">BEFORE</span>)
+    <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">InterceptMethod</span>((<span class="cm-operator">*</span><span class="cm-variable">Mongo</span>)<span class="cm-number">.</span><span class="cm-variable">Close</span>, <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">AFTER</span>)
+    <span class="cm-comment">// On veut aussi fermer le clone si le controlleur plante.</span>
+    <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">InterceptMethod</span>((<span class="cm-operator">*</span><span class="cm-variable">Mongo</span>)<span class="cm-number">.</span><span class="cm-variable">Close</span>, <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">PANIC</span>)
 }</code></pre>
 <p>On a créé notre connexion à mongo, mais maintenant on va aussi l’utiliser. Dans
 le contrôleur, rien de plus simple :</p>
-<pre><code>import (
-    &quot;github.com/robfig/revel&quot;
-    &quot;github.com/OwlyCode/PutainDeProjet/app/modules/mongo&quot;
+<pre><code class="language-go"><span class="cm-keyword">import</span> (
+    <span class="cm-string">&quot;github.com/robfig/revel&quot;</span>
+    <span class="cm-string">&quot;github.com/OwlyCode/PutainDeProjet/app/modules/mongo&quot;</span>
 )
 
-type AppController struct {
-    *revel.Controller
-    mongo.Mongo // Le controlleur doit étendre notre type Mongo.
+<span class="cm-keyword">type</span> <span class="cm-variable">AppController</span> <span class="cm-keyword">struct</span> {
+    <span class="cm-operator">*</span><span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">Controller</span>
+    <span class="cm-variable">mongo</span><span class="cm-number">.</span><span class="cm-variable">Mongo</span> <span class="cm-comment">// Le controlleur doit étendre notre type Mongo.</span>
 }
 
-func (c *AppController) Index() revel.Result {
-    usersCollection := c.MongoDatabase.C(&quot;users&quot;)
-    // tu peux maintenant manipuler ta mgo.Collection.
-    // [ ... ]
+<span class="cm-keyword">func</span> (<span class="cm-variable">c</span> <span class="cm-operator">*</span><span class="cm-variable">AppController</span>) <span class="cm-variable">Index</span>() <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">Result</span> {
+    <span class="cm-variable">usersCollection</span> :<span class="cm-operator">=</span> <span class="cm-variable">c</span><span class="cm-number">.</span><span class="cm-variable">MongoDatabase</span><span class="cm-number">.</span><span class="cm-variable">C</span>(<span class="cm-string">&quot;users&quot;</span>)
+    <span class="cm-comment">// tu peux maintenant manipuler ta mgo.Collection.</span>
+    <span class="cm-comment">// [ ... ]</span>
 }</code></pre>
 <p>Mais tu peux aussi l’appeler ailleurs dans le projet, par exemple dans un autre
 module :</p>
-<pre><code>import (
-    &quot;github.com/OwlyCode/PutainDeProjet/app/modules/mongo&quot;
+<pre><code class="language-go"><span class="cm-keyword">import</span> (
+    <span class="cm-string">&quot;github.com/OwlyCode/PutainDeProjet/app/modules/mongo&quot;</span>
 )
 
-func DoStuff(user *models.User) {
-    session := mongo.GetSession()
-    defer session.Close() // Oublie pas de fermer le robinet à la fin!
+<span class="cm-keyword">func</span> <span class="cm-variable">DoStuff</span>(<span class="cm-variable">user</span> <span class="cm-operator">*</span><span class="cm-variable">models</span><span class="cm-number">.</span><span class="cm-variable">User</span>) {
+    <span class="cm-variable">session</span> :<span class="cm-operator">=</span> <span class="cm-variable">mongo</span><span class="cm-number">.</span><span class="cm-variable">GetSession</span>()
+    <span class="cm-keyword">defer</span> <span class="cm-variable">session</span><span class="cm-number">.</span><span class="cm-variable">Close</span>() <span class="cm-comment">// Oublie pas de fermer le robinet à la fin!</span>
 
-    // tu peux maintenant manipuler ta mgo.Session.
-    // [ ... ]
+    <span class="cm-comment">// tu peux maintenant manipuler ta mgo.Session.</span>
+    <span class="cm-comment">// [ ... ]</span>
 }</code></pre>
 <p><strong>C&#39;est bien beau de copier coller mais ...</strong></p>
 <p>... tu te demandes certainement pourquoi on a créé un dossier <code>app/modules</code>, si
@@ -412,7 +412,7 @@ Amateur de science fiction, d&#x27;insectes et reste sur Windows pour Starcraft 
 
   
 </div>
-<script src="/assets/js/putaindecode.js?20131207131920"></script>
+<script src="/assets/js/putaindecode.js?20131226224840"></script>
 
 
 	

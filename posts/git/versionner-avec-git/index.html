@@ -21,7 +21,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="feed.xml" rel="alternate" type="application/rss+xml">
 
-<link rel="stylesheet" href="/assets/css/putaindecode.css?20131207131920">
+<link rel="stylesheet" href="/assets/css/putaindecode.css?20131226224840">
 
 
 
@@ -41,9 +41,9 @@
 			<span class="putainde-Baseline">On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</span>
 
 			<ul class="putainde-Nav-list">
-				<li class=""><a class="putainde-Nav-list-item " href="/">Home</a>
 				<li class=""><a class="putainde-Nav-list-item " href="c-est-quoi-putaindecode">Putain de ... ?</a>
-				<li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+        <li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+				<li class=""><a class="putainde-Nav-list-item " href="posts/comment-contribuer/">Comment Contribuer ?</a>
 				<li class=""><a class="putainde-Nav-list-item " href="le-crew">Le Crew</a>
 			</ul>
 		</div>
@@ -120,7 +120,7 @@ nom local pour le dépôt. Il va récupérer le dépôt à l&#39;adresse spécif
 bien foutu hein ?) puis le mettre soit dans un dossier du même nom soit dans un
 dossier du nom spécifié en dernier argument.</p>
 <p>Par exemple, si je veux cloner le dépôt du site :</p>
-<pre><code class="language-bash">$ git clone https://github.com/putaindecode/website.git</code></pre>
+<pre><code class="language-bash"><span class="cm-def">$ git</span> clone https://github.com/putaindecode/website.git</code></pre>
 <p>Ça va créer un dossier <code>website</code> avec le contenu du dépôt.</p>
 <p><code>clone</code> accepte plusieurs types d&#39;adresse : HTTP(S), SSH, protocole Git dédié et
 même des chemins locaux pour cloner un dépôt situé ailleurs sur le système de
@@ -130,8 +130,8 @@ bien pour lancer les vraies commandes intéressantes de Git.</p>
 <h2 id="premiers-commits">Premiers commits</h2>
 <p>Pour commencer à s&#39;amuser, écrivez un bout de code dans un fichier et
 sauvegardez le :</p>
-<pre><code class="language-bash">$ cat &gt; putain_de_hello_world.rb
-puts <span class="string">"Hello, putain de codeur !"</span>
+<pre><code class="language-bash"><span class="cm-def">$ cat</span> &gt; putain_de_hello_world.rb
+puts <span class="cm-string">&quot;Hello, putain de codeur !&quot;</span>
 ^D</code></pre>
 <p>On va tout se suite introduire l&#39;un des concepts déroutants de Git, <em>l&#39;Index</em>.
 Git utilise trois zones distinctes pour les fichiers : le dossier de travail
@@ -154,31 +154,31 @@ difficile.</p>
 <p>Dans notre cas, notre fichier n&#39;est même pas encore suivi par Git ! Vous pouvez
 vérifier ça en utilisant <code>git status</code>, dont vous ne pourrez bientôt plus vous
 passer :</p>
-<pre><code class="language-bash">$ git status
-<span class="comment"># Sur la branche master</span>
-<span class="comment">#</span>
-<span class="comment"># Validation initiale.</span>
-<span class="comment">#</span>
-<span class="comment"># Fichiers non suivis:</span>
-<span class="comment">#   (utilisez "git add &lt;fichier&gt;..." pour inclure dans ce qui sera validé)</span>
-<span class="comment">#</span>
-<span class="comment">#    putain_de_hello_world.rb</span>
-Aucune modification indexée mais des fichiers non suivis sont présents (utilisez <span class="string">"git add"</span> pour les suivre)</code></pre>
+<pre><code class="language-bash"><span class="cm-def">$ git</span> status
+<span class="cm-comment"># Sur la branche master</span>
+<span class="cm-comment">#</span>
+<span class="cm-comment"># Validation initiale.</span>
+<span class="cm-comment">#</span>
+<span class="cm-comment"># Fichiers non suivis:</span>
+<span class="cm-comment">#   (utilisez &quot;git add &lt;fichier&gt;...&quot; pour inclure dans ce qui sera validé)</span>
+<span class="cm-comment">#</span>
+<span class="cm-comment">#    putain_de_hello_world.rb</span>
+Aucune modification indexée mais des fichiers non suivis sont présents (utilisez <span class="cm-string">&quot;git add&quot;</span> pour les suivre)</code></pre>
 <p>Pour pallier celà, on utilise <code>git add</code> pour l&#39;ajouter direct à l&#39;index.</p>
 <p>Dans notre cas, ça donne <code>git add putain_de_hello_world.rb</code></p>
 <p>On peut utilise <code>git add</code> pour ajouter des dossiers entiers, des motifs, … Mais
 soyez vigilants, c&#39;est une bonne source d&#39;erreurs souvent chiantes.</p>
 <p>Vous pouvez vérifier que <code>git add</code> a bien marché avec la commande <code>git status</code>,</p>
-<pre><code class="language-bash">$ git status
-<span class="comment"># Sur la branche master</span>
-<span class="comment">#</span>
-<span class="comment"># Validation initiale.</span>
-<span class="comment">#</span>
-<span class="comment"># Modifications qui seront validées :</span>
-<span class="comment">#   (utilisez "git rm --cached &lt;fichier&gt;..." pour désindexer)</span>
-<span class="comment">#</span>
-<span class="comment">#    nouveau : putain_de_hello_world.rb</span>
-<span class="comment">#</span></code></pre>
+<pre><code class="language-bash"><span class="cm-def">$ git</span> status
+<span class="cm-comment"># Sur la branche master</span>
+<span class="cm-comment">#</span>
+<span class="cm-comment"># Validation initiale.</span>
+<span class="cm-comment">#</span>
+<span class="cm-comment"># Modifications qui seront validées :</span>
+<span class="cm-comment">#   (utilisez &quot;git rm --cached &lt;fichier&gt;...&quot; pour désindexer)</span>
+<span class="cm-comment">#</span>
+<span class="cm-comment">#    nouveau : putain_de_hello_world.rb</span>
+<span class="cm-comment">#</span></code></pre>
 <p>Ok c&#39;est prêt ! On lance maintenant <code>git commit</code> pour créer notre premier commit
 (pas con le <em>naming</em> de la commande hein ?). Si tout se passe bien vous devriez
 avoir un éditeur qui s&#39;ouvre pour écrire un message de commit. Prenez l&#39;habitude
@@ -186,8 +186,8 @@ de décrire votre changement sur la première ligne succintement et, si vous ave
 besoin de détails, sautez une ligne et détaillez les modifications.</p>
 <p>Un petit <code>git status</code> nous confirme qu&#39;on s&#39;est pas foiré (la preuve, tout est
 propre) :</p>
-<pre><code class="language-bash">$ git status
-<span class="comment"># Sur la branche master</span>
+<pre><code class="language-bash"><span class="cm-def">$ git</span> status
+<span class="cm-comment"># Sur la branche master</span>
 rien à valider, la copie de travail est propre</code></pre>
 <h2 id="inspecter">Inspecter</h2>
 <p>Bon, c&#39;est bien beau de commiter, mais à un moment on arrive sur un projet en
@@ -198,30 +198,30 @@ Windows) ou retrousser vos poils de barbe et sortir le bon vieux <code>git log</
 de votre dépôt, avec des options en veux-tu en voilà pour personnaliser
 l&#39;affichage.</p>
 <p>Un <code>git log</code> basique ça ressemble à ça :</p>
-<pre><code class="language-bash">$ git log
-commit <span class="number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
-Author: madx &lt;madx+github@yapok.org&gt;
-Date:   Mon Nov <span class="number">4</span> <span class="number">23</span>:<span class="number">28</span>:<span class="number">11</span> <span class="number">2013</span> +<span class="number">0100</span>
+<pre><code class="language-bash"><span class="cm-def">$ git</span> log
+commit 8120de7b7139e46b9cbc1c3ee89a02962dbc198e
+Author: madx &lt;madx<span class="cm-operator">+</span>github@yapok.org&gt;
+Date:   Mon Nov <span class="cm-number">4</span> <span class="cm-number">23</span>:28:11 <span class="cm-number">2013</span> <span class="cm-operator">+</span>0100
 
     Premier commit</code></pre>
 <p>Oui, c&#39;est le commit que je viens de faire dans la partie précédente. Comment
 j&#39;en suis sûr ? Car je peux utiliser <code>git show</code> pour afficher les détails d&#39;un
 objet Git (il n&#39;y a pas que des commits, mais on verra ça une prochaine fois).</p>
 <p><code>git show</code> prend en argument le fameux <code>SHA1</code> du commit :</p>
-<pre><code class="language-bash">$ git show <span class="number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
-commit <span class="number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
-Author: madx &lt;madx+github@yapok.org&gt;
-Date:   Mon Nov <span class="number">4</span> <span class="number">23</span>:<span class="number">28</span>:<span class="number">11</span> <span class="number">2013</span> +<span class="number">0100</span>
+<pre><code class="language-bash"><span class="cm-def">$ git</span> show 8120de7b7139e46b9cbc1c3ee89a02962dbc198e
+commit 8120de7b7139e46b9cbc1c3ee89a02962dbc198e
+Author: madx &lt;madx<span class="cm-operator">+</span>github@yapok.org&gt;
+Date:   Mon Nov <span class="cm-number">4</span> <span class="cm-number">23</span>:28:11 <span class="cm-number">2013</span> <span class="cm-operator">+</span>0100
 
     Premier commit
 
-diff --git a/putain_de_hello_world.rb b/putain_de_hello_world.rb
-new file mode <span class="number">100644</span>
-index <span class="number">0000000</span>..ded37dc
---- /dev/null
-+++ b/putain_de_hello_world.rb
-@@ -<span class="number">0</span>,<span class="number">0</span> +<span class="number">1</span> @@
-+puts <span class="string">"Hello, putain de codeur !!!"</span></code></pre>
+<span class="cm-builtin">diff</span> <span class="cm-attribute">--git</span> a/putain_de_hello_world.rb b/putain_de_hello_world.rb
+new file mode 100644
+index <span class="cm-number">0000000</span>..ded37dc
+<span class="cm-attribute">--</span><span class="cm-attribute">-</span> /dev/null
+<span class="cm-operator">+</span><span class="cm-operator">+</span><span class="cm-operator">+</span> b/putain_de_hello_world.rb
+@@ <span class="cm-attribute">-0</span>,0 <span class="cm-operator">+</span><span class="cm-number">1</span> @@
+<span class="cm-operator">+</span>puts <span class="cm-string">&quot;Hello, putain de codeur !!!&quot;</span></code></pre>
 <p>Dit comme ça, ça a pas l&#39;air de casser trois pattes à un canard, mais c&#39;est la
 base de la base de la praticité. Je vous fait pas l&#39;insulte de vous expliquer le
 détails, vous êtes sans doute assez malins pour comprendre ce que git raconte
@@ -255,25 +255,25 @@ cette branche.</p>
 <p>On peut utiliser <code>git branch</code> sans argument pour lister les branches, celle avec
 un petit asterisque devant c&#39;est la branche courante.</p>
 <p>Essayons ça avec notre petit dépôt :</p>
-<pre><code class="language-bash">$ git branch
+<pre><code class="language-bash"><span class="cm-def">$ git</span> branch
 * master
-$ git checkout -b add-shebang
-Basculement sur la nouvelle branche <span class="string">'add-shebang'</span>
-$ vim putain_de_hello_world.rb
-$ git status
-<span class="comment"># Sur la branche add-shebang</span>
-<span class="comment"># Modifications qui ne seront pas validées :</span>
-<span class="comment">#   (utilisez "git add &lt;fichier&gt;..." pour mettre à jour ce qui sera validé)</span>
-<span class="comment">#   (utilisez "git checkout -- &lt;fichier&gt;..." pour annuler les modifications dans la copie de travail)</span>
-<span class="comment">#</span>
-<span class="comment">#    modifié : putain_de_hello_world.rb</span>
-<span class="comment">#</span>
-aucune modification n<span class="string">'a été ajoutée au commit (utilisez "git add" ou "git commit -a")
-$ git add putain_de_hello_world.rb
-$ git commit
+<span class="cm-def">$ git</span> checkout <span class="cm-attribute">-b</span> add-shebang
+Basculement sur la nouvelle branche <span class="cm-string">&#39;add-shebang&#39;</span>
+<span class="cm-def">$ vim</span> putain_de_hello_world.rb
+<span class="cm-def">$ git</span> status
+<span class="cm-comment"># Sur la branche add-shebang</span>
+<span class="cm-comment"># Modifications qui ne seront pas validées :</span>
+<span class="cm-comment">#   (utilisez &quot;git add &lt;fichier&gt;...&quot; pour mettre à jour ce qui sera validé)</span>
+<span class="cm-comment">#   (utilisez &quot;git checkout -- &lt;fichier&gt;...&quot; pour annuler les modifications dans la copie de travail)</span>
+<span class="cm-comment">#</span>
+<span class="cm-comment">#    modifié : putain_de_hello_world.rb</span>
+<span class="cm-comment">#</span>
+aucune modification n<span class="cm-string">&#39;a été ajoutée au commit (utilisez &quot;git add&quot; ou &quot;git commit -a&quot;)</span>
+<span class="cm-def">$ git</span> add putain_de_hello_world.rb
+<span class="cm-def">$ git</span> commit
 [add-shebang 5d48735] Add shebang
- 1 file changed, 1 insertion(+)
-$ git log --pretty=oneline --decorate
+ <span class="cm-number">1</span> file changed, <span class="cm-number">1</span> insertion(<span class="cm-operator">+</span>)
+<span class="cm-def">$ git</span> log <span class="cm-attribute">--pretty</span><span class="cm-operator">=</span>oneline <span class="cm-attribute">--decorate</span>
 5d48735fcc805d51e2e294df5d9d22d481250789 (HEAD, add-shebang) Add shebang
 8120de7b7139e46b9cbc1c3ee89a02962dbc198e (master) Premier commit</code></pre>
 <p>Comme vous le voyez grâce à l&#39;option <code>--decorate--</code> de <code>git log</code>, on a bien
@@ -285,13 +285,13 @@ base fournie par Git, <code>master</code>, reste au commit précédent.</p>
 la branche dans laquelle on va fusionner et en passant en argument la branche à
 fusionner.</p>
 <p>Si vous avez bien suivi, on va donc faire les choses suivantes :</p>
-<pre><code class="language-bash">$ git checkout master
-Basculement sur la branche <span class="string">'master'</span>
-$ git merge add-shebang
-Updating <span class="number">8120</span>de7..<span class="number">5</span>d48735
+<pre><code class="language-bash"><span class="cm-def">$ git</span> checkout master
+Basculement sur la branche <span class="cm-string">&#39;master&#39;</span>
+<span class="cm-def">$ git</span> merge add-shebang
+Updating 8120de7..5d48735
 Fast-forward
- putain_de_hello_world.rb | <span class="number">1</span> +
- <span class="number">1</span> file changed, <span class="number">1</span> insertion(+)</code></pre>
+ putain_de_hello_world.rb | <span class="cm-number">1</span> <span class="cm-operator">+</span>
+ <span class="cm-number">1</span> file changed, <span class="cm-number">1</span> insertion(<span class="cm-operator">+</span>)</code></pre>
 <p>Vous remarquez que Git signale <em>Fast-forward</em>. Comme le commit pointé par
 <code>add-shebang</code> est un fils direct de celui de <code>master</code>, Git se contente de faire
 pointer <code>master</code> sur celui-ci, ce qui est beaucoup plus rapide.</p>
@@ -406,7 +406,7 @@ Spécialiste en développement d&#x27;applications inutiles.</p>
 
   
 </div>
-<script src="/assets/js/putaindecode.js?20131207131920"></script>
+<script src="/assets/js/putaindecode.js?20131226224840"></script>
 
 
 	

@@ -21,7 +21,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="feed.xml" rel="alternate" type="application/rss+xml">
 
-<link rel="stylesheet" href="/assets/css/putaindecode.css?20131207131920">
+<link rel="stylesheet" href="/assets/css/putaindecode.css?20131226224840">
 
 
 
@@ -41,9 +41,9 @@
 			<span class="putainde-Baseline">On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</span>
 
 			<ul class="putainde-Nav-list">
-				<li class=""><a class="putainde-Nav-list-item " href="/">Home</a>
 				<li class=""><a class="putainde-Nav-list-item " href="c-est-quoi-putaindecode">Putain de ... ?</a>
-				<li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+        <li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+				<li class=""><a class="putainde-Nav-list-item " href="posts/comment-contribuer/">Comment Contribuer ?</a>
 				<li class=""><a class="putainde-Nav-list-item " href="le-crew">Le Crew</a>
 			</ul>
 		</div>
@@ -85,8 +85,8 @@ les plus nazes que je peux vous raconter. C&#39;est parti mon jQuéri.</p>
 <p>Si vous avez ouvert ne serait-ce que quelques documents HTML dans votre vie,
 vous avez du croiser ce qu&#39;on appelle un <a href="http://fr.wikipedia.org/wiki/Doctype">doctype</a>
 qui ressemble à ça:</p>
-<pre><code class="language-markup">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
-   &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</code></pre>
+<pre><code class="language-html"><span class="cm-meta">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
+   <span class="cm-meta">&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span></code></pre>
 <p>Vous pourrez remarquer dans ce <del>petit</del> gros bout de code bien relou qu&#39;il y&#39;a
 une <a href="http://fr.wikipedia.org/wiki/Uniform_Resource_Locator">URL</a>:
 c&#39;est tout simplement la DTD (doctype) du langage en question.
@@ -108,22 +108,22 @@ partout dans mes footers:</p>
 
 <p>Mais bon les conneries, ça va un moment.
 Pour info, j&#39;ai du valider le code suivant pour obtenir ce logo:</p>
-<pre><code class="language-markup">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
-   &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
- &lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
-&lt;head&gt;
-  &lt;title&gt; &lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
+<pre><code class="language-html"><span class="cm-meta">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
+   <span class="cm-meta">&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
+ <span class="cm-tag">&lt;html</span> <span class="cm-attribute">xmlns</span>=<span class="cm-string">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;head</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;title</span><span class="cm-tag">&gt;</span> <span class="cm-tag">&lt;/title</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/head</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;body</span><span class="cm-tag">&gt;</span>
 
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+<span class="cm-tag">&lt;/body</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/html</span><span class="cm-tag">&gt;</span></code></pre>
 <p>Ben dites donc, c&#39;est propre tout ça. Un petit document tout vide mais déjà
 bien rempli.
 Mais attendez en 2013, on peut pas faire mieux ? Oh si !</p>
 <h2 id="le-nouveau-testament">Le nouveau testament</h2>
-<pre><code class="language-markup">&lt;!doctype html&gt;
-&lt;title&gt; &lt;/title&gt;</code></pre>
+<pre><code class="language-html"><span class="cm-meta">&lt;!doctype html&gt;</span>
+<span class="cm-tag">&lt;title</span><span class="cm-tag">&gt;</span> <span class="cm-tag">&lt;/title</span><span class="cm-tag">&gt;</span></code></pre>
 <p>Il faut savoir qu&#39;un simple document <em>valide</em>, peut se résumer à ça.
 Oui oui mes cocos, ce document est parfaitement valide. Voilà j&#39;voulais vous le
 dire. Arrêtez d&#39;utiliser des doctypes dans tous les sens, ça ne sert à rien.
@@ -152,23 +152,23 @@ dit, il a été pensé dans ce sens.</p>
 On va voir ça par un exemple digne des plus grands diplômes.</p>
 <h2 id="ce-p-fout-la-merde-">Ce <code>&lt;p&gt;</code> fout la merde.</h2>
 <p>Prenons le code suivant:</p>
-<pre><code class="language-markup">&lt;!doctype html&gt;
-&lt;title&gt;Putain de page&lt;/title&gt;
-&lt;style&gt;
-  p {
-    margin-top: 2em;
-    margin-bottom: 10em;
+<pre><code class="language-html"><span class="cm-meta">&lt;!doctype html&gt;</span>
+<span class="cm-tag">&lt;title</span><span class="cm-tag">&gt;</span>Putain de page<span class="cm-tag">&lt;/title</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;style</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">p</span> {
+    <span class="cm-property">margin-top</span><span class="cm-operator">:</span> <span class="cm-number">2em</span>;
+    <span class="cm-property">margin-bottom</span><span class="cm-operator">:</span> <span class="cm-number">10em</span>;
   }
-&lt;/style&gt;
-&lt;h1&gt;Ma première putain de page html&lt;/h1&gt;
-&lt;p&gt;
+<span class="cm-tag">&lt;/style</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;h1</span><span class="cm-tag">&gt;</span>Ma première putain de page html<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>
   Ouais mec t&#39;as vu ce code de ouf ?
   Il est trop bien parce que:
-  &lt;ul&gt;
-    &lt;li&gt;Il est &lt;del&gt;valide&lt;/del&gt;&lt;/li&gt;
-    &lt;li&gt;Il est beau&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/p&gt;</code></pre>
+  <span class="cm-tag">&lt;ul</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;li</span><span class="cm-tag">&gt;</span>Il est <span class="cm-tag">&lt;del</span><span class="cm-tag">&gt;</span>valide<span class="cm-tag">&lt;/del</span><span class="cm-tag">&gt;</span><span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;li</span><span class="cm-tag">&gt;</span>Il est beau<span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;/ul</span><span class="cm-tag">&gt;</span>
+<span class="cm-tagcm-error">&lt;/p</span><span class="cm-tagcm-error">&gt;</span></code></pre>
 <p>Certains d&#39;entre vous ont du remarquer la coquille.
 Celle-là, mes élèves qui découvrent le HTML me la font à chaque fois lorsqu&#39;ils
 codent leur super CV
@@ -200,9 +200,9 @@ Ca veut dire que… Ça veut dire que mon <strong>p</strong> ouvert n&#39;est pa
 Mais attend qu&#39;est-ce que c&#39;est que cette histoire ?!</p>
 <p>Si vous prenez 10 secondes pour inspecter ce code, vous allez vite vous
 aperçevoir qu&#39;il est parsé ainsi:</p>
-<pre><code class="language-markup">&lt;p&gt;…&lt;/p&gt;
-&lt;ul&gt;…&lt;/ul&gt;
-&lt;p&gt;&lt;/p&gt;</code></pre>
+<pre><code class="language-html"><span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>…<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;ul</span><span class="cm-tag">&gt;</span>…<span class="cm-tag">&lt;/ul</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span><span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span></code></pre>
 <p><em>Mais qu&#39;est-ce que… ? Hein ? Mais ? Quoi ? Comment ?</em></p>
 <p>Oui vous avez bien vu. L&#39;HTML est parsé n&#39;importe comment. Enfin non il est parsé
 comme il peut, au mieux.
@@ -301,7 +301,7 @@ règle CSS qui marche pas, ou votre morceau de JavaScript buggé.</p>
   </h1>
   
     
-    <div class="putainde-AboutTheAuthor-bio--long"><p>Développeur web front-end (100% bio), vivant dans la campagne près de Toulouse. Il joue avec CSS &amp; et JavaScript en temps que Freelance.
+    <div class="putainde-AboutTheAuthor-bio--long"><p>Développeur web front-end (100% bio), vivant dans la campagne près de Toulouse. Il joue avec CSS &amp; et JavaScript en tant que Freelance.
 Lorsqu&#x27;il n&#x27;est pas derrière son écran tel un geek, il adore bricoler dans sa maison en bois et se marrer avec sa merveilleuse femme, quand il n&#x27;est pas en train de se promener dans la forêt.</p>
 </div>
   
@@ -366,7 +366,7 @@ Lorsqu&#x27;il n&#x27;est pas derrière son écran tel un geek, il adore bricole
 
   
 </div>
-<script src="/assets/js/putaindecode.js?20131207131920"></script>
+<script src="/assets/js/putaindecode.js?20131226224840"></script>
 
 
 	

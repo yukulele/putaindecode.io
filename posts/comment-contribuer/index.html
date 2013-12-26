@@ -21,7 +21,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="feed.xml" rel="alternate" type="application/rss+xml">
 
-<link rel="stylesheet" href="/assets/css/putaindecode.css?20131207131920">
+<link rel="stylesheet" href="/assets/css/putaindecode.css?20131226224840">
 
 
 
@@ -41,9 +41,9 @@
 			<span class="putainde-Baseline">On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</span>
 
 			<ul class="putainde-Nav-list">
-				<li class=""><a class="putainde-Nav-list-item " href="/">Home</a>
 				<li class=""><a class="putainde-Nav-list-item " href="c-est-quoi-putaindecode">Putain de ... ?</a>
-				<li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+        <li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+				<li class=""><a class="putainde-Nav-list-item " href="posts/comment-contribuer/">Comment Contribuer ?</a>
 				<li class=""><a class="putainde-Nav-list-item " href="le-crew">Le Crew</a>
 			</ul>
 		</div>
@@ -114,7 +114,7 @@ de commande (sous Windows tu y vas avec l&#39;invite de commande mais on te
 prévient qu&#39;on va pas être copains longtemps, trouve un OS décent putain,
 sous Mac OS X tu utilises le terminal, et sous Linux je pense qu&#39;on a pas à
 t&#39;expliquer).</p>
-<pre><code>$ git clone https://github.com/clinthorris/website.git putaindecode</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ git</span> clone https://github.com/clinthorris/website.git putaindecode</code></pre>
 </li>
 <li><p>Ensuite tu dois ajouter ce qu&#39;on appelle une remote. Une remote c&#39;est une
 référence du repo principal, le beau, le grand, le nôtre. En gros, ça va te
@@ -122,9 +122,9 @@ servir que si tu fais une modification ou une contribution sur notre site
 aujourd&#39;hui, et que dans un mois tu veuilles encore en faire, tu pourras
 facilement rattraper tout ce qu&#39;on aura fait entre temps. La remote en
 rapport avec le repo principal, on l&#39;appelle souvent <em>upstream</em></p>
-<pre><code>  $ cd putaindecode
-  $ git remote add upstream https://github.com/putaindecode/website.git
-  $ git fetch upstream</code></pre>
+<pre><code class="language-shell">  <span class="cm-def">$ cd</span> putaindecode
+  <span class="cm-def">$ git</span> remote add upstream https://github.com/putaindecode/website.git
+  <span class="cm-def">$ git</span> fetch upstream</code></pre>
 </li>
 <li><p>Alors là, normalement, t&#39;as le dossier propre et frais, pêché du matin. Vu
 que notre site pète la classe, et qu&#39;on l&#39;a fait en utilisant quand même des
@@ -185,7 +185,7 @@ genre de tâches, c&#39;est un bon moment pour l&#39;apprendre.</p>
 de faire une branche, c&#39;est une bonne pratique et ça nous permettra de voir
 exactement ce que t&#39;auras modifié, c&#39;est beaucoup plus simple. Du coup tu
 fais simplement un :</p>
-<pre><code>$ git checkout -b fix.nom-du-post</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ git</span> checkout <span class="cm-attribute">-b</span> fix.nom-du-post</code></pre>
 </li>
 <li><p>Fais les modifications que tu veux dans le fichier, là on peut pas t&#39;aider,
 c&#39;est à toi de jouer.</p>
@@ -220,12 +220,12 @@ lien</a>.</p>
 commencer à écrire dans le fichier. Tout d&#39;abord tu vas devoir créer une
 nouvelle branche. C&#39;est une pratique qu&#39;on demande à tout le monde, même
 nous en interne on bosse sur des branches. Donc tout d&#39;abord :</p>
-<pre><code>$ git checkout -b post.titre-court-du-post</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ git</span> checkout <span class="cm-attribute">-b</span> post.titre-court-du-post</code></pre>
 <p>Ensuite il va falloir que tu crées le fichier nécessaire pour le brouillon
 du post.</p>
-<pre><code>$ happyplan newpost --name=&quot;Nom du post&quot; --tags=&quot;tags, separes, virgules&quot;
-$ mkdir src/posts/nom-du-post
-$ mv src/posts/nom-du-post.html.hbs src/posts/nom-du-post/index.html.hbs</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ happyplan</span> newpost <span class="cm-attribute">--name</span><span class="cm-operator">=</span><span class="cm-string">&quot;Nom du post&quot;</span> <span class="cm-attribute">--tags</span><span class="cm-operator">=</span><span class="cm-string">&quot;tags,separes,virgules&quot;</span>
+<span class="cm-def">$ mkdir</span> src/posts/nom-du-post
+<span class="cm-def">$ mv</span> src/posts/nom-du-post.html.hbs src/posts/nom-du-post/index.html.hbs</code></pre>
 <p>Ça va te créer un fichier dans <code>/src/posts/</code> avec le nom qui va bien.
 Tu remarqueras qu&#39;on la déplacé dans un dossier, histoire d&#39;avoir des URLs
 simples et sympa. Puis si t&#39;as de la merde à fourrer pour ton article, tu sais
@@ -263,16 +263,16 @@ proposition d&#39;un nouveau)</p>
 <li><p>Il faut tout d&#39;abord pousser tes modifications sur ton <code>fork</code>. Pour ça on va
 d&#39;abord ajouter les fichier que tu as modifié à l&#39;index de fichiers à
 commit. Tu peux faire ça tout simplement avec un :</p>
-<pre><code>$ git add -A src/posts/nom-du-post</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ git</span> add <span class="cm-attribute">-A</span> src/posts/nom-du-post</code></pre>
 <p>Cette commande ajoute tous les fichiers dans le dossier que tu as créé.
 Si tu as ajouter des fichiers à l&#39;exterieur de ce dossier, tu devras les
 ajouter. Exemple:</p>
-<pre><code>$ git add src/media/memes/trollface.jpg</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ git</span> add src/media/memes/trollface.jpg</code></pre>
 <p>Ensuite on va dire à git de valider ces modifications de code :</p>
-<pre><code>$ git commit -m &quot;Un petit message sympa expliquant le correctif/post&quot;</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ git</span> commit <span class="cm-attribute">-m</span> <span class="cm-string">&quot;Un petit message sympa expliquant le correctif/post&quot;</span></code></pre>
 <p>Et on va finir en disant qu&#39;on veut envoyer tout ça sur ton fork qui est
 situé sur GitHub :</p>
-<pre><code>$ git push -u</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ git</span> push <span class="cm-attribute">-u</span></code></pre>
 </li>
 <li><p>Voila ! Si tu vas voir ton <code>fork</code> sur GitHub tu verras ton commit et les
 modifications que tu as apportées normalement. Il ne te reste plus qu&#39;à nous
@@ -288,8 +288,8 @@ branches / etc.</p>
 </figure>
 </li>
 <li><p>Sélectionnes les bonnes branches et ajoute nous un beau titre et une belle
-description de Pull Request en essayant au moins de commencer par <code>Post:
-Nom du post</code> ou `Fix: Nom du post</p>
+description de Pull Request en essayant au moins de commencer par <code>Post: Nom du post</code>
+ou <code>Fix: Nom du post</code></p>
 </li>
 <li><p>Et voila ! Tu n&#39;as qu&#39;à attendre de nos nouvelles maintenant. D&#39;ailleurs au
 passage, si tu veux, tu peux en profiter pour nous suivre <a href="http://twitter.com/putaindecode">sur
@@ -386,7 +386,7 @@ Et il porte toujours un k-way rouge et sexy.</p>
 
   
 </div>
-<script src="/assets/js/putaindecode.js?20131207131920"></script>
+<script src="/assets/js/putaindecode.js?20131226224840"></script>
 
 
 	

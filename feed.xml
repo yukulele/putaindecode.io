@@ -4,8 +4,286 @@
         <title>Putain de Code !</title>
         <description>On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</description>
         <link>/</link>
-        <generator>happyplan 0.4.0-alpha.10</generator>
-        <lastBuildDate>Sat, 07 December 2013 00:00:00 +0100</lastBuildDate>
+        <generator>happyplan 0.4.0-alpha.13</generator>
+        <lastBuildDate>Thu, 26 December 2013 00:00:00 +0100</lastBuildDate>
+
+          <item>
+              <title>Responsive webdesign et structure du DOM</title>
+              <description><![CDATA[
+
+<p>Bien, commençons par le commencement, si tu veux bien. Le <strong>responsive
+webdesign</strong>, ça te dit quelque chose ? Oui ? Bon. Dans ce cas, tu as peut-être
+comme moi déjà été confronté à un cas de figure plutôt ennuyeux. Que tu sois
+adepte du <em>mobile-first</em> ou irréductible dégradateur progressiste, il est
+forcément arrivé un moment où tu t&#39;es dit cette chose toute bête :</p>
+<blockquote>
+<p>Ce serait quand même pas mal si cet élément était ici plutôt que là. Sauf que
+non.</p>
+</blockquote>
+<p>Le cas typique est celui d&#39;un menu un minimum complexe, dont on réordonnerait
+volontiers les éléments un chouïa au dessus ou en deçà d&#39;une certaine taille
+d&#39;écran. Et là, il faut bien avouer qu&#39;il n&#39;existe pas vraiment de solution
+miracle.</p>
+<p>J&#39;entends déjà les plus teigneux vociférer qu&#39;avec une meilleure réflexion en
+amont, le <em>markup</em> aurait été mieux conçu et on n&#39;en serait pas là. Bien qu&#39;un
+peu facile, cette réponse peut s&#39;avérer vraie dans un certain nombre de cas
+(admire la phrase du mec qui ne se mouille pas). Mais quoi qu&#39;il en soit, si tu
+en es au stade de ce type de questionnement, c&#39;est qu&#39;il est de toute façon trop
+tard pour faire machine arrière.</p>
+<p>Au train où va l&#39;innovation dans notre branche, surtout pour tout ce qui touche
+au mobile en général et à la conception web en particulier, il n&#39;est pas exclu
+que les bouts de ficelle que je vais t&#39;exposer ici soient obsolètes dans six
+mois, et que cet article fasse un comeback incroyable sur Twitter, les RT 
+moquant gentiment les techniques précolombiennes auxquelles nous étions réduits
+il n&#39;y a encore pas si longtemps. Va savoir, je pourrais bien faire l&#39;objet
+d&#39;une célébrité paradoxalement décadente à la Rick Astley. En attendant, il 
+s&#39;agit des seules solutions que je connais pour ce type de cas. Si tu as mieux à
+proposer, je te recommande chaudement de l&#39;ouvrir dans les commentaires pour
+qu&#39;on en bénéficie tous. C&#39;est bon, on y va ? Je t&#39;attends, moi !</p>
+<h2 id="-l-ancienne-do-repeat-yourself">À l&#39;ancienne : Do Repeat Yourself</h2>
+<p>Imagine une page de blog, où apparaissent consécutivement le titre de l&#39;article,
+la photo l&#39;illustrant, et enfin le texte. Comme une photo, selon la qualité de
+ta connexion, ça peut être un peu galère à charger sur mobile (et que la 
+question des images en responsive design
+<a href="http://css-tricks.com/responsive-images-hard/">est encore un sacré bordel</a>), tu
+prends la décision de passer la photo en dessous du contenu textuel pour que tes
+visiteurs puissent lire leur article peinards même si la photo n&#39;a pas fini de
+charger - et tu vas même en profiter pour la remplacer par une version plus
+light.</p>
+<p>Dans un tel cas, la meilleure solution peut encore être de dupliquer ta balise
+<code>img</code>, et de masquer l&#39;une ou l&#39;autre avec CSS en fonction de la taille d&#39;écran,
+grâce à une <code>media query</code>. Voilà un exemple rudimentaire :</p>
+<pre><code class="language-html"><span class="cm-tag">&lt;article</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;h1</span><span class="cm-tag">&gt;</span>Mon super article<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
+
+  <span class="cm-tag">&lt;img</span> <span class="cm-attribute">src</span>=<span class="cm-string">&quot;/mon/image/desktop.jpg&quot;</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;img-desktop&quot;</span> <span class="cm-tag">/&gt;</span>
+
+  <span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>Lâche tes comm&#39; !<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+
+  <span class="cm-tag">&lt;img</span> <span class="cm-attribute">src</span>=<span class="cm-string">&quot;/mon/image/mobile.jpg&quot;</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;img-mobile&quot;</span> <span class="cm-tag">/&gt;</span>
+<span class="cm-tag">&lt;/article</span><span class="cm-tag">&gt;</span></code></pre>
+<pre><code class="language-css"><span class="cm-qualifier">.img-desktop</span> {
+  <span class="cm-comment">/* Par défaut, l&#39;image desktop est cachée */</span>
+  <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-string-2">none</span>;
+}
+
+<span class="cm-def">@media</span> <span class="cm-attribute">screen</span> <span class="cm-operator">and</span> (<span class="cm-property">min-width</span><span class="cm-operator">:</span> <span class="cm-number">768px</span>) {
+  <span class="cm-comment">/* Si on est sur &quot;grand&quot; écran, on affiche l&#39;image desktop... */</span>
+  <span class="cm-qualifier">.img-desktop</span> {
+    <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-string-2">block</span>;
+  }
+
+  <span class="cm-comment">/* ...et on masque l&#39;image mobile */</span>
+  <span class="cm-qualifier">.img-mobile</span> {
+    <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-string-2">none</span>;
+  }
+}</code></pre>
+<p>Évidemment, le gros inconvénient de ce type de solution est que qui dit
+duplication de contenu dit augmentation du poids total. Dans le cas d&#39;un contenu
+purement textuel, selon sa taille, cela peut être négligeable. J&#39;ai ici
+volontairement pris l&#39;exemple le moins adapté : une image, qu&#39;il ne faut
+absolument pas faire charger deux fois à nos visiteurs. On va tricher un peu
+avec JavaScript :</p>
+<pre><code class="language-html"><span class="cm-tag">&lt;article</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;h1</span><span class="cm-tag">&gt;</span>Mon super article<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
+
+  <span class="cm-comment">&lt;!-- Ces images ne seront pas chargées car elles n&#39;ont pas d&#39;attribut src --&gt;</span>
+  <span class="cm-tag">&lt;img</span> <span class="cm-attribute">data-src</span>=<span class="cm-string">&quot;/mon/image/desktop.jpg&quot;</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;img-desktop&quot;</span> <span class="cm-tag">/&gt;</span>
+
+  <span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>Lâche tes comm&#39; !<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+
+  <span class="cm-tag">&lt;img</span> <span class="cm-attribute">data-src</span>=<span class="cm-string">&quot;/mon/image/mobile.jpg&quot;</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;img-mobile&quot;</span> <span class="cm-tag">/&gt;</span>
+
+  <span class="cm-tag">&lt;noscript</span><span class="cm-tag">&gt;</span>
+    <span class="cm-comment">&lt;!-- Cette image ne sera chargée que si le visiteur n&#39;a pas activé le JS --&gt;</span>
+    <span class="cm-tag">&lt;img</span> <span class="cm-attribute">src</span>=<span class="cm-string">&quot;/mon/image/mobile.jpg&quot;</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;img-mobile img-noscript&quot;</span> <span class="cm-tag">/&gt;</span>
+  <span class="cm-tag">&lt;/noscript</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/article</span><span class="cm-tag">&gt;</span></code></pre>
+<pre><code class="language-css"><span class="cm-qualifier">.img-desktop</span> {
+  <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-string-2">none</span>;
+}
+
+<span class="cm-def">@media</span> <span class="cm-attribute">screen</span> <span class="cm-operator">and</span> (<span class="cm-property">min-width</span><span class="cm-operator">:</span> <span class="cm-number">768px</span>) {
+  <span class="cm-qualifier">.img-desktop</span> {
+    <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-string-2">block</span>;
+  }
+
+  <span class="cm-qualifier">.img-mobile</span> {
+    <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-string-2">none</span>;
+  }
+}
+
+<span class="cm-qualifier">.img-noscript</span> {
+  <span class="cm-comment">/* On surcharge le style desktop pour s&#39;assurer</span>
+<span class="cm-comment">     que cette image s&#39;affiche quelle que soit la taille de l&#39;écran */</span>
+
+  <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-string-2">block</span>;
+}</code></pre>
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">handleImages</span> = <span class="cm-keyword">function</span>() {
+  <span class="cm-comment">// On charge les images ayant l&#39;attribut data-src,</span>
+  <span class="cm-comment">// non encore chargées (attribut src indéfini)</span>
+  <span class="cm-comment">// et non masquées par CSS</span>
+
+  [].<span class="cm-variable">forEach</span>.<span class="cm-variable">call</span>(<span class="cm-variable">document</span>.<span class="cm-variable">querySelectorAll</span>(<span class="cm-string">&#39;img[data-src]:not([src])&#39;</span>), <span class="cm-keyword">function</span>(<span class="cm-variable">el</span>) {
+    <span class="cm-keyword">if</span> (<span class="cm-variable">window</span>.<span class="cm-variable">getComputedStyle</span>(<span class="cm-variable">el</span>).<span class="cm-variable">display</span> != <span class="cm-string">&#39;none&#39;</span>) {
+      <span class="cm-variable">el</span>.<span class="cm-variable">src</span> = <span class="cm-variable">el</span>.<span class="cm-variable">getAttribute</span>(<span class="cm-string">&#39;data-src&#39;</span>);
+    }
+  });
+};
+
+<span class="cm-variable">window</span>.<span class="cm-variable">addEventListener</span>(<span class="cm-string">&#39;load&#39;</span>, <span class="cm-variable">handleImages</span>);
+<span class="cm-variable">window</span>.<span class="cm-variable">addEventListener</span>(<span class="cm-string">&#39;resize&#39;</span>, <span class="cm-variable">handleImages</span>);</code></pre>
+<p>Ainsi, seules les images nécessaires seront chargées avec la page. J&#39;applique
+également le même traitement au <code>resize</code> ; c&#39;est un peu bourrin, je te
+l&#39;accorde, on pourrait probablement faire plus fin avec <code>matchMedia</code>.</p>
+<p>Dans le cas d&#39;un visiteur naviguant sans JavaScript, seule l&#39;image mobile est
+chargée : je pars du principe qu&#39;étant donné qu&#39;on ne peut pas définir laquelle
+des deux versions de l&#39;image est la mieux adaptée pour lui, autant lui envoyer
+la plus légère.</p>
+<h2 id="js-powa-enquire-js">JS powa : enquire.js</h2>
+<p>La seconde solution peut tout à fait être réalisée &quot;à la main&quot;, mais je vais te
+parler d&#39;une petite librairie que j&#39;aime beaucoup et que j&#39;ai déjà utilisée dans
+ce genre de cas. Elle se nomme <a href="http://wicky.nillia.ms/enquire.js/">enquire.js</a>
+et permet tout simplement d&#39;affecter des callbacks à des media queries :</p>
+<pre><code class="language-javascript"><span class="cm-variable">enquire</span>.<span class="cm-property">register</span>(<span class="cm-string">&#39;screen and (min-width: 768px)&#39;</span>, {
+  <span class="cm-property">match</span>: <span class="cm-keyword">function</span>() {
+    <span class="cm-comment">// L&#39;écran fait 768px de large ou plus...</span>
+  },
+
+  <span class="cm-property">unmatch</span>: <span class="cm-keyword">function</span>() {
+    <span class="cm-comment">// ...et ici, 767px de large ou moins.</span>
+    <span class="cm-comment">// La librairie repose sur matchMedia et matchMedia.addListener</span>
+  }
+});</code></pre>
+<p>Plutôt sympa, non ? Pour reprendre notre exemple de tout à l&#39;heure (le CSS n&#39;est
+plus nécessaire) :</p>
+<pre><code class="language-html"><span class="cm-tag">&lt;article</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;h1</span><span class="cm-tag">&gt;</span>Mon super article<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
+
+  <span class="cm-tag">&lt;img</span> <span class="cm-attribute">data-src</span>=<span class="cm-string">&quot;/mon/image/desktop.jpg&quot;</span> <span class="cm-attribute">data-mobile-src</span>=<span class="cm-string">&quot;/mon/image/mobile.jpg&quot;</span> <span class="cm-tag">/&gt;</span>
+
+  <span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>Lâche tes comm&#39; !<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+
+  <span class="cm-tag">&lt;noscript</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;img</span> <span class="cm-attribute">src</span>=<span class="cm-string">&quot;/mon/image/mobile.jpg&quot;</span> <span class="cm-tag">/&gt;</span>
+  <span class="cm-tag">&lt;/noscript</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/article</span><span class="cm-tag">&gt;</span></code></pre>
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">content</span> = <span class="cm-variable">document</span>.<span class="cm-property">querySelector</span>(<span class="cm-string">&#39;p&#39;</span>),
+
+  <span class="cm-variable">switchImage</span> = <span class="cm-keyword">function</span>(<span class="cm-def">isMobile</span>) {
+    <span class="cm-keyword">var</span> <span class="cm-def">attr</span> = <span class="cm-variable-2">isMobile</span> ? <span class="cm-string">&#39;data-mobile-src&#39;</span> : <span class="cm-string">&#39;data-src&#39;</span>;
+
+    [].<span class="cm-variable">forEach</span>.<span class="cm-variable">call</span>(<span class="cm-variable">document</span>.<span class="cm-variable">querySelectorAll</span>(<span class="cm-string">&#39;img[&#39;</span> + <span class="cm-variable-2">attr</span> + <span class="cm-string">&#39;]&#39;</span>), <span class="cm-keyword">function</span>(<span class="cm-variable">el</span>) {
+      <span class="cm-comment">// On affecte l&#39;une ou l&#39;autre source à notre image,</span>
+      <span class="cm-comment">// entraînant son chargement si nécessaire.</span>
+      <span class="cm-variable">el</span>.<span class="cm-variable">src</span> = <span class="cm-variable">el</span>.<span class="cm-variable">getAttribute</span>(<span class="cm-variable-2">attr</span>);
+
+      <span class="cm-comment">// On en profite pour la bouger avant ou après le contenu</span>
+      <span class="cm-variable">content</span>.<span class="cm-variable">parentNode</span>.<span class="cm-variable">insertBefore</span>(<span class="cm-variable">el</span>, <span class="cm-variable-2">isMobile</span> ? <span class="cm-variable">content</span>.<span class="cm-variable">nextSibling</span> : <span class="cm-variable">content</span>);
+    });
+  };
+
+<span class="cm-variable">enquire</span>.<span class="cm-variable">register</span>(<span class="cm-string">&#39;screen and (min-width: 768px)&#39;</span>, <span class="cm-keyword">function</span>() {
+  <span class="cm-variable">switchImage</span>(<span class="cm-atom">false</span>);
+});
+
+<span class="cm-variable">enquire</span>.<span class="cm-variable">register</span>(<span class="cm-string">&#39;screen and (max-width: 767px)&#39;</span>, <span class="cm-keyword">function</span>() {
+  <span class="cm-variable">switchImage</span>(<span class="cm-atom">true</span>);
+});</code></pre>
+<p>On peut ainsi gérer facilement le chargement de l&#39;image, ainsi que son
+emplacement. J&#39;utilise ici deux handlers distincts pour m&#39;assurer qu&#39;enquire
+fait bien son boulot au chargement aussi, dans tous les cas (les callbacks
+<code>unmatch</code> ne sont appelés qu&#39;au redimensionnement, semble-t-il : avec un seul
+handler, l&#39;image n&#39;arrive donc jamais si on charge la page avec un écran d&#39;une
+largeur inférieure à 768px).</p>
+<h2 id="that-s-all-you-ve-got-bitch-">That&#39;s all you&#39;ve got, bitch?</h2>
+<p>On peut également, puisque tu y tiens tant, évoquer d&#39;autres solutions plus
+marginales mais qui méritent d&#39;être citées.</p>
+<h3 id="foundation">Foundation</h3>
+<p><a href="http://foundation.zurb.com/">Foundation</a> propose, dans sa version 5 (et
+peut-être même avant, j&#39;ai pas vérifié) un peu de sucre syntaxique HTML
+permettant de switcher (via JS, œuf corse) simplement entre différents contenus
+pour l&#39;élément sur lequel on l&#39;utilise.</p>
+<p>C&#39;est pas mal. Ça donne ça (tiré de <a href="http://foundation.zurb.com/docs/components/interchange.html">la doc</a>) :</p>
+<blockquote>
+<p>We use the data-interchange attribute on a markup container (probably a div)
+to do this. Here&#39;s an example which loads up a small, static map on mobile, a
+larger static map for medium-sized devices, and a full interactive Google map
+on large display devices.</p>
+</blockquote>
+<pre><code class="language-html"><span class="cm-tag">&lt;div</span> <span class="cm-attribute">data-interchange</span>=<span class="cm-string">&quot;[../examples/interchange/default.html, (small)],</span>
+                       <span class="cm-string">[../examples/interchange/medium.html, (medium)],</span>
+                       <span class="cm-string">[../examples/interchange/large.html, (large)]&quot;</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;div</span> <span class="cm-attribute">data-alert</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;alert-box secondary radius&quot;</span><span class="cm-tag">&gt;</span>
+    This is the default content.
+    <span class="cm-tag">&lt;a</span> <span class="cm-attribute">href</span>=<span class="cm-string">&quot;#&quot;</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;close&quot;</span><span class="cm-tag">&gt;</span><span class="cm-atom">&amp;times;</span><span class="cm-tag">&lt;/a</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;/div</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/div</span><span class="cm-tag">&gt;</span></code></pre>
+<p><code>small</code>, <code>medium</code> et <code>large</code> étant des raccourcis pour des media queries données
+(c&#39;est dans <a href="http://foundation.zurb.com/docs/components/interchange.html">la doc</a>,
+toujours. J&#39;insiste.)</p>
+<h3 id="flexbox-pas-toi-david-">Flexbox (pas toi, David)</h3>
+<p>On peut également, comme l&#39;a très justement souligné <a href="/le-crew/">lionelB</a>, se
+pencher (mais pas trop) sur le cas de Flexbox, qui est un nouveau type de
+positionnement introduit en CSS3. La <a href="http://caniuse.com/#search=flexbox">compatibilité</a>
+n&#39;est pas encore au top (surtout grâce à IE, qui l&#39;eût cru) mais autant se tenir
+prêts ! Pour ceux qui ont dormi, en gros, tu définis un conteneur :</p>
+<pre><code class="language-css"><span class="cm-qualifier">.flex-container</span> {
+  <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-variable-2">flex</span>;
+
+  <span class="cm-comment">/* ou bien */</span>
+
+  <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-variable-2">inline-flex</span>;
+}</code></pre>
+<p>...et tu donnes des numéros à ses enfants, comme à Bangkok :</p>
+<pre><code class="language-css"><span class="cm-qualifier">.title</span> {
+  <span class="cm-property">order</span><span class="cm-operator">:</span> <span class="cm-number">1</span>;
+}
+
+<span class="cm-qualifier">.content</span> {
+  <span class="cm-property">order</span><span class="cm-operator">:</span> <span class="cm-number">2</span>;
+}
+
+<span class="cm-qualifier">.image</span> {
+  <span class="cm-property">order</span><span class="cm-operator">:</span> <span class="cm-number">3</span>;
+}
+
+<span class="cm-comment">/*</span>
+<span class="cm-comment">Bien sûr, tu as été assez malin pour mettre ton image en dernier dans le DOM...</span>
+<span class="cm-comment">...n&#39;est-ce pas ?</span>
+<span class="cm-comment">*/</span>
+
+<span class="cm-def">@media</span> <span class="cm-attribute">screen</span> <span class="cm-operator">and</span> (<span class="cm-property">min-width</span><span class="cm-operator">:</span> <span class="cm-number">768px</span>) {
+  <span class="cm-qualifier">.content</span> {
+    <span class="cm-property">order</span><span class="cm-operator">:</span> <span class="cm-number">3</span>;
+  }
+
+  <span class="cm-qualifier">.image</span> {
+    <span class="cm-property">order</span><span class="cm-operator">:</span> <span class="cm-number">2</span>;
+  }
+}</code></pre>
+<p>Et voilà, pas besoin d&#39;avoir fait Pollypocket pour percevoir à quel point la
+flexibilité et la propreté du code que cette technique nous permet d&#39;écrire
+résolvent notre problème en deux secondes douze. Ce n&#39;est évidemment ici que la
+partie émergée du flexberg ; il y a des tas de bonnes ressources qui vous
+expliqueront ça en long, en large et en travers bien mieux que moi, notamment
+<a href="http://www.adobe.com/devnet/html5/articles/working-with-flexbox-the-new-spec.html">cet article</a>
+sur lequel j&#39;ai honteusement pompé les snippets de cette partie.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Comme tu l&#39;as vu, rien de ce que je t&#39;ai montré n&#39;est réellement satisfaisant :
+pour pouvoir contrôler le positionnement d&#39;un élément dans le DOM dans le cadre
+d&#39;un webdesign responsive, tu dois soit le dupliquer et jouer à cache-cache,
+soit le déplacer avec JavaScript. Aussi, je serais ravi que tu partages ton
+opinion, tes idées ou tes retours d&#39;XP à ce sujet. Ça me fera de la lecture pour
+passer le temps, et toi tu feras quelque chose de constructif !</p>
+<p>Il est temps pour moi de te laisser reprendre le cours de ta vie. Peut-être nos
+routes se croiseront-elles de nouveau. Dans l&#39;intervalle, va, vis, et code !</p>
+
+]]></description>
+              <pubDate>Thu, 26 December 2013 01:00:00 +0100</pubDate>
+              <link>/dist/posts/html/responsive-dom/index.html</link>
+              <guid isPermaLink="true">/dist/posts/html/responsive-dom/index.html</guid>
+          </item>
 
           <item>
               <title>Comment se passer de libraries/frameworks JavaScript</title>
@@ -16,25 +294,25 @@
 <h2 id="pour-la-s-lection-d-lements">Pour la sélection d&#39;élements</h2>
 <p>Pour remplacer ton bon vieux <code>$</code> magique, <code>document.querySelectorAll</code> semble faire l&#39;affaire. En revanche, il retourne une instance de <code>NodeList</code>, pas d&#39;<code>Array</code>, ce qui ne nous arrange pas des masses.</p>
 <p>Du coup, on peut écrire une petite function toute con, qui nous retourne un <code>Array</code> et ses méthodes bien utiles.</p>
-<pre><code class="language-javascript"><span class="keyword">var</span> nativeSlice = [].slice <span class="comment">// la méthode de conversion</span>
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">nativeSlice</span> = [].<span class="cm-variable">slice</span> <span class="cm-comment">// la méthode de conversion</span>
 
-<span class="function"><span class="keyword">function</span> <span class="title">$</span><span class="params">(selector)</span>{</span>
-  <span class="keyword">var</span> list = document.querySelectorAll(selector)
-  <span class="keyword">return</span> nativeSlice.call(list)
+<span class="cm-keyword">function</span> <span class="cm-variable">$</span>(<span class="cm-variable">selector</span>){
+  <span class="cm-keyword">var</span> <span class="cm-variable">list</span> = <span class="cm-variable">document</span>.<span class="cm-variable">querySelectorAll</span>(<span class="cm-variable">selector</span>)
+  <span class="cm-keyword">return</span> <span class="cm-variable">nativeSlice</span>.<span class="cm-variable">call</span>(<span class="cm-variable">list</span>)
 }</code></pre>
 <p>Alternativement, tu peux utiliser <code>Array.apply(null, list)</code> plutôt que <code>nativeSlice.call(list)</code>, si vraiment ça te fait plaisir.</p>
 <p>Une troisième solution, un peu plus chiante au quotidien (et terriblement laide), c&#39;est d&#39;utiliser directement les méthodes qui t&#39;intéressent (ex. <code>[].forEach</code>) de cette façon :</p>
-<pre><code class="language-javascript">;[].forEach.call(document.querySelectorAll(selector), <span class="function"><span class="keyword">function</span><span class="params">(element)</span>{</span>
-  <span class="comment">// do something w/ element</span>
+<pre><code class="language-javascript">;[].<span class="cm-variable">forEach</span>.<span class="cm-variable">call</span>(<span class="cm-variable">document</span>.<span class="cm-variable">querySelectorAll</span>(<span class="cm-variable">selector</span>), <span class="cm-keyword">function</span>(<span class="cm-variable">element</span>){
+  <span class="cm-comment">// do something w/ element</span>
 })</code></pre>
 <p>Pour en revenir à notre petite méthode <code>$</code>, on peut du coup faire :</p>
-<pre><code class="language-javascript"><span class="comment">// prends bien l'habitude de garder</span>
-<span class="comment">// tes nodeLists si tu les réutilises</span>
+<pre><code class="language-javascript"><span class="cm-comment">// prends bien l&#39;habitude de garder</span>
+<span class="cm-comment">// tes nodeLists si tu les réutilises</span>
 
-<span class="keyword">var</span> elements = $(<span class="string">".my-elements-className"</span>)
+<span class="cm-keyword">var</span> <span class="cm-variable">elements</span> = <span class="cm-variable">$</span>(<span class="cm-string">&quot;.my-elements-className&quot;</span>)
 
-elements.forEach(<span class="function"><span class="keyword">function</span><span class="params">(element)</span>{</span>
-  <span class="comment">// do something w/ element</span>
+<span class="cm-variable">elements</span>.<span class="cm-property">forEach</span>(<span class="cm-keyword">function</span>(<span class="cm-def">element</span>){
+  <span class="cm-comment">// do something w/ element</span>
 })</code></pre>
 <h3 id="pour-l-event-delegation">Pour l&#39;event delegation</h3>
 <p>L&#39;event delegation, c&#39;est bien, mangez-en. Ça permet entre autres de ne pas attacher 150 listeners uniques à 150 elements différents, mais à attacher un seul listener sur un parent commun, et analyser les sources des évenements à l&#39;intérieur en se basant sur le bubbling (remontée d&#39;évenement de la source au plus haut parent) ou capturing (descente d&#39;évenement du plus haut parent à la source, avant même que la source ne le reçoive).</p>
@@ -45,212 +323,212 @@ elements.forEach(<span class="function"><span class="keyword">function</span><sp
 <li>Si ça match, on garde l&#39;élement correspondant au sélecteur, sinon, exit</li>
 </ul>
 <p>Les browsers relativement récents possèdent une méthode : <code>matchesSelector</code> (et tous ses alias préfixés). Ce qu&#39;on peut donc faire, c&#39;est ceci :</p>
-<pre><code class="language-javascript"><span class="keyword">var</span> docEl = document.documentElement
-    <span class="comment">// si c'est dans docEl, c'est que c'est dispo</span>
-  , nativeMatchesSelector =
-      docEl.matchesSelector ||
-      docEl.webkitMatchesSelector ||
-      docEl.mozMatchesSelector ||
-      docEl.oMatchesSelector ||
-      docEl.msMatchesSelector
-  , matchesSelector = nativeMatchesSelector || matchesPolyfill
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">docEl</span> = <span class="cm-variable">document</span>.<span class="cm-property">documentElement</span>
+    <span class="cm-comment">// si c&#39;est dans docEl, c&#39;est que c&#39;est dispo</span>
+  , <span class="cm-variable">nativeMatchesSelector</span> =
+      <span class="cm-variable">docEl</span>.<span class="cm-property">matchesSelector</span> ||
+      <span class="cm-variable">docEl</span>.<span class="cm-property">webkitMatchesSelector</span> ||
+      <span class="cm-variable">docEl</span>.<span class="cm-property">mozMatchesSelector</span> ||
+      <span class="cm-variable">docEl</span>.<span class="cm-property">oMatchesSelector</span> ||
+      <span class="cm-variable">docEl</span>.<span class="cm-property">msMatchesSelector</span>
+  , <span class="cm-variable">matchesSelector</span> = <span class="cm-variable">nativeMatchesSelector</span> || <span class="cm-variable">matchesPolyfill</span>
 
-<span class="comment">// le polyfill utilise querySelectorAll</span>
-<span class="comment">// et cherche dans le parent de l'élement</span>
-<span class="function"><span class="keyword">function</span> <span class="title">matchesPolyfill</span><span class="params">(selector)</span>{</span>
-  <span class="keyword">var</span> node = <span class="keyword">this</span>
-    , parent = node.parentNode
-    , query, index, length
-  <span class="keyword">if</span>(!parent || parent.nodeType != <span class="number">1</span>) {
-    <span class="keyword">return</span> <span class="literal">false</span>
+<span class="cm-comment">// le polyfill utilise querySelectorAll</span>
+<span class="cm-comment">// et cherche dans le parent de l&#39;élement</span>
+<span class="cm-keyword">function</span> <span class="cm-variable">matchesPolyfill</span>(<span class="cm-def">selector</span>){
+  <span class="cm-keyword">var</span> <span class="cm-def">node</span> = <span class="cm-keyword">this</span>
+    , <span class="cm-def">parent</span> = <span class="cm-variable-2">node</span>.<span class="cm-property">parentNode</span>
+    , <span class="cm-def">query</span>, <span class="cm-def">index</span>, <span class="cm-def">length</span>
+  <span class="cm-keyword">if</span>(!<span class="cm-variable-2">parent</span> || <span class="cm-variable-2">parent</span>.<span class="cm-property">nodeType</span> != <span class="cm-number">1</span>) {
+    <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
   }
-  query = parent.querySelectorAll(selector)
-  index = -<span class="number">1</span>
-  length = query.length
-  <span class="keyword">while</span>(++index &lt; length) {
-    <span class="keyword">if</span>(query[index] == node) <span class="keyword">return</span> <span class="literal">true</span>
+  <span class="cm-variable-2">query</span> = <span class="cm-variable-2">parent</span>.<span class="cm-property">querySelectorAll</span>(<span class="cm-variable-2">selector</span>)
+  <span class="cm-variable-2">index</span> = -<span class="cm-number">1</span>
+  <span class="cm-variable-2">length</span> = <span class="cm-variable-2">query</span>.<span class="cm-property">length</span>
+  <span class="cm-keyword">while</span>(++<span class="cm-variable-2">index</span> &lt; <span class="cm-variable-2">length</span>) {
+    <span class="cm-keyword">if</span>(<span class="cm-variable-2">query</span>[<span class="cm-variable-2">index</span>] == <span class="cm-variable-2">node</span>) <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
   }
-  <span class="keyword">return</span> <span class="literal">false</span>
+  <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
 }
 
-<span class="function"><span class="keyword">function</span> <span class="title">getCurrentTarget</span><span class="params">(node, selector)</span>{</span>
-  <span class="keyword">if</span>(matchesSelector.call(node, selector)) <span class="keyword">return</span> node
-  <span class="keyword">while</span>(node = node.parentNode) {
-    <span class="keyword">if</span>(node.nodeType != <span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>
-    <span class="keyword">if</span>(matchesSelector.call(node, selector)) <span class="keyword">return</span> node
+<span class="cm-keyword">function</span> <span class="cm-variable">getCurrentTarget</span>(<span class="cm-def">node</span>, <span class="cm-def">selector</span>){
+  <span class="cm-keyword">if</span>(<span class="cm-variable">matchesSelector</span>.<span class="cm-property">call</span>(<span class="cm-variable-2">node</span>, <span class="cm-variable-2">selector</span>)) <span class="cm-keyword">return</span> <span class="cm-variable-2">node</span>
+  <span class="cm-keyword">while</span>(<span class="cm-variable-2">node</span> = <span class="cm-variable-2">node</span>.<span class="cm-property">parentNode</span>) {
+    <span class="cm-keyword">if</span>(<span class="cm-variable-2">node</span>.<span class="cm-property">nodeType</span> != <span class="cm-number">1</span>) <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+    <span class="cm-keyword">if</span>(<span class="cm-variable">matchesSelector</span>.<span class="cm-property">call</span>(<span class="cm-variable-2">node</span>, <span class="cm-variable-2">selector</span>)) <span class="cm-keyword">return</span> <span class="cm-variable-2">node</span>
   }
-  <span class="keyword">return</span> <span class="literal">false</span>
+  <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
 }</code></pre>
 <p>Dès lors, dans nos listeners, on pourra directement procéder ainsi :</p>
-<pre><code class="language-javascript">element.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span><span class="params">(evt)</span>{</span>
-  <span class="keyword">var</span> currentTarget = getCurrentTarget(evt.target, <span class="string">".Button-action"</span>)
-  <span class="keyword">if</span>(!currentTarget) <span class="keyword">return</span>
-  <span class="comment">// all good with currentTarget</span>
+<pre><code class="language-javascript"><span class="cm-variable">element</span>.<span class="cm-property">addEventListener</span>(<span class="cm-string">&quot;click&quot;</span>, <span class="cm-keyword">function</span>(<span class="cm-def">evt</span>){
+  <span class="cm-keyword">var</span> <span class="cm-def">currentTarget</span> = <span class="cm-variable">getCurrentTarget</span>(<span class="cm-variable-2">evt</span>.<span class="cm-property">target</span>, <span class="cm-string">&quot;.Button-action&quot;</span>)
+  <span class="cm-keyword">if</span>(!<span class="cm-variable-2">currentTarget</span>) <span class="cm-keyword">return</span>
+  <span class="cm-comment">// all good with currentTarget</span>
 })</code></pre>
 <h3 id="pour-l-ajax">Pour l&#39;Ajax</h3>
 <p>Pourquoi est-ce que l&#39;on appelle ça encore Ajax, d&#39;ailleurs ? Bref.</p>
 <p>Simple comme bonjour :</p>
-<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">isSuccessStatus</span><span class="params">(status)</span>{</span>
-  <span class="keyword">return</span> status &gt;= <span class="number">200</span> &amp;&amp; status &lt; <span class="number">300</span> || status == <span class="number">304</span>
+<pre><code class="language-javascript"><span class="cm-keyword">function</span> <span class="cm-variable">isSuccessStatus</span>(<span class="cm-def">status</span>){
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">status</span> &gt;= <span class="cm-number">200</span> &amp;&amp; <span class="cm-variable-2">status</span> &lt; <span class="cm-number">300</span> || <span class="cm-variable-2">status</span> == <span class="cm-number">304</span>
 }
 
-<span class="function"><span class="keyword">function</span> <span class="title">ajax</span><span class="params">(options)</span>{</span>
-  <span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest()
-    , done = <span class="literal">false</span>
-    , async = options.hasOwnProperty(<span class="string">"async"</span>) ? options.async : <span class="literal">true</span>
+<span class="cm-keyword">function</span> <span class="cm-variable">ajax</span>(<span class="cm-def">options</span>){
+  <span class="cm-keyword">var</span> <span class="cm-def">xhr</span> = <span class="cm-keyword">new</span> <span class="cm-variable">XMLHttpRequest</span>()
+    , <span class="cm-def">done</span> = <span class="cm-atom">false</span>
+    , <span class="cm-def">async</span> = <span class="cm-variable-2">options</span>.<span class="cm-property">hasOwnProperty</span>(<span class="cm-string">&quot;async&quot;</span>) ? <span class="cm-variable-2">options</span>.<span class="cm-property">async</span> : <span class="cm-atom">true</span>
 
-  xhr.open(options.method || <span class="string">"GET"</span>, options.url, async)
+  <span class="cm-variable-2">xhr</span>.<span class="cm-property">open</span>(<span class="cm-variable-2">options</span>.<span class="cm-property">method</span> || <span class="cm-string">&quot;GET&quot;</span>, <span class="cm-variable-2">options</span>.<span class="cm-property">url</span>, <span class="cm-variable-2">async</span>)
 
-  xhr.onreadystatechange = <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-    <span class="keyword">if</span>(done) <span class="keyword">return</span>
-    <span class="keyword">if</span>(<span class="keyword">this</span>.readyState != <span class="number">4</span>) <span class="keyword">return</span>
-    done = <span class="literal">true</span>
+  <span class="cm-variable-2">xhr</span>.<span class="cm-property">onreadystatechange</span> = <span class="cm-keyword">function</span>(){
+    <span class="cm-keyword">if</span>(<span class="cm-variable-2">done</span>) <span class="cm-keyword">return</span>
+    <span class="cm-keyword">if</span>(<span class="cm-keyword">this</span>.<span class="cm-property">readyState</span> != <span class="cm-number">4</span>) <span class="cm-keyword">return</span>
+    <span class="cm-variable-2">done</span> = <span class="cm-atom">true</span>
 
-    <span class="keyword">if</span>(isSuccessStatus(<span class="keyword">this</span>.status)) {
-      <span class="keyword">if</span>(options.success) {
-        options.success.call(<span class="keyword">this</span>)
+    <span class="cm-keyword">if</span>(<span class="cm-variable">isSuccessStatus</span>(<span class="cm-keyword">this</span>.<span class="cm-property">status</span>)) {
+      <span class="cm-keyword">if</span>(<span class="cm-variable-2">options</span>.<span class="cm-property">success</span>) {
+        <span class="cm-variable-2">options</span>.<span class="cm-property">success</span>.<span class="cm-property">call</span>(<span class="cm-keyword">this</span>)
       }
-      <span class="keyword">return</span>
+      <span class="cm-keyword">return</span>
     }
 
-    <span class="keyword">if</span>(options.error) {
-      options.error.call(<span class="keyword">this</span>)
+    <span class="cm-keyword">if</span>(<span class="cm-variable-2">options</span>.<span class="cm-property">error</span>) {
+      <span class="cm-variable-2">options</span>.<span class="cm-property">error</span>.<span class="cm-property">call</span>(<span class="cm-keyword">this</span>)
     }
   }
-  Object.keys(options.headers || {})
-    .forEach(<span class="function"><span class="keyword">function</span><span class="params">(key)</span>{</span>
-      xhr.setRequestHeader(key, options.headers[key])
+  <span class="cm-variable">Object</span>.<span class="cm-property">keys</span>(<span class="cm-variable-2">options</span>.<span class="cm-property">headers</span> || {})
+    .<span class="cm-property">forEach</span>(<span class="cm-keyword">function</span>(<span class="cm-def">key</span>){
+      <span class="cm-variable-2">xhr</span>.<span class="cm-property">setRequestHeader</span>(<span class="cm-variable-2">key</span>, <span class="cm-variable-2">options</span>.<span class="cm-property">headers</span>[<span class="cm-variable-2">key</span>])
     })
-  xhr.send(options.data || <span class="literal">null</span>)
-  <span class="keyword">return</span> xhr
+  <span class="cm-variable-2">xhr</span>.<span class="cm-property">send</span>(<span class="cm-variable-2">options</span>.<span class="cm-property">data</span> || <span class="cm-atom">null</span>)
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">xhr</span>
 }</code></pre>
 <p>Cette fonction offre un support basique de XHR :</p>
-<pre><code class="language-javascript"><span class="keyword">var</span> myXHR = ajax({
-    url : <span class="string">"api/users"</span>
-  , success : <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-      doStuff(<span class="keyword">this</span>.responseText)
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">myXHR</span> = <span class="cm-variable">ajax</span>({
+    <span class="cm-property">url</span> : <span class="cm-string">&quot;api/users&quot;</span>
+  , <span class="cm-property">success</span> : <span class="cm-keyword">function</span>(){
+      <span class="cm-variable">doStuff</span>(<span class="cm-keyword">this</span>.<span class="cm-property">responseText</span>)
     }
-  , error : <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-      showError(<span class="keyword">this</span>.status)
+  , <span class="cm-property">error</span> : <span class="cm-keyword">function</span>(){
+      <span class="cm-variable">showError</span>(<span class="cm-keyword">this</span>.<span class="cm-property">status</span>)
     }
 })</code></pre>
 <h3 id="es5-magic">ES5 magic</h3>
 <p>EcmaScript 5 délivre des petites méthodes très intéressantes pour se simplifier la vie, fortement inspirées par ce qu&#39;on a l&#39;habitude de trouver dans les bibliothèques ayant connu l&#39;âge d&#39;or, comme <a href="http://prototypejs.org">PrototypeJS</a> ou <a href="http://mootools.net">MooTools</a>.</p>
 <p>Dès lors, plutôt qu&#39;un ennuyeux :</p>
-<pre><code class="language-javascript"><span class="keyword">var</span> key, item
-<span class="keyword">for</span>(key <span class="keyword">in</span> myObject) {
-  <span class="keyword">if</span>(myObject.hasOwnProperty(key)) {
-    item = myObject[key]
-    <span class="comment">// do something</span>
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">key</span>, <span class="cm-variable">item</span>
+<span class="cm-keyword">for</span>(<span class="cm-variable">key</span> <span class="cm-keyword">in</span> <span class="cm-variable">myObject</span>) {
+  <span class="cm-keyword">if</span>(<span class="cm-variable">myObject</span>.<span class="cm-property">hasOwnProperty</span>(<span class="cm-variable">key</span>)) {
+    <span class="cm-variable">item</span> = <span class="cm-variable">myObject</span>[<span class="cm-variable">key</span>]
+    <span class="cm-comment">// do something</span>
   }
 }</code></pre>
 <p>on peut se contenter d&#39;un :</p>
-<pre><code class="language-javascript">Object.keys(myObject)
-  .forEach(<span class="function"><span class="keyword">function</span><span class="params">(key)</span>{</span>
-    <span class="keyword">var</span> item = myObject[i]
-    <span class="comment">// do something</span>
+<pre><code class="language-javascript"><span class="cm-variable">Object</span>.<span class="cm-property">keys</span>(<span class="cm-variable">myObject</span>)
+  .<span class="cm-property">forEach</span>(<span class="cm-keyword">function</span>(<span class="cm-def">key</span>){
+    <span class="cm-keyword">var</span> <span class="cm-def">item</span> = <span class="cm-variable">myObject</span>[<span class="cm-variable">i</span>]
+    <span class="cm-comment">// do something</span>
   })</code></pre>
 <p>De même, on bénéficie de méthodes s&#39;avérant très utiles, comme <a href="http://developer.mozilla.org/en-US/docs/[Web/JavaScript/Reference/Global_Objects/Array/prototype"><code>Array.prototype.map</code>, <code>Array.prototype.reduce</code>, <code>Array.prototype.filter</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object"><code>Object.create</code>, <code>Object.getPrototypeOf</code>, <code>Object.getOwnPropertyNames</code>, <code>Object.defineProperty</code></a> dont je t&#39;invite, si cela t&#39;intéresse, à te renseigner sur ces méthodes. Et si tu veux avoir plus de détails, read the fucking manual : <a href="http://es5.github.io"><a href="http://es5.github.io">http://es5.github.io</a></a>.</p>
 <h3 id="des-petits-d-tails-cools-du-c-t-des-events">Des petits détails cools du côté des events</h3>
 <p>Avec <code>addEventListener</code>, on peut aussi passer un objet comme listener, avec <code>handleEvent</code> pour interface :</p>
-<pre><code class="language-javascript"><span class="keyword">var</span> myElementClickEvents = {
-    element : myElement
-  , callbacks : []
-  , handleEvent : <span class="function"><span class="keyword">function</span><span class="params">(evt)</span>{</span>
-      <span class="keyword">var</span> self = <span class="keyword">this</span>
-      <span class="keyword">this</span>.callbacks.forEach(<span class="function"><span class="keyword">function</span><span class="params">(item)</span>{</span>
-        item.call(self.element, evt)
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">myElementClickEvents</span> = {
+    <span class="cm-property">element</span> : <span class="cm-variable">myElement</span>
+  , <span class="cm-property">callbacks</span> : []
+  , <span class="cm-variable">handleEvent</span> : <span class="cm-keyword">function</span>(<span class="cm-variable">evt</span>){
+      <span class="cm-keyword">var</span> <span class="cm-variable">self</span> = <span class="cm-keyword">this</span>
+      <span class="cm-keyword">this</span>.<span class="cm-variable">callbacks</span>.<span class="cm-variable">forEach</span>(<span class="cm-keyword">function</span>(<span class="cm-variable">item</span>){
+        <span class="cm-variable">item</span>.<span class="cm-variable">call</span>(<span class="cm-variable">self</span>.<span class="cm-variable">element</span>, <span class="cm-variable">evt</span>)
       })
     }
 }
-myElement.addEventListener(<span class="string">"click"</span>, myElementClickEvents)
+<span class="cm-variable">myElement</span>.<span class="cm-variable">addEventListener</span>(<span class="cm-string">&quot;click&quot;</span>, <span class="cm-variable">myElementClickEvents</span>)
 
-myElementClickEvents.callbacks.push(<span class="function"><span class="keyword">function</span><span class="params">(evt)</span>{</span>
-  console.log(evt)
+<span class="cm-variable">myElementClickEvents</span>.<span class="cm-variable">callbacks</span>.<span class="cm-variable">push</span>(<span class="cm-keyword">function</span>(<span class="cm-variable">evt</span>){
+  <span class="cm-variable">console</span>.<span class="cm-variable">log</span>(<span class="cm-variable">evt</span>)
 })</code></pre>
 <p>Avec ça, on peut facilement garder une trace de ce qu&#39;on passé comme listeners.</p>
 <h3 id="du-type-checking-">Du type checking ?</h3>
-<pre><code class="language-javascript"><span class="keyword">var</span> getClass = <span class="function"><span class="keyword">function</span><span class="params">(o)</span>{</span> <span class="keyword">return</span> Object.prototype.toString.call(o) }
-  , someString = <span class="keyword">new</span> String(<span class="string">"foo"</span>)
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">getClass</span> = <span class="cm-keyword">function</span>(<span class="cm-def">o</span>){ <span class="cm-keyword">return</span> <span class="cm-variable">Object</span>.<span class="cm-property">prototype</span>.<span class="cm-property">toString</span>.<span class="cm-property">call</span>(<span class="cm-variable-2">o</span>) }
+  , <span class="cm-variable">someString</span> = <span class="cm-keyword">new</span> <span class="cm-variable">String</span>(<span class="cm-string">&quot;foo&quot;</span>)
 
-<span class="keyword">typeof</span> someString <span class="comment">// "object"</span>
-getClass(someString) <span class="comment">// "[object String]", sounds more reasonable</span></code></pre>
+<span class="cm-keyword">typeof</span> <span class="cm-variable">someString</span> <span class="cm-comment">// &quot;object&quot;</span>
+<span class="cm-variable">getClass</span>(<span class="cm-variable">someString</span>) <span class="cm-comment">// &quot;[object String]&quot;, sounds more reasonable</span></code></pre>
 <h3 id="petit-bonus">Petit bonus</h3>
 <p>Un petit bonus rien que pour toi : pour avoir une syntaxe plus sympathique et plus claire que les prototypes.</p>
 <p>En principe, on fait comme ça :</p>
-<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span><span class="params">(name)</span>{</span>
-  <span class="keyword">this</span>.name = name
+<pre><code class="language-javascript"><span class="cm-keyword">function</span> <span class="cm-variable">Animal</span>(<span class="cm-def">name</span>){
+  <span class="cm-keyword">this</span>.<span class="cm-property">name</span> = <span class="cm-variable-2">name</span>
 }
 
-Animal.prototype.getName = <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-  <span class="keyword">return</span> <span class="keyword">this</span>.name
+<span class="cm-variable">Animal</span>.<span class="cm-property">prototype</span>.<span class="cm-property">getName</span> = <span class="cm-keyword">function</span>(){
+  <span class="cm-keyword">return</span> <span class="cm-keyword">this</span>.<span class="cm-property">name</span>
 }
 
-<span class="function"><span class="keyword">function</span> <span class="title">Cat</span><span class="params">(name)</span>{</span>
-  Animal.call(<span class="keyword">this</span>, name)
+<span class="cm-keyword">function</span> <span class="cm-variable">Cat</span>(<span class="cm-def">name</span>){
+  <span class="cm-variable">Animal</span>.<span class="cm-property">call</span>(<span class="cm-keyword">this</span>, <span class="cm-variable-2">name</span>)
 }
 
-<span class="function"><span class="keyword">function</span> <span class="title">K</span><span class="params">()</span>{</span>}
-K.prototype = Animal.prototype
+<span class="cm-keyword">function</span> <span class="cm-variable">K</span>(){}
+<span class="cm-variable">K</span>.<span class="cm-property">prototype</span> = <span class="cm-variable">Animal</span>.<span class="cm-property">prototype</span>
 
-Cat.prototype = <span class="keyword">new</span> K
-Cat.prototype.constructor = Cat
-Cat.prototype.type = <span class="string">"cat"</span>
+<span class="cm-variable">Cat</span>.<span class="cm-property">prototype</span> = <span class="cm-keyword">new</span> <span class="cm-variable">K</span>
+<span class="cm-variable">Cat</span>.<span class="cm-property">prototype</span>.<span class="cm-property">constructor</span> = <span class="cm-variable">Cat</span>
+<span class="cm-variable">Cat</span>.<span class="cm-property">prototype</span>.<span class="cm-property">type</span> = <span class="cm-string">&quot;cat&quot;</span>
 
-<span class="keyword">var</span> myAnimal = <span class="keyword">new</span> Animal(<span class="string">"Foo"</span>)
-  , myCat = <span class="keyword">new</span> Cat(<span class="string">"Bar"</span>)
+<span class="cm-keyword">var</span> <span class="cm-variable">myAnimal</span> = <span class="cm-keyword">new</span> <span class="cm-variable">Animal</span>(<span class="cm-string">&quot;Foo&quot;</span>)
+  , <span class="cm-variable">myCat</span> = <span class="cm-keyword">new</span> <span class="cm-variable">Cat</span>(<span class="cm-string">&quot;Bar&quot;</span>)
 
-myCat <span class="keyword">instanceof</span> Cat <span class="comment">// true</span>
-myCat <span class="keyword">instanceof</span> Animal <span class="comment">// true</span></code></pre>
+<span class="cm-variable">myCat</span> <span class="cm-keyword">instanceof</span> <span class="cm-variable">Cat</span> <span class="cm-comment">// true</span>
+<span class="cm-variable">myCat</span> <span class="cm-keyword">instanceof</span> <span class="cm-variable">Animal</span> <span class="cm-comment">// true</span></code></pre>
 <p>Maintenant, à l&#39;aide de deux petites méthodes :</p>
-<pre><code class="language-javascript"><span class="comment">// wow</span>
-<span class="comment">//         many magic</span>
-<span class="comment">//   very es5</span>
-<span class="comment">//            wow</span>
-<span class="function"><span class="keyword">function</span> <span class="title">extend</span><span class="params">(object)</span>{</span>
-  <span class="keyword">var</span> self = Object.create(<span class="keyword">this</span>)
-  <span class="keyword">if</span>(!object) <span class="keyword">return</span> self
-  Object.keys(object)
-    .forEach(<span class="function"><span class="keyword">function</span><span class="params">(key)</span>{</span>
-      self[key] = object[key]
+<pre><code class="language-javascript"><span class="cm-comment">// wow</span>
+<span class="cm-comment">//         many magic</span>
+<span class="cm-comment">//   very es5</span>
+<span class="cm-comment">//            wow</span>
+<span class="cm-keyword">function</span> <span class="cm-variable">extend</span>(<span class="cm-def">object</span>){
+  <span class="cm-keyword">var</span> <span class="cm-def">self</span> = <span class="cm-variable">Object</span>.<span class="cm-property">create</span>(<span class="cm-keyword">this</span>)
+  <span class="cm-keyword">if</span>(!<span class="cm-variable-2">object</span>) <span class="cm-keyword">return</span> <span class="cm-variable-2">self</span>
+  <span class="cm-variable">Object</span>.<span class="cm-property">keys</span>(<span class="cm-variable-2">object</span>)
+    .<span class="cm-property">forEach</span>(<span class="cm-keyword">function</span>(<span class="cm-def">key</span>){
+      <span class="cm-variable-2">self</span>[<span class="cm-variable-2">key</span>] = <span class="cm-variable-2">object</span>[<span class="cm-variable-2">key</span>]
     })
-  <span class="keyword">return</span> self
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">self</span>
 }
 
-<span class="function"><span class="keyword">function</span> <span class="title">create</span><span class="params">()</span>{</span>
-  <span class="keyword">var</span> self = Object.create(<span class="keyword">this</span>)
-  <span class="keyword">if</span>(<span class="keyword">typeof</span> self.constructor == <span class="string">"function"</span>) {
-    self.constructor.apply(self, arguments)
+<span class="cm-keyword">function</span> <span class="cm-variable">create</span>(){
+  <span class="cm-keyword">var</span> <span class="cm-def">self</span> = <span class="cm-variable">Object</span>.<span class="cm-property">create</span>(<span class="cm-keyword">this</span>)
+  <span class="cm-keyword">if</span>(<span class="cm-keyword">typeof</span> <span class="cm-variable-2">self</span>.<span class="cm-property">constructor</span> == <span class="cm-string">&quot;function&quot;</span>) {
+    <span class="cm-variable-2">self</span>.<span class="cm-property">constructor</span>.<span class="cm-property">apply</span>(<span class="cm-variable-2">self</span>, <span class="cm-variable-2">arguments</span>)
   }
-  <span class="keyword">return</span> self
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">self</span>
 }
 
-<span class="keyword">var</span> klass = {
-    create : create
-  , extend : extend
+<span class="cm-keyword">var</span> <span class="cm-variable">klass</span> = {
+    <span class="cm-property">create</span> : <span class="cm-variable">create</span>
+  , <span class="cm-property">extend</span> : <span class="cm-variable">extend</span>
 }</code></pre>
 <p>Tu peux faire ça :</p>
-<pre><code class="language-javascript"><span class="keyword">var</span> animal = klass.extend({
-    constructor : <span class="function"><span class="keyword">function</span><span class="params">(name)</span>{</span>
-      <span class="keyword">this</span>.name = name
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">animal</span> = <span class="cm-variable">klass</span>.<span class="cm-property">extend</span>({
+    <span class="cm-property">constructor</span> : <span class="cm-keyword">function</span>(<span class="cm-def">name</span>){
+      <span class="cm-keyword">this</span>.<span class="cm-property">name</span> = <span class="cm-variable-2">name</span>
     }
-  , getName : <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-      <span class="keyword">return</span> <span class="keyword">this</span>.name
+  , <span class="cm-property">getName</span> : <span class="cm-keyword">function</span>(){
+      <span class="cm-keyword">return</span> <span class="cm-keyword">this</span>.<span class="cm-property">name</span>
     }
 })
 
-<span class="keyword">var</span> cat = animal.extend({
-    constructor : <span class="function"><span class="keyword">function</span><span class="params">(name)</span>{</span>
-      animal.constructor.call(<span class="keyword">this</span>, name)
+<span class="cm-keyword">var</span> <span class="cm-variable">cat</span> = <span class="cm-variable">animal</span>.<span class="cm-property">extend</span>({
+    <span class="cm-property">constructor</span> : <span class="cm-keyword">function</span>(<span class="cm-def">name</span>){
+      <span class="cm-variable">animal</span>.<span class="cm-property">constructor</span>.<span class="cm-property">call</span>(<span class="cm-keyword">this</span>, <span class="cm-variable-2">name</span>)
     }
-  , type : <span class="string">"cat"</span>
+  , <span class="cm-property">type</span> : <span class="cm-string">&quot;cat&quot;</span>
 })
 
-<span class="keyword">var</span> myAnimal = animal.create(<span class="string">"Foo"</span>)
-  , myCat = cat.create(<span class="string">"Bar"</span>)
+<span class="cm-keyword">var</span> <span class="cm-variable">myAnimal</span> = <span class="cm-variable">animal</span>.<span class="cm-property">create</span>(<span class="cm-string">&quot;Foo&quot;</span>)
+  , <span class="cm-variable">myCat</span> = <span class="cm-variable">cat</span>.<span class="cm-property">create</span>(<span class="cm-string">&quot;Bar&quot;</span>)
 
-cat.isPrototypeOf(myCat) <span class="comment">// true</span>
-animal.isPrototypeOf(myCat) <span class="comment">// true</span></code></pre>
+<span class="cm-variable">cat</span>.<span class="cm-property">isPrototypeOf</span>(<span class="cm-variable">myCat</span>) <span class="cm-comment">// true</span>
+<span class="cm-variable">animal</span>.<span class="cm-property">isPrototypeOf</span>(<span class="cm-variable">myCat</span>) <span class="cm-comment">// true</span></code></pre>
 <p>Voilà, j&#39;espère que cela a pu attiser ta curiosité d&#39;en apprendre plus sur le langage lui-même et le DOM.</p>
 
 ]]></description>
@@ -281,128 +559,128 @@ animal.isPrototypeOf(myCat) <span class="comment">// true</span></code></pre>
 <li><a href="/posts/js/de-jquery-a-vanillajs/#jsonp">JSONP</a></li>
 </ol>
 <h2 id="-v-nements">Évènements</h2>
-<pre><code class="language-javascript"><span class="comment">// jQuery</span>
-$(document).ready(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
-  <span class="comment">// code</span>
+<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
+<span class="cm-variable">$</span>(<span class="cm-variable">document</span>).<span class="cm-property">ready</span>(<span class="cm-keyword">function</span>() {
+  <span class="cm-comment">// code</span>
 })
 
-<span class="comment">// Vanilla</span>
-document.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
-  <span class="comment">// code</span>
+<span class="cm-comment">// Vanilla</span>
+<span class="cm-variable">document</span>.<span class="cm-property">addEventListener</span>(<span class="cm-string">&#39;DOMContentLoaded&#39;</span>, <span class="cm-keyword">function</span>() {
+  <span class="cm-comment">// code</span>
 })</code></pre>
-<pre><code class="language-javascript"><span class="comment">// jQuery</span>
-$(<span class="string">'a'</span>).click(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
-  <span class="comment">// code…</span>
+<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
+<span class="cm-variable">$</span>(<span class="cm-string">&#39;a&#39;</span>).<span class="cm-property">click</span>(<span class="cm-keyword">function</span>() {
+  <span class="cm-comment">// code…</span>
 })
 
-<span class="comment">// Vanilla</span>
-[].forEach.call(document.querySelectorAll(<span class="string">'a'</span>), <span class="function"><span class="keyword">function</span><span class="params">(el)</span> {</span>
-  el.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
-    <span class="comment">// code…</span>
+<span class="cm-comment">// Vanilla</span>
+[].<span class="cm-property">forEach</span>.<span class="cm-property">call</span>(<span class="cm-variable">document</span>.<span class="cm-property">querySelectorAll</span>(<span class="cm-string">&#39;a&#39;</span>), <span class="cm-keyword">function</span>(<span class="cm-def">el</span>) {
+  <span class="cm-variable-2">el</span>.<span class="cm-property">addEventListener</span>(<span class="cm-string">&#39;click&#39;</span>, <span class="cm-keyword">function</span>() {
+    <span class="cm-comment">// code…</span>
   })
 })</code></pre>
 <h2 id="s-lecteurs">Sélecteurs</h2>
-<pre><code class="language-javascript"><span class="comment">// jQuery</span>
-<span class="keyword">var</span> divs = $(<span class="string">'div'</span>)
+<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">divs</span> = <span class="cm-variable">$</span>(<span class="cm-string">&#39;div&#39;</span>)
 
-<span class="comment">// Vanilla</span>
-<span class="keyword">var</span> divs = document.querySelectorAll(<span class="string">'div'</span>)</code></pre>
-<pre><code class="language-javascript"><span class="comment">// jQuery</span>
-<span class="keyword">var</span> newDiv = $(<span class="string">'&lt;div/&gt;'</span>)
+<span class="cm-comment">// Vanilla</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">divs</span> = <span class="cm-variable">document</span>.<span class="cm-property">querySelectorAll</span>(<span class="cm-string">&#39;div&#39;</span>)</code></pre>
+<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">newDiv</span> = <span class="cm-variable">$</span>(<span class="cm-string">&#39;&lt;div/&gt;&#39;</span>)
 
-<span class="comment">// Vanilla</span>
-<span class="keyword">var</span> newDiv = document.createElement(<span class="string">'div'</span>)</code></pre>
+<span class="cm-comment">// Vanilla</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">newDiv</span> = <span class="cm-variable">document</span>.<span class="cm-property">createElement</span>(<span class="cm-string">&#39;div&#39;</span>)</code></pre>
 <h2 id="attributs">Attributs</h2>
-<pre><code class="language-javascript"><span class="comment">// jQuery</span>
-$(<span class="string">'img'</span>).filter(<span class="string">':first'</span>).attr(<span class="string">'alt'</span>, <span class="string">'My image'</span>)
+<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
+<span class="cm-variable">$</span>(<span class="cm-string">&#39;img&#39;</span>).<span class="cm-property">filter</span>(<span class="cm-string">&#39;:first&#39;</span>).<span class="cm-property">attr</span>(<span class="cm-string">&#39;alt&#39;</span>, <span class="cm-string">&#39;My image&#39;</span>)
 
-<span class="comment">// Vanilla</span>
-document.querySelector(<span class="string">'img'</span>).setAttribute(<span class="string">'alt'</span>, <span class="string">'My image'</span>)</code></pre>
+<span class="cm-comment">// Vanilla</span>
+<span class="cm-variable">document</span>.<span class="cm-property">querySelector</span>(<span class="cm-string">&#39;img&#39;</span>).<span class="cm-property">setAttribute</span>(<span class="cm-string">&#39;alt&#39;</span>, <span class="cm-string">&#39;My image&#39;</span>)</code></pre>
 <h2 id="classes">Classes</h2>
-<pre><code class="language-javascript"><span class="comment">// jQuery</span>
-newDiv.addClass(<span class="string">'foo'</span>)
+<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
+<span class="cm-variable">newDiv</span>.<span class="cm-property">addClass</span>(<span class="cm-string">&#39;foo&#39;</span>)
 
-<span class="comment">// Vanilla</span>
-newDiv.classList.add(<span class="string">'foo'</span>)</code></pre>
-<pre><code class="language-javascript"><span class="comment">// jQuery</span>
-newDiv.toggleClass(<span class="string">'foo'</span>)
+<span class="cm-comment">// Vanilla</span>
+<span class="cm-variable">newDiv</span>.<span class="cm-property">classList</span>.<span class="cm-property">add</span>(<span class="cm-string">&#39;foo&#39;</span>)</code></pre>
+<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
+<span class="cm-variable">newDiv</span>.<span class="cm-property">toggleClass</span>(<span class="cm-string">&#39;foo&#39;</span>)
 
-<span class="comment">// Vanilla</span>
-newDiv.classList.toggle(<span class="string">'foo'</span>)</code></pre>
+<span class="cm-comment">// Vanilla</span>
+<span class="cm-variable">newDiv</span>.<span class="cm-property">classList</span>.<span class="cm-property">toggle</span>(<span class="cm-string">&#39;foo&#39;</span>)</code></pre>
 <h2 id="manipulation">Manipulation</h2>
-<pre><code class="language-javascript"><span class="comment">// jQuery</span>
-$(<span class="string">'body'</span>).append($(<span class="string">'&lt;p/&gt;'</span>))
+<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
+<span class="cm-variable">$</span>(<span class="cm-string">&#39;body&#39;</span>).<span class="cm-property">append</span>(<span class="cm-variable">$</span>(<span class="cm-string">&#39;&lt;p/&gt;&#39;</span>))
 
-<span class="comment">// Vanilla</span>
-document.body.appendChild(document.createElement(<span class="string">'p'</span>))</code></pre>
-<pre><code class="language-javascript"><span class="comment">// jQuery</span>
-<span class="keyword">var</span> clonedElement = $(<span class="string">'#about'</span>).clone()
+<span class="cm-comment">// Vanilla</span>
+<span class="cm-variable">document</span>.<span class="cm-property">body</span>.<span class="cm-property">appendChild</span>(<span class="cm-variable">document</span>.<span class="cm-property">createElement</span>(<span class="cm-string">&#39;p&#39;</span>))</code></pre>
+<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">clonedElement</span> = <span class="cm-variable">$</span>(<span class="cm-string">&#39;#about&#39;</span>).<span class="cm-property">clone</span>()
 
-<span class="comment">// Vanilla</span>
-<span class="keyword">var</span> clonedElement = document.getElementById(<span class="string">'about'</span>).cloneNode(<span class="literal">true</span>)</code></pre>
-<pre><code class="language-javascript"><span class="comment">// jQuery</span>
-$(<span class="string">'#wrap'</span>).empty()
+<span class="cm-comment">// Vanilla</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">clonedElement</span> = <span class="cm-variable">document</span>.<span class="cm-property">getElementById</span>(<span class="cm-string">&#39;about&#39;</span>).<span class="cm-property">cloneNode</span>(<span class="cm-atom">true</span>)</code></pre>
+<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
+<span class="cm-variable">$</span>(<span class="cm-string">&#39;#wrap&#39;</span>).<span class="cm-property">empty</span>()
 
-<span class="comment">// Vanilla</span>
-<span class="keyword">var</span> wrap = document.getElementById(<span class="string">'wrap'</span>)
-<span class="keyword">while</span>(wrap.firstChild) wrap.removeChild(wrap.firstChild)</code></pre>
+<span class="cm-comment">// Vanilla</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">wrap</span> = <span class="cm-variable">document</span>.<span class="cm-property">getElementById</span>(<span class="cm-string">&#39;wrap&#39;</span>)
+<span class="cm-keyword">while</span>(<span class="cm-variable">wrap</span>.<span class="cm-property">firstChild</span>) <span class="cm-variable">wrap</span>.<span class="cm-property">removeChild</span>(<span class="cm-variable">wrap</span>.<span class="cm-property">firstChild</span>)</code></pre>
 <h2 id="navigation">Navigation</h2>
-<pre><code class="language-javascript"><span class="comment">// jQuery</span>
-<span class="keyword">var</span> parent = $(<span class="string">'#about'</span>).parent()
+<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">parent</span> = <span class="cm-variable">$</span>(<span class="cm-string">&#39;#about&#39;</span>).<span class="cm-property">parent</span>()
 
-<span class="comment">// Vanilla</span>
-<span class="keyword">var</span> parent = document.getElementById(<span class="string">'about'</span>).parentNode</code></pre>
-<pre><code class="language-javascript"><span class="comment">// jQuery</span>
-<span class="keyword">if</span>($(<span class="string">'#wrap'</span>).is(<span class="string">':empty'</span>))
+<span class="cm-comment">// Vanilla</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">parent</span> = <span class="cm-variable">document</span>.<span class="cm-property">getElementById</span>(<span class="cm-string">&#39;about&#39;</span>).<span class="cm-property">parentNode</span></code></pre>
+<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
+<span class="cm-keyword">if</span>(<span class="cm-variable">$</span>(<span class="cm-string">&#39;#wrap&#39;</span>).<span class="cm-property">is</span>(<span class="cm-string">&#39;:empty&#39;</span>))
 
-<span class="comment">// Vanilla</span>
-<span class="keyword">if</span>(!document.getElementById(<span class="string">'wrap'</span>).hasChildNodes())</code></pre>
-<pre><code class="language-javascript"><span class="comment">// jQuery</span>
-<span class="keyword">var</span> nextElement = $(<span class="string">'#wrap'</span>).next()
+<span class="cm-comment">// Vanilla</span>
+<span class="cm-keyword">if</span>(!<span class="cm-variable">document</span>.<span class="cm-property">getElementById</span>(<span class="cm-string">&#39;wrap&#39;</span>).<span class="cm-property">hasChildNodes</span>())</code></pre>
+<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">nextElement</span> = <span class="cm-variable">$</span>(<span class="cm-string">&#39;#wrap&#39;</span>).<span class="cm-property">next</span>()
 
-<span class="comment">// Vanilla</span>
-<span class="keyword">var</span> nextElement = document.getElementById(<span class="string">'wrap'</span>).nextSibling</code></pre>
+<span class="cm-comment">// Vanilla</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">nextElement</span> = <span class="cm-variable">document</span>.<span class="cm-property">getElementById</span>(<span class="cm-string">&#39;wrap&#39;</span>).<span class="cm-property">nextSibling</span></code></pre>
 <h2 id="ajax">AJAX</h2>
 <h3 id="get">GET</h3>
-<pre><code class="language-javascript"><span class="comment">// jQuery</span>
-$.get(<span class="string">'//example.com'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(data)</span> {</span>
-  <span class="comment">// code</span>
+<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
+<span class="cm-variable">$</span>.<span class="cm-property">get</span>(<span class="cm-string">&#39;//example.com&#39;</span>, <span class="cm-keyword">function</span> (<span class="cm-def">data</span>) {
+  <span class="cm-comment">// code</span>
 })
 
-<span class="comment">// Vanilla</span>
-<span class="keyword">var</span> httpRequest = <span class="keyword">new</span> XMLHttpRequest()
-httpRequest.onreadystatechange = <span class="function"><span class="keyword">function</span> <span class="params">(data)</span> {</span>
-  <span class="comment">// code</span>
+<span class="cm-comment">// Vanilla</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">httpRequest</span> = <span class="cm-keyword">new</span> <span class="cm-variable">XMLHttpRequest</span>()
+<span class="cm-variable">httpRequest</span>.<span class="cm-property">onreadystatechange</span> = <span class="cm-keyword">function</span> (<span class="cm-def">data</span>) {
+  <span class="cm-comment">// code</span>
 }
-httpRequest.open(<span class="string">'GET'</span>, url)
-httpRequest.send()</code></pre>
+<span class="cm-variable">httpRequest</span>.<span class="cm-property">open</span>(<span class="cm-string">&#39;GET&#39;</span>, <span class="cm-variable">url</span>)
+<span class="cm-variable">httpRequest</span>.<span class="cm-property">send</span>()</code></pre>
 <h3 id="post">POST</h3>
-<pre><code class="language-javascript"><span class="comment">// jQuery</span>
-$.post(<span class="string">'//example.com'</span>, { username: username }, <span class="function"><span class="keyword">function</span> <span class="params">(data)</span> {</span>
-  <span class="comment">// code</span>
+<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
+<span class="cm-variable">$</span>.<span class="cm-property">post</span>(<span class="cm-string">&#39;//example.com&#39;</span>, { <span class="cm-property">username</span>: <span class="cm-variable">username</span> }, <span class="cm-keyword">function</span> (<span class="cm-def">data</span>) {
+  <span class="cm-comment">// code</span>
 })
 
-<span class="comment">// Vanilla</span>
-<span class="keyword">var</span> httpRequest = <span class="keyword">new</span> XMLHttpRequest()
-httpRequest.onreadystatechange = <span class="function"><span class="keyword">function</span> <span class="params">(data)</span> {</span>
-  <span class="comment">// code</span>
+<span class="cm-comment">// Vanilla</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">httpRequest</span> = <span class="cm-keyword">new</span> <span class="cm-variable">XMLHttpRequest</span>()
+<span class="cm-variable">httpRequest</span>.<span class="cm-property">onreadystatechange</span> = <span class="cm-keyword">function</span> (<span class="cm-def">data</span>) {
+  <span class="cm-comment">// code</span>
 }
-httpRequest.setRequestHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/x-www-form-urlencoded'</span>)
-httpRequest.open(<span class="string">'POST'</span>, url)
-httpRequest.send(<span class="string">'username='</span> + encodeURIComponent(username))</code></pre>
+<span class="cm-variable">httpRequest</span>.<span class="cm-property">setRequestHeader</span>(<span class="cm-string">&#39;Content-Type&#39;</span>, <span class="cm-string">&#39;application/x-www-form-urlencoded&#39;</span>)
+<span class="cm-variable">httpRequest</span>.<span class="cm-property">open</span>(<span class="cm-string">&#39;POST&#39;</span>, <span class="cm-variable">url</span>)
+<span class="cm-variable">httpRequest</span>.<span class="cm-property">send</span>(<span class="cm-string">&#39;username=&#39;</span> + <span class="cm-variable">encodeURIComponent</span>(<span class="cm-variable">username</span>))</code></pre>
 <h3 id="jsonp">JSONP</h3>
-<pre><code class="language-javascript"><span class="comment">// jQuery</span>
-$.getJSON(<span class="string">'//openexchangerates.org/latest.json?callback=?'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(data)</span> {</span>
-  <span class="comment">// code</span>
+<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
+<span class="cm-variable">$</span>.<span class="cm-property">getJSON</span>(<span class="cm-string">&#39;//openexchangerates.org/latest.json?callback=?&#39;</span>, <span class="cm-keyword">function</span> (<span class="cm-def">data</span>) {
+  <span class="cm-comment">// code</span>
 })
 
-<span class="comment">// Vanilla</span>
-<span class="function"><span class="keyword">function</span> <span class="title">success</span><span class="params">(data)</span> {</span>
-  <span class="comment">// code</span>
+<span class="cm-comment">// Vanilla</span>
+<span class="cm-keyword">function</span> <span class="cm-variable">success</span>(<span class="cm-def">data</span>) {
+  <span class="cm-comment">// code</span>
 }
-<span class="keyword">var</span> scr = document.createElement(<span class="string">'script'</span>)
-scr.src = <span class="string">'//openexchangerates.org/latest.json?callback=formatCurrency'</span>
-document.body.appendChild(scr)</code></pre>
+<span class="cm-keyword">var</span> <span class="cm-variable">scr</span> = <span class="cm-variable">document</span>.<span class="cm-property">createElement</span>(<span class="cm-string">&#39;script&#39;</span>)
+<span class="cm-variable">scr</span>.<span class="cm-property">src</span> = <span class="cm-string">&#39;//openexchangerates.org/latest.json?callback=formatCurrency&#39;</span>
+<span class="cm-variable">document</span>.<span class="cm-property">body</span>.<span class="cm-property">appendChild</span>(<span class="cm-variable">scr</span>)</code></pre>
 <p>Cela vous parait-il encore difficile de vous passer de jQuery ? :)</p>
 <p>Un grand merci à <a href="http://playground.deaxon.com/js/vanilla-js/">@deaxon</a> qui est à l&#39;origine de cet éclaircissement.</p>
 <h2 id="a-creuser">A creuser</h2>
@@ -425,34 +703,20 @@ document.body.appendChild(scr)</code></pre>
 <p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu&#39;il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d&#39;un autre article. (Je dis ça à chaque fois, haha).</p>
 <h2 id="le-pitch">Le pitch</h2>
 <p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu&#39;il le souhaite afin de communiquer avec l&#39;application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l&#39;avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d&#39;évènement mais vous en avez d&#39;<a href="http://microjs.com/#event">autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
-<pre><code class="language-javascript"> <span class="comment">// on crée un objet vide</span>
-App.FlashManager.Events = {}
+<pre><code class="language-javascript"> <span class="cm-comment">// on crée un objet vide</span>
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
 
-<span class="comment">// on lui ajoute les fonctionnalités des events Backbone</span>
-_.extend(App.FlashManager.Events, Backbone.Events)</code></pre>
-<p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d&#39;évènement façon Backbone</a>. Il pourra alors s&#39;écouter lui même, écouter un autre objet, mais aussi déclencher des évènements.</p>
+<span class="cm-comment">// on lui ajoute les fonctionnalités des events Backbone</span>
+<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)</code></pre>
+<p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d&#39;évènement façon Backbone</a>. Il pourra alors s&#39;écouter lui-même, écouter un autre objet, mais aussi déclencher des évènements.</p>
 <h2 id="c-t-flash">Côté Flash</h2>
 <p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l&#39;objet <code>ExternalInterface</code> :</p>
-<pre><code class="language-javascript">ExternalInterface.call(<span class="string">"window.App.FlashManager.Events.trigger"</span>, <span class="string">"my-event"</span>)
-<span class="comment">// http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html#call</span></code></pre>
+<pre><code class="language-javascript"><span class="cm-variable">ExternalInterface</span>.<span class="cm-property">call</span>(<span class="cm-string">&quot;window.App.FlashManager.Events.trigger&quot;</span>, <span class="cm-string">&quot;my-event&quot;</span>)
+<span class="cm-comment">// http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html#call</span></code></pre>
 <p>Et là, bug.</p>
 <h2 id="pourquoi-bug-">Pourquoi bug ?</h2>
-<p>Parce que <code>ExtercalInterface.call()</code> ne s&#39;attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l&#39;<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153">objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur faisant tout bonnement une boucle infinie d&#39;appel à la méthode interne de Flash <code>__flash__toXML</code> :</p>
-<pre><code class="language-javascript">__flash__toXML
-  __flash__toXML
-    __flash__toXML
-      __flash__toXML
-        __flash__toXML
-          __flash__toXML
-           __flash__toXML
-            __flash__toXML
-              __flash__toXML
-                __flash__toXML
-                  __flash__toXML
-                    __flash__toXML</code></pre>
-<p>Peut-être que vous allez vous empresser de regarder si une autre méthode qu&#39;<code>ExtercalInterface.call()</code> existe pour faire un appel à JavaScript (vous vous trompez) ou encore d&#39;aller insulter Adobe sur son bugtracker en leur disant &quot;c&#39;est quoi c&#39;bordel ?!&quot; (vous n&#39;auriez pas forcément tort, quand bien même ce n&#39;est pas vraiment de leur faute dans le cas présent). Nope, c&#39;est du côté JavaScript qu&#39;il faut régler ça.</p>
-<h2 id="c-t-javascript">Côté JavaScript</h2>
-<p>Comme je vous disais, <strong>Backbone.js</strong> renvoie lorsqu&#39;on utilise <code>.trigger()</code> l&#39;instance en cours de l&#39;objet, provoquant un bug dû à une <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Une_r%C3%A9introduction_%C3%A0_JavaScript#Fuites_de_m.C3.A9moire">référence circulaire</a>. En gros, ici nous sommes en train de retourner l&#39;élément Flash (<code>&lt;object|embed&gt;</code>).</p>
+<p>Pour le moment, je ne sais pas vraiment. Je me pencherai plus sur le sujet dès que j&#39;ai un peu de temps, mais ce que je sais, c&#39;est que <code>ExtercalInterface.call()</code> ne s&#39;attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l&#39;<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153">objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur.</p>
+<h2 id="la-solution-c-t-javascript">La solution côté JavaScript</h2>
 <p>Pour contrer cela, je vous propose la solution suivante qui est de ne pas utiliser directement l&#39;objet <code>Backbone.Events|View</code> mais plutôt de passer par une interface, un objet proxy.</p>
 <p>Voici le schéma :</p>
 <ul>
@@ -460,36 +724,26 @@ _.extend(App.FlashManager.Events, Backbone.Events)</code></pre>
 <li>Utiliser <strong>Backbone.js</strong> dans les méthodes de cet objet <em>Proxy</em></li>
 </ul>
 <p>Exemple :</p>
-<pre><code class="language-javascript"><span class="comment">// Bridge between flash and js</span>
-App.FlashManager = {}
-App.FlashManager.Events = {}
+<pre><code class="language-javascript"><span class="cm-comment">// Bridge between flash and js</span>
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span> = {}
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
 
-<span class="comment">// Backbone events used for Flash</span>
-App.InternalFlashManager = {}
-App.InternalFlashManager.Events = {}
+<span class="cm-comment">// Backbone events used for Flash</span>
+<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span> = {}
+<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span> = {}
 
-_.extend(App.InternalFlashManager.Events, Backbone.Events)
+<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)
 
-App.FlashManager.Events.trigger = <span class="function"><span class="keyword">function</span><span class="params">(name, opts)</span> {</span>
-    App.InternalFlashManager.Events.trigger(name, opts)
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span> = <span class="cm-keyword">function</span>(<span class="cm-def">name</span>, <span class="cm-def">opts</span>) {
+    <span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span>(<span class="cm-variable-2">name</span>, <span class="cm-variable-2">opts</span>)
 
-    <span class="comment">// Must return nothing not to loop JavaScript engine, important!</span>
-    <span class="keyword">return</span>
+    <span class="cm-comment">// Must return nothing not to loop JavaScript engine, important!</span>
+    <span class="cm-keyword">return</span>
 }</code></pre>
-<h2 id="a-creuser">A creuser</h2>
-<p>Note de <a href="https://twitter.com/b_lionel">@b_lionel</a> : Pour le problème de référence circulaire, il est possible que ce soit dû au fait de renvoyer un objet ayant une référence vers un object qui lui même à une référence sur le premier objet :</p>
-<pre><code class="language-javascript"><span class="keyword">var</span> obj1 = {label: <span class="string">'objet1'</span>}
-  ,  obj2 = {label: <span class="string">'objet2'</span>}
-obj1.child = obj2
-obj2.child = obj1
-
-<span class="keyword">return</span> obj1</code></pre>
-<p>...ce qui fait que le sérialiseur se prend probablement les pieds dans le tapis.</p>
 <h2 id="oh-et-">Oh et...</h2>
-<p>...il existe une version similaire de cet article en anglais disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
+<p>...il existe une version ayant plus ou moins le même souci que moi disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript ne retourne pas l&#39;élément Flash lui-même (<code>&lt;object|embed&gt;</code>).</p>
-<p>Merci à <a href="https://twitter.com/zr0z">@zr0z</a> et à <a href="https://twitter.com/alexmex_">@alexmex_</a> pour la relecture.</p>
+<p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript retourne quelque chose de simple (un objet ayant que des atributs, pas de fonctions, ou encore un bouléen ou un <em>integer</em>).</p>
 
 ]]></description>
               <pubDate>Thu, 05 December 2013 01:00:00 +0100</pubDate>
@@ -515,23 +769,23 @@ obj2.child = obj1
 <p>Voyons maintenant comment l&#39;on peut mettre en place ceci via <strong>Grunt</strong>.</p>
 <h2 id="installation">Installation</h2>
 <p>Tout d&#39;abord, installons <strong>Grunt</strong>. Notez que <strong>Grunt</strong> est en <em>nodejs</em> et que je considère que vous avez déjà <em>nodejs</em> d&#39;installé. D&#39;autre part, nous allons créer un nouveau projet <strong>npm</strong> afin d&#39;enregistrer tous les packages que vous allez installer. Je vous explique par la suite pourquoi nous faisons ça.</p>
-<pre><code class="language-bash">$ npm init // puis plusieurs fois entrée</code></pre>
+<pre><code class="language-bash"><span class="cm-def">$ npm</span> init // puis plusieurs fois entrée</code></pre>
 <p>En premier lieu, il faut installer le <em>package</em> qui permet de gérer <strong>Grunt</strong> en ligne de commande. C&#39;est le <em>commander</em> de <strong>Grunt</strong> en gros.</p>
-<pre><code class="language-bash">$ npm install -g grunt-cli</code></pre>
+<pre><code class="language-bash"><span class="cm-def">$ npm</span> install <span class="cm-attribute">-g</span> grunt-cli</code></pre>
 <p>Une fois cela fait, installez <strong>Grunt</strong> en local dans votre projet.</p>
-<pre><code class="language-bash">$ npm install grunt --save-dev</code></pre>
+<pre><code class="language-bash"><span class="cm-def">$ npm</span> install grunt <span class="cm-attribute">--save</span><span class="cm-attribute">-dev</span></code></pre>
 <p>Ni plus ni moins, <strong>Grunt</strong> est enfin installé dans votre projet.</p>
 <h2 id="initialisation">Initialisation</h2>
 <p>Maintenant, il est nécessaire de créer un fichier de configuration <strong>Grunt</strong>. Pour cela, nous allons créer un fichier nommé <code>Gruntfile.js</code> à la racine de votre projet.</p>
-<pre><code class="language-bash">$ touch Gruntfile.js</code></pre>
+<pre><code class="language-bash"><span class="cm-def">$ touch</span> Gruntfile.js</code></pre>
 <p>Fait ? Voici maintenant à quoi doit ressembler la base d&#39;une configuration <strong>Grunt</strong>.</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  <span class="comment">// Configuration de Grunt</span>
-  grunt.initConfig({})
+  <span class="cm-comment">// Configuration de Grunt</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({})
 
-  <span class="comment">// Définition des tâches Grunt</span>
-  grunt.registerTask(<span class="string">'default'</span>, <span class="string">''</span>)
+  <span class="cm-comment">// Définition des tâches Grunt</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, <span class="cm-string">&#39;&#39;</span>)
 
 }</code></pre>
 <p>Nous avons maintenant tout le nécessaire pour débuter notre projet. Nous allons enfin pouvoir attaquer les choses sérieuses. Revenons un peu en arrière où nous expliquions que nous voulons en tout premier lieu compiler nos <code>.scss</code> en <code>.css</code>.</p>
@@ -539,56 +793,56 @@ obj2.child = obj1
 <p>Une petite recherche sur votre moteur de recherche préféré en tapant <code>grunt sass</code> et vous trouverez le projet <a href="https://github.com/gruntjs/grunt-contrib-sass"><code>grunt-contrib-sass</code></a>.</p>
 <p>Toute documentation pour installer une tâche <strong>Grunt</strong> est indiquée sur chaque <code>README.md</code> du projet mais pour un souci de clarté et de compréhension, je vais tout de même vous expliquer ici comment faire.</p>
 <p>D&#39;abord, installons le package pour <em>Sass</em>.</p>
-<pre><code class="language-bash">$ npm install grunt-contrib-sass --save-dev</code></pre>
+<pre><code class="language-bash"><span class="cm-def">$ npm</span> install grunt-contrib-sass <span class="cm-attribute">--save</span><span class="cm-attribute">-dev</span></code></pre>
 <p>Ceci va installer le <em>package</em> <code>grunt-contrib-sass</code> dans votre dossier <code>node_modules</code> où vous pourrez l&#39;utiliser en l&#39;important dans votre <code>Gruntfile.js</code>.</p>
 <p>Un exemple d&#39;utilisation :</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {                              <span class="comment">// Nom de la tâche</span>
-      dist: {                            <span class="comment">// Nom de la sous-tâche</span>
-        options: {                       <span class="comment">// Options</span>
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {                              <span class="cm-comment">// Nom de la tâche</span>
+      <span class="cm-property">dist</span>: {                            <span class="cm-comment">// Nom de la sous-tâche</span>
+        <span class="cm-property">options</span>: {                       <span class="cm-comment">// Options</span>
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {                         <span class="comment">// Liste des fichiers</span>
-          <span class="string">'main.css'</span>: <span class="string">'main.scss'</span>,       <span class="comment">// 'destination': 'source'</span>
-          <span class="string">'widgets.css'</span>: <span class="string">'widgets.scss'</span>
+        <span class="cm-property">files</span>: {                         <span class="cm-comment">// Liste des fichiers</span>
+          <span class="cm-stringcm-property">&#39;main.css&#39;</span>: <span class="cm-string">&#39;main.scss&#39;</span>,       <span class="cm-comment">// &#39;destination&#39;: &#39;source&#39;</span>
+          <span class="cm-stringcm-property">&#39;widgets.css&#39;</span>: <span class="cm-string">&#39;widgets.scss&#39;</span>
         }
       }
     }
   })
 
-  <span class="comment">// Import du package</span>
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
+  <span class="cm-comment">// Import du package</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>)
 
-  <span class="comment">// Redéfinition de la tâche `default` qui est la tâche lancée dès que vous lancez Grunt sans rien spécifier.</span>
-  <span class="comment">// Note : ici, nous définissons sass comme une tâche à lancer si on lance la tâche `default`.</span>
-  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>])
+  <span class="cm-comment">// Redéfinition de la tâche `default` qui est la tâche lancée dès que vous lancez Grunt sans rien spécifier.</span>
+  <span class="cm-comment">// Note : ici, nous définissons sass comme une tâche à lancer si on lance la tâche `default`.</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>])
 }</code></pre>
 <p>Nous avons maintenant tout le nécessaire pour pouvoir compiler nos <code>.scss</code> en  <code>.css</code>.</p>
 <p>Vous vous demandez peut-être comment vous pouvez généraliser vos sources plutôt que les définir une par une. Pas de souci.</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: { <span class="comment">// C'est ici que l'on définit le dossier que l'on souhaite importer</span>
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: { <span class="cm-comment">// C&#39;est ici que l&#39;on définit le dossier que l&#39;on souhaite importer</span>
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>)
 
-  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>])
 }</code></pre>
 <h2 id="deuxi-me-t-che-concat-ner-ses-fichiers-javascript">Deuxième tâche : concaténer ses fichiers JavaScript</h2>
 <p>Passons maintenant à la concaténation des fichiers JavaScripts.</p>
@@ -596,232 +850,232 @@ obj2.child = obj1
 <p>-&gt; <a href="https://github.com/gruntjs/grunt-contrib-concat"><code>grunt-contrib-concat</code></a></p>
 <p>Installation : <code>npm install grunt-contrib-concat --save-dev</code> (<code>--save-dev</code> permet de sauvegarder le package dans <code>package.json</code> pour pouvoir à tout moment le réinstaller en faisant <code>npm install</code>)</p>
 <p>On ajoute alors à notre configuration <strong>Grunt</strong> l&#39;importation de <code>grunt-contrib-concat</code> :</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>);
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>); <span class="comment">// Voilà l'ajout.</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>);
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>); <span class="cm-comment">// Voilà l&#39;ajout.</span>
 
-  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>])
 }</code></pre>
 <p>Puis on ajoute notre tâche :</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     },
-    concat: {
-      options: {
-        separator: <span class="string">';'</span>, <span class="comment">// permet d'ajouter un point-virgule entre chaque fichier concaténé.</span>
+    <span class="cm-property">concat</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>, <span class="cm-comment">// permet d&#39;ajouter un point-virgule entre chaque fichier concaténé.</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>], <span class="comment">// la source</span>
-        dest: <span class="string">'dist/built.js'</span> <span class="comment">// la destination finale</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>], <span class="cm-comment">// la source</span>
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span> <span class="cm-comment">// la destination finale</span>
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>);
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>);
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>);
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>);
 
-  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>])
 }</code></pre>
 <p>Ne pas oublier d&#39;ajouter la tâche de concaténation à notre tâche par défaut :</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     },
-    concat: {
-      options: {
-        separator: <span class="string">';'</span>, <span class="comment">// permet d'ajouter un point-virgule entre chaque fichier concaténé.</span>
+    <span class="cm-property">concat</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>, <span class="cm-comment">// permet d&#39;ajouter un point-virgule entre chaque fichier concaténé.</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>], <span class="comment">// la source</span>
-        dest: <span class="string">'dist/built.js'</span> <span class="comment">// la destination finale</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>], <span class="cm-comment">// la source</span>
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span> <span class="cm-comment">// la destination finale</span>
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>);
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>);
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>);
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>);
 
-  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'concat:dist'</span>]) <span class="comment">// ici même.</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>, <span class="cm-string">&#39;concat:dist&#39;</span>]) <span class="cm-comment">// ici même.</span>
 }</code></pre>
 <h2 id="compressons-le-tout-">Compressons le tout !</h2>
 <p>Pour finir, compressons nos fichiers JavaScript ! Pour cela : <a href="https://github.com/gruntjs/grunt-contrib-uglify"><code>grunt-contrib-uglify</code></a> fera l&#39;affaire.</p>
 <p>Je vous passe les détails pour l&#39;installer, si vous avez bien suivi cet article, vous ne devriez avoir aucun problème pour l&#39;installer.</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     },
-    concat: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">concat</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>],
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>],
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     },
-    uglify: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">uglify</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>]
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>],
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>)
 
-  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'concat:dist'</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>, <span class="cm-string">&#39;concat:dist&#39;</span>])
 }</code></pre>
 <p>Ne constatez vous pas un souci ici ? Oui, nous ne voulons sûrement pas à la fois concaténer nos fichiers et les compresser. Alors comment faire ? Pas d&#39;inquiètude, il suffit de créer des tâches d&#39;environnement ou de contexte. On pourrait par exemple créer une tâche développement et une tâche de production, qu&#39;en pensez-vous ? Pas mal non ? :)</p>
 <h2 id="optimisons-">Optimisons !</h2>
 <p>Supprimons alors dans un premier temps notre tâche par défaut et créons deux tâches : <code>dev</code> et <code>dist</code>.</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     },
-    concat: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">concat</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>],
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>],
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     },
-    uglify: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">uglify</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>]
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>],
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>)
 
-  grunt.registerTask(<span class="string">'dev'</span>, [])
-  grunt.registerTask(<span class="string">'dist'</span>, [])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dev&#39;</span>, [])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-variable">registerTask</span>(<span class="cm-string">&#39;dist&#39;</span>, [])
 }</code></pre>
 <p>Sauf que comme ça, vous le voyez, cela ne va pas faire grand chose, voire rien du tout. Agrémentons alors nos deux tâches par ce qu&#39;on souhaite faire.</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     },
-    concat: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">concat</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>],
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>],
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     },
-    uglify: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">uglify</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>]
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>],
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>)
 
-  grunt.registerTask(<span class="string">'dev'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'concat:dist'</span>]) <span class="comment">// C'est pas chouette ça ?</span>
-  grunt.registerTask(<span class="string">'dist'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'uglify:dist'</span>]) <span class="comment">// Et hop, je compresse si je lance $ grunt dist</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dev&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>, <span class="cm-string">&#39;concat:dist&#39;</span>]) <span class="cm-comment">// C&#39;est pas chouette ça ?</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dist&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>, <span class="cm-string">&#39;uglify:dist&#39;</span>]) <span class="cm-comment">// Et hop, je compresse si je lance $ grunt dist</span>
 }</code></pre>
 <p>Ha ! Nous y voilà ! Nous avons alors deux tâches <code>grunt dev</code> et <code>grunt dist</code> qui nous permettent dans tous les cas de générer nos css et dans un cas concaténer nos js, dans l&#39;autre les compresser (la compression fait aussi la concaténation implicitement).</p>
 <p>Sauf que comme tout bon(ne) développeur/euse, vous êtes une grosse feignasse et compiler à chaque fois que vous faites des modifications sur vos fichiers va vite être saoulant.</p>
@@ -829,189 +1083,189 @@ obj2.child = obj1
 <h2 id="regarde-ce-fichier-que-je-ne-euh-bref-">Regarde ce fichier que je ne... euh bref.</h2>
 <p>Très simple, <code>watch</code> va vous permettre de &quot;regarder&quot; vos fichiers, savoir lesquels ont changé et donc lancer une action en fonction du type de fichiers.</p>
 <p>Imaginons que l&#39;on veut par exemple compiler nos css à chaque fois que l&#39;on change un fichier <em>Sass</em>. Ou encore que l&#39;on concatène nos fichiers JavaScript dès que l&#39;on touche à l&#39;un d&#39;entre eux.</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     },
-    concat: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">concat</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>],
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>],
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     },
-    uglify: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">uglify</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>]
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>]
+        <span class="cm-variable">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     },
-    watch: {
-      scripts: {
-        files: <span class="string">'**/*.js'</span>, <span class="comment">// tous les fichiers JavaScript de n'importe quel dossier</span>
-        tasks: [<span class="string">'concat:dist'</span>]
+    <span class="cm-property">watch</span>: {
+      <span class="cm-property">scripts</span>: {
+        <span class="cm-property">files</span>: <span class="cm-string">&#39;**/*.js&#39;</span>, <span class="cm-comment">// tous les fichiers JavaScript de n&#39;importe quel dossier</span>
+        <span class="cm-property">tasks</span>: [<span class="cm-string">&#39;concat:dist&#39;</span>]
       },
-      styles: {
-        files: <span class="string">'**/*.scss'</span>, <span class="comment">// tous les fichiers Sass de n'importe quel dossier</span>
-        tasks: [<span class="string">'sass:dist'</span>]
+      <span class="cm-property">styles</span>: {
+        <span class="cm-property">files</span>: <span class="cm-string">&#39;**/*.scss&#39;</span>, <span class="cm-comment">// tous les fichiers Sass de n&#39;importe quel dossier</span>
+        <span class="cm-property">tasks</span>: [<span class="cm-string">&#39;sass:dist&#39;</span>]
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>)
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-watch'</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-watch&#39;</span>)
 
-  grunt.registerTask(<span class="string">'dev'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'concat:dist'</span>])
-  grunt.registerTask(<span class="string">'dist'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'uglify:dist'</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dev&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>, <span class="cm-string">&#39;concat:dist&#39;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dist&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>, <span class="cm-string">&#39;uglify:dist&#39;</span>])
 }</code></pre>
 <p>Maintenant, vous êtes capable à tout moment de compiler automatiquement vos fichiers en lançant simplement <code>$ grunt watch</code>.</p>
 <p>Oui, comprenez bien que lorsque vous ajoutez une tâche dans la définition de la configuration de <strong>Grunt</strong>, elle est appelable directement. Typiquement, vous pouvez faire <code>$ grunt premier-niveau:deuxieme-niveau</code> soit par exemple <code>$ grunt sass:dist</code>. Vous n&#39;êtes pas obligé(e) de (re)définir chaque tâche via <code>grunt.registerTask()</code>.</p>
 <p>Je ne sais pas si vous vous rappelez mais nous avions crée une tâche de base s&#39;appelant <code>default</code>. Cette tâche se lance dès que vous ne passez aucun paramètre à <strong>Grunt</strong> soit <code>$ grunt</code>. Vous pouvez aussi l&#39;appeler via <code>$ grunt default</code> mais aucun intérêt.</p>
 <p>Tout ça pour dire qu&#39;il est serait sûrement intéressant de lancer la tâche <code>watch</code> dès qu&#39;on souhaite lancer <strong>Grunt</strong> étant donné que c&#39;est sûrement la tâche la plus récurrente que vous utiliserez.</p>
 <p>C&#39;est parti !</p>
-<pre><code class="language-javascript">module.exports = <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> {</span>
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="string">'expanded'</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          <span class="string">"expand"</span>: <span class="literal">true</span>,
-          <span class="string">"cwd"</span>: <span class="string">"src/styles/"</span>,
-          <span class="string">"src"</span>: [<span class="string">"*.scss"</span>],
-          <span class="string">"dest"</span>: <span class="string">"dist/styles/"</span>,
-          <span class="string">"ext"</span>: <span class="string">".css"</span>
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       }
     },
-    concat: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">concat</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>],
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>],
+        <span class="cm-property">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     },
-    uglify: {
-      options: {
-        separator: <span class="string">';'</span>
+    <span class="cm-property">uglify</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      dist: {
-        src: [<span class="string">'src/intro.js'</span>, <span class="string">'src/project.js'</span>, <span class="string">'src/outro.js'</span>]
-        dest: <span class="string">'dist/built.js'</span>
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">src</span>: [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>]
+        <span class="cm-variable">dest</span>: <span class="cm-string">&#39;dist/built.js&#39;</span>
       }
     },
-    watch: {
-      scripts: {
-        files: <span class="string">'**/*.js'</span>, <span class="comment">// tous les fichiers JavaScript de n'importe quel dossier</span>
-        tasks: [<span class="string">'concat:dist'</span>]
+    <span class="cm-property">watch</span>: {
+      <span class="cm-property">scripts</span>: {
+        <span class="cm-property">files</span>: <span class="cm-string">&#39;**/*.js&#39;</span>, <span class="cm-comment">// tous les fichiers JavaScript de n&#39;importe quel dossier</span>
+        <span class="cm-property">tasks</span>: [<span class="cm-string">&#39;concat:dist&#39;</span>]
       },
-      styles: {
-        files: <span class="string">'**/*.scss'</span>, <span class="comment">// tous les fichiers Sass de n'importe quel dossier</span>
-        tasks: [<span class="string">'sass:dist'</span>]
+      <span class="cm-property">styles</span>: {
+        <span class="cm-property">files</span>: <span class="cm-string">&#39;**/*.scss&#39;</span>, <span class="cm-comment">// tous les fichiers Sass de n&#39;importe quel dossier</span>
+        <span class="cm-property">tasks</span>: [<span class="cm-string">&#39;sass:dist&#39;</span>]
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-sass'</span>)
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>)
-  grunt.loadNpmTasks(<span class="string">'grunt-contrib-watch'</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-watch&#39;</span>)
 
-  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'dev'</span>, <span class="string">'watch'</span>]) <span class="comment">// Oui, je conseille de toujours compiler une fois avant de lancer watch.</span>
-  grunt.registerTask(<span class="string">'dev'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'concat:dist'</span>])
-  grunt.registerTask(<span class="string">'dist'</span>, [<span class="string">'sass:dist'</span>, <span class="string">'uglify:dist'</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, [<span class="cm-string">&#39;dev&#39;</span>, <span class="cm-string">&#39;watch&#39;</span>]) <span class="cm-comment">// Oui, je conseille de toujours compiler une fois avant de lancer watch.</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dev&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>, <span class="cm-string">&#39;concat:dist&#39;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dist&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>, <span class="cm-string">&#39;uglify:dist&#39;</span>])
 }</code></pre>
 <p>That&#39;s it. Nous avons maintenant tout le nécessaire pour compiler des css, du js, l&#39;optimiser, ainsi qu&#39;avoir une commande de développement avec compilation automatique.</p>
 <p>Et puisque je suis maniaque, nous allons ranger un peu :</p>
-<pre><code class="language-javascript">module.exports = function(grunt) {
+<pre><code class="language-javascript"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
 
-  // Je préfère définir mes imports tout en haut
-  grunt.loadNpmTasks(&#39;grunt-contrib-sass&#39;)
-  grunt.loadNpmTasks(&#39;grunt-contrib-concat&#39;)
-  grunt.loadNpmTasks(&#39;grunt-contrib-watch&#39;)
+  <span class="cm-comment">// Je préfère définir mes imports tout en haut</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-sass&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-concat&#39;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&#39;grunt-contrib-watch&#39;</span>)
 
-  var jsSrc = [&#39;src/intro.js&#39;, &#39;src/project.js&#39;, &#39;src/outro.js&#39;]
-    , jsDist = &#39;dist/built.js
+  <span class="cm-keyword">var</span> <span class="cm-def">jsSrc</span> = [<span class="cm-string">&#39;src/intro.js&#39;</span>, <span class="cm-string">&#39;src/project.js&#39;</span>, <span class="cm-string">&#39;src/outro.js&#39;</span>]
+    , <span class="cm-def">jsDist</span> = <span class="cm-string">&#39;dist/built.js&#39;</span>
 
-  // Configuration de Grunt
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: &#39;expanded&#39;
+  <span class="cm-comment">// Configuration de Grunt</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&#39;expanded&#39;</span>
         },
-        files: {
-          &quot;expand&quot;: true,
-          &quot;cwd&quot;: &quot;src/styles/&quot;,
-          &quot;src&quot;: [&quot;*.scss&quot;],
-          &quot;dest&quot;: &quot;dist/styles/&quot;,
-          &quot;ext&quot;: &quot;.css&quot;
+        <span class="cm-property">files</span>: {
+          <span class="cm-stringcm-property">&quot;expand&quot;</span>: <span class="cm-atom">true</span>,
+          <span class="cm-stringcm-property">&quot;cwd&quot;</span>: <span class="cm-string">&quot;src/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;src&quot;</span>: [<span class="cm-string">&quot;*.scss&quot;</span>],
+          <span class="cm-stringcm-property">&quot;dest&quot;</span>: <span class="cm-string">&quot;dist/styles/&quot;</span>,
+          <span class="cm-stringcm-property">&quot;ext&quot;</span>: <span class="cm-string">&quot;.css&quot;</span>
         }
       },
-      dev: {} // A vous de le faire ! vous verrez que certaines options Sass sont plus intéressantes en mode dev que d&#39;autres.
+      <span class="cm-property">dev</span>: {} <span class="cm-comment">// A vous de le faire ! vous verrez que certaines options Sass sont plus intéressantes en mode dev que d&#39;autres.</span>
     },
-    concat: {
-      options: {
-        separator: &#39;;&#39;
+    <span class="cm-property">concat</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      compile: { // On renomme vu qu&#39;on a pas de mode dev/dist. Dist étant une autre tâche : uglify
-        src: jsSrc, // Vu qu&#39;on doit l&#39;utiliser deux fois, autant en faire une variable.
-        dest: jsDist // Il existe des hacks plus intéressants mais ce n&#39;est pas le sujet du post.
+      <span class="cm-property">compile</span>: { <span class="cm-comment">// On renomme vu qu&#39;on a pas de mode dev/dist. Dist étant une autre tâche : uglify</span>
+        <span class="cm-property">src</span>: <span class="cm-variable-2">jsSrc</span>, <span class="cm-comment">// Vu qu&#39;on doit l&#39;utiliser deux fois, autant en faire une variable.</span>
+        <span class="cm-property">dest</span>: <span class="cm-variable-2">jsDist</span> <span class="cm-comment">// Il existe des hacks plus intéressants mais ce n&#39;est pas le sujet du post.</span>
       }
     },
-    uglify: {
-      options: {
-        separator: &#39;;&#39;
+    <span class="cm-property">uglify</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">separator</span>: <span class="cm-string">&#39;;&#39;</span>
       },
-      compile: {
-        src: jsSrc,
-        dest: jsDist
+      <span class="cm-property">compile</span>: {
+        <span class="cm-property">src</span>: <span class="cm-variable-2">jsSrc</span>,
+        <span class="cm-property">dest</span>: <span class="cm-variable-2">jsDist</span>
       }
     },
-    watch: {
-      scripts: {
-        files: &#39;**/*.js&#39;,
-        tasks: [&#39;scripts:dev&#39;]
+    <span class="cm-property">watch</span>: {
+      <span class="cm-property">scripts</span>: {
+        <span class="cm-property">files</span>: <span class="cm-string">&#39;**/*.js&#39;</span>,
+        <span class="cm-property">tasks</span>: [<span class="cm-string">&#39;scripts:dev&#39;</span>]
       },
-      styles: {
-        files: &#39;**/*.scss&#39;,
-        tasks: [&#39;styles:dev&#39;]
+      <span class="cm-property">styles</span>: {
+        <span class="cm-property">files</span>: <span class="cm-string">&#39;**/*.scss&#39;</span>,
+        <span class="cm-property">tasks</span>: [<span class="cm-string">&#39;styles:dev&#39;</span>]
       }
     }
   })
 
-  grunt.registerTask(&#39;default&#39;, [&#39;dev&#39;, &#39;watch&#39;])
-  grunt.registerTask(&#39;dev&#39;, [&#39;styles:dev&#39;, &#39;scripts:dev&#39;])
-  grunt.registerTask(&#39;dist&#39;, [&#39;styles:dist&#39;, &#39;scripts:dist&#39;])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;default&#39;</span>, [<span class="cm-string">&#39;dev&#39;</span>, <span class="cm-string">&#39;watch&#39;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dev&#39;</span>, [<span class="cm-string">&#39;styles:dev&#39;</span>, <span class="cm-string">&#39;scripts:dev&#39;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;dist&#39;</span>, [<span class="cm-string">&#39;styles:dist&#39;</span>, <span class="cm-string">&#39;scripts:dist&#39;</span>])
 
-  // J&#39;aime bien avoir des noms génériques
-  grunt.registerTask(&#39;scripts:dev&#39;, [&#39;concat:compile&#39;])
-  grunt.registerTask(&#39;scripts:dist&#39;, [&#39;uglify:compile&#39;])
+  <span class="cm-comment">// J&#39;aime bien avoir des noms génériques</span>
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;scripts:dev&#39;</span>, [<span class="cm-string">&#39;concat:compile&#39;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;scripts:dist&#39;</span>, [<span class="cm-string">&#39;uglify:compile&#39;</span>])
 
-  grunt.registerTask(&#39;styles:dev&#39;, [&#39;sass:dev&#39;])
-  grunt.registerTask(&#39;styles:dist&#39;, [&#39;sass:dist&#39;])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;styles:dev&#39;</span>, [<span class="cm-string">&#39;sass:dev&#39;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&#39;styles:dist&#39;</span>, [<span class="cm-string">&#39;sass:dist&#39;</span>])
 }</code></pre>
 <p>Avec ça, je pense qu&#39;on est pas trop mal. Il reste des optimisations éventuelles à faire et nombreuses autres tâches intéressantes peuvent être ajoutées comme <a href="https://github.com/gruntjs/grunt-contrib-jshint/">jshint</a>. Cela fera probablement office d&#39;un autre article.</p>
 <p>J&#39;espère que vous y voyez maintenant un peu plus clair dans <strong>Grunt</strong> ainsi que dans la compilation côté front-end. <strong>Grunt</strong> est un excellent produit, avec une communauté réactive et il est rare qu&#39;une tâche que vous souhaitiez mettre en place n&#39;existe pas.</p>
@@ -1096,7 +1350,7 @@ tes pauses cafés aux prétextes douteux.</p>
 <p>On va partir du principe que tu as Go et Revel prêts pour la baston. On attaque
 direct à sec par le classique “revel new” puisqu&#39;on va partir de la structure de
 base.</p>
-<pre><code>revel new github.com/OwlyCode/PutainDeProjet</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ revel</span> new github.com/OwlyCode/PutainDeProjet</code></pre>
 <p>Là théoriquement, tu te retrouves avec la structure par défaut du boilerplate
 revel, quelque chose comme ça:</p>
 <ul>
@@ -1117,104 +1371,104 @@ revel, quelque chose comme ça:</p>
  En fait ce n’est rien de plus qu’un binding entre Revel et Mgo. La technique 
  utilisée pour brancher ce binding côté Revel est celle des 
  <a href="http://robfig.github.io/revel/manual/interceptors.html">interceptors</a>.</p>
-<pre><code>package mongo
+<pre><code class="language-go"><span class="cm-keyword">package</span> <span class="cm-variable">mongo</span>
 
-import (
-    &quot;github.com/robfig/revel&quot;
-    &quot;labix.org/v2/mgo&quot;
-    &quot;sync&quot;
+<span class="cm-keyword">import</span> (
+    <span class="cm-string">&quot;github.com/robfig/revel&quot;</span>
+    <span class="cm-string">&quot;labix.org/v2/mgo&quot;</span>
+    <span class="cm-string">&quot;sync&quot;</span>
 )
 
-// Extension du controlleur.
-type Mongo struct {
-    *revel.Controller
-    MongoSession  *mgo.Session
-    MongoDatabase *mgo.Database
+<span class="cm-comment">// Extension du controlleur.</span>
+<span class="cm-keyword">type</span> <span class="cm-variable">Mongo</span> <span class="cm-keyword">struct</span> {
+    <span class="cm-operator">*</span><span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">Controller</span>
+    <span class="cm-variable">MongoSession</span>  <span class="cm-operator">*</span><span class="cm-variable">mgo</span><span class="cm-number">.</span><span class="cm-variable">Session</span>
+    <span class="cm-variable">MongoDatabase</span> <span class="cm-operator">*</span><span class="cm-variable">mgo</span><span class="cm-number">.</span><span class="cm-variable">Database</span>
 }
 
-// Stockage global de la session dont la visibilité est restreinte au package.
-var session *mgo.Session
+<span class="cm-comment">// Stockage global de la session dont la visibilité est restreinte au package.</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">session</span> <span class="cm-operator">*</span><span class="cm-variable">mgo</span><span class="cm-number">.</span><span class="cm-variable">Session</span>
 
-// Singleton
-var dial sync.Once
+<span class="cm-comment">// Singleton</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">dial</span> <span class="cm-variable">sync</span><span class="cm-number">.</span><span class="cm-variable">Once</span>
 
-// Renvoie la session mgo en cours, si aucune n&#39;existe, elle est créée.
-func GetSession() *mgo.Session {
+<span class="cm-comment">// Renvoie la session mgo en cours, si aucune n&#39;existe, elle est créée.</span>
+<span class="cm-keyword">func</span> <span class="cm-variable">GetSession</span>() <span class="cm-operator">*</span><span class="cm-variable">mgo</span><span class="cm-number">.</span><span class="cm-variable">Session</span> {
 
-    host, _ := revel.Config.String(&quot;mongo.host&quot;)
+    <span class="cm-variable">host</span>, <span class="cm-variable">_</span> :<span class="cm-operator">=</span> <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">Config</span><span class="cm-number">.</span><span class="cm-variable">String</span>(<span class="cm-string">&quot;mongo.host&quot;</span>)
 
-    // Grâce au package sync cette fonction n&#39;est appelée
-    // qu&#39;une seule fois et de manière synchrone.
-    dial.Do(func() {
-        var err error
-        session, err = mgo.Dial(host)
-        if err != nil {
-            panic(err)
+    <span class="cm-comment">// Grâce au package sync cette fonction n&#39;est appelée</span>
+    <span class="cm-comment">// qu&#39;une seule fois et de manière synchrone.</span>
+    <span class="cm-variable">dial</span><span class="cm-number">.</span><span class="cm-variable">Do</span>(<span class="cm-keyword">func</span>() {
+        <span class="cm-keyword">var</span> <span class="cm-variable">err</span> <span class="cm-variable">error</span>
+        <span class="cm-variable">session</span>, <span class="cm-variable">err</span> <span class="cm-operator">=</span> <span class="cm-variable">mgo</span><span class="cm-number">.</span><span class="cm-variable">Dial</span>(<span class="cm-variable">host</span>)
+        <span class="cm-keyword">if</span> <span class="cm-variable">err</span> <span class="cm-operator">!=</span> <span class="cm-atom">nil</span> {
+            <span class="cm-atom">panic</span>(<span class="cm-variable">err</span>)
         }
     })
 
-    return session
+    <span class="cm-keyword">return</span> <span class="cm-variable">session</span>
 }
 
-// Alimente les propriétés affectées au controlleur en clonant la session mongo.
-func (c *Mongo) Bind() revel.Result {
-    // Oublie pas de mettre mongo.database dans le app.conf, genre &quot;localhost&quot;
-    databaseName, _ := revel.Config.String(&quot;mongo.database&quot;)
+<span class="cm-comment">// Alimente les propriétés affectées au controlleur en clonant la session mongo.</span>
+<span class="cm-keyword">func</span> (<span class="cm-variable">c</span> <span class="cm-operator">*</span><span class="cm-variable">Mongo</span>) <span class="cm-variable">Bind</span>() <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">Result</span> {
+    <span class="cm-comment">// Oublie pas de mettre mongo.database dans le app.conf, genre &quot;localhost&quot;</span>
+    <span class="cm-variable">databaseName</span>, <span class="cm-variable">_</span> :<span class="cm-operator">=</span> <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">Config</span><span class="cm-number">.</span><span class="cm-variable">String</span>(<span class="cm-string">&quot;mongo.database&quot;</span>)
 
-    c.MongoSession = GetSession().Clone()
-    c.MongoDatabase = c.MongoSession.DB(databaseName)
+    <span class="cm-variable">c</span><span class="cm-number">.</span><span class="cm-variable">MongoSession</span> <span class="cm-operator">=</span> <span class="cm-variable">GetSession</span>()<span class="cm-number">.</span><span class="cm-variable">Clone</span>()
+    <span class="cm-variable">c</span><span class="cm-number">.</span><span class="cm-variable">MongoDatabase</span> <span class="cm-operator">=</span> <span class="cm-variable">c</span><span class="cm-number">.</span><span class="cm-variable">MongoSession</span><span class="cm-number">.</span><span class="cm-variable">DB</span>(<span class="cm-variable">databaseName</span>)
 
-    return nil
+    <span class="cm-keyword">return</span> <span class="cm-atom">nil</span>
 }
 
-// Ferme un clone
-func (c *Mongo) Close() revel.Result {
+<span class="cm-comment">// Ferme un clone</span>
+<span class="cm-keyword">func</span> (<span class="cm-variable">c</span> <span class="cm-operator">*</span><span class="cm-variable">Mongo</span>) <span class="cm-variable">Close</span>() <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">Result</span> {
 
-    if c.MongoSession != nil {
-        c.MongoSession.Close()
+    <span class="cm-keyword">if</span> <span class="cm-variable">c</span><span class="cm-number">.</span><span class="cm-variable">MongoSession</span> <span class="cm-operator">!=</span> <span class="cm-atom">nil</span> {
+        <span class="cm-variable">c</span><span class="cm-number">.</span><span class="cm-variable">MongoSession</span><span class="cm-number">.</span><span class="cm-variable">Close</span>()
     }
 
-    return nil
+    <span class="cm-keyword">return</span> <span class="cm-atom">nil</span>
 }
 
-// Fonction appelée au chargement de l&#39;application.
-// Elle effectue un appel a notre fonction Bind avant
-// chaque execution du controlleur.
-func init() {
-    revel.InterceptMethod((*Mongo).Bind, revel.BEFORE)
-    revel.InterceptMethod((*Mongo).Close, revel.AFTER)
-    // On veut aussi fermer le clone si le controlleur plante.
-    revel.InterceptMethod((*Mongo).Close, revel.PANIC)
+<span class="cm-comment">// Fonction appelée au chargement de l&#39;application.</span>
+<span class="cm-comment">// Elle effectue un appel a notre fonction Bind avant</span>
+<span class="cm-comment">// chaque execution du controlleur.</span>
+<span class="cm-keyword">func</span> <span class="cm-variable">init</span>() {
+    <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">InterceptMethod</span>((<span class="cm-operator">*</span><span class="cm-variable">Mongo</span>)<span class="cm-number">.</span><span class="cm-variable">Bind</span>, <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">BEFORE</span>)
+    <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">InterceptMethod</span>((<span class="cm-operator">*</span><span class="cm-variable">Mongo</span>)<span class="cm-number">.</span><span class="cm-variable">Close</span>, <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">AFTER</span>)
+    <span class="cm-comment">// On veut aussi fermer le clone si le controlleur plante.</span>
+    <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">InterceptMethod</span>((<span class="cm-operator">*</span><span class="cm-variable">Mongo</span>)<span class="cm-number">.</span><span class="cm-variable">Close</span>, <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">PANIC</span>)
 }</code></pre>
 <p>On a créé notre connexion à mongo, mais maintenant on va aussi l’utiliser. Dans
 le contrôleur, rien de plus simple :</p>
-<pre><code>import (
-    &quot;github.com/robfig/revel&quot;
-    &quot;github.com/OwlyCode/PutainDeProjet/app/modules/mongo&quot;
+<pre><code class="language-go"><span class="cm-keyword">import</span> (
+    <span class="cm-string">&quot;github.com/robfig/revel&quot;</span>
+    <span class="cm-string">&quot;github.com/OwlyCode/PutainDeProjet/app/modules/mongo&quot;</span>
 )
 
-type AppController struct {
-    *revel.Controller
-    mongo.Mongo // Le controlleur doit étendre notre type Mongo.
+<span class="cm-keyword">type</span> <span class="cm-variable">AppController</span> <span class="cm-keyword">struct</span> {
+    <span class="cm-operator">*</span><span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">Controller</span>
+    <span class="cm-variable">mongo</span><span class="cm-number">.</span><span class="cm-variable">Mongo</span> <span class="cm-comment">// Le controlleur doit étendre notre type Mongo.</span>
 }
 
-func (c *AppController) Index() revel.Result {
-    usersCollection := c.MongoDatabase.C(&quot;users&quot;)
-    // tu peux maintenant manipuler ta mgo.Collection.
-    // [ ... ]
+<span class="cm-keyword">func</span> (<span class="cm-variable">c</span> <span class="cm-operator">*</span><span class="cm-variable">AppController</span>) <span class="cm-variable">Index</span>() <span class="cm-variable">revel</span><span class="cm-number">.</span><span class="cm-variable">Result</span> {
+    <span class="cm-variable">usersCollection</span> :<span class="cm-operator">=</span> <span class="cm-variable">c</span><span class="cm-number">.</span><span class="cm-variable">MongoDatabase</span><span class="cm-number">.</span><span class="cm-variable">C</span>(<span class="cm-string">&quot;users&quot;</span>)
+    <span class="cm-comment">// tu peux maintenant manipuler ta mgo.Collection.</span>
+    <span class="cm-comment">// [ ... ]</span>
 }</code></pre>
 <p>Mais tu peux aussi l’appeler ailleurs dans le projet, par exemple dans un autre
 module :</p>
-<pre><code>import (
-    &quot;github.com/OwlyCode/PutainDeProjet/app/modules/mongo&quot;
+<pre><code class="language-go"><span class="cm-keyword">import</span> (
+    <span class="cm-string">&quot;github.com/OwlyCode/PutainDeProjet/app/modules/mongo&quot;</span>
 )
 
-func DoStuff(user *models.User) {
-    session := mongo.GetSession()
-    defer session.Close() // Oublie pas de fermer le robinet à la fin!
+<span class="cm-keyword">func</span> <span class="cm-variable">DoStuff</span>(<span class="cm-variable">user</span> <span class="cm-operator">*</span><span class="cm-variable">models</span><span class="cm-number">.</span><span class="cm-variable">User</span>) {
+    <span class="cm-variable">session</span> :<span class="cm-operator">=</span> <span class="cm-variable">mongo</span><span class="cm-number">.</span><span class="cm-variable">GetSession</span>()
+    <span class="cm-keyword">defer</span> <span class="cm-variable">session</span><span class="cm-number">.</span><span class="cm-variable">Close</span>() <span class="cm-comment">// Oublie pas de fermer le robinet à la fin!</span>
 
-    // tu peux maintenant manipuler ta mgo.Session.
-    // [ ... ]
+    <span class="cm-comment">// tu peux maintenant manipuler ta mgo.Session.</span>
+    <span class="cm-comment">// [ ... ]</span>
 }</code></pre>
 <p><strong>C&#39;est bien beau de copier coller mais ...</strong></p>
 <p>... tu te demandes certainement pourquoi on a créé un dossier <code>app/modules</code>, si
@@ -1373,9 +1627,9 @@ de box déjà prêtes à l&#39;emploi, avec ou sans support pour puppet, chef...
 <p>La suite du fichier contient des exemples de type de provisioning
 (Puppet, Chef solo ou Chef server)
 Et si jamais tu souhaites lancer un script de provisioning :</p>
-<pre><code class="language-ruby"><span class="constant">Vagrant</span>.configure(<span class="string">"2"</span>) <span class="keyword">do</span> |config|
-  config.vm.provision <span class="string">"shell"</span>, <span class="symbol">path:</span> <span class="string">"provision.sh"</span>
-<span class="keyword">end</span></code></pre>
+<pre><code class="language-ruby"><span class="cm-tag">Vagrant</span><span class="cm-operator">.</span><span class="cm-variable">configure</span>(<span class="cm-string">&quot;2&quot;</span>) <span class="cm-keyword">do</span> |<span class="cm-def">config</span>|
+  <span class="cm-variable">config</span><span class="cm-operator">.</span><span class="cm-variable">vm</span><span class="cm-operator">.</span><span class="cm-variable">provision</span> <span class="cm-string">&quot;shell&quot;</span>, <span class="cm-atom">path:</span> <span class="cm-string">&quot;provision.sh&quot;</span>
+<span class="cm-keyword">end</span></code></pre>
 <blockquote>
 <p>Vagrant te permet aussi de créer tes propres box déjà provisionnées via
 la commande vagrant package. C’est assez pratique quand tu dois
@@ -1450,8 +1704,8 @@ les plus nazes que je peux vous raconter. C&#39;est parti mon jQuéri.</p>
 <p>Si vous avez ouvert ne serait-ce que quelques documents HTML dans votre vie,
 vous avez du croiser ce qu&#39;on appelle un <a href="http://fr.wikipedia.org/wiki/Doctype">doctype</a>
 qui ressemble à ça:</p>
-<pre><code class="language-markup">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
-   &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</code></pre>
+<pre><code class="language-html"><span class="cm-meta">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
+   <span class="cm-meta">&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span></code></pre>
 <p>Vous pourrez remarquer dans ce <del>petit</del> gros bout de code bien relou qu&#39;il y&#39;a
 une <a href="http://fr.wikipedia.org/wiki/Uniform_Resource_Locator">URL</a>:
 c&#39;est tout simplement la DTD (doctype) du langage en question.
@@ -1473,22 +1727,22 @@ partout dans mes footers:</p>
 
 <p>Mais bon les conneries, ça va un moment.
 Pour info, j&#39;ai du valider le code suivant pour obtenir ce logo:</p>
-<pre><code class="language-markup">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
-   &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
- &lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
-&lt;head&gt;
-  &lt;title&gt; &lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
+<pre><code class="language-html"><span class="cm-meta">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
+   <span class="cm-meta">&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
+ <span class="cm-tag">&lt;html</span> <span class="cm-attribute">xmlns</span>=<span class="cm-string">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;head</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;title</span><span class="cm-tag">&gt;</span> <span class="cm-tag">&lt;/title</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/head</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;body</span><span class="cm-tag">&gt;</span>
 
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+<span class="cm-tag">&lt;/body</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/html</span><span class="cm-tag">&gt;</span></code></pre>
 <p>Ben dites donc, c&#39;est propre tout ça. Un petit document tout vide mais déjà
 bien rempli.
 Mais attendez en 2013, on peut pas faire mieux ? Oh si !</p>
 <h2 id="le-nouveau-testament">Le nouveau testament</h2>
-<pre><code class="language-markup">&lt;!doctype html&gt;
-&lt;title&gt; &lt;/title&gt;</code></pre>
+<pre><code class="language-html"><span class="cm-meta">&lt;!doctype html&gt;</span>
+<span class="cm-tag">&lt;title</span><span class="cm-tag">&gt;</span> <span class="cm-tag">&lt;/title</span><span class="cm-tag">&gt;</span></code></pre>
 <p>Il faut savoir qu&#39;un simple document <em>valide</em>, peut se résumer à ça.
 Oui oui mes cocos, ce document est parfaitement valide. Voilà j&#39;voulais vous le
 dire. Arrêtez d&#39;utiliser des doctypes dans tous les sens, ça ne sert à rien.
@@ -1517,23 +1771,23 @@ dit, il a été pensé dans ce sens.</p>
 On va voir ça par un exemple digne des plus grands diplômes.</p>
 <h2 id="ce-p-fout-la-merde-">Ce <code>&lt;p&gt;</code> fout la merde.</h2>
 <p>Prenons le code suivant:</p>
-<pre><code class="language-markup">&lt;!doctype html&gt;
-&lt;title&gt;Putain de page&lt;/title&gt;
-&lt;style&gt;
-  p {
-    margin-top: 2em;
-    margin-bottom: 10em;
+<pre><code class="language-html"><span class="cm-meta">&lt;!doctype html&gt;</span>
+<span class="cm-tag">&lt;title</span><span class="cm-tag">&gt;</span>Putain de page<span class="cm-tag">&lt;/title</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;style</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">p</span> {
+    <span class="cm-property">margin-top</span><span class="cm-operator">:</span> <span class="cm-number">2em</span>;
+    <span class="cm-property">margin-bottom</span><span class="cm-operator">:</span> <span class="cm-number">10em</span>;
   }
-&lt;/style&gt;
-&lt;h1&gt;Ma première putain de page html&lt;/h1&gt;
-&lt;p&gt;
+<span class="cm-tag">&lt;/style</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;h1</span><span class="cm-tag">&gt;</span>Ma première putain de page html<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>
   Ouais mec t&#39;as vu ce code de ouf ?
   Il est trop bien parce que:
-  &lt;ul&gt;
-    &lt;li&gt;Il est &lt;del&gt;valide&lt;/del&gt;&lt;/li&gt;
-    &lt;li&gt;Il est beau&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/p&gt;</code></pre>
+  <span class="cm-tag">&lt;ul</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;li</span><span class="cm-tag">&gt;</span>Il est <span class="cm-tag">&lt;del</span><span class="cm-tag">&gt;</span>valide<span class="cm-tag">&lt;/del</span><span class="cm-tag">&gt;</span><span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;li</span><span class="cm-tag">&gt;</span>Il est beau<span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;/ul</span><span class="cm-tag">&gt;</span>
+<span class="cm-tagcm-error">&lt;/p</span><span class="cm-tagcm-error">&gt;</span></code></pre>
 <p>Certains d&#39;entre vous ont du remarquer la coquille.
 Celle-là, mes élèves qui découvrent le HTML me la font à chaque fois lorsqu&#39;ils
 codent leur super CV
@@ -1565,9 +1819,9 @@ Ca veut dire que… Ça veut dire que mon <strong>p</strong> ouvert n&#39;est pa
 Mais attend qu&#39;est-ce que c&#39;est que cette histoire ?!</p>
 <p>Si vous prenez 10 secondes pour inspecter ce code, vous allez vite vous
 aperçevoir qu&#39;il est parsé ainsi:</p>
-<pre><code class="language-markup">&lt;p&gt;…&lt;/p&gt;
-&lt;ul&gt;…&lt;/ul&gt;
-&lt;p&gt;&lt;/p&gt;</code></pre>
+<pre><code class="language-html"><span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>…<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;ul</span><span class="cm-tag">&gt;</span>…<span class="cm-tag">&lt;/ul</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span><span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span></code></pre>
 <p><em>Mais qu&#39;est-ce que… ? Hein ? Mais ? Quoi ? Comment ?</em></p>
 <p>Oui vous avez bien vu. L&#39;HTML est parsé n&#39;importe comment. Enfin non il est parsé
 comme il peut, au mieux.
@@ -1714,7 +1968,7 @@ nom local pour le dépôt. Il va récupérer le dépôt à l&#39;adresse spécif
 bien foutu hein ?) puis le mettre soit dans un dossier du même nom soit dans un
 dossier du nom spécifié en dernier argument.</p>
 <p>Par exemple, si je veux cloner le dépôt du site :</p>
-<pre><code class="language-bash">$ git clone https://github.com/putaindecode/website.git</code></pre>
+<pre><code class="language-bash"><span class="cm-def">$ git</span> clone https://github.com/putaindecode/website.git</code></pre>
 <p>Ça va créer un dossier <code>website</code> avec le contenu du dépôt.</p>
 <p><code>clone</code> accepte plusieurs types d&#39;adresse : HTTP(S), SSH, protocole Git dédié et
 même des chemins locaux pour cloner un dépôt situé ailleurs sur le système de
@@ -1724,8 +1978,8 @@ bien pour lancer les vraies commandes intéressantes de Git.</p>
 <h2 id="premiers-commits">Premiers commits</h2>
 <p>Pour commencer à s&#39;amuser, écrivez un bout de code dans un fichier et
 sauvegardez le :</p>
-<pre><code class="language-bash">$ cat &gt; putain_de_hello_world.rb
-puts <span class="string">"Hello, putain de codeur !"</span>
+<pre><code class="language-bash"><span class="cm-def">$ cat</span> &gt; putain_de_hello_world.rb
+puts <span class="cm-string">&quot;Hello, putain de codeur !&quot;</span>
 ^D</code></pre>
 <p>On va tout se suite introduire l&#39;un des concepts déroutants de Git, <em>l&#39;Index</em>.
 Git utilise trois zones distinctes pour les fichiers : le dossier de travail
@@ -1748,31 +2002,31 @@ difficile.</p>
 <p>Dans notre cas, notre fichier n&#39;est même pas encore suivi par Git ! Vous pouvez
 vérifier ça en utilisant <code>git status</code>, dont vous ne pourrez bientôt plus vous
 passer :</p>
-<pre><code class="language-bash">$ git status
-<span class="comment"># Sur la branche master</span>
-<span class="comment">#</span>
-<span class="comment"># Validation initiale.</span>
-<span class="comment">#</span>
-<span class="comment"># Fichiers non suivis:</span>
-<span class="comment">#   (utilisez "git add &lt;fichier&gt;..." pour inclure dans ce qui sera validé)</span>
-<span class="comment">#</span>
-<span class="comment">#    putain_de_hello_world.rb</span>
-Aucune modification indexée mais des fichiers non suivis sont présents (utilisez <span class="string">"git add"</span> pour les suivre)</code></pre>
+<pre><code class="language-bash"><span class="cm-def">$ git</span> status
+<span class="cm-comment"># Sur la branche master</span>
+<span class="cm-comment">#</span>
+<span class="cm-comment"># Validation initiale.</span>
+<span class="cm-comment">#</span>
+<span class="cm-comment"># Fichiers non suivis:</span>
+<span class="cm-comment">#   (utilisez &quot;git add &lt;fichier&gt;...&quot; pour inclure dans ce qui sera validé)</span>
+<span class="cm-comment">#</span>
+<span class="cm-comment">#    putain_de_hello_world.rb</span>
+Aucune modification indexée mais des fichiers non suivis sont présents (utilisez <span class="cm-string">&quot;git add&quot;</span> pour les suivre)</code></pre>
 <p>Pour pallier celà, on utilise <code>git add</code> pour l&#39;ajouter direct à l&#39;index.</p>
 <p>Dans notre cas, ça donne <code>git add putain_de_hello_world.rb</code></p>
 <p>On peut utilise <code>git add</code> pour ajouter des dossiers entiers, des motifs, … Mais
 soyez vigilants, c&#39;est une bonne source d&#39;erreurs souvent chiantes.</p>
 <p>Vous pouvez vérifier que <code>git add</code> a bien marché avec la commande <code>git status</code>,</p>
-<pre><code class="language-bash">$ git status
-<span class="comment"># Sur la branche master</span>
-<span class="comment">#</span>
-<span class="comment"># Validation initiale.</span>
-<span class="comment">#</span>
-<span class="comment"># Modifications qui seront validées :</span>
-<span class="comment">#   (utilisez "git rm --cached &lt;fichier&gt;..." pour désindexer)</span>
-<span class="comment">#</span>
-<span class="comment">#    nouveau : putain_de_hello_world.rb</span>
-<span class="comment">#</span></code></pre>
+<pre><code class="language-bash"><span class="cm-def">$ git</span> status
+<span class="cm-comment"># Sur la branche master</span>
+<span class="cm-comment">#</span>
+<span class="cm-comment"># Validation initiale.</span>
+<span class="cm-comment">#</span>
+<span class="cm-comment"># Modifications qui seront validées :</span>
+<span class="cm-comment">#   (utilisez &quot;git rm --cached &lt;fichier&gt;...&quot; pour désindexer)</span>
+<span class="cm-comment">#</span>
+<span class="cm-comment">#    nouveau : putain_de_hello_world.rb</span>
+<span class="cm-comment">#</span></code></pre>
 <p>Ok c&#39;est prêt ! On lance maintenant <code>git commit</code> pour créer notre premier commit
 (pas con le <em>naming</em> de la commande hein ?). Si tout se passe bien vous devriez
 avoir un éditeur qui s&#39;ouvre pour écrire un message de commit. Prenez l&#39;habitude
@@ -1780,8 +2034,8 @@ de décrire votre changement sur la première ligne succintement et, si vous ave
 besoin de détails, sautez une ligne et détaillez les modifications.</p>
 <p>Un petit <code>git status</code> nous confirme qu&#39;on s&#39;est pas foiré (la preuve, tout est
 propre) :</p>
-<pre><code class="language-bash">$ git status
-<span class="comment"># Sur la branche master</span>
+<pre><code class="language-bash"><span class="cm-def">$ git</span> status
+<span class="cm-comment"># Sur la branche master</span>
 rien à valider, la copie de travail est propre</code></pre>
 <h2 id="inspecter">Inspecter</h2>
 <p>Bon, c&#39;est bien beau de commiter, mais à un moment on arrive sur un projet en
@@ -1792,30 +2046,30 @@ Windows) ou retrousser vos poils de barbe et sortir le bon vieux <code>git log</
 de votre dépôt, avec des options en veux-tu en voilà pour personnaliser
 l&#39;affichage.</p>
 <p>Un <code>git log</code> basique ça ressemble à ça :</p>
-<pre><code class="language-bash">$ git log
-commit <span class="number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
-Author: madx &lt;madx+github@yapok.org&gt;
-Date:   Mon Nov <span class="number">4</span> <span class="number">23</span>:<span class="number">28</span>:<span class="number">11</span> <span class="number">2013</span> +<span class="number">0100</span>
+<pre><code class="language-bash"><span class="cm-def">$ git</span> log
+commit 8120de7b7139e46b9cbc1c3ee89a02962dbc198e
+Author: madx &lt;madx<span class="cm-operator">+</span>github@yapok.org&gt;
+Date:   Mon Nov <span class="cm-number">4</span> <span class="cm-number">23</span>:28:11 <span class="cm-number">2013</span> <span class="cm-operator">+</span>0100
 
     Premier commit</code></pre>
 <p>Oui, c&#39;est le commit que je viens de faire dans la partie précédente. Comment
 j&#39;en suis sûr ? Car je peux utiliser <code>git show</code> pour afficher les détails d&#39;un
 objet Git (il n&#39;y a pas que des commits, mais on verra ça une prochaine fois).</p>
 <p><code>git show</code> prend en argument le fameux <code>SHA1</code> du commit :</p>
-<pre><code class="language-bash">$ git show <span class="number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
-commit <span class="number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
-Author: madx &lt;madx+github@yapok.org&gt;
-Date:   Mon Nov <span class="number">4</span> <span class="number">23</span>:<span class="number">28</span>:<span class="number">11</span> <span class="number">2013</span> +<span class="number">0100</span>
+<pre><code class="language-bash"><span class="cm-def">$ git</span> show 8120de7b7139e46b9cbc1c3ee89a02962dbc198e
+commit 8120de7b7139e46b9cbc1c3ee89a02962dbc198e
+Author: madx &lt;madx<span class="cm-operator">+</span>github@yapok.org&gt;
+Date:   Mon Nov <span class="cm-number">4</span> <span class="cm-number">23</span>:28:11 <span class="cm-number">2013</span> <span class="cm-operator">+</span>0100
 
     Premier commit
 
-diff --git a/putain_de_hello_world.rb b/putain_de_hello_world.rb
-new file mode <span class="number">100644</span>
-index <span class="number">0000000</span>..ded37dc
---- /dev/null
-+++ b/putain_de_hello_world.rb
-@@ -<span class="number">0</span>,<span class="number">0</span> +<span class="number">1</span> @@
-+puts <span class="string">"Hello, putain de codeur !!!"</span></code></pre>
+<span class="cm-builtin">diff</span> <span class="cm-attribute">--git</span> a/putain_de_hello_world.rb b/putain_de_hello_world.rb
+new file mode 100644
+index <span class="cm-number">0000000</span>..ded37dc
+<span class="cm-attribute">--</span><span class="cm-attribute">-</span> /dev/null
+<span class="cm-operator">+</span><span class="cm-operator">+</span><span class="cm-operator">+</span> b/putain_de_hello_world.rb
+@@ <span class="cm-attribute">-0</span>,0 <span class="cm-operator">+</span><span class="cm-number">1</span> @@
+<span class="cm-operator">+</span>puts <span class="cm-string">&quot;Hello, putain de codeur !!!&quot;</span></code></pre>
 <p>Dit comme ça, ça a pas l&#39;air de casser trois pattes à un canard, mais c&#39;est la
 base de la base de la praticité. Je vous fait pas l&#39;insulte de vous expliquer le
 détails, vous êtes sans doute assez malins pour comprendre ce que git raconte
@@ -1849,25 +2103,25 @@ cette branche.</p>
 <p>On peut utiliser <code>git branch</code> sans argument pour lister les branches, celle avec
 un petit asterisque devant c&#39;est la branche courante.</p>
 <p>Essayons ça avec notre petit dépôt :</p>
-<pre><code class="language-bash">$ git branch
+<pre><code class="language-bash"><span class="cm-def">$ git</span> branch
 * master
-$ git checkout -b add-shebang
-Basculement sur la nouvelle branche <span class="string">'add-shebang'</span>
-$ vim putain_de_hello_world.rb
-$ git status
-<span class="comment"># Sur la branche add-shebang</span>
-<span class="comment"># Modifications qui ne seront pas validées :</span>
-<span class="comment">#   (utilisez "git add &lt;fichier&gt;..." pour mettre à jour ce qui sera validé)</span>
-<span class="comment">#   (utilisez "git checkout -- &lt;fichier&gt;..." pour annuler les modifications dans la copie de travail)</span>
-<span class="comment">#</span>
-<span class="comment">#    modifié : putain_de_hello_world.rb</span>
-<span class="comment">#</span>
-aucune modification n<span class="string">'a été ajoutée au commit (utilisez "git add" ou "git commit -a")
-$ git add putain_de_hello_world.rb
-$ git commit
+<span class="cm-def">$ git</span> checkout <span class="cm-attribute">-b</span> add-shebang
+Basculement sur la nouvelle branche <span class="cm-string">&#39;add-shebang&#39;</span>
+<span class="cm-def">$ vim</span> putain_de_hello_world.rb
+<span class="cm-def">$ git</span> status
+<span class="cm-comment"># Sur la branche add-shebang</span>
+<span class="cm-comment"># Modifications qui ne seront pas validées :</span>
+<span class="cm-comment">#   (utilisez &quot;git add &lt;fichier&gt;...&quot; pour mettre à jour ce qui sera validé)</span>
+<span class="cm-comment">#   (utilisez &quot;git checkout -- &lt;fichier&gt;...&quot; pour annuler les modifications dans la copie de travail)</span>
+<span class="cm-comment">#</span>
+<span class="cm-comment">#    modifié : putain_de_hello_world.rb</span>
+<span class="cm-comment">#</span>
+aucune modification n<span class="cm-string">&#39;a été ajoutée au commit (utilisez &quot;git add&quot; ou &quot;git commit -a&quot;)</span>
+<span class="cm-def">$ git</span> add putain_de_hello_world.rb
+<span class="cm-def">$ git</span> commit
 [add-shebang 5d48735] Add shebang
- 1 file changed, 1 insertion(+)
-$ git log --pretty=oneline --decorate
+ <span class="cm-number">1</span> file changed, <span class="cm-number">1</span> insertion(<span class="cm-operator">+</span>)
+<span class="cm-def">$ git</span> log <span class="cm-attribute">--pretty</span><span class="cm-operator">=</span>oneline <span class="cm-attribute">--decorate</span>
 5d48735fcc805d51e2e294df5d9d22d481250789 (HEAD, add-shebang) Add shebang
 8120de7b7139e46b9cbc1c3ee89a02962dbc198e (master) Premier commit</code></pre>
 <p>Comme vous le voyez grâce à l&#39;option <code>--decorate--</code> de <code>git log</code>, on a bien
@@ -1879,13 +2133,13 @@ base fournie par Git, <code>master</code>, reste au commit précédent.</p>
 la branche dans laquelle on va fusionner et en passant en argument la branche à
 fusionner.</p>
 <p>Si vous avez bien suivi, on va donc faire les choses suivantes :</p>
-<pre><code class="language-bash">$ git checkout master
-Basculement sur la branche <span class="string">'master'</span>
-$ git merge add-shebang
-Updating <span class="number">8120</span>de7..<span class="number">5</span>d48735
+<pre><code class="language-bash"><span class="cm-def">$ git</span> checkout master
+Basculement sur la branche <span class="cm-string">&#39;master&#39;</span>
+<span class="cm-def">$ git</span> merge add-shebang
+Updating 8120de7..5d48735
 Fast-forward
- putain_de_hello_world.rb | <span class="number">1</span> +
- <span class="number">1</span> file changed, <span class="number">1</span> insertion(+)</code></pre>
+ putain_de_hello_world.rb | <span class="cm-number">1</span> <span class="cm-operator">+</span>
+ <span class="cm-number">1</span> file changed, <span class="cm-number">1</span> insertion(<span class="cm-operator">+</span>)</code></pre>
 <p>Vous remarquez que Git signale <em>Fast-forward</em>. Comme le commit pointé par
 <code>add-shebang</code> est un fils direct de celui de <code>master</code>, Git se contente de faire
 pointer <code>master</code> sur celui-ci, ce qui est beaucoup plus rapide.</p>
@@ -1966,7 +2220,7 @@ de commande (sous Windows tu y vas avec l&#39;invite de commande mais on te
 prévient qu&#39;on va pas être copains longtemps, trouve un OS décent putain,
 sous Mac OS X tu utilises le terminal, et sous Linux je pense qu&#39;on a pas à
 t&#39;expliquer).</p>
-<pre><code>$ git clone https://github.com/clinthorris/website.git putaindecode</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ git</span> clone https://github.com/clinthorris/website.git putaindecode</code></pre>
 </li>
 <li><p>Ensuite tu dois ajouter ce qu&#39;on appelle une remote. Une remote c&#39;est une
 référence du repo principal, le beau, le grand, le nôtre. En gros, ça va te
@@ -1974,9 +2228,9 @@ servir que si tu fais une modification ou une contribution sur notre site
 aujourd&#39;hui, et que dans un mois tu veuilles encore en faire, tu pourras
 facilement rattraper tout ce qu&#39;on aura fait entre temps. La remote en
 rapport avec le repo principal, on l&#39;appelle souvent <em>upstream</em></p>
-<pre><code>  $ cd putaindecode
-  $ git remote add upstream https://github.com/putaindecode/website.git
-  $ git fetch upstream</code></pre>
+<pre><code class="language-shell">  <span class="cm-def">$ cd</span> putaindecode
+  <span class="cm-def">$ git</span> remote add upstream https://github.com/putaindecode/website.git
+  <span class="cm-def">$ git</span> fetch upstream</code></pre>
 </li>
 <li><p>Alors là, normalement, t&#39;as le dossier propre et frais, pêché du matin. Vu
 que notre site pète la classe, et qu&#39;on l&#39;a fait en utilisant quand même des
@@ -2037,7 +2291,7 @@ genre de tâches, c&#39;est un bon moment pour l&#39;apprendre.</p>
 de faire une branche, c&#39;est une bonne pratique et ça nous permettra de voir
 exactement ce que t&#39;auras modifié, c&#39;est beaucoup plus simple. Du coup tu
 fais simplement un :</p>
-<pre><code>$ git checkout -b fix.nom-du-post</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ git</span> checkout <span class="cm-attribute">-b</span> fix.nom-du-post</code></pre>
 </li>
 <li><p>Fais les modifications que tu veux dans le fichier, là on peut pas t&#39;aider,
 c&#39;est à toi de jouer.</p>
@@ -2072,12 +2326,12 @@ lien</a>.</p>
 commencer à écrire dans le fichier. Tout d&#39;abord tu vas devoir créer une
 nouvelle branche. C&#39;est une pratique qu&#39;on demande à tout le monde, même
 nous en interne on bosse sur des branches. Donc tout d&#39;abord :</p>
-<pre><code>$ git checkout -b post.titre-court-du-post</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ git</span> checkout <span class="cm-attribute">-b</span> post.titre-court-du-post</code></pre>
 <p>Ensuite il va falloir que tu crées le fichier nécessaire pour le brouillon
 du post.</p>
-<pre><code>$ happyplan newpost --name=&quot;Nom du post&quot; --tags=&quot;tags, separes, virgules&quot;
-$ mkdir src/posts/nom-du-post
-$ mv src/posts/nom-du-post.html.hbs src/posts/nom-du-post/index.html.hbs</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ happyplan</span> newpost <span class="cm-attribute">--name</span><span class="cm-operator">=</span><span class="cm-string">&quot;Nom du post&quot;</span> <span class="cm-attribute">--tags</span><span class="cm-operator">=</span><span class="cm-string">&quot;tags,separes,virgules&quot;</span>
+<span class="cm-def">$ mkdir</span> src/posts/nom-du-post
+<span class="cm-def">$ mv</span> src/posts/nom-du-post.html.hbs src/posts/nom-du-post/index.html.hbs</code></pre>
 <p>Ça va te créer un fichier dans <code>/src/posts/</code> avec le nom qui va bien.
 Tu remarqueras qu&#39;on la déplacé dans un dossier, histoire d&#39;avoir des URLs
 simples et sympa. Puis si t&#39;as de la merde à fourrer pour ton article, tu sais
@@ -2115,16 +2369,16 @@ proposition d&#39;un nouveau)</p>
 <li><p>Il faut tout d&#39;abord pousser tes modifications sur ton <code>fork</code>. Pour ça on va
 d&#39;abord ajouter les fichier que tu as modifié à l&#39;index de fichiers à
 commit. Tu peux faire ça tout simplement avec un :</p>
-<pre><code>$ git add -A src/posts/nom-du-post</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ git</span> add <span class="cm-attribute">-A</span> src/posts/nom-du-post</code></pre>
 <p>Cette commande ajoute tous les fichiers dans le dossier que tu as créé.
 Si tu as ajouter des fichiers à l&#39;exterieur de ce dossier, tu devras les
 ajouter. Exemple:</p>
-<pre><code>$ git add src/media/memes/trollface.jpg</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ git</span> add src/media/memes/trollface.jpg</code></pre>
 <p>Ensuite on va dire à git de valider ces modifications de code :</p>
-<pre><code>$ git commit -m &quot;Un petit message sympa expliquant le correctif/post&quot;</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ git</span> commit <span class="cm-attribute">-m</span> <span class="cm-string">&quot;Un petit message sympa expliquant le correctif/post&quot;</span></code></pre>
 <p>Et on va finir en disant qu&#39;on veut envoyer tout ça sur ton fork qui est
 situé sur GitHub :</p>
-<pre><code>$ git push -u</code></pre>
+<pre><code class="language-shell"><span class="cm-def">$ git</span> push <span class="cm-attribute">-u</span></code></pre>
 </li>
 <li><p>Voila ! Si tu vas voir ton <code>fork</code> sur GitHub tu verras ton commit et les
 modifications que tu as apportées normalement. Il ne te reste plus qu&#39;à nous
@@ -2140,8 +2394,8 @@ branches / etc.</p>
 </figure>
 </li>
 <li><p>Sélectionnes les bonnes branches et ajoute nous un beau titre et une belle
-description de Pull Request en essayant au moins de commencer par <code>Post:
-Nom du post</code> ou `Fix: Nom du post</p>
+description de Pull Request en essayant au moins de commencer par <code>Post: Nom du post</code>
+ou <code>Fix: Nom du post</code></p>
 </li>
 <li><p>Et voila ! Tu n&#39;as qu&#39;à attendre de nos nouvelles maintenant. D&#39;ailleurs au
 passage, si tu veux, tu peux en profiter pour nous suivre <a href="http://twitter.com/putaindecode">sur

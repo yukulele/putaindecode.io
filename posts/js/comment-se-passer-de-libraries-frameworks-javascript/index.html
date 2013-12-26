@@ -21,7 +21,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="feed.xml" rel="alternate" type="application/rss+xml">
 
-<link rel="stylesheet" href="/assets/css/putaindecode.css?20131207131920">
+<link rel="stylesheet" href="/assets/css/putaindecode.css?20131226224840">
 
 
 
@@ -41,9 +41,9 @@
 			<span class="putainde-Baseline">On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</span>
 
 			<ul class="putainde-Nav-list">
-				<li class=""><a class="putainde-Nav-list-item " href="/">Home</a>
 				<li class=""><a class="putainde-Nav-list-item " href="c-est-quoi-putaindecode">Putain de ... ?</a>
-				<li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+        <li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+				<li class=""><a class="putainde-Nav-list-item " href="posts/comment-contribuer/">Comment Contribuer ?</a>
 				<li class=""><a class="putainde-Nav-list-item " href="le-crew">Le Crew</a>
 			</ul>
 		</div>
@@ -68,25 +68,25 @@
 <h2 id="pour-la-s-lection-d-lements">Pour la sélection d&#39;élements</h2>
 <p>Pour remplacer ton bon vieux <code>$</code> magique, <code>document.querySelectorAll</code> semble faire l&#39;affaire. En revanche, il retourne une instance de <code>NodeList</code>, pas d&#39;<code>Array</code>, ce qui ne nous arrange pas des masses.</p>
 <p>Du coup, on peut écrire une petite function toute con, qui nous retourne un <code>Array</code> et ses méthodes bien utiles.</p>
-<pre><code class="language-javascript"><span class="keyword">var</span> nativeSlice = [].slice <span class="comment">// la méthode de conversion</span>
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">nativeSlice</span> = [].<span class="cm-variable">slice</span> <span class="cm-comment">// la méthode de conversion</span>
 
-<span class="function"><span class="keyword">function</span> <span class="title">$</span><span class="params">(selector)</span>{</span>
-  <span class="keyword">var</span> list = document.querySelectorAll(selector)
-  <span class="keyword">return</span> nativeSlice.call(list)
+<span class="cm-keyword">function</span> <span class="cm-variable">$</span>(<span class="cm-variable">selector</span>){
+  <span class="cm-keyword">var</span> <span class="cm-variable">list</span> = <span class="cm-variable">document</span>.<span class="cm-variable">querySelectorAll</span>(<span class="cm-variable">selector</span>)
+  <span class="cm-keyword">return</span> <span class="cm-variable">nativeSlice</span>.<span class="cm-variable">call</span>(<span class="cm-variable">list</span>)
 }</code></pre>
 <p>Alternativement, tu peux utiliser <code>Array.apply(null, list)</code> plutôt que <code>nativeSlice.call(list)</code>, si vraiment ça te fait plaisir.</p>
 <p>Une troisième solution, un peu plus chiante au quotidien (et terriblement laide), c&#39;est d&#39;utiliser directement les méthodes qui t&#39;intéressent (ex. <code>[].forEach</code>) de cette façon :</p>
-<pre><code class="language-javascript">;[].forEach.call(document.querySelectorAll(selector), <span class="function"><span class="keyword">function</span><span class="params">(element)</span>{</span>
-  <span class="comment">// do something w/ element</span>
+<pre><code class="language-javascript">;[].<span class="cm-variable">forEach</span>.<span class="cm-variable">call</span>(<span class="cm-variable">document</span>.<span class="cm-variable">querySelectorAll</span>(<span class="cm-variable">selector</span>), <span class="cm-keyword">function</span>(<span class="cm-variable">element</span>){
+  <span class="cm-comment">// do something w/ element</span>
 })</code></pre>
 <p>Pour en revenir à notre petite méthode <code>$</code>, on peut du coup faire :</p>
-<pre><code class="language-javascript"><span class="comment">// prends bien l'habitude de garder</span>
-<span class="comment">// tes nodeLists si tu les réutilises</span>
+<pre><code class="language-javascript"><span class="cm-comment">// prends bien l&#39;habitude de garder</span>
+<span class="cm-comment">// tes nodeLists si tu les réutilises</span>
 
-<span class="keyword">var</span> elements = $(<span class="string">".my-elements-className"</span>)
+<span class="cm-keyword">var</span> <span class="cm-variable">elements</span> = <span class="cm-variable">$</span>(<span class="cm-string">&quot;.my-elements-className&quot;</span>)
 
-elements.forEach(<span class="function"><span class="keyword">function</span><span class="params">(element)</span>{</span>
-  <span class="comment">// do something w/ element</span>
+<span class="cm-variable">elements</span>.<span class="cm-property">forEach</span>(<span class="cm-keyword">function</span>(<span class="cm-def">element</span>){
+  <span class="cm-comment">// do something w/ element</span>
 })</code></pre>
 <h3 id="pour-l-event-delegation">Pour l&#39;event delegation</h3>
 <p>L&#39;event delegation, c&#39;est bien, mangez-en. Ça permet entre autres de ne pas attacher 150 listeners uniques à 150 elements différents, mais à attacher un seul listener sur un parent commun, et analyser les sources des évenements à l&#39;intérieur en se basant sur le bubbling (remontée d&#39;évenement de la source au plus haut parent) ou capturing (descente d&#39;évenement du plus haut parent à la source, avant même que la source ne le reçoive).</p>
@@ -97,212 +97,212 @@ elements.forEach(<span class="function"><span class="keyword">function</span><sp
 <li>Si ça match, on garde l&#39;élement correspondant au sélecteur, sinon, exit</li>
 </ul>
 <p>Les browsers relativement récents possèdent une méthode : <code>matchesSelector</code> (et tous ses alias préfixés). Ce qu&#39;on peut donc faire, c&#39;est ceci :</p>
-<pre><code class="language-javascript"><span class="keyword">var</span> docEl = document.documentElement
-    <span class="comment">// si c'est dans docEl, c'est que c'est dispo</span>
-  , nativeMatchesSelector =
-      docEl.matchesSelector ||
-      docEl.webkitMatchesSelector ||
-      docEl.mozMatchesSelector ||
-      docEl.oMatchesSelector ||
-      docEl.msMatchesSelector
-  , matchesSelector = nativeMatchesSelector || matchesPolyfill
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">docEl</span> = <span class="cm-variable">document</span>.<span class="cm-property">documentElement</span>
+    <span class="cm-comment">// si c&#39;est dans docEl, c&#39;est que c&#39;est dispo</span>
+  , <span class="cm-variable">nativeMatchesSelector</span> =
+      <span class="cm-variable">docEl</span>.<span class="cm-property">matchesSelector</span> ||
+      <span class="cm-variable">docEl</span>.<span class="cm-property">webkitMatchesSelector</span> ||
+      <span class="cm-variable">docEl</span>.<span class="cm-property">mozMatchesSelector</span> ||
+      <span class="cm-variable">docEl</span>.<span class="cm-property">oMatchesSelector</span> ||
+      <span class="cm-variable">docEl</span>.<span class="cm-property">msMatchesSelector</span>
+  , <span class="cm-variable">matchesSelector</span> = <span class="cm-variable">nativeMatchesSelector</span> || <span class="cm-variable">matchesPolyfill</span>
 
-<span class="comment">// le polyfill utilise querySelectorAll</span>
-<span class="comment">// et cherche dans le parent de l'élement</span>
-<span class="function"><span class="keyword">function</span> <span class="title">matchesPolyfill</span><span class="params">(selector)</span>{</span>
-  <span class="keyword">var</span> node = <span class="keyword">this</span>
-    , parent = node.parentNode
-    , query, index, length
-  <span class="keyword">if</span>(!parent || parent.nodeType != <span class="number">1</span>) {
-    <span class="keyword">return</span> <span class="literal">false</span>
+<span class="cm-comment">// le polyfill utilise querySelectorAll</span>
+<span class="cm-comment">// et cherche dans le parent de l&#39;élement</span>
+<span class="cm-keyword">function</span> <span class="cm-variable">matchesPolyfill</span>(<span class="cm-def">selector</span>){
+  <span class="cm-keyword">var</span> <span class="cm-def">node</span> = <span class="cm-keyword">this</span>
+    , <span class="cm-def">parent</span> = <span class="cm-variable-2">node</span>.<span class="cm-property">parentNode</span>
+    , <span class="cm-def">query</span>, <span class="cm-def">index</span>, <span class="cm-def">length</span>
+  <span class="cm-keyword">if</span>(!<span class="cm-variable-2">parent</span> || <span class="cm-variable-2">parent</span>.<span class="cm-property">nodeType</span> != <span class="cm-number">1</span>) {
+    <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
   }
-  query = parent.querySelectorAll(selector)
-  index = -<span class="number">1</span>
-  length = query.length
-  <span class="keyword">while</span>(++index &lt; length) {
-    <span class="keyword">if</span>(query[index] == node) <span class="keyword">return</span> <span class="literal">true</span>
+  <span class="cm-variable-2">query</span> = <span class="cm-variable-2">parent</span>.<span class="cm-property">querySelectorAll</span>(<span class="cm-variable-2">selector</span>)
+  <span class="cm-variable-2">index</span> = -<span class="cm-number">1</span>
+  <span class="cm-variable-2">length</span> = <span class="cm-variable-2">query</span>.<span class="cm-property">length</span>
+  <span class="cm-keyword">while</span>(++<span class="cm-variable-2">index</span> &lt; <span class="cm-variable-2">length</span>) {
+    <span class="cm-keyword">if</span>(<span class="cm-variable-2">query</span>[<span class="cm-variable-2">index</span>] == <span class="cm-variable-2">node</span>) <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
   }
-  <span class="keyword">return</span> <span class="literal">false</span>
+  <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
 }
 
-<span class="function"><span class="keyword">function</span> <span class="title">getCurrentTarget</span><span class="params">(node, selector)</span>{</span>
-  <span class="keyword">if</span>(matchesSelector.call(node, selector)) <span class="keyword">return</span> node
-  <span class="keyword">while</span>(node = node.parentNode) {
-    <span class="keyword">if</span>(node.nodeType != <span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>
-    <span class="keyword">if</span>(matchesSelector.call(node, selector)) <span class="keyword">return</span> node
+<span class="cm-keyword">function</span> <span class="cm-variable">getCurrentTarget</span>(<span class="cm-def">node</span>, <span class="cm-def">selector</span>){
+  <span class="cm-keyword">if</span>(<span class="cm-variable">matchesSelector</span>.<span class="cm-property">call</span>(<span class="cm-variable-2">node</span>, <span class="cm-variable-2">selector</span>)) <span class="cm-keyword">return</span> <span class="cm-variable-2">node</span>
+  <span class="cm-keyword">while</span>(<span class="cm-variable-2">node</span> = <span class="cm-variable-2">node</span>.<span class="cm-property">parentNode</span>) {
+    <span class="cm-keyword">if</span>(<span class="cm-variable-2">node</span>.<span class="cm-property">nodeType</span> != <span class="cm-number">1</span>) <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+    <span class="cm-keyword">if</span>(<span class="cm-variable">matchesSelector</span>.<span class="cm-property">call</span>(<span class="cm-variable-2">node</span>, <span class="cm-variable-2">selector</span>)) <span class="cm-keyword">return</span> <span class="cm-variable-2">node</span>
   }
-  <span class="keyword">return</span> <span class="literal">false</span>
+  <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
 }</code></pre>
 <p>Dès lors, dans nos listeners, on pourra directement procéder ainsi :</p>
-<pre><code class="language-javascript">element.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span><span class="params">(evt)</span>{</span>
-  <span class="keyword">var</span> currentTarget = getCurrentTarget(evt.target, <span class="string">".Button-action"</span>)
-  <span class="keyword">if</span>(!currentTarget) <span class="keyword">return</span>
-  <span class="comment">// all good with currentTarget</span>
+<pre><code class="language-javascript"><span class="cm-variable">element</span>.<span class="cm-property">addEventListener</span>(<span class="cm-string">&quot;click&quot;</span>, <span class="cm-keyword">function</span>(<span class="cm-def">evt</span>){
+  <span class="cm-keyword">var</span> <span class="cm-def">currentTarget</span> = <span class="cm-variable">getCurrentTarget</span>(<span class="cm-variable-2">evt</span>.<span class="cm-property">target</span>, <span class="cm-string">&quot;.Button-action&quot;</span>)
+  <span class="cm-keyword">if</span>(!<span class="cm-variable-2">currentTarget</span>) <span class="cm-keyword">return</span>
+  <span class="cm-comment">// all good with currentTarget</span>
 })</code></pre>
 <h3 id="pour-l-ajax">Pour l&#39;Ajax</h3>
 <p>Pourquoi est-ce que l&#39;on appelle ça encore Ajax, d&#39;ailleurs ? Bref.</p>
 <p>Simple comme bonjour :</p>
-<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">isSuccessStatus</span><span class="params">(status)</span>{</span>
-  <span class="keyword">return</span> status &gt;= <span class="number">200</span> &amp;&amp; status &lt; <span class="number">300</span> || status == <span class="number">304</span>
+<pre><code class="language-javascript"><span class="cm-keyword">function</span> <span class="cm-variable">isSuccessStatus</span>(<span class="cm-def">status</span>){
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">status</span> &gt;= <span class="cm-number">200</span> &amp;&amp; <span class="cm-variable-2">status</span> &lt; <span class="cm-number">300</span> || <span class="cm-variable-2">status</span> == <span class="cm-number">304</span>
 }
 
-<span class="function"><span class="keyword">function</span> <span class="title">ajax</span><span class="params">(options)</span>{</span>
-  <span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest()
-    , done = <span class="literal">false</span>
-    , async = options.hasOwnProperty(<span class="string">"async"</span>) ? options.async : <span class="literal">true</span>
+<span class="cm-keyword">function</span> <span class="cm-variable">ajax</span>(<span class="cm-def">options</span>){
+  <span class="cm-keyword">var</span> <span class="cm-def">xhr</span> = <span class="cm-keyword">new</span> <span class="cm-variable">XMLHttpRequest</span>()
+    , <span class="cm-def">done</span> = <span class="cm-atom">false</span>
+    , <span class="cm-def">async</span> = <span class="cm-variable-2">options</span>.<span class="cm-property">hasOwnProperty</span>(<span class="cm-string">&quot;async&quot;</span>) ? <span class="cm-variable-2">options</span>.<span class="cm-property">async</span> : <span class="cm-atom">true</span>
 
-  xhr.open(options.method || <span class="string">"GET"</span>, options.url, async)
+  <span class="cm-variable-2">xhr</span>.<span class="cm-property">open</span>(<span class="cm-variable-2">options</span>.<span class="cm-property">method</span> || <span class="cm-string">&quot;GET&quot;</span>, <span class="cm-variable-2">options</span>.<span class="cm-property">url</span>, <span class="cm-variable-2">async</span>)
 
-  xhr.onreadystatechange = <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-    <span class="keyword">if</span>(done) <span class="keyword">return</span>
-    <span class="keyword">if</span>(<span class="keyword">this</span>.readyState != <span class="number">4</span>) <span class="keyword">return</span>
-    done = <span class="literal">true</span>
+  <span class="cm-variable-2">xhr</span>.<span class="cm-property">onreadystatechange</span> = <span class="cm-keyword">function</span>(){
+    <span class="cm-keyword">if</span>(<span class="cm-variable-2">done</span>) <span class="cm-keyword">return</span>
+    <span class="cm-keyword">if</span>(<span class="cm-keyword">this</span>.<span class="cm-property">readyState</span> != <span class="cm-number">4</span>) <span class="cm-keyword">return</span>
+    <span class="cm-variable-2">done</span> = <span class="cm-atom">true</span>
 
-    <span class="keyword">if</span>(isSuccessStatus(<span class="keyword">this</span>.status)) {
-      <span class="keyword">if</span>(options.success) {
-        options.success.call(<span class="keyword">this</span>)
+    <span class="cm-keyword">if</span>(<span class="cm-variable">isSuccessStatus</span>(<span class="cm-keyword">this</span>.<span class="cm-property">status</span>)) {
+      <span class="cm-keyword">if</span>(<span class="cm-variable-2">options</span>.<span class="cm-property">success</span>) {
+        <span class="cm-variable-2">options</span>.<span class="cm-property">success</span>.<span class="cm-property">call</span>(<span class="cm-keyword">this</span>)
       }
-      <span class="keyword">return</span>
+      <span class="cm-keyword">return</span>
     }
 
-    <span class="keyword">if</span>(options.error) {
-      options.error.call(<span class="keyword">this</span>)
+    <span class="cm-keyword">if</span>(<span class="cm-variable-2">options</span>.<span class="cm-property">error</span>) {
+      <span class="cm-variable-2">options</span>.<span class="cm-property">error</span>.<span class="cm-property">call</span>(<span class="cm-keyword">this</span>)
     }
   }
-  Object.keys(options.headers || {})
-    .forEach(<span class="function"><span class="keyword">function</span><span class="params">(key)</span>{</span>
-      xhr.setRequestHeader(key, options.headers[key])
+  <span class="cm-variable">Object</span>.<span class="cm-property">keys</span>(<span class="cm-variable-2">options</span>.<span class="cm-property">headers</span> || {})
+    .<span class="cm-property">forEach</span>(<span class="cm-keyword">function</span>(<span class="cm-def">key</span>){
+      <span class="cm-variable-2">xhr</span>.<span class="cm-property">setRequestHeader</span>(<span class="cm-variable-2">key</span>, <span class="cm-variable-2">options</span>.<span class="cm-property">headers</span>[<span class="cm-variable-2">key</span>])
     })
-  xhr.send(options.data || <span class="literal">null</span>)
-  <span class="keyword">return</span> xhr
+  <span class="cm-variable-2">xhr</span>.<span class="cm-property">send</span>(<span class="cm-variable-2">options</span>.<span class="cm-property">data</span> || <span class="cm-atom">null</span>)
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">xhr</span>
 }</code></pre>
 <p>Cette fonction offre un support basique de XHR :</p>
-<pre><code class="language-javascript"><span class="keyword">var</span> myXHR = ajax({
-    url : <span class="string">"api/users"</span>
-  , success : <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-      doStuff(<span class="keyword">this</span>.responseText)
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">myXHR</span> = <span class="cm-variable">ajax</span>({
+    <span class="cm-property">url</span> : <span class="cm-string">&quot;api/users&quot;</span>
+  , <span class="cm-property">success</span> : <span class="cm-keyword">function</span>(){
+      <span class="cm-variable">doStuff</span>(<span class="cm-keyword">this</span>.<span class="cm-property">responseText</span>)
     }
-  , error : <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-      showError(<span class="keyword">this</span>.status)
+  , <span class="cm-property">error</span> : <span class="cm-keyword">function</span>(){
+      <span class="cm-variable">showError</span>(<span class="cm-keyword">this</span>.<span class="cm-property">status</span>)
     }
 })</code></pre>
 <h3 id="es5-magic">ES5 magic</h3>
 <p>EcmaScript 5 délivre des petites méthodes très intéressantes pour se simplifier la vie, fortement inspirées par ce qu&#39;on a l&#39;habitude de trouver dans les bibliothèques ayant connu l&#39;âge d&#39;or, comme <a href="http://prototypejs.org">PrototypeJS</a> ou <a href="http://mootools.net">MooTools</a>.</p>
 <p>Dès lors, plutôt qu&#39;un ennuyeux :</p>
-<pre><code class="language-javascript"><span class="keyword">var</span> key, item
-<span class="keyword">for</span>(key <span class="keyword">in</span> myObject) {
-  <span class="keyword">if</span>(myObject.hasOwnProperty(key)) {
-    item = myObject[key]
-    <span class="comment">// do something</span>
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">key</span>, <span class="cm-variable">item</span>
+<span class="cm-keyword">for</span>(<span class="cm-variable">key</span> <span class="cm-keyword">in</span> <span class="cm-variable">myObject</span>) {
+  <span class="cm-keyword">if</span>(<span class="cm-variable">myObject</span>.<span class="cm-property">hasOwnProperty</span>(<span class="cm-variable">key</span>)) {
+    <span class="cm-variable">item</span> = <span class="cm-variable">myObject</span>[<span class="cm-variable">key</span>]
+    <span class="cm-comment">// do something</span>
   }
 }</code></pre>
 <p>on peut se contenter d&#39;un :</p>
-<pre><code class="language-javascript">Object.keys(myObject)
-  .forEach(<span class="function"><span class="keyword">function</span><span class="params">(key)</span>{</span>
-    <span class="keyword">var</span> item = myObject[i]
-    <span class="comment">// do something</span>
+<pre><code class="language-javascript"><span class="cm-variable">Object</span>.<span class="cm-property">keys</span>(<span class="cm-variable">myObject</span>)
+  .<span class="cm-property">forEach</span>(<span class="cm-keyword">function</span>(<span class="cm-def">key</span>){
+    <span class="cm-keyword">var</span> <span class="cm-def">item</span> = <span class="cm-variable">myObject</span>[<span class="cm-variable">i</span>]
+    <span class="cm-comment">// do something</span>
   })</code></pre>
 <p>De même, on bénéficie de méthodes s&#39;avérant très utiles, comme <a href="http://developer.mozilla.org/en-US/docs/[Web/JavaScript/Reference/Global_Objects/Array/prototype"><code>Array.prototype.map</code>, <code>Array.prototype.reduce</code>, <code>Array.prototype.filter</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object"><code>Object.create</code>, <code>Object.getPrototypeOf</code>, <code>Object.getOwnPropertyNames</code>, <code>Object.defineProperty</code></a> dont je t&#39;invite, si cela t&#39;intéresse, à te renseigner sur ces méthodes. Et si tu veux avoir plus de détails, read the fucking manual : <a href="http://es5.github.io"><a href="http://es5.github.io">http://es5.github.io</a></a>.</p>
 <h3 id="des-petits-d-tails-cools-du-c-t-des-events">Des petits détails cools du côté des events</h3>
 <p>Avec <code>addEventListener</code>, on peut aussi passer un objet comme listener, avec <code>handleEvent</code> pour interface :</p>
-<pre><code class="language-javascript"><span class="keyword">var</span> myElementClickEvents = {
-    element : myElement
-  , callbacks : []
-  , handleEvent : <span class="function"><span class="keyword">function</span><span class="params">(evt)</span>{</span>
-      <span class="keyword">var</span> self = <span class="keyword">this</span>
-      <span class="keyword">this</span>.callbacks.forEach(<span class="function"><span class="keyword">function</span><span class="params">(item)</span>{</span>
-        item.call(self.element, evt)
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">myElementClickEvents</span> = {
+    <span class="cm-property">element</span> : <span class="cm-variable">myElement</span>
+  , <span class="cm-property">callbacks</span> : []
+  , <span class="cm-variable">handleEvent</span> : <span class="cm-keyword">function</span>(<span class="cm-variable">evt</span>){
+      <span class="cm-keyword">var</span> <span class="cm-variable">self</span> = <span class="cm-keyword">this</span>
+      <span class="cm-keyword">this</span>.<span class="cm-variable">callbacks</span>.<span class="cm-variable">forEach</span>(<span class="cm-keyword">function</span>(<span class="cm-variable">item</span>){
+        <span class="cm-variable">item</span>.<span class="cm-variable">call</span>(<span class="cm-variable">self</span>.<span class="cm-variable">element</span>, <span class="cm-variable">evt</span>)
       })
     }
 }
-myElement.addEventListener(<span class="string">"click"</span>, myElementClickEvents)
+<span class="cm-variable">myElement</span>.<span class="cm-variable">addEventListener</span>(<span class="cm-string">&quot;click&quot;</span>, <span class="cm-variable">myElementClickEvents</span>)
 
-myElementClickEvents.callbacks.push(<span class="function"><span class="keyword">function</span><span class="params">(evt)</span>{</span>
-  console.log(evt)
+<span class="cm-variable">myElementClickEvents</span>.<span class="cm-variable">callbacks</span>.<span class="cm-variable">push</span>(<span class="cm-keyword">function</span>(<span class="cm-variable">evt</span>){
+  <span class="cm-variable">console</span>.<span class="cm-variable">log</span>(<span class="cm-variable">evt</span>)
 })</code></pre>
 <p>Avec ça, on peut facilement garder une trace de ce qu&#39;on passé comme listeners.</p>
 <h3 id="du-type-checking-">Du type checking ?</h3>
-<pre><code class="language-javascript"><span class="keyword">var</span> getClass = <span class="function"><span class="keyword">function</span><span class="params">(o)</span>{</span> <span class="keyword">return</span> Object.prototype.toString.call(o) }
-  , someString = <span class="keyword">new</span> String(<span class="string">"foo"</span>)
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">getClass</span> = <span class="cm-keyword">function</span>(<span class="cm-def">o</span>){ <span class="cm-keyword">return</span> <span class="cm-variable">Object</span>.<span class="cm-property">prototype</span>.<span class="cm-property">toString</span>.<span class="cm-property">call</span>(<span class="cm-variable-2">o</span>) }
+  , <span class="cm-variable">someString</span> = <span class="cm-keyword">new</span> <span class="cm-variable">String</span>(<span class="cm-string">&quot;foo&quot;</span>)
 
-<span class="keyword">typeof</span> someString <span class="comment">// "object"</span>
-getClass(someString) <span class="comment">// "[object String]", sounds more reasonable</span></code></pre>
+<span class="cm-keyword">typeof</span> <span class="cm-variable">someString</span> <span class="cm-comment">// &quot;object&quot;</span>
+<span class="cm-variable">getClass</span>(<span class="cm-variable">someString</span>) <span class="cm-comment">// &quot;[object String]&quot;, sounds more reasonable</span></code></pre>
 <h3 id="petit-bonus">Petit bonus</h3>
 <p>Un petit bonus rien que pour toi : pour avoir une syntaxe plus sympathique et plus claire que les prototypes.</p>
 <p>En principe, on fait comme ça :</p>
-<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span><span class="params">(name)</span>{</span>
-  <span class="keyword">this</span>.name = name
+<pre><code class="language-javascript"><span class="cm-keyword">function</span> <span class="cm-variable">Animal</span>(<span class="cm-def">name</span>){
+  <span class="cm-keyword">this</span>.<span class="cm-property">name</span> = <span class="cm-variable-2">name</span>
 }
 
-Animal.prototype.getName = <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-  <span class="keyword">return</span> <span class="keyword">this</span>.name
+<span class="cm-variable">Animal</span>.<span class="cm-property">prototype</span>.<span class="cm-property">getName</span> = <span class="cm-keyword">function</span>(){
+  <span class="cm-keyword">return</span> <span class="cm-keyword">this</span>.<span class="cm-property">name</span>
 }
 
-<span class="function"><span class="keyword">function</span> <span class="title">Cat</span><span class="params">(name)</span>{</span>
-  Animal.call(<span class="keyword">this</span>, name)
+<span class="cm-keyword">function</span> <span class="cm-variable">Cat</span>(<span class="cm-def">name</span>){
+  <span class="cm-variable">Animal</span>.<span class="cm-property">call</span>(<span class="cm-keyword">this</span>, <span class="cm-variable-2">name</span>)
 }
 
-<span class="function"><span class="keyword">function</span> <span class="title">K</span><span class="params">()</span>{</span>}
-K.prototype = Animal.prototype
+<span class="cm-keyword">function</span> <span class="cm-variable">K</span>(){}
+<span class="cm-variable">K</span>.<span class="cm-property">prototype</span> = <span class="cm-variable">Animal</span>.<span class="cm-property">prototype</span>
 
-Cat.prototype = <span class="keyword">new</span> K
-Cat.prototype.constructor = Cat
-Cat.prototype.type = <span class="string">"cat"</span>
+<span class="cm-variable">Cat</span>.<span class="cm-property">prototype</span> = <span class="cm-keyword">new</span> <span class="cm-variable">K</span>
+<span class="cm-variable">Cat</span>.<span class="cm-property">prototype</span>.<span class="cm-property">constructor</span> = <span class="cm-variable">Cat</span>
+<span class="cm-variable">Cat</span>.<span class="cm-property">prototype</span>.<span class="cm-property">type</span> = <span class="cm-string">&quot;cat&quot;</span>
 
-<span class="keyword">var</span> myAnimal = <span class="keyword">new</span> Animal(<span class="string">"Foo"</span>)
-  , myCat = <span class="keyword">new</span> Cat(<span class="string">"Bar"</span>)
+<span class="cm-keyword">var</span> <span class="cm-variable">myAnimal</span> = <span class="cm-keyword">new</span> <span class="cm-variable">Animal</span>(<span class="cm-string">&quot;Foo&quot;</span>)
+  , <span class="cm-variable">myCat</span> = <span class="cm-keyword">new</span> <span class="cm-variable">Cat</span>(<span class="cm-string">&quot;Bar&quot;</span>)
 
-myCat <span class="keyword">instanceof</span> Cat <span class="comment">// true</span>
-myCat <span class="keyword">instanceof</span> Animal <span class="comment">// true</span></code></pre>
+<span class="cm-variable">myCat</span> <span class="cm-keyword">instanceof</span> <span class="cm-variable">Cat</span> <span class="cm-comment">// true</span>
+<span class="cm-variable">myCat</span> <span class="cm-keyword">instanceof</span> <span class="cm-variable">Animal</span> <span class="cm-comment">// true</span></code></pre>
 <p>Maintenant, à l&#39;aide de deux petites méthodes :</p>
-<pre><code class="language-javascript"><span class="comment">// wow</span>
-<span class="comment">//         many magic</span>
-<span class="comment">//   very es5</span>
-<span class="comment">//            wow</span>
-<span class="function"><span class="keyword">function</span> <span class="title">extend</span><span class="params">(object)</span>{</span>
-  <span class="keyword">var</span> self = Object.create(<span class="keyword">this</span>)
-  <span class="keyword">if</span>(!object) <span class="keyword">return</span> self
-  Object.keys(object)
-    .forEach(<span class="function"><span class="keyword">function</span><span class="params">(key)</span>{</span>
-      self[key] = object[key]
+<pre><code class="language-javascript"><span class="cm-comment">// wow</span>
+<span class="cm-comment">//         many magic</span>
+<span class="cm-comment">//   very es5</span>
+<span class="cm-comment">//            wow</span>
+<span class="cm-keyword">function</span> <span class="cm-variable">extend</span>(<span class="cm-def">object</span>){
+  <span class="cm-keyword">var</span> <span class="cm-def">self</span> = <span class="cm-variable">Object</span>.<span class="cm-property">create</span>(<span class="cm-keyword">this</span>)
+  <span class="cm-keyword">if</span>(!<span class="cm-variable-2">object</span>) <span class="cm-keyword">return</span> <span class="cm-variable-2">self</span>
+  <span class="cm-variable">Object</span>.<span class="cm-property">keys</span>(<span class="cm-variable-2">object</span>)
+    .<span class="cm-property">forEach</span>(<span class="cm-keyword">function</span>(<span class="cm-def">key</span>){
+      <span class="cm-variable-2">self</span>[<span class="cm-variable-2">key</span>] = <span class="cm-variable-2">object</span>[<span class="cm-variable-2">key</span>]
     })
-  <span class="keyword">return</span> self
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">self</span>
 }
 
-<span class="function"><span class="keyword">function</span> <span class="title">create</span><span class="params">()</span>{</span>
-  <span class="keyword">var</span> self = Object.create(<span class="keyword">this</span>)
-  <span class="keyword">if</span>(<span class="keyword">typeof</span> self.constructor == <span class="string">"function"</span>) {
-    self.constructor.apply(self, arguments)
+<span class="cm-keyword">function</span> <span class="cm-variable">create</span>(){
+  <span class="cm-keyword">var</span> <span class="cm-def">self</span> = <span class="cm-variable">Object</span>.<span class="cm-property">create</span>(<span class="cm-keyword">this</span>)
+  <span class="cm-keyword">if</span>(<span class="cm-keyword">typeof</span> <span class="cm-variable-2">self</span>.<span class="cm-property">constructor</span> == <span class="cm-string">&quot;function&quot;</span>) {
+    <span class="cm-variable-2">self</span>.<span class="cm-property">constructor</span>.<span class="cm-property">apply</span>(<span class="cm-variable-2">self</span>, <span class="cm-variable-2">arguments</span>)
   }
-  <span class="keyword">return</span> self
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">self</span>
 }
 
-<span class="keyword">var</span> klass = {
-    create : create
-  , extend : extend
+<span class="cm-keyword">var</span> <span class="cm-variable">klass</span> = {
+    <span class="cm-property">create</span> : <span class="cm-variable">create</span>
+  , <span class="cm-property">extend</span> : <span class="cm-variable">extend</span>
 }</code></pre>
 <p>Tu peux faire ça :</p>
-<pre><code class="language-javascript"><span class="keyword">var</span> animal = klass.extend({
-    constructor : <span class="function"><span class="keyword">function</span><span class="params">(name)</span>{</span>
-      <span class="keyword">this</span>.name = name
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">animal</span> = <span class="cm-variable">klass</span>.<span class="cm-property">extend</span>({
+    <span class="cm-property">constructor</span> : <span class="cm-keyword">function</span>(<span class="cm-def">name</span>){
+      <span class="cm-keyword">this</span>.<span class="cm-property">name</span> = <span class="cm-variable-2">name</span>
     }
-  , getName : <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-      <span class="keyword">return</span> <span class="keyword">this</span>.name
+  , <span class="cm-property">getName</span> : <span class="cm-keyword">function</span>(){
+      <span class="cm-keyword">return</span> <span class="cm-keyword">this</span>.<span class="cm-property">name</span>
     }
 })
 
-<span class="keyword">var</span> cat = animal.extend({
-    constructor : <span class="function"><span class="keyword">function</span><span class="params">(name)</span>{</span>
-      animal.constructor.call(<span class="keyword">this</span>, name)
+<span class="cm-keyword">var</span> <span class="cm-variable">cat</span> = <span class="cm-variable">animal</span>.<span class="cm-property">extend</span>({
+    <span class="cm-property">constructor</span> : <span class="cm-keyword">function</span>(<span class="cm-def">name</span>){
+      <span class="cm-variable">animal</span>.<span class="cm-property">constructor</span>.<span class="cm-property">call</span>(<span class="cm-keyword">this</span>, <span class="cm-variable-2">name</span>)
     }
-  , type : <span class="string">"cat"</span>
+  , <span class="cm-property">type</span> : <span class="cm-string">&quot;cat&quot;</span>
 })
 
-<span class="keyword">var</span> myAnimal = animal.create(<span class="string">"Foo"</span>)
-  , myCat = cat.create(<span class="string">"Bar"</span>)
+<span class="cm-keyword">var</span> <span class="cm-variable">myAnimal</span> = <span class="cm-variable">animal</span>.<span class="cm-property">create</span>(<span class="cm-string">&quot;Foo&quot;</span>)
+  , <span class="cm-variable">myCat</span> = <span class="cm-variable">cat</span>.<span class="cm-property">create</span>(<span class="cm-string">&quot;Bar&quot;</span>)
 
-cat.isPrototypeOf(myCat) <span class="comment">// true</span>
-animal.isPrototypeOf(myCat) <span class="comment">// true</span></code></pre>
+<span class="cm-variable">cat</span>.<span class="cm-property">isPrototypeOf</span>(<span class="cm-variable">myCat</span>) <span class="cm-comment">// true</span>
+<span class="cm-variable">animal</span>.<span class="cm-property">isPrototypeOf</span>(<span class="cm-variable">myCat</span>) <span class="cm-comment">// true</span></code></pre>
 <p>Voilà, j&#39;espère que cela a pu attiser ta curiosité d&#39;en apprendre plus sur le langage lui-même et le DOM.</p>
 
 
@@ -388,7 +388,7 @@ animal.isPrototypeOf(myCat) <span class="comment">// true</span></code></pre>
 
   
 </div>
-<script src="/assets/js/putaindecode.js?20131207131920"></script>
+<script src="/assets/js/putaindecode.js?20131226224840"></script>
 
 
 	

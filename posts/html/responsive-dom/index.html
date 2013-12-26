@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<!--
+  HEY YOU, STOP LOOKING AT MY SOURCE CODE
+  Just check it out directly on Github :
+
+  https://github.com/putaindecode/website.git
+-->
+<html lang="fr" class="no-js no-touch ">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<script>(function(docEl) {
+  docEl.className = docEl.className.replace(/\bno-js\b/, 'js');
+  if ('ontouchstart' in docEl) { docEl.className = docEl.className.replace(/\bno-touch\b/, 'touch'); }
+})(document.documentElement);</script>
+
+<meta charset="utf-8">
+<title>Responsive webdesign et structure du DOM</title>
+<meta name="description" content="">
+<base href="/" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="feed.xml" rel="alternate" type="application/rss+xml">
+
+<link rel="stylesheet" href="/assets/css/putaindecode.css?20131226224840">
+
+
+
+
+</head>
+<body>
+
+<div class="">
+  <nav class="putainde-Nav">
+	<div class="grid">
+		<div class="grid__cell">
+			<a class="putainde-SiteTitle" href="/">
+				<img class="putainde-Logo" alt="Putain de Code !" src="/assets/img/p!-logo.svg" />
+				Putain de Code !
+			</a>
+
+			<span class="putainde-Baseline">On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</span>
+
+			<ul class="putainde-Nav-list">
+				<li class=""><a class="putainde-Nav-list-item " href="c-est-quoi-putaindecode">Putain de ... ?</a>
+        <li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+				<li class=""><a class="putainde-Nav-list-item " href="posts/comment-contribuer/">Comment Contribuer ?</a>
+				<li class=""><a class="putainde-Nav-list-item " href="le-crew">Le Crew</a>
+			</ul>
+		</div>
+	</div>
+</nav>
+ 
+  <article class="putainde-Content grid putainde-Post">
+    <header class="putainde-Content-header grid__cell unit-1-1">
+      <h1 class="putainde-Content-title">Responsive webdesign et structure du DOM</h1>
+      <div class="putainde-Content-metas">
+        <span class="putainde-Content-author">Par <span class="putainde-Author">neemzy</span></span>
+        <span class="putainde-Content-readingTime">Temps de lecture: environ 15min</span>
+        <span class="putainde-Content-tags">Tags: responsive,html,javascript</span>
+      </div>
+    </header>
+    <div class="putainde-Content-body grid__cell unit-3-4--m">
+    
+
+
+<p>Bien, commençons par le commencement, si tu veux bien. Le <strong>responsive
+webdesign</strong>, ça te dit quelque chose ? Oui ? Bon. Dans ce cas, tu as peut-être
+comme moi déjà été confronté à un cas de figure plutôt ennuyeux. Que tu sois
+adepte du <em>mobile-first</em> ou irréductible dégradateur progressiste, il est
+forcément arrivé un moment où tu t&#39;es dit cette chose toute bête :</p>
+<blockquote>
+<p>Ce serait quand même pas mal si cet élément était ici plutôt que là. Sauf que
+non.</p>
+</blockquote>
+<p>Le cas typique est celui d&#39;un menu un minimum complexe, dont on réordonnerait
+volontiers les éléments un chouïa au dessus ou en deçà d&#39;une certaine taille
+d&#39;écran. Et là, il faut bien avouer qu&#39;il n&#39;existe pas vraiment de solution
+miracle.</p>
+<p>J&#39;entends déjà les plus teigneux vociférer qu&#39;avec une meilleure réflexion en
+amont, le <em>markup</em> aurait été mieux conçu et on n&#39;en serait pas là. Bien qu&#39;un
+peu facile, cette réponse peut s&#39;avérer vraie dans un certain nombre de cas
+(admire la phrase du mec qui ne se mouille pas). Mais quoi qu&#39;il en soit, si tu
+en es au stade de ce type de questionnement, c&#39;est qu&#39;il est de toute façon trop
+tard pour faire machine arrière.</p>
+<p>Au train où va l&#39;innovation dans notre branche, surtout pour tout ce qui touche
+au mobile en général et à la conception web en particulier, il n&#39;est pas exclu
+que les bouts de ficelle que je vais t&#39;exposer ici soient obsolètes dans six
+mois, et que cet article fasse un comeback incroyable sur Twitter, les RT 
+moquant gentiment les techniques précolombiennes auxquelles nous étions réduits
+il n&#39;y a encore pas si longtemps. Va savoir, je pourrais bien faire l&#39;objet
+d&#39;une célébrité paradoxalement décadente à la Rick Astley. En attendant, il 
+s&#39;agit des seules solutions que je connais pour ce type de cas. Si tu as mieux à
+proposer, je te recommande chaudement de l&#39;ouvrir dans les commentaires pour
+qu&#39;on en bénéficie tous. C&#39;est bon, on y va ? Je t&#39;attends, moi !</p>
+<h2 id="-l-ancienne-do-repeat-yourself">À l&#39;ancienne : Do Repeat Yourself</h2>
+<p>Imagine une page de blog, où apparaissent consécutivement le titre de l&#39;article,
+la photo l&#39;illustrant, et enfin le texte. Comme une photo, selon la qualité de
+ta connexion, ça peut être un peu galère à charger sur mobile (et que la 
+question des images en responsive design
+<a href="http://css-tricks.com/responsive-images-hard/">est encore un sacré bordel</a>), tu
+prends la décision de passer la photo en dessous du contenu textuel pour que tes
+visiteurs puissent lire leur article peinards même si la photo n&#39;a pas fini de
+charger - et tu vas même en profiter pour la remplacer par une version plus
+light.</p>
+<p>Dans un tel cas, la meilleure solution peut encore être de dupliquer ta balise
+<code>img</code>, et de masquer l&#39;une ou l&#39;autre avec CSS en fonction de la taille d&#39;écran,
+grâce à une <code>media query</code>. Voilà un exemple rudimentaire :</p>
+<pre><code class="language-html"><span class="cm-tag">&lt;article</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;h1</span><span class="cm-tag">&gt;</span>Mon super article<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
+
+  <span class="cm-tag">&lt;img</span> <span class="cm-attribute">src</span>=<span class="cm-string">&quot;/mon/image/desktop.jpg&quot;</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;img-desktop&quot;</span> <span class="cm-tag">/&gt;</span>
+
+  <span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>Lâche tes comm&#39; !<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+
+  <span class="cm-tag">&lt;img</span> <span class="cm-attribute">src</span>=<span class="cm-string">&quot;/mon/image/mobile.jpg&quot;</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;img-mobile&quot;</span> <span class="cm-tag">/&gt;</span>
+<span class="cm-tag">&lt;/article</span><span class="cm-tag">&gt;</span></code></pre>
+<pre><code class="language-css"><span class="cm-qualifier">.img-desktop</span> {
+  <span class="cm-comment">/* Par défaut, l&#39;image desktop est cachée */</span>
+  <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-string-2">none</span>;
+}
+
+<span class="cm-def">@media</span> <span class="cm-attribute">screen</span> <span class="cm-operator">and</span> (<span class="cm-property">min-width</span><span class="cm-operator">:</span> <span class="cm-number">768px</span>) {
+  <span class="cm-comment">/* Si on est sur &quot;grand&quot; écran, on affiche l&#39;image desktop... */</span>
+  <span class="cm-qualifier">.img-desktop</span> {
+    <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-string-2">block</span>;
+  }
+
+  <span class="cm-comment">/* ...et on masque l&#39;image mobile */</span>
+  <span class="cm-qualifier">.img-mobile</span> {
+    <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-string-2">none</span>;
+  }
+}</code></pre>
+<p>Évidemment, le gros inconvénient de ce type de solution est que qui dit
+duplication de contenu dit augmentation du poids total. Dans le cas d&#39;un contenu
+purement textuel, selon sa taille, cela peut être négligeable. J&#39;ai ici
+volontairement pris l&#39;exemple le moins adapté : une image, qu&#39;il ne faut
+absolument pas faire charger deux fois à nos visiteurs. On va tricher un peu
+avec JavaScript :</p>
+<pre><code class="language-html"><span class="cm-tag">&lt;article</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;h1</span><span class="cm-tag">&gt;</span>Mon super article<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
+
+  <span class="cm-comment">&lt;!-- Ces images ne seront pas chargées car elles n&#39;ont pas d&#39;attribut src --&gt;</span>
+  <span class="cm-tag">&lt;img</span> <span class="cm-attribute">data-src</span>=<span class="cm-string">&quot;/mon/image/desktop.jpg&quot;</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;img-desktop&quot;</span> <span class="cm-tag">/&gt;</span>
+
+  <span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>Lâche tes comm&#39; !<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+
+  <span class="cm-tag">&lt;img</span> <span class="cm-attribute">data-src</span>=<span class="cm-string">&quot;/mon/image/mobile.jpg&quot;</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;img-mobile&quot;</span> <span class="cm-tag">/&gt;</span>
+
+  <span class="cm-tag">&lt;noscript</span><span class="cm-tag">&gt;</span>
+    <span class="cm-comment">&lt;!-- Cette image ne sera chargée que si le visiteur n&#39;a pas activé le JS --&gt;</span>
+    <span class="cm-tag">&lt;img</span> <span class="cm-attribute">src</span>=<span class="cm-string">&quot;/mon/image/mobile.jpg&quot;</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;img-mobile img-noscript&quot;</span> <span class="cm-tag">/&gt;</span>
+  <span class="cm-tag">&lt;/noscript</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/article</span><span class="cm-tag">&gt;</span></code></pre>
+<pre><code class="language-css"><span class="cm-qualifier">.img-desktop</span> {
+  <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-string-2">none</span>;
+}
+
+<span class="cm-def">@media</span> <span class="cm-attribute">screen</span> <span class="cm-operator">and</span> (<span class="cm-property">min-width</span><span class="cm-operator">:</span> <span class="cm-number">768px</span>) {
+  <span class="cm-qualifier">.img-desktop</span> {
+    <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-string-2">block</span>;
+  }
+
+  <span class="cm-qualifier">.img-mobile</span> {
+    <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-string-2">none</span>;
+  }
+}
+
+<span class="cm-qualifier">.img-noscript</span> {
+  <span class="cm-comment">/* On surcharge le style desktop pour s&#39;assurer</span>
+<span class="cm-comment">     que cette image s&#39;affiche quelle que soit la taille de l&#39;écran */</span>
+
+  <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-string-2">block</span>;
+}</code></pre>
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">handleImages</span> = <span class="cm-keyword">function</span>() {
+  <span class="cm-comment">// On charge les images ayant l&#39;attribut data-src,</span>
+  <span class="cm-comment">// non encore chargées (attribut src indéfini)</span>
+  <span class="cm-comment">// et non masquées par CSS</span>
+
+  [].<span class="cm-variable">forEach</span>.<span class="cm-variable">call</span>(<span class="cm-variable">document</span>.<span class="cm-variable">querySelectorAll</span>(<span class="cm-string">&#39;img[data-src]:not([src])&#39;</span>), <span class="cm-keyword">function</span>(<span class="cm-variable">el</span>) {
+    <span class="cm-keyword">if</span> (<span class="cm-variable">window</span>.<span class="cm-variable">getComputedStyle</span>(<span class="cm-variable">el</span>).<span class="cm-variable">display</span> != <span class="cm-string">&#39;none&#39;</span>) {
+      <span class="cm-variable">el</span>.<span class="cm-variable">src</span> = <span class="cm-variable">el</span>.<span class="cm-variable">getAttribute</span>(<span class="cm-string">&#39;data-src&#39;</span>);
+    }
+  });
+};
+
+<span class="cm-variable">window</span>.<span class="cm-variable">addEventListener</span>(<span class="cm-string">&#39;load&#39;</span>, <span class="cm-variable">handleImages</span>);
+<span class="cm-variable">window</span>.<span class="cm-variable">addEventListener</span>(<span class="cm-string">&#39;resize&#39;</span>, <span class="cm-variable">handleImages</span>);</code></pre>
+<p>Ainsi, seules les images nécessaires seront chargées avec la page. J&#39;applique
+également le même traitement au <code>resize</code> ; c&#39;est un peu bourrin, je te
+l&#39;accorde, on pourrait probablement faire plus fin avec <code>matchMedia</code>.</p>
+<p>Dans le cas d&#39;un visiteur naviguant sans JavaScript, seule l&#39;image mobile est
+chargée : je pars du principe qu&#39;étant donné qu&#39;on ne peut pas définir laquelle
+des deux versions de l&#39;image est la mieux adaptée pour lui, autant lui envoyer
+la plus légère.</p>
+<h2 id="js-powa-enquire-js">JS powa : enquire.js</h2>
+<p>La seconde solution peut tout à fait être réalisée &quot;à la main&quot;, mais je vais te
+parler d&#39;une petite librairie que j&#39;aime beaucoup et que j&#39;ai déjà utilisée dans
+ce genre de cas. Elle se nomme <a href="http://wicky.nillia.ms/enquire.js/">enquire.js</a>
+et permet tout simplement d&#39;affecter des callbacks à des media queries :</p>
+<pre><code class="language-javascript"><span class="cm-variable">enquire</span>.<span class="cm-property">register</span>(<span class="cm-string">&#39;screen and (min-width: 768px)&#39;</span>, {
+  <span class="cm-property">match</span>: <span class="cm-keyword">function</span>() {
+    <span class="cm-comment">// L&#39;écran fait 768px de large ou plus...</span>
+  },
+
+  <span class="cm-property">unmatch</span>: <span class="cm-keyword">function</span>() {
+    <span class="cm-comment">// ...et ici, 767px de large ou moins.</span>
+    <span class="cm-comment">// La librairie repose sur matchMedia et matchMedia.addListener</span>
+  }
+});</code></pre>
+<p>Plutôt sympa, non ? Pour reprendre notre exemple de tout à l&#39;heure (le CSS n&#39;est
+plus nécessaire) :</p>
+<pre><code class="language-html"><span class="cm-tag">&lt;article</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;h1</span><span class="cm-tag">&gt;</span>Mon super article<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
+
+  <span class="cm-tag">&lt;img</span> <span class="cm-attribute">data-src</span>=<span class="cm-string">&quot;/mon/image/desktop.jpg&quot;</span> <span class="cm-attribute">data-mobile-src</span>=<span class="cm-string">&quot;/mon/image/mobile.jpg&quot;</span> <span class="cm-tag">/&gt;</span>
+
+  <span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>Lâche tes comm&#39; !<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+
+  <span class="cm-tag">&lt;noscript</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;img</span> <span class="cm-attribute">src</span>=<span class="cm-string">&quot;/mon/image/mobile.jpg&quot;</span> <span class="cm-tag">/&gt;</span>
+  <span class="cm-tag">&lt;/noscript</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/article</span><span class="cm-tag">&gt;</span></code></pre>
+<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">content</span> = <span class="cm-variable">document</span>.<span class="cm-property">querySelector</span>(<span class="cm-string">&#39;p&#39;</span>),
+
+  <span class="cm-variable">switchImage</span> = <span class="cm-keyword">function</span>(<span class="cm-def">isMobile</span>) {
+    <span class="cm-keyword">var</span> <span class="cm-def">attr</span> = <span class="cm-variable-2">isMobile</span> ? <span class="cm-string">&#39;data-mobile-src&#39;</span> : <span class="cm-string">&#39;data-src&#39;</span>;
+
+    [].<span class="cm-variable">forEach</span>.<span class="cm-variable">call</span>(<span class="cm-variable">document</span>.<span class="cm-variable">querySelectorAll</span>(<span class="cm-string">&#39;img[&#39;</span> + <span class="cm-variable-2">attr</span> + <span class="cm-string">&#39;]&#39;</span>), <span class="cm-keyword">function</span>(<span class="cm-variable">el</span>) {
+      <span class="cm-comment">// On affecte l&#39;une ou l&#39;autre source à notre image,</span>
+      <span class="cm-comment">// entraînant son chargement si nécessaire.</span>
+      <span class="cm-variable">el</span>.<span class="cm-variable">src</span> = <span class="cm-variable">el</span>.<span class="cm-variable">getAttribute</span>(<span class="cm-variable-2">attr</span>);
+
+      <span class="cm-comment">// On en profite pour la bouger avant ou après le contenu</span>
+      <span class="cm-variable">content</span>.<span class="cm-variable">parentNode</span>.<span class="cm-variable">insertBefore</span>(<span class="cm-variable">el</span>, <span class="cm-variable-2">isMobile</span> ? <span class="cm-variable">content</span>.<span class="cm-variable">nextSibling</span> : <span class="cm-variable">content</span>);
+    });
+  };
+
+<span class="cm-variable">enquire</span>.<span class="cm-variable">register</span>(<span class="cm-string">&#39;screen and (min-width: 768px)&#39;</span>, <span class="cm-keyword">function</span>() {
+  <span class="cm-variable">switchImage</span>(<span class="cm-atom">false</span>);
+});
+
+<span class="cm-variable">enquire</span>.<span class="cm-variable">register</span>(<span class="cm-string">&#39;screen and (max-width: 767px)&#39;</span>, <span class="cm-keyword">function</span>() {
+  <span class="cm-variable">switchImage</span>(<span class="cm-atom">true</span>);
+});</code></pre>
+<p>On peut ainsi gérer facilement le chargement de l&#39;image, ainsi que son
+emplacement. J&#39;utilise ici deux handlers distincts pour m&#39;assurer qu&#39;enquire
+fait bien son boulot au chargement aussi, dans tous les cas (les callbacks
+<code>unmatch</code> ne sont appelés qu&#39;au redimensionnement, semble-t-il : avec un seul
+handler, l&#39;image n&#39;arrive donc jamais si on charge la page avec un écran d&#39;une
+largeur inférieure à 768px).</p>
+<h2 id="that-s-all-you-ve-got-bitch-">That&#39;s all you&#39;ve got, bitch?</h2>
+<p>On peut également, puisque tu y tiens tant, évoquer d&#39;autres solutions plus
+marginales mais qui méritent d&#39;être citées.</p>
+<h3 id="foundation">Foundation</h3>
+<p><a href="http://foundation.zurb.com/">Foundation</a> propose, dans sa version 5 (et
+peut-être même avant, j&#39;ai pas vérifié) un peu de sucre syntaxique HTML
+permettant de switcher (via JS, œuf corse) simplement entre différents contenus
+pour l&#39;élément sur lequel on l&#39;utilise.</p>
+<p>C&#39;est pas mal. Ça donne ça (tiré de <a href="http://foundation.zurb.com/docs/components/interchange.html">la doc</a>) :</p>
+<blockquote>
+<p>We use the data-interchange attribute on a markup container (probably a div)
+to do this. Here&#39;s an example which loads up a small, static map on mobile, a
+larger static map for medium-sized devices, and a full interactive Google map
+on large display devices.</p>
+</blockquote>
+<pre><code class="language-html"><span class="cm-tag">&lt;div</span> <span class="cm-attribute">data-interchange</span>=<span class="cm-string">&quot;[../examples/interchange/default.html, (small)],</span>
+                       <span class="cm-string">[../examples/interchange/medium.html, (medium)],</span>
+                       <span class="cm-string">[../examples/interchange/large.html, (large)]&quot;</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;div</span> <span class="cm-attribute">data-alert</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;alert-box secondary radius&quot;</span><span class="cm-tag">&gt;</span>
+    This is the default content.
+    <span class="cm-tag">&lt;a</span> <span class="cm-attribute">href</span>=<span class="cm-string">&quot;#&quot;</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;close&quot;</span><span class="cm-tag">&gt;</span><span class="cm-atom">&amp;times;</span><span class="cm-tag">&lt;/a</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;/div</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/div</span><span class="cm-tag">&gt;</span></code></pre>
+<p><code>small</code>, <code>medium</code> et <code>large</code> étant des raccourcis pour des media queries données
+(c&#39;est dans <a href="http://foundation.zurb.com/docs/components/interchange.html">la doc</a>,
+toujours. J&#39;insiste.)</p>
+<h3 id="flexbox-pas-toi-david-">Flexbox (pas toi, David)</h3>
+<p>On peut également, comme l&#39;a très justement souligné <a href="/le-crew/">lionelB</a>, se
+pencher (mais pas trop) sur le cas de Flexbox, qui est un nouveau type de
+positionnement introduit en CSS3. La <a href="http://caniuse.com/#search=flexbox">compatibilité</a>
+n&#39;est pas encore au top (surtout grâce à IE, qui l&#39;eût cru) mais autant se tenir
+prêts ! Pour ceux qui ont dormi, en gros, tu définis un conteneur :</p>
+<pre><code class="language-css"><span class="cm-qualifier">.flex-container</span> {
+  <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-variable-2">flex</span>;
+
+  <span class="cm-comment">/* ou bien */</span>
+
+  <span class="cm-property">display</span><span class="cm-operator">:</span> <span class="cm-variable-2">inline-flex</span>;
+}</code></pre>
+<p>...et tu donnes des numéros à ses enfants, comme à Bangkok :</p>
+<pre><code class="language-css"><span class="cm-qualifier">.title</span> {
+  <span class="cm-property">order</span><span class="cm-operator">:</span> <span class="cm-number">1</span>;
+}
+
+<span class="cm-qualifier">.content</span> {
+  <span class="cm-property">order</span><span class="cm-operator">:</span> <span class="cm-number">2</span>;
+}
+
+<span class="cm-qualifier">.image</span> {
+  <span class="cm-property">order</span><span class="cm-operator">:</span> <span class="cm-number">3</span>;
+}
+
+<span class="cm-comment">/*</span>
+<span class="cm-comment">Bien sûr, tu as été assez malin pour mettre ton image en dernier dans le DOM...</span>
+<span class="cm-comment">...n&#39;est-ce pas ?</span>
+<span class="cm-comment">*/</span>
+
+<span class="cm-def">@media</span> <span class="cm-attribute">screen</span> <span class="cm-operator">and</span> (<span class="cm-property">min-width</span><span class="cm-operator">:</span> <span class="cm-number">768px</span>) {
+  <span class="cm-qualifier">.content</span> {
+    <span class="cm-property">order</span><span class="cm-operator">:</span> <span class="cm-number">3</span>;
+  }
+
+  <span class="cm-qualifier">.image</span> {
+    <span class="cm-property">order</span><span class="cm-operator">:</span> <span class="cm-number">2</span>;
+  }
+}</code></pre>
+<p>Et voilà, pas besoin d&#39;avoir fait Pollypocket pour percevoir à quel point la
+flexibilité et la propreté du code que cette technique nous permet d&#39;écrire
+résolvent notre problème en deux secondes douze. Ce n&#39;est évidemment ici que la
+partie émergée du flexberg ; il y a des tas de bonnes ressources qui vous
+expliqueront ça en long, en large et en travers bien mieux que moi, notamment
+<a href="http://www.adobe.com/devnet/html5/articles/working-with-flexbox-the-new-spec.html">cet article</a>
+sur lequel j&#39;ai honteusement pompé les snippets de cette partie.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Comme tu l&#39;as vu, rien de ce que je t&#39;ai montré n&#39;est réellement satisfaisant :
+pour pouvoir contrôler le positionnement d&#39;un élément dans le DOM dans le cadre
+d&#39;un webdesign responsive, tu dois soit le dupliquer et jouer à cache-cache,
+soit le déplacer avec JavaScript. Aussi, je serais ravi que tu partages ton
+opinion, tes idées ou tes retours d&#39;XP à ce sujet. Ça me fera de la lecture pour
+passer le temps, et toi tu feras quelque chose de constructif !</p>
+<p>Il est temps pour moi de te laisser reprendre le cours de ta vie. Peut-être nos
+routes se croiseront-elles de nouveau. Dans l&#39;intervalle, va, vis, et code !</p>
+
+
+
+<section class="putainde-AboutTheAuthor">
+  
+    
+    <a class="putainde-AboutTheAuthor-avatar putainde-Author-avatar" href="http://www.zaibatsu.fr">
+      <img src="http://www.gravatar.com/avatar/259cfb842be0d236e68340b1c330cc88.png?s=300&amp;d=https%3A%2F%2Fidenticons.github.com%2Fc0863a4414cba6aa95014df9e3d9f6a5.png" />
+    </a>
+    
+  
+  <h1 class="putainde-AboutTheAuthor-title">
+    Écrit par
+    <strong class="putainde-AboutTheAuthor-name">neemzy</strong>
+    <a class="putainde-AboutTheAuthor-url" href="http://www.zaibatsu.fr"><i class="icon icon_home"> </i></a>
+    <a class="putainde-AboutTheAuthor-twitter" href="https://twitter.com/_neemzy"><i class="icon icon_twitter"> </i></a>
+    <a class="putainde-AboutTheAuthor-github" href="https://github.com/neemzy"><i class="icon icon_github"> </i></a>
+  </h1>
+  
+    
+    <div class="putainde-AboutTheAuthor-bio--long"><p>Développeur full-stack tombé dans le web quand il était petit.
+Fait surtout du PHP, mais aussi de plus en plus de JavaScript.
+A une peur irraisonnée des utilisateurs de Mac / Ruby / Sass.
+Atteint du syndrome de Patrick Modiano qui l&#x27;empêche parfois de finir ses</p>
+</div>
+  
+</section>
+
+
+
+
+
+<section class="putainde-Comments">
+  <h1 class="putainde-Comments-title">Comments</h1>
+  <div id="disqus_thread" aria-live="polite">
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+
+    </div>
+    
+    <aside class="putainde-Sidebar grid__cell unit-1-4--m">
+    <aside class="putainde-Sidebar-block">
+	<h1 class="putainde-Sidebar-block-title">On est partout !</h1>
+	<ul class="putainde-Sidebar-block-list--nobullet">
+		<li><a href="https://github.com/putaindecode"><i class="icon icon_github"></i> Github</a></li>
+		<li><a href="https://twitter.com/putaindecode"><i class="icon icon_twitter"></i> Twitter</a></li>
+		<li><a href="#derriere-toi,-c'est-affreux!" onclick="if (confirm('Attention Benjamin...!')) window.location = 'http://www.youtube.com/watch?v=MEKHaG9FxKY&t=44s'; return false;"><i class="icon icon_eye"></i> Derrière toi</a></li>
+	</ul>
+</aside>
+<aside class="putainde-Sidebar-block">
+	<h1 class="putainde-Sidebar-block-title">À avoir sous la main</h1>
+	<ul class="putainde-Sidebar-block-list--nobullet">
+		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues/new"><i class="icon icon_pencil"></i> Proposer un article</a></li>
+		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues?labels=post&state=open"><i class="icon icon_bookmarks"></i> Voir les propositions</a></li>
+		<li><a href="https://github.com/putaindecode/website/blob/master/src/posts/html/responsive-dom/index.html.hbs"><i class="icon icon_edit"></i> Modifier cette page</a></li>
+	</ul>
+</aside>
+
+
+    </aside>
+    
+  </article>
+  
+    <footer class="putainde-Footer">
+
+    <div class="putainde-Footer-colophon grid">
+      <div class="putainde-Footer-colophon-left grid__cell unit-5-12--m">
+        © 1970 - 2013 Putain de code
+      </div>
+      <div class="putainde-Footer-colophon-center grid__cell unit-2-12--m">
+        <img class="putainde-Footer-logo" alt="Putain de code !" src="/assets/img/p!-logo.svg" />
+      </div>
+      <div class="putainde-Footer-colophon-right grid__cell unit-5-12--m">
+        <span class="putainde-Footer-colophon-item">Made with ❤ by <a href="/le-crew/">le crew</a></span>
+        |
+        <a class="putainde-Footer-colophon-item" href="projets/">Projets</a>
+        |
+        <a class="putainde-Footer-colophon-item" href="https://github.com/putaindecode">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  
+</div>
+<script src="/assets/js/putaindecode.js?20131226224840"></script>
+
+
+	
+	<script>
+		var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src='//www.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+	
+
+
+
+
+
+  <script>
+  var disqus_shortname = 'putaindecode',
+  
+  
+  
+  disqus_identifier = '',
+  disqus_url = '',
+  disqus_script = 'embed.js';
+  
+  (function(d,s) {
+  s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+  (d.getElementsByTagName('head')[0]).appendChild(s);
+  })(document);
+  </script>
+
+
+
+</body>
+</html>
+
