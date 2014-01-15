@@ -15,20 +15,20 @@
 <p>Alors que je prends goût à me passer de frameworks (principalement à cause des
 courbes d&#39;apprentissage et des éventuelles lourdeurs et/ou restrictions que cela
 impose, mais c&#39;est une autre histoire),
-je cherchais la meilleur façon d&#39;écrire des micro composants réutilisables.</p>
-<p>Pour le JavaScript, j&#39;ai commencé il y&#39;a bien longtemps par des extensions/plugins
+je cherchais la meilleure façon d&#39;écrire des micro composants réutilisables.</p>
+<p>Pour le JavaScript, j&#39;ai commencé il y a bien longtemps par des extensions/plugins
 <a href="http://prototypejs.org/">Prototype</a>, puis peu de temps après, du plugins
 <a href="http://plugins.jquery.com/">jQuery</a> à la pelle.
 Souvent à tord puisque j&#39;utilisais peut être 1% de la librairie en dépendance - 
 exemple avec mon <a href="https://github.com/MoOx/jQuery.Loading-Indicator/">indicateur de chargement avec sémaphore</a>
 ou encore mon <a href="https://github.com/MoOx/jQuery.External-Links/">plugin qui ouvre les liens externes avec du target blank automatique</a>.</p>
 <p><b>Je ne ferais plus jamais ça pour la simple raison du ratio &quot;poids / % d&#39;utilisation&quot; de la dépendance.</b></p>
-<p>Alors oui, utiliser jQuery à peut être du bon. Mais s&#39;en passer aussi.
-<a href="/posts/js/de-jquery-a-vanillajs/">Ç&#39;est faisable pour pleins de petites choses</a>.
-<a href="/posts/js/comment-se-passer-de-libraries-frameworks-javascript/">Et ç&#39;est pas forcément difficile</a>.</p>
+<p>Alors oui, utiliser jQuery a peut-être du bon. Mais s&#39;en passer aussi.
+<a href="/posts/js/de-jquery-a-vanillajs/">C&#39;est faisable pour pleins de petites choses</a>.
+<a href="/posts/js/comment-se-passer-de-libraries-frameworks-javascript/">Et c&#39;est pas forcément difficile</a>.</p>
 <p>Car si je veux utiliser mon petit script qui ajoute des targets blank automatiquement,
  devoir inclure jQuery pour si peu, ça fait mal à mes kilobites.</p>
-<p>En attendant les <a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules">
+<p>En attendant <a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules">
 la gestion de modules via ES6</a>, il nous faut gérer aujourd&#39;hui nos composants 
 et dépendances à la main.
 Encore qu&#39;on pourrait faire un transpiler pour utiliser cette syntaxe (ça existe 
@@ -39,9 +39,9 @@ définition de module.</p>
 Un simple <code>require(&#39;module&#39;)</code> va tenter de récupérer un module avec ce nom.
 Un module n&#39;est rien d&#39;autre qu&#39;un fichier JavaScript. Node va essayer de loader 
 un <code>.js</code>, puis <code>.json</code> et enfin <code>.node</code> si besoin), qui lui même peut 
-éventuellement charger d&#39;autres dépendances (les dépendances sont gérés localement) 
-tout en prennant en compte les packages NPM.
-Même si <a href="http://nodejs.org/">Node</a> d&#39;implémente pas totalement
+éventuellement charger d&#39;autres dépendances (les dépendances sont gérées localement) 
+tout en prenant en compte les packages NPM.
+Même si <a href="http://nodejs.org/">Node</a> n&#39;implémente pas totalement
 <a href="http://wiki.commonjs.org/">CommonJS</a>, un projet de développement d&#39;une API pour 
 écrire des programmes en JavaScript ailleurs que dans le navigateur, 
 la façon de faire est assez proche.</p>
@@ -81,9 +81,9 @@ modules AMD, mais ça ce n&#39;est qu&#39;un détail.</p>
 <p>CommonJS:</p>
 <pre><code class="language-js"><span class="cm-keyword">var</span> <span class="cm-variable">$</span> = <span class="cm-variable">require</span>(<span class="cm-string">&#39;jquery&#39;</span>);
 <span class="cm-variable">exports</span>.<span class="cm-property">myExample</span> = <span class="cm-keyword">function</span> () {};</code></pre>
-<p>AMD et CommonJS utilisent tout les deux une identification par chaine de caractères.
-Il faut bien que ces chaines soient déclarées quelque part.</p>
-<p>Côté RequireJS (AMD), on doit éventuellement mapper toutes ces chaines à la main,
+<p>AMD et CommonJS utilisent tout les deux une identification par chaîne de caractères.
+Il faut bien que ces chaînes soient déclarées quelque part.</p>
+<p>Côté RequireJS (AMD), on doit éventuellement mapper toutes ces chaînes à la main,
 dans le fichier configuration.
 De plus la déclaration des dépendances se faisant dans l&#39;entête du module, ça peut
 devenir lourd :</p>
@@ -98,8 +98,8 @@ devenir lourd :</p>
           <span class="cm-def">AddAccount</span>,           <span class="cm-def">less</span>,   <span class="cm-def">osTheme</span>) {
   <span class="cm-comment">// ici le corps de la fonction</span>
 });</code></pre>
-<p>Bon vous me direz que si un module a autant de dépendances, il y&#39;a peut être un 
-problème en amont, et vous n&#39;aurez pas tort.</p>
+<p>Bon vous me direz que si un module a autant de dépendances, il y a peut être un 
+problème en amont et vous n&#39;aurez pas tort.</p>
 <p>Côté Browserify (CommonJS like), les dépendances externes proviennent (à la base) 
 de NPM.
 On a donc rien à mapper nul part. Puis pour avoir un module local, il suffit de 
@@ -107,10 +107,13 @@ faire un <code>require(&#39;./mon/module&#39;)</code>, et Browserify se chargera
 dépendance (et je vous montre encore mieux après).</p>
 <p>RequireJS propose un &quot;optimizer&quot;, qui au final ne fait que supprimer son point fort: 
 le côté asynchrone du téléchargement des modules.
-Du coup on se retrouve avec tout RequireJS dans la source ET toutes les dépendances 
-avec le mapping. Ça optimise  pas tant que ça comparé à Browserify.
-Il existe bien <a href="https://github.com/jrburke/almond">Almond.js</a> qui se veut être plus léger, mais du coup, utiliser
-RequireJS pour &quot;optimizer&quot; avec Almond, je ne trouve pas ça cohérent.</p>
+Du coup on se retrouve avec tout RequireJS dans la source ET toutes les dépendances avec le mapping.
+Il y a bien une façon de vraiment optimiser par bundle quand on cherche un peu 
+dans la doc, mais 
+<a href="http://requirejs.org/docs/optimization.html#wholemultipage">ça n&#39;est pas vraiment mis en avant</a>.
+Il existe aussi <a href="https://github.com/jrburke/almond">Almond.js</a> qui se veut être 
+plus léger, mais du coup, utiliser RequireJS pour optimiser avec Almond, je ne 
+trouve pas ça cohérent.</p>
 <p>Si jusque là, Browserify vous intéresse (plus car les autres solutions ne vous 
 intéressent pas), attaquons le corps du sujet.</p>
 <h2>Installation de Browserify</h2>
@@ -137,7 +140,7 @@ dernier point intéressant.</p>
 
 
 },{}]},{},[<span class="cm-number">1</span>])</code></pre>
-<p>On reconnaît notre ligne en plein milieu. Avec un ajout conséquent. Ca peut paraitre 
+<p>On reconnaît notre ligne en plein milieu. Avec un ajout conséquent. Ça peut paraître 
 beaucoup, mais c&#39;est rien comparé à la 
 <a href="http://requirejs.org/docs/release/2.1.10/minified/require.js">source de RequireJS</a></p>
 <p>Bon du coup partons avec un exemple peut être plus représentatif qu&#39;on peut voir
@@ -156,7 +159,7 @@ sur la homepage de Browserify.</p>
 <p>Avec la même commande que précédement (et donc le même ajout), Browserify va parser
 l&#39;arbre syntaxique abstrait (AST) des appels à <code>require()</code> et va créer un graph 
 des dépendances du projet.<br>Un fois ceci fait, il va simplement ajuster les chemins et déclarer les fonctions 
-mappé dans un object par leur identifiant. Lorsqu&#39;une fonction appel <code>require</code>, 
+mappées dans un object par leur identifiant. Lorsqu&#39;une fonction appelle <code>require</code>, 
 le petit bout de script ajouté va se charger de retourner la dépendance.</p>
 <p>Notez qu&#39;on peut aussi simplement utiliser une redirection de sortie de commande 
 pour gérer le fichier final:</p>
@@ -177,7 +180,7 @@ pas forcément être le mieux.</p>
 <p>Cela dit, si mon paquet est prévu pour Bower par exemple, il existe une <i>transformation</i>
 prévue pour aider Browserify à résoudre les références aux paquets pour les 
 consommer depuis Bower: <code>debowerify</code>.
-Dans le même esprit, on va retrouver tout plein de transformation tel que:</p>
+Dans le même esprit, on va retrouver de nombreuses transformations telles que :</p>
 <ul>
 <li><code>decomponentify</code>: pour consommer des <a href="https://github.com/component/component">component</a>s,</li>
 <li><code>deamdify</code>:  pour consommer des modules AMD,</li>
@@ -188,8 +191,8 @@ Dans le même esprit, on va retrouver tout plein de transformation tel que:</p>
 <li><code>uglifyify</code>: appliquer uglify.</li>
 </ul>
 <p>Il existe plein <a href="https://npmjs.org/browse/keyword/browserify">d&#39;autres transformations</a> 
-qui s&#39;adapteront surement à vos besoin.</p>
-<p>Du coup la ligne ultime pour consommer à peut prêt n&#39;importe quel module:</p>
+qui s&#39;adapteront sûrement à vos besoins.</p>
+<p>Du coup la ligne ultime pour consommer a peu près n&#39;importe quel module :</p>
 <pre><code class="language-bash">browserify <span class="cm-attribute">-t</span> debowerify <span class="cm-attribute">-t</span> decomponentify <span class="cm-attribute">-t</span> deamdify <span class="cm-attribute">-t</span> deglobalify <span class="cm-attribute">-t</span> es6ify main.js &gt; bundle.js</code></pre>
 <p>L&#39;équivalent avec les tâches Grunt ou Gulp sera tout aussi simple via un tableau.
 Pensez bien à installer ces dépendances avant:</p>
@@ -198,7 +201,7 @@ Pensez bien à installer ces dépendances avant:</p>
 
 <p>Consommer c&#39;est bien, mais faire c&#39;est <del>mieux</del> bien aussi.</p>
 <p><img class="putainde-Img" alt="" src="/browserify-potter.png" /></p>
-<p>Tout droit sortie de <a href="https://github.com/umdjs/umd">UMD</a> (Universal Module Definition),
+<p>Tout droit sorti de <a href="https://github.com/umdjs/umd">UMD</a> (Universal Module Definition),
 voici un wrapper qui vous permettra de créer votre module compatible avec CommonJS, 
 AMD et pour les projets old school !</p>
 <pre><code class="language-js">(<span class="cm-keyword">function</span> (<span class="cm-def">root</span>, <span class="cm-def">factory</span>) {
