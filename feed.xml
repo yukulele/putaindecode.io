@@ -25,7 +25,7 @@ ou encore mon <a href="https://github.com/MoOx/jQuery.External-Links/">plugin qu
 <p><b>Je ne ferais plus jamais ça pour la simple raison du ratio &quot;poids / % d&#39;utilisation&quot; de la dépendance.</b></p>
 <p>Alors oui, utiliser jQuery à peut être du bon. Mais s&#39;en passer aussi.
 <a href="/posts/js/de-jquery-a-vanillajs/">Ç&#39;est faisable pour pleins de petites choses</a>.
-<a href="/posts/js/comment-se-passer-de-libraries-frameworks-javascript/">Et ç&#39;est par forcément difficile</a>.</p>
+<a href="/posts/js/comment-se-passer-de-libraries-frameworks-javascript/">Et ç&#39;est pas forcément difficile</a>.</p>
 <p>Car si je veux utiliser mon petit script qui ajoute des targets blank automatiquement,
  devoir inclure jQuery pour si peu, ça fait mal à mes kilobites.</p>
 <p>En attendant les <a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules">
@@ -52,10 +52,10 @@ dans le navigateur.</p>
 pour un résultat similaire.</p>
 <p>RequireJS implémente l&#39;API AMD  (Asynchronous Module Definition), 
 différent de l&#39;API CommonJS.
-Cette API, dérivé de CommonJS, se veut adapté au navigateur. Son principal atout 
-étant le chargements des modules de manière asynchrone.
+Cette API, dérivée de CommonJS, se veut adaptée au navigateur. Son principal atout 
+étant le chargement des modules de manière asynchrone.
 En théorie, c&#39;est super.</p>
-<p>Sauf que dans la pratique (du moins quelques choses de simple et classique,
+<p>Sauf que dans la pratique (du moins quelque chose de simple et classique,
 disons pour l&#39;exemple du petit JavaScript pour améliorer une page web, ou encore
 une simple <em>single page webapp</em> (SPA)) ce n&#39;est pas forcément pertinent.</p>
 <p>En effet charger des modules de manières asynchrones n&#39;est forcément pas optimisé
@@ -81,9 +81,9 @@ modules AMD, mais ça ce n&#39;est qu&#39;un détail.</p>
 <p>CommonJS:</p>
 <pre><code class="language-js"><span class="cm-keyword">var</span> <span class="cm-variable">$</span> = <span class="cm-variable">require</span>(<span class="cm-string">&#39;jquery&#39;</span>);
 <span class="cm-variable">exports</span>.<span class="cm-property">myExample</span> = <span class="cm-keyword">function</span> () {};</code></pre>
-<p>AMD et CommonJS utilise tout les deux une identification par chaine de caractères.
-Il faut bien que ces chaines soient déclarés quelque part.</p>
-<p>Côté RequireJS (AMD), on doit éventuellement mapper tous ces chaines à la main,
+<p>AMD et CommonJS utilisent tout les deux une identification par chaine de caractères.
+Il faut bien que ces chaines soient déclarées quelque part.</p>
+<p>Côté RequireJS (AMD), on doit éventuellement mapper toutes ces chaines à la main,
 dans le fichier configuration.
 De plus la déclaration des dépendances se faisant dans l&#39;entête du module, ça peut
 devenir lourd :</p>
@@ -104,11 +104,11 @@ problème en amont, et vous n&#39;aurez pas tort.</p>
 de NPM.
 On a donc rien à mapper nul part. Puis pour avoir un module local, il suffit de 
 faire un <code>require(&#39;./mon/module&#39;)</code>, et Browserify se chargera de régler la 
-dépendance  (et je vous montre encore mieux après).</p>
+dépendance (et je vous montre encore mieux après).</p>
 <p>RequireJS propose un &quot;optimizer&quot;, qui au final ne fait que supprimer son point fort: 
 le côté asynchrone du téléchargement des modules.
 Du coup on se retrouve avec tout RequireJS dans la source ET toutes les dépendances 
-avec le mapping. Ça optimise  pas tant que ça comparer à Browserify.
+avec le mapping. Ça optimise  pas tant que ça comparé à Browserify.
 Il existe bien <a href="https://github.com/jrburke/almond">Almond.js</a> qui se veut être plus léger, mais du coup, utiliser
 RequireJS pour &quot;optimizer&quot; avec Almond, je ne trouve pas ça cohérent.</p>
 <p>Si jusque là, Browserify vous intéresse (plus car les autres solutions ne vous 
@@ -222,7 +222,7 @@ AMD et pour les projets old school !</p>
 <p>Il existe bien sur <a href="https://github.com/umdjs/umd#variations">plusieurs façons de faire</a> 
 selon vos critères. À vous de choisir.</p>
 <p>Maintenant vous aller pouvoir consommer et écrire des modules facilement, et 
-sans se prendre la tête.</p>
+sans vous prendre la tête.</p>
 <p>Bisous.</p>
 
 ]]></description>
