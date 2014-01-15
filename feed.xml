@@ -4,9 +4,232 @@
         <title>Putain de Code !</title>
         <description>On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</description>
         <link>http://putaindecode.fr/</link>
-        <generator>happyplan 0.4.0-beta.2</generator>
-        <lastBuildDate>Sun, 05 Jan 2014 00:00:00 +0100</lastBuildDate>
+        <generator>happyplan 0.4.0-beta.4</generator>
+        <lastBuildDate>Wed, 15 Jan 2014 00:00:00 +0100</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml" />
+
+          <item>
+              <title>BROWSERIFY ALL THE THINGS</title>
+              <description><![CDATA[
+
+<p>Alors que je prends goût à me passer de frameworks (principalement à cause des
+courbes d&#39;apprentissage et des éventuelles lourdeurs et/ou restrictions que cela
+impose, mais c&#39;est une autre histoire),
+je cherchais la meilleur façon d&#39;écrire des micro composants réutilisables.</p>
+<p>Pour le JavaScript, j&#39;ai commencé il y&#39;a bien longtemps par des extensions/plugins
+<a href="http://prototypejs.org/">Prototype</a>, puis peu de temps après, du plugins
+<a href="http://plugins.jquery.com/">jQuery</a> à la pelle.
+Souvent à tord puisque j&#39;utilisais peut être 1% de la librairie en dépendance - 
+exemple avec mon <a href="https://github.com/MoOx/jQuery.Loading-Indicator/">indicateur de chargement avec sémaphore</a>
+ou encore mon <a href="https://github.com/MoOx/jQuery.External-Links/">plugin qui ouvre les liens externes avec du target blank automatique</a>.</p>
+<p><b>Je ne ferais plus jamais ça pour la simple raison du ratio &quot;poids / % d&#39;utilisation&quot; de la dépendance.</b></p>
+<p>Alors oui, utiliser jQuery à peut être du bon. Mais s&#39;en passer aussi.
+<a href="/posts/js/de-jquery-a-vanillajs/">Ç&#39;est faisable pour pleins de petites choses</a>.
+<a href="/posts/js/comment-se-passer-de-libraries-frameworks-javascript/">Et ç&#39;est par forcément difficile</a>.</p>
+<p>Car si je veux utiliser mon petit script qui ajoute des targets blank automatiquement,
+ devoir inclure jQuery pour si peu, ça fait mal à mes kilobites.</p>
+<p>En attendant les <a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules">
+la gestion de modules via ES6</a>, il nous faut gérer aujourd&#39;hui nos composants 
+et dépendances à la main.
+Encore qu&#39;on pourrait faire un transpiler pour utiliser cette syntaxe (ça existe 
+déjà, il n&#39;y a qu&#39;à voir sur GitHub), mais là on ne ferait que créer une nouvelle
+définition de module.</p>
+<p>Côté back-end, on a déjà ce qu&#39;il faut en JavaScript avec la gestion
+<a href="http://nodejs.org/api/modules.html">des modules en Node</a>.
+Un simple <code>require(&#39;module&#39;)</code> va tenter de récupérer un module avec ce nom.
+Un module n&#39;est rien d&#39;autre qu&#39;un fichier JavaScript. Node va essayer de loader 
+un <code>.js</code>, puis <code>.json</code> et enfin <code>.node</code> si besoin), qui lui même peut 
+éventuellement charger d&#39;autres dépendances (les dépendances sont gérés localement) 
+tout en prennant en compte les packages NPM.
+Même si <a href="http://nodejs.org/">Node</a> d&#39;implémente pas totalement
+<a href="http://wiki.commonjs.org/">CommonJS</a>, un projet de développement d&#39;une API pour 
+écrire des programmes en JavaScript ailleurs que dans le navigateur, 
+la façon de faire est assez proche.</p>
+<p><img class="putainde-Img" alt="" src="/browserify.png" /></p>
+<p>L&#39;idée de <a href="http://browserify.org/">Browserify</a> est d&#39;amener cette façon de faire 
+dans le navigateur.</p>
+<p>À côté de ça, vous me direz qu&#39;on a déjà <a href="http://requirejs.org/">RequireJS</a>
+pour un résultat similaire.</p>
+<p>RequireJS implémente l&#39;API AMD  (Asynchronous Module Definition), 
+différent de l&#39;API CommonJS.
+Cette API, dérivé de CommonJS, se veut adapté au navigateur. Son principal atout 
+étant le chargements des modules de manière asynchrone.
+En théorie, c&#39;est super.</p>
+<p>Sauf que dans la pratique (du moins quelques choses de simple et classique,
+disons pour l&#39;exemple du petit JavaScript pour améliorer une page web, ou encore
+une simple <em>single page webapp</em> (SPA)) ce n&#39;est pas forcément pertinent.</p>
+<p>En effet charger des modules de manières asynchrones n&#39;est forcément pas optimisé
+lorsqu&#39;il s&#39;agit de faire des pages qui se chargent rapidement.
+Il suffit de penser aux problématiques de débits selon la vitesse de la connexion
+au réseau (Edge, faible 3G...) et donc nombre de requêtes HTTP qui peuvent nous
+faire souffrir de gros ralentissement pour se rendre compte que cela peut poser
+problème.</p>
+<p>En plus de cela, je trouve personnellement dégueulasse  la façon de déclarer les 
+modules AMD, mais ça ce n&#39;est qu&#39;un détail.</p>
+<p>Comparons les différentes méthodes comme on nous les montre sur le site de 
+<a href="http://requirejs.org/docs/whyamd.html">RequireJS</a> :</p>
+<p>Le web aujourd&#39;hui:</p>
+<pre><code class="language-js">(<span class="cm-keyword">function</span> () {
+    <span class="cm-keyword">var</span> <span class="cm-def">$</span> = <span class="cm-keyword">this</span>.<span class="cm-property">jQuery</span>;
+
+    <span class="cm-keyword">this</span>.<span class="cm-property">myExample</span> = <span class="cm-keyword">function</span> () {};
+}());</code></pre>
+<p>AMD:</p>
+<pre><code class="language-js"><span class="cm-variable">define</span>([<span class="cm-string">&#39;jquery&#39;</span>] , <span class="cm-keyword">function</span> (<span class="cm-def">$</span>) {
+    <span class="cm-keyword">return</span> <span class="cm-keyword">function</span> () {};
+});</code></pre>
+<p>CommonJS:</p>
+<pre><code class="language-js"><span class="cm-keyword">var</span> <span class="cm-variable">$</span> = <span class="cm-variable">require</span>(<span class="cm-string">&#39;jquery&#39;</span>);
+<span class="cm-variable">exports</span>.<span class="cm-property">myExample</span> = <span class="cm-keyword">function</span> () {};</code></pre>
+<p>AMD et CommonJS utilise tout les deux une identification par chaine de caractères.
+Il faut bien que ces chaines soient déclarés quelque part.</p>
+<p>Côté RequireJS (AMD), on doit éventuellement mapper tous ces chaines à la main,
+dans le fichier configuration.
+De plus la déclaration des dépendances se faisant dans l&#39;entête du module, ça peut
+devenir lourd :</p>
+<pre><code class="language-js"><span class="cm-variable">define</span>([ <span class="cm-string">&quot;require&quot;</span>, <span class="cm-string">&quot;jquery&quot;</span>, <span class="cm-string">&quot;blade/object&quot;</span>, <span class="cm-string">&quot;blade/fn&quot;</span>, <span class="cm-string">&quot;rdapi&quot;</span>,
+         <span class="cm-string">&quot;oauth&quot;</span>, <span class="cm-string">&quot;blade/jig&quot;</span>, <span class="cm-string">&quot;blade/url&quot;</span>, <span class="cm-string">&quot;dispatch&quot;</span>, <span class="cm-string">&quot;accounts&quot;</span>,
+         <span class="cm-string">&quot;storage&quot;</span>, <span class="cm-string">&quot;services&quot;</span>, <span class="cm-string">&quot;widgets/AccountPanel&quot;</span>, <span class="cm-string">&quot;widgets/TabButton&quot;</span>,
+         <span class="cm-string">&quot;widgets/AddAccount&quot;</span>, <span class="cm-string">&quot;less&quot;</span>, <span class="cm-string">&quot;osTheme&quot;</span>, <span class="cm-string">&quot;jquery-ui-1.8.7.min&quot;</span>,
+         <span class="cm-string">&quot;jquery.textOverflow&quot;</span>],
+<span class="cm-keyword">function</span> (<span class="cm-def">require</span>,   <span class="cm-def">$</span>,        <span class="cm-def">object</span>,         <span class="cm-def">fn</span>,         <span class="cm-def">rdapi</span>,
+          <span class="cm-def">oauth</span>,   <span class="cm-def">jig</span>,         <span class="cm-def">url</span>,         <span class="cm-def">dispatch</span>,   <span class="cm-def">accounts</span>,
+          <span class="cm-def">storage</span>,   <span class="cm-def">services</span>,   <span class="cm-def">AccountPanel</span>,           <span class="cm-def">TabButton</span>,
+          <span class="cm-def">AddAccount</span>,           <span class="cm-def">less</span>,   <span class="cm-def">osTheme</span>) {
+  <span class="cm-comment">// ici le corps de la fonction</span>
+});</code></pre>
+<p>Bon vous me direz que si un module a autant de dépendances, il y&#39;a peut être un 
+problème en amont, et vous n&#39;aurez pas tort.</p>
+<p>Côté Browserify (CommonJS like), les dépendances externes proviennent (à la base) 
+de NPM.
+On a donc rien à mapper nul part. Puis pour avoir un module local, il suffit de 
+faire un <code>require(&#39;./mon/module&#39;)</code>, et Browserify se chargera de régler la 
+dépendance  (et je vous montre encore mieux après).</p>
+<p>RequireJS propose un &quot;optimizer&quot;, qui au final ne fait que supprimer son point fort: 
+le côté asynchrone du téléchargement des modules.
+Du coup on se retrouve avec tout RequireJS dans la source ET toutes les dépendances 
+avec le mapping. Ça optimise  pas tant que ça comparer à Browserify.
+Il existe bien <a href="https://github.com/jrburke/almond">Almond.js</a> qui se veut être plus léger, mais du coup, utiliser
+RequireJS pour &quot;optimizer&quot; avec Almond, je ne trouve pas ça cohérent.</p>
+<p>Si jusque là, Browserify vous intéresse (plus car les autres solutions ne vous 
+intéressent pas), attaquons le corps du sujet.</p>
+<h2>Installation de Browserify</h2>
+
+<p>Si vous souhaitez accéder à la commande via le terminal, la chose la plus simple 
+à faire est d&#39;installer le paquet en global.</p>
+<pre><code class="language-bash"><span class="cm-def">$ npm</span> install <span class="cm-attribute">-g</span> browserify</code></pre>
+<p>Si vous ne l&#39;installez pas en global (sans l&#39;option <code>-g</code>, vous aurez la commande 
+accessible dans <code>./node_modules/.bin/browserify</code>).
+Mais selon votre workflow, vous pouvez l&#39;utiliser via une tâche 
+<a href="https://npmjs.org/package/grunt-browserify">grunt-browserify</a> 
+ou <a href="https://npmjs.org/package/gulp-browserify">gulp-browserify</a>.</p>
+<h2>Utilisation de Browserify</h2>
+
+<p>Partons d&#39;un simple fichier <code>main.js</code>:</p>
+<pre><code class="language-js"><span class="cm-variable">alert</span>(<span class="cm-string">&#39;Hello world !&#39;</span>);</code></pre>
+<p>Sans aucune dépendance, ça n&#39;a que peu de sens, mais c&#39;est plus pour montrer un 
+dernier point intéressant.</p>
+<p>Je le compile avec la commande suivante:</p>
+<pre><code class="language-bash"><span class="cm-def">$ browserify</span> main.js <span class="cm-attribute">-o</span> bundle.js</code></pre>
+<p>J&#39;obtiens le fichier suivant.</p>
+<pre><code class="language-js">(<span class="cm-keyword">function</span> <span class="cm-variable">e</span>(<span class="cm-def">t</span>,<span class="cm-def">n</span>,<span class="cm-def">r</span>){<span class="cm-keyword">function</span> <span class="cm-def">s</span>(<span class="cm-def">o</span>,<span class="cm-def">u</span>){<span class="cm-keyword">if</span>(!<span class="cm-variable-2">n</span>[<span class="cm-variable-2">o</span>]){<span class="cm-keyword">if</span>(!<span class="cm-variable-2">t</span>[<span class="cm-variable-2">o</span>]){<span class="cm-keyword">var</span> <span class="cm-def">a</span>=<span class="cm-keyword">typeof</span> <span class="cm-variable">require</span>==<span class="cm-string">&quot;function&quot;</span>&amp;&amp;<span class="cm-variable">require</span>;<span class="cm-keyword">if</span>(!<span class="cm-variable-2">u</span>&amp;&amp;<span class="cm-variable-2">a</span>)<span class="cm-keyword">return</span> <span class="cm-variable-2">a</span>(<span class="cm-variable-2">o</span>,!<span class="cm-number">0</span>);<span class="cm-keyword">if</span>(<span class="cm-variable">i</span>)<span class="cm-keyword">return</span> <span class="cm-variable">i</span>(<span class="cm-variable-2">o</span>,!<span class="cm-number">0</span>);<span class="cm-keyword">throw</span> <span class="cm-keyword">new</span> <span class="cm-variable">Error</span>(<span class="cm-string">&quot;Cannot find module &#39;&quot;</span>+<span class="cm-variable-2">o</span>+<span class="cm-string">&quot;&#39;&quot;</span>)}<span class="cm-keyword">var</span> <span class="cm-def">f</span>=<span class="cm-variable-2">n</span>[<span class="cm-variable-2">o</span>]={<span class="cm-property">exports</span>:{}};<span class="cm-variable-2">t</span>[<span class="cm-variable-2">o</span>][<span class="cm-number">0</span>].<span class="cm-property">call</span>(<span class="cm-variable-2">f</span>.<span class="cm-property">exports</span>,<span class="cm-keyword">function</span>(<span class="cm-def">e</span>){<span class="cm-keyword">var</span> <span class="cm-def">n</span>=<span class="cm-variable-2">t</span>[<span class="cm-variable-2">o</span>][<span class="cm-number">1</span>][<span class="cm-variable-2">e</span>];<span class="cm-keyword">return</span> <span class="cm-variable-2">s</span>(<span class="cm-variable-2">n</span>?<span class="cm-variable-2">n</span>:<span class="cm-variable-2">e</span>)},<span class="cm-variable-2">f</span>,<span class="cm-variable-2">f</span>.<span class="cm-property">exports</span>,<span class="cm-variable">e</span>,<span class="cm-variable-2">t</span>,<span class="cm-variable-2">n</span>,<span class="cm-variable-2">r</span>)}<span class="cm-keyword">return</span> <span class="cm-variable-2">n</span>[<span class="cm-variable-2">o</span>].<span class="cm-property">exports</span>}<span class="cm-keyword">var</span> <span class="cm-def">i</span>=<span class="cm-keyword">typeof</span> <span class="cm-variable">require</span>==<span class="cm-string">&quot;function&quot;</span>&amp;&amp;<span class="cm-variable">require</span>;<span class="cm-keyword">for</span>(<span class="cm-keyword">var</span> <span class="cm-def">o</span>=<span class="cm-number">0</span>;<span class="cm-variable-2">o</span>&lt;<span class="cm-variable-2">r</span>.<span class="cm-property">length</span>;<span class="cm-variable-2">o</span>++)<span class="cm-variable-2">s</span>(<span class="cm-variable-2">r</span>[<span class="cm-variable-2">o</span>]);<span class="cm-keyword">return</span> <span class="cm-variable-2">s</span>})({<span class="cm-numbercm-property">1</span>:[<span class="cm-keyword">function</span>(<span class="cm-def">require</span>,<span class="cm-keyword">module</span>,<span class="cm-variable">exports</span>){
+<span class="cm-variable">alert</span>(<span class="cm-string">&#39;Hello world !&#39;</span>);
+
+
+},{}]},{},[<span class="cm-number">1</span>])</code></pre>
+<p>On reconnaît notre ligne en plein milieu. Avec un ajout conséquent. Ca peut paraitre 
+beaucoup, mais c&#39;est rien comparé à la 
+<a href="http://requirejs.org/docs/release/2.1.10/minified/require.js">source de RequireJS</a></p>
+<p>Bon du coup partons avec un exemple peut être plus représentatif qu&#39;on peut voir
+sur la homepage de Browserify.</p>
+<pre><code class="language-js"><span class="cm-keyword">var</span> <span class="cm-variable">foo</span> = <span class="cm-variable">require</span>(<span class="cm-string">&#39;./foo&#39;</span>);
+<span class="cm-keyword">var</span> <span class="cm-variable">gamma</span> = <span class="cm-variable">require</span>(<span class="cm-string">&#39;gamma&#39;</span>);
+
+<span class="cm-keyword">var</span> <span class="cm-variable">n</span> = <span class="cm-variable">gamma</span>(<span class="cm-variable">foo</span>(<span class="cm-number">5</span>) * <span class="cm-number">3</span>);
+<span class="cm-keyword">var</span> <span class="cm-variable">txt</span> = <span class="cm-variable">document</span>.<span class="cm-property">createTextNode</span>(<span class="cm-variable">n</span>);
+<span class="cm-variable">document</span>.<span class="cm-property">body</span>.<span class="cm-property">appendChild</span>(<span class="cm-variable">txt</span>);</code></pre>
+<p>Ici on aura en plus <code>foo.js</code></p>
+<pre><code class="language-js"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span> (<span class="cm-def">n</span>) { <span class="cm-keyword">return</span> <span class="cm-variable-2">n</span> * <span class="cm-number">11</span> }</code></pre>
+<p>Et le module <code>gamma</code> qu&#39;on a installé depuis NPM</p>
+<pre><code class="language-bash"><span class="cm-def">$ npm</span> i gamma</code></pre>
+<p><small><i><code>i</code> est l&#39;alias de <code>install</code>.</i></small></p>
+<p>Avec la même commande que précédement (et donc le même ajout), Browserify va parser
+l&#39;arbre syntaxique abstrait (AST) des appels à <code>require()</code> et va créer un graph 
+des dépendances du projet.<br>Un fois ceci fait, il va simplement ajuster les chemins et déclarer les fonctions 
+mappé dans un object par leur identifiant. Lorsqu&#39;une fonction appel <code>require</code>, 
+le petit bout de script ajouté va se charger de retourner la dépendance.</p>
+<p>Notez qu&#39;on peut aussi simplement utiliser une redirection de sortie de commande 
+pour gérer le fichier final:</p>
+<pre><code class="language-bash"><span class="cm-def">$ browserify</span> main.js &gt; bundle.js</code></pre>
+<p>Du coup on a plus qu&#39;à utiliser une simple balise <code>&lt;script&gt;</code> pour incorporer ça 
+dans nos pages web.</p>
+<pre><code class="language-html"><span class="cm-tag">&lt;script</span> <span class="cm-attribute">src</span>=<span class="cm-string">&quot;bundle.js&quot;</span><span class="cm-tag">&gt;</span><span class="cm-tag">&lt;/script</span><span class="cm-tag">&gt;</span></code></pre>
+<h2>Les transformations avec Browserify</h2>
+
+<p>Tant qu&#39;à utiliser un outil, autant l&#39;exploiter jusqu&#39;au bout. Car pour l&#39;instant 
+je n&#39;ai parlé que de NPM.
+Que faire si mon module n&#39;est pas sur NPM ?
+Bon déjà je double check, car maintenant la plupart des librairies y sont 
+(jQuery, Backbone et Jean passe).
+Si ce n&#39;est pas le cas, je pourrais toujours faire <code>npm i https//adresse.git</code> 
+mais si le paquet n&#39;a pas de <code>package.json</code> avec le <code>main</code> bien rempli, ça ne va
+pas forcément être le mieux.</p>
+<p>Cela dit, si mon paquet est prévu pour Bower par exemple, il existe une <i>transformation</i>
+prévue pour aider Browserify à résoudre les références aux paquets pour les 
+consommer depuis Bower: <code>debowerify</code>.
+Dans le même esprit, on va retrouver tout plein de transformation tel que:</p>
+<ul>
+<li><code>decomponentify</code>: pour consommer des <a href="https://github.com/component/component">component</a>s,</li>
+<li><code>deamdify</code>:  pour consommer des modules AMD,</li>
+<li><code>deglobalify</code>: pour consommer des modules qui utilisent des variables globales,</li>
+<li><code>jadeify</code>: pour consommer des fichiers de templates jade,</li>
+<li><code>hbsify</code>: pour consommer des fichiers de templates handlebars,</li>
+<li><code>es6ify</code>: pour écrire du JavaScript ES6 (compiler en ES5),</li>
+<li><code>uglifyify</code>: appliquer uglify.</li>
+</ul>
+<p>Il existe plein <a href="https://npmjs.org/browse/keyword/browserify">d&#39;autres transformations</a> 
+qui s&#39;adapteront surement à vos besoin.</p>
+<p>Du coup la ligne ultime pour consommer à peut prêt n&#39;importe quel module:</p>
+<pre><code class="language-bash">browserify <span class="cm-attribute">-t</span> debowerify <span class="cm-attribute">-t</span> decomponentify <span class="cm-attribute">-t</span> deamdify <span class="cm-attribute">-t</span> deglobalify <span class="cm-attribute">-t</span> es6ify main.js &gt; bundle.js</code></pre>
+<p>L&#39;équivalent avec les tâches Grunt ou Gulp sera tout aussi simple via un tableau.
+Pensez bien à installer ces dépendances avant:</p>
+<pre><code class="language-bash"><span class="cm-builtin">npm</span> install debowerify decomponentify deamdify deglobalify es6ify <span class="cm-attribute">--save</span></code></pre>
+<h2>Ecrire un module pour Browserify (mais pas que)</h2>
+
+<p>Consommer c&#39;est bien, mais faire c&#39;est <del>mieux</del> bien aussi.</p>
+<p><img class="putainde-Img" alt="" src="/browserify-potter.png" /></p>
+<p>Tout droit sortie de <a href="https://github.com/umdjs/umd">UMD</a> (Universal Module Definition),
+voici un wrapper qui vous permettra de créer votre module compatible avec CommonJS, 
+AMD et pour les projets old school !</p>
+<pre><code class="language-js">(<span class="cm-keyword">function</span> (<span class="cm-def">root</span>, <span class="cm-def">factory</span>) {
+  <span class="cm-keyword">if</span> (<span class="cm-keyword">typeof</span> <span class="cm-variable">exports</span> === <span class="cm-string">&#39;object&#39;</span>) {
+    <span class="cm-comment">// CommonJS</span>
+    <span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-variable-2">factory</span>(<span class="cm-variable">require</span>(<span class="cm-string">&#39;b&#39;</span>));
+  } <span class="cm-keyword">else</span> <span class="cm-keyword">if</span> (<span class="cm-keyword">typeof</span> <span class="cm-variable">define</span> === <span class="cm-string">&#39;function&#39;</span> &amp;&amp; <span class="cm-variable">define</span>.<span class="cm-property">amd</span>) {
+    <span class="cm-comment">// AMD</span>
+    <span class="cm-variable">define</span>([<span class="cm-string">&#39;b&#39;</span>], <span class="cm-keyword">function</span> (<span class="cm-def">b</span>) {
+      <span class="cm-keyword">return</span> (<span class="cm-variable-2">root</span>.<span class="cm-property">returnExportsGlobal</span> = <span class="cm-variable-2">factory</span>(<span class="cm-variable-2">b</span>));
+    });
+  } <span class="cm-keyword">else</span> {
+    <span class="cm-comment">// Global Variables</span>
+    <span class="cm-variable-2">root</span>.<span class="cm-property">returnExportsGlobal</span> = <span class="cm-variable-2">factory</span>(<span class="cm-variable-2">root</span>.<span class="cm-property">b</span>);
+  }
+}(<span class="cm-keyword">this</span>, <span class="cm-keyword">function</span> (<span class="cm-variable">b</span>) {
+
+  <span class="cm-comment">// Ici votre module (fonction, objet, whatever...)</span>
+  <span class="cm-keyword">return</span> {};
+}));</code></pre>
+<p>Il existe bien sur <a href="https://github.com/umdjs/umd#variations">plusieurs façons de faire</a> 
+selon vos critères. À vous de choisir.</p>
+<p>Maintenant vous aller pouvoir consommer et écrire des modules facilement, et 
+sans se prendre la tête.</p>
+<p>Bisous.</p>
+
+]]></description>
+              <pubDate>Wed, 15 Jan 2014 01:00:00 +0100</pubDate>
+              <link>http://putaindecode.fr/posts/js/browserify-all-the-things/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/js/browserify-all-the-things/</guid>
+          </item>
 
           <item>
               <title>Responsive webdesign et structure du DOM</title>
@@ -539,11 +762,68 @@ routes se croiseront-elles de nouveau. Dans l&#39;intervalle, va, vis, et code !
           </item>
 
           <item>
+              <title>ExternalInterface.call() de Flash (et Backbone), toute une histoire</title>
+              <description><![CDATA[
+
+<p><img class="putainde-Img putainde-Img--left" alt="" src="/occupyflash.png" /></p>
+<p>Je voulais vous parler d&#39;un bug qui m&#39;a bien emmerdé récemment et comme j&#39;aimerais que vous ne perdiez pas de temps avec cela, un article s&#39;imposait.</p>
+<p><em>Note de la direction : j&#39;y connais rien en Flash (et je ne crois pas avoir trop envie de connaître en fait).</em></p>
+<p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu&#39;il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d&#39;un autre article. (Je dis ça à chaque fois, haha).</p>
+<h2 id="le-pitch">Le pitch</h2>
+<p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu&#39;il le souhaite afin de communiquer avec l&#39;application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l&#39;avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d&#39;évènement mais vous en avez d&#39;<a href="http://microjs.com/#event">autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
+<pre><code class="language-javascript"> <span class="cm-comment">// on crée un objet vide</span>
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
+
+<span class="cm-comment">// on lui ajoute les fonctionnalités des events Backbone</span>
+<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)</code></pre>
+<p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d&#39;évènement façon Backbone</a>. Il pourra alors s&#39;écouter lui-même, écouter un autre objet, mais aussi déclencher des évènements.</p>
+<h2 id="c-t-flash">Côté Flash</h2>
+<p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l&#39;objet <code>ExternalInterface</code> :</p>
+<pre><code class="language-javascript"><span class="cm-variable">ExternalInterface</span>.<span class="cm-property">call</span>(<span class="cm-string">&quot;window.App.FlashManager.Events.trigger&quot;</span>, <span class="cm-string">&quot;my-event&quot;</span>)
+<span class="cm-comment">// http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html#call</span></code></pre>
+<p>Et là, bug.</p>
+<h2 id="pourquoi-bug-">Pourquoi bug ?</h2>
+<p>Pour le moment, je ne sais pas vraiment. Je me pencherai plus sur le sujet dès que j&#39;ai un peu de temps, mais ce que je sais, c&#39;est que <code>ExtercalInterface.call()</code> ne s&#39;attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l&#39;<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153">objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur.</p>
+<h2 id="la-solution-c-t-javascript">La solution côté JavaScript</h2>
+<p>Pour contrer cela, je vous propose la solution suivante qui est de ne pas utiliser directement l&#39;objet <code>Backbone.Events|View</code> mais plutôt de passer par une interface, un objet proxy.</p>
+<p>Voici le schéma :</p>
+<ul>
+<li>Créer un objet simple qui contient les mêmes noms de méthodes que les objets évènements <strong>Backbone.js</strong> (en gros, se mapper sur l&#39;API Backbone)</li>
+<li>Utiliser <strong>Backbone.js</strong> dans les méthodes de cet objet <em>Proxy</em></li>
+</ul>
+<p>Exemple :</p>
+<pre><code class="language-javascript"><span class="cm-comment">// Bridge between flash and js</span>
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span> = {}
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
+
+<span class="cm-comment">// Backbone events used for Flash</span>
+<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span> = {}
+<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span> = {}
+
+<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)
+
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span> = <span class="cm-keyword">function</span>(<span class="cm-def">name</span>, <span class="cm-def">opts</span>) {
+    <span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span>(<span class="cm-variable-2">name</span>, <span class="cm-variable-2">opts</span>)
+
+    <span class="cm-comment">// Must return nothing not to loop JavaScript engine, important!</span>
+    <span class="cm-keyword">return</span>
+}</code></pre>
+<h2 id="oh-et-">Oh et...</h2>
+<p>...il existe une version ayant plus ou moins le même souci que moi disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript retourne quelque chose de simple (un objet ayant que des atributs, pas de fonctions, ou encore un bouléen ou un <em>integer</em>).</p>
+
+]]></description>
+              <pubDate>Thu, 05 Dec 2013 01:00:00 +0100</pubDate>
+              <link>http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</guid>
+          </item>
+
+          <item>
               <title>De jQuery à Vanilla JS</title>
               <description><![CDATA[
 
-<div style="float: left; margin-right: 15px; background: white; padding: 5px; border-radius: 4px; margin-top: 10px"><img src="/media/jquery-die.jpg"></div>
-
+<p><img class="putainde-Img putainde-Img--left" alt="" src="/jquery-die.jpg"></p>
 <p>Oui alors jQuery, c&#39;est sûrement très bien, ça simplifie pas mal de choses et le <em>chaining</em> est intéressant mais eeeest-ce que vous connaissez l&#39;équivalent en <em>pur</em> JavaScript ? Pas sûr hein.</p>
 <p>Ce petit article vous propose de quoi peut-être vous faire changer d&#39;avis sur la bibliothèque qui pèse tout de même environ ~80ko.</p>
 <p><em>Note : <a href="http://vanilla-js.com/">Vanilla JS</a> n&#39;est pas un framework mais veut simplement dire &quot;à nu&quot;, c&#39;est du JavaScript sans bibliothèque.</em></p>
@@ -694,70 +974,10 @@ routes se croiseront-elles de nouveau. Dans l&#39;intervalle, va, vis, et code !
           </item>
 
           <item>
-              <title>ExternalInterface.call() de Flash (et Backbone), toute une histoire</title>
-              <description><![CDATA[
-
-<div style="float: left; margin-right: 15px;"><img src="/media/occupyflash.png"></div>
-
-<p>Je voulais vous parler d&#39;un bug qui m&#39;a bien emmerdé récemment et comme j&#39;aimerais que vous ne perdiez pas de temps avec cela, un article s&#39;imposait.</p>
-<p><em>Note de la direction : j&#39;y connais rien en Flash (et je ne crois pas avoir trop envie de connaître en fait).</em></p>
-<p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu&#39;il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d&#39;un autre article. (Je dis ça à chaque fois, haha).</p>
-<h2 id="le-pitch">Le pitch</h2>
-<p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu&#39;il le souhaite afin de communiquer avec l&#39;application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l&#39;avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d&#39;évènement mais vous en avez d&#39;<a href="http://microjs.com/#event">autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
-<pre><code class="language-javascript"> <span class="cm-comment">// on crée un objet vide</span>
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
-
-<span class="cm-comment">// on lui ajoute les fonctionnalités des events Backbone</span>
-<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)</code></pre>
-<p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d&#39;évènement façon Backbone</a>. Il pourra alors s&#39;écouter lui-même, écouter un autre objet, mais aussi déclencher des évènements.</p>
-<h2 id="c-t-flash">Côté Flash</h2>
-<p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l&#39;objet <code>ExternalInterface</code> :</p>
-<pre><code class="language-javascript"><span class="cm-variable">ExternalInterface</span>.<span class="cm-property">call</span>(<span class="cm-string">&quot;window.App.FlashManager.Events.trigger&quot;</span>, <span class="cm-string">&quot;my-event&quot;</span>)
-<span class="cm-comment">// http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html#call</span></code></pre>
-<p>Et là, bug.</p>
-<h2 id="pourquoi-bug-">Pourquoi bug ?</h2>
-<p>Pour le moment, je ne sais pas vraiment. Je me pencherai plus sur le sujet dès que j&#39;ai un peu de temps, mais ce que je sais, c&#39;est que <code>ExtercalInterface.call()</code> ne s&#39;attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l&#39;<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153">objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur.</p>
-<h2 id="la-solution-c-t-javascript">La solution côté JavaScript</h2>
-<p>Pour contrer cela, je vous propose la solution suivante qui est de ne pas utiliser directement l&#39;objet <code>Backbone.Events|View</code> mais plutôt de passer par une interface, un objet proxy.</p>
-<p>Voici le schéma :</p>
-<ul>
-<li>Créer un objet simple qui contient les mêmes noms de méthodes que les objets évènements <strong>Backbone.js</strong> (en gros, se mapper sur l&#39;API Backbone)</li>
-<li>Utiliser <strong>Backbone.js</strong> dans les méthodes de cet objet <em>Proxy</em></li>
-</ul>
-<p>Exemple :</p>
-<pre><code class="language-javascript"><span class="cm-comment">// Bridge between flash and js</span>
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span> = {}
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
-
-<span class="cm-comment">// Backbone events used for Flash</span>
-<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span> = {}
-<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span> = {}
-
-<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)
-
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span> = <span class="cm-keyword">function</span>(<span class="cm-def">name</span>, <span class="cm-def">opts</span>) {
-    <span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span>(<span class="cm-variable-2">name</span>, <span class="cm-variable-2">opts</span>)
-
-    <span class="cm-comment">// Must return nothing not to loop JavaScript engine, important!</span>
-    <span class="cm-keyword">return</span>
-}</code></pre>
-<h2 id="oh-et-">Oh et...</h2>
-<p>...il existe une version ayant plus ou moins le même souci que moi disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
-<h2 id="conclusion">Conclusion</h2>
-<p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript retourne quelque chose de simple (un objet ayant que des atributs, pas de fonctions, ou encore un bouléen ou un <em>integer</em>).</p>
-
-]]></description>
-              <pubDate>Thu, 05 Dec 2013 01:00:00 +0100</pubDate>
-              <link>http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</link>
-              <guid isPermaLink="true">http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</guid>
-          </item>
-
-          <item>
               <title>Premiers pas avec Grunt</title>
               <description><![CDATA[
 
-<div style="float: left"><img src="/media/gruntjs.png"></div>
-
+<p><img class="putainde-Img putainde-Img--left" alt="" src="/gruntjs.png" /></p>
 <p>Vous avez sûrement déjà entendu parler de <strong>Grunt</strong> à droite à gauche, en conférence, voire votre boite l&#39;utilise déjà mais vous ne savez toujours pas trop ce qui se cache derrière ce terme saugrenu digne d&#39;un personnage de Warcraft. Soit, ce n&#39;est pas bien grave. <strong>Grunt</strong> est simplement un <em>JavaScript Task Runner</em>, un outil vous permettant de créer des tâches automatisées en JavaScript. Forcément ce n&#39;est pas très parlant mais c&#39;est tout l&#39;intérêt de cet article, vous expliquer ce qu&#39;est <strong>Grunt</strong> et pourquoi il peut vous être utile dans un <em>workflow</em> de front-end dev.</p>
 <h1 id="commen-ons">Commençons</h1>
 <p>Vous est-il déjà arrivé(e) de devoir régulièrement lancer, lancer et relancer des processus tels que <em>Sass</em>, <em>LESS</em>, <em>uglify</em> - en somme des préprocesseurs ou des minifiers - régulièrement à la main ? N&#39;est-ce pas pénible ? N&#39;est-ce pas aussi pénible de devoir indiquer à tous ses collègues comment ils doivent bosser pour que vous soyez tous cohérents ? Oui ? <strong>Grunt</strong> permet de résoudre ce genre de choses : respecter un putain de <em>workflow</em> en s&#39;assurant que le parcours soit le même pour tout le monde et d&#39;exécuter tout ça en lançant une seule commande. N&#39;est-ce pas fucking aweeeeesome dude ? Bref.</p>
