@@ -4,9 +4,222 @@
         <title>Putain de Code !</title>
         <description>On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</description>
         <link>http://putaindecode.fr/</link>
-        <generator>happyplan 0.4.0-beta.4</generator>
-        <lastBuildDate>Fri, 17 Jan 2014 00:00:00 +0100</lastBuildDate>
+        <generator>happyplan 0.4.0-beta.5</generator>
+        <lastBuildDate>Thu, 20 Feb 2014 00:00:00 +0100</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml" />
+
+          <item>
+              <title>Sublime Text en tant qu&#x27;éditeur Markdown</title>
+              <description><![CDATA[
+
+<p>La vie de développeur n&#39;est jamais facile. Tu souhaites faire quelque chose de précis et tu te retrouves à faire totalement autre chose, <em>patchant</em> ci ou tu as découvert ça.</p>
+<p>Typiquement, j&#39;étais tranquillement en train d&#39;écrire un article pour <strong>p!</strong> qui n&#39;avait rien à voir avec celui actuel, et je me retrouve à personnaliser mon Sublime Text pour Markdown car ne souhaitant plus utiliser autre chose que celui-ci pour l&#39;écriture.</p>
+<p>Il y a certes le très bon <a href="http://mouapp.com/">Mou.app</a> (<code>$ brew cask install mou</code>) sur Mac OS X mais comme indiqué, il n&#39;est que pour Mac, or il m&#39;arrive parfois d&#39;être sur Windows.
+De plus, les éditeurs en ligne comme <a href="https://stackedit.io/">stackedit.io</a> ou <a href="http://dillinger.io/">dillinger.io</a> sont pratiques mais comme j&#39;ai tendance à stocker mes brouillons sur <a href="https://db.tt/nTkiSUb">dropbox</a>, ces outils vous demandent l&#39;accès de toute votre dropbox, chose que je n&#39;aime pas spécialement.</p>
+<p>Bref, tout ça pour dire que tout centraliser sur Sublime Text et utiliser dropbox pour écrire des articles me semble une pratique plutôt agréable.</p>
+<p>Pour cela, quittez totalement vos éditeurs Markdown et installez les plugins Sublime Text qui vont bien.</p>
+<h2 id="markdownediting">MarkdownEditing</h2>
+<p>Premièrement, <a href="http://ttscoff.github.io/MarkdownEditing/">MarkdownEditing</a>, ce petit plugin est votre parfait compagnon qui vous permettra d&#39;avoir la bonne coloration syntaxique de votre Markdown. Il vous permettra de mettre en évidence les liens, le code, et tout le reste. Du bonheur donc.</p>
+<p><img alt="" class="putainde-Img" src="/preview-markdownediting.png"></p>
+<p>Oui alors, j&#39;ai fait quelques configurations car à la base, ca ressemble plutôt à ça :</p>
+<p><img alt="" class="putainde-Img" src="/preview-markdownediting-light.png"></p>
+<p>Si vous souhaitez modifier Sublime Text mais uniquement pour le format Markdown, faites : <code>Preferences &gt; Browse Packages...</code> puis aller dans <code>User</code> et créez un fichier <code>Markdown.sublime-settings</code>. Celui-ci sera lu et appliqué à chaque fois que vous éditerez un fichier Markdown.</p>
+<p>Voici ce que j&#39;ai pour le moment :</p>
+<pre><code>{
+  &quot;color_scheme&quot;: &quot;Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme&quot;,
+  &quot;enable_table_editor&quot;: true,
+  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,
+  &quot;tab_size&quot;: 2,
+  &quot;extensions&quot;:
+  [
+    &quot;mdown&quot;,
+    &quot;txt&quot;,
+    &quot;md&quot;
+  ]
+}</code></pre>
+<p>Le thème <code>dark</code> pour pas se niquer les yeux (coucou <a href="https://twitter.com/bloodyowl">@bloodyowl</a>), j&#39;active aussi d&#39;autres plugins dont je vais vous parler d&#39;ici peu, j&#39;affecte le spacing à <code>2</code>, et je déclare que j&#39;utiliserai l&#39;éditeur Markdown pour ce genre de fichiers : <code>.mdown</code>, <code>.txt</code>, <code>.md</code>.</p>
+<p>Bien, passons à la suite.</p>
+<h2 id="markdown-preview">Markdown Preview</h2>
+<p>Notre cher <a href="https://twitter.com/revolunet">@revolunet</a> a fait un excellent plugin Markdown pour Sublime Text: <a href="https://github.com/revolunet/sublimetext-markdown-preview">Sublime Text Markdown Preview</a>. Celui-ci permet d&#39;avoir un rendu de votre Markdown en <code>.html</code>. Vous pouvez soit compiler votre Markdown pour créer un fichier HTML, soit l&#39;ouvrir directement dans votre navigateur.</p>
+<p>Différents formats disponibles :</p>
+<ul>
+<li>Python Markdown</li>
+<li>Github Flavored Markdown</li>
+</ul>
+<p>Un autre parfait compagnon en somme, qui quant à lui s&#39;occupera de digérer l&#39;excellent article que vous êtes en train d&#39;écrire.</p>
+<p>Je vous parlerai éventuellement un jour de <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> qui permet de faire ce genre de choses mais en un peu plus complet et générique (Sublime Text n&#39;est pas nécessaire) mais c&#39;est un poil plus complexe. Jettez-y un œil tout de même.</p>
+<h2 id="smartmarkdown">SmartMarkdown</h2>
+<p><a href="https://github.com/demon386/SmartMarkdown">Petit plugin</a> intéressant qui vous permettra de cacher des parties de votre texte en le repliant. Par exemple, vous vous mettez devant un titre du style <code>##</code> et vous appuyez sur <code>tab</code>, cela repliera votre texte. Plutôt pratique pour se focaliser.</p>
+<p><img alt="" class="putainde-Img" src="/preview-smartmarkdown.png"></p>
+<h2 id="sublimetableeditor">SublimeTableEditor</h2>
+<p>Précédemment dans ma configuration Markdown, vous avez pu voir ceci :</p>
+<pre><code>  &quot;enable_table_editor&quot;: true,
+  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,</code></pre>
+<p>Cela permet de configurer <a href="https://github.com/vkocubinsky/SublimeTableEditor">SublimeTableEditor</a> qui vous permettra de correctement aligner vos tableaux dans Markdown.</p>
+<p>Et voilà. Avec tout ceci, vous êtes paré(e) à écrire votre Markdown dans de bonnes conditions. Plus qu&#39;à mettre du Jazz et vous préparer une tasse de thé et c&#39;est parti.</p>
+<h2 id="bonus-markdown-extended">Bonus : Markdown Extended</h2>
+<p>Il est possible que vous n&#39;aimiez pas forcément MarkdownEditing, et dans ce cas je vous propose un autre plugin pas inintéressant non plus s&#39;appelant <a href="https://github.com/jonschlinkert/sublime-markdown-extended">Markdown Extended</a>. Il vous permettra d&#39;avoir la bonne coloration syntaxique lorsque vous écrivez du code dans votre éditeur.</p>
+<h4 id="avant">Avant</h4>
+<p><img alt="" class="putainde-Img" src="/preview-markdownextended-before.png"></p>
+<h4 id="apr-s">Après</h4>
+<p><img alt="" class="putainde-Img" src="/preview-markdownextended-after.png"></p>
+<p>Oh et j&#39;oubliais, voici quelques documentations sur Markdown histoire de bien l&#39;utiliser :</p>
+<ul>
+<li><a href="http://daringfireball.net/projects/markdown/syntax">Documentation officielle</a></li>
+<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></li>
+<li><a href="http://warpedvisions.org/projects/markdown-cheat-sheet.md">Another Markdown Cheatsheet</a></li>
+</ul>
+
+]]></description>
+              <pubDate>Mon, 16 Feb 2015 01:00:00 +0100</pubDate>
+              <link>http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</guid>
+          </item>
+
+          <item>
+              <title>La puissance de dnsmasq</title>
+              <description><![CDATA[
+
+<p>Dernièrement, j&#39;ai voulu accéder avec mon Smartphone à ma machine virtuelle (<em>VM</em>) de développement qui se trouve sur mon poste de travail (<em>machine ou poste hôte</em>). Ma machine virtuelle me permet de reproduire à l&#39;identique la production afin d&#39;avoir le moins de marge d&#39;erreur possible entre la phase de développement et la phase de mise en production.</p>
+<p>A ce moment là, j&#39;accédais à ma machine virtuelle à partir de mon poste via le fichier <em>hosts</em> comprenant ceci :</p>
+<pre><code>192.168.1.145 monsite.dev</code></pre>
+<p>Le problème est que seul mon poste est au courant de la résolution du nom de domaine de par cette méthode.</p>
+<p>Étant donné qu&#39;il est laborieux de changer des <em>hosts</em> sur un appareil comme un téléphone et que je n&#39;ai pas non plus envie de dupliquer cette modification sur chaque appareil, il me fallait trouver une solution généralisée.</p>
+<p>C&#39;est là que <strong><a href="http://fr.wikipedia.org/wiki/Dnsmasq">dnsmasq</a></strong> entre en jeu.</p>
+<blockquote>
+<p>Dnsmasq est un serveur léger pour fournir les services DNS, DHCP, Bootstrap Protocol et TFTP pour un petit réseau, voire pour un poste de travail. Il permet d&#39;offrir un service de nommage des machines du réseau interne non intégrées au service de nommage global (i.e. le service DNS d&#39;Internet). Le service de nommage est associé au service d&#39;adressage de telle manière que les machines dont le bail DHCP est fourni par Dnsmasq peuvent avoir automatiquement un nom DNS sur le réseau interne. Le logiciel offre un service DHCP statique ou dynamique.</p>
+</blockquote>
+<h2 id="dnsmasq-le-serveur-dns-tout-petit">dnsmasq, le serveur dns tout petit</h2>
+<p><strong>dnsmasq</strong> va me permettre de faire plusieurs choses :</p>
+<ul>
+<li>accélérer la résolution dns</li>
+<li>ne pas polluer le réseau interne de la boite avec des résolutions de domaines propre à votre poste (imaginez que vous soyez plusieurs à avoir <em>monsite.dev</em> (ce qui est le cas dans notre boite)); une résolution se ferait uniquement vers un seul poste donc impossible de faire sans si vous êtes plusieurs</li>
+<li>ne pas dupliquer sur chacun appareil la résolution dns</li>
+<li>réussir à résoudre un nom de domaine sur un appareil où le fichier <em>hosts</em> est difficile voire impossible d&#39;accès</li>
+</ul>
+<p>Cependant, tout n&#39;est pas si rose, je vais vous montrer pourquoi après.</p>
+<h3 id="partage-de-connexion">Partage de connexion</h3>
+<p>Je vous propose dans un premier temps de partager votre connexion via le Wifi sous Mac OS X afin :</p>
+<ul>
+<li>d&#39;avoir constamment un débit stable et performant; étant donné que vous êtes souvent devant votre poste pour tester sur différents appareils, en partageant votre connexion via Wifi, vous vous assurez d&#39;avoir un excellent débit, chose qui n&#39;est pas toujours évidente quand le wifi de votre boite est un peu / souvent trop loin</li>
+<li>d&#39;utiliser le serveur dns (dnsmasq) que vous allez monter</li>
+</ul>
+<p>Pour cela, il suffit de faire : <code>System Preferences &gt; Sharing &gt; Internet Sharing</code> puis choisir <code>Ethernet</code> en source, et <code>Wifi</code> en sortie. (Je vous conseille d&#39;ailleurs de protéger votre Wifi avec une clé WPA2).</p>
+<p><img alt="" class="putainde-Img" src="/macosx-network-sharing.png"></p>
+<p><em>Ici, c&#39;est USB Ethernet en source car je suis sur un Mac Book Air donc aucun port ethernet natif mais choisissez Ethernet si possible.</em></p>
+<p>Une fois que le partage de connexion via Wifi est activé, vous pouvez vous y connecter avec votre smartphone (ou tablette).</p>
+<p>Cela crée alors un nouveau réseau privé entre votre machine hôte et votre téléphone avec des adresses comme <code>192.168.2.x</code>. La machine hôte aura sûrement l&#39;adresse <code>192.168.2.1</code> et votre téléphone très probablement <code>192.168.2.2</code>.</p>
+<p>C&#39;est alors un autre réseau que le réseau interne à la boite en <code>192.168.1.x</code>.</p>
+<p>Notez aussi que la machine hôte, faisant bridge, donne les informations en cascade aux appareils connectés. Ce que vous spécifiez comme serveurs dns sur la machine hôte sera alors ceux utilisés par les appareils étant connectés à votre partage de réseau.</p>
+<h3 id="aaaah-dnsmasq-">Aaaah dnsmasq !</h3>
+<p>On est sous Mac OS X, la vie est si simple, on installe <strong>dnsmasq</strong> via <strong>homebrew</strong>.</p>
+<h4 id="dnsmasq-via-homebrew">dnsmasq via homebrew</h4>
+<pre><code>$ brew install dnsmasq</code></pre>
+<h4 id="configuration-de-dnsmasq">configuration de dnsmasq</h4>
+<p>Une fois installé, on copie la configuration :</p>
+<pre><code>$ cp /usr/local/opt/dnsmasq/dnsmasq.conf.example /usr/local/etc/dnsmasq.conf</code></pre>
+<p>puis on édite le comme ceci :</p>
+<pre><code># Add domains which you want to force to an IP address here.
+# The example below send any host in double-click.net to a local
+# web-server.
+#address=/double-click.net/127.0.0.1
+address=/monsite.dev/192.168.1.145
+
+# If you want dnsmasq to listen for DHCP and DNS requests only on
+# specified interfaces (and the loopback) give the name of the
+# interface (eg eth0) here.
+# Repeat the line for more than one interface.
+#interface=
+# Or you can specify which interface _not_ to listen on
+#except-interface=
+# Or which to listen on by address (remember to include 127.0.0.1 if
+# you use this.)
+listen-address=0.0.0.0
+# If you don&#39;t want dnsmasq to read /etc/hosts, uncomment the
+# following line.
+no-hosts</code></pre>
+<p>Nous précisons dans un premier temps la résolution du nom de domaine <code>monsite.dev</code> (notez que c&#39;est du wildcard, donc pas besoin de préciser les sous-domaines), puis nous indiquons que le serveur DNS marche sur toutes les IPs de la machine hôte et enfin nous indiquons que nous ne voulons pas prendre en compte le fichier <code>/etc/hosts</code> vu qu&#39;on spécifie les résolutions via <code>address</code>.</p>
+<p>Cela permettra à terme de ne plus gérer le fichier <code>/etc/hosts</code> et de tout spécifier dans <code>dnsmasq.conf</code>.</p>
+<h4 id="lancer-dnsmasq-au-d-marrage-de-la-machine">lancer dnsmasq au démarrage de la machine</h4>
+<p>On copie le fichier de démon dans le dossier qui va bien puis on lance le démon.</p>
+<pre><code>$ sudo cp -fv /usr/local/opt/dnsmasq/*.plist /Library/LaunchDaemons
+$ sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist</code></pre>
+<h4 id="utiliser-le-serveur-dnsmasq">utiliser le serveur dnsmasq</h4>
+<p>Etant donné que vous partagez votre connexion et que votre poste fait hôte, le serveur dns utilisé sera celui installé sur votre poste, donc rien à faire.</p>
+<p>Sinon :</p>
+<ul>
+<li><p>vous pouvez changer le serveur dns de la machine hôte dans <code>network</code> et dans ce cas, que ce soit sur vos appareils connectés au wifi ou votre machine principale, vous utiliserez <strong>dnsmasq</strong> mais je vous le déconseile car j&#39;ai constaté que j&#39;atteignais trop facilement le nombre de connexions maximum.</p>
+</li>
+<li><p>vous pouvez aussi modifier le serveur dns de l&#39;appareil connecté au wifi partagé :</p>
+</li>
+</ul>
+<p><em>(Sous Android)</em></p>
+<p><code>Wifi &gt; Press on the current connnection &gt; Modify network &gt; Show advanced options</code></p>
+<p><img alt="" class="putainde-Img" src="/android-network-advanced.png"></p>
+<p>Mais quel intérêt car vous devrez faire cela sur tous vos appareils connectés</p>
+<ul>
+<li>vous pouvez aussi éditer le fichier <code>/etc/bootpd.plist</code> qui définit toute votre configuration de partage de connexion :</li>
+</ul>
+<pre><code>$ sudo $EDITOR /etc/bootpd.plist</code></pre>
+<pre><code class="language-xml"><span class="cm-meta">&lt;?xml</span> <span class="cm-meta">version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cm-meta">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
+<span class="cm-tag">&lt;plist</span> <span class="cm-attribute">version</span>=<span class="cm-string">&quot;1.0&quot;</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;dict</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>Subnets<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;array</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;dict</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>_creator<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>com.apple.InternetSharing<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>allocate<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;true</span><span class="cm-tag">/&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>dhcp_domain_name_server<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;array</span><span class="cm-tag">&gt;</span>
+        <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>192.168.2.1<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;/array</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>dhcp_router<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>192.168.2.1<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>lease_max<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;integer</span><span class="cm-tag">&gt;</span>86400<span class="cm-tag">&lt;/integer</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>lease_min<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;integer</span><span class="cm-tag">&gt;</span>86400<span class="cm-tag">&lt;/integer</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>name<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>192.168.2/24<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>net_address<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>192.168.2.0<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>net_mask<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>255.255.255.0<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>net_range<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;array</span><span class="cm-tag">&gt;</span>
+        <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>192.168.2.2<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+        <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>192.168.2.254<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;/array</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;/dict</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;/array</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>bootp_enabled<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;false</span><span class="cm-tag">/&gt;</span>
+  <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>detect_other_dhcp_server<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;true</span><span class="cm-tag">/&gt;</span>
+  <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>dhcp_enabled<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;array</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>bridge100<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;/array</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>use_server_config_for_dhcp_options<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;false</span><span class="cm-tag">/&gt;</span>
+<span class="cm-tag">&lt;/dict</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/plist</span><span class="cm-tag">&gt;</span></code></pre>
+<p><code>192.168.2.1</code> est l&#39;adresse de votre machine hôte dans le réseau de partage.</p>
+<h2 id="oh-oui-j-oubliais-mac-os-x-peut-tre-lourd-parfois">Oh oui, j&#39;oubliais, Mac OS X peut être lourd parfois</h2>
+<p>Oui, quand vous créez un partage de connexion sur Mac OS X, il lance son propre serveur dns s&#39;appelant <strong>_mdnsresponder</strong>. C&#39;est le système <em>Bonjour</em> de iOS/Mac OS X permettant à n&#39;importe quel appareil Apple de communiquer entre eux. Le problème c&#39;est qu&#39;il risque de marcher sur les pieds de <strong>dnsmasq</strong>.</p>
+<p>Faites donc un <code>$ sudo lsof -i :53</code> et vous pourrez éventuellement voir que <strong>_mdnsresponder</strong> est lancé aussi bien en ipv6 qu&#39;en ipv4 sur le port 53. Cela vous empêchera de lancer <strong>dnsmasq</strong>.</p>
+<p>Ce que je vous propose dans ces cas là, c&#39;est de couper votre partage de connexion, puis notez le pid de <strong>_mdnsresponder</strong> via <code>$ sudo lsof -i :53</code>, de le <code>sudo kill :pid</code>, de lancer <code>$ sudo dnsmasq</code> puis de relancer le partage de connexion. Comme ça <strong>_mdnsresponser</strong> ne prendra plus la place de <strong>dnsmasq</strong>.</p>
+<p>Autre point, évitez, mais vraiment, de nommer vos noms de domaines personnels en <code>.local</code>. En effet, ceux-ci sont plutôt réservés à l&#39;environnement Mac OS X. Ils sont d&#39;ailleurs en rapport avec <strong>_mdnsresponder</strong>. Les <code>.local</code> permettent à n&#39;importe quel produit Apple sur le réseau de se connecter à d&#39;autres postes Apple via <code>nom-de-l-appareil.local</code>. Votre connexion pourrait alors s&#39;emméler entre le serveur dns de <strong>Bonjour</strong> et votre propre serveur dns.</p>
+<p>Happy coding !</p>
+
+]]></description>
+              <pubDate>Mon, 16 Feb 2015 01:00:00 +0100</pubDate>
+              <link>http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</guid>
+          </item>
 
           <item>
               <title>BROWSERIFY ALL THE THINGS</title>
@@ -765,64 +978,6 @@ routes se croiseront-elles de nouveau. Dans l&#39;intervalle, va, vis, et code !
           </item>
 
           <item>
-              <title>ExternalInterface.call() de Flash (et Backbone), toute une histoire</title>
-              <description><![CDATA[
-
-<p><img class="putainde-Img putainde-Img--left" alt="" src="/occupyflash.png" /></p>
-<p>Je voulais vous parler d&#39;un bug qui m&#39;a bien emmerdé récemment et comme j&#39;aimerais que vous ne perdiez pas de temps avec cela, un article s&#39;imposait.</p>
-<p><em>Note de la direction : j&#39;y connais rien en Flash (et je ne crois pas avoir trop envie de connaître en fait).</em></p>
-<p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu&#39;il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d&#39;un autre article. (Je dis ça à chaque fois, haha).</p>
-<h2 id="le-pitch">Le pitch</h2>
-<p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu&#39;il le souhaite afin de communiquer avec l&#39;application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l&#39;avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d&#39;évènement mais vous en avez d&#39;<a href="http://microjs.com/#event">autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
-<pre><code class="language-javascript"> <span class="cm-comment">// on crée un objet vide</span>
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
-
-<span class="cm-comment">// on lui ajoute les fonctionnalités des events Backbone</span>
-<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)</code></pre>
-<p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d&#39;évènement façon Backbone</a>. Il pourra alors s&#39;écouter lui-même, écouter un autre objet, mais aussi déclencher des évènements.</p>
-<h2 id="c-t-flash">Côté Flash</h2>
-<p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l&#39;objet <code>ExternalInterface</code> :</p>
-<pre><code class="language-javascript"><span class="cm-variable">ExternalInterface</span>.<span class="cm-property">call</span>(<span class="cm-string">&quot;window.App.FlashManager.Events.trigger&quot;</span>, <span class="cm-string">&quot;my-event&quot;</span>)
-<span class="cm-comment">// http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html#call</span></code></pre>
-<p>Et là, bug.</p>
-<h2 id="pourquoi-bug-">Pourquoi bug ?</h2>
-<p>Pour le moment, je ne sais pas vraiment. Je me pencherai plus sur le sujet dès que j&#39;ai un peu de temps, mais ce que je sais, c&#39;est que <code>ExtercalInterface.call()</code> ne s&#39;attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l&#39;<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153">objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur.</p>
-<h2 id="la-solution-c-t-javascript">La solution côté JavaScript</h2>
-<p>Pour contrer cela, je vous propose la solution suivante qui est de ne pas utiliser directement l&#39;objet <code>Backbone.Events|View</code> mais plutôt de passer par une interface, un objet proxy.</p>
-<p>Voici le schéma :</p>
-<ul>
-<li>Créer un objet simple qui contient les mêmes noms de méthodes que les objets évènements <strong>Backbone.js</strong> (en gros, se mapper sur l&#39;API Backbone)</li>
-<li>Utiliser <strong>Backbone.js</strong> dans les méthodes de cet objet <em>Proxy</em></li>
-</ul>
-<p>Exemple :</p>
-<pre><code class="language-javascript"><span class="cm-comment">// Bridge between flash and js</span>
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span> = {}
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
-
-<span class="cm-comment">// Backbone events used for Flash</span>
-<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span> = {}
-<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span> = {}
-
-<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)
-
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span> = <span class="cm-keyword">function</span>(<span class="cm-def">name</span>, <span class="cm-def">opts</span>) {
-    <span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span>(<span class="cm-variable-2">name</span>, <span class="cm-variable-2">opts</span>)
-
-    <span class="cm-comment">// Must return nothing not to loop JavaScript engine, important!</span>
-    <span class="cm-keyword">return</span>
-}</code></pre>
-<h2 id="oh-et-">Oh et...</h2>
-<p>...il existe une version ayant plus ou moins le même souci que moi disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
-<h2 id="conclusion">Conclusion</h2>
-<p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript retourne quelque chose de simple (un objet ayant que des atributs, pas de fonctions, ou encore un bouléen ou un <em>integer</em>).</p>
-
-]]></description>
-              <pubDate>Thu, 05 Dec 2013 01:00:00 +0100</pubDate>
-              <link>http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</link>
-              <guid isPermaLink="true">http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</guid>
-          </item>
-
-          <item>
               <title>De jQuery à Vanilla JS</title>
               <description><![CDATA[
 
@@ -974,6 +1129,64 @@ routes se croiseront-elles de nouveau. Dans l&#39;intervalle, va, vis, et code !
               <pubDate>Thu, 05 Dec 2013 01:00:00 +0100</pubDate>
               <link>http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/</link>
               <guid isPermaLink="true">http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/</guid>
+          </item>
+
+          <item>
+              <title>ExternalInterface.call() de Flash (et Backbone), toute une histoire</title>
+              <description><![CDATA[
+
+<p><img class="putainde-Img putainde-Img--left" alt="" src="/occupyflash.png" /></p>
+<p>Je voulais vous parler d&#39;un bug qui m&#39;a bien emmerdé récemment et comme j&#39;aimerais que vous ne perdiez pas de temps avec cela, un article s&#39;imposait.</p>
+<p><em>Note de la direction : j&#39;y connais rien en Flash (et je ne crois pas avoir trop envie de connaître en fait).</em></p>
+<p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu&#39;il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d&#39;un autre article. (Je dis ça à chaque fois, haha).</p>
+<h2 id="le-pitch">Le pitch</h2>
+<p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu&#39;il le souhaite afin de communiquer avec l&#39;application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l&#39;avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d&#39;évènement mais vous en avez d&#39;<a href="http://microjs.com/#event">autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
+<pre><code class="language-javascript"> <span class="cm-comment">// on crée un objet vide</span>
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
+
+<span class="cm-comment">// on lui ajoute les fonctionnalités des events Backbone</span>
+<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)</code></pre>
+<p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d&#39;évènement façon Backbone</a>. Il pourra alors s&#39;écouter lui-même, écouter un autre objet, mais aussi déclencher des évènements.</p>
+<h2 id="c-t-flash">Côté Flash</h2>
+<p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l&#39;objet <code>ExternalInterface</code> :</p>
+<pre><code class="language-javascript"><span class="cm-variable">ExternalInterface</span>.<span class="cm-property">call</span>(<span class="cm-string">&quot;window.App.FlashManager.Events.trigger&quot;</span>, <span class="cm-string">&quot;my-event&quot;</span>)
+<span class="cm-comment">// http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html#call</span></code></pre>
+<p>Et là, bug.</p>
+<h2 id="pourquoi-bug-">Pourquoi bug ?</h2>
+<p>Pour le moment, je ne sais pas vraiment. Je me pencherai plus sur le sujet dès que j&#39;ai un peu de temps, mais ce que je sais, c&#39;est que <code>ExtercalInterface.call()</code> ne s&#39;attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l&#39;<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153">objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur.</p>
+<h2 id="la-solution-c-t-javascript">La solution côté JavaScript</h2>
+<p>Pour contrer cela, je vous propose la solution suivante qui est de ne pas utiliser directement l&#39;objet <code>Backbone.Events|View</code> mais plutôt de passer par une interface, un objet proxy.</p>
+<p>Voici le schéma :</p>
+<ul>
+<li>Créer un objet simple qui contient les mêmes noms de méthodes que les objets évènements <strong>Backbone.js</strong> (en gros, se mapper sur l&#39;API Backbone)</li>
+<li>Utiliser <strong>Backbone.js</strong> dans les méthodes de cet objet <em>Proxy</em></li>
+</ul>
+<p>Exemple :</p>
+<pre><code class="language-javascript"><span class="cm-comment">// Bridge between flash and js</span>
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span> = {}
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
+
+<span class="cm-comment">// Backbone events used for Flash</span>
+<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span> = {}
+<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span> = {}
+
+<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)
+
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span> = <span class="cm-keyword">function</span>(<span class="cm-def">name</span>, <span class="cm-def">opts</span>) {
+    <span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span>(<span class="cm-variable-2">name</span>, <span class="cm-variable-2">opts</span>)
+
+    <span class="cm-comment">// Must return nothing not to loop JavaScript engine, important!</span>
+    <span class="cm-keyword">return</span>
+}</code></pre>
+<h2 id="oh-et-">Oh et...</h2>
+<p>...il existe une version ayant plus ou moins le même souci que moi disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript retourne quelque chose de simple (un objet ayant que des atributs, pas de fonctions, ou encore un bouléen ou un <em>integer</em>).</p>
+
+]]></description>
+              <pubDate>Thu, 05 Dec 2013 01:00:00 +0100</pubDate>
+              <link>http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</guid>
           </item>
 
           <item>

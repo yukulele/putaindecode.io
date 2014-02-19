@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<!--
+  HEY YOU, STOP LOOKING AT MY SOURCE CODE
+  Just check it out directly on Github :
+
+  https://github.com/putaindecode/website.git
+-->
+<html lang="fr" class="no-js no-touch ">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<script>(function(docEl) {
+  docEl.className = docEl.className.replace(/\bno-js\b/, 'js');
+  if ('ontouchstart' in docEl) { docEl.className = docEl.className.replace(/\bno-touch\b/, 'touch'); }
+})(document.documentElement);</script>
+
+<meta charset="utf-8">
+<title>La puissance de dnsmasq</title>
+<meta name="description" content="">
+<base href="http://putaindecode.fr/" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="feed.xml" rel="alternate" type="application/rss+xml">
+
+<link rel="stylesheet" href="/assets/css/putaindecode.css?20140220003829">
+
+
+
+
+</head>
+<body>
+
+<div class="">
+  <nav class="putainde-Nav">
+	<div class="grid">
+		<div class="grid__cell">
+			<a class="putainde-SiteTitle" href="/">
+				<img class="putainde-Logo" alt="Putain de Code !" src="/assets/img/p!-logo.svg" />
+				Putain de Code !
+			</a>
+
+			<span class="putainde-Baseline">On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</span>
+
+			<ul class="putainde-Nav-list">
+				<li class=""><a class="putainde-Nav-list-item " href="c-est-quoi-putaindecode">Putain de ... ?</a>
+        <li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+				<li class=""><a class="putainde-Nav-list-item " href="posts/comment-contribuer/">Comment Contribuer ?</a>
+				<li class=""><a class="putainde-Nav-list-item " href="le-crew">Le Crew</a>
+			</ul>
+		</div>
+	</div>
+</nav>
+ 
+  <article class="putainde-Content grid putainde-Post">
+    <header class="putainde-Content-header grid__cell unit-1-1">
+      <h1 class="putainde-Content-title">La puissance de dnsmasq</h1>
+      <div class="putainde-Content-metas">
+        <span class="putainde-Content-author">Par <span class="putainde-Author">kud</span></span>
+        <span class="putainde-Content-readingTime">Temps de lecture: environ 25min</span>
+        <span class="putainde-Content-tags">Tags: dnsmasq,macosx,test,dns,serveur</span>
+      </div>
+    </header>
+    <div class="putainde-Content-body grid__cell unit-3-4--m">
+    
+
+
+<p>Dernièrement, j&#39;ai voulu accéder avec mon Smartphone à ma machine virtuelle (<em>VM</em>) de développement qui se trouve sur mon poste de travail (<em>machine ou poste hôte</em>). Ma machine virtuelle me permet de reproduire à l&#39;identique la production afin d&#39;avoir le moins de marge d&#39;erreur possible entre la phase de développement et la phase de mise en production.</p>
+<p>A ce moment là, j&#39;accédais à ma machine virtuelle à partir de mon poste via le fichier <em>hosts</em> comprenant ceci :</p>
+<pre><code>192.168.1.145 monsite.dev</code></pre>
+<p>Le problème est que seul mon poste est au courant de la résolution du nom de domaine de par cette méthode.</p>
+<p>Étant donné qu&#39;il est laborieux de changer des <em>hosts</em> sur un appareil comme un téléphone et que je n&#39;ai pas non plus envie de dupliquer cette modification sur chaque appareil, il me fallait trouver une solution généralisée.</p>
+<p>C&#39;est là que <strong><a href="http://fr.wikipedia.org/wiki/Dnsmasq">dnsmasq</a></strong> entre en jeu.</p>
+<blockquote>
+<p>Dnsmasq est un serveur léger pour fournir les services DNS, DHCP, Bootstrap Protocol et TFTP pour un petit réseau, voire pour un poste de travail. Il permet d&#39;offrir un service de nommage des machines du réseau interne non intégrées au service de nommage global (i.e. le service DNS d&#39;Internet). Le service de nommage est associé au service d&#39;adressage de telle manière que les machines dont le bail DHCP est fourni par Dnsmasq peuvent avoir automatiquement un nom DNS sur le réseau interne. Le logiciel offre un service DHCP statique ou dynamique.</p>
+</blockquote>
+<h2 id="dnsmasq-le-serveur-dns-tout-petit">dnsmasq, le serveur dns tout petit</h2>
+<p><strong>dnsmasq</strong> va me permettre de faire plusieurs choses :</p>
+<ul>
+<li>accélérer la résolution dns</li>
+<li>ne pas polluer le réseau interne de la boite avec des résolutions de domaines propre à votre poste (imaginez que vous soyez plusieurs à avoir <em>monsite.dev</em> (ce qui est le cas dans notre boite)); une résolution se ferait uniquement vers un seul poste donc impossible de faire sans si vous êtes plusieurs</li>
+<li>ne pas dupliquer sur chacun appareil la résolution dns</li>
+<li>réussir à résoudre un nom de domaine sur un appareil où le fichier <em>hosts</em> est difficile voire impossible d&#39;accès</li>
+</ul>
+<p>Cependant, tout n&#39;est pas si rose, je vais vous montrer pourquoi après.</p>
+<h3 id="partage-de-connexion">Partage de connexion</h3>
+<p>Je vous propose dans un premier temps de partager votre connexion via le Wifi sous Mac OS X afin :</p>
+<ul>
+<li>d&#39;avoir constamment un débit stable et performant; étant donné que vous êtes souvent devant votre poste pour tester sur différents appareils, en partageant votre connexion via Wifi, vous vous assurez d&#39;avoir un excellent débit, chose qui n&#39;est pas toujours évidente quand le wifi de votre boite est un peu / souvent trop loin</li>
+<li>d&#39;utiliser le serveur dns (dnsmasq) que vous allez monter</li>
+</ul>
+<p>Pour cela, il suffit de faire : <code>System Preferences &gt; Sharing &gt; Internet Sharing</code> puis choisir <code>Ethernet</code> en source, et <code>Wifi</code> en sortie. (Je vous conseille d&#39;ailleurs de protéger votre Wifi avec une clé WPA2).</p>
+<p><img alt="" class="putainde-Img" src="/media/macosx-network-sharing.png"></p>
+<p><em>Ici, c&#39;est USB Ethernet en source car je suis sur un Mac Book Air donc aucun port ethernet natif mais choisissez Ethernet si possible.</em></p>
+<p>Une fois que le partage de connexion via Wifi est activé, vous pouvez vous y connecter avec votre smartphone (ou tablette).</p>
+<p>Cela crée alors un nouveau réseau privé entre votre machine hôte et votre téléphone avec des adresses comme <code>192.168.2.x</code>. La machine hôte aura sûrement l&#39;adresse <code>192.168.2.1</code> et votre téléphone très probablement <code>192.168.2.2</code>.</p>
+<p>C&#39;est alors un autre réseau que le réseau interne à la boite en <code>192.168.1.x</code>.</p>
+<p>Notez aussi que la machine hôte, faisant bridge, donne les informations en cascade aux appareils connectés. Ce que vous spécifiez comme serveurs dns sur la machine hôte sera alors ceux utilisés par les appareils étant connectés à votre partage de réseau.</p>
+<h3 id="aaaah-dnsmasq-">Aaaah dnsmasq !</h3>
+<p>On est sous Mac OS X, la vie est si simple, on installe <strong>dnsmasq</strong> via <strong>homebrew</strong>.</p>
+<h4 id="dnsmasq-via-homebrew">dnsmasq via homebrew</h4>
+<pre><code>$ brew install dnsmasq</code></pre>
+<h4 id="configuration-de-dnsmasq">configuration de dnsmasq</h4>
+<p>Une fois installé, on copie la configuration :</p>
+<pre><code>$ cp /usr/local/opt/dnsmasq/dnsmasq.conf.example /usr/local/etc/dnsmasq.conf</code></pre>
+<p>puis on édite le comme ceci :</p>
+<pre><code># Add domains which you want to force to an IP address here.
+# The example below send any host in double-click.net to a local
+# web-server.
+#address=/double-click.net/127.0.0.1
+address=/monsite.dev/192.168.1.145
+
+# If you want dnsmasq to listen for DHCP and DNS requests only on
+# specified interfaces (and the loopback) give the name of the
+# interface (eg eth0) here.
+# Repeat the line for more than one interface.
+#interface=
+# Or you can specify which interface _not_ to listen on
+#except-interface=
+# Or which to listen on by address (remember to include 127.0.0.1 if
+# you use this.)
+listen-address=0.0.0.0
+# If you don&#39;t want dnsmasq to read /etc/hosts, uncomment the
+# following line.
+no-hosts</code></pre>
+<p>Nous précisons dans un premier temps la résolution du nom de domaine <code>monsite.dev</code> (notez que c&#39;est du wildcard, donc pas besoin de préciser les sous-domaines), puis nous indiquons que le serveur DNS marche sur toutes les IPs de la machine hôte et enfin nous indiquons que nous ne voulons pas prendre en compte le fichier <code>/etc/hosts</code> vu qu&#39;on spécifie les résolutions via <code>address</code>.</p>
+<p>Cela permettra à terme de ne plus gérer le fichier <code>/etc/hosts</code> et de tout spécifier dans <code>dnsmasq.conf</code>.</p>
+<h4 id="lancer-dnsmasq-au-d-marrage-de-la-machine">lancer dnsmasq au démarrage de la machine</h4>
+<p>On copie le fichier de démon dans le dossier qui va bien puis on lance le démon.</p>
+<pre><code>$ sudo cp -fv /usr/local/opt/dnsmasq/*.plist /Library/LaunchDaemons
+$ sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist</code></pre>
+<h4 id="utiliser-le-serveur-dnsmasq">utiliser le serveur dnsmasq</h4>
+<p>Etant donné que vous partagez votre connexion et que votre poste fait hôte, le serveur dns utilisé sera celui installé sur votre poste, donc rien à faire.</p>
+<p>Sinon :</p>
+<ul>
+<li><p>vous pouvez changer le serveur dns de la machine hôte dans <code>network</code> et dans ce cas, que ce soit sur vos appareils connectés au wifi ou votre machine principale, vous utiliserez <strong>dnsmasq</strong> mais je vous le déconseile car j&#39;ai constaté que j&#39;atteignais trop facilement le nombre de connexions maximum.</p>
+</li>
+<li><p>vous pouvez aussi modifier le serveur dns de l&#39;appareil connecté au wifi partagé :</p>
+</li>
+</ul>
+<p><em>(Sous Android)</em></p>
+<p><code>Wifi &gt; Press on the current connnection &gt; Modify network &gt; Show advanced options</code></p>
+<p><img alt="" class="putainde-Img" src="/media/android-network-advanced.png"></p>
+<p>Mais quel intérêt car vous devrez faire cela sur tous vos appareils connectés</p>
+<ul>
+<li>vous pouvez aussi éditer le fichier <code>/etc/bootpd.plist</code> qui définit toute votre configuration de partage de connexion :</li>
+</ul>
+<pre><code>$ sudo $EDITOR /etc/bootpd.plist</code></pre>
+<pre><code class="language-xml"><span class="cm-meta">&lt;?xml</span> <span class="cm-meta">version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cm-meta">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
+<span class="cm-tag">&lt;plist</span> <span class="cm-attribute">version</span>=<span class="cm-string">&quot;1.0&quot;</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;dict</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>Subnets<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;array</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;dict</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>_creator<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>com.apple.InternetSharing<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>allocate<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;true</span><span class="cm-tag">/&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>dhcp_domain_name_server<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;array</span><span class="cm-tag">&gt;</span>
+        <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>192.168.2.1<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;/array</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>dhcp_router<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>192.168.2.1<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>lease_max<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;integer</span><span class="cm-tag">&gt;</span>86400<span class="cm-tag">&lt;/integer</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>lease_min<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;integer</span><span class="cm-tag">&gt;</span>86400<span class="cm-tag">&lt;/integer</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>name<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>192.168.2/24<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>net_address<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>192.168.2.0<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>net_mask<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>255.255.255.0<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>net_range<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;array</span><span class="cm-tag">&gt;</span>
+        <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>192.168.2.2<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+        <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>192.168.2.254<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">&lt;/array</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;/dict</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;/array</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>bootp_enabled<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;false</span><span class="cm-tag">/&gt;</span>
+  <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>detect_other_dhcp_server<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;true</span><span class="cm-tag">/&gt;</span>
+  <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>dhcp_enabled<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;array</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;string</span><span class="cm-tag">&gt;</span>bridge100<span class="cm-tag">&lt;/string</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;/array</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;key</span><span class="cm-tag">&gt;</span>use_server_config_for_dhcp_options<span class="cm-tag">&lt;/key</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;false</span><span class="cm-tag">/&gt;</span>
+<span class="cm-tag">&lt;/dict</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/plist</span><span class="cm-tag">&gt;</span></code></pre>
+<p><code>192.168.2.1</code> est l&#39;adresse de votre machine hôte dans le réseau de partage.</p>
+<h2 id="oh-oui-j-oubliais-mac-os-x-peut-tre-lourd-parfois">Oh oui, j&#39;oubliais, Mac OS X peut être lourd parfois</h2>
+<p>Oui, quand vous créez un partage de connexion sur Mac OS X, il lance son propre serveur dns s&#39;appelant <strong>_mdnsresponder</strong>. C&#39;est le système <em>Bonjour</em> de iOS/Mac OS X permettant à n&#39;importe quel appareil Apple de communiquer entre eux. Le problème c&#39;est qu&#39;il risque de marcher sur les pieds de <strong>dnsmasq</strong>.</p>
+<p>Faites donc un <code>$ sudo lsof -i :53</code> et vous pourrez éventuellement voir que <strong>_mdnsresponder</strong> est lancé aussi bien en ipv6 qu&#39;en ipv4 sur le port 53. Cela vous empêchera de lancer <strong>dnsmasq</strong>.</p>
+<p>Ce que je vous propose dans ces cas là, c&#39;est de couper votre partage de connexion, puis notez le pid de <strong>_mdnsresponder</strong> via <code>$ sudo lsof -i :53</code>, de le <code>sudo kill :pid</code>, de lancer <code>$ sudo dnsmasq</code> puis de relancer le partage de connexion. Comme ça <strong>_mdnsresponser</strong> ne prendra plus la place de <strong>dnsmasq</strong>.</p>
+<p>Autre point, évitez, mais vraiment, de nommer vos noms de domaines personnels en <code>.local</code>. En effet, ceux-ci sont plutôt réservés à l&#39;environnement Mac OS X. Ils sont d&#39;ailleurs en rapport avec <strong>_mdnsresponder</strong>. Les <code>.local</code> permettent à n&#39;importe quel produit Apple sur le réseau de se connecter à d&#39;autres postes Apple via <code>nom-de-l-appareil.local</code>. Votre connexion pourrait alors s&#39;emméler entre le serveur dns de <strong>Bonjour</strong> et votre propre serveur dns.</p>
+<p>Happy coding !</p>
+
+
+
+<section class="putainde-AboutTheAuthor">
+  
+    
+    <a class="putainde-AboutTheAuthor-avatar putainde-Author-avatar" href="http://kud.io">
+      <img src="https://gravatar.com/avatar/7c72a078c8819fd10f1d11c24d4aa64b?s=300&amp;d=https%3A%2F%2Fidenticons.github.com%2Fc0863a4414cba6aa95014df9e3d9f6a5.png" />
+    </a>
+    
+  
+  <h1 class="putainde-AboutTheAuthor-title">
+    Écrit par
+    <strong class="putainde-AboutTheAuthor-name">kud</strong>
+    <a class="putainde-AboutTheAuthor-url" href="http://kud.io"><i class="icon icon_home"> </i></a>
+    <a class="putainde-AboutTheAuthor-twitter" href="https://twitter.com/_kud"><i class="icon icon_twitter"> </i></a>
+    <a class="putainde-AboutTheAuthor-github" href="https://github.com/kud"><i class="icon icon_github"> </i></a>
+  </h1>
+  
+    
+    <div class="putainde-AboutTheAuthor-bio--long"><p>Viking application designer (aka JavaScript engineer), batteur, photographe, amoureux de cinéma, n&#x27;aime pas les longues descriptions.</p>
+</div>
+  
+</section>
+
+
+
+
+
+<section class="putainde-Comments">
+  <h1 class="putainde-Comments-title">Comments</h1>
+  <div id="disqus_thread" aria-live="polite">
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+
+    </div>
+    
+    <aside class="putainde-Sidebar grid__cell unit-1-4--m">
+    <aside class="putainde-Sidebar-block">
+	<h1 class="putainde-Sidebar-block-title">On est partout !</h1>
+	<ul class="putainde-Sidebar-block-list--nobullet">
+		<li><a href="https://github.com/putaindecode"><i class="icon icon_github"></i> Github</a></li>
+		<li><a href="https://twitter.com/putaindecode"><i class="icon icon_twitter"></i> Twitter</a></li>
+		<li><a href="#derriere-toi,-c'est-affreux!" onclick="if (confirm('Attention Benjamin...!')) window.location = 'http://www.youtube.com/watch?v=MEKHaG9FxKY&t=44s'; return false;"><i class="icon icon_eye"></i> Derrière toi</a></li>
+	</ul>
+</aside>
+<aside class="putainde-Sidebar-block">
+	<h1 class="putainde-Sidebar-block-title">À avoir sous la main</h1>
+	<ul class="putainde-Sidebar-block-list--nobullet">
+		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues/new"><i class="icon icon_pencil"></i> Proposer un article</a></li>
+		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues?labels=post&state=open"><i class="icon icon_bookmarks"></i> Voir les propositions</a></li>
+		<li><a href="https://github.com/putaindecode/website/blob/master/src/posts/env/la-puissance-de-dnsmasq/index.html.hbs"><i class="icon icon_edit"></i> Modifier cette page</a></li>
+	</ul>
+</aside>
+
+
+    </aside>
+    
+  </article>
+  
+    <footer class="putainde-Footer">
+
+    <div class="putainde-Footer-colophon grid">
+      <div class="putainde-Footer-colophon-left grid__cell unit-5-12--m">
+        © 1970 - 2013 Putain de code
+      </div>
+      <div class="putainde-Footer-colophon-center grid__cell unit-2-12--m">
+        <img class="putainde-Footer-logo" alt="Putain de code !" src="/assets/img/p!-logo.svg" />
+      </div>
+      <div class="putainde-Footer-colophon-right grid__cell unit-5-12--m">
+        <span class="putainde-Footer-colophon-item">Made with ❤ by <a href="/le-crew/">le crew</a></span>
+        |
+        <a class="putainde-Footer-colophon-item" href="projets/">Projets</a>
+        |
+        <a class="putainde-Footer-colophon-item" href="https://github.com/putaindecode">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  
+</div>
+<script src="/assets/js/putaindecode.js?20140220003829"></script>
+
+
+	
+	<script>
+		var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src='//www.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+	
+
+
+
+
+
+  <script>
+  var disqus_shortname = 'putaindecode',
+  
+  
+  
+  disqus_identifier = 'http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/',
+  disqus_url = 'http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/',
+  disqus_script = 'embed.js';
+  
+  (function(d,s) {
+  s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+  (d.getElementsByTagName('head')[0]).appendChild(s);
+  })(document);
+  </script>
+
+
+
+</body>
+</html>
+
