@@ -4,9 +4,90 @@
         <title>Putain de Code !</title>
         <description>On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</description>
         <link>http://putaindecode.fr/</link>
-        <generator>happyplan 0.4.0-beta.6</generator>
+        <generator>happyplan 0.4.0-beta.5</generator>
         <lastBuildDate>Tue, 25 Feb 2014 00:00:00 +0100</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml" />
+
+          <item>
+              <title>Twitter comme lecteur de flux</title>
+              <description><![CDATA[
+
+<p><em>(Note : dans cet article, j&#39;ai volontairement pris comme exemple la version Web afin que tout le monde puisse profiter de l&#39;expérience mais il est évident que vous puissiez le faire avec votre application twitter favorite).</em></p>
+<p>Bien avant la fin de Google Reader, je me posais déjà la question de l&#39;intérêt d&#39;un lecteur de flux {rss|atom}. En effet, il m&#39;était pénible d&#39;organiser les flux que je souhaitais lire : les ranger par catégorie, supprimer les sites morts ou ceux qui ne m&#39;intéressaient plus; de plus, je n&#39;ai jamais réellement utilisé les fonctionnalités d&#39;un lecteur de flux comme le système de marquage, savoir si le flux a été lu ou non, lire l&#39;article dans le lecteur (je le lis toujours sur le site, jamais dans l&#39;application). Et puis c&#39;est parfois pénible de trouver un lecteur de flux simple, multi-OS et gratuit.</p>
+<p>J&#39;ai été un grand fan à l&#39;époque de Netvibes puis je l&#39;ai délaissé pour Google Reader et nous voilà quelques temps après, sans réelle solution à mon sens pour lire agréablement des flux tel que je le concois.</p>
+<p>J&#39;expérimente pourtant une solution depuis quelques mois qui me sied bien. J&#39;utilise en effet Twitter en tant que lecteur de flux. Oui, car cela a plusieurs avantages :</p>
+<ul>
+<li><p>Il existe une application pour <a href="https://play.google.com/store/apps/details?id=com.twitter.android&amp;hl=fr">Android</a>, <a href="https://about.twitter.com/products/iphone">iOS</a> ainsi que <a href="https://itunes.apple.com/fr/app/twitter/id409789998?mt=12">Mac</a>; mais aussi la <a href="https://twitter.com/">version Web</a> et <a href="https://tweetdeck.twitter.com/">Tweetdeck</a> est disponible sur tous les environnements.</p>
+</li>
+<li><p>Je fais ma veille majoritairement via Twitter; j&#39;écrème au fil de la journée ce qui m&#39;intéresse ou non. Si c&#39;est rapide à lire alors je le lis, sinon je <em>bookmark</em> l&#39;article en &quot;Read later&quot; sur mon navigateur. Cela permet de trier rapidement l&#39;information et de lire plus paisiblement cela au moment opportun.
+De plus, étant donné que l&#39;information est donnée par mes <em>following</em> et que je suis les personnes qui m&#39;intéressent vraiment, l&#39;information est alors souvent pertinente. Encore faut-il avoir la bonne TL.
+Et  si j&#39;ai besoin d&#39;aller chercher une information précise, j&#39;irai la trouver à travers un moteur de recherche... donc aucune problématique de &quot;neutralité&quot; de l&#39;information.</p>
+</li>
+<li><p>De plus, étant donné que je fais justement cette veille via Twitter, cela me permet d&#39;avoir qu&#39;un seul outil. Cela m&#39;ennuie au plus au point de collectionner les outils. Je suis certes partisant d&#39;utiliser le bon outil pour chaque tâche plutôt qu&#39;un couteau-suisse, mais finalement Twitter et un lecteur de flux ne sont pas si éloignés.</p>
+</li>
+<li><p>Enfin, la majorité des blogs / sites que j&#39;apprécie ont leur propre compte twitter qui postent l&#39;url de leurs articles, il suffit alors de les suivre. Et si ce n&#39;est pas le cas, je vous montrerai une petite astuce pour que ça le soit.</p>
+</li>
+</ul>
+<p>Vous vous sentez chaud(e) pour commencer ? Très bien, c&#39;est parti !</p>
+<h2 id="cr-er-une-liste-twitter">Créer une liste Twitter</h2>
+<p>Pour créer une liste, aucun problème, vous allez dans &quot;Me&quot; dans le <em>header</em> puis &quot;List&quot; dans la colonne de gauche pour vous retrouver ici :</p>
+<p><img alt="" class="putainde-Img" src="/twitter/twitter-list.png"></p>
+<p>Puis vous cliquez sur <code>Create list</code> et vous rentrez les informations que vous souhaitez :</p>
+<p><img alt="" class="putainde-Img" src="/twitter/create-list.png"></p>
+<p>Nous voilà avec notre belle liste. Il n&#39;y a plus qu&#39;à la remplir de jolis <em>following</em>.</p>
+<p>Prenons par exemple <code>@nodenpm</code>, un beau <em>bot</em> tweetant les nouveaux packages node.js ou/et les updates de ces packages.</p>
+<p><img alt="" class="putainde-Img" src="/twitter/nodenpm.png"></p>
+<p>Ajoutons-le à notre liste.</p>
+<p><img alt="" class="putainde-Img" src="/twitter/add-in-list.png"></p>
+<p>Nous voilà maintenant avec notre liste comprenant un <em>following</em>. Ce qui en ayant ajouté quelques comptes donnera quelque chose comme ceci :</p>
+<p><img alt="" class="putainde-Img" src="/twitter/twitter-list-read.png"></p>
+<p>Vous pouvez maintenant apprécier votre lecteur de flux.</p>
+<p>Oh mais ! C&#39;est là que vous constatez qu&#39;un de vos sites préférés n&#39;a pas de compte Twitter ! Que faire ? Haha, et si on utilisait la puissance de IFTTT pour se créer un bot twitter qui tweet chaque nouvel article d&#39;un des sites que vous appréciez ?! Mais ouais !</p>
+<h2 id="ifttt-la-solution-pour-parfaite-notre-lecteur">IFTTT, la solution pour parfaite notre lecteur</h2>
+<p>Mais avant tout, créons notre compte twitter &quot;bot&quot; qui va tweeter ce qu&#39;on souhaite.</p>
+<h3 id="compte-twitter-bot-">Compte twitter &quot;bot&quot;</h3>
+<ul>
+<li>Déconnectez-vous</li>
+<li>Inscrivez-vous à nouveau sur Twitter (le mien s&#39;appelle <a href="https://twitter.com/kud_feeds">@kud_feeds</a> par exemple)</li>
+<li>Mettez-lui une belle bio, un bel avatar</li>
+<li>Déconnectez-vous à nouveau</li>
+<li>Connectez-vous avec votre vrai compte</li>
+<li>Ajoutez votre &quot;bot&quot; à la liste que vous venez de créer précédemment</li>
+</ul>
+<p>... et voilà !</p>
+<h3 id="ifttt">IFTTT</h3>
+<p><img alt="" class="putainde-Img" src="/ifttt.png"></p>
+<p>Maintenant, IFTTT.</p>
+<blockquote>
+<p>IFTTT (&quot;If This Then That&quot;) est un service qui permet aux utilisateurs de connecter différentes applications ensemble à travers de simples conditions nommées &quot;recettes&quot;.</p>
+</blockquote>
+<p>IFTTT va vous permettre d&#39;aller pomper les flux {rss|atom} de vos sites préférés puis ayant accès à votre <em>bot</em> va permettre de tweeter le contenu des flux ! C&#39;est pas beau ça hein ?! =)</p>
+<ul>
+<li>Allez sur <a href="https://ifttt.com">ifttt.com</a></li>
+<li>Créez-vous un compte (je vous conseille de créer un compte spécialement pour le <em>bot</em> car IFTTT ne propose de relier qu&#39;un seul compte twitter. Du coup, si comme moi vous appréciez IFTTT et que vous souhaitez autant utiliser IFTTT pour votre compte twitter principal que votre compte <em>bot</em>, je vous conseille de vous créer deux comptes IFTTT)</li>
+<li>Créez une nouvelle recette en cliquant sur <code>Create</code></li>
+<li>Cliquez sur <code>this</code></li>
+<li>Puis <code>feed</code></li>
+<li>Choissisez le <em>trigger</em> (&quot;déclencheur&quot;) que vous souhaitez, moi je prends plutôt le premier <code>New feed item</code> (le plus simple)</li>
+<li>Indiquez l&#39;url du flux de votre site, par exemple <code>http://dribbble.com/_kud/shots/following.rss</code></li>
+<li>Puis <code>then</code></li>
+<li>Twitter</li>
+<li><code>Post a tweet</code></li>
+<li>Laissez tel quel le <em>template</em> de base pour le moment (vous pourrez le changer quand vous serez à l&#39;aise avec IFTTT)</li>
+<li>Mettez la description qui va bien</li>
+</ul>
+<p>Et on est bon.</p>
+<p>Vous avez maintenant une nouvelle recette qui dès qu&#39;un article sortira, un tweet de votre <em>bot</em> apparaitra. Vous pouvez d&#39;ailleurs vérifier que tout marche bien en cliquant sur la flèche <em>Check Recipe Now</em>.</p>
+<p>Vous n&#39;aurez plus qu&#39;à créer une nouvelle recette en dupliquant cette recette à chaque fois que vous voudrez suivre un nouveau flux. Certes éventuellement plus contraignant qu&#39;un vrai lecteur de flux mais vous y gagnerez largement par la suite ;)</p>
+<p>Et voilà, nous avons maintenant une belle liste Twitter qui représentre votre lecteur de flux. Voici la mienne : <a href="https://twitter.com/_kud/lists/feeds">https://twitter.com/_kud/lists/feeds</a></p>
+<p>Vous pouvez même pousser le vice en créant plusieurs listes par catégorie mais ça sous-entend aussi de créer des <em>bots</em> et donc des comptes IFTTT par catégorie. Heureusement que j&#39;en ai qu&#39;une. ;)</p>
+<p>Enjoy!</p>
+
+]]></description>
+              <pubDate>Wed, 26 Feb 2014 01:00:00 +0100</pubDate>
+              <link>http://putaindecode.fr/posts/hack/twitter-comme-lecteur-de-flux/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/hack/twitter-comme-lecteur-de-flux/</guid>
+          </item>
 
           <item>
               <title>Comment en finir avec les préfixes CSS</title>
@@ -1104,6 +1185,64 @@ routes se croiseront-elles de nouveau. Dans l&#39;intervalle, va, vis, et code !
           </item>
 
           <item>
+              <title>ExternalInterface.call() de Flash (et Backbone), toute une histoire</title>
+              <description><![CDATA[
+
+<p><img class="putainde-Img putainde-Img--left" alt="" src="/occupyflash.png" /></p>
+<p>Je voulais vous parler d&#39;un bug qui m&#39;a bien emmerdé récemment et comme j&#39;aimerais que vous ne perdiez pas de temps avec cela, un article s&#39;imposait.</p>
+<p><em>Note de la direction : j&#39;y connais rien en Flash (et je ne crois pas avoir trop envie de connaître en fait).</em></p>
+<p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu&#39;il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d&#39;un autre article. (Je dis ça à chaque fois, haha).</p>
+<h2 id="le-pitch">Le pitch</h2>
+<p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu&#39;il le souhaite afin de communiquer avec l&#39;application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l&#39;avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d&#39;évènement mais vous en avez d&#39;<a href="http://microjs.com/#event">autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
+<pre><code class="language-javascript"> <span class="cm-comment">// on crée un objet vide</span>
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
+
+<span class="cm-comment">// on lui ajoute les fonctionnalités des events Backbone</span>
+<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)</code></pre>
+<p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d&#39;évènement façon Backbone</a>. Il pourra alors s&#39;écouter lui-même, écouter un autre objet, mais aussi déclencher des évènements.</p>
+<h2 id="c-t-flash">Côté Flash</h2>
+<p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l&#39;objet <code>ExternalInterface</code> :</p>
+<pre><code class="language-javascript"><span class="cm-variable">ExternalInterface</span>.<span class="cm-property">call</span>(<span class="cm-string">&quot;window.App.FlashManager.Events.trigger&quot;</span>, <span class="cm-string">&quot;my-event&quot;</span>)
+<span class="cm-comment">// http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html#call</span></code></pre>
+<p>Et là, bug.</p>
+<h2 id="pourquoi-bug-">Pourquoi bug ?</h2>
+<p>Pour le moment, je ne sais pas vraiment. Je me pencherai plus sur le sujet dès que j&#39;ai un peu de temps, mais ce que je sais, c&#39;est que <code>ExtercalInterface.call()</code> ne s&#39;attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l&#39;<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153">objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur.</p>
+<h2 id="la-solution-c-t-javascript">La solution côté JavaScript</h2>
+<p>Pour contrer cela, je vous propose la solution suivante qui est de ne pas utiliser directement l&#39;objet <code>Backbone.Events|View</code> mais plutôt de passer par une interface, un objet proxy.</p>
+<p>Voici le schéma :</p>
+<ul>
+<li>Créer un objet simple qui contient les mêmes noms de méthodes que les objets évènements <strong>Backbone.js</strong> (en gros, se mapper sur l&#39;API Backbone)</li>
+<li>Utiliser <strong>Backbone.js</strong> dans les méthodes de cet objet <em>Proxy</em></li>
+</ul>
+<p>Exemple :</p>
+<pre><code class="language-javascript"><span class="cm-comment">// Bridge between flash and js</span>
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span> = {}
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
+
+<span class="cm-comment">// Backbone events used for Flash</span>
+<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span> = {}
+<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span> = {}
+
+<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)
+
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span> = <span class="cm-keyword">function</span>(<span class="cm-def">name</span>, <span class="cm-def">opts</span>) {
+    <span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span>(<span class="cm-variable-2">name</span>, <span class="cm-variable-2">opts</span>)
+
+    <span class="cm-comment">// Must return nothing not to loop JavaScript engine, important!</span>
+    <span class="cm-keyword">return</span>
+}</code></pre>
+<h2 id="oh-et-">Oh et...</h2>
+<p>...il existe une version ayant plus ou moins le même souci que moi disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript retourne quelque chose de simple (un objet ayant que des atributs, pas de fonctions, ou encore un bouléen ou un <em>integer</em>).</p>
+
+]]></description>
+              <pubDate>Thu, 05 Dec 2013 01:00:00 +0100</pubDate>
+              <link>http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</guid>
+          </item>
+
+          <item>
               <title>De jQuery à Vanilla JS</title>
               <description><![CDATA[
 
@@ -1255,64 +1394,6 @@ routes se croiseront-elles de nouveau. Dans l&#39;intervalle, va, vis, et code !
               <pubDate>Thu, 05 Dec 2013 01:00:00 +0100</pubDate>
               <link>http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/</link>
               <guid isPermaLink="true">http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/</guid>
-          </item>
-
-          <item>
-              <title>ExternalInterface.call() de Flash (et Backbone), toute une histoire</title>
-              <description><![CDATA[
-
-<p><img class="putainde-Img putainde-Img--left" alt="" src="/occupyflash.png" /></p>
-<p>Je voulais vous parler d&#39;un bug qui m&#39;a bien emmerdé récemment et comme j&#39;aimerais que vous ne perdiez pas de temps avec cela, un article s&#39;imposait.</p>
-<p><em>Note de la direction : j&#39;y connais rien en Flash (et je ne crois pas avoir trop envie de connaître en fait).</em></p>
-<p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu&#39;il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d&#39;un autre article. (Je dis ça à chaque fois, haha).</p>
-<h2 id="le-pitch">Le pitch</h2>
-<p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu&#39;il le souhaite afin de communiquer avec l&#39;application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l&#39;avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d&#39;évènement mais vous en avez d&#39;<a href="http://microjs.com/#event">autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
-<pre><code class="language-javascript"> <span class="cm-comment">// on crée un objet vide</span>
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
-
-<span class="cm-comment">// on lui ajoute les fonctionnalités des events Backbone</span>
-<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)</code></pre>
-<p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d&#39;évènement façon Backbone</a>. Il pourra alors s&#39;écouter lui-même, écouter un autre objet, mais aussi déclencher des évènements.</p>
-<h2 id="c-t-flash">Côté Flash</h2>
-<p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l&#39;objet <code>ExternalInterface</code> :</p>
-<pre><code class="language-javascript"><span class="cm-variable">ExternalInterface</span>.<span class="cm-property">call</span>(<span class="cm-string">&quot;window.App.FlashManager.Events.trigger&quot;</span>, <span class="cm-string">&quot;my-event&quot;</span>)
-<span class="cm-comment">// http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html#call</span></code></pre>
-<p>Et là, bug.</p>
-<h2 id="pourquoi-bug-">Pourquoi bug ?</h2>
-<p>Pour le moment, je ne sais pas vraiment. Je me pencherai plus sur le sujet dès que j&#39;ai un peu de temps, mais ce que je sais, c&#39;est que <code>ExtercalInterface.call()</code> ne s&#39;attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l&#39;<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153">objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur.</p>
-<h2 id="la-solution-c-t-javascript">La solution côté JavaScript</h2>
-<p>Pour contrer cela, je vous propose la solution suivante qui est de ne pas utiliser directement l&#39;objet <code>Backbone.Events|View</code> mais plutôt de passer par une interface, un objet proxy.</p>
-<p>Voici le schéma :</p>
-<ul>
-<li>Créer un objet simple qui contient les mêmes noms de méthodes que les objets évènements <strong>Backbone.js</strong> (en gros, se mapper sur l&#39;API Backbone)</li>
-<li>Utiliser <strong>Backbone.js</strong> dans les méthodes de cet objet <em>Proxy</em></li>
-</ul>
-<p>Exemple :</p>
-<pre><code class="language-javascript"><span class="cm-comment">// Bridge between flash and js</span>
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span> = {}
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
-
-<span class="cm-comment">// Backbone events used for Flash</span>
-<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span> = {}
-<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span> = {}
-
-<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)
-
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span> = <span class="cm-keyword">function</span>(<span class="cm-def">name</span>, <span class="cm-def">opts</span>) {
-    <span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span>(<span class="cm-variable-2">name</span>, <span class="cm-variable-2">opts</span>)
-
-    <span class="cm-comment">// Must return nothing not to loop JavaScript engine, important!</span>
-    <span class="cm-keyword">return</span>
-}</code></pre>
-<h2 id="oh-et-">Oh et...</h2>
-<p>...il existe une version ayant plus ou moins le même souci que moi disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
-<h2 id="conclusion">Conclusion</h2>
-<p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript retourne quelque chose de simple (un objet ayant que des atributs, pas de fonctions, ou encore un bouléen ou un <em>integer</em>).</p>
-
-]]></description>
-              <pubDate>Thu, 05 Dec 2013 01:00:00 +0100</pubDate>
-              <link>http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</link>
-              <guid isPermaLink="true">http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</guid>
           </item>
 
           <item>
