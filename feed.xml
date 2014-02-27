@@ -5,8 +5,316 @@
         <description>On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</description>
         <link>http://putaindecode.fr/</link>
         <generator>happyplan 0.4.0-beta.6</generator>
-        <lastBuildDate>Wed, 26 Feb 2014 00:00:00 +0100</lastBuildDate>
+        <lastBuildDate>Thu, 27 Feb 2014 00:00:00 +0100</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml" />
+
+          <item>
+              <title>Git, boutez les bugs, domptez votre historique!</title>
+              <description><![CDATA[
+
+<p>Vous viendez de lire l&#39;<a href="/posts/git/versionner-avec-git/">article de madx</a> sur le gestionnaire
+de version Git et vous vous dites que vous aimeriez en découvrir plus! Vous l&#39;utilisez déjà mais êtes
+en quête de quelques nouvelles (ou pas) astuces à vous mettre sous la dent! Bienvenue!</p>
+<p>Si vous désirez vous servir de cet article comme d&#39;un tutoriel il est recommandé d&#39;avoir quelques
+bases concernant l&#39;utilisation et le fonctionnement de Git (commits/branches/etc…).</p>
+<p>Allez, je ne vous fais pas plus attendre, voici ma liste des fonctionnalités Git dont je ne
+saurais plus me passer:</p>
+<h2 id="git-lg-l-alias-qui-vous-parle-d-histoire">git lg, l&#39;alias qui vous parle d&#39;Histoire</h2>
+<p>À l&#39;aide, à l&#39;aide je ne comprends plus rien à l&#39;historique de mon dépôt Git!
+J&#39;ai créé un monstre… Pas de panique! J&#39;ai pour vous l&#39;alias qu&#39;il vous faut,
+honteusement pompé de <a href="https://coderwall.com/p/euwpig">ce site</a>, mais
+comme j&#39;ai pas d&#39;honneur… Pour le mettre en place il suffit d&#39;entrer la commande
+suivante dans votre terminal préféré:</p>
+<pre><code class="language-bash"><span class="cm-def">$ git</span> config <span class="cm-attribute">--global</span> alias.lg <span class="cm-string">&quot;log --color --graph --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit&quot;</span></code></pre>
+<p>Au cas où vous ne seriez pas à l&#39;aise avec ce genre de choses, sachez simplement que la commande
+<code>git config --global alias.lg</code> permet d&#39;inscrire à votre configuration générale un nouvel alias (
+ici lg). Le reste est ce que doit faire cet alias, à savoir afficher un historique reformaté de votre
+dépôt Git.</p>
+<p>Allez, je vous met au défi d&#39;oser taper un coup de <code>git lg</code> dans votre terminal
+maintenant (dans un dépôt Git bien entendu banane). Pour l&#39;exemple, je l&#39;ai réalisé dans le dépôt
+de Putain De Code:</p>
+<figure>
+  <img src="/posts/git/boutez-les-bugs-domptez-votre-historique/omagad-history.png" alt="capture historique">
+  <figcaption>Le pouvoir de l&#39;arc en ciel</figcaption>
+</figure>
+
+<p>Eh oui, sous vos yeux ébahis se dessine maintenant l&#39;historique de votre dépôt!
+Tout y est: créations de branches, commits, merges, les miaouOnes… Voilà, vous ne pourrez plus
+dire que vous n&#39;y comprenez rien, vous seriez un fieffé menteur.</p>
+<h2 id="git-bisect-trouver-et-punir">git bisect, trouver et punir</h2>
+<p>S&#39;il y a bien quelque chose d&#39;agaçant dans l&#39;activité de développement, c&#39;est que bien
+souvent on est amené à travailler en équipe, et évidemment, il y en a toujours
+un pour introduire des Putain De Bugs. Alors c&#39;est parti on sort le débugger pour
+l&#39;autre ingrat, on place les <code>console.log</code> et autres <code>var_dump()</code> pour trouver d&#39;où
+peut bien venir ce fichu problème, et on se coule un café parce qu&#39;entre nous, ça peut
+prendre du temps.</p>
+<p>Heureusement pour nous, là aussi Git est au rendez-vous avec sa fonctionnalité de <em>bisecting</em>. Je vous vois déjà en
+train de baver devant votre écran, mais non, Git ne va pas corriger vos bugs bien évidemment, il va vous aider
+à trouver le changement dans le code qui l&#39;a fait apparaître et ceci grâce à la commande <code>git bisect</code>.</p>
+<p>Pour lancer une <em>bisection</em> par Git il suffit d&#39;entrer <code>git bisect start</code> dans votre terminal préféré
+et le tour est joué!</p>
+<pre><code class="language-bash"><span class="cm-def">$ git</span> bisect <span class="cm-builtin">start</span>
+<span class="cm-def">$</span></code></pre>
+<figure>
+    <figcaption> Capitaine, regardez il n&#39;y a rien </figcaption>
+</figure>
+
+<p>Oui bon d&#39;accord, il va falloir s&#39;investir un peu plus pour parvenir à nos fins. Pour l&#39;instant Git est
+passé en mode <em>bisection</em>, maintenant il a besoin d&#39;informations pour s&#39;exécuter:</p>
+<ul>
+<li>Un commit où le bug est présent</li>
+<li>Un commit où le bug est absent</li>
+</ul>
+<p>Imaginons que le commit sur lequel nous sommes comporte le bug, nous allons donc le signaler à Git avec
+<code>git bisect bad</code>. Nous allons ensuite nous déplacer sur un commit plus ancien qui ne comporte pas le bug et
+le signaler à son tour: <code>git bisect good</code>.</p>
+<p>Git va alors se mettre en route et vous déplacer automatiquement de commit en commit. Pour chacun d&#39;eux vous n&#39;aurez
+qu&#39;à le déclarer bon ou mauvais comme expliqué au dessus, jusqu&#39;à ce que Git vous fournisse le premier commit
+comportant le bug, celui dont le changement a révélé le disfonctionnement.</p>
+<pre><code class="language-bash"><span class="cm-def">$ git</span> bisect bad
+1082351d9157e98aed1bbee8b9ad6deedca1288f is the first bad commit
+commit 1082351d9157e98aed1bbee8b9ad6deedca1288f
+Author: Maxime Thirouin &lt;m@***.io&gt;
+Date:   Fri Jan <span class="cm-number">17</span> <span class="cm-number">08</span>:19:46 <span class="cm-number">2014</span> <span class="cm-operator">+</span>0100
+
+    ¯\_(ツ)_/¯ Fix shit bring <span class="cm-keyword">in</span> 34a44c98048f2b74fc2dd20f0be807c1e23e8b58
+
+:040000 <span class="cm-number">040000</span> 7a5d5010f0aaa052ffdc0747b182dc6178a346db d3562872efd1b9d662a89825a3070d64f860cc34 M  src</code></pre>
+<figure>
+    <figcaption>1, 2, 3, Soleil!</figcaption>
+</figure>
+
+<p>Et voilà, le tour est joué, en plus Git vous a positionné sur ce commit, il ne manque plus qu&#39;un petit coup de
+<code>git show</code> et vous savez tout. Pour revenir à votre travail, un simple <code>git bisect reset</code> fera l&#39;affaire!
+Il ne vous reste plus qu&#39;à punir la personne fautive, mais pour ça je vous laisse avec votre imagination,
+je suis sûr que vous trouverez.</p>
+<p>Pour les fanatiques de l&#39;efficacité et de l&#39;automatisation, sachez que Git en a encore dans le ventre. Si vous
+connaissez déjà un bon et un mauvais commit, vous pouvez tout simplement lancer la <em>bissection</em> à grand coup de
+<code>git bisect start MAUVAIS_COMMIT BON_COMMIT</code> et si, cerise sur le gâteau, vous êtes en possession d&#39;une suite de tests
+unitaires (oui non je sais faut pas déconner), <code>git bisect run &lt;votre_script&gt;</code> vous permettra de la lancer et la
+recherche du premier commit défectueux se fera alors toute seule!</p>
+<h2 id="git-rebase-du-pur-story-telling">git rebase, du pur story-telling</h2>
+<p>Je ne sais pas s&#39;il vous est déjà arrivé de naviguer dans les dépôts Git de projets libres, mais souvent on y trouve que très
+peu de commits poubelles, ces commits avec comme message &quot;step&quot; ou autre &quot;stuff&quot;. Chaque commit correspond à une fonctionnalité,
+un bug fix, une unité logique cohérente. Je ne sais pas pour vous, mais personnellement un <em>git log</em> ne ressemble pas à
+ça chez moi!</p>
+<pre><code>commit e739e7c0248b841b0250eb85d99a1b4ba149149d
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+Date:   Tue Feb 18 21:39:50 2014 +0100
+
+    Now my new functionality finally works
+
+commit 551b243525d826afcfece3e2c4c471ebd1e91779
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+Date:   Tue Feb 18 21:39:23 2014 +0100
+
+    misc
+
+commit 9db49a39fdb05a54adcfc2b46832818ef05b9c72
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+Date:   Tue Feb 18 21:38:43 2014 +0100
+
+    stuff
+
+commit ca4ff952310d6246216e83f49309b32b2d2fa010
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+Date:   Tue Feb 18 21:38:35 2014 +0100
+
+    first commit</code></pre>
+<figure>
+    <figcaption>best git log, ever</figcaption>
+</figure>
+
+<p>Bien que l&#39;on essaye de nous faire croire que les logiciels libres sont codés par des rockstars, ce qui permet de justifier le
+mythe du <em>1 commit = 1 fonctionnalité</em>, vous n&#39;êtes pas dupes; l&#39;historique Git de ces dépôts est bel et bien retravaillé, et ceci dans
+le but de maintenir sa cohérence et de permettre à tous les contributeurs de le comprendre. Si cela s&#39;applique particulièrement
+dans le cadre des logiciels libres, il n&#39;en est pas moins satisfaisant d&#39;avoir également un historique clair sur ses propres dépôts.</p>
+<p>Pour cela, l&#39;arme de choix s&#39;appelle <code>git rebase</code>. Cette fonctionnalité permet de réécrire l&#39;historique de vos dépôts, de
+réorganiser les commits, d&#39;en supprimer, de changer leur message associé etc… La fonctionnalité est assez simple à utiliser, nous allons
+prendre exemple sur l&#39;historique présenté ci-dessus: je voudrais supprimer le commit dont le message est &#39;stuff&#39; parce que finalement il
+s&#39;avère inutile. Je veux également fusionner le commit &#39;misc&#39; avec le commit &#39;Now my new functionality finally works&#39; et renommer ce dernier
+pour qu&#39;il soit plus explicite et fasse référence à ma User Story correspondante dans mon outil de tracking préféré.</p>
+<p>Pour commencer, il faut dire jusqu&#39;à quel commit on souhaite effectuer cette réécriture; pour cela, dans mon cas, deux solutions:</p>
+<ul>
+<li>Faire référence à partir de HEAD (l&#39;étiquette courante), ici: HEAD~3 (je veux réécrire jusqu&#39;au commit avant &#39;stuff&#39;)</li>
+<li>Fournir le SHA1 du commit avant &#39;stuff&#39; (ici 2645b1cdbdd72bea6c392c011320556997327761)</li>
+</ul>
+<p>Je vais utiliser la première méthode (le choix n&#39;influe en rien sur la suite), et donc lancer la réécriture en invoquant la commande: <code>git rebase -i HEAD~3</code>
+( -i voulant dire de lancer un <em>rebase</em> en mode intéractif). Voici ce qui m&#39;est alors présenté:</p>
+<pre><code>pick 9db49a3 stuff
+pick 551b243 misc
+pick e739e7c Now my new functionality finally works
+
+# Rebase ca4ff95..e739e7c onto ca4ff95
+#
+# Commands:
+#  p, pick = use commit
+#  r, reword = use commit, but edit the commit message
+#  e, edit = use commit, but stop for amending
+#  s, squash = use commit, but meld into previous commit
+#  f, fixup = like &quot;squash&quot;, but discard this commit&#39;s log message
+#  x, exec = run command (the rest of the line) using shell
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+# Note that empty commits are commented out</code></pre>
+<p>Git m&#39;affiche tous les commits concernés par l&#39;opération (en ordre inverse), devant chacun d&#39;eux, la mention <em>pick</em>, et une légende en bas.
+<em>pick</em>, comme l&#39;indique la légende, signifie que ce commit sera conservé, mais je peux remplacer cette mention par les suivantes:</p>
+<ul>
+<li>reword : modifier le message de commit.</li>
+<li>edit : utiliser le commit mais me laisser le modifier avec un <code>git commit --amend</code> qui permet de commiter l&#39;état courant de la copie de travail en
+l&#39;incorporant au commit précédent.</li>
+<li>squash : utiliser le commit en le fusionnant avec le commit précédent.</li>
+<li>fixup : utiliser le commit en le fusionnant avec le commit précédent et ne pas utiliser son message associé.</li>
+<li>exec : exécuter une commande sur ce commit.</li>
+</ul>
+<p>En plus de ces différentes mentions, je peux également effectuer deux autres actions:</p>
+<ul>
+<li>déplacer un commit, ce qui aura pour effet final de le déplacer dans l&#39;historique.</li>
+<li>supprimer un commit, ce qui aura comme résultat de le faire disparaître de l&#39;historique.</li>
+</ul>
+<p>Pour ma part, je vais:</p>
+<ul>
+<li>supprimer la première ligne parce que j&#39;ai décidé que le commit &#39;stuff&#39; ne me servait à rien.</li>
+<li>mettre la mention reword devant le commit &#39;misc&#39;, car je vais fusionner le dernier commit avec celui-ci et mettre un nouveau message.</li>
+<li>mettre la mention fixup devant le commit &#39;Now my new functionality finally works&#39; car je vais le fusionner au précédent et abandonner son message.</li>
+</ul>
+<p>Ce qui nous donne le résultat suivant:</p>
+<pre><code>reword 551b243 misc
+fixup e739e7c Now my new functionality finally works
+
+# Rebase ca4ff95..e739e7c onto ca4ff95
+#
+# Commands:
+#  p, pick = use commit
+#  r, reword = use commit, but edit the commit message
+#  e, edit = use commit, but stop for amending
+#  s, squash = use commit, but meld into previous commit
+#  f, fixup = like &quot;squash&quot;, but discard this commit&#39;s log message
+#  x, exec = run command (the rest of the line) using shell
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+# Note that empty commits are commented out</code></pre>
+<figure>
+    <figcaption>Attention chérie, ça va trancher</figcaption>
+</figure>
+
+<p>Il n&#39;y a plus qu&#39;à sauvegarder et quitter (:x dans vim) pour que la machine se mette en route. Si certaines actions que vous avez effectuées, notamment
+le déplacement de commits, provoquent des conflits, Git va vous demander de les résoudre au fur et à mesure; il suffit pour cela d&#39;éditer vos fichiers, puis
+de les marquer comme résolus au moyen de la commande <code>git add &lt;lefichier&gt;</code> avant de reprendre avec la commande <code>git rebase --continue</code>. Comme convenu,
+Git vous demande d&#39;éditer le message du commit marqué en <em>reword</em>:</p>
+<pre><code>Story #34 - Poker cards now have a real back picture
+
+# Please enter the commit message for your changes. Lines starting
+# with &#39;#&#39; will be ignored, and an empty message aborts the commit.
+# HEAD detached at ca4ff95
+# You are currently rebasing branch &#39;master&#39; on &#39;ca4ff95&#39;.
+#   (all conflicts fixed: run &quot;git rebase --continue&quot;)
+#
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+# modified:   README.txt
+#</code></pre>
+<figure>
+    <figcaption>Un commit qu&#39;il est mieux pour le relire</figcaption>
+</figure>
+
+<p>L&#39;opération va continuer puis Git va vous rendre la main. Il vous suffit alors de faire un <code>git log</code> pour apprécier le résultat:</p>
+<pre><code>commit 481b4dccf4fedf4ed9d7f4e83ae5c19a07f7e12e
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+Date:   Tue Feb 18 21:39:23 2014 +0100
+
+    Story #34 - Poker cards now have a real back picture</code></pre>
+<figure>
+    <figcaption>Et c&#39;est le succèèèèèèès</figcaption>
+</figure>
+
+<p>Vous n&#39;avez plus qu&#39;un seul commit tout beau tout propre! Vous pouvez maintenant le pousser sur votre dépôt et vous vanter d&#39;avoir un bel historique, parce
+que vous aussi, vous êtes une rockstar :).</p>
+<p>Pour ceux qui désirent aller encore plus loin dans l&#39;automatisation de ce processus de rebase, je vous conseille d&#39;aller jeter un œil à l&#39;utilisation
+de l&#39;option <a href="!http://madx.me/articles/git_rebase_autosquash.html">--autosquash</a>.</p>
+<h2 id="git-reflog-la-commande-de-celui-qui-a-fait-n-importe-quoi">git reflog, la commande de celui qui a fait n&#39;importe quoi</h2>
+<p>Voici venu le temps <del>des rires et des chants</del> de la denière commande que je souhaitais vous présenter, j&#39;ai nommé <code>git reflog</code>. Cette commande
+c&#39;est votre <em>joker</em>, elle assure votre survie, notamment si vous avez été assez zinzins pour suivre les exemples donnés dans cet article, parce
+que honnêtement…</p>
+<figure>
+    <img src="http://i1.kym-cdn.com/photos/images/newsfeed/000/305/224/3e1.jpg" alt="I have no idea what I&#39;m doing">
+</figure>
+
+<p>Vous ne le savez peut être pas, mais Git, dans sa grande bonté, garde une référence de toutes vos actions, de tous les endroits où vous vous êtes déplacez.
+Ce registre, c&#39;est le <em>references log</em>, et en plus on peut y accéder simplement grâce à la commande <code>git reflog</code> (sans déconner). Faisons un petit tour
+dans le miens:</p>
+<pre><code>481b4dc HEAD@{0}: rebase -i (finish): returning to refs/heads/master
+481b4dc HEAD@{1}: rebase -i (fixup): Story #34 - Poker cards now have a real back picture
+8fd5835 HEAD@{2}: rebase -i (continue): Story #34 - Poker cards now have a real back picture
+ca4ff95 HEAD@{3}: checkout: moving from master to ca4ff952310d6246216e83f49309b32b2d2fa010
+e739e7c HEAD@{4}: rebase -i (finish): returning to refs/heads/master
+e739e7c HEAD@{5}: checkout: moving from master to e739e7c
+e739e7c HEAD@{6}: rebase -i (finish): returning to refs/heads/master
+e739e7c HEAD@{7}: checkout: moving from master to e739e7c
+e739e7c HEAD@{8}: rebase -i (finish): returning to refs/heads/master
+e739e7c HEAD@{9}: checkout: moving from master to e739e7c
+e739e7c HEAD@{10}: rebase -i (finish): returning to refs/heads/master
+e739e7c HEAD@{11}: checkout: moving from master to e739e7c
+e739e7c HEAD@{12}: commit: Now my new functionality finally works
+551b243 HEAD@{13}: commit: misc
+9db49a3 HEAD@{14}: commit (amend): stuff
+af7fc36 HEAD@{15}: commit: misc
+ca4ff95 HEAD@{16}: commit (initial): first commit</code></pre>
+<figure>
+    <figcaption>Il est beau mon reflog, il est frais</figcaption>
+</figure>
+
+<p>On voit ici l&#39;ensemble de mes opérations apparaître comme le <em>rebase</em> effectué précédemment (bon d&#39;accord il apparaît plusieurs fois parce que j&#39;ai
+fait quelques tests avant d&#39;écrire cette partie de l&#39;article). Chaque opération possède un SHA1 qui est en fait une référence vers le commit concerné, dans l&#39;état
+dans lequel il était au moment de l&#39;opération. Bien, imaginons que j&#39;ai fait n&#39;importe quoi avec le rebase et que je veuille retrouver mon état précédent, et bien
+il me suffira ici de faire un <code>git checkout e739e7c</code> (dans votre cas la ligne sera probablement plus simple à trouver). Et là si je refais un <code>git log</code>, miracle:</p>
+<pre><code>commit e739e7c0248b841b0250eb85d99a1b4ba149149d
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+Date:   Tue Feb 18 21:39:50 2014 +0100
+
+    Now my new functionality finally works
+
+commit 551b243525d826afcfece3e2c4c471ebd1e91779
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+Date:   Tue Feb 18 21:39:23 2014 +0100
+
+    misc
+
+commit 9db49a39fdb05a54adcfc2b46832818ef05b9c72
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+Date:   Tue Feb 18 21:38:43 2014 +0100
+
+    stuff
+
+commit ca4ff952310d6246216e83f49309b32b2d2fa010
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+Date:   Tue Feb 18 21:38:35 2014 +0100
+
+    first commit</code></pre>
+<p>Vous voilà retombés sur vos pieds! Vous n&#39;avez plus qu&#39;à reconnecter votre branche à ce commit si jamais vous en aviez une et vous êtes reparti pour de nouvelles
+aventures.</p>
+<p>Sachez tout de même que ce <em>references log</em> peut être effacé, et il est même conseillé de le faire régulièrement pour des problématiques de performance de Git sur
+votre dépôt; conserver tous ces commits peut devenir coûteux à la longue. La commande <code>git gc</code> pour <em>garbage collector</em> s&#39;occupera de faire le ménage
+pour vous.</p>
+<p>Voilà, on arrive au bout de notre aventure, j&#39;espère que vous avez appris quelque chose et que Git vous fait maintenant moins peur.</p>
+<p>Amike,</p>
+
+]]></description>
+              <pubDate>Thu, 27 Feb 2014 01:00:00 +0100</pubDate>
+              <link>http://putaindecode.fr/posts/git/boutez-les-bugs-domptez-votre-historique/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/git/boutez-les-bugs-domptez-votre-historique/</guid>
+          </item>
 
           <item>
               <title>Twitter comme lecteur de flux</title>
@@ -23,7 +331,7 @@
 De plus, étant donné que l&#39;information est donnée par mes <em>following</em> et que je suis les personnes qui m&#39;intéressent vraiment, l&#39;information est alors souvent pertinente. Encore faut-il avoir la bonne TL.
 Et  si j&#39;ai besoin d&#39;aller chercher une information précise, j&#39;irai la trouver à travers un moteur de recherche... donc aucune problématique de &quot;neutralité&quot; de l&#39;information.</p>
 </li>
-<li><p>De plus, étant donné que je fais justement cette veille via Twitter, cela me permet d&#39;avoir qu&#39;un seul outil. Cela m&#39;ennuie au plus au point de collectionner les outils. Je suis certes partisant d&#39;utiliser le bon outil pour chaque tâche plutôt qu&#39;un couteau-suisse, mais finalement Twitter et un lecteur de flux ne sont pas si éloignés.</p>
+<li><p>De plus, étant donné que je fais justement cette veille via Twitter, cela me permet d&#39;avoir qu&#39;un seul outil. Cela m&#39;ennuie au plus haut point de collectionner les outils. Je suis certes partisant d&#39;utiliser le bon outil pour chaque tâche plutôt qu&#39;un couteau-suisse, mais finalement Twitter et un lecteur de flux ne sont pas si éloignés.</p>
 </li>
 <li><p>Enfin, la majorité des blogs / sites que j&#39;apprécie ont leur propre compte twitter qui postent l&#39;url de leurs articles, il suffit alors de les suivre. Et si ce n&#39;est pas le cas, je vous montrerai une petite astuce pour que ça le soit.</p>
 </li>
@@ -216,74 +524,6 @@ Mais ça, je vous en parle la prochaine fois ;)</p>
           </item>
 
           <item>
-              <title>Sublime Text en tant qu&#x27;éditeur Markdown</title>
-              <description><![CDATA[
-
-<p>La vie de développeur n&#39;est jamais facile. Tu souhaites faire quelque chose de précis et tu te retrouves à faire totalement autre chose, <em>patchant</em> ci ou tu as découvert ça.</p>
-<p>Typiquement, j&#39;étais tranquillement en train d&#39;écrire un article pour <strong>p!</strong> qui n&#39;avait rien à voir avec celui actuel, et je me retrouve à personnaliser mon Sublime Text pour Markdown car ne souhaitant plus utiliser autre chose que celui-ci pour l&#39;écriture.</p>
-<p>Il y a certes le très bon <a href="http://mouapp.com/">Mou.app</a> (<code>$ brew cask install mou</code>) sur Mac OS X mais comme indiqué, il n&#39;est que pour Mac, or il m&#39;arrive parfois d&#39;être sur Windows.
-De plus, les éditeurs en ligne comme <a href="https://stackedit.io/">stackedit.io</a> ou <a href="http://dillinger.io/">dillinger.io</a> sont pratiques mais comme j&#39;ai tendance à stocker mes brouillons sur <a href="https://db.tt/nTkiSUb">dropbox</a>, ces outils vous demandent l&#39;accès de toute votre dropbox, chose que je n&#39;aime pas spécialement.</p>
-<p>Bref, tout ça pour dire que tout centraliser sur Sublime Text et utiliser dropbox pour écrire des articles me semble une pratique plutôt agréable.</p>
-<p>Pour cela, quittez totalement vos éditeurs Markdown et installez les plugins Sublime Text qui vont bien.</p>
-<h2 id="markdownediting">MarkdownEditing</h2>
-<p>Premièrement, <a href="http://ttscoff.github.io/MarkdownEditing/">MarkdownEditing</a>, ce petit plugin est votre parfait compagnon qui vous permettra d&#39;avoir la bonne coloration syntaxique de votre Markdown. Il vous permettra de mettre en évidence les liens, le code, et tout le reste. Du bonheur donc.</p>
-<p><img alt="" class="putainde-Img" src="/preview-markdownediting.png"></p>
-<p>Oui alors, j&#39;ai fait quelques configurations car à la base, ca ressemble plutôt à ça :</p>
-<p><img alt="" class="putainde-Img" src="/preview-markdownediting-light.png"></p>
-<p>Si vous souhaitez modifier Sublime Text mais uniquement pour le format Markdown, faites : <code>Preferences &gt; Browse Packages...</code> puis aller dans <code>User</code> et créez un fichier <code>Markdown.sublime-settings</code>. Celui-ci sera lu et appliqué à chaque fois que vous éditerez un fichier Markdown.</p>
-<p>Voici ce que j&#39;ai pour le moment :</p>
-<pre><code>{
-  &quot;color_scheme&quot;: &quot;Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme&quot;,
-  &quot;enable_table_editor&quot;: true,
-  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,
-  &quot;tab_size&quot;: 2,
-  &quot;extensions&quot;:
-  [
-    &quot;mdown&quot;,
-    &quot;txt&quot;,
-    &quot;md&quot;
-  ]
-}</code></pre>
-<p>Le thème <code>dark</code> pour pas se niquer les yeux (coucou <a href="https://twitter.com/bloodyowl">@bloodyowl</a>), j&#39;active aussi d&#39;autres plugins dont je vais vous parler d&#39;ici peu, j&#39;affecte le spacing à <code>2</code>, et je déclare que j&#39;utiliserai l&#39;éditeur Markdown pour ce genre de fichiers : <code>.mdown</code>, <code>.txt</code>, <code>.md</code>.</p>
-<p>Bien, passons à la suite.</p>
-<h2 id="markdown-preview">Markdown Preview</h2>
-<p>Notre cher <a href="https://twitter.com/revolunet">@revolunet</a> a fait un excellent plugin Markdown pour Sublime Text: <a href="https://github.com/revolunet/sublimetext-markdown-preview">Sublime Text Markdown Preview</a>. Celui-ci permet d&#39;avoir un rendu de votre Markdown en <code>.html</code>. Vous pouvez soit compiler votre Markdown pour créer un fichier HTML, soit l&#39;ouvrir directement dans votre navigateur.</p>
-<p>Différents formats disponibles :</p>
-<ul>
-<li>Python Markdown</li>
-<li>Github Flavored Markdown</li>
-</ul>
-<p>Un autre parfait compagnon en somme, qui quant à lui s&#39;occupera de digérer l&#39;excellent article que vous êtes en train d&#39;écrire.</p>
-<p>Je vous parlerai éventuellement un jour de <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> qui permet de faire ce genre de choses mais en un peu plus complet et générique (Sublime Text n&#39;est pas nécessaire) mais c&#39;est un poil plus complexe. Jettez-y un œil tout de même.</p>
-<h2 id="smartmarkdown">SmartMarkdown</h2>
-<p><a href="https://github.com/demon386/SmartMarkdown">Petit plugin</a> intéressant qui vous permettra de cacher des parties de votre texte en le repliant. Par exemple, vous vous mettez devant un titre du style <code>##</code> et vous appuyez sur <code>tab</code>, cela repliera votre texte. Plutôt pratique pour se focaliser.</p>
-<p><img alt="" class="putainde-Img" src="/preview-smartmarkdown.png"></p>
-<h2 id="sublimetableeditor">SublimeTableEditor</h2>
-<p>Précédemment dans ma configuration Markdown, vous avez pu voir ceci :</p>
-<pre><code>  &quot;enable_table_editor&quot;: true,
-  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,</code></pre>
-<p>Cela permet de configurer <a href="https://github.com/vkocubinsky/SublimeTableEditor">SublimeTableEditor</a> qui vous permettra de correctement aligner vos tableaux dans Markdown.</p>
-<p>Et voilà. Avec tout ceci, vous êtes paré(e) à écrire votre Markdown dans de bonnes conditions. Plus qu&#39;à mettre du Jazz et vous préparer une tasse de thé et c&#39;est parti.</p>
-<h2 id="bonus-markdown-extended">Bonus : Markdown Extended</h2>
-<p>Il est possible que vous n&#39;aimiez pas forcément MarkdownEditing, et dans ce cas je vous propose un autre plugin pas inintéressant non plus s&#39;appelant <a href="https://github.com/jonschlinkert/sublime-markdown-extended">Markdown Extended</a>. Il vous permettra d&#39;avoir la bonne coloration syntaxique lorsque vous écrivez du code dans votre éditeur.</p>
-<h4 id="avant">Avant</h4>
-<p><img alt="" class="putainde-Img" src="/preview-markdownextended-before.png"></p>
-<h4 id="apr-s">Après</h4>
-<p><img alt="" class="putainde-Img" src="/preview-markdownextended-after.png"></p>
-<p>Oh et j&#39;oubliais, voici quelques documentations sur Markdown histoire de bien l&#39;utiliser :</p>
-<ul>
-<li><a href="http://daringfireball.net/projects/markdown/syntax">Documentation officielle</a></li>
-<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></li>
-<li><a href="http://warpedvisions.org/projects/markdown-cheat-sheet.md">Another Markdown Cheatsheet</a></li>
-</ul>
-
-]]></description>
-              <pubDate>Thu, 20 Feb 2014 01:00:00 +0100</pubDate>
-              <link>http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</link>
-              <guid isPermaLink="true">http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</guid>
-          </item>
-
-          <item>
               <title>La puissance de dnsmasq</title>
               <description><![CDATA[
 
@@ -426,6 +666,74 @@ $ sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist</code><
               <pubDate>Thu, 20 Feb 2014 01:00:00 +0100</pubDate>
               <link>http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</link>
               <guid isPermaLink="true">http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</guid>
+          </item>
+
+          <item>
+              <title>Sublime Text en tant qu&#x27;éditeur Markdown</title>
+              <description><![CDATA[
+
+<p>La vie de développeur n&#39;est jamais facile. Tu souhaites faire quelque chose de précis et tu te retrouves à faire totalement autre chose, <em>patchant</em> ci ou tu as découvert ça.</p>
+<p>Typiquement, j&#39;étais tranquillement en train d&#39;écrire un article pour <strong>p!</strong> qui n&#39;avait rien à voir avec celui actuel, et je me retrouve à personnaliser mon Sublime Text pour Markdown car ne souhaitant plus utiliser autre chose que celui-ci pour l&#39;écriture.</p>
+<p>Il y a certes le très bon <a href="http://mouapp.com/">Mou.app</a> (<code>$ brew cask install mou</code>) sur Mac OS X mais comme indiqué, il n&#39;est que pour Mac, or il m&#39;arrive parfois d&#39;être sur Windows.
+De plus, les éditeurs en ligne comme <a href="https://stackedit.io/">stackedit.io</a> ou <a href="http://dillinger.io/">dillinger.io</a> sont pratiques mais comme j&#39;ai tendance à stocker mes brouillons sur <a href="https://db.tt/nTkiSUb">dropbox</a>, ces outils vous demandent l&#39;accès de toute votre dropbox, chose que je n&#39;aime pas spécialement.</p>
+<p>Bref, tout ça pour dire que tout centraliser sur Sublime Text et utiliser dropbox pour écrire des articles me semble une pratique plutôt agréable.</p>
+<p>Pour cela, quittez totalement vos éditeurs Markdown et installez les plugins Sublime Text qui vont bien.</p>
+<h2 id="markdownediting">MarkdownEditing</h2>
+<p>Premièrement, <a href="http://ttscoff.github.io/MarkdownEditing/">MarkdownEditing</a>, ce petit plugin est votre parfait compagnon qui vous permettra d&#39;avoir la bonne coloration syntaxique de votre Markdown. Il vous permettra de mettre en évidence les liens, le code, et tout le reste. Du bonheur donc.</p>
+<p><img alt="" class="putainde-Img" src="/preview-markdownediting.png"></p>
+<p>Oui alors, j&#39;ai fait quelques configurations car à la base, ca ressemble plutôt à ça :</p>
+<p><img alt="" class="putainde-Img" src="/preview-markdownediting-light.png"></p>
+<p>Si vous souhaitez modifier Sublime Text mais uniquement pour le format Markdown, faites : <code>Preferences &gt; Browse Packages...</code> puis aller dans <code>User</code> et créez un fichier <code>Markdown.sublime-settings</code>. Celui-ci sera lu et appliqué à chaque fois que vous éditerez un fichier Markdown.</p>
+<p>Voici ce que j&#39;ai pour le moment :</p>
+<pre><code>{
+  &quot;color_scheme&quot;: &quot;Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme&quot;,
+  &quot;enable_table_editor&quot;: true,
+  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,
+  &quot;tab_size&quot;: 2,
+  &quot;extensions&quot;:
+  [
+    &quot;mdown&quot;,
+    &quot;txt&quot;,
+    &quot;md&quot;
+  ]
+}</code></pre>
+<p>Le thème <code>dark</code> pour pas se niquer les yeux (coucou <a href="https://twitter.com/bloodyowl">@bloodyowl</a>), j&#39;active aussi d&#39;autres plugins dont je vais vous parler d&#39;ici peu, j&#39;affecte le spacing à <code>2</code>, et je déclare que j&#39;utiliserai l&#39;éditeur Markdown pour ce genre de fichiers : <code>.mdown</code>, <code>.txt</code>, <code>.md</code>.</p>
+<p>Bien, passons à la suite.</p>
+<h2 id="markdown-preview">Markdown Preview</h2>
+<p>Notre cher <a href="https://twitter.com/revolunet">@revolunet</a> a fait un excellent plugin Markdown pour Sublime Text: <a href="https://github.com/revolunet/sublimetext-markdown-preview">Sublime Text Markdown Preview</a>. Celui-ci permet d&#39;avoir un rendu de votre Markdown en <code>.html</code>. Vous pouvez soit compiler votre Markdown pour créer un fichier HTML, soit l&#39;ouvrir directement dans votre navigateur.</p>
+<p>Différents formats disponibles :</p>
+<ul>
+<li>Python Markdown</li>
+<li>Github Flavored Markdown</li>
+</ul>
+<p>Un autre parfait compagnon en somme, qui quant à lui s&#39;occupera de digérer l&#39;excellent article que vous êtes en train d&#39;écrire.</p>
+<p>Je vous parlerai éventuellement un jour de <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> qui permet de faire ce genre de choses mais en un peu plus complet et générique (Sublime Text n&#39;est pas nécessaire) mais c&#39;est un poil plus complexe. Jettez-y un œil tout de même.</p>
+<h2 id="smartmarkdown">SmartMarkdown</h2>
+<p><a href="https://github.com/demon386/SmartMarkdown">Petit plugin</a> intéressant qui vous permettra de cacher des parties de votre texte en le repliant. Par exemple, vous vous mettez devant un titre du style <code>##</code> et vous appuyez sur <code>tab</code>, cela repliera votre texte. Plutôt pratique pour se focaliser.</p>
+<p><img alt="" class="putainde-Img" src="/preview-smartmarkdown.png"></p>
+<h2 id="sublimetableeditor">SublimeTableEditor</h2>
+<p>Précédemment dans ma configuration Markdown, vous avez pu voir ceci :</p>
+<pre><code>  &quot;enable_table_editor&quot;: true,
+  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,</code></pre>
+<p>Cela permet de configurer <a href="https://github.com/vkocubinsky/SublimeTableEditor">SublimeTableEditor</a> qui vous permettra de correctement aligner vos tableaux dans Markdown.</p>
+<p>Et voilà. Avec tout ceci, vous êtes paré(e) à écrire votre Markdown dans de bonnes conditions. Plus qu&#39;à mettre du Jazz et vous préparer une tasse de thé et c&#39;est parti.</p>
+<h2 id="bonus-markdown-extended">Bonus : Markdown Extended</h2>
+<p>Il est possible que vous n&#39;aimiez pas forcément MarkdownEditing, et dans ce cas je vous propose un autre plugin pas inintéressant non plus s&#39;appelant <a href="https://github.com/jonschlinkert/sublime-markdown-extended">Markdown Extended</a>. Il vous permettra d&#39;avoir la bonne coloration syntaxique lorsque vous écrivez du code dans votre éditeur.</p>
+<h4 id="avant">Avant</h4>
+<p><img alt="" class="putainde-Img" src="/preview-markdownextended-before.png"></p>
+<h4 id="apr-s">Après</h4>
+<p><img alt="" class="putainde-Img" src="/preview-markdownextended-after.png"></p>
+<p>Oh et j&#39;oubliais, voici quelques documentations sur Markdown histoire de bien l&#39;utiliser :</p>
+<ul>
+<li><a href="http://daringfireball.net/projects/markdown/syntax">Documentation officielle</a></li>
+<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></li>
+<li><a href="http://warpedvisions.org/projects/markdown-cheat-sheet.md">Another Markdown Cheatsheet</a></li>
+</ul>
+
+]]></description>
+              <pubDate>Thu, 20 Feb 2014 01:00:00 +0100</pubDate>
+              <link>http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</guid>
           </item>
 
           <item>
@@ -1185,64 +1493,6 @@ routes se croiseront-elles de nouveau. Dans l&#39;intervalle, va, vis, et code !
           </item>
 
           <item>
-              <title>ExternalInterface.call() de Flash (et Backbone), toute une histoire</title>
-              <description><![CDATA[
-
-<p><img class="putainde-Img putainde-Img--left" alt="" src="/occupyflash.png" /></p>
-<p>Je voulais vous parler d&#39;un bug qui m&#39;a bien emmerdé récemment et comme j&#39;aimerais que vous ne perdiez pas de temps avec cela, un article s&#39;imposait.</p>
-<p><em>Note de la direction : j&#39;y connais rien en Flash (et je ne crois pas avoir trop envie de connaître en fait).</em></p>
-<p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu&#39;il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d&#39;un autre article. (Je dis ça à chaque fois, haha).</p>
-<h2 id="le-pitch">Le pitch</h2>
-<p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu&#39;il le souhaite afin de communiquer avec l&#39;application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l&#39;avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d&#39;évènement mais vous en avez d&#39;<a href="http://microjs.com/#event">autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
-<pre><code class="language-javascript"> <span class="cm-comment">// on crée un objet vide</span>
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
-
-<span class="cm-comment">// on lui ajoute les fonctionnalités des events Backbone</span>
-<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)</code></pre>
-<p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d&#39;évènement façon Backbone</a>. Il pourra alors s&#39;écouter lui-même, écouter un autre objet, mais aussi déclencher des évènements.</p>
-<h2 id="c-t-flash">Côté Flash</h2>
-<p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l&#39;objet <code>ExternalInterface</code> :</p>
-<pre><code class="language-javascript"><span class="cm-variable">ExternalInterface</span>.<span class="cm-property">call</span>(<span class="cm-string">&quot;window.App.FlashManager.Events.trigger&quot;</span>, <span class="cm-string">&quot;my-event&quot;</span>)
-<span class="cm-comment">// http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html#call</span></code></pre>
-<p>Et là, bug.</p>
-<h2 id="pourquoi-bug-">Pourquoi bug ?</h2>
-<p>Pour le moment, je ne sais pas vraiment. Je me pencherai plus sur le sujet dès que j&#39;ai un peu de temps, mais ce que je sais, c&#39;est que <code>ExtercalInterface.call()</code> ne s&#39;attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l&#39;<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153">objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur.</p>
-<h2 id="la-solution-c-t-javascript">La solution côté JavaScript</h2>
-<p>Pour contrer cela, je vous propose la solution suivante qui est de ne pas utiliser directement l&#39;objet <code>Backbone.Events|View</code> mais plutôt de passer par une interface, un objet proxy.</p>
-<p>Voici le schéma :</p>
-<ul>
-<li>Créer un objet simple qui contient les mêmes noms de méthodes que les objets évènements <strong>Backbone.js</strong> (en gros, se mapper sur l&#39;API Backbone)</li>
-<li>Utiliser <strong>Backbone.js</strong> dans les méthodes de cet objet <em>Proxy</em></li>
-</ul>
-<p>Exemple :</p>
-<pre><code class="language-javascript"><span class="cm-comment">// Bridge between flash and js</span>
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span> = {}
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
-
-<span class="cm-comment">// Backbone events used for Flash</span>
-<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span> = {}
-<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span> = {}
-
-<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)
-
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span> = <span class="cm-keyword">function</span>(<span class="cm-def">name</span>, <span class="cm-def">opts</span>) {
-    <span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span>(<span class="cm-variable-2">name</span>, <span class="cm-variable-2">opts</span>)
-
-    <span class="cm-comment">// Must return nothing not to loop JavaScript engine, important!</span>
-    <span class="cm-keyword">return</span>
-}</code></pre>
-<h2 id="oh-et-">Oh et...</h2>
-<p>...il existe une version ayant plus ou moins le même souci que moi disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
-<h2 id="conclusion">Conclusion</h2>
-<p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript retourne quelque chose de simple (un objet ayant que des atributs, pas de fonctions, ou encore un bouléen ou un <em>integer</em>).</p>
-
-]]></description>
-              <pubDate>Thu, 05 Dec 2013 01:00:00 +0100</pubDate>
-              <link>http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</link>
-              <guid isPermaLink="true">http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</guid>
-          </item>
-
-          <item>
               <title>De jQuery à Vanilla JS</title>
               <description><![CDATA[
 
@@ -1394,6 +1644,64 @@ routes se croiseront-elles de nouveau. Dans l&#39;intervalle, va, vis, et code !
               <pubDate>Thu, 05 Dec 2013 01:00:00 +0100</pubDate>
               <link>http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/</link>
               <guid isPermaLink="true">http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/</guid>
+          </item>
+
+          <item>
+              <title>ExternalInterface.call() de Flash (et Backbone), toute une histoire</title>
+              <description><![CDATA[
+
+<p><img class="putainde-Img putainde-Img--left" alt="" src="/occupyflash.png" /></p>
+<p>Je voulais vous parler d&#39;un bug qui m&#39;a bien emmerdé récemment et comme j&#39;aimerais que vous ne perdiez pas de temps avec cela, un article s&#39;imposait.</p>
+<p><em>Note de la direction : j&#39;y connais rien en Flash (et je ne crois pas avoir trop envie de connaître en fait).</em></p>
+<p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu&#39;il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d&#39;un autre article. (Je dis ça à chaque fois, haha).</p>
+<h2 id="le-pitch">Le pitch</h2>
+<p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu&#39;il le souhaite afin de communiquer avec l&#39;application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l&#39;avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d&#39;évènement mais vous en avez d&#39;<a href="http://microjs.com/#event">autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
+<pre><code class="language-javascript"> <span class="cm-comment">// on crée un objet vide</span>
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
+
+<span class="cm-comment">// on lui ajoute les fonctionnalités des events Backbone</span>
+<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)</code></pre>
+<p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d&#39;évènement façon Backbone</a>. Il pourra alors s&#39;écouter lui-même, écouter un autre objet, mais aussi déclencher des évènements.</p>
+<h2 id="c-t-flash">Côté Flash</h2>
+<p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l&#39;objet <code>ExternalInterface</code> :</p>
+<pre><code class="language-javascript"><span class="cm-variable">ExternalInterface</span>.<span class="cm-property">call</span>(<span class="cm-string">&quot;window.App.FlashManager.Events.trigger&quot;</span>, <span class="cm-string">&quot;my-event&quot;</span>)
+<span class="cm-comment">// http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html#call</span></code></pre>
+<p>Et là, bug.</p>
+<h2 id="pourquoi-bug-">Pourquoi bug ?</h2>
+<p>Pour le moment, je ne sais pas vraiment. Je me pencherai plus sur le sujet dès que j&#39;ai un peu de temps, mais ce que je sais, c&#39;est que <code>ExtercalInterface.call()</code> ne s&#39;attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l&#39;<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153">objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur.</p>
+<h2 id="la-solution-c-t-javascript">La solution côté JavaScript</h2>
+<p>Pour contrer cela, je vous propose la solution suivante qui est de ne pas utiliser directement l&#39;objet <code>Backbone.Events|View</code> mais plutôt de passer par une interface, un objet proxy.</p>
+<p>Voici le schéma :</p>
+<ul>
+<li>Créer un objet simple qui contient les mêmes noms de méthodes que les objets évènements <strong>Backbone.js</strong> (en gros, se mapper sur l&#39;API Backbone)</li>
+<li>Utiliser <strong>Backbone.js</strong> dans les méthodes de cet objet <em>Proxy</em></li>
+</ul>
+<p>Exemple :</p>
+<pre><code class="language-javascript"><span class="cm-comment">// Bridge between flash and js</span>
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span> = {}
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
+
+<span class="cm-comment">// Backbone events used for Flash</span>
+<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span> = {}
+<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span> = {}
+
+<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)
+
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span> = <span class="cm-keyword">function</span>(<span class="cm-def">name</span>, <span class="cm-def">opts</span>) {
+    <span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span>(<span class="cm-variable-2">name</span>, <span class="cm-variable-2">opts</span>)
+
+    <span class="cm-comment">// Must return nothing not to loop JavaScript engine, important!</span>
+    <span class="cm-keyword">return</span>
+}</code></pre>
+<h2 id="oh-et-">Oh et...</h2>
+<p>...il existe une version ayant plus ou moins le même souci que moi disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript retourne quelque chose de simple (un objet ayant que des atributs, pas de fonctions, ou encore un bouléen ou un <em>integer</em>).</p>
+
+]]></description>
+              <pubDate>Thu, 05 Dec 2013 01:00:00 +0100</pubDate>
+              <link>http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</guid>
           </item>
 
           <item>

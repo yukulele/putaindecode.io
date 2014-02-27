@@ -1,0 +1,176 @@
+---
+lang: fr
+layout: post.hbs
+type: post
+comments: true
+title: Mise en place d'autoprefixer
+author: MoOx
+tags:
+  - css
+  - préfixe
+readingTime: 6min
+date: 2014-02-26
+---
+
+{{#markdown}}
+Suite à mon précédent article [Comment en finir avec les préfixes CSS](/posts/css/comment-en-finir-avec-les-prefixes/), certains sont resté sur leur faim.
+Voici donc de rapides exemples de mise en place de cette solution
+
+## Installation d'autoprefixer
+
+Il vous faudra [Node.js]() (qui embarque maintenant [Npm]()) afin de pouvoir 
+installer ce nouveau joujou.
+
+```shell
+# on install autoprefixer via npm en global
+$ npm install --global autoprefixer
+# ou pour les fainéants
+$ npm i -g autoprefixer
+```
+
+Une fois ceci fait, vous devriez avoir la commande `autoprefixer` disponible.
+On vérifie de suite avec `autoprefixer -v`
+
+```shell
+$ autoprefixer -v
+autoprefixer 1.0.20140203
+```
+
+Vous remarquerez que le numéro de version est un peu spécial: il contient une 
+date en place d'un numéro de patch.
+
+## Utilisation d'autoprefixer
+
+```shell
+$ autoprefixer *.css
+```
+
+C'est aussi simple que ça. En fait non je plaisante, c'est un tout petit peu 
+plus long car par defaut, comme beaucoup de commandes, vous allez avoir la sortie
+craché en plein visage.
+
+Pour voir les options, comme d'habitude `--help` ou `-h`:
+
+```shell
+$ autoprefixer -h
+```
+
+On y apprends l'existance des options suivantes:
+
+```
+Options:
+  -b, --browsers BROWSERS  add prefixes for selected browsers
+  -o, --output FILE        set output file
+  -d, --dir DIR            set output dir
+  -m, --map                generate source map
+  -i, --info               show selected browsers and properties
+  -h, --help               show help text
+  -v, --version            print program version
+```
+
+Du coup si on veut faire un coup de commande bien personnalisé on pourra faire
+
+```shell
+$ autoprefixer index.css -b "last 2 versions, > 1%, Explorer 7, Android 2" -o prefixed.css
+```
+
+Il va par contre nous falloir un fichier css pour tester
+
+```shell
+# on met un peu de CSS dans index.css manière de tester le bouzin
+$ echo "* { box-sizing:border-box}" > index.css
+```
+
+On peut du coup essayer notre commande plus haut qui va remplir le fichier prefixed.css
+
+Pour vérifier
+
+```shell
+$ cat prefixed.css
+* { -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box}
+```
+
+On a bien eu des préfixes ajoutés en fonction de notre demande (bon rien pour IE
+qui n'est pas passé par une version préfixé)
+
+Par défaut, autoprefixer utilise "> 1%, last 2 versions, Firefox ESR, Opera 12.1" pour les navigateurs.
+Je pense que pour la plupart d'entre vous il faudra ajouter "Explorer 8" (ou 7, ou 9) à la liste.
+
+Sinon, pour du petit one shot, un plugin dans votre IDE suffira:
+
+- [plugin autoprefixer pour Sublime Text](https://github.com/sindresorhus/sublime-autoprefixer)
+- [plugin autoprefixer pour Brackets](https://github.com/mikaeljorhult/brackets-autoprefixer)
+
+<figure>
+  <img src="{{ happyplan.baseUrls.media }}/sublime-text/autoprefixer.gif">
+  <figcaption>Intégration dans Sublime Text</figcaption>
+</figure>
+
+## Automatisation d'autoprefixer (combo tavu)
+
+Bien entendu on va pas se taper la commande à la main tout le temps hein...
+Donc, comme je l'ai dit précédemment, on peut utiliser préfixer avec les solutions 
+suivantes:
+
+- via [Node.js](https://github.com/ai/autoprefixer#nodejs) directement,
+- en plugin [Gulp](https://npmjs.org/package/gulp-autoprefixer),
+- en plugin [Grunt](https://github.com/ai/autoprefixer#grunt),
+- via [Compass](https://github.com/ai/autoprefixer#compass),
+- en plugin [Stylus](https://github.com/ai/autoprefixer#stylus),
+- avec [RoR](https://github.com/ai/autoprefixer#ruby-on-rails) ou [Ruby](https://github.com/ai/autoprefixer#ruby),
+- avec l’application [Prepros](https://github.com/ai/autoprefixer#prepros)
+- via [Mincer](https://github.com/ai/autoprefixer#mincer)
+- via [Middleman](https://github.com/ai/autoprefixer#middleman)
+- avec [PHP](https://github.com/ai/autoprefixer#php) (vous avez bien lu)
+
+Si vous avez besoin, je pense que vous trouverez sans trop de problème d'autres
+implémentations.
+
+Cela dit, je vais vous montrer quelques cas d'utilisations:
+
+### Make
+
+Là c'est facile, tout bon développeur doit avoir `make` sur sa machine (sinon
+c'est que t'es pas développeur, je sais pas trop ce que tu fais ici du coup).
+
+On peut tout simplement créer un fichier `Makefile` avec la commande précédente:
+
+```shell
+# On créer un makefile avec une tâche `css`
+$ echo "css:" > Makefile
+
+# On vérifie qu'on a bien rempli le fichier
+$ cat Makefile
+
+## On ajoute notre commande au fichier
+$ echo "\tautoprefixer index.css -b \"last 2 versions, > 1%, Explorer 7, Android 2\" -o prefixed.css" >> Makefile
+
+# On vérifie qu'on a bien rempli le fichier
+$ cat Makefile
+```
+
+Voilà votre Makefile doit être bien rempli. Pour tester la commande `css`:
+
+```shell
+$ make css
+```
+
+Vous remarquerez que la commande autoprefixer s'affiche, si ça vous embête, rajoutez
+`@` devant. Vous pouvez modifier votre Makefile dans ce sens:
+
+```
+css:
+  echo "❯ Autoprefixage magique."
+  @autoprefixer index.css -b "last 2 versions, > 1%, Explorer 7, Android 2" -o prefixed.css
+```
+
+Vous avez donc maintenant un exemple assez simpliste.
+Passons à des solutions plus sérieuse
+
+### Autoprefixer avec Gulp
+
+### Autoprefixer avec Grunt
+
+### Autoprefixer avec Stylus
+
+{{/markdown}}
