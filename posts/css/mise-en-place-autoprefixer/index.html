@@ -1,176 +1,447 @@
----
-lang: fr
-layout: post.hbs
-type: post
-comments: true
-title: Mise en place d'autoprefixer
-author: MoOx
-tags:
-  - css
-  - préfixe
-readingTime: 6min
-date: 2014-02-26
----
 
-{{#markdown}}
-Suite à mon précédent article [Comment en finir avec les préfixes CSS](/posts/css/comment-en-finir-avec-les-prefixes/), certains sont resté sur leur faim.
-Voici donc de rapides exemples de mise en place de cette solution
+<!DOCTYPE html>
+<!--
+  HEY YOU, STOP LOOKING AT MY SOURCE CODE
+  Just check it out directly on Github :
 
-## Installation d'autoprefixer
+  https://github.com/putaindecode/website.git
+-->
+<html lang="fr" class="no-js no-touch ">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<script>(function(docEl) {
+  docEl.className = docEl.className.replace(/\bno-js\b/, 'js');
+  if ('ontouchstart' in docEl) { docEl.className = docEl.className.replace(/\bno-touch\b/, 'touch'); }
+})(document.documentElement);</script>
 
-Il vous faudra [Node.js]() (qui embarque maintenant [Npm]()) afin de pouvoir 
-installer ce nouveau joujou.
+<meta charset="utf-8">
+<title>Mise en place d’autoprefixer</title>
+<meta name="description" content="">
+<base href="http://putaindecode.fr/" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="feed.xml" rel="alternate" type="application/rss+xml">
 
-```shell
-# on install autoprefixer via npm en global
-$ npm install --global autoprefixer
-# ou pour les fainéants
-$ npm i -g autoprefixer
-```
+<link rel="stylesheet" href="/assets/css/putaindecode.css?20140304072637">
 
-Une fois ceci fait, vous devriez avoir la commande `autoprefixer` disponible.
-On vérifie de suite avec `autoprefixer -v`
 
-```shell
-$ autoprefixer -v
-autoprefixer 1.0.20140203
-```
 
-Vous remarquerez que le numéro de version est un peu spécial: il contient une 
-date en place d'un numéro de patch.
 
-## Utilisation d'autoprefixer
+</head>
+<body>
 
-```shell
-$ autoprefixer *.css
-```
+<div class="">
+  <nav class="putainde-Nav">
+	<div class="grid">
+		<div class="grid__cell">
+			<a class="putainde-SiteTitle" href="/">
+				<img class="putainde-Logo" alt="Putain de Code !" src="/assets/img/p!-logo.svg" />
+				Putain de Code !
+			</a>
 
-C'est aussi simple que ça. En fait non je plaisante, c'est un tout petit peu 
-plus long car par defaut, comme beaucoup de commandes, vous allez avoir la sortie
-craché en plein visage.
+			<span class="putainde-Baseline">On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</span>
 
-Pour voir les options, comme d'habitude `--help` ou `-h`:
+			<ul class="putainde-Nav-list">
+				<li class=""><a class="putainde-Nav-list-item " href="c-est-quoi-putaindecode">Putain de ... ?</a>
+        <li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
+				<li class=""><a class="putainde-Nav-list-item " href="posts/comment-contribuer/">Comment Contribuer ?</a>
+			</ul>
+		</div>
+	</div>
+</nav>
+ 
+  <article class="putainde-Content grid putainde-Post">
+    <header class="putainde-Content-header grid__cell unit-1-1">
+      <h1 class="putainde-Content-title">Mise en place d’autoprefixer</h1>
+      <div class="putainde-Content-metas">
+        <span class="putainde-Content-meta putainde-Content-author">Par <span class="putainde-Author">MoOx</span></span>
+        <span class="putainde-Content-meta putainde-Content-date">Publié le: <span class="putainde-Date">mar. 04 mars 2014</span></span>
+        <span class="putainde-Content-meta putainde-Content-readingTime">Temps de lecture: environ 5min</span>
+        <span class="putainde-Content-meta putainde-Content-tags">Tags: css,préfixe</span>
+      </div>
+    </header>
+    <div class="putainde-Content-body grid__cell unit-3-4--m">
+    
 
-```shell
-$ autoprefixer -h
-```
 
-On y apprends l'existance des options suivantes:
-
-```
-Options:
+<p>Suite à mon précédent article <a href="/posts/css/comment-en-finir-avec-les-prefixes/">Comment en finir avec les préfixes CSS</a>,
+certains sont restés sur leur faim.
+Voici donc de rapides exemples de mise en place de cette solution.</p>
+<h2 id="installation-d-autoprefixer">Installation d’autoprefixer</h2>
+<p>Il vous faudra <a href="http://nodejs.org/">Node.js</a> (qui embarque maintenant <a href="https://www.npmjs.org/">Npm</a>) afin de pouvoir
+installer ce nouveau joujou.</p>
+<pre><code class="language-shell"><span class="cm-comment"># on install autoprefixer via npm en global</span>
+<span class="cm-def">$ npm</span> install <span class="cm-attribute">--global</span> autoprefixer
+<span class="cm-comment"># ou pour les fainéants</span>
+<span class="cm-def">$ npm</span> i <span class="cm-attribute">-g</span> autoprefixer</code></pre>
+<p>Une fois ceci fait, vous devriez avoir la commande <code>autoprefixer</code> disponible.
+On vérifie de suite avec <code>autoprefixer -v</code>.</p>
+<pre><code class="language-shell"><span class="cm-def">$ autoprefixer</span> <span class="cm-attribute">-v</span>
+autoprefixer <span class="cm-number">1</span>.0.20140203</code></pre>
+<p>Vous remarquerez que le numéro de version est un peu spécial : il contient une
+date en place d’un numéro de patch. Cette date correspond à la dernière mise à
+jour de la base de données de <em>Can I Use</em>.</p>
+<h2 id="utilisation-d-autoprefixer">Utilisation d’autoprefixer</h2>
+<pre><code class="language-shell"><span class="cm-def">$ autoprefixer</span> *.css</code></pre>
+<p>C’est aussi simple que ça.</p>
+<p>En fait non je plaisante, c’est un tout petit peu plus long car par défaut,
+comme beaucoup de commandes, vous allez avoir la sortie crachée en plein visage.</p>
+<p>Pour voir les options, comme d’habitude <code>--help</code> ou <code>-h</code> :</p>
+<pre><code class="language-shell"><span class="cm-def">$ autoprefixer</span> <span class="cm-attribute">-h</span></code></pre>
+<p>On y apprend l’existance des options suivantes :</p>
+<pre><code>Options:
   -b, --browsers BROWSERS  add prefixes for selected browsers
   -o, --output FILE        set output file
   -d, --dir DIR            set output dir
   -m, --map                generate source map
   -i, --info               show selected browsers and properties
   -h, --help               show help text
-  -v, --version            print program version
-```
-
-Du coup si on veut faire un coup de commande bien personnalisé on pourra faire
-
-```shell
-$ autoprefixer index.css -b "last 2 versions, > 1%, Explorer 7, Android 2" -o prefixed.css
-```
-
-Il va par contre nous falloir un fichier css pour tester
-
-```shell
-# on met un peu de CSS dans index.css manière de tester le bouzin
-$ echo "* { box-sizing:border-box}" > index.css
-```
-
-On peut du coup essayer notre commande plus haut qui va remplir le fichier prefixed.css
-
-Pour vérifier
-
-```shell
-$ cat prefixed.css
-* { -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box}
-```
-
-On a bien eu des préfixes ajoutés en fonction de notre demande (bon rien pour IE
-qui n'est pas passé par une version préfixé)
-
-Par défaut, autoprefixer utilise "> 1%, last 2 versions, Firefox ESR, Opera 12.1" pour les navigateurs.
-Je pense que pour la plupart d'entre vous il faudra ajouter "Explorer 8" (ou 7, ou 9) à la liste.
-
-Sinon, pour du petit one shot, un plugin dans votre IDE suffira:
-
-- [plugin autoprefixer pour Sublime Text](https://github.com/sindresorhus/sublime-autoprefixer)
-- [plugin autoprefixer pour Brackets](https://github.com/mikaeljorhult/brackets-autoprefixer)
-
+  -v, --version            print program version</code></pre>
+<p>Du coup si on veut faire un coup de commande bien personnalisée on pourra faire :</p>
+<pre><code class="language-shell"><span class="cm-def">$ autoprefixer</span> <span class="cm-attribute">-b</span> <span class="cm-string">&quot;last 2 versions, &gt; 1%, Explorer 7, Android 2&quot;</span> <span class="cm-attribute">-o</span> prefixed.css index.css</code></pre>
+<p>Il va par contre nous falloir un fichier css pour tester :</p>
+<pre><code class="language-shell"><span class="cm-comment"># on met un peu de CSS dans index.css manière de tester le bouzin</span>
+<span class="cm-def">$ echo</span> <span class="cm-string">&quot;* { box-sizing:border-box}&quot;</span> &gt; index.css</code></pre>
+<p>On peut donc essayer notre commande plus haut qui va remplir le fichier <code>prefixed.css</code></p>
+<p>Pour vérifier :</p>
+<pre><code class="language-shell"><span class="cm-def">$ cat</span> prefixed.css
+* { <span class="cm-attribute">-webkit</span><span class="cm-attribute">-box</span><span class="cm-attribute">-sizing</span>:border-box; <span class="cm-attribute">-moz</span><span class="cm-attribute">-box</span><span class="cm-attribute">-sizing</span>:border-box; box-sizing:border-box}</code></pre>
+<p>On a bien eu des préfixes ajoutés en fonction de notre demande (bon rien pour IE
+qui n’est pas passé par une version préfixé)</p>
+<p>Par défaut, <em>autoprefixer</em> utilise <code>&gt; 1%, last 2 versions, Firefox ESR, Opera 12.1</code> pour les navigateurs.
+Je pense que pour la plupart d’entre voudront ajouter &quot;Explorer 8&quot; à la liste, mais ça
+n’est en théorie pas nécessaire vu le permier argument qui demande de préfixer tous les navigateurs
+dont l’usage global est supérieur à 1%. Peut-être Explorer 7 pour certains ?
+Faites un tour sur la <a href="http://caniuse.com/usage_table.php">page dédié aux statistiques globales sur CanIUse.com</a> pour avoir une idée.</p>
+<p>Sinon, pour du petit one shot, un plugin dans votre éditeur suffira:</p>
+<ul>
+<li><a href="https://github.com/sindresorhus/atom-autoprefixer">plugin autoprefixer pour Atom</a></li>
+<li><a href="https://github.com/sindresorhus/sublime-autoprefixer">plugin autoprefixer pour Sublime Text</a></li>
+<li><a href="https://github.com/mikaeljorhult/brackets-autoprefixer">plugin autoprefixer pour Brackets</a></li>
+</ul>
 <figure>
-  <img src="{{ happyplan.baseUrls.media }}/sublime-text/autoprefixer.gif">
+  <img src="/media/sublime-text/autoprefixer.gif">
   <figcaption>Intégration dans Sublime Text</figcaption>
 </figure>
 
-## Automatisation d'autoprefixer (combo tavu)
+<h2 id="automatisation-d-autoprefixer-autoception-">Automatisation d’autoprefixer (autoception)</h2>
+<p>Bien entendu on va pas se taper la commande à la main tout le temps hein...
+Il nous faut automatiser nos processus. Sans quoi on perd du temps, et
+<a href="http://deboutlesgens.com/blog/jai-pas-le-temps-la-pire-excuse-qui-soit/">le temps... C’est du temps !</a></p>
+<p>Donc, comme je l’ai dit précédemment, on peut utiliser <em>autoprefixer</em> avec les solutions
+suivantes:</p>
+<ul>
+<li>via <a href="https://github.com/ai/autoprefixer#nodejs">Node.js</a> directement,</li>
+<li>en plugin <a href="https://www.npmjs.org/package/gulp-autoprefixer">Gulp</a>,</li>
+<li>en plugin <a href="https://github.com/ai/autoprefixer#grunt">Grunt</a>,</li>
+<li>via <a href="https://github.com/ai/autoprefixer#compass">Compass</a>,</li>
+<li>en plugin <a href="https://github.com/ai/autoprefixer#stylus">Stylus</a>,</li>
+<li>avec <a href="https://github.com/ai/autoprefixer#ruby-on-rails">RoR</a> ou <a href="https://github.com/ai/autoprefixer#ruby">Ruby</a>,</li>
+<li>avec l’application <a href="https://github.com/ai/autoprefixer#prepros">Prepros</a></li>
+<li>via <a href="https://github.com/ai/autoprefixer#mincer">Mincer</a></li>
+<li>via <a href="https://github.com/ai/autoprefixer#middleman">Middleman</a></li>
+<li>avec <a href="https://github.com/ai/autoprefixer#php">PHP</a> (vous avez bien lu)</li>
+</ul>
+<p>Si vous avez besoin, je pense que vous trouverez sans trop de problème d’autres
+implémentations.</p>
+<p>Cela dit, je vais vous montrer quelques cas d’utilisations:</p>
+<h3 id="make">Make</h3>
+<p>Là c’est facile, tout bon développeur doit avoir <code>make</code> sur sa machine (sinon
+c’est que t’es pas développeur, je sais pas trop ce que tu fais ici du coup).</p>
+<p>On peut tout simplement créer un fichier <code>Makefile</code> avec la commande précédente:</p>
+<pre><code class="language-shell"><span class="cm-comment"># création d’un dossier pour notre popote (puis on va dedans...)</span>
+<span class="cm-def">$ mkdir</span> autoprefixer-test &amp;&amp; <span class="cm-builtin">cd</span> autoprefixer-test
 
-Bien entendu on va pas se taper la commande à la main tout le temps hein...
-Donc, comme je l'ai dit précédemment, on peut utiliser préfixer avec les solutions 
-suivantes:
+<span class="cm-comment"># On créer un makefile avec une tâche `css` (création/écrasement via &gt;)</span>
+<span class="cm-def">$ echo</span> <span class="cm-string">&quot;css:&quot;</span> &gt; Makefile
 
-- via [Node.js](https://github.com/ai/autoprefixer#nodejs) directement,
-- en plugin [Gulp](https://npmjs.org/package/gulp-autoprefixer),
-- en plugin [Grunt](https://github.com/ai/autoprefixer#grunt),
-- via [Compass](https://github.com/ai/autoprefixer#compass),
-- en plugin [Stylus](https://github.com/ai/autoprefixer#stylus),
-- avec [RoR](https://github.com/ai/autoprefixer#ruby-on-rails) ou [Ruby](https://github.com/ai/autoprefixer#ruby),
-- avec l’application [Prepros](https://github.com/ai/autoprefixer#prepros)
-- via [Mincer](https://github.com/ai/autoprefixer#mincer)
-- via [Middleman](https://github.com/ai/autoprefixer#middleman)
-- avec [PHP](https://github.com/ai/autoprefixer#php) (vous avez bien lu)
+<span class="cm-comment"># On vérifie qu’on a bien rempli le fichier</span>
+<span class="cm-def">$ cat</span> Makefile
 
-Si vous avez besoin, je pense que vous trouverez sans trop de problème d'autres
-implémentations.
+<span class="cm-comment">## On ajoute notre commande au fichier (ajout au fichier existant via &gt;&gt;)</span>
+<span class="cm-def">$ echo</span> <span class="cm-string">&quot;\tautoprefixer index.css -b \&quot;last 2 versions, &gt; 1%, Explorer 7, Android 2\&quot; -o prefixed.css&quot;</span> &gt;&gt; Makefile
 
-Cela dit, je vais vous montrer quelques cas d'utilisations:
+<span class="cm-comment"># On vérifie qu’on a bien rempli le fichier</span>
+<span class="cm-def">$ cat</span> Makefile</code></pre>
+<p>Voilà votre Makefile doit être bien rempli. Pour tester la commande <code>css</code>:</p>
+<pre><code class="language-shell"><span class="cm-def">$ make</span> css</code></pre>
+<p>Vous remarquerez que la commande <em>autoprefixer</em> s’affiche, si ça vous embête, rajoutez
+<code>@</code> devant. Vous pouvez modifier votre Makefile dans ce sens:</p>
+<pre><code>css:
+    echo &quot;❯ Autoprefixage magique.&quot;
+    @autoprefixer index.css -b &quot;last 2 versions, &gt; 1%, Explorer 7, Android 2&quot; -o prefixed.css</code></pre>
+<p><em>Attention : Les Makefiles utilisent des tabulations uniquement ! Sans quoi cela
+ne va pas marcher comme prévu.</em></p>
+<p>Vous avez donc maintenant un exemple assez simpliste qui peut être utilisé si
+vous n’avez pas encore <a href="http://www.24joursdeweb.fr/2013/automatisez-votre-workflow-front-end/">automatisé votre workflow</a>
+via des outils comme <a href="http://gulpjs.com/">Gulp</a> ou <a href="http://gruntjs.com/">Grunt</a>.</p>
+<p>Passons justement à ces solutions plus sérieuses.</p>
+<h3 id="autoprefixer-avec-gulp">Autoprefixer avec Gulp</h3>
+<p>Je ne vais pas trop rentrer dans les détails de Gulp (ce n’est pas le sujet ici).
+Voici cependant une exemple assez bref et compréhensible pour commencer, avec
+une seule écriture sur le système de fichier (contrairement à la solution Grunt).</p>
+<pre><code class="language-js"><span class="cm-comment">// gulp stuff</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">gulp</span> = <span class="cm-variable">require</span>(<span class="cm-string">&quot;gulp&quot;</span>)
+  , <span class="cm-variable">gutil</span> = <span class="cm-variable">require</span>(<span class="cm-string">&quot;gulp-util&quot;</span>)
+  <span class="cm-comment">// le plombier ajuste les fuites des tuyaux (erreur de pipe)</span>
+  <span class="cm-comment">// ceci est conseillé pour éviter que chaque erreur &quot;casse&quot; tout le process</span>
+  <span class="cm-comment">// dès qu’une erreur est remonté par un plugin</span>
+  , <span class="cm-variable">plumber</span> = <span class="cm-variable">require</span>(<span class="cm-string">&quot;gulp-plumber&quot;</span>)
 
-### Make
+<span class="cm-comment">// css stuff</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">sass</span> = <span class="cm-variable">require</span>(<span class="cm-string">&quot;gulp-ruby-sass&quot;</span>)
+  , <span class="cm-variable">autoprefixer</span> = <span class="cm-variable">require</span>(<span class="cm-string">&quot;gulp-autoprefixer&quot;</span>)
+  , <span class="cm-variable">csso</span> = <span class="cm-variable">require</span>(<span class="cm-string">&quot;gulp-csso&quot;</span>)
 
-Là c'est facile, tout bon développeur doit avoir `make` sur sa machine (sinon
-c'est que t'es pas développeur, je sais pas trop ce que tu fais ici du coup).
+<span class="cm-comment">// css task: sass, autoprefixer et csso si --production</span>
+<span class="cm-variable">gulp</span>.<span class="cm-property">task</span>(<span class="cm-string">&quot;styles&quot;</span>, <span class="cm-keyword">function</span>() {
+  <span class="cm-variable">gulp</span>.<span class="cm-property">src</span>(<span class="cm-string">&quot;./src/css/*.scss&quot;</span>)
+    <span class="cm-comment">// it’s me, Mario</span>
+    .<span class="cm-property">pipe</span>(<span class="cm-variable">plumber</span>())
 
-On peut tout simplement créer un fichier `Makefile` avec la commande précédente:
+    .<span class="cm-property">pipe</span>(<span class="cm-variable">sass</span>({<span class="cm-property">style</span>: <span class="cm-string">&quot;expanded&quot;</span>}))
 
-```shell
-# On créer un makefile avec une tâche `css`
-$ echo "css:" > Makefile
+    <span class="cm-comment">// Autoprefixer \\</span>
+    <span class="cm-comment">// vous remarquerez que ici chaque option est un paramètre</span>
+    <span class="cm-comment">// pas comme pour l’appel en ligne de commande.</span>
+    .<span class="cm-property">pipe</span>(<span class="cm-variable">autoprefixer</span>(<span class="cm-string">&quot;last 2 versions&quot;</span>, <span class="cm-string">&quot;&gt; 1%&quot;</span>, <span class="cm-string">&quot;Explorer 7&quot;</span>, <span class="cm-string">&quot;Android 2&quot;</span>))
 
-# On vérifie qu'on a bien rempli le fichier
-$ cat Makefile
+    <span class="cm-comment">// optimisation CSS pour la prod uniquement</span>
+    .<span class="cm-property">pipe</span>(<span class="cm-variable">gulp</span>.<span class="cm-property">env</span>.<span class="cm-property">production</span> ? <span class="cm-variable">csso</span>() : <span class="cm-variable">gutil</span>.<span class="cm-property">noop</span>())
 
-## On ajoute notre commande au fichier
-$ echo "\tautoprefixer index.css -b \"last 2 versions, > 1%, Explorer 7, Android 2\" -o prefixed.css" >> Makefile
+    <span class="cm-comment">// unique écriture sur disque</span>
+    .<span class="cm-property">pipe</span>(<span class="cm-variable">gulp</span>.<span class="cm-property">dest</span>(<span class="cm-string">&quot;./dist/css/&quot;</span>))
+    <span class="cm-comment">// je passe sur cette partie à configurer, mais ici on peut imaginer un</span>
+    <span class="cm-comment">// livereload en plus, il faudra définir livereload et livereloadServer</span>
+    <span class="cm-comment">// cette partie dépend un peu de votre serveur durant le dév.</span>
+    <span class="cm-comment">// ca fera l’objet d’un post tiens...</span>
+    <span class="cm-comment">//.pipe(livereload(livereloadServer))</span>
+})
 
-# On vérifie qu'on a bien rempli le fichier
-$ cat Makefile
-```
+<span class="cm-variable">gulp</span>.<span class="cm-property">task</span>(<span class="cm-string">&quot;dev&quot;</span>, [<span class="cm-string">&quot;styles&quot;</span>], <span class="cm-keyword">function</span>() {
+  <span class="cm-variable">gulp</span>.<span class="cm-property">watch</span>(<span class="cm-string">&quot;./src/css/**/*&quot;</span>, <span class="cm-keyword">function</span>(<span class="cm-def">event</span>) {
+    <span class="cm-variable">gulp</span>.<span class="cm-property">run</span>(<span class="cm-string">&quot;styles&quot;</span>)
+  })
+})
 
-Voilà votre Makefile doit être bien rempli. Pour tester la commande `css`:
+<span class="cm-comment">// Tâches disponibles :</span>
 
-```shell
-$ make css
-```
+<span class="cm-comment">// - pour générer les feuilles de styles</span>
+<span class="cm-comment">//   (pour optimiser pour la prod, utiliser l’option)</span>
+<span class="cm-comment">// $ gulp styles [--production]</span>
 
-Vous remarquerez que la commande autoprefixer s'affiche, si ça vous embête, rajoutez
-`@` devant. Vous pouvez modifier votre Makefile dans ce sens:
+<span class="cm-comment">// - pour le dev, surveille et lance la tâche `styles` dès que nécessaire</span>
+<span class="cm-comment">// $ gulp dev</span></code></pre>
+<h3 id="autoprefixer-avec-grunt">Autoprefixer avec Grunt</h3>
+<p>Voici un petit Gruntfile avec la même configuration que ci dessus</p>
+<pre><code class="language-js"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
+  <span class="cm-string">&quot;use strict&quot;</span>;
 
-```
-css:
-  echo "❯ Autoprefixage magique."
-  @autoprefixer index.css -b "last 2 versions, > 1%, Explorer 7, Android 2" -o prefixed.css
-```
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&quot;grunt-contrib-sass&quot;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&quot;grunt-autoprefixer&quot;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&quot;grunt-csso&quot;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&quot;grunt-contrib-watch&quot;</span>)
 
-Vous avez donc maintenant un exemple assez simpliste.
-Passons à des solutions plus sérieuse
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&quot;expanded&quot;</span>
+        }
+      , <span class="cm-property">files</span>: [{
+          <span class="cm-property">expand</span>: <span class="cm-atom">true</span>
+        , <span class="cm-property">flatten</span>: <span class="cm-atom">true</span>
+        , <span class="cm-property">cwd</span>: <span class="cm-string">&quot;./src/css&quot;</span>
+        , <span class="cm-property">src</span>: [<span class="cm-string">&quot;*.scss&quot;</span>]
+        , <span class="cm-property">dest</span>: <span class="cm-string">&quot;./dist/css&quot;</span>
+        , <span class="cm-property">ext</span>: <span class="cm-string">&quot;.css&quot;</span>
+        }]
+      }
+    }
+  , <span class="cm-property">autoprefixer</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">browsers</span>: [<span class="cm-string">&quot;last 2 versions&quot;</span>, <span class="cm-string">&quot;&gt; 1%&quot;</span>, <span class="cm-string">&quot;Explorer 7&quot;</span>, <span class="cm-string">&quot;Android 2&quot;</span>]
+      }
+    , <span class="cm-property">dist</span>: {
+        <span class="cm-property">expand</span>: <span class="cm-atom">true</span>
+      , <span class="cm-property">flatten</span>: <span class="cm-atom">true</span>
+      , <span class="cm-property">cwd</span>: <span class="cm-string">&quot;./dist/css&quot;</span>
+      , <span class="cm-property">src</span>: [<span class="cm-string">&quot;*.css&quot;</span>]
+      , <span class="cm-property">dest</span>: <span class="cm-string">&quot;./dist/css/&quot;</span>
+      }
+    }
+  , <span class="cm-property">csso</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">expand</span>: <span class="cm-atom">true</span>
+      , <span class="cm-property">flatten</span>: <span class="cm-atom">true</span>
+      , <span class="cm-property">cwd</span>: <span class="cm-string">&quot;./dist/css/&quot;</span>
+      , <span class="cm-property">src</span>: [<span class="cm-string">&quot;*.css&quot;</span>]
+      , <span class="cm-property">dest</span>: <span class="cm-string">&quot;./dist/css/&quot;</span>
+      }
+    }
 
-### Autoprefixer avec Gulp
+  , <span class="cm-property">watch</span>: {
+      <span class="cm-property">styles</span>: {
+        <span class="cm-property">files</span>: [<span class="cm-string">&quot;./src/css/**/*.scss&quot;</span>]
+      , <span class="cm-property">tasks</span>: [<span class="cm-string">&quot;styles&quot;</span>]
+      }
+    }
+  })
 
-### Autoprefixer avec Grunt
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTasks</span>(<span class="cm-string">&quot;styles&quot;</span>, [<span class="cm-string">&quot;sass&quot;</span>, <span class="cm-string">&quot;autoprefixer&quot;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTasks</span>(<span class="cm-string">&quot;styles:production&quot;</span>, [<span class="cm-string">&quot;sass&quot;</span>, <span class="cm-string">&quot;autoprefixer&quot;</span>, <span class="cm-string">&quot;csso&quot;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTasks</span>(<span class="cm-string">&quot;dev&quot;</span>, [<span class="cm-string">&quot;sass&quot;</span>, <span class="cm-string">&quot;watch&quot;</span>])
+}
 
-### Autoprefixer avec Stylus
+<span class="cm-comment">// Tâches disponibles :</span>
 
-{{/markdown}}
+<span class="cm-comment">// - pour générer les feuilles de styles</span>
+<span class="cm-comment">// $ grunt styles</span>
+
+<span class="cm-comment">// - pareil, mais optimiser pour la prod</span>
+<span class="cm-comment">// $ grunt styles:production</span>
+
+<span class="cm-comment">// - pour le dev, surveille et lance la tâche `styles` dès que nécessaire</span>
+<span class="cm-comment">// $ grunt watch</span></code></pre>
+<p>Comme vous pouvez le voir, la version Grunt est un peu plus volumineuse (bien qu’espacée).
+Personnellement j’aime la concision de gulp.
+De plus la version Grunt sera plus longue car nous aurons 3 lectures / écritures sur le disque.</p>
+<p><em>Notez que bien entendu dans notre exemple précédent, nous pouvons remplacer Sass
+par un autre pré / post-processeur.</em></p>
+<h3 id="autoprefixer-avec-stylus">Autoprefixer avec Stylus</h3>
+<p>Dans les exemples précédents, j’ai montré une solution classique avec Sass.
+Mais voici complètement autre chose: <em>autoprefixer</em> peut s’utiliser en &quot;plugin&quot; Stylus.</p>
+<p>C’est assez simple il suffit d’utiliser l’option <code>use</code> (<code>-u</code> en cli).
+Voilà ce qu’on aurait en cli :</p>
+<pre><code class="language-shell"><span class="cm-def">$ npm</span> install <span class="cm-attribute">-g</span> stylus autoprefixer-stylus
+<span class="cm-def">$ stylus</span> <span class="cm-attribute">-u</span> autoprefixer-stylus <span class="cm-attribute">-o</span> index.css index.styl</code></pre>
+<h4 id="avec-grunt">Avec Grunt</h4>
+<p>Il suffira d’utiliser donc l’option <code>use</code> dans votre configuration.</p>
+<h4 id="-avec-gulp-"><del>Avec Gulp</del></h4>
+<p>La façon de faire de gulp, via des streams pour éviter la lecture / écriture multiple fait que le plugin
+<em>autoprefixer-stylus</em> est vide de sens.
+Vous pouvez donc utiliser <em>autoprefixer</em> normalement, après l’appel du pré-processeur.</p>
+<hr>
+<p>Voilà j’espère que cette fois-ci vous êtes rassasié afin de ne plus avoir envie de manger des préfixes CSS !</p>
+
+
+
+<section class="putainde-AboutTheAuthor">
+  
+    
+    <a class="putainde-AboutTheAuthor-avatar putainde-Author-avatar" href="http://moox.io">
+      <img src="https://gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d?s=300&amp;d=https%3A%2F%2Fidenticons.github.com%2Fc0863a4414cba6aa95014df9e3d9f6a5.png" />
+    </a>
+    
+  
+  <h1 class="putainde-AboutTheAuthor-title">
+    Écrit par
+    <strong class="putainde-AboutTheAuthor-name">MoOx</strong>
+    <a class="putainde-AboutTheAuthor-url" href="http://moox.io"><i class="icon icon_home"> </i></a>
+    <a class="putainde-AboutTheAuthor-twitter" href="https://twitter.com/MoOx"><i class="icon icon_twitter"> </i></a>
+    <a class="putainde-AboutTheAuthor-github" href="https://github.com/MoOx"><i class="icon icon_github"> </i></a>
+  </h1>
+  
+    
+    <div class="putainde-AboutTheAuthor-bio--long"><p>Développeur web front-end (100% bio), vivant dans la campagne près de Toulouse. Il joue avec CSS &amp; et JavaScript en tant que Freelance.
+Lorsqu&#x27;il n&#x27;est pas derrière son écran tel un geek, il adore bricoler dans sa maison en bois et se marrer avec sa merveilleuse femme, quand il n&#x27;est pas en train de se promener dans la forêt.</p>
+</div>
+  
+</section>
+
+
+
+
+
+<section class="putainde-Comments">
+  <h1 class="putainde-Comments-title">Comments</h1>
+  <div id="disqus_thread" aria-live="polite">
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+
+    </div>
+    
+    <aside class="putainde-Sidebar grid__cell unit-1-4--m">
+    <aside class="putainde-Sidebar-block">
+	<h1 class="putainde-Sidebar-block-title">On est partout !</h1>
+	<ul class="putainde-Sidebar-block-list--nobullet">
+		<li><a href="https://github.com/putaindecode"><i class="icon icon_github"></i> Github</a></li>
+		<li><a href="https://twitter.com/putaindecode"><i class="icon icon_twitter"></i> Twitter</a></li>
+		<li><a href="#derriere-toi,-c'est-affreux!" onclick="if (confirm('Attention Benjamin...!')) window.location = 'http://www.youtube.com/watch?v=MEKHaG9FxKY&t=44s'; return false;"><i class="icon icon_eye"></i> Derrière toi</a></li>
+	</ul>
+</aside>
+<aside class="putainde-Sidebar-block">
+	<h1 class="putainde-Sidebar-block-title">À avoir sous la main</h1>
+	<ul class="putainde-Sidebar-block-list--nobullet">
+		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues/new"><i class="icon icon_pencil"></i> Proposer un article</a></li>
+		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues?labels=post&state=open"><i class="icon icon_bookmarks"></i> Voir les propositions</a></li>
+		<li><a href="https://github.com/putaindecode/website/blob/master/src/posts/css/mise-en-place-autoprefixer/index.html.hbs"><i class="icon icon_edit"></i> Modifier cette page</a></li>
+	</ul>
+</aside>
+
+
+    </aside>
+    
+  </article>
+  
+    <footer class="putainde-Footer">
+
+    <div class="putainde-Footer-colophon grid">
+      <div class="putainde-Footer-colophon-left grid__cell unit-5-12--m">
+        <span class="putainde-Footer-colophon-item">© 1970 - 2013 Putain de Code !</span>
+        |
+        <a class="putainde-Footer-colophon-item" href="https://github.com/putaindecode">Contact</a>
+      </div>
+      <div class="putainde-Footer-colophon-center grid__cell unit-2-12--m">
+        <img class="putainde-Footer-logo" alt="Putain de code !" src="/assets/img/p!-logo.svg" />
+      </div>
+      <div class="putainde-Footer-colophon-right grid__cell unit-5-12--m">
+        <a class="putainde-Footer-colophon-item" href="feed.xml">Flux RSS</a>
+        |
+        <a class="putainde-Footer-colophon-item" href="projets/">Projets</a>
+        |
+        <span class="putainde-Footer-colophon-item">Made with ❤ by <a href="/le-crew/">le crew</a></span>
+      </div>
+    </div>
+  </footer>
+
+  
+</div>
+<script src="/assets/js/putaindecode.js?20140304072637"></script>
+
+
+	
+	<script>
+		var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src='//www.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+	
+
+
+
+
+
+  <script>
+  var disqus_shortname = 'putaindecode',
+  
+  
+  
+  disqus_identifier = 'http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/',
+  disqus_url = 'http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/',
+  disqus_script = 'embed.js';
+  
+  (function(d,s) {
+  s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+  (d.getElementsByTagName('head')[0]).appendChild(s);
+  })(document);
+  </script>
+
+
+
+</body>
+</html>
+

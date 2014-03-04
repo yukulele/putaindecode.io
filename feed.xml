@@ -5,8 +5,278 @@
         <description>On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</description>
         <link>http://putaindecode.fr/</link>
         <generator>happyplan 0.4.0-beta.6</generator>
-        <lastBuildDate>Thu, 27 Feb 2014 00:00:00 +0100</lastBuildDate>
+        <lastBuildDate>Tue, 04 Mar 2014 00:00:00 +0100</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml" />
+
+          <item>
+              <title>Mise en place d’autoprefixer</title>
+              <description><![CDATA[
+
+<p>Suite à mon précédent article <a href="/posts/css/comment-en-finir-avec-les-prefixes/">Comment en finir avec les préfixes CSS</a>,
+certains sont restés sur leur faim.
+Voici donc de rapides exemples de mise en place de cette solution.</p>
+<h2 id="installation-d-autoprefixer">Installation d’autoprefixer</h2>
+<p>Il vous faudra <a href="http://nodejs.org/">Node.js</a> (qui embarque maintenant <a href="https://www.npmjs.org/">Npm</a>) afin de pouvoir
+installer ce nouveau joujou.</p>
+<pre><code class="language-shell"><span class="cm-comment"># on install autoprefixer via npm en global</span>
+<span class="cm-def">$ npm</span> install <span class="cm-attribute">--global</span> autoprefixer
+<span class="cm-comment"># ou pour les fainéants</span>
+<span class="cm-def">$ npm</span> i <span class="cm-attribute">-g</span> autoprefixer</code></pre>
+<p>Une fois ceci fait, vous devriez avoir la commande <code>autoprefixer</code> disponible.
+On vérifie de suite avec <code>autoprefixer -v</code>.</p>
+<pre><code class="language-shell"><span class="cm-def">$ autoprefixer</span> <span class="cm-attribute">-v</span>
+autoprefixer <span class="cm-number">1</span>.0.20140203</code></pre>
+<p>Vous remarquerez que le numéro de version est un peu spécial : il contient une
+date en place d’un numéro de patch. Cette date correspond à la dernière mise à
+jour de la base de données de <em>Can I Use</em>.</p>
+<h2 id="utilisation-d-autoprefixer">Utilisation d’autoprefixer</h2>
+<pre><code class="language-shell"><span class="cm-def">$ autoprefixer</span> *.css</code></pre>
+<p>C’est aussi simple que ça.</p>
+<p>En fait non je plaisante, c’est un tout petit peu plus long car par défaut,
+comme beaucoup de commandes, vous allez avoir la sortie crachée en plein visage.</p>
+<p>Pour voir les options, comme d’habitude <code>--help</code> ou <code>-h</code> :</p>
+<pre><code class="language-shell"><span class="cm-def">$ autoprefixer</span> <span class="cm-attribute">-h</span></code></pre>
+<p>On y apprend l’existance des options suivantes :</p>
+<pre><code>Options:
+  -b, --browsers BROWSERS  add prefixes for selected browsers
+  -o, --output FILE        set output file
+  -d, --dir DIR            set output dir
+  -m, --map                generate source map
+  -i, --info               show selected browsers and properties
+  -h, --help               show help text
+  -v, --version            print program version</code></pre>
+<p>Du coup si on veut faire un coup de commande bien personnalisée on pourra faire :</p>
+<pre><code class="language-shell"><span class="cm-def">$ autoprefixer</span> <span class="cm-attribute">-b</span> <span class="cm-string">&quot;last 2 versions, &gt; 1%, Explorer 7, Android 2&quot;</span> <span class="cm-attribute">-o</span> prefixed.css index.css</code></pre>
+<p>Il va par contre nous falloir un fichier css pour tester :</p>
+<pre><code class="language-shell"><span class="cm-comment"># on met un peu de CSS dans index.css manière de tester le bouzin</span>
+<span class="cm-def">$ echo</span> <span class="cm-string">&quot;* { box-sizing:border-box}&quot;</span> &gt; index.css</code></pre>
+<p>On peut donc essayer notre commande plus haut qui va remplir le fichier <code>prefixed.css</code></p>
+<p>Pour vérifier :</p>
+<pre><code class="language-shell"><span class="cm-def">$ cat</span> prefixed.css
+* { <span class="cm-attribute">-webkit</span><span class="cm-attribute">-box</span><span class="cm-attribute">-sizing</span>:border-box; <span class="cm-attribute">-moz</span><span class="cm-attribute">-box</span><span class="cm-attribute">-sizing</span>:border-box; box-sizing:border-box}</code></pre>
+<p>On a bien eu des préfixes ajoutés en fonction de notre demande (bon rien pour IE
+qui n’est pas passé par une version préfixé)</p>
+<p>Par défaut, <em>autoprefixer</em> utilise <code>&gt; 1%, last 2 versions, Firefox ESR, Opera 12.1</code> pour les navigateurs.
+Je pense que pour la plupart d’entre voudront ajouter &quot;Explorer 8&quot; à la liste, mais ça
+n’est en théorie pas nécessaire vu le permier argument qui demande de préfixer tous les navigateurs
+dont l’usage global est supérieur à 1%. Peut-être Explorer 7 pour certains ?
+Faites un tour sur la <a href="http://caniuse.com/usage_table.php">page dédié aux statistiques globales sur CanIUse.com</a> pour avoir une idée.</p>
+<p>Sinon, pour du petit one shot, un plugin dans votre éditeur suffira:</p>
+<ul>
+<li><a href="https://github.com/sindresorhus/atom-autoprefixer">plugin autoprefixer pour Atom</a></li>
+<li><a href="https://github.com/sindresorhus/sublime-autoprefixer">plugin autoprefixer pour Sublime Text</a></li>
+<li><a href="https://github.com/mikaeljorhult/brackets-autoprefixer">plugin autoprefixer pour Brackets</a></li>
+</ul>
+<figure>
+  <img src="/sublime-text/autoprefixer.gif">
+  <figcaption>Intégration dans Sublime Text</figcaption>
+</figure>
+
+<h2 id="automatisation-d-autoprefixer-autoception-">Automatisation d’autoprefixer (autoception)</h2>
+<p>Bien entendu on va pas se taper la commande à la main tout le temps hein...
+Il nous faut automatiser nos processus. Sans quoi on perd du temps, et
+<a href="http://deboutlesgens.com/blog/jai-pas-le-temps-la-pire-excuse-qui-soit/">le temps... C’est du temps !</a></p>
+<p>Donc, comme je l’ai dit précédemment, on peut utiliser <em>autoprefixer</em> avec les solutions
+suivantes:</p>
+<ul>
+<li>via <a href="https://github.com/ai/autoprefixer#nodejs">Node.js</a> directement,</li>
+<li>en plugin <a href="https://www.npmjs.org/package/gulp-autoprefixer">Gulp</a>,</li>
+<li>en plugin <a href="https://github.com/ai/autoprefixer#grunt">Grunt</a>,</li>
+<li>via <a href="https://github.com/ai/autoprefixer#compass">Compass</a>,</li>
+<li>en plugin <a href="https://github.com/ai/autoprefixer#stylus">Stylus</a>,</li>
+<li>avec <a href="https://github.com/ai/autoprefixer#ruby-on-rails">RoR</a> ou <a href="https://github.com/ai/autoprefixer#ruby">Ruby</a>,</li>
+<li>avec l’application <a href="https://github.com/ai/autoprefixer#prepros">Prepros</a></li>
+<li>via <a href="https://github.com/ai/autoprefixer#mincer">Mincer</a></li>
+<li>via <a href="https://github.com/ai/autoprefixer#middleman">Middleman</a></li>
+<li>avec <a href="https://github.com/ai/autoprefixer#php">PHP</a> (vous avez bien lu)</li>
+</ul>
+<p>Si vous avez besoin, je pense que vous trouverez sans trop de problème d’autres
+implémentations.</p>
+<p>Cela dit, je vais vous montrer quelques cas d’utilisations:</p>
+<h3 id="make">Make</h3>
+<p>Là c’est facile, tout bon développeur doit avoir <code>make</code> sur sa machine (sinon
+c’est que t’es pas développeur, je sais pas trop ce que tu fais ici du coup).</p>
+<p>On peut tout simplement créer un fichier <code>Makefile</code> avec la commande précédente:</p>
+<pre><code class="language-shell"><span class="cm-comment"># création d’un dossier pour notre popote (puis on va dedans...)</span>
+<span class="cm-def">$ mkdir</span> autoprefixer-test &amp;&amp; <span class="cm-builtin">cd</span> autoprefixer-test
+
+<span class="cm-comment"># On créer un makefile avec une tâche `css` (création/écrasement via &gt;)</span>
+<span class="cm-def">$ echo</span> <span class="cm-string">&quot;css:&quot;</span> &gt; Makefile
+
+<span class="cm-comment"># On vérifie qu’on a bien rempli le fichier</span>
+<span class="cm-def">$ cat</span> Makefile
+
+<span class="cm-comment">## On ajoute notre commande au fichier (ajout au fichier existant via &gt;&gt;)</span>
+<span class="cm-def">$ echo</span> <span class="cm-string">&quot;\tautoprefixer index.css -b \&quot;last 2 versions, &gt; 1%, Explorer 7, Android 2\&quot; -o prefixed.css&quot;</span> &gt;&gt; Makefile
+
+<span class="cm-comment"># On vérifie qu’on a bien rempli le fichier</span>
+<span class="cm-def">$ cat</span> Makefile</code></pre>
+<p>Voilà votre Makefile doit être bien rempli. Pour tester la commande <code>css</code>:</p>
+<pre><code class="language-shell"><span class="cm-def">$ make</span> css</code></pre>
+<p>Vous remarquerez que la commande <em>autoprefixer</em> s’affiche, si ça vous embête, rajoutez
+<code>@</code> devant. Vous pouvez modifier votre Makefile dans ce sens:</p>
+<pre><code>css:
+    echo &quot;❯ Autoprefixage magique.&quot;
+    @autoprefixer index.css -b &quot;last 2 versions, &gt; 1%, Explorer 7, Android 2&quot; -o prefixed.css</code></pre>
+<p><em>Attention : Les Makefiles utilisent des tabulations uniquement ! Sans quoi cela
+ne va pas marcher comme prévu.</em></p>
+<p>Vous avez donc maintenant un exemple assez simpliste qui peut être utilisé si
+vous n’avez pas encore <a href="http://www.24joursdeweb.fr/2013/automatisez-votre-workflow-front-end/">automatisé votre workflow</a>
+via des outils comme <a href="http://gulpjs.com/">Gulp</a> ou <a href="http://gruntjs.com/">Grunt</a>.</p>
+<p>Passons justement à ces solutions plus sérieuses.</p>
+<h3 id="autoprefixer-avec-gulp">Autoprefixer avec Gulp</h3>
+<p>Je ne vais pas trop rentrer dans les détails de Gulp (ce n’est pas le sujet ici).
+Voici cependant une exemple assez bref et compréhensible pour commencer, avec
+une seule écriture sur le système de fichier (contrairement à la solution Grunt).</p>
+<pre><code class="language-js"><span class="cm-comment">// gulp stuff</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">gulp</span> = <span class="cm-variable">require</span>(<span class="cm-string">&quot;gulp&quot;</span>)
+  , <span class="cm-variable">gutil</span> = <span class="cm-variable">require</span>(<span class="cm-string">&quot;gulp-util&quot;</span>)
+  <span class="cm-comment">// le plombier ajuste les fuites des tuyaux (erreur de pipe)</span>
+  <span class="cm-comment">// ceci est conseillé pour éviter que chaque erreur &quot;casse&quot; tout le process</span>
+  <span class="cm-comment">// dès qu’une erreur est remonté par un plugin</span>
+  , <span class="cm-variable">plumber</span> = <span class="cm-variable">require</span>(<span class="cm-string">&quot;gulp-plumber&quot;</span>)
+
+<span class="cm-comment">// css stuff</span>
+<span class="cm-keyword">var</span> <span class="cm-variable">sass</span> = <span class="cm-variable">require</span>(<span class="cm-string">&quot;gulp-ruby-sass&quot;</span>)
+  , <span class="cm-variable">autoprefixer</span> = <span class="cm-variable">require</span>(<span class="cm-string">&quot;gulp-autoprefixer&quot;</span>)
+  , <span class="cm-variable">csso</span> = <span class="cm-variable">require</span>(<span class="cm-string">&quot;gulp-csso&quot;</span>)
+
+<span class="cm-comment">// css task: sass, autoprefixer et csso si --production</span>
+<span class="cm-variable">gulp</span>.<span class="cm-property">task</span>(<span class="cm-string">&quot;styles&quot;</span>, <span class="cm-keyword">function</span>() {
+  <span class="cm-variable">gulp</span>.<span class="cm-property">src</span>(<span class="cm-string">&quot;./src/css/*.scss&quot;</span>)
+    <span class="cm-comment">// it’s me, Mario</span>
+    .<span class="cm-property">pipe</span>(<span class="cm-variable">plumber</span>())
+
+    .<span class="cm-property">pipe</span>(<span class="cm-variable">sass</span>({<span class="cm-property">style</span>: <span class="cm-string">&quot;expanded&quot;</span>}))
+
+    <span class="cm-comment">// Autoprefixer \\</span>
+    <span class="cm-comment">// vous remarquerez que ici chaque option est un paramètre</span>
+    <span class="cm-comment">// pas comme pour l’appel en ligne de commande.</span>
+    .<span class="cm-property">pipe</span>(<span class="cm-variable">autoprefixer</span>(<span class="cm-string">&quot;last 2 versions&quot;</span>, <span class="cm-string">&quot;&gt; 1%&quot;</span>, <span class="cm-string">&quot;Explorer 7&quot;</span>, <span class="cm-string">&quot;Android 2&quot;</span>))
+
+    <span class="cm-comment">// optimisation CSS pour la prod uniquement</span>
+    .<span class="cm-property">pipe</span>(<span class="cm-variable">gulp</span>.<span class="cm-property">env</span>.<span class="cm-property">production</span> ? <span class="cm-variable">csso</span>() : <span class="cm-variable">gutil</span>.<span class="cm-property">noop</span>())
+
+    <span class="cm-comment">// unique écriture sur disque</span>
+    .<span class="cm-property">pipe</span>(<span class="cm-variable">gulp</span>.<span class="cm-property">dest</span>(<span class="cm-string">&quot;./dist/css/&quot;</span>))
+    <span class="cm-comment">// je passe sur cette partie à configurer, mais ici on peut imaginer un</span>
+    <span class="cm-comment">// livereload en plus, il faudra définir livereload et livereloadServer</span>
+    <span class="cm-comment">// cette partie dépend un peu de votre serveur durant le dév.</span>
+    <span class="cm-comment">// ca fera l’objet d’un post tiens...</span>
+    <span class="cm-comment">//.pipe(livereload(livereloadServer))</span>
+})
+
+<span class="cm-variable">gulp</span>.<span class="cm-property">task</span>(<span class="cm-string">&quot;dev&quot;</span>, [<span class="cm-string">&quot;styles&quot;</span>], <span class="cm-keyword">function</span>() {
+  <span class="cm-variable">gulp</span>.<span class="cm-property">watch</span>(<span class="cm-string">&quot;./src/css/**/*&quot;</span>, <span class="cm-keyword">function</span>(<span class="cm-def">event</span>) {
+    <span class="cm-variable">gulp</span>.<span class="cm-property">run</span>(<span class="cm-string">&quot;styles&quot;</span>)
+  })
+})
+
+<span class="cm-comment">// Tâches disponibles :</span>
+
+<span class="cm-comment">// - pour générer les feuilles de styles</span>
+<span class="cm-comment">//   (pour optimiser pour la prod, utiliser l’option)</span>
+<span class="cm-comment">// $ gulp styles [--production]</span>
+
+<span class="cm-comment">// - pour le dev, surveille et lance la tâche `styles` dès que nécessaire</span>
+<span class="cm-comment">// $ gulp dev</span></code></pre>
+<h3 id="autoprefixer-avec-grunt">Autoprefixer avec Grunt</h3>
+<p>Voici un petit Gruntfile avec la même configuration que ci dessus</p>
+<pre><code class="language-js"><span class="cm-keyword">module</span>.<span class="cm-variable">exports</span> = <span class="cm-keyword">function</span>(<span class="cm-def">grunt</span>) {
+  <span class="cm-string">&quot;use strict&quot;</span>;
+
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&quot;grunt-contrib-sass&quot;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&quot;grunt-autoprefixer&quot;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&quot;grunt-csso&quot;</span>)
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">loadNpmTasks</span>(<span class="cm-string">&quot;grunt-contrib-watch&quot;</span>)
+
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">initConfig</span>({
+    <span class="cm-property">sass</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">options</span>: {
+          <span class="cm-property">style</span>: <span class="cm-string">&quot;expanded&quot;</span>
+        }
+      , <span class="cm-property">files</span>: [{
+          <span class="cm-property">expand</span>: <span class="cm-atom">true</span>
+        , <span class="cm-property">flatten</span>: <span class="cm-atom">true</span>
+        , <span class="cm-property">cwd</span>: <span class="cm-string">&quot;./src/css&quot;</span>
+        , <span class="cm-property">src</span>: [<span class="cm-string">&quot;*.scss&quot;</span>]
+        , <span class="cm-property">dest</span>: <span class="cm-string">&quot;./dist/css&quot;</span>
+        , <span class="cm-property">ext</span>: <span class="cm-string">&quot;.css&quot;</span>
+        }]
+      }
+    }
+  , <span class="cm-property">autoprefixer</span>: {
+      <span class="cm-property">options</span>: {
+        <span class="cm-property">browsers</span>: [<span class="cm-string">&quot;last 2 versions&quot;</span>, <span class="cm-string">&quot;&gt; 1%&quot;</span>, <span class="cm-string">&quot;Explorer 7&quot;</span>, <span class="cm-string">&quot;Android 2&quot;</span>]
+      }
+    , <span class="cm-property">dist</span>: {
+        <span class="cm-property">expand</span>: <span class="cm-atom">true</span>
+      , <span class="cm-property">flatten</span>: <span class="cm-atom">true</span>
+      , <span class="cm-property">cwd</span>: <span class="cm-string">&quot;./dist/css&quot;</span>
+      , <span class="cm-property">src</span>: [<span class="cm-string">&quot;*.css&quot;</span>]
+      , <span class="cm-property">dest</span>: <span class="cm-string">&quot;./dist/css/&quot;</span>
+      }
+    }
+  , <span class="cm-property">csso</span>: {
+      <span class="cm-property">dist</span>: {
+        <span class="cm-property">expand</span>: <span class="cm-atom">true</span>
+      , <span class="cm-property">flatten</span>: <span class="cm-atom">true</span>
+      , <span class="cm-property">cwd</span>: <span class="cm-string">&quot;./dist/css/&quot;</span>
+      , <span class="cm-property">src</span>: [<span class="cm-string">&quot;*.css&quot;</span>]
+      , <span class="cm-property">dest</span>: <span class="cm-string">&quot;./dist/css/&quot;</span>
+      }
+    }
+
+  , <span class="cm-property">watch</span>: {
+      <span class="cm-property">styles</span>: {
+        <span class="cm-property">files</span>: [<span class="cm-string">&quot;./src/css/**/*.scss&quot;</span>]
+      , <span class="cm-property">tasks</span>: [<span class="cm-string">&quot;styles&quot;</span>]
+      }
+    }
+  })
+
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTasks</span>(<span class="cm-string">&quot;styles&quot;</span>, [<span class="cm-string">&quot;sass&quot;</span>, <span class="cm-string">&quot;autoprefixer&quot;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTasks</span>(<span class="cm-string">&quot;styles:production&quot;</span>, [<span class="cm-string">&quot;sass&quot;</span>, <span class="cm-string">&quot;autoprefixer&quot;</span>, <span class="cm-string">&quot;csso&quot;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTasks</span>(<span class="cm-string">&quot;dev&quot;</span>, [<span class="cm-string">&quot;sass&quot;</span>, <span class="cm-string">&quot;watch&quot;</span>])
+}
+
+<span class="cm-comment">// Tâches disponibles :</span>
+
+<span class="cm-comment">// - pour générer les feuilles de styles</span>
+<span class="cm-comment">// $ grunt styles</span>
+
+<span class="cm-comment">// - pareil, mais optimiser pour la prod</span>
+<span class="cm-comment">// $ grunt styles:production</span>
+
+<span class="cm-comment">// - pour le dev, surveille et lance la tâche `styles` dès que nécessaire</span>
+<span class="cm-comment">// $ grunt watch</span></code></pre>
+<p>Comme vous pouvez le voir, la version Grunt est un peu plus volumineuse (bien qu’espacée).
+Personnellement j’aime la concision de gulp.
+De plus la version Grunt sera plus longue car nous aurons 3 lectures / écritures sur le disque.</p>
+<p><em>Notez que bien entendu dans notre exemple précédent, nous pouvons remplacer Sass
+par un autre pré / post-processeur.</em></p>
+<h3 id="autoprefixer-avec-stylus">Autoprefixer avec Stylus</h3>
+<p>Dans les exemples précédents, j’ai montré une solution classique avec Sass.
+Mais voici complètement autre chose: <em>autoprefixer</em> peut s’utiliser en &quot;plugin&quot; Stylus.</p>
+<p>C’est assez simple il suffit d’utiliser l’option <code>use</code> (<code>-u</code> en cli).
+Voilà ce qu’on aurait en cli :</p>
+<pre><code class="language-shell"><span class="cm-def">$ npm</span> install <span class="cm-attribute">-g</span> stylus autoprefixer-stylus
+<span class="cm-def">$ stylus</span> <span class="cm-attribute">-u</span> autoprefixer-stylus <span class="cm-attribute">-o</span> index.css index.styl</code></pre>
+<h4 id="avec-grunt">Avec Grunt</h4>
+<p>Il suffira d’utiliser donc l’option <code>use</code> dans votre configuration.</p>
+<h4 id="-avec-gulp-"><del>Avec Gulp</del></h4>
+<p>La façon de faire de gulp, via des streams pour éviter la lecture / écriture multiple fait que le plugin
+<em>autoprefixer-stylus</em> est vide de sens.
+Vous pouvez donc utiliser <em>autoprefixer</em> normalement, après l’appel du pré-processeur.</p>
+<hr>
+<p>Voilà j’espère que cette fois-ci vous êtes rassasié afin de ne plus avoir envie de manger des préfixes CSS !</p>
+
+]]></description>
+              <pubDate>Tue, 04 Mar 2014 01:00:00 +0100</pubDate>
+              <link>http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/</guid>
+          </item>
 
           <item>
               <title>Git, boutez les bugs, domptez votre historique!</title>
@@ -402,19 +672,19 @@ Et  si j&#39;ai besoin d&#39;aller chercher une information précise, j&#39;irai
               <description><![CDATA[
 
 <p>En mettant de côté le débat trollesque <em>faut-il ou pas des préfixes CSS ?</em>
-(car avouons-le, ils sont là, il faut faire avec), on ne va pas se le cacher, 
+(car avouons-le, ils sont là, il faut faire avec), on ne va pas se le cacher,
 les préfixes CSS ça nous brise tous les... touches du clavier.
 Eh bien oui, sans automatisation on est obligé de se taper des caractères en plus.
-Même avec un IDE correct, on peut faire ça rapidement, mais ça nécessite 
+Même avec un IDE correct, on peut faire ça rapidement, mais ça nécessite
 presque à chaque fois une action de notre part.</p>
 <h2 id="pr-fixer-via-des-outils-en-ligne">Préfixer via des outils en ligne</h2>
-<p>Les élèves au fond de la classe me montreront de suite des solutions comme 
-<a href="http://prefixmycss.com/">prefixmycss.com</a> ou <a href="http://prefixr.com/">prefixr</a>.
+<p>Les élèves au fond de la classe me montreront de suite des solutions comme
+<a href="http://prefixmycss.com/">prefixmycss.com</a> ou l&#39;ancien prefixr.
 Inopinément, un moche &quot;Mourrez moi sile vou pler&quot; sort de mon corps.
-Non, sérieusement, ce n’est pas une façon de faire ça. Aller sur une web app à 
+Non, sérieusement, ce n’est pas une façon de faire ça. Aller sur une web app à
 chaque fois que je veux préfixer mes CSS ? Sérieusement ?
 Vous avez qu’à aussi faire un service postal où j’envoie mes fichiers CSS dans
-une clé USB et qu’on me renvoie sous 48h avec les préfixes ajoutés. 
+une clé USB et qu’on me renvoie sous 48h avec les préfixes ajoutés.
 Super pratique.</p>
 <h2 id="pr-fixer-via-javascript">Préfixer via JavaScript</h2>
 <p>Une autre solution serait <a href="http://leaverou.github.io/prefixfree/">prefix-free</a>,
@@ -429,23 +699,23 @@ pour parser la feuille de style et réintégrer des préfixes quoi. Au secours.<
 <blockquote>
 <p>Bah lui c’est clair il’connait pas les pré-processeurs CSS le noube</p>
 </blockquote>
-<p>Sans rentrer dans un débat trollesque (encore un), à part peut-être avec <em>Stylus</em> et ces 
+<p>Sans rentrer dans un débat trollesque (encore un), à part peut-être avec <em>Stylus</em> et ces
 mixins transparent (coucou <em><a href="http://visionmedia.github.io/nib/">Nib</a></em>),
 on est obligé de rajouter du code.
 Avec <em>Sass</em> il faudra (en scss) rajouter <code>@include</code> et un couple de parenthèse (et
 au passage avoir <em>Compass</em> si on ne veut pas coder les mixins à la main).
-Avec <em>Less</em> il faudra aussi une librairie <em>Less Hat</em> si on n’a pas envie de se taper 
-du mixin qui donne de la nausée comme on peut voir sur la 
+Avec <em>Less</em> il faudra aussi une librairie <em>Less Hat</em> si on n’a pas envie de se taper
+du mixin qui donne de la nausée comme on peut voir sur la
 <a href="http://lesscss.org/">page d’accueil</a>.</p>
 <h2 id="les-pr-fixes-c-est-comme-le-lait-a-tourne">Les préfixes, c’est comme le lait, ça tourne</h2>
-<p>D’ailleurs, parlons en vite fait de cette page d’accueil qui au jour où j’écris 
+<p>D’ailleurs, parlons en vite fait de cette page d’accueil qui au jour où j’écris
 se post, comporte <b>en premier exemple</b> un mixin pour <code>box-shadow</code>
 (hashtag ohlol).</p>
-<p>Certaines propriétés comme <code>box-shadow</code>, ou encore <code>border-radius</code>, sont 
-aujourd’hui préfixées à tort, car comme on peut le voir sur le site de 
-<a href="http://caniuse.com/">CanIUse.com</a>, elles n’ont plus vraiment besoin d’être préfixées, à 
+<p>Certaines propriétés comme <code>box-shadow</code>, ou encore <code>border-radius</code>, sont
+aujourd’hui préfixées à tort, car comme on peut le voir sur le site de
+<a href="http://caniuse.com/">CanIUse.com</a>, elles n’ont plus vraiment besoin d’être préfixées, à
 moins que vous supportiez encore Firefox 3.6, Safari iOS 3 ou Android 2...
-Je vous renvoie rapidement sur ce (vieil) article de Chris Coyier 
+Je vous renvoie rapidement sur ce (vieil) article de Chris Coyier
 <a href="http://css-tricks.com/do-we-need-box-shadow-prefixes/">Do we need box-shadow or border-radius prefixes anymore?</a>
 en guise de mémo :)</p>
 <p>Sans être de mauvaise foi, on va vite avouer qu’on ne peut pas forcément tout savoir.
@@ -461,7 +731,7 @@ auto... AUTOPREFIXER ?!</p>
 <h1 id="autoprefixer">Autoprefixer</h1>
 <p>Ce magnifique outil, basé sur une solide base de données (au hasard, CanIUse.com),
 permet de préfixer automatiquement vos CSS, et ce, de manière intelligente.
-Vous pouvez en effet configurer autoprefixer, afin de lui préciser quel 
+Vous pouvez en effet configurer autoprefixer, afin de lui préciser quel
 navigateur vous voulez utiliser.
 Vous pouvez au choix lui demander de supporter X versions en arrière, les versions
 qui ont un usage global &gt; à Y% de trafic, ou encore une version minimale donnée.</p>
@@ -471,7 +741,7 @@ qui ont un usage global &gt; à Y% de trafic, ou encore une version minimale don
 
 <span class="cm-comment">// Je supporte 2 versions en arrière, et minimum BlackBerry 10 et Android 4</span>
 <span class="cm-variable">autoprefixer</span>(<span class="cm-string">&quot;last 2 version&quot;</span>, <span class="cm-string">&quot;BlackBerry 10&quot;</span>, <span class="cm-string">&quot;Android 4&quot;</span>).<span class="cm-property">process</span>(<span class="cm-variable">css</span>).<span class="cm-property">css</span>;</code></pre>
-<p>Dans ces lignes de code JavaScript... Quoi attendez c’est en JavaScript ? Oh le 
+<p>Dans ces lignes de code JavaScript... Quoi attendez c’est en JavaScript ? Oh le
 fourbe, il nous recale sa techno de front-end de mes deux.
 Bon faites pas les relous, que vous soyez front-end ou back-end, vous avez Node.js hein ?</p>
 <p>Donc aucune inquiétude, il existe une commande pour que vous puissiez faire ça rapidement :</p>
@@ -486,11 +756,11 @@ autoprefixer *.css</code></pre>
 <blockquote>
 <p>NON MAIS T’AS CRU QUE J’ALLAIS TAPER LA COMMANDE À CHAQUE FOIS TOCARD ?</p>
 </blockquote>
-<p>No problem, comme tout outil bien foutu, il y’a une multitudes de façon de 
+<p>No problem, comme tout outil bien foutu, il y’a une multitudes de façon de
 l’utiliser :</p>
 <ul>
 <li>via <a href="https://github.com/ai/autoprefixer#nodejs">Node.js</a> directement,</li>
-<li>en plugin <a href="https://npmjs.org/package/gulp-autoprefixer">Gulp</a>,</li>
+<li>en plugin <a href="https://www.npmjs.org/package/gulp-autoprefixer">Gulp</a>,</li>
 <li>en plugin <a href="https://github.com/ai/autoprefixer#grunt">Grunt</a>,</li>
 <li>via <a href="https://github.com/ai/autoprefixer#compass">Compass</a>,</li>
 <li>en plugin <a href="https://github.com/ai/autoprefixer#stylus">Stylus</a>,</li>
@@ -512,7 +782,7 @@ vous avez aussi à dispo des plugins pour
 
 <p>Cet outil est maintenant basé sur <a href="https://github.com/ai/postcss">PostCSS</a>,
 un post-processeur CSS. Vous pouvez donc l’utiliser en plugin pour ce post-procésseur.</p>
-<p>Attends attends, un WAT ? Un <strong>POST</strong>-processeur ? Oui tu as bien lu car les 
+<p>Attends attends, un WAT ? Un <strong>POST</strong>-processeur ? Oui tu as bien lu car les
 pré-processeurs c’est so 2000.
 Mais ça, je vous en parle la prochaine fois ;)</p>
 <p>Tout plein de -moz-bisous.</p>
@@ -521,6 +791,74 @@ Mais ça, je vous en parle la prochaine fois ;)</p>
               <pubDate>Tue, 25 Feb 2014 01:00:00 +0100</pubDate>
               <link>http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</link>
               <guid isPermaLink="true">http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</guid>
+          </item>
+
+          <item>
+              <title>Sublime Text en tant qu&#x27;éditeur Markdown</title>
+              <description><![CDATA[
+
+<p>La vie de développeur n&#39;est jamais facile. Tu souhaites faire quelque chose de précis et tu te retrouves à faire totalement autre chose, <em>patchant</em> ci ou tu as découvert ça.</p>
+<p>Typiquement, j&#39;étais tranquillement en train d&#39;écrire un article pour <strong>p!</strong> qui n&#39;avait rien à voir avec celui actuel, et je me retrouve à personnaliser mon Sublime Text pour Markdown car ne souhaitant plus utiliser autre chose que celui-ci pour l&#39;écriture.</p>
+<p>Il y a certes le très bon <a href="http://mouapp.com/">Mou.app</a> (<code>$ brew cask install mou</code>) sur Mac OS X mais comme indiqué, il n&#39;est que pour Mac, or il m&#39;arrive parfois d&#39;être sur Windows.
+De plus, les éditeurs en ligne comme <a href="https://stackedit.io/">stackedit.io</a> ou <a href="http://dillinger.io/">dillinger.io</a> sont pratiques mais comme j&#39;ai tendance à stocker mes brouillons sur <a href="https://db.tt/nTkiSUb">dropbox</a>, ces outils vous demandent l&#39;accès de toute votre dropbox, chose que je n&#39;aime pas spécialement.</p>
+<p>Bref, tout ça pour dire que tout centraliser sur Sublime Text et utiliser dropbox pour écrire des articles me semble une pratique plutôt agréable.</p>
+<p>Pour cela, quittez totalement vos éditeurs Markdown et installez les plugins Sublime Text qui vont bien.</p>
+<h2 id="markdownediting">MarkdownEditing</h2>
+<p>Premièrement, <a href="http://ttscoff.github.io/MarkdownEditing/">MarkdownEditing</a>, ce petit plugin est votre parfait compagnon qui vous permettra d&#39;avoir la bonne coloration syntaxique de votre Markdown. Il vous permettra de mettre en évidence les liens, le code, et tout le reste. Du bonheur donc.</p>
+<p><img alt="" class="putainde-Img" src="/preview-markdownediting.png"></p>
+<p>Oui alors, j&#39;ai fait quelques configurations car à la base, ca ressemble plutôt à ça :</p>
+<p><img alt="" class="putainde-Img" src="/preview-markdownediting-light.png"></p>
+<p>Si vous souhaitez modifier Sublime Text mais uniquement pour le format Markdown, faites : <code>Preferences &gt; Browse Packages...</code> puis aller dans <code>User</code> et créez un fichier <code>Markdown.sublime-settings</code>. Celui-ci sera lu et appliqué à chaque fois que vous éditerez un fichier Markdown.</p>
+<p>Voici ce que j&#39;ai pour le moment :</p>
+<pre><code>{
+  &quot;color_scheme&quot;: &quot;Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme&quot;,
+  &quot;enable_table_editor&quot;: true,
+  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,
+  &quot;tab_size&quot;: 2,
+  &quot;extensions&quot;:
+  [
+    &quot;mdown&quot;,
+    &quot;txt&quot;,
+    &quot;md&quot;
+  ]
+}</code></pre>
+<p>Le thème <code>dark</code> pour pas se niquer les yeux (coucou <a href="https://twitter.com/bloodyowl">@bloodyowl</a>), j&#39;active aussi d&#39;autres plugins dont je vais vous parler d&#39;ici peu, j&#39;affecte le spacing à <code>2</code>, et je déclare que j&#39;utiliserai l&#39;éditeur Markdown pour ce genre de fichiers : <code>.mdown</code>, <code>.txt</code>, <code>.md</code>.</p>
+<p>Bien, passons à la suite.</p>
+<h2 id="markdown-preview">Markdown Preview</h2>
+<p>Notre cher <a href="https://twitter.com/revolunet">@revolunet</a> a fait un excellent plugin Markdown pour Sublime Text: <a href="https://github.com/revolunet/sublimetext-markdown-preview">Sublime Text Markdown Preview</a>. Celui-ci permet d&#39;avoir un rendu de votre Markdown en <code>.html</code>. Vous pouvez soit compiler votre Markdown pour créer un fichier HTML, soit l&#39;ouvrir directement dans votre navigateur.</p>
+<p>Différents formats disponibles :</p>
+<ul>
+<li>Python Markdown</li>
+<li>Github Flavored Markdown</li>
+</ul>
+<p>Un autre parfait compagnon en somme, qui quant à lui s&#39;occupera de digérer l&#39;excellent article que vous êtes en train d&#39;écrire.</p>
+<p>Je vous parlerai éventuellement un jour de <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> qui permet de faire ce genre de choses mais en un peu plus complet et générique (Sublime Text n&#39;est pas nécessaire) mais c&#39;est un poil plus complexe. Jettez-y un œil tout de même.</p>
+<h2 id="smartmarkdown">SmartMarkdown</h2>
+<p><a href="https://github.com/demon386/SmartMarkdown">Petit plugin</a> intéressant qui vous permettra de cacher des parties de votre texte en le repliant. Par exemple, vous vous mettez devant un titre du style <code>##</code> et vous appuyez sur <code>tab</code>, cela repliera votre texte. Plutôt pratique pour se focaliser.</p>
+<p><img alt="" class="putainde-Img" src="/preview-smartmarkdown.png"></p>
+<h2 id="sublimetableeditor">SublimeTableEditor</h2>
+<p>Précédemment dans ma configuration Markdown, vous avez pu voir ceci :</p>
+<pre><code>  &quot;enable_table_editor&quot;: true,
+  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,</code></pre>
+<p>Cela permet de configurer <a href="https://github.com/vkocubinsky/SublimeTableEditor">SublimeTableEditor</a> qui vous permettra de correctement aligner vos tableaux dans Markdown.</p>
+<p>Et voilà. Avec tout ceci, vous êtes paré(e) à écrire votre Markdown dans de bonnes conditions. Plus qu&#39;à mettre du Jazz et vous préparer une tasse de thé et c&#39;est parti.</p>
+<h2 id="bonus-markdown-extended">Bonus : Markdown Extended</h2>
+<p>Il est possible que vous n&#39;aimiez pas forcément MarkdownEditing, et dans ce cas je vous propose un autre plugin pas inintéressant non plus s&#39;appelant <a href="https://github.com/jonschlinkert/sublime-markdown-extended">Markdown Extended</a>. Il vous permettra d&#39;avoir la bonne coloration syntaxique lorsque vous écrivez du code dans votre éditeur.</p>
+<h4 id="avant">Avant</h4>
+<p><img alt="" class="putainde-Img" src="/preview-markdownextended-before.png"></p>
+<h4 id="apr-s">Après</h4>
+<p><img alt="" class="putainde-Img" src="/preview-markdownextended-after.png"></p>
+<p>Oh et j&#39;oubliais, voici quelques documentations sur Markdown histoire de bien l&#39;utiliser :</p>
+<ul>
+<li><a href="http://daringfireball.net/projects/markdown/syntax">Documentation officielle</a></li>
+<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></li>
+<li><a href="http://warpedvisions.org/projects/markdown-cheat-sheet.md">Another Markdown Cheatsheet</a></li>
+</ul>
+
+]]></description>
+              <pubDate>Thu, 20 Feb 2014 01:00:00 +0100</pubDate>
+              <link>http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</guid>
           </item>
 
           <item>
@@ -669,74 +1007,6 @@ $ sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist</code><
           </item>
 
           <item>
-              <title>Sublime Text en tant qu&#x27;éditeur Markdown</title>
-              <description><![CDATA[
-
-<p>La vie de développeur n&#39;est jamais facile. Tu souhaites faire quelque chose de précis et tu te retrouves à faire totalement autre chose, <em>patchant</em> ci ou tu as découvert ça.</p>
-<p>Typiquement, j&#39;étais tranquillement en train d&#39;écrire un article pour <strong>p!</strong> qui n&#39;avait rien à voir avec celui actuel, et je me retrouve à personnaliser mon Sublime Text pour Markdown car ne souhaitant plus utiliser autre chose que celui-ci pour l&#39;écriture.</p>
-<p>Il y a certes le très bon <a href="http://mouapp.com/">Mou.app</a> (<code>$ brew cask install mou</code>) sur Mac OS X mais comme indiqué, il n&#39;est que pour Mac, or il m&#39;arrive parfois d&#39;être sur Windows.
-De plus, les éditeurs en ligne comme <a href="https://stackedit.io/">stackedit.io</a> ou <a href="http://dillinger.io/">dillinger.io</a> sont pratiques mais comme j&#39;ai tendance à stocker mes brouillons sur <a href="https://db.tt/nTkiSUb">dropbox</a>, ces outils vous demandent l&#39;accès de toute votre dropbox, chose que je n&#39;aime pas spécialement.</p>
-<p>Bref, tout ça pour dire que tout centraliser sur Sublime Text et utiliser dropbox pour écrire des articles me semble une pratique plutôt agréable.</p>
-<p>Pour cela, quittez totalement vos éditeurs Markdown et installez les plugins Sublime Text qui vont bien.</p>
-<h2 id="markdownediting">MarkdownEditing</h2>
-<p>Premièrement, <a href="http://ttscoff.github.io/MarkdownEditing/">MarkdownEditing</a>, ce petit plugin est votre parfait compagnon qui vous permettra d&#39;avoir la bonne coloration syntaxique de votre Markdown. Il vous permettra de mettre en évidence les liens, le code, et tout le reste. Du bonheur donc.</p>
-<p><img alt="" class="putainde-Img" src="/preview-markdownediting.png"></p>
-<p>Oui alors, j&#39;ai fait quelques configurations car à la base, ca ressemble plutôt à ça :</p>
-<p><img alt="" class="putainde-Img" src="/preview-markdownediting-light.png"></p>
-<p>Si vous souhaitez modifier Sublime Text mais uniquement pour le format Markdown, faites : <code>Preferences &gt; Browse Packages...</code> puis aller dans <code>User</code> et créez un fichier <code>Markdown.sublime-settings</code>. Celui-ci sera lu et appliqué à chaque fois que vous éditerez un fichier Markdown.</p>
-<p>Voici ce que j&#39;ai pour le moment :</p>
-<pre><code>{
-  &quot;color_scheme&quot;: &quot;Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme&quot;,
-  &quot;enable_table_editor&quot;: true,
-  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,
-  &quot;tab_size&quot;: 2,
-  &quot;extensions&quot;:
-  [
-    &quot;mdown&quot;,
-    &quot;txt&quot;,
-    &quot;md&quot;
-  ]
-}</code></pre>
-<p>Le thème <code>dark</code> pour pas se niquer les yeux (coucou <a href="https://twitter.com/bloodyowl">@bloodyowl</a>), j&#39;active aussi d&#39;autres plugins dont je vais vous parler d&#39;ici peu, j&#39;affecte le spacing à <code>2</code>, et je déclare que j&#39;utiliserai l&#39;éditeur Markdown pour ce genre de fichiers : <code>.mdown</code>, <code>.txt</code>, <code>.md</code>.</p>
-<p>Bien, passons à la suite.</p>
-<h2 id="markdown-preview">Markdown Preview</h2>
-<p>Notre cher <a href="https://twitter.com/revolunet">@revolunet</a> a fait un excellent plugin Markdown pour Sublime Text: <a href="https://github.com/revolunet/sublimetext-markdown-preview">Sublime Text Markdown Preview</a>. Celui-ci permet d&#39;avoir un rendu de votre Markdown en <code>.html</code>. Vous pouvez soit compiler votre Markdown pour créer un fichier HTML, soit l&#39;ouvrir directement dans votre navigateur.</p>
-<p>Différents formats disponibles :</p>
-<ul>
-<li>Python Markdown</li>
-<li>Github Flavored Markdown</li>
-</ul>
-<p>Un autre parfait compagnon en somme, qui quant à lui s&#39;occupera de digérer l&#39;excellent article que vous êtes en train d&#39;écrire.</p>
-<p>Je vous parlerai éventuellement un jour de <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> qui permet de faire ce genre de choses mais en un peu plus complet et générique (Sublime Text n&#39;est pas nécessaire) mais c&#39;est un poil plus complexe. Jettez-y un œil tout de même.</p>
-<h2 id="smartmarkdown">SmartMarkdown</h2>
-<p><a href="https://github.com/demon386/SmartMarkdown">Petit plugin</a> intéressant qui vous permettra de cacher des parties de votre texte en le repliant. Par exemple, vous vous mettez devant un titre du style <code>##</code> et vous appuyez sur <code>tab</code>, cela repliera votre texte. Plutôt pratique pour se focaliser.</p>
-<p><img alt="" class="putainde-Img" src="/preview-smartmarkdown.png"></p>
-<h2 id="sublimetableeditor">SublimeTableEditor</h2>
-<p>Précédemment dans ma configuration Markdown, vous avez pu voir ceci :</p>
-<pre><code>  &quot;enable_table_editor&quot;: true,
-  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,</code></pre>
-<p>Cela permet de configurer <a href="https://github.com/vkocubinsky/SublimeTableEditor">SublimeTableEditor</a> qui vous permettra de correctement aligner vos tableaux dans Markdown.</p>
-<p>Et voilà. Avec tout ceci, vous êtes paré(e) à écrire votre Markdown dans de bonnes conditions. Plus qu&#39;à mettre du Jazz et vous préparer une tasse de thé et c&#39;est parti.</p>
-<h2 id="bonus-markdown-extended">Bonus : Markdown Extended</h2>
-<p>Il est possible que vous n&#39;aimiez pas forcément MarkdownEditing, et dans ce cas je vous propose un autre plugin pas inintéressant non plus s&#39;appelant <a href="https://github.com/jonschlinkert/sublime-markdown-extended">Markdown Extended</a>. Il vous permettra d&#39;avoir la bonne coloration syntaxique lorsque vous écrivez du code dans votre éditeur.</p>
-<h4 id="avant">Avant</h4>
-<p><img alt="" class="putainde-Img" src="/preview-markdownextended-before.png"></p>
-<h4 id="apr-s">Après</h4>
-<p><img alt="" class="putainde-Img" src="/preview-markdownextended-after.png"></p>
-<p>Oh et j&#39;oubliais, voici quelques documentations sur Markdown histoire de bien l&#39;utiliser :</p>
-<ul>
-<li><a href="http://daringfireball.net/projects/markdown/syntax">Documentation officielle</a></li>
-<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></li>
-<li><a href="http://warpedvisions.org/projects/markdown-cheat-sheet.md">Another Markdown Cheatsheet</a></li>
-</ul>
-
-]]></description>
-              <pubDate>Thu, 20 Feb 2014 01:00:00 +0100</pubDate>
-              <link>http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</link>
-              <guid isPermaLink="true">http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</guid>
-          </item>
-
-          <item>
               <title>BROWSERIFY ALL THE THINGS</title>
               <description><![CDATA[
 
@@ -747,7 +1017,7 @@ je cherchais la meilleure façon d&#39;écrire des micro composants réutilisabl
 <p>Pour le JavaScript, j&#39;ai commencé il y a bien longtemps par des extensions/plugins
 <a href="http://prototypejs.org/">Prototype</a>, puis peu de temps après, du plugins
 <a href="http://plugins.jquery.com/">jQuery</a> à la pelle.
-Souvent à tord puisque j&#39;utilisais peut être 1% de la librairie en dépendance - 
+Souvent à tord puisque j&#39;utilisais peut être 1% de la librairie en dépendance -
 exemple avec mon <a href="https://github.com/MoOx/jQuery.Loading-Indicator/">indicateur de chargement avec sémaphore</a>
 ou encore mon <a href="https://github.com/MoOx/jQuery.External-Links/">plugin qui ouvre les liens externes avec du target blank automatique</a>.</p>
 <p><b>Je ne ferais plus jamais ça pour la simple raison du ratio &quot;poids / % d&#39;utilisation&quot; de la dépendance.</b></p>
@@ -757,30 +1027,30 @@ ou encore mon <a href="https://github.com/MoOx/jQuery.External-Links/">plugin qu
 <p>Car si je veux utiliser mon petit script qui ajoute des targets blank automatiquement,
  devoir inclure jQuery pour si peu, ça fait mal à mes kilobites.</p>
 <p>En attendant <a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules">
-la gestion de modules via ES6</a>, il nous faut gérer aujourd&#39;hui nos composants 
+la gestion de modules via ES6</a>, il nous faut gérer aujourd&#39;hui nos composants
 et dépendances à la main.
-Encore qu&#39;on pourrait faire un transpiler pour utiliser cette syntaxe (ça existe 
+Encore qu&#39;on pourrait faire un transpiler pour utiliser cette syntaxe (ça existe
 déjà, il n&#39;y a qu&#39;à voir sur GitHub), mais là on ne ferait que créer une nouvelle
 définition de module.</p>
 <p>Côté back-end, on a déjà ce qu&#39;il faut en JavaScript avec la gestion
 <a href="http://nodejs.org/api/modules.html">des modules en Node</a>.
 Un simple <code>require(&#39;module&#39;)</code> va tenter de récupérer un module avec ce nom.
-Un module n&#39;est rien d&#39;autre qu&#39;un fichier JavaScript. Node va essayer de loader 
-un <code>.js</code>, puis <code>.json</code> et enfin <code>.node</code> si besoin), qui lui même peut 
-éventuellement charger d&#39;autres dépendances (les dépendances sont gérées localement) 
+Un module n&#39;est rien d&#39;autre qu&#39;un fichier JavaScript. Node va essayer de loader
+un <code>.js</code>, puis <code>.json</code> et enfin <code>.node</code> si besoin), qui lui même peut
+éventuellement charger d&#39;autres dépendances (les dépendances sont gérées localement)
 tout en prenant en compte les packages NPM.
 Même si <a href="http://nodejs.org/">Node</a> n&#39;implémente pas totalement
-<a href="http://wiki.commonjs.org/">CommonJS</a>, un projet de développement d&#39;une API pour 
-écrire des programmes en JavaScript ailleurs que dans le navigateur, 
+<a href="http://wiki.commonjs.org/wiki/CommonJS">CommonJS</a>, un projet de développement d&#39;une API pour
+écrire des programmes en JavaScript ailleurs que dans le navigateur,
 la façon de faire est assez proche.</p>
 <p><img class="putainde-Img" alt="" src="/browserify.png" /></p>
-<p>L&#39;idée de <a href="http://browserify.org/">Browserify</a> est d&#39;amener cette façon de faire 
+<p>L&#39;idée de <a href="http://browserify.org/">Browserify</a> est d&#39;amener cette façon de faire
 dans le navigateur.</p>
 <p>À côté de ça, vous me direz qu&#39;on a déjà <a href="http://requirejs.org/">RequireJS</a>
 pour un résultat similaire.</p>
-<p>RequireJS implémente l&#39;API AMD  (Asynchronous Module Definition), 
+<p>RequireJS implémente l&#39;API AMD  (Asynchronous Module Definition),
 différent de l&#39;API CommonJS.
-Cette API, dérivée de CommonJS, se veut adaptée au navigateur. Son principal atout 
+Cette API, dérivée de CommonJS, se veut adaptée au navigateur. Son principal atout
 étant le chargement des modules de manière asynchrone.
 En théorie, c&#39;est super.</p>
 <p>Sauf que dans la pratique (du moins quelque chose de simple et classique,
@@ -792,9 +1062,9 @@ Il suffit de penser aux problématiques de débits selon la vitesse de la connex
 au réseau (Edge, faible 3G...) et donc nombre de requêtes HTTP qui peuvent nous
 faire souffrir de gros ralentissement pour se rendre compte que cela peut poser
 problème.</p>
-<p>En plus de cela, je trouve personnellement dégueulasse  la façon de déclarer les 
+<p>En plus de cela, je trouve personnellement dégueulasse  la façon de déclarer les
 modules AMD, mais ça ce n&#39;est qu&#39;un détail.</p>
-<p>Comparons les différentes méthodes comme on nous les montre sur le site de 
+<p>Comparons les différentes méthodes comme on nous les montre sur le site de
 <a href="http://requirejs.org/docs/whyamd.html">RequireJS</a> :</p>
 <p>Le web aujourd&#39;hui:</p>
 <pre><code class="language-js">(<span class="cm-keyword">function</span> () {
@@ -826,39 +1096,39 @@ devenir lourd :</p>
           <span class="cm-def">AddAccount</span>,           <span class="cm-def">less</span>,   <span class="cm-def">osTheme</span>) {
   <span class="cm-comment">// ici le corps de la fonction</span>
 });</code></pre>
-<p>Bon vous me direz que si un module a autant de dépendances, il y a peut être un 
+<p>Bon vous me direz que si un module a autant de dépendances, il y a peut être un
 problème en amont et vous n&#39;aurez pas tort.</p>
-<p>Côté Browserify (CommonJS like), les dépendances externes proviennent (à la base) 
+<p>Côté Browserify (CommonJS like), les dépendances externes proviennent (à la base)
 de NPM.
-On a donc rien à mapper nul part. Puis pour avoir un module local, il suffit de 
-faire un <code>require(&#39;./mon/module&#39;)</code>, et Browserify se chargera de régler la 
+On a donc rien à mapper nul part. Puis pour avoir un module local, il suffit de
+faire un <code>require(&#39;./mon/module&#39;)</code>, et Browserify se chargera de régler la
 dépendance (et je vous montre encore mieux après).</p>
-<p>RequireJS propose un &quot;optimizer&quot;, qui au final ne fait que supprimer son point fort: 
+<p>RequireJS propose un &quot;optimizer&quot;, qui au final ne fait que supprimer son point fort:
 le côté asynchrone du téléchargement des modules.
 Du coup on se retrouve avec tout RequireJS dans la source ET toutes les dépendances avec le mapping.
-Il y a bien une façon de vraiment optimiser par bundle quand on cherche un peu 
-dans la doc, mais 
+Il y a bien une façon de vraiment optimiser par bundle quand on cherche un peu
+dans la doc, mais
 <a href="http://requirejs.org/docs/optimization.html#wholemultipage">ça n&#39;est pas vraiment mis en avant</a>.
-Il existe aussi <a href="https://github.com/jrburke/almond">Almond.js</a> qui se veut être 
-plus léger, mais du coup, utiliser RequireJS pour optimiser avec Almond, je ne 
+Il existe aussi <a href="https://github.com/jrburke/almond">Almond.js</a> qui se veut être
+plus léger, mais du coup, utiliser RequireJS pour optimiser avec Almond, je ne
 trouve pas ça cohérent.</p>
-<p>Si jusque là, Browserify vous intéresse (plus car les autres solutions ne vous 
+<p>Si jusque là, Browserify vous intéresse (plus car les autres solutions ne vous
 intéressent pas), attaquons le corps du sujet.</p>
 <h2>Installation de Browserify</h2>
 
-<p>Si vous souhaitez accéder à la commande via le terminal, la chose la plus simple 
+<p>Si vous souhaitez accéder à la commande via le terminal, la chose la plus simple
 à faire est d&#39;installer le paquet en global.</p>
 <pre><code class="language-bash"><span class="cm-def">$ npm</span> install <span class="cm-attribute">-g</span> browserify</code></pre>
-<p>Si vous ne l&#39;installez pas en global (sans l&#39;option <code>-g</code>, vous aurez la commande 
+<p>Si vous ne l&#39;installez pas en global (sans l&#39;option <code>-g</code>, vous aurez la commande
 accessible dans <code>./node_modules/.bin/browserify</code>).
-Mais selon votre workflow, vous pouvez l&#39;utiliser via une tâche 
-<a href="https://npmjs.org/package/grunt-browserify">grunt-browserify</a> 
-ou <a href="https://npmjs.org/package/gulp-browserify">gulp-browserify</a>.</p>
+Mais selon votre workflow, vous pouvez l&#39;utiliser via une tâche
+<a href="https://www.npmjs.org/package/grunt-browserify">grunt-browserify</a>
+ou <a href="https://www.npmjs.org/package/gulp-browserify">gulp-browserify</a>.</p>
 <h2>Utilisation de Browserify</h2>
 
 <p>Partons d&#39;un simple fichier <code>main.js</code>:</p>
 <pre><code class="language-js"><span class="cm-variable">alert</span>(<span class="cm-string">&#39;Hello world !&#39;</span>);</code></pre>
-<p>Sans aucune dépendance, ça n&#39;a que peu de sens, mais c&#39;est plus pour montrer un 
+<p>Sans aucune dépendance, ça n&#39;a que peu de sens, mais c&#39;est plus pour montrer un
 dernier point intéressant.</p>
 <p>Je le compile avec la commande suivante:</p>
 <pre><code class="language-bash"><span class="cm-def">$ browserify</span> main.js <span class="cm-attribute">-o</span> bundle.js</code></pre>
@@ -868,8 +1138,8 @@ dernier point intéressant.</p>
 
 
 },{}]},{},[<span class="cm-number">1</span>])</code></pre>
-<p>On reconnaît notre ligne en plein milieu. Avec un ajout conséquent. Ça peut paraître 
-beaucoup, mais c&#39;est rien comparé à la 
+<p>On reconnaît notre ligne en plein milieu. Avec un ajout conséquent. Ça peut paraître
+beaucoup, mais c&#39;est rien comparé à la
 <a href="http://requirejs.org/docs/release/2.1.10/minified/require.js">source de RequireJS</a></p>
 <p>Bon du coup partons avec un exemple peut être plus représentatif qu&#39;on peut voir
 sur la homepage de Browserify.</p>
@@ -885,28 +1155,29 @@ sur la homepage de Browserify.</p>
 <pre><code class="language-bash"><span class="cm-def">$ npm</span> i gamma</code></pre>
 <p><small><i><code>i</code> est l&#39;alias de <code>install</code>.</i></small></p>
 <p>Avec la même commande que précédement (et donc le même ajout), Browserify va parser
-l&#39;arbre syntaxique abstrait (AST) des appels à <code>require()</code> et va créer un graph 
-des dépendances du projet.<br>Un fois ceci fait, il va simplement ajuster les chemins et déclarer les fonctions 
-mappées dans un object par leur identifiant. Lorsqu&#39;une fonction appelle <code>require</code>, 
+l&#39;arbre syntaxique abstrait (AST) des appels à <code>require()</code> et va créer un graph
+des dépendances du projet.
+Un fois ceci fait, il va simplement ajuster les chemins et déclarer les fonctions
+mappées dans un object par leur identifiant. Lorsqu&#39;une fonction appelle <code>require</code>,
 le petit bout de script ajouté va se charger de retourner la dépendance.</p>
-<p>Notez qu&#39;on peut aussi simplement utiliser une redirection de sortie de commande 
+<p>Notez qu&#39;on peut aussi simplement utiliser une redirection de sortie de commande
 pour gérer le fichier final:</p>
 <pre><code class="language-bash"><span class="cm-def">$ browserify</span> main.js &gt; bundle.js</code></pre>
-<p>Du coup on a plus qu&#39;à utiliser une simple balise <code>&lt;script&gt;</code> pour incorporer ça 
+<p>Du coup on a plus qu&#39;à utiliser une simple balise <code>&lt;script&gt;</code> pour incorporer ça
 dans nos pages web.</p>
 <pre><code class="language-html"><span class="cm-tag">&lt;script</span> <span class="cm-attribute">src</span>=<span class="cm-string">&quot;bundle.js&quot;</span><span class="cm-tag">&gt;</span><span class="cm-tag">&lt;/script</span><span class="cm-tag">&gt;</span></code></pre>
 <h2>Les transformations avec Browserify</h2>
 
-<p>Tant qu&#39;à utiliser un outil, autant l&#39;exploiter jusqu&#39;au bout. Car pour l&#39;instant 
+<p>Tant qu&#39;à utiliser un outil, autant l&#39;exploiter jusqu&#39;au bout. Car pour l&#39;instant
 je n&#39;ai parlé que de NPM.
 Que faire si mon module n&#39;est pas sur NPM ?
-Bon déjà je double check, car maintenant la plupart des librairies y sont 
+Bon déjà je double check, car maintenant la plupart des librairies y sont
 (jQuery, Backbone et Jean passe).
-Si ce n&#39;est pas le cas, je pourrais toujours faire <code>npm i https//adresse.git</code> 
+Si ce n&#39;est pas le cas, je pourrais toujours faire <code>npm i https//adresse.git</code>
 mais si le paquet n&#39;a pas de <code>package.json</code> avec le <code>main</code> bien rempli, ça ne va
 pas forcément être le mieux.</p>
 <p>Cela dit, si mon paquet est prévu pour Bower par exemple, il existe une <i>transformation</i>
-prévue pour aider Browserify à résoudre les références aux paquets pour les 
+prévue pour aider Browserify à résoudre les références aux paquets pour les
 consommer depuis Bower: <code>debowerify</code>.
 Dans le même esprit, on va retrouver de nombreuses transformations telles que :</p>
 <ul>
@@ -918,7 +1189,7 @@ Dans le même esprit, on va retrouver de nombreuses transformations telles que :
 <li><code>es6ify</code>: pour écrire du JavaScript ES6 (compilé en ES5),</li>
 <li><code>uglifyify</code>: appliquer uglify.</li>
 </ul>
-<p>Il existe plein <a href="https://npmjs.org/browse/keyword/browserify">d&#39;autres transformations</a> 
+<p>Il existe plein <a href="https://www.npmjs.org/browse/keyword/browserify">d&#39;autres transformations</a>
 qui s&#39;adapteront sûrement à vos besoins.</p>
 <p>Du coup la ligne ultime pour consommer a peu près n&#39;importe quel module :</p>
 <pre><code class="language-bash">browserify <span class="cm-attribute">-t</span> debowerify <span class="cm-attribute">-t</span> decomponentify <span class="cm-attribute">-t</span> deamdify <span class="cm-attribute">-t</span> deglobalify <span class="cm-attribute">-t</span> es6ify main.js &gt; bundle.js</code></pre>
@@ -930,7 +1201,7 @@ Pensez bien à installer ces dépendances avant:</p>
 <p>Consommer c&#39;est bien, mais faire c&#39;est <del>mieux</del> bien aussi.</p>
 <p><img class="putainde-Img" alt="" src="/browserify-potter.png" /></p>
 <p>Tout droit sorti de <a href="https://github.com/umdjs/umd">UMD</a> (Universal Module Definition),
-voici un wrapper qui vous permettra de créer votre module compatible avec CommonJS, 
+voici un wrapper qui vous permettra de créer votre module compatible avec CommonJS,
 AMD et pour les projets old school !</p>
 <pre><code class="language-js">(<span class="cm-keyword">function</span> (<span class="cm-def">root</span>, <span class="cm-def">factory</span>) {
   <span class="cm-keyword">if</span> (<span class="cm-keyword">typeof</span> <span class="cm-variable">exports</span> === <span class="cm-string">&#39;object&#39;</span>) {
@@ -950,9 +1221,9 @@ AMD et pour les projets old school !</p>
   <span class="cm-comment">// Ici votre module (fonction, objet, whatever...)</span>
   <span class="cm-keyword">return</span> {};
 }));</code></pre>
-<p>Il existe bien sur <a href="https://github.com/umdjs/umd#variations">plusieurs façons de faire</a> 
+<p>Il existe bien sur <a href="https://github.com/umdjs/umd#variations">plusieurs façons de faire</a>
 selon vos critères. À vous de choisir.</p>
-<p>Maintenant vous aller pouvoir consommer et écrire des modules facilement, et 
+<p>Maintenant vous aller pouvoir consommer et écrire des modules facilement, et
 sans vous prendre la tête.</p>
 <p>Bisous.</p>
 
@@ -1383,7 +1654,12 @@ routes se croiseront-elles de nouveau. Dans l&#39;intervalle, va, vis, et code !
     <span class="cm-keyword">var</span> <span class="cm-def">item</span> = <span class="cm-variable">myObject</span>[<span class="cm-variable">i</span>]
     <span class="cm-comment">// do something</span>
   })</code></pre>
-<p>De même, on bénéficie de méthodes s&#39;avérant très utiles, comme <a href="http://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype"><code>Array.prototype.map</code>, <code>Array.prototype.reduce</code>, <code>Array.prototype.filter</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object"><code>Object.create</code>, <code>Object.getPrototypeOf</code>, <code>Object.getOwnPropertyNames</code>, <code>Object.defineProperty</code></a> dont je t&#39;invite, si cela t&#39;intéresse, à te renseigner sur ces méthodes. Et si tu veux avoir plus de détails, read the fucking manual : <a href="http://es5.github.io"><a href="http://es5.github.io">http://es5.github.io</a></a>.</p>
+<p>De même, on bénéficie de méthodes s&#39;avérant très utiles, comme
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype"><code>Array.prototype.map</code>, <code>Array.prototype.reduce</code>, <code>Array.prototype.filter</code></a>,
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object"><code>Object.create</code>, <code>Object.getPrototypeOf</code>, <code>Object.getOwnPropertyNames</code>, <code>Object.defineProperty</code></a>
+dont je t&#39;invite, si cela t&#39;intéresse, à te renseigner sur ces méthodes.
+Et si tu veux avoir plus de détails, read the fucking manual :
+<a href="http://es5.github.io"><a href="http://es5.github.io">http://es5.github.io</a></a>.</p>
 <h3 id="des-petits-d-tails-cools-du-c-t-des-events">Des petits détails cools du côté des events</h3>
 <p>Avec <code>addEventListener</code>, on peut aussi passer un objet comme listener, avec <code>handleEvent</code> pour interface :</p>
 <pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">myElementClickEvents</span> = {
@@ -2234,24 +2510,24 @@ routes se croiseront-elles de nouveau. Dans l&#39;intervalle, va, vis, et code !
               <description><![CDATA[
 
 <p>Tu te sens l’âme d’un rebelle ? Tu veux tester de la techno atypique ? Ça tombe
-bien, aujourd’hui on est là pour ça. On va toucher à un sujet pas forcément 
+bien, aujourd’hui on est là pour ça. On va toucher à un sujet pas forcément
 majoritaire : le langage Go. Si tu ne connais pas les bases, je t’invite à aller
-sur la <a href="http://goo.gl/EF1rIa">homepage du projet</a> et à parcourir le 
-<a href="http://goo.gl/7z0uzx">go-tour anglais</a> ou 
-<a href="http://goo.gl/XMwsIY">celui en français</a>, c&#39;est un showcase complet du langage 
+sur la <a href="http://golang.org/">homepage du projet</a> et à parcourir le
+<a href="http://tour.golang.org/">go-tour anglais</a> ou
+<a href="http://go-tour-fr.appspot.com/">celui en français</a>, c&#39;est un showcase complet du langage
 (et très bien fichu).
 Mais si t&#39;es juste curieux et que comprendre chaque pixel de l&#39;article n&#39;est pas
-une obsession pour toi, tu devrais pouvoir voir de quoi on parle. Même 
+une obsession pour toi, tu devrais pouvoir voir de quoi on parle. Même
 <a href="/le-crew/">Nyalab</a> y est arrivé.</p>
-<p>Dans cet article on va voir <strong>comment brancher un projet go+revel à une base de 
+<p>Dans cet article on va voir <strong>comment brancher un projet go+revel à une base de
 données mongodb</strong> et obtenir ainsi une base de travail sympa pour explorer le
 développement web avec Go.</p>
 <h2 id="les-technos-utilis-es">Les technos utilisées</h2>
 <h3 id="-golang-http-golang-org-"><a href="http://golang.org">Golang</a></h3>
-<p>Langage compilé, publié en 2009, communément considéré comme “désorienté objet”, 
-c’est une alternative solide au C/C++ qui prône un découpage modulaire (par 
-“package”) des applications. Il est prédisposé à une utilisation en 
-développement web grâce à un package natif de gestion des réseaux et du 
+<p>Langage compilé, publié en 2009, communément considéré comme “désorienté objet”,
+c’est une alternative solide au C/C++ qui prône un découpage modulaire (par
+“package”) des applications. Il est prédisposé à une utilisation en
+développement web grâce à un package natif de gestion des réseaux et du
 protocole http.</p>
 <h3 id="-revel-http-robfig-github-io-revel-"><a href="http://robfig.github.io/revel/">Revel</a></h3>
 <p>Framework développé en Go et pour Go. Il intègre tout ce qu’il faut pour
@@ -2271,7 +2547,7 @@ json dans des collections. Le requêtage se fait en manipulant des objets et des
 fonctions javascript.</p>
 <h2 id="attends-attends-pourquoi-go-">Attends, attends ... Pourquoi Go ?</h2>
 <p>Le premier vrai argument, c&#39;est la <strong>performance</strong>. Sans rentrer dans
-l&#39;explication hyper poussée d&#39;un <a href="http://goo.gl/3dqA7q">benchmark</a>, on peut
+l&#39;explication hyper poussée d&#39;un <a href="http://jaxbot.me/articles/benchmarks_nodejs_vs_go_vs_php_3_14_2013">benchmark</a>, on peut
 affirmer sans trop de risque que Go se hisse au moins au niveau de node.js. On
 va pas risquer de vexer les autres membres du crew avec des affirmations
 trollesques dès le premier post.</p>
@@ -2294,7 +2570,7 @@ Tout ce qui est appelé dans myFunc() saute sur un thread séparé. Et pour gér
 la synchronicité entre plusieurs thread il y a un mécanisme de canaux. Ce sont
 des files FIFO (the First In is the First Out) dont la lecture est bloquante
 (il existe des techniques évoluées pour faire du polling, cf
-<a href="http://goo.gl/ijKHTq">gotour#68</a>).</p>
+<a href="http://tour.golang.org/#68">gotour#68</a>).</p>
 <p>Pour finir, cerise sur le gateau, <strong>Go compile vite</strong>, extrêment vite, et ça va
 sauver ton intégrité mentale sur les gros projets. Par contre c&#39;est foutu pour
 tes pauses cafés aux prétextes douteux.</p>
@@ -2320,8 +2596,8 @@ revel, quelque chose comme ça:</p>
  aucune trace de gestion de base de données là dedans. On commence donc par
  créer un dossier <code>app/modules</code> et un sous dossier <code>app/modules/mongo</code>. C’est
  dans ce dossier que va se trouver notre gestionnaire de connexion à mongoDB.
- En fait ce n’est rien de plus qu’un binding entre Revel et Mgo. La technique 
- utilisée pour brancher ce binding côté Revel est celle des 
+ En fait ce n’est rien de plus qu’un binding entre Revel et Mgo. La technique
+ utilisée pour brancher ce binding côté Revel est celle des
  <a href="http://robfig.github.io/revel/manual/interceptors.html">interceptors</a>.</p>
 <pre><code class="language-go"><span class="cm-keyword">package</span> <span class="cm-variable">mongo</span>
 
@@ -2488,9 +2764,9 @@ modèles dans des modules est une première étape vers une architecture propre 
 je l&#39;ai brièvement mentionné un peu plus tôt, c&#39;est même d&#39;ailleurs ce que je te
 conseille. Si tu veux creuser ce sujet là tu trouveras pas mal de monde qui s&#39;y
 intéresse en fouinant sur le
-<a href="http://goo.gl/qePO51">groupe de discussion des utilisateurs golang</a>.
+<a href="https://groups.google.com/forum/#!forum/Golang-Nuts">groupe de discussion des utilisateurs golang</a>.
 Tu as par exemple ce gars là qui a
-<a href="http://goo.gl/HZmrHJ">remplacé sa dépendance à la librairie mgo par des interfaces</a>
+<a href="https://groups.google.com/forum/#!searchin/Golang-Nuts/interface/golang-nuts/Q0WhF7vhw5Q/T1tSJHT4aCoJ">remplacé sa dépendance à la librairie mgo par des interfaces</a>
 pour éviter d&#39;inclure le package a chaque fois et faciliter ses tests. Tu peux
 envisager de faire la même chose pour découpler tes modèles et la logique métier
 .</p>
@@ -2837,7 +3113,7 @@ Aucun intêret de se fatiguer, sauf si votre <a href="https://code.google.com/p/
 </ul>
 <h2 id="le-mot-de-la-fin">Le mot de la fin</h2>
 <p>Ne soyez jamais sûr de vous, que ce soit pour écrire de l&#39;HTML ou faire une mise
-en prod&#39; un vendredi soir à <a href="http://www.miximum.fr/tranche_vie/62-le-bug-de-17h30">17h30</a>.
+en prod&#39; un vendredi soir à <a href="http://www.miximum.fr/le-bug-de-17h30.html">17h30</a>.
 Faites pas les malins. Ne sous-estimez pas HTML.
 Si ça merde quelque part, vérifiez plus loin que le bout de votre nez, que votre
 règle CSS qui marche pas, ou votre morceau de JavaScript buggé.</p>
@@ -2863,7 +3139,7 @@ règle CSS qui marche pas, ou votre morceau de JavaScript buggé.</p>
               <title>Versionner avec Git</title>
               <description><![CDATA[
 
-<p>Chez Putain de Code, on aime se servir de <a href="http://git-scm.org/">Git</a> (et de GitHub, mais
+<p>Chez Putain de Code, on aime se servir de <a href="http://git-scm.com/">Git</a> (et de GitHub, mais
 c&#39;est une autre histoire), même si certains d&#39;entre nous (comme Lionel) ne s&#39;en
 servent pas forcément bien.</p>
 <p>Pour éviter ce genre de mésaventures, on s&#39;est dit qu&#39;on allait consacrer une
@@ -2992,7 +3268,7 @@ rien à valider, la copie de travail est propre</code></pre>
 <h2 id="inspecter">Inspecter</h2>
 <p>Bon, c&#39;est bien beau de commiter, mais à un moment on arrive sur un projet en
 cours et on aimerait bien savoir où on en est. Pour ça vous pouvez utiliser un
-outil graphique (il y en a pour <a href="https://wiki.gnome.org/Gitg">Linux</a>, <a href="http://gitx.frim.nl/">OS X</a> et même sûrement
+outil graphique (il y en a pour <a href="https://wiki.gnome.org/Apps/Gitg">Linux</a>, <a href="http://gitx.frim.nl/">OS X</a> et même sûrement
 Windows) ou retrousser vos poils de barbe et sortir le bon vieux <code>git log</code>.</p>
 <p>C&#39;est un vrai couteau-suisse qui va vous permettre d&#39;inspecter tout l&#39;historique
 de votre dépôt, avec des options en veux-tu en voilà pour personnaliser
@@ -3350,7 +3626,7 @@ description de Pull Request en essayant au moins de commencer par <code>Post: No
 ou <code>Fix: Nom du post</code></p>
 </li>
 <li><p>Et voila ! Tu n&#39;as qu&#39;à attendre de nos nouvelles maintenant. D&#39;ailleurs au
-passage, si tu veux, tu peux en profiter pour nous suivre <a href="http://twitter.com/putaindecode">sur
+passage, si tu veux, tu peux en profiter pour nous suivre <a href="https://twitter.com/putaindecode">sur
 twitter</a>, et tu pourras nous lâcher un
 message avec ta PR ou ton issue en lien, histoire de nous mettre la pression.</p>
 </li>
