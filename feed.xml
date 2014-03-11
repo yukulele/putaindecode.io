@@ -5,8 +5,212 @@
         <description>On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</description>
         <link>http://putaindecode.fr/</link>
         <generator>happyplan 0.4.0-beta.6</generator>
-        <lastBuildDate>Mon, 10 Mar 2014 00:00:00 +0100</lastBuildDate>
+        <lastBuildDate>Tue, 11 Mar 2014 00:00:00 +0100</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml" />
+
+          <item>
+              <title>Le point sur les pré-processeurs CSS</title>
+              <description><![CDATA[
+
+<h2 id="pourquoi-les-pr-processeurs">Pourquoi les pré-processeurs</h2>
+<p>Voilà ce que j&#39;ai écrit en 2011 dans
+<a href="http://moox.io/blog/utiliser-des-variables-fonctions-css/">mon premier post sur les pré-processeur</a>.
+Je venais de découvrir cette notion et j&#39;avais donc fait le tour de la question.</p>
+<blockquote>
+<p>Le langage des CSS n’a pas de côté dynamique. C’est lui avec lequel, à chaque
+fois qu’on intègre une maquette graphique, on doit se taper tout de zéro.
+Il a beau exister des CSS « Reset », des frameworks CSS, tout un tas de
+grilles prête à l’emploi, des composants de CSS réutilisables avec l’approche
+objet, je n’ai jamais réellement était satisfait par ces méthodes, que ce soit
+à cause des contraintes qu’impose la syntaxe (devoir mettre des classes à tout
+va dans l’HTML ça peut vite devenir chiant dans un CMS), ou par d’éventuelles
+limitations qui obligent à « trop » modifier la source du document (pas assez
+de, ou trop de, ou seulement ça ne me plait pas comment c’est fait).</p>
+</blockquote>
+<p>J&#39;avais tout dit, même des trucs qu&#39;aujourd&#39;hui je pense être des conneries (il
+n&#39;y a que les cons qui ne changent pas d&#39;avis + c&#39;est en faisant des erreurs
+qu&#39;on apprend le mieux), mais je reviendrais dessus plus tard.</p>
+<p>Du coup on en retire quoi ? Qu&#39;utiliser un pré-processeur se justifie par
+l&#39;ajout de fonctionnalités lorsque vous écrivez des feuilles de style (en tant
+que développeur). En tant qu&#39;utilisateur du code produit, cela va permettre
+d&#39;ajouter une couche abstraction (ce qui peut poser des problèmes, je reviendrais
+sur ce point plus tard).</p>
+<h2 id="principales-fonctionnalit-s">Principales fonctionnalités</h2>
+<ul>
+<li>variables</li>
+<li>fonctions</li>
+<li>mixins (permettant de réaliser des sorties CSS paramétrables)</li>
+<li><code>@import</code> intelligent (pas côté client)</li>
+<li>nesting (imbrications des sélecteurs pour éviter la répétition)</li>
+<li>optimisation et abstraction poussée (via les mixins, placeholders et <code>@extend</code>)</li>
+</ul>
+<p>Anciennement on aurait rajouté à cette liste la gestion du CSS 3, mais comme
+je l&#39;expliquais il y a peu, ce n&#39;est plus nécessaire, on a une méthode bien
+mieux, rapide et surtout <b>maintenu à jour</b> avec
+<a href="/posts/css/comment-en-finir-avec-les-prefixes/">AutoPrefixer</a></p>
+<h2 id="les-principaux-pr-processeurs">Les principaux pré-processeurs</h2>
+<h3 id="-sass-http-sass-lang-com-"><a href="http://sass-lang.com/">Sass</a></h3>
+<p>Sass est à mon avis le plus mature des pré-processeurs CSS.
+Il possède 2 syntaxes (une indentée et une plus proche de CSS).
+Ce projet avance à bon rythme. Niveau fonctionnalités, rien à dire si ce n&#39;est que
+celui-ci a un petit plus pour avec la feature <code>@content</code> qui permet pour le coup de
+passer tout un bloc de propriétés en paramètre à des mixins. Ce qui est super
+pratique lorsque l&#39;on écrit pas mal de media queries.
+(Après, venez pas me dire qu&#39;on a plein de fois les media-queries qui se
+répètent et que ce n&#39;est pas bien pour la taille du fichier, gzip se chargera de ça -
+<small><a href="https://twitter.com/kaelig/status/412909849207644160">exemple similaire</a>)</small>.</p>
+<p>Le langage Sass possède une implémentation d&#39;origine en Ruby mais aussi depuis
+quelques temps une implémentation C qui se veut beaucoup plus rapide et portable:
+<a href="http://libsass.org/">libsass</a> mais qui est encore un peu en retard niveau
+fonctionnalité (affaire à suivre). Surtout depuis la version 3.3 qui possède de
+nouvelles fonctionnalités (comme les maps, entre autres).</p>
+<p>Avec ce pré-processeur, on peut s&#39;éloigner pas mal du CSS natif, que ce soit avec
+la syntaxe ou l&#39;aspect programmation (il n&#39;y a qu&#39;à voir des trucs comme
+<a href="https://github.com/Team-Sass/modular-scale">modular-scale</a> ou
+<a href="https://github.com/HugoGiraudel/SassyMatrix">SassyMatrix</a>).</p>
+<p>Bibliotèques construites sur Sass :</p>
+<ul>
+<li><a href="http://compass-style.org/">Compass</a>, solide, basé sur Ruby (incompatible libsass),</li>
+<li><a href="http://bourbon.io/">Bourbon</a>, plus light mais plus rapide.</li>
+</ul>
+<h3 id="-less-http-lesscss-org-"><a href="http://lesscss.org/">LESS</a></h3>
+<p>Je n&#39;ai pas trop envie de parler de ce pré-processeur assez classique, qui a fait un
+choix assez étrange pour les variables par exemple (oui, <code>@</code> est un caractère
+spécial en CSS, c&#39;est assez étrange de rajouter une couche avec pour les variables
+avec ce dernier).
+J&#39;espère seulement que ceux qui l&#39;utilisent aujourd&#39;hui n&#39;utilise pas le script côté client
+(ce qui provoquerait un affichage sans CSS si le client n&#39;a pas JavaScript activé).
+Bien qu&#39;il soit populaire, le repository sur GitHub n&#39;est pas signe de bonne santé
+à mes yeux. Voir des pull-requests qui traînent vielles de plusieurs
+<del>mois</del> <ins>années</ins> me laissent dubitatif...
+Puis il n&#39;y a qu&#39;à voir l&#39;exemple sur la homepage du site avec les box-shadow,
+pour voir que ce pré-processeur est assez déprécié.</p>
+<p>Ajoutons à cela le fait que Twitter Boostrap a (enfin) une version Sass...</p>
+<p>Côté fonctionnalités, l&#39;aspect programmation est assez laborieux avec la façon dont
+sont gérés les mixins conditionnels. Je passe sur ce point gerbant.</p>
+<p>Bibliotèques construites sur Less :</p>
+<ul>
+<li><a href="http://lesshat.madebysource.com/">LESS Hat</a>,</li>
+<li><a href="http://lesselements.com/">LESS Elements</a>.</li>
+</ul>
+<h3 id="-stylus-http-learnboost-github-io-stylus-"><a href="http://learnboost.github.io/stylus/">Stylus</a></h3>
+<p>Stylus se veut plus transparent que les autres pré-processeurs. C&#39;est un point
+réussi puisqu&#39;il permet d&#39;avoir des mixins transparents au niveau écriture.
+Cela peut par contre bien entendu rendre la maintenance et la compréhension plus
+difficile si on en abuse.
+Il permet aussi de coder sans <code>{}</code> ni <code>:</code> ni <code>;</code> (bien que tout cela soit optionnel)</p>
+<p>Niveau fonctionnalités cela ne vaut pas Sass. Ici pas de <code>@content</code> ou de maps.</p>
+<p>Bibliotèque construite sur Stylus :</p>
+<ul>
+<li><a href="http://visionmedia.github.io/nib/">Nib</a></li>
+</ul>
+<h3 id="alternatives">Alternatives</h3>
+<p>On peut s&#39;amuser à faire un pré-processeur CSS avec n&#39;importe quel langage c&#39;est
+évident.
+Mais <a href="http://www.alsacreations.com/astuce/lire/1433-utiliser-php-pour-gerer-vos-styles-css.html">les enfants, ne faites pas ça.</a>
+À moins que vous souhaitiez alourdir vos CSS plus que vous y gagnerez.
+Puis si c&#39;est juste pour ajouter des variables, il existe d&#39;autres solutions...</p>
+<p><em>Note: si vous avez d&#39;autres pré-processeurs intéressants, je me ferais un plaisir
+de les ajouter ici. Mais bon <a href="https://github.com/putaindecode/website/blob/master/src/posts/css/le-point-sur-les-preprocesseurs/index.html.hbs">vous pouvez aussi le faire tout seul comme un
+grand</a>.</em></p>
+<h2 id="les-pr-processeurs-sont-ils-vraiment-n-cessaire-">Les pré-processeurs sont-ils vraiment nécessaire ?</h2>
+<blockquote>
+<p>Oula. Le mec vient de nous poser un post pour nous parler des pré-processeurs,
+et il nous sort une question comme ça ? Il est où le piège ?</p>
+</blockquote>
+<p>Si je pose la question c&#39;est que j&#39;ai une petite réponse par là. Et elle ne va
+peut-être pas vous plaire.</p>
+<p>Je vais revenir sur certains points qui peuvent poser problème avec les pré-processeurs.</p>
+<h3 id="le-nesting-cay-mal">Le nesting cay mal</h3>
+<p>Ahh... Le nesting, c&#39;est bien pratique lorsque l&#39;on travaille sur un CMS
+(ou n&#39;importe quoi ayant un code HTML qu&#39;on ne maitrise pas facilement)
+de pouvoir utiliser le nesting pour pouvoir rapidement produire les sélecteurs adéquats.
+Mais en terme de maintenance et surtout de réutilisation, c&#39;est vraiment à chier.
+Faut dire ce qui est.</p>
+<pre><code class="language-scss"><span class="cm-qualifier">.widget</span> {
+  <span class="cm-comment">// titre</span>
+  <span class="cm-tag">h3</span> { }
+
+  <span class="cm-comment">// widget body</span>
+  &gt; <span class="cm-tag">div</span> {
+
+    <span class="cm-comment">// liste</span>
+    <span class="cm-tag">ul</span> {
+
+    }
+  }
+}</code></pre>
+<p>Cet exemple est parfait pour démontrer les limites du nesting.
+Comment faire si, sur un widget donnée, nous avons comme titre un h2 ou h4 ?
+Il faut alourdir la CSS. Pareillement, si notre fameuse liste dans le corps n&#39;est
+pas dans la même arborescence que celle décrite, il faut à nouveau alourdir notre CSS.
+Sans rentrer dans ces solutions solides (nous parlerons de BEM très bientôt),
+cette solution serait bien plus élégante pour la réutilisation :</p>
+<pre><code class="language-css"><span class="cm-qualifier">.widget</span> {}
+
+  <span class="cm-qualifier">.widget-title</span> { }
+
+  <span class="cm-qualifier">.widget-body</span> { }
+
+    <span class="cm-qualifier">.widget-body-list</span> { }</code></pre>
+<p>Vous remarquerez que j&#39;ai un code ici beaucoup plus compréhensible par un nouveau,
+mais aussi bien mieux réutilisable et surtout, point très important, non couplé
+(non dépendant) à notre arborescence HTML (coucou le DOM).
+De plus, utiliser le nesting provoque des sélecteurs à rallonges, après c&#39;est la
+course à la longueur (et au poids) des sélecteurs quand il faut surcharger une
+règle héritée.
+Avec de simple sélecteurs, pas de souci de ce genre là.</p>
+<p><em>ProTip™ : vous remarquerez que j&#39;indente mon CSS à l&#39;image des composants, ça mange
+pas de pain, est cela facilite la lecture, moins linéaire.</em></p>
+<p>Donc je reviens sur ce que je disais, il faut utiliser pleins de classes dans l&#39;HTML.
+Ça sert à ça. Votre CSS produit de cette façon sera bien plus réutilisable.</p>
+<h3 id="l-abstraction-cay-dangereux">L&#39;abstraction cay dangereux</h3>
+<p>On en revient à la magie. Lorsqu&#39;on a trop de couche qui cache ce qu&#39;il y a
+réellement sous le capot, <a href="http://linuxfr.org/news/encore-un-exemple-de-code-spaghetti-toyota">on peut vite perdre le contrôle</a>.</p>
+<p>Et voici <a href="https://github.com/MoOx/compass-recipes/issues/104">un parfait exemple</a>
+où un utilisateur de ma librairie <a href="https://github.com/MoOx/compass-recipes">Compass Recipes</a>
+avait un problème lorsqu&#39;il utilisait 2 mixins qui cachaient trop de code.
+Dans  notre cas corners-tucked (version coin scotché) et background-noise (bruit visuel).
+Il en a perdu des choses simples et avait passé beaucoup de temps à se prendre la tête
+alors que la solution était très (trop) simple (une histoire entre <code>background-image</code>
+et le shorthand <code>background</code>).</p>
+<p>Je me laisse souvent attirer par la magie d&#39;un code, mais mon expérience m&#39;indique
+aujourd&#39;hui qu&#39;il ne faut pas abuser de cette partie mystérieuse où l&#39;on ne sait
+plus ce qui se passe.</p>
+<p>Je vous laisse imaginer du nesting caché dans des mixins qui utilisent d&#39;autres mixins
+qui font des @extends de placeholders...</p>
+<blockquote>
+<p>Un grand pouvoir implique de grandes responsabilités.</p>
+</blockquote>
+<p>Tout est dit. Il faut faire attention. Très attention.</p>
+<h2 id="mon-avis-sur-les-pr-processeurs">Mon avis sur les pré-processeurs</h2>
+<p>Je pense que les pré-processeurs restent utiles mais seulement pour des projets
+de très grosse envergure, qui possède énormément de code CSS et/ou extrêmement dynamique.
+Ou que vous utilisez de solutions comme <a href="http://getbootstrap.com/">Bootstrap</a> ou
+<a href="http://foundation.zurb.com/">Foundation</a>, chose que je déconseille pour autre chose que des prototypes.</p>
+<p>De part mon expérience et mon recul (si si j&#39;en prends je vous jure), je pense que
+j&#39;aurais pu m&#39;en passer bien plus souvent que j&#39;ai voulu l&#39;admettre par le passé.
+Mais bon comme je dis souvent, quel plaisir de se planter quand ce n&#39;est pas dans un platane !</p>
+<p>Bien que j&#39;ai longtemps apprécié les pré-processeurs CSS, aujourd&#39;hui je commence
+à leur tourner le dos du fait que je n&#39;utilise que trop peu de leurs fonctionnalités.
+J&#39;évite l&#39;overkill quoi.</p>
+<p>Quand on voit que des <em>grands</em> de l&#39;HTML / CSS comme <a href="http://nicolasgallagher.com/">@necolas</a>
+n&#39;utilise pas de pré-processeur, on a de quoi se poser des questions.
+Avec une bonne bibliothèque comme <a href="https://github.com/suitcss/suit/">SUIT CSS</a>,
+on s&#39;en retrouve à ne manquer que des petites choses.</p>
+<p>Que l&#39;on peut combler.</p>
+<p>Avec les post-processeurs par exemple.</p>
+<p>J&#39;ai donc à ce jour moi aussi conservé une couche pour ajouter le minimum vital en tant que développeur.</p>
+<p>Mais ne voulant pas alourdir ce post consacré aux pré-processeurs CSS,
+vous pourrez continuer la lecture au prochain épisode qui sera consacré aux post-processeurs...</p>
+<p><small>(Mamam, t&#39;as vu ce cliffhanger digne des séries US !)</small></p>
+<p>Bon promis la prochain fois je vous en parle des post-processeurs. Pour de vrai.</p>
+
+]]></description>
+              <pubDate>Tue, 11 Mar 2014 01:00:00 +0100</pubDate>
+              <link>http://putaindecode.fr/posts/css/le-point-sur-les-preprocesseurs/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/css/le-point-sur-les-preprocesseurs/</guid>
+          </item>
 
           <item>
               <title>Mise en place d’autoprefixer</title>
@@ -799,74 +1003,6 @@ avec des exemples concrets pour ajouter ça dans un workflow existant.</p>
           </item>
 
           <item>
-              <title>Sublime Text en tant qu&#x27;éditeur Markdown</title>
-              <description><![CDATA[
-
-<p>La vie de développeur n&#39;est jamais facile. Tu souhaites faire quelque chose de précis et tu te retrouves à faire totalement autre chose, <em>patchant</em> ci ou tu as découvert ça.</p>
-<p>Typiquement, j&#39;étais tranquillement en train d&#39;écrire un article pour <strong>p!</strong> qui n&#39;avait rien à voir avec celui actuel, et je me retrouve à personnaliser mon Sublime Text pour Markdown car ne souhaitant plus utiliser autre chose que celui-ci pour l&#39;écriture.</p>
-<p>Il y a certes le très bon <a href="http://mouapp.com/">Mou.app</a> (<code>$ brew cask install mou</code>) sur Mac OS X mais comme indiqué, il n&#39;est que pour Mac, or il m&#39;arrive parfois d&#39;être sur Windows.
-De plus, les éditeurs en ligne comme <a href="https://stackedit.io/">stackedit.io</a> ou <a href="http://dillinger.io/">dillinger.io</a> sont pratiques mais comme j&#39;ai tendance à stocker mes brouillons sur <a href="https://db.tt/nTkiSUb">dropbox</a>, ces outils vous demandent l&#39;accès de toute votre dropbox, chose que je n&#39;aime pas spécialement.</p>
-<p>Bref, tout ça pour dire que tout centraliser sur Sublime Text et utiliser dropbox pour écrire des articles me semble une pratique plutôt agréable.</p>
-<p>Pour cela, quittez totalement vos éditeurs Markdown et installez les plugins Sublime Text qui vont bien.</p>
-<h2 id="markdownediting">MarkdownEditing</h2>
-<p>Premièrement, <a href="http://ttscoff.github.io/MarkdownEditing/">MarkdownEditing</a>, ce petit plugin est votre parfait compagnon qui vous permettra d&#39;avoir la bonne coloration syntaxique de votre Markdown. Il vous permettra de mettre en évidence les liens, le code, et tout le reste. Du bonheur donc.</p>
-<p><img alt="" class="putainde-Img" src="/preview-markdownediting.png"></p>
-<p>Oui alors, j&#39;ai fait quelques configurations car à la base, ca ressemble plutôt à ça :</p>
-<p><img alt="" class="putainde-Img" src="/preview-markdownediting-light.png"></p>
-<p>Si vous souhaitez modifier Sublime Text mais uniquement pour le format Markdown, faites : <code>Preferences &gt; Browse Packages...</code> puis aller dans <code>User</code> et créez un fichier <code>Markdown.sublime-settings</code>. Celui-ci sera lu et appliqué à chaque fois que vous éditerez un fichier Markdown.</p>
-<p>Voici ce que j&#39;ai pour le moment :</p>
-<pre><code>{
-  &quot;color_scheme&quot;: &quot;Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme&quot;,
-  &quot;enable_table_editor&quot;: true,
-  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,
-  &quot;tab_size&quot;: 2,
-  &quot;extensions&quot;:
-  [
-    &quot;mdown&quot;,
-    &quot;txt&quot;,
-    &quot;md&quot;
-  ]
-}</code></pre>
-<p>Le thème <code>dark</code> pour pas se niquer les yeux (coucou <a href="https://twitter.com/bloodyowl">@bloodyowl</a>), j&#39;active aussi d&#39;autres plugins dont je vais vous parler d&#39;ici peu, j&#39;affecte le spacing à <code>2</code>, et je déclare que j&#39;utiliserai l&#39;éditeur Markdown pour ce genre de fichiers : <code>.mdown</code>, <code>.txt</code>, <code>.md</code>.</p>
-<p>Bien, passons à la suite.</p>
-<h2 id="markdown-preview">Markdown Preview</h2>
-<p>Notre cher <a href="https://twitter.com/revolunet">@revolunet</a> a fait un excellent plugin Markdown pour Sublime Text: <a href="https://github.com/revolunet/sublimetext-markdown-preview">Sublime Text Markdown Preview</a>. Celui-ci permet d&#39;avoir un rendu de votre Markdown en <code>.html</code>. Vous pouvez soit compiler votre Markdown pour créer un fichier HTML, soit l&#39;ouvrir directement dans votre navigateur.</p>
-<p>Différents formats disponibles :</p>
-<ul>
-<li>Python Markdown</li>
-<li>Github Flavored Markdown</li>
-</ul>
-<p>Un autre parfait compagnon en somme, qui quant à lui s&#39;occupera de digérer l&#39;excellent article que vous êtes en train d&#39;écrire.</p>
-<p>Je vous parlerai éventuellement un jour de <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> qui permet de faire ce genre de choses mais en un peu plus complet et générique (Sublime Text n&#39;est pas nécessaire) mais c&#39;est un poil plus complexe. Jettez-y un œil tout de même.</p>
-<h2 id="smartmarkdown">SmartMarkdown</h2>
-<p><a href="https://github.com/demon386/SmartMarkdown">Petit plugin</a> intéressant qui vous permettra de cacher des parties de votre texte en le repliant. Par exemple, vous vous mettez devant un titre du style <code>##</code> et vous appuyez sur <code>tab</code>, cela repliera votre texte. Plutôt pratique pour se focaliser.</p>
-<p><img alt="" class="putainde-Img" src="/preview-smartmarkdown.png"></p>
-<h2 id="sublimetableeditor">SublimeTableEditor</h2>
-<p>Précédemment dans ma configuration Markdown, vous avez pu voir ceci :</p>
-<pre><code>  &quot;enable_table_editor&quot;: true,
-  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,</code></pre>
-<p>Cela permet de configurer <a href="https://github.com/vkocubinsky/SublimeTableEditor">SublimeTableEditor</a> qui vous permettra de correctement aligner vos tableaux dans Markdown.</p>
-<p>Et voilà. Avec tout ceci, vous êtes paré(e) à écrire votre Markdown dans de bonnes conditions. Plus qu&#39;à mettre du Jazz et vous préparer une tasse de thé et c&#39;est parti.</p>
-<h2 id="bonus-markdown-extended">Bonus : Markdown Extended</h2>
-<p>Il est possible que vous n&#39;aimiez pas forcément MarkdownEditing, et dans ce cas je vous propose un autre plugin pas inintéressant non plus s&#39;appelant <a href="https://github.com/jonschlinkert/sublime-markdown-extended">Markdown Extended</a>. Il vous permettra d&#39;avoir la bonne coloration syntaxique lorsque vous écrivez du code dans votre éditeur.</p>
-<h4 id="avant">Avant</h4>
-<p><img alt="" class="putainde-Img" src="/preview-markdownextended-before.png"></p>
-<h4 id="apr-s">Après</h4>
-<p><img alt="" class="putainde-Img" src="/preview-markdownextended-after.png"></p>
-<p>Oh et j&#39;oubliais, voici quelques documentations sur Markdown histoire de bien l&#39;utiliser :</p>
-<ul>
-<li><a href="http://daringfireball.net/projects/markdown/syntax">Documentation officielle</a></li>
-<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></li>
-<li><a href="http://warpedvisions.org/projects/markdown-cheat-sheet.md">Another Markdown Cheatsheet</a></li>
-</ul>
-
-]]></description>
-              <pubDate>Thu, 20 Feb 2014 01:00:00 +0100</pubDate>
-              <link>http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</link>
-              <guid isPermaLink="true">http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</guid>
-          </item>
-
-          <item>
               <title>La puissance de dnsmasq</title>
               <description><![CDATA[
 
@@ -1009,6 +1145,74 @@ $ sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist</code><
               <pubDate>Thu, 20 Feb 2014 01:00:00 +0100</pubDate>
               <link>http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</link>
               <guid isPermaLink="true">http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</guid>
+          </item>
+
+          <item>
+              <title>Sublime Text en tant qu&#x27;éditeur Markdown</title>
+              <description><![CDATA[
+
+<p>La vie de développeur n&#39;est jamais facile. Tu souhaites faire quelque chose de précis et tu te retrouves à faire totalement autre chose, <em>patchant</em> ci ou tu as découvert ça.</p>
+<p>Typiquement, j&#39;étais tranquillement en train d&#39;écrire un article pour <strong>p!</strong> qui n&#39;avait rien à voir avec celui actuel, et je me retrouve à personnaliser mon Sublime Text pour Markdown car ne souhaitant plus utiliser autre chose que celui-ci pour l&#39;écriture.</p>
+<p>Il y a certes le très bon <a href="http://mouapp.com/">Mou.app</a> (<code>$ brew cask install mou</code>) sur Mac OS X mais comme indiqué, il n&#39;est que pour Mac, or il m&#39;arrive parfois d&#39;être sur Windows.
+De plus, les éditeurs en ligne comme <a href="https://stackedit.io/">stackedit.io</a> ou <a href="http://dillinger.io/">dillinger.io</a> sont pratiques mais comme j&#39;ai tendance à stocker mes brouillons sur <a href="https://db.tt/nTkiSUb">dropbox</a>, ces outils vous demandent l&#39;accès de toute votre dropbox, chose que je n&#39;aime pas spécialement.</p>
+<p>Bref, tout ça pour dire que tout centraliser sur Sublime Text et utiliser dropbox pour écrire des articles me semble une pratique plutôt agréable.</p>
+<p>Pour cela, quittez totalement vos éditeurs Markdown et installez les plugins Sublime Text qui vont bien.</p>
+<h2 id="markdownediting">MarkdownEditing</h2>
+<p>Premièrement, <a href="http://ttscoff.github.io/MarkdownEditing/">MarkdownEditing</a>, ce petit plugin est votre parfait compagnon qui vous permettra d&#39;avoir la bonne coloration syntaxique de votre Markdown. Il vous permettra de mettre en évidence les liens, le code, et tout le reste. Du bonheur donc.</p>
+<p><img alt="" class="putainde-Img" src="/preview-markdownediting.png"></p>
+<p>Oui alors, j&#39;ai fait quelques configurations car à la base, ca ressemble plutôt à ça :</p>
+<p><img alt="" class="putainde-Img" src="/preview-markdownediting-light.png"></p>
+<p>Si vous souhaitez modifier Sublime Text mais uniquement pour le format Markdown, faites : <code>Preferences &gt; Browse Packages...</code> puis aller dans <code>User</code> et créez un fichier <code>Markdown.sublime-settings</code>. Celui-ci sera lu et appliqué à chaque fois que vous éditerez un fichier Markdown.</p>
+<p>Voici ce que j&#39;ai pour le moment :</p>
+<pre><code>{
+  &quot;color_scheme&quot;: &quot;Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme&quot;,
+  &quot;enable_table_editor&quot;: true,
+  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,
+  &quot;tab_size&quot;: 2,
+  &quot;extensions&quot;:
+  [
+    &quot;mdown&quot;,
+    &quot;txt&quot;,
+    &quot;md&quot;
+  ]
+}</code></pre>
+<p>Le thème <code>dark</code> pour pas se niquer les yeux (coucou <a href="https://twitter.com/bloodyowl">@bloodyowl</a>), j&#39;active aussi d&#39;autres plugins dont je vais vous parler d&#39;ici peu, j&#39;affecte le spacing à <code>2</code>, et je déclare que j&#39;utiliserai l&#39;éditeur Markdown pour ce genre de fichiers : <code>.mdown</code>, <code>.txt</code>, <code>.md</code>.</p>
+<p>Bien, passons à la suite.</p>
+<h2 id="markdown-preview">Markdown Preview</h2>
+<p>Notre cher <a href="https://twitter.com/revolunet">@revolunet</a> a fait un excellent plugin Markdown pour Sublime Text: <a href="https://github.com/revolunet/sublimetext-markdown-preview">Sublime Text Markdown Preview</a>. Celui-ci permet d&#39;avoir un rendu de votre Markdown en <code>.html</code>. Vous pouvez soit compiler votre Markdown pour créer un fichier HTML, soit l&#39;ouvrir directement dans votre navigateur.</p>
+<p>Différents formats disponibles :</p>
+<ul>
+<li>Python Markdown</li>
+<li>Github Flavored Markdown</li>
+</ul>
+<p>Un autre parfait compagnon en somme, qui quant à lui s&#39;occupera de digérer l&#39;excellent article que vous êtes en train d&#39;écrire.</p>
+<p>Je vous parlerai éventuellement un jour de <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> qui permet de faire ce genre de choses mais en un peu plus complet et générique (Sublime Text n&#39;est pas nécessaire) mais c&#39;est un poil plus complexe. Jettez-y un œil tout de même.</p>
+<h2 id="smartmarkdown">SmartMarkdown</h2>
+<p><a href="https://github.com/demon386/SmartMarkdown">Petit plugin</a> intéressant qui vous permettra de cacher des parties de votre texte en le repliant. Par exemple, vous vous mettez devant un titre du style <code>##</code> et vous appuyez sur <code>tab</code>, cela repliera votre texte. Plutôt pratique pour se focaliser.</p>
+<p><img alt="" class="putainde-Img" src="/preview-smartmarkdown.png"></p>
+<h2 id="sublimetableeditor">SublimeTableEditor</h2>
+<p>Précédemment dans ma configuration Markdown, vous avez pu voir ceci :</p>
+<pre><code>  &quot;enable_table_editor&quot;: true,
+  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,</code></pre>
+<p>Cela permet de configurer <a href="https://github.com/vkocubinsky/SublimeTableEditor">SublimeTableEditor</a> qui vous permettra de correctement aligner vos tableaux dans Markdown.</p>
+<p>Et voilà. Avec tout ceci, vous êtes paré(e) à écrire votre Markdown dans de bonnes conditions. Plus qu&#39;à mettre du Jazz et vous préparer une tasse de thé et c&#39;est parti.</p>
+<h2 id="bonus-markdown-extended">Bonus : Markdown Extended</h2>
+<p>Il est possible que vous n&#39;aimiez pas forcément MarkdownEditing, et dans ce cas je vous propose un autre plugin pas inintéressant non plus s&#39;appelant <a href="https://github.com/jonschlinkert/sublime-markdown-extended">Markdown Extended</a>. Il vous permettra d&#39;avoir la bonne coloration syntaxique lorsque vous écrivez du code dans votre éditeur.</p>
+<h4 id="avant">Avant</h4>
+<p><img alt="" class="putainde-Img" src="/preview-markdownextended-before.png"></p>
+<h4 id="apr-s">Après</h4>
+<p><img alt="" class="putainde-Img" src="/preview-markdownextended-after.png"></p>
+<p>Oh et j&#39;oubliais, voici quelques documentations sur Markdown histoire de bien l&#39;utiliser :</p>
+<ul>
+<li><a href="http://daringfireball.net/projects/markdown/syntax">Documentation officielle</a></li>
+<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></li>
+<li><a href="http://warpedvisions.org/projects/markdown-cheat-sheet.md">Another Markdown Cheatsheet</a></li>
+</ul>
+
+]]></description>
+              <pubDate>Thu, 20 Feb 2014 01:00:00 +0100</pubDate>
+              <link>http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</guid>
           </item>
 
           <item>
@@ -1773,6 +1977,64 @@ Et si tu veux avoir plus de détails, read the fucking manual :
           </item>
 
           <item>
+              <title>ExternalInterface.call() de Flash (et Backbone), toute une histoire</title>
+              <description><![CDATA[
+
+<p><img class="putainde-Img putainde-Img--left" alt="" src="/occupyflash.png" /></p>
+<p>Je voulais vous parler d&#39;un bug qui m&#39;a bien emmerdé récemment et comme j&#39;aimerais que vous ne perdiez pas de temps avec cela, un article s&#39;imposait.</p>
+<p><em>Note de la direction : j&#39;y connais rien en Flash (et je ne crois pas avoir trop envie de connaître en fait).</em></p>
+<p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu&#39;il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d&#39;un autre article. (Je dis ça à chaque fois, haha).</p>
+<h2 id="le-pitch">Le pitch</h2>
+<p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu&#39;il le souhaite afin de communiquer avec l&#39;application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l&#39;avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d&#39;évènement mais vous en avez d&#39;<a href="http://microjs.com/#event">autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
+<pre><code class="language-javascript"> <span class="cm-comment">// on crée un objet vide</span>
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
+
+<span class="cm-comment">// on lui ajoute les fonctionnalités des events Backbone</span>
+<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)</code></pre>
+<p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d&#39;évènement façon Backbone</a>. Il pourra alors s&#39;écouter lui-même, écouter un autre objet, mais aussi déclencher des évènements.</p>
+<h2 id="c-t-flash">Côté Flash</h2>
+<p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l&#39;objet <code>ExternalInterface</code> :</p>
+<pre><code class="language-javascript"><span class="cm-variable">ExternalInterface</span>.<span class="cm-property">call</span>(<span class="cm-string">&quot;window.App.FlashManager.Events.trigger&quot;</span>, <span class="cm-string">&quot;my-event&quot;</span>)
+<span class="cm-comment">// http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html#call</span></code></pre>
+<p>Et là, bug.</p>
+<h2 id="pourquoi-bug-">Pourquoi bug ?</h2>
+<p>Pour le moment, je ne sais pas vraiment. Je me pencherai plus sur le sujet dès que j&#39;ai un peu de temps, mais ce que je sais, c&#39;est que <code>ExtercalInterface.call()</code> ne s&#39;attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l&#39;<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153">objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur.</p>
+<h2 id="la-solution-c-t-javascript">La solution côté JavaScript</h2>
+<p>Pour contrer cela, je vous propose la solution suivante qui est de ne pas utiliser directement l&#39;objet <code>Backbone.Events|View</code> mais plutôt de passer par une interface, un objet proxy.</p>
+<p>Voici le schéma :</p>
+<ul>
+<li>Créer un objet simple qui contient les mêmes noms de méthodes que les objets évènements <strong>Backbone.js</strong> (en gros, se mapper sur l&#39;API Backbone)</li>
+<li>Utiliser <strong>Backbone.js</strong> dans les méthodes de cet objet <em>Proxy</em></li>
+</ul>
+<p>Exemple :</p>
+<pre><code class="language-javascript"><span class="cm-comment">// Bridge between flash and js</span>
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span> = {}
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
+
+<span class="cm-comment">// Backbone events used for Flash</span>
+<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span> = {}
+<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span> = {}
+
+<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)
+
+<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span> = <span class="cm-keyword">function</span>(<span class="cm-def">name</span>, <span class="cm-def">opts</span>) {
+    <span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span>(<span class="cm-variable-2">name</span>, <span class="cm-variable-2">opts</span>)
+
+    <span class="cm-comment">// Must return nothing not to loop JavaScript engine, important!</span>
+    <span class="cm-keyword">return</span>
+}</code></pre>
+<h2 id="oh-et-">Oh et...</h2>
+<p>...il existe une version ayant plus ou moins le même souci que moi disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript retourne quelque chose de simple (un objet ayant que des atributs, pas de fonctions, ou encore un bouléen ou un <em>integer</em>).</p>
+
+]]></description>
+              <pubDate>Thu, 05 Dec 2013 01:00:00 +0100</pubDate>
+              <link>http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</guid>
+          </item>
+
+          <item>
               <title>De jQuery à Vanilla JS</title>
               <description><![CDATA[
 
@@ -1924,64 +2186,6 @@ Et si tu veux avoir plus de détails, read the fucking manual :
               <pubDate>Thu, 05 Dec 2013 01:00:00 +0100</pubDate>
               <link>http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/</link>
               <guid isPermaLink="true">http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/</guid>
-          </item>
-
-          <item>
-              <title>ExternalInterface.call() de Flash (et Backbone), toute une histoire</title>
-              <description><![CDATA[
-
-<p><img class="putainde-Img putainde-Img--left" alt="" src="/occupyflash.png" /></p>
-<p>Je voulais vous parler d&#39;un bug qui m&#39;a bien emmerdé récemment et comme j&#39;aimerais que vous ne perdiez pas de temps avec cela, un article s&#39;imposait.</p>
-<p><em>Note de la direction : j&#39;y connais rien en Flash (et je ne crois pas avoir trop envie de connaître en fait).</em></p>
-<p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu&#39;il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d&#39;un autre article. (Je dis ça à chaque fois, haha).</p>
-<h2 id="le-pitch">Le pitch</h2>
-<p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu&#39;il le souhaite afin de communiquer avec l&#39;application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l&#39;avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d&#39;évènement mais vous en avez d&#39;<a href="http://microjs.com/#event">autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
-<pre><code class="language-javascript"> <span class="cm-comment">// on crée un objet vide</span>
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
-
-<span class="cm-comment">// on lui ajoute les fonctionnalités des events Backbone</span>
-<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)</code></pre>
-<p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d&#39;évènement façon Backbone</a>. Il pourra alors s&#39;écouter lui-même, écouter un autre objet, mais aussi déclencher des évènements.</p>
-<h2 id="c-t-flash">Côté Flash</h2>
-<p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l&#39;objet <code>ExternalInterface</code> :</p>
-<pre><code class="language-javascript"><span class="cm-variable">ExternalInterface</span>.<span class="cm-property">call</span>(<span class="cm-string">&quot;window.App.FlashManager.Events.trigger&quot;</span>, <span class="cm-string">&quot;my-event&quot;</span>)
-<span class="cm-comment">// http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html#call</span></code></pre>
-<p>Et là, bug.</p>
-<h2 id="pourquoi-bug-">Pourquoi bug ?</h2>
-<p>Pour le moment, je ne sais pas vraiment. Je me pencherai plus sur le sujet dès que j&#39;ai un peu de temps, mais ce que je sais, c&#39;est que <code>ExtercalInterface.call()</code> ne s&#39;attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l&#39;<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153">objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur.</p>
-<h2 id="la-solution-c-t-javascript">La solution côté JavaScript</h2>
-<p>Pour contrer cela, je vous propose la solution suivante qui est de ne pas utiliser directement l&#39;objet <code>Backbone.Events|View</code> mais plutôt de passer par une interface, un objet proxy.</p>
-<p>Voici le schéma :</p>
-<ul>
-<li>Créer un objet simple qui contient les mêmes noms de méthodes que les objets évènements <strong>Backbone.js</strong> (en gros, se mapper sur l&#39;API Backbone)</li>
-<li>Utiliser <strong>Backbone.js</strong> dans les méthodes de cet objet <em>Proxy</em></li>
-</ul>
-<p>Exemple :</p>
-<pre><code class="language-javascript"><span class="cm-comment">// Bridge between flash and js</span>
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span> = {}
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span> = {}
-
-<span class="cm-comment">// Backbone events used for Flash</span>
-<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span> = {}
-<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span> = {}
-
-<span class="cm-variable">_</span>.<span class="cm-property">extend</span>(<span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>, <span class="cm-variable">Backbone</span>.<span class="cm-property">Events</span>)
-
-<span class="cm-variable">App</span>.<span class="cm-property">FlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span> = <span class="cm-keyword">function</span>(<span class="cm-def">name</span>, <span class="cm-def">opts</span>) {
-    <span class="cm-variable">App</span>.<span class="cm-property">InternalFlashManager</span>.<span class="cm-property">Events</span>.<span class="cm-property">trigger</span>(<span class="cm-variable-2">name</span>, <span class="cm-variable-2">opts</span>)
-
-    <span class="cm-comment">// Must return nothing not to loop JavaScript engine, important!</span>
-    <span class="cm-keyword">return</span>
-}</code></pre>
-<h2 id="oh-et-">Oh et...</h2>
-<p>...il existe une version ayant plus ou moins le même souci que moi disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
-<h2 id="conclusion">Conclusion</h2>
-<p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript retourne quelque chose de simple (un objet ayant que des atributs, pas de fonctions, ou encore un bouléen ou un <em>integer</em>).</p>
-
-]]></description>
-              <pubDate>Thu, 05 Dec 2013 01:00:00 +0100</pubDate>
-              <link>http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</link>
-              <guid isPermaLink="true">http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</guid>
           </item>
 
           <item>
