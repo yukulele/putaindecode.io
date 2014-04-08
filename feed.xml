@@ -5,8 +5,175 @@
         <description>On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</description>
         <link>http://putaindecode.fr/</link>
         <generator>happyplan 0.4.0-beta.6</generator>
-        <lastBuildDate>Tue, 11 Mar 2014 00:00:00 +0100</lastBuildDate>
+        <lastBuildDate>Tue, 08 Apr 2014 00:00:00 +0200</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml" />
+
+          <item>
+              <title>Les post-processeurs CSS</title>
+              <description><![CDATA[
+
+<p>Vous avez surement entendu parler des <a href="http://iamvdo.me/blog/les-postprocesseurs-css"><em>post-processeurs CSS</em></a>.
+J&#39;ai personnelement pas mal fait référence à <del>ce concept</del> cette expression ces derniers temps.
+Que ce soit lorsque je vous racontais
+<a href="/posts/css/comment-en-finir-avec-les-prefixes/">comment se passer des préfixes CSS</a>
+ou lors
+<a href="/posts/css/le-point-sur-les-preprocesseurs/">d&#39;un point sur les pré-processeurs CSS</a>.
+N&#39;y a-t-il rien qui vous a fait tiquer ?</p>
+<h2 id="du-post-processing-">Du post-processing ?</h2>
+<p>Bon on va pas jouer sur les mots mais quand même un peu. <em>Post</em> ça veut dire après.
+Mais après quoi ? Après du <em>processing</em>. Donc en théorie après que la feuille de
+style ait été traité.</p>
+<p>Si on revient sur <em>pré-processeurs</em>, on a quelques choses de sensé.
+On travaille sur la feuille de style avant qu&#39;elle n&#39;ait été traité.
+Traité par qui ? Je dirais le navigateur pas vous ?
+Dans ce cas le pré-processing est tout à fait logique.</p>
+<p>Mais le post-processing ? Du vrai post-processing ça existe ? Oui et ça ressemblerait à ça par exemple :
+<a href="http://jsfiddle.net/yyx990803/B5JTg/">Interpolation de CSS avec Vue.js</a> (enfin je crois).
+Ici on a un process sur du CSS existant, déjà traité par le navigateur.</p>
+<p>Bon ok j&#39;avoue que je pinaille un peu. On pourrait considérer que le &quot;process&quot;,
+c&#39;est le fait d&#39;améliorer sa feuille de style et dans ce cas, on pourrait accepter pré- et post-process.
+Mais ça reste pas super exacte de mon point de vue.</p>
+<p>Du coup on appel ça comment les post-processeurs ?
+Devrait-on appeler ça du <em>post-pré-processing</em> ? Je vous le demande.</p>
+<p>Assez plaisanté, passons donc à l&#39;explication de ce qu&#39;on appelera le <em>post-processing.</em></p>
+<h2 id="le-post-processing">Le post-processing</h2>
+<p>Quel est la différence avec du pré-processing ? Pour répondre à cette question,
+il faut bien définir ce qu&#39;est le pré-processing dans notre contexte.</p>
+<h3 id="le-pr-processing-css">Le pré-processing CSS</h3>
+<p>Le pré-processing est un pré-traitement avant le traitment final. Dans le cas de feuille de style,
+on travaille donc sur des pré-feuilles de style. Ce ne sont donc pas des feuilles de style.
+Comment les différencie-t-on ? La syntaxe.
+Hola hola, calmez-vous. J&#39;en entends déjà chouiner qu&#39;avec Sass, Less et Stylus,
+on peut coller du CSS valide et Ça Marche™. Oui ça marche. Mais seulement dans ce sens.
+Si on essaye de faire parser un <code>@foreach</code>, <code>@include</code> ou ce genre de nouveautés
+apportés par un pré-processeur, votre navigateur il va faire la gueule.
+En effet un pré-processeur n&#39;est rien d&#39;autres qu&#39;un langage. Un nouveau.
+Il ajoute des éléments à ce langage, et change même éventuellement la syntaxe.
+Certes il peut s&#39;appuyer sur un langage existant (par exemple la syntaxe Scss de Sass, ou la syntaxe Less )
+mais ça n&#39;est pas obligé (exemple avec l&#39;ancienne syntaxe Sass, ou encore pour changer de registre, Coffeescript pour du JavaScript).</p>
+<h3 id="diff-rence-entre-post-processing-et-pr-processing">Différence entre post-processing et pré-processing</h3>
+<p>Avant de parler des différences ils nous faut un cas concret pour y voir plus clair.
+Autoprefixer est un très bon exemple, mais je vais vous en montrer un encore plus pertinent: les fallbacks REM.
+J&#39;espère que vous connaissez le REM (root EM), cette unité CSS très utile qui permet d&#39;avoir la souplesse de l&#39;unite EM,
+en se basant non sur l&#39;élement parent, mais l&#39;élement root (donc le document).
+Cette unité CSS n&#39;est par exemple pas compatible avec IE8, et certain d&#39;entre vous doivent encore le supporter.</p>
+<p>On a donc vu pas mal de mixins genre <code>rem2px()</code> pour ajouter un fallback, via des pré-processeurs CSS.
+Sauf que là, il semble beaucoup plus pertinent de ne pas alourdir son code (car on y ajoute rien d&#39;intéressant),
+surtout lorsque c&#39;est pour supporter de vieux navigateurs.
+Et si on pouvait ajouter un petit coup de peinture magique, je dirais même automatique,
+afin d&#39;avoir ce fallback ?</p>
+<p>Et bien, on peut. Ça prend 20 secondes, et ça fera les choses bien, sans oubli.
+Exemple avec <a href="https://github.com/ctalkington/rework-rem-fallback">rework-rem-fallback</a></p>
+<pre><code class="language-js"><span class="cm-comment">// il faudrait installer les dépendances de la façon suivante</span>
+<span class="cm-comment">// $ npm i rework rework-rem-fallback</span>
+
+<span class="cm-keyword">var</span> <span class="cm-variable">rework</span> = <span class="cm-variable">require</span>(<span class="cm-string">&#39;rework&#39;</span>) <span class="cm-comment">// le moteur rework, je reviens dessus après</span>
+  , <span class="cm-variable">remFallback</span> = <span class="cm-variable">require</span>(<span class="cm-string">&#39;rework-rem-fallback&#39;</span>) <span class="cm-comment">// le plugin rework</span>
+
+  <span class="cm-comment">// lecture du fichier css</span>
+  , <span class="cm-variable">css</span> = <span class="cm-variable">require</span>(<span class="cm-string">&#39;fs&#39;</span>).<span class="cm-property">readFileSync</span>(<span class="cm-string">&#39;dist/index.css&#39;</span>, <span class="cm-string">&#39;utf8&#39;</span>).<span class="cm-property">toString</span>()
+
+  <span class="cm-comment">// on traité le CSS en indiquant à rework la source, et le plugin a utilisé</span>
+  , <span class="cm-variable">out</span> = <span class="cm-variable">rework</span>(<span class="cm-variable">css</span>).<span class="cm-property">use</span>(<span class="cm-variable">remFallback</span>()).<span class="cm-property">toString</span>()
+
+  <span class="cm-comment">// ici on fait la même chose, mais comme si la font de base était en 14px</span>
+  , <span class="cm-variable">out14</span> = <span class="cm-variable">rework</span>(<span class="cm-variable">css</span>).<span class="cm-property">use</span>(<span class="cm-variable">remFallback</span>(<span class="cm-number">14</span>)).<span class="cm-property">toString</span>()</code></pre>
+<p>Avec l&#39;exemple d&#39;avant, et ce bout de CSS:</p>
+<pre><code class="language-css"><span class="cm-qualifier">.main-header</span> { <span class="cm-property">width</span><span class="cm-operator">:</span> <span class="cm-number">5rem</span> }</code></pre>
+<p>... On obtiendra le résultat suivant:</p>
+<pre><code class="language-css"><span class="cm-qualifier">.main-header</span> {
+  <span class="cm-property">width</span><span class="cm-operator">:</span> <span class="cm-number">80px</span>;
+  <span class="cm-property">width</span><span class="cm-operator">:</span> <span class="cm-number">5rem</span>;
+}</code></pre>
+<p>Notre exemple n&#39;est pas intégré dans un
+<a href="http://www.24joursdeweb.fr/2013/automatisez-votre-workflow-front-end/">workflow automatisé</a>,
+mais c&#39;est juste pour vous montrer que c&#39;est l&#39;histoire de 5 lignes de code
+et pas autant de ligne que de fois où l&#39;on a <code>rem</code> dans sa feuille de style.</p>
+<p>Sexy n&#39;est-ce pas ?</p>
+<p>L&#39;autre grosse différence entre le pré- et le post-processing, c&#39;est le langage.
+Ce post-processing s&#39;effecture après du pré-processing. Donc après que le pré-processeur,
+cette autre langage, ait fait son boulot.</p>
+<p><strong>Le post-processing s&#39;effectue sur du CSS de manière transparente.</strong></p>
+<p><em>Du (pas forcément) vrai CSS. Disons sur la syntaxe CSS.</em>
+Et la syntaxe CSS étant très simple (se résumant principalement à <code>selecteur { prop: value }</code> - oui y&#39;a les règles <code>@*</code> en plus je sais),
+<a href="https://github.com/reworkcss/css-parse#performance">c&#39;est très rapide à parser</a>.</p>
+<h2 id="pourquoi-du-post-processing-">Pourquoi du post-processing ?</h2>
+<p>Comme on vient de le voir avec les 2 points précédents, on a déjà 2 bonnes raisons:</p>
+<ul>
+<li>la simplicité (pour certains cas de figures, c&#39;est plus pertinent, ça évite trop de code et des
+oublis)</li>
+<li>la vitesse</li>
+<li>le fait de pouvoir brancher ses propres plugins</li>
+</ul>
+<p>Je sais pas vous mais moi ça me suffit. Et en cherchant mieux, on pourrait surement trouver d&#39;autres arguments.
+(<em>Rappel: d&#39;ailleurs n&#39;hésitez à modifier cette article si vous en avez</em>).</p>
+<h2 id="avec-quoi-doit-on-post-processer-ces-css-">Avec quoi doit-on post-processer ces CSS ?</h2>
+<p>Comme vous avez pu le voir tout à l&#39;heure j&#39;ai pris dans une exemple Rework,
+mais il existe aussi PostCSS, plus récent.</p>
+<h3 id="-rework-https-github-com-reworkcss-rework-"><a href="https://github.com/reworkcss/rework">Rework</a></h3>
+<p>Rework a été initié par le grand <a href="https://github.com/visionmedia">TJ Holowaychuck</a>,
+cette machine de guerre (<a href="http://www.quora.com/TJ-Holowaychuk-1/How-is-TJ-Holowaychuk-so-insanely-productive">que certain ne pense même pas humain</a> pour vous dire).
+TJ était il fut un temps utilisateur de Sass, il avait donc même commencé le
+portage de <a href="https://github.com/stunti/sass.js">Sass en Node</a>.
+Il a du se rendre compte bien avant nous que ce n&#39;était finalement pas forcément la meilleur option.
+Il a donc développé <a href="https://github.com/LearnBoost/stylus/">Stylus</a> (si si c&#39;est bien lui),
+le temps de comprendre qu&#39;un autre approche était possible (pour info, il ne maintient maintenant plus Stylus).
+C&#39;est donc <a href="https://github.com/reworkcss/rework/commit/0a7be255bfe753d03f93c7072351266fa636e80a">le 1er Septembre 2012 qu&#39;il pousse la première version de Rework</a>.</p>
+<p>L&#39;objectif de Rework n&#39;est pas spécialement de gérer du post-process.
+Rework se place comme un manipulateur de CSS, permettant (entre autres) :</p>
+<ul>
+<li>l&#39;automatisation d&#39;ajout des préfixes</li>
+<li>la création de nouvelles propriétés</li>
+<li>l&#39;intégration d&#39;images inline</li>
+</ul>
+<p>Vous me direz que ça ressemble vachement à un pré-processeur n&#39;est-ce pas ?
+Vu l&#39;historique que je viens de vous conter et <a href="https://github.com/reworkcss/rework#plugins">les plugins par défaut</a>,
+vous aurez bien compris que c&#39;est l&#39;idée: faire un moteur de pré-processeur où l&#39;on y branche des plugins pour ajouter nos propres fonctionnalités.
+C&#39;est grâce à ce projet qu&#39;Autoprefixer a initialement vu le jour d&#39;ailleurs.</p>
+<h3 id="-postcss-https-github-com-ai-postcss-"><a href="https://github.com/ai/postcss">PostCSS</a></h3>
+<p>Beaucoup plus récent, PostCSS a été écrit par l&#39;auteur d&#39;Autoprefixer.</p>
+<blockquote>
+<p>Heu mais quoi ? Tu viens de nous dire que Autoprefixer utilisait Rework ?!</p>
+</blockquote>
+<p>Oui <em>c&#39;était</em> le cas. <em>Utilisait</em>. L&#39;auteur de PostCSS s&#39;explique dans <a href="https://github.com/ai/postcss#rework">son README</a>.
+Il y indique que, bien que très similaire, Rework et PostCSS n&#39;ont pas été développé pour les mêmes raisons.
+C&#39;est ce qui explique les différences au niveau des moteurs.
+PostCSS se veut plus préservateur par rapport à votre source d&#39;origine,
+et gère donc mieux sourcemap, peut conserver votre espacement et indentation,
+parse de manière plus sécurisé (vu que ça se veut mieux gérer le code legacy).</p>
+<p>Dans la pratique je n&#39;ai jamais eu de problème avec Rework, me souciant peut de la mise en forme de la sortie CSS.
+Mais PostCSS semble avoir une API plus haut niveau et plus souple pour mieux travailler les feuilles de styles.</p>
+<h3 id="rework-ou-postcss-">Rework ou PostCSS ?</h3>
+<p>Tout dépend ce que vous voulez faire. Si vous avez idée en tête de développer un outil,
+je pencherais plus vers PostCSS. Mais en temps qu&#39;utilisateur, pour l&#39;instant, définitivement Rework.
+Ce denier a clairement beaucoup plus de plugins existants. Voyez par vous même:</p>
+<ul>
+<li><a href="https://www.npmjs.org/search?q=rework">npmjs.org/search?q=rework</a></li>
+<li><a href="https://www.npmjs.org/search?q=postcss">npmjs.org/search?q=postcss</a></li>
+</ul>
+<h2 id="rework-ce-n-est-pas-_que_-du-post-processing-">Rework ce n&#39;est pas <em>que</em> du post-processing ?</h2>
+<p>Oui en effet, comme je le disais avant, c&#39;est pas le but. C&#39;est du &quot;processing&quot;.
+Pré-, post-... Qu&#39;est-ce que ça change dans le fond hein ?</p>
+<p>L&#39;idée, en temps que développeur, est d&#39;améliorer le confort d&#39;écriture sans contrainte.
+Comme je l&#39;ai indiqué dans <a href="/posts/css/le-point-sur-les-preprocesseurs/#mon-avis-sur-les-pr-processeurs">précédement</a>,
+j&#39;ai laché les pré-processeurs &quot;classiques&quot; ayant l&#39;impression d&#39;utiliser un tank pour tuer une mouche.
+Car au fond pour 90% (si ce n&#39;est plus) d&#39;entres nous,
+que nous faut-il pour bien développer des feuilles de styles ?
+Un peu d&#39;organisation, des variables et un poil de math ?
+Personnelement je me contente de ça. Pour l&#39;organisation, je suis devenu fan de BEM
+(on vous en parle bientôt).</p>
+<p><strong>Et en attendant de vraiment pouvoir utiliser les variables CSS associé à <code>calc()</code>,
+je reste sur du <em>custom pré-processing</em> via Rework avec lequel je peux coder avec la syntaxe des spécs (même si c&#39;est en draft), plus futur-proof.</strong></p>
+<p>J&#39;aime conserver la syntaxe CSS et avoir une process ultra-rapide et transparent.</p>
+<h3 id="prochaine-tape-faire-son-propre-pr-post-processeur-css-c-est-simple">Prochaine étape: faire son propre pré/post-processeur CSS, c&#39;est simple</h3>
+<p>Rework ayant un bon petit paquet de plugins déjà existant, c&#39;est assez simple de réaliser son propre pré-processeur via quelques lignes de code seulement.
+La mise en place et l&#39;automatisation feront l&#39;objet d&#39;un prochain article !</p>
+
+]]></description>
+              <pubDate>Tue, 08 Apr 2014 02:00:00 +0200</pubDate>
+              <link>http://putaindecode.fr/posts/css/les-post-processeurs/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/css/les-post-processeurs/</guid>
+          </item>
 
           <item>
               <title>Le point sur les pré-processeurs CSS</title>
@@ -168,7 +335,7 @@ pas de pain, est cela facilite la lecture, moins linéaire.</em></p>
 <p>On en revient à la magie. Lorsqu&#39;on a trop de couche qui cache ce qu&#39;il y a
 réellement sous le capot, <a href="http://linuxfr.org/news/encore-un-exemple-de-code-spaghetti-toyota">on peut vite perdre le contrôle</a>.</p>
 <p>Et voici <a href="https://github.com/MoOx/compass-recipes/issues/104">un parfait exemple</a>
-où un utilisateur de ma librairie <a href="https://github.com/MoOx/compass-recipes">Compass Recipes</a>
+où un utilisateur de ma bibliothèque <a href="https://github.com/MoOx/compass-recipes">Compass Recipes</a>
 avait un problème lorsqu&#39;il utilisait 2 mixins qui cachaient trop de code.
 Dans  notre cas corners-tucked (version coin scotché) et background-noise (bruit visuel).
 Il en a perdu des choses simples et avait passé beaucoup de temps à se prendre la tête
@@ -445,9 +612,9 @@ une seule écriture sur le système de fichier (contrairement à la solution Gru
     }
   })
 
-  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTasks</span>(<span class="cm-string">&quot;styles&quot;</span>, [<span class="cm-string">&quot;sass&quot;</span>, <span class="cm-string">&quot;autoprefixer&quot;</span>])
-  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTasks</span>(<span class="cm-string">&quot;styles:production&quot;</span>, [<span class="cm-string">&quot;sass&quot;</span>, <span class="cm-string">&quot;autoprefixer&quot;</span>, <span class="cm-string">&quot;csso&quot;</span>])
-  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTasks</span>(<span class="cm-string">&quot;dev&quot;</span>, [<span class="cm-string">&quot;sass&quot;</span>, <span class="cm-string">&quot;watch&quot;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&quot;styles&quot;</span>, [<span class="cm-string">&quot;sass&quot;</span>, <span class="cm-string">&quot;autoprefixer&quot;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&quot;styles:production&quot;</span>, [<span class="cm-string">&quot;sass&quot;</span>, <span class="cm-string">&quot;autoprefixer&quot;</span>, <span class="cm-string">&quot;csso&quot;</span>])
+  <span class="cm-variable-2">grunt</span>.<span class="cm-property">registerTask</span>(<span class="cm-string">&quot;dev&quot;</span>, [<span class="cm-string">&quot;sass&quot;</span>, <span class="cm-string">&quot;watch&quot;</span>])
 }
 
 <span class="cm-comment">// Tâches disponibles :</span>
@@ -1008,6 +1175,74 @@ avec des exemples concrets pour ajouter ça dans un workflow existant.</p>
           </item>
 
           <item>
+              <title>Sublime Text en tant qu&#x27;éditeur Markdown</title>
+              <description><![CDATA[
+
+<p>La vie de développeur n&#39;est jamais facile. Tu souhaites faire quelque chose de précis et tu te retrouves à faire totalement autre chose, <em>patchant</em> ci ou tu as découvert ça.</p>
+<p>Typiquement, j&#39;étais tranquillement en train d&#39;écrire un article pour <strong>p!</strong> qui n&#39;avait rien à voir avec celui actuel, et je me retrouve à personnaliser mon Sublime Text pour Markdown car ne souhaitant plus utiliser autre chose que celui-ci pour l&#39;écriture.</p>
+<p>Il y a certes le très bon <a href="http://mouapp.com/">Mou.app</a> (<code>$ brew cask install mou</code>) sur Mac OS X mais comme indiqué, il n&#39;est que pour Mac, or il m&#39;arrive parfois d&#39;être sur Windows.
+De plus, les éditeurs en ligne comme <a href="https://stackedit.io/">stackedit.io</a> ou <a href="http://dillinger.io/">dillinger.io</a> sont pratiques mais comme j&#39;ai tendance à stocker mes brouillons sur <a href="https://db.tt/nTkiSUb">dropbox</a>, ces outils vous demandent l&#39;accès de toute votre dropbox, chose que je n&#39;aime pas spécialement.</p>
+<p>Bref, tout ça pour dire que tout centraliser sur Sublime Text et utiliser dropbox pour écrire des articles me semble une pratique plutôt agréable.</p>
+<p>Pour cela, quittez totalement vos éditeurs Markdown et installez les plugins Sublime Text qui vont bien.</p>
+<h2 id="markdownediting">MarkdownEditing</h2>
+<p>Premièrement, <a href="http://ttscoff.github.io/MarkdownEditing/">MarkdownEditing</a>, ce petit plugin est votre parfait compagnon qui vous permettra d&#39;avoir la bonne coloration syntaxique de votre Markdown. Il vous permettra de mettre en évidence les liens, le code, et tout le reste. Du bonheur donc.</p>
+<p><img alt="" class="putainde-Img" src="/preview-markdownediting.png"></p>
+<p>Oui alors, j&#39;ai fait quelques configurations car à la base, ca ressemble plutôt à ça :</p>
+<p><img alt="" class="putainde-Img" src="/preview-markdownediting-light.png"></p>
+<p>Si vous souhaitez modifier Sublime Text mais uniquement pour le format Markdown, faites : <code>Preferences &gt; Browse Packages...</code> puis aller dans <code>User</code> et créez un fichier <code>Markdown.sublime-settings</code>. Celui-ci sera lu et appliqué à chaque fois que vous éditerez un fichier Markdown.</p>
+<p>Voici ce que j&#39;ai pour le moment :</p>
+<pre><code>{
+  &quot;color_scheme&quot;: &quot;Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme&quot;,
+  &quot;enable_table_editor&quot;: true,
+  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,
+  &quot;tab_size&quot;: 2,
+  &quot;extensions&quot;:
+  [
+    &quot;mdown&quot;,
+    &quot;txt&quot;,
+    &quot;md&quot;
+  ]
+}</code></pre>
+<p>Le thème <code>dark</code> pour pas se niquer les yeux (coucou <a href="https://twitter.com/bloodyowl">@bloodyowl</a>), j&#39;active aussi d&#39;autres plugins dont je vais vous parler d&#39;ici peu, j&#39;affecte le spacing à <code>2</code>, et je déclare que j&#39;utiliserai l&#39;éditeur Markdown pour ce genre de fichiers : <code>.mdown</code>, <code>.txt</code>, <code>.md</code>.</p>
+<p>Bien, passons à la suite.</p>
+<h2 id="markdown-preview">Markdown Preview</h2>
+<p>Notre cher <a href="https://twitter.com/revolunet">@revolunet</a> a fait un excellent plugin Markdown pour Sublime Text: <a href="https://github.com/revolunet/sublimetext-markdown-preview">Sublime Text Markdown Preview</a>. Celui-ci permet d&#39;avoir un rendu de votre Markdown en <code>.html</code>. Vous pouvez soit compiler votre Markdown pour créer un fichier HTML, soit l&#39;ouvrir directement dans votre navigateur.</p>
+<p>Différents formats disponibles :</p>
+<ul>
+<li>Python Markdown</li>
+<li>Github Flavored Markdown</li>
+</ul>
+<p>Un autre parfait compagnon en somme, qui quant à lui s&#39;occupera de digérer l&#39;excellent article que vous êtes en train d&#39;écrire.</p>
+<p>Je vous parlerai éventuellement un jour de <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> qui permet de faire ce genre de choses mais en un peu plus complet et générique (Sublime Text n&#39;est pas nécessaire) mais c&#39;est un poil plus complexe. Jettez-y un œil tout de même.</p>
+<h2 id="smartmarkdown">SmartMarkdown</h2>
+<p><a href="https://github.com/demon386/SmartMarkdown">Petit plugin</a> intéressant qui vous permettra de cacher des parties de votre texte en le repliant. Par exemple, vous vous mettez devant un titre du style <code>##</code> et vous appuyez sur <code>tab</code>, cela repliera votre texte. Plutôt pratique pour se focaliser.</p>
+<p><img alt="" class="putainde-Img" src="/preview-smartmarkdown.png"></p>
+<h2 id="sublimetableeditor">SublimeTableEditor</h2>
+<p>Précédemment dans ma configuration Markdown, vous avez pu voir ceci :</p>
+<pre><code>  &quot;enable_table_editor&quot;: true,
+  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,</code></pre>
+<p>Cela permet de configurer <a href="https://github.com/vkocubinsky/SublimeTableEditor">SublimeTableEditor</a> qui vous permettra de correctement aligner vos tableaux dans Markdown.</p>
+<p>Et voilà. Avec tout ceci, vous êtes paré(e) à écrire votre Markdown dans de bonnes conditions. Plus qu&#39;à mettre du Jazz et vous préparer une tasse de thé et c&#39;est parti.</p>
+<h2 id="bonus-markdown-extended">Bonus : Markdown Extended</h2>
+<p>Il est possible que vous n&#39;aimiez pas forcément MarkdownEditing, et dans ce cas je vous propose un autre plugin pas inintéressant non plus s&#39;appelant <a href="https://github.com/jonschlinkert/sublime-markdown-extended">Markdown Extended</a>. Il vous permettra d&#39;avoir la bonne coloration syntaxique lorsque vous écrivez du code dans votre éditeur.</p>
+<h4 id="avant">Avant</h4>
+<p><img alt="" class="putainde-Img" src="/preview-markdownextended-before.png"></p>
+<h4 id="apr-s">Après</h4>
+<p><img alt="" class="putainde-Img" src="/preview-markdownextended-after.png"></p>
+<p>Oh et j&#39;oubliais, voici quelques documentations sur Markdown histoire de bien l&#39;utiliser :</p>
+<ul>
+<li><a href="http://daringfireball.net/projects/markdown/syntax">Documentation officielle</a></li>
+<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></li>
+<li><a href="http://warpedvisions.org/projects/markdown-cheat-sheet.md">Another Markdown Cheatsheet</a></li>
+</ul>
+
+]]></description>
+              <pubDate>Thu, 20 Feb 2014 01:00:00 +0100</pubDate>
+              <link>http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</link>
+              <guid isPermaLink="true">http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</guid>
+          </item>
+
+          <item>
               <title>La puissance de dnsmasq</title>
               <description><![CDATA[
 
@@ -1150,74 +1385,6 @@ $ sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist</code><
               <pubDate>Thu, 20 Feb 2014 01:00:00 +0100</pubDate>
               <link>http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</link>
               <guid isPermaLink="true">http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</guid>
-          </item>
-
-          <item>
-              <title>Sublime Text en tant qu&#x27;éditeur Markdown</title>
-              <description><![CDATA[
-
-<p>La vie de développeur n&#39;est jamais facile. Tu souhaites faire quelque chose de précis et tu te retrouves à faire totalement autre chose, <em>patchant</em> ci ou tu as découvert ça.</p>
-<p>Typiquement, j&#39;étais tranquillement en train d&#39;écrire un article pour <strong>p!</strong> qui n&#39;avait rien à voir avec celui actuel, et je me retrouve à personnaliser mon Sublime Text pour Markdown car ne souhaitant plus utiliser autre chose que celui-ci pour l&#39;écriture.</p>
-<p>Il y a certes le très bon <a href="http://mouapp.com/">Mou.app</a> (<code>$ brew cask install mou</code>) sur Mac OS X mais comme indiqué, il n&#39;est que pour Mac, or il m&#39;arrive parfois d&#39;être sur Windows.
-De plus, les éditeurs en ligne comme <a href="https://stackedit.io/">stackedit.io</a> ou <a href="http://dillinger.io/">dillinger.io</a> sont pratiques mais comme j&#39;ai tendance à stocker mes brouillons sur <a href="https://db.tt/nTkiSUb">dropbox</a>, ces outils vous demandent l&#39;accès de toute votre dropbox, chose que je n&#39;aime pas spécialement.</p>
-<p>Bref, tout ça pour dire que tout centraliser sur Sublime Text et utiliser dropbox pour écrire des articles me semble une pratique plutôt agréable.</p>
-<p>Pour cela, quittez totalement vos éditeurs Markdown et installez les plugins Sublime Text qui vont bien.</p>
-<h2 id="markdownediting">MarkdownEditing</h2>
-<p>Premièrement, <a href="http://ttscoff.github.io/MarkdownEditing/">MarkdownEditing</a>, ce petit plugin est votre parfait compagnon qui vous permettra d&#39;avoir la bonne coloration syntaxique de votre Markdown. Il vous permettra de mettre en évidence les liens, le code, et tout le reste. Du bonheur donc.</p>
-<p><img alt="" class="putainde-Img" src="/preview-markdownediting.png"></p>
-<p>Oui alors, j&#39;ai fait quelques configurations car à la base, ca ressemble plutôt à ça :</p>
-<p><img alt="" class="putainde-Img" src="/preview-markdownediting-light.png"></p>
-<p>Si vous souhaitez modifier Sublime Text mais uniquement pour le format Markdown, faites : <code>Preferences &gt; Browse Packages...</code> puis aller dans <code>User</code> et créez un fichier <code>Markdown.sublime-settings</code>. Celui-ci sera lu et appliqué à chaque fois que vous éditerez un fichier Markdown.</p>
-<p>Voici ce que j&#39;ai pour le moment :</p>
-<pre><code>{
-  &quot;color_scheme&quot;: &quot;Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme&quot;,
-  &quot;enable_table_editor&quot;: true,
-  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,
-  &quot;tab_size&quot;: 2,
-  &quot;extensions&quot;:
-  [
-    &quot;mdown&quot;,
-    &quot;txt&quot;,
-    &quot;md&quot;
-  ]
-}</code></pre>
-<p>Le thème <code>dark</code> pour pas se niquer les yeux (coucou <a href="https://twitter.com/bloodyowl">@bloodyowl</a>), j&#39;active aussi d&#39;autres plugins dont je vais vous parler d&#39;ici peu, j&#39;affecte le spacing à <code>2</code>, et je déclare que j&#39;utiliserai l&#39;éditeur Markdown pour ce genre de fichiers : <code>.mdown</code>, <code>.txt</code>, <code>.md</code>.</p>
-<p>Bien, passons à la suite.</p>
-<h2 id="markdown-preview">Markdown Preview</h2>
-<p>Notre cher <a href="https://twitter.com/revolunet">@revolunet</a> a fait un excellent plugin Markdown pour Sublime Text: <a href="https://github.com/revolunet/sublimetext-markdown-preview">Sublime Text Markdown Preview</a>. Celui-ci permet d&#39;avoir un rendu de votre Markdown en <code>.html</code>. Vous pouvez soit compiler votre Markdown pour créer un fichier HTML, soit l&#39;ouvrir directement dans votre navigateur.</p>
-<p>Différents formats disponibles :</p>
-<ul>
-<li>Python Markdown</li>
-<li>Github Flavored Markdown</li>
-</ul>
-<p>Un autre parfait compagnon en somme, qui quant à lui s&#39;occupera de digérer l&#39;excellent article que vous êtes en train d&#39;écrire.</p>
-<p>Je vous parlerai éventuellement un jour de <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> qui permet de faire ce genre de choses mais en un peu plus complet et générique (Sublime Text n&#39;est pas nécessaire) mais c&#39;est un poil plus complexe. Jettez-y un œil tout de même.</p>
-<h2 id="smartmarkdown">SmartMarkdown</h2>
-<p><a href="https://github.com/demon386/SmartMarkdown">Petit plugin</a> intéressant qui vous permettra de cacher des parties de votre texte en le repliant. Par exemple, vous vous mettez devant un titre du style <code>##</code> et vous appuyez sur <code>tab</code>, cela repliera votre texte. Plutôt pratique pour se focaliser.</p>
-<p><img alt="" class="putainde-Img" src="/preview-smartmarkdown.png"></p>
-<h2 id="sublimetableeditor">SublimeTableEditor</h2>
-<p>Précédemment dans ma configuration Markdown, vous avez pu voir ceci :</p>
-<pre><code>  &quot;enable_table_editor&quot;: true,
-  &quot;table_editor_syntax&quot;: &quot;Auto&quot;,</code></pre>
-<p>Cela permet de configurer <a href="https://github.com/vkocubinsky/SublimeTableEditor">SublimeTableEditor</a> qui vous permettra de correctement aligner vos tableaux dans Markdown.</p>
-<p>Et voilà. Avec tout ceci, vous êtes paré(e) à écrire votre Markdown dans de bonnes conditions. Plus qu&#39;à mettre du Jazz et vous préparer une tasse de thé et c&#39;est parti.</p>
-<h2 id="bonus-markdown-extended">Bonus : Markdown Extended</h2>
-<p>Il est possible que vous n&#39;aimiez pas forcément MarkdownEditing, et dans ce cas je vous propose un autre plugin pas inintéressant non plus s&#39;appelant <a href="https://github.com/jonschlinkert/sublime-markdown-extended">Markdown Extended</a>. Il vous permettra d&#39;avoir la bonne coloration syntaxique lorsque vous écrivez du code dans votre éditeur.</p>
-<h4 id="avant">Avant</h4>
-<p><img alt="" class="putainde-Img" src="/preview-markdownextended-before.png"></p>
-<h4 id="apr-s">Après</h4>
-<p><img alt="" class="putainde-Img" src="/preview-markdownextended-after.png"></p>
-<p>Oh et j&#39;oubliais, voici quelques documentations sur Markdown histoire de bien l&#39;utiliser :</p>
-<ul>
-<li><a href="http://daringfireball.net/projects/markdown/syntax">Documentation officielle</a></li>
-<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></li>
-<li><a href="http://warpedvisions.org/projects/markdown-cheat-sheet.md">Another Markdown Cheatsheet</a></li>
-</ul>
-
-]]></description>
-              <pubDate>Thu, 20 Feb 2014 01:00:00 +0100</pubDate>
-              <link>http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</link>
-              <guid isPermaLink="true">http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</guid>
           </item>
 
           <item>
