@@ -32,7 +32,7 @@ Dans ce cas le pré-processing est tout à fait logique.</p>
 Ici on a un process sur du CSS existant, déjà traité par le navigateur.</p>
 <p>Bon ok j&#39;avoue que je pinaille un peu. On pourrait considérer que le &quot;process&quot;,
 c&#39;est le fait d&#39;améliorer sa feuille de style et dans ce cas, on pourrait accepter pré- et post-process.
-Mais ça reste pas super exacte de mon point de vue.</p>
+Mais ça reste pas super exact de mon point de vue.</p>
 <p>Du coup on appel ça comment les post-processeurs ?
 Devrait-on appeler ça du <em>post-pré-processing</em> ? Je vous le demande.</p>
 <p>Assez plaisanté, passons donc à l&#39;explication de ce qu&#39;on appelera le <em>post-processing.</em></p>
@@ -42,19 +42,19 @@ il faut bien définir ce qu&#39;est le pré-processing dans notre contexte.</p>
 <h3 id="le-pr-processing-css">Le pré-processing CSS</h3>
 <p>Le pré-processing est un pré-traitement avant le traitment final. Dans le cas de feuille de style,
 on travaille donc sur des pré-feuilles de style. Ce ne sont donc pas des feuilles de style.
-Comment les différencie-t-on ? La syntaxe.
-Hola hola, calmez-vous. J&#39;en entends déjà chouiner qu&#39;avec Sass, Less et Stylus,
+Comment les différencie-t-on ? La syntaxe.</p>
+<p>Hola hola, calmez-vous. J&#39;en entends déjà chouiner qu&#39;avec Sass, Less et Stylus,
 on peut coller du CSS valide et Ça Marche™. Oui ça marche. Mais seulement dans ce sens.
 Si on essaye de faire parser un <code>@foreach</code>, <code>@include</code> ou ce genre de nouveautés
-apportés par un pré-processeur, votre navigateur il va faire la gueule.
-En effet un pré-processeur n&#39;est rien d&#39;autres qu&#39;un langage. Un nouveau.
+apportés par un pré-processeur, votre navigateur il va faire la gueule.</p>
+<p>En effet un pré-processeur n&#39;est rien d&#39;autre qu&#39;un langage. Un nouveau.
 Il ajoute des éléments à ce langage, et change même éventuellement la syntaxe.
 Certes il peut s&#39;appuyer sur un langage existant (par exemple la syntaxe Scss de Sass, ou la syntaxe Less )
 mais ça n&#39;est pas obligé (exemple avec l&#39;ancienne syntaxe Sass, ou encore pour changer de registre, Coffeescript pour du JavaScript).</p>
 <h3 id="diff-rence-entre-post-processing-et-pr-processing">Différence entre post-processing et pré-processing</h3>
 <p>Avant de parler des différences ils nous faut un cas concret pour y voir plus clair.
 Autoprefixer est un très bon exemple, mais je vais vous en montrer un encore plus pertinent: les fallbacks REM.
-J&#39;espère que vous connaissez le REM (root EM), cette unité CSS très utile qui permet d&#39;avoir la souplesse de l&#39;unite EM,
+J&#39;espère que vous connaissez le REM (root EM), cette unité CSS très utile qui permet d&#39;avoir la souplesse de l&#39;unité EM,
 en se basant non sur l&#39;élement parent, mais l&#39;élement root (donc le document).
 Cette unité CSS n&#39;est par exemple pas compatible avec IE8, et certain d&#39;entre vous doivent encore le supporter.</p>
 <p>On a donc vu pas mal de mixins genre <code>rem2px()</code> pour ajouter un fallback, via des pré-processeurs CSS.
@@ -88,17 +88,17 @@ Exemple avec <a href="https://github.com/ctalkington/rework-rem-fallback">rework
 <p>Notre exemple n&#39;est pas intégré dans un
 <a href="http://www.24joursdeweb.fr/2013/automatisez-votre-workflow-front-end/">workflow automatisé</a>,
 mais c&#39;est juste pour vous montrer que c&#39;est l&#39;histoire de 5 lignes de code
-et pas autant de ligne que de fois où l&#39;on a <code>rem</code> dans sa feuille de style.</p>
+et pas autant de lignes que de fois où l&#39;on a <code>rem</code> dans sa feuille de style.</p>
 <p>Sexy n&#39;est-ce pas ?</p>
 <p>L&#39;autre grosse différence entre le pré- et le post-processing, c&#39;est le langage.
 Ce post-processing s&#39;effecture après du pré-processing. Donc après que le pré-processeur,
-cette autre langage, ait fait son boulot.</p>
+cet autre langage, ait fait son boulot.</p>
 <p><strong>Le post-processing s&#39;effectue sur du CSS de manière transparente.</strong></p>
-<p><em>Du (pas forcément) vrai CSS. Disons sur la syntaxe CSS.</em>
-Et la syntaxe CSS étant très simple (se résumant principalement à <code>selecteur { prop: value }</code> - oui y&#39;a les règles <code>@*</code> en plus je sais),
+<p><em>Ce processing s&#39;effectue sur du vrai CSS (disons la syntaxe CSS).</em></p>
+<p>Cette syntaxe étant très simple (se résumant principalement à <code>selecteur { prop: value }</code> - oui y&#39;a les règles <code>@*</code> en plus je sais),
 <a href="https://github.com/reworkcss/css-parse#performance">c&#39;est très rapide à parser</a>.</p>
 <h2 id="pourquoi-du-post-processing-">Pourquoi du post-processing ?</h2>
-<p>Comme on vient de le voir avec les 2 points précédents, on a déjà 2 bonnes raisons:</p>
+<p>Comme on vient de le voir avec les 2 points précédents, on a déjà 2 bonnes raisons :</p>
 <ul>
 <li>la simplicité (pour certains cas de figures, c&#39;est plus pertinent, ça évite trop de code et des
 oublis)</li>
@@ -108,15 +108,15 @@ oublis)</li>
 <p>Je sais pas vous mais moi ça me suffit. Et en cherchant mieux, on pourrait surement trouver d&#39;autres arguments.
 (<em>Rappel: d&#39;ailleurs n&#39;hésitez à modifier cette article si vous en avez</em>).</p>
 <h2 id="avec-quoi-doit-on-post-processer-ces-css-">Avec quoi doit-on post-processer ces CSS ?</h2>
-<p>Comme vous avez pu le voir tout à l&#39;heure j&#39;ai pris dans une exemple Rework,
+<p>Comme vous avez pu le voir tout à l&#39;heure j&#39;ai pris dans un exemple Rework,
 mais il existe aussi PostCSS, plus récent.</p>
 <h3 id="-rework-https-github-com-reworkcss-rework-"><a href="https://github.com/reworkcss/rework">Rework</a></h3>
 <p>Rework a été initié par le grand <a href="https://github.com/visionmedia">TJ Holowaychuck</a>,
-cette machine de guerre (<a href="http://www.quora.com/TJ-Holowaychuk-1/How-is-TJ-Holowaychuk-so-insanely-productive">que certain ne pense même pas humain</a> pour vous dire).
+cette machine de guerre (<a href="http://www.quora.com/TJ-Holowaychuk-1/How-is-TJ-Holowaychuk-so-insanely-productive">que certains ne pensent même pas humain</a> pour vous dire).
 TJ était il fut un temps utilisateur de Sass, il avait donc même commencé le
 portage de <a href="https://github.com/stunti/sass.js">Sass en Node</a>.
-Il a du se rendre compte bien avant nous que ce n&#39;était finalement pas forcément la meilleur option.
-Il a donc développé <a href="https://github.com/LearnBoost/stylus/">Stylus</a> (si si c&#39;est bien lui),
+Il a du se rendre compte bien avant nous que ce n&#39;était finalement pas forcément la meilleure option.
+Il a donc développé <a href="https://github.com/LearnBoost/stylus/">Stylus</a> (si, si, c&#39;est bien lui),
 le temps de comprendre qu&#39;un autre approche était possible (pour info, il ne maintient maintenant plus Stylus).
 C&#39;est donc <a href="https://github.com/reworkcss/rework/commit/0a7be255bfe753d03f93c7072351266fa636e80a">le 1er Septembre 2012 qu&#39;il pousse la première version de Rework</a>.</p>
 <p>L&#39;objectif de Rework n&#39;est pas spécialement de gérer du post-process.
@@ -128,7 +128,7 @@ Rework se place comme un manipulateur de CSS, permettant (entre autres) :</p>
 </ul>
 <p>Vous me direz que ça ressemble vachement à un pré-processeur n&#39;est-ce pas ?
 Vu l&#39;historique que je viens de vous conter et <a href="https://github.com/reworkcss/rework#plugins">les plugins par défaut</a>,
-vous aurez bien compris que c&#39;est l&#39;idée: faire un moteur de pré-processeur où l&#39;on y branche des plugins pour ajouter nos propres fonctionnalités.
+vous aurez bien compris que c&#39;est l&#39;idée : faire un moteur de pré-processeur où l&#39;on y branche des plugins pour ajouter nos propres fonctionnalités.
 C&#39;est grâce à ce projet qu&#39;Autoprefixer a initialement vu le jour d&#39;ailleurs.</p>
 <h3 id="-postcss-https-github-com-ai-postcss-"><a href="https://github.com/ai/postcss">PostCSS</a></h3>
 <p>Beaucoup plus récent, PostCSS a été écrit par l&#39;auteur d&#39;Autoprefixer.</p>
@@ -144,9 +144,9 @@ parse de manière plus sécurisé (vu que ça se veut mieux gérer le code legac
 <p>Dans la pratique je n&#39;ai jamais eu de problème avec Rework, me souciant peut de la mise en forme de la sortie CSS.
 Mais PostCSS semble avoir une API plus haut niveau et plus souple pour mieux travailler les feuilles de styles.</p>
 <h3 id="rework-ou-postcss-">Rework ou PostCSS ?</h3>
-<p>Tout dépend ce que vous voulez faire. Si vous avez idée en tête de développer un outil,
+<p>Tout dépend ce que vous voulez faire. Si vous avez en tête l&#39;idée de développer un outil,
 je pencherais plus vers PostCSS. Mais en temps qu&#39;utilisateur, pour l&#39;instant, définitivement Rework.
-Ce denier a clairement beaucoup plus de plugins existants. Voyez par vous même:</p>
+Ce denier a clairement beaucoup plus de plugins existants. Voyez par vous mêmes :</p>
 <ul>
 <li><a href="https://www.npmjs.org/search?q=rework">npmjs.org/search?q=rework</a></li>
 <li><a href="https://www.npmjs.org/search?q=postcss">npmjs.org/search?q=postcss</a></li>
@@ -155,18 +155,18 @@ Ce denier a clairement beaucoup plus de plugins existants. Voyez par vous même:
 <p>Oui en effet, comme je le disais avant, c&#39;est pas le but. C&#39;est du &quot;processing&quot;.
 Pré-, post-... Qu&#39;est-ce que ça change dans le fond hein ?</p>
 <p>L&#39;idée, en temps que développeur, est d&#39;améliorer le confort d&#39;écriture sans contrainte.
-Comme je l&#39;ai indiqué dans <a href="/posts/css/le-point-sur-les-preprocesseurs/#mon-avis-sur-les-pr-processeurs">précédement</a>,
+Comme je l&#39;ai indiqué <a href="/posts/css/le-point-sur-les-preprocesseurs/#mon-avis-sur-les-pr-processeurs">précédement</a>,
 j&#39;ai laché les pré-processeurs &quot;classiques&quot; ayant l&#39;impression d&#39;utiliser un tank pour tuer une mouche.
 Car au fond pour 90% (si ce n&#39;est plus) d&#39;entres nous,
 que nous faut-il pour bien développer des feuilles de styles ?
 Un peu d&#39;organisation, des variables et un poil de math ?
-Personnelement je me contente de ça. Pour l&#39;organisation, je suis devenu fan de BEM
+Personnellement je me contente de ça. Pour l&#39;organisation, je suis devenu fan de BEM
 (on vous en parle bientôt).</p>
 <p><strong>Et en attendant de vraiment pouvoir utiliser les variables CSS associé à <code>calc()</code>,
-je reste sur du <em>custom pré-processing</em> via Rework avec lequel je peux coder avec la syntaxe des spécs (même si c&#39;est en draft), plus futur-proof.</strong></p>
-<p>J&#39;aime conserver la syntaxe CSS et avoir une process ultra-rapide et transparent.</p>
+je reste sur du <em>custom pré-processing</em> via Rework avec lequel je peux coder avec la syntaxe des specs (même si c&#39;est en draft), plus future-proof.</strong></p>
+<p>J&#39;aime conserver la syntaxe CSS et avoir un process ultra-rapide et transparent.</p>
 <h3 id="prochaine-tape-faire-son-propre-pr-post-processeur-css-c-est-simple">Prochaine étape: faire son propre pré/post-processeur CSS, c&#39;est simple</h3>
-<p>Rework ayant un bon petit paquet de plugins déjà existant, c&#39;est assez simple de réaliser son propre pré-processeur via quelques lignes de code seulement.
+<p>Rework ayant un bon petit paquet de plugins déjà existants, c&#39;est assez simple de réaliser son propre pré-processeur via quelques lignes de code seulement.
 La mise en place et l&#39;automatisation feront l&#39;objet d&#39;un prochain article !</p>
 
 ]]></description>
