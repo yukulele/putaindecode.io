@@ -1,69 +1,4 @@
-
-<!DOCTYPE html>
-<!--
-  HEY YOU, STOP LOOKING AT MY SOURCE CODE
-  Just check it out directly on Github :
-
-  https://github.com/putaindecode/website.git
--->
-<html lang="fr" class="no-js no-touch ">
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-<script>(function(docEl) {
-  docEl.className = docEl.className.replace(/\bno-js\b/, 'js');
-  if ('ontouchstart' in docEl) { docEl.className = docEl.className.replace(/\bno-touch\b/, 'touch'); }
-})(document.documentElement);</script>
-
-<meta charset="utf-8">
-<title>Git, boutez les bugs, domptez votre historique!</title>
-<meta name="description" content="">
-<base href="http://putaindecode.fr/" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="feed.xml" rel="alternate" type="application/rss+xml">
-
-<link rel="stylesheet" href="/assets/css/putaindecode.css?20140409071115">
-
-
-
-
-</head>
-<body>
-
-<div class="">
-  <nav class="putainde-Nav">
-	<div class="grid">
-		<div class="grid__cell">
-			<a class="putainde-SiteTitle" href="/">
-				<img class="putainde-Logo" alt="Putain de Code !" src="/assets/img/p!-logo.svg" />
-				Putain de Code !
-			</a>
-
-			<span class="putainde-Baseline">On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</span>
-
-			<ul class="putainde-Nav-list">
-				<li class=""><a class="putainde-Nav-list-item " href="c-est-quoi-putaindecode">Putain de ... ?</a>
-        <li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
-				<li class=""><a class="putainde-Nav-list-item " href="posts/comment-contribuer/">Comment Contribuer ?</a>
-			</ul>
-		</div>
-	</div>
-</nav>
- 
-  <article class="putainde-Content grid putainde-Post">
-    <header class="putainde-Content-header grid__cell unit-1-1">
-      <h1 class="putainde-Content-title">Git, boutez les bugs, domptez votre historique!</h1>
-      <div class="putainde-Content-metas">
-        <span class="putainde-Content-meta putainde-Content-author">Par <span class="putainde-Author">Erwyn</span></span>
-        <span class="putainde-Content-meta putainde-Content-date">Publié le: <span class="putainde-Date">jeu. 27 févr. 2014</span></span>
-        <span class="putainde-Content-meta putainde-Content-readingTime">Temps de lecture: environ 10min</span>
-        <span class="putainde-Content-meta putainde-Content-tags">Tags: git</span>
-      </div>
-    </header>
-    <div class="putainde-Content-body grid__cell unit-3-4--m">
-    
-
-
-<p>Vous viendez de lire l&#39;<a href="/posts/git/versionner-avec-git/">article de madx</a> sur le gestionnaire
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Git, boutez les bugs, domptez votre historique!</title><link rel="stylesheet" href="../../../stylesheets/index.css"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size7of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size5of12"><nav class="putainde-Nav"><a href="../../../c-est-quoi-putaindecode" class="putainde-Nav-item">Putain de ?</a><a href="../.." class="putainde-Nav-item">Les posts</a><a href="../../comment-contribuer" class="putainde-Nav-item">Contribuer</a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><header class="putainde-Post-header"><div class="putainde-Title"><h1 class="putainde-Title-text">Git, boutez les bugs, domptez votre historique!</h1></div><div class="putainde-Post-metas">Écrit par Erwyn,<span class="putainde-Date"> le 27 fév. 2014</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">git</li></ul></header><div class="putainde-Post-md"><p>Vous viendez de lire l&#39;<a href="/posts/git/versionner-avec-git/">article de madx</a> sur le gestionnaire
 de version Git et vous vous dites que vous aimeriez en découvrir plus! Vous l&#39;utilisez déjà mais êtes
 en quête de quelques nouvelles (ou pas) astuces à vous mettre sous la dent! Bienvenue!</p>
 <p>Si vous désirez vous servir de cet article comme d&#39;un tutoriel il est recommandé d&#39;avoir quelques
@@ -76,7 +11,8 @@ J&#39;ai créé un monstre… Pas de panique! J&#39;ai pour vous l&#39;alias qu&
 honteusement pompé de <a href="https://coderwall.com/p/euwpig">ce site</a>, mais
 comme j&#39;ai pas d&#39;honneur… Pour le mettre en place il suffit d&#39;entrer la commande
 suivante dans votre terminal préféré:</p>
-<pre><code class="language-bash"><span class="cm-def">$ git</span> config <span class="cm-attribute">--global</span> alias.lg <span class="cm-string">&quot;log --color --graph --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit&quot;</span></code></pre>
+<pre><code class="lang-bash">$ git config --global alias.lg <span class="hljs-string">"log --color --graph --pretty=format:'<span class="hljs-variable">%Cred</span><span class="hljs-variable">%h</span><span class="hljs-variable">%Creset</span> -<span class="hljs-variable">%C</span>(yellow)<span class="hljs-variable">%d</span><span class="hljs-variable">%Creset</span> <span class="hljs-variable">%s</span> <span class="hljs-variable">%Cgreen</span>(<span class="hljs-variable">%cr</span>) <span class="hljs-variable">%C</span>(bold blue)&lt;<span class="hljs-variable">%an</span>&gt;<span class="hljs-variable">%Creset</span>' --abbrev-commit"</span>
+</code></pre>
 <p>Au cas où vous ne seriez pas à l&#39;aise avec ce genre de choses, sachez simplement que la commande
 <code>git config --global alias.lg</code> permet d&#39;inscrire à votre configuration générale un nouvel alias (
 ici lg). Le reste est ce que doit faire cet alias, à savoir afficher un historique reformaté de votre
@@ -85,7 +21,7 @@ dépôt Git.</p>
 maintenant (dans un dépôt Git bien entendu banane). Pour l&#39;exemple, je l&#39;ai réalisé dans le dépôt
 de Putain De Code:</p>
 <figure>
-  <img src="/posts/git/boutez-les-bugs-domptez-votre-historique/omagad-history.png" alt="capture historique">
+  <img src="../../../images/posts/git/boutez-les-bugs-domptez-votre-historique/omagad-history.png" alt="capture historique">
   <figcaption>Le pouvoir de l&#39;arc en ciel</figcaption>
 </figure>
 
@@ -104,8 +40,9 @@ train de baver devant votre écran, mais non, Git ne va pas corriger vos bugs bi
 à trouver le changement dans le code qui l&#39;a fait apparaître et ceci grâce à la commande <code>git bisect</code>.</p>
 <p>Pour lancer une <em>bisection</em> par Git il suffit d&#39;entrer <code>git bisect start</code> dans votre terminal préféré
 et le tour est joué!</p>
-<pre><code class="language-bash"><span class="cm-def">$ git</span> bisect <span class="cm-builtin">start</span>
-<span class="cm-def">$</span></code></pre>
+<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git bisect start
+$
+</code></pre>
 <figure>
     <figcaption> Capitaine, regardez il n&#39;y a rien </figcaption>
 </figure>
@@ -122,15 +59,16 @@ le signaler à son tour: <code>git bisect good</code>.</p>
 <p>Git va alors se mettre en route et vous déplacer automatiquement de commit en commit. Pour chacun d&#39;eux vous n&#39;aurez
 qu&#39;à le déclarer bon ou mauvais comme expliqué au dessus, jusqu&#39;à ce que Git vous fournisse le premier commit
 comportant le bug, celui dont le changement a révélé le disfonctionnement.</p>
-<pre><code class="language-bash"><span class="cm-def">$ git</span> bisect bad
-1082351d9157e98aed1bbee8b9ad6deedca1288f is the first bad commit
-commit 1082351d9157e98aed1bbee8b9ad6deedca1288f
+<pre><code class="lang-bash">$ git bisect bad
+1082351d9157e98aed1bbee8b9ad6deedca1288f is the first bad <span class="hljs-operator"><span class="hljs-keyword">commit</span>
+<span class="hljs-keyword">commit</span> <span class="hljs-number">1082351</span>d9157e98aed1bbee8b9ad6deedca1288f
 Author: Maxime Thirouin &lt;m@***.io&gt;
-Date:   Fri Jan <span class="cm-number">17</span> <span class="cm-number">08</span>:19:46 <span class="cm-number">2014</span> <span class="cm-operator">+</span>0100
+<span class="hljs-keyword">Date</span>:   Fri Jan <span class="hljs-number">17</span> <span class="hljs-number">08</span>:<span class="hljs-number">19</span>:<span class="hljs-number">46</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
-    ¯\_(ツ)_/¯ Fix shit bring <span class="cm-keyword">in</span> 34a44c98048f2b74fc2dd20f0be807c1e23e8b58
+    ¯\_(ツ)_/¯ Fix shit bring <span class="hljs-keyword">in</span> <span class="hljs-number">34</span>a44c98048f2b74fc2dd20f0be807c1e23e8b58
 
-:040000 <span class="cm-number">040000</span> 7a5d5010f0aaa052ffdc0747b182dc6178a346db d3562872efd1b9d662a89825a3070d64f860cc34 M  src</code></pre>
+:<span class="hljs-number">040000</span> <span class="hljs-number">040000</span> <span class="hljs-number">7</span>a5d5010f0aaa052ffdc0747b182dc6178a346db d3562872efd1b9d662a89825a3070d64f860cc34 M  src</span>
+</code></pre>
 <figure>
     <figcaption>1, 2, 3, Soleil!</figcaption>
 </figure>
@@ -150,29 +88,29 @@ peu de commits poubelles, ces commits avec comme message &quot;step&quot; ou aut
 un bug fix, une unité logique cohérente. Je ne sais pas pour vous, mais personnellement un <em>git log</em> ne ressemble pas à
 ça chez moi!</p>
 <pre><code>commit e739e7c0248b841b0250eb85d99a1b4ba149149d
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-Date:   Tue Feb 18 21:39:50 2014 +0100
+<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
+<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">50</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
     Now my new functionality finally works
 
-commit 551b243525d826afcfece3e2c4c471ebd1e91779
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-Date:   Tue Feb 18 21:39:23 2014 +0100
+commit <span class="hljs-number">551</span>b243525d826afcfece3e2c4c471ebd1e91779
+<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
+<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
     misc
 
-commit 9db49a39fdb05a54adcfc2b46832818ef05b9c72
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-Date:   Tue Feb 18 21:38:43 2014 +0100
+commit <span class="hljs-number">9</span>db49a39fdb05a54adcfc2b46832818ef05b9c72
+<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
+<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">43</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
     stuff
 
 commit ca4ff952310d6246216e83f49309b32b2d2fa010
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-Date:   Tue Feb 18 21:38:35 2014 +0100
+<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
+<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">35</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
-    first commit</code></pre>
-<figure>
+    first commit
+</code></pre><figure>
     <figcaption>best git log, ever</figcaption>
 </figure>
 
@@ -192,28 +130,28 @@ pour qu&#39;il soit plus explicite et fasse référence à ma User Story corresp
 </ul>
 <p>Je vais utiliser la première méthode (le choix n&#39;influe en rien sur la suite), et donc lancer la réécriture en invoquant la commande: <code>git rebase -i HEAD~3</code>
 ( -i voulant dire de lancer un <em>rebase</em> en mode intéractif). Voici ce qui m&#39;est alors présenté:</p>
-<pre><code>pick 9db49a3 stuff
-pick 551b243 misc
-pick e739e7c Now my new functionality finally works
+<pre><code>pick <span class="hljs-number">9</span>db49a3 stuff
+pick <span class="hljs-number">551</span>b243 misc
+pick e739e7c Now my <span class="hljs-keyword">new</span> functionality finally works
 
-# Rebase ca4ff95..e739e7c onto ca4ff95
-#
-# Commands:
-#  p, pick = use commit
-#  r, reword = use commit, but edit the commit message
-#  e, edit = use commit, but stop for amending
-#  s, squash = use commit, but meld into previous commit
-#  f, fixup = like &quot;squash&quot;, but discard this commit&#39;s log message
-#  x, exec = run command (the rest of the line) using shell
-#
-# These lines can be re-ordered; they are executed from top to bottom.
-#
-# If you remove a line here THAT COMMIT WILL BE LOST.
-#
-# However, if you remove everything, the rebase will be aborted.
-#
-# Note that empty commits are commented out</code></pre>
-<p>Git m&#39;affiche tous les commits concernés par l&#39;opération (en ordre inverse), devant chacun d&#39;eux, la mention <em>pick</em>, et une légende en bas.
+<span class="hljs-preprocessor"># Rebase ca4ff95..e739e7c onto ca4ff95</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor"># Commands:</span>
+<span class="hljs-preprocessor">#  p, pick = use commit</span>
+<span class="hljs-preprocessor">#  r, reword = use commit, but edit the commit message</span>
+<span class="hljs-preprocessor">#  e, edit = use commit, but stop for amending</span>
+<span class="hljs-preprocessor">#  s, squash = use commit, but meld into previous commit</span>
+<span class="hljs-preprocessor">#  f, fixup = like "squash", but discard this commit's log message</span>
+<span class="hljs-preprocessor">#  x, exec = run command (the rest of the line) using shell</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor"># These lines can be re-ordered; they are executed from top to bottom.</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor"># If you remove a line here THAT COMMIT WILL BE LOST.</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor"># However, if you remove everything, the rebase will be aborted.</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor"># Note that empty commits are commented out</span>
+</code></pre><p>Git m&#39;affiche tous les commits concernés par l&#39;opération (en ordre inverse), devant chacun d&#39;eux, la mention <em>pick</em>, et une légende en bas.
 <em>pick</em>, comme l&#39;indique la légende, signifie que ce commit sera conservé, mais je peux remplacer cette mention par les suivantes:</p>
 <ul>
 <li>reword : modifier le message de commit.</li>
@@ -235,27 +173,27 @@ l&#39;incorporant au commit précédent.</li>
 <li>mettre la mention fixup devant le commit &#39;Now my new functionality finally works&#39; car je vais le fusionner au précédent et abandonner son message.</li>
 </ul>
 <p>Ce qui nous donne le résultat suivant:</p>
-<pre><code>reword 551b243 misc
-fixup e739e7c Now my new functionality finally works
+<pre><code>reword <span class="hljs-number">551</span>b243 misc
+fixup e739e7c Now my <span class="hljs-keyword">new</span> functionality finally works
 
-# Rebase ca4ff95..e739e7c onto ca4ff95
-#
-# Commands:
-#  p, pick = use commit
-#  r, reword = use commit, but edit the commit message
-#  e, edit = use commit, but stop for amending
-#  s, squash = use commit, but meld into previous commit
-#  f, fixup = like &quot;squash&quot;, but discard this commit&#39;s log message
-#  x, exec = run command (the rest of the line) using shell
-#
-# These lines can be re-ordered; they are executed from top to bottom.
-#
-# If you remove a line here THAT COMMIT WILL BE LOST.
-#
-# However, if you remove everything, the rebase will be aborted.
-#
-# Note that empty commits are commented out</code></pre>
-<figure>
+<span class="hljs-preprocessor"># Rebase ca4ff95..e739e7c onto ca4ff95</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor"># Commands:</span>
+<span class="hljs-preprocessor">#  p, pick = use commit</span>
+<span class="hljs-preprocessor">#  r, reword = use commit, but edit the commit message</span>
+<span class="hljs-preprocessor">#  e, edit = use commit, but stop for amending</span>
+<span class="hljs-preprocessor">#  s, squash = use commit, but meld into previous commit</span>
+<span class="hljs-preprocessor">#  f, fixup = like "squash", but discard this commit's log message</span>
+<span class="hljs-preprocessor">#  x, exec = run command (the rest of the line) using shell</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor"># These lines can be re-ordered; they are executed from top to bottom.</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor"># If you remove a line here THAT COMMIT WILL BE LOST.</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor"># However, if you remove everything, the rebase will be aborted.</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor"># Note that empty commits are commented out</span>
+</code></pre><figure>
     <figcaption>Attention chérie, ça va trancher</figcaption>
 </figure>
 
@@ -263,30 +201,30 @@ fixup e739e7c Now my new functionality finally works
 le déplacement de commits, provoquent des conflits, Git va vous demander de les résoudre au fur et à mesure; il suffit pour cela d&#39;éditer vos fichiers, puis
 de les marquer comme résolus au moyen de la commande <code>git add &lt;lefichier&gt;</code> avant de reprendre avec la commande <code>git rebase --continue</code>. Comme convenu,
 Git vous demande d&#39;éditer le message du commit marqué en <em>reword</em>:</p>
-<pre><code>Story #34 - Poker cards now have a real back picture
+<pre><code>Story #<span class="hljs-number">34</span> - Poker cards now have a real back picture
 
-# Please enter the commit message for your changes. Lines starting
-# with &#39;#&#39; will be ignored, and an empty message aborts the commit.
-# HEAD detached at ca4ff95
-# You are currently rebasing branch &#39;master&#39; on &#39;ca4ff95&#39;.
-#   (all conflicts fixed: run &quot;git rebase --continue&quot;)
-#
-# Changes to be committed:
-#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
-#
-# modified:   README.txt
-#</code></pre>
-<figure>
+<span class="hljs-preprocessor"># Please enter the commit message for your changes. Lines starting</span>
+<span class="hljs-preprocessor"># with '#' will be ignored, and an empty message aborts the commit.</span>
+<span class="hljs-preprocessor"># HEAD detached at ca4ff95</span>
+<span class="hljs-preprocessor"># You are currently rebasing branch 'master' on 'ca4ff95'.</span>
+<span class="hljs-preprocessor">#   (all conflicts fixed: run "git rebase --continue")</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor"># Changes to be committed:</span>
+<span class="hljs-preprocessor">#   (use "git reset HEAD &lt;file&gt;..." to unstage)</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor"># modified:   README.txt</span>
+<span class="hljs-preprocessor">#</span>
+</code></pre><figure>
     <figcaption>Un commit qu&#39;il est mieux pour le relire</figcaption>
 </figure>
 
 <p>L&#39;opération va continuer puis Git va vous rendre la main. Il vous suffit alors de faire un <code>git log</code> pour apprécier le résultat:</p>
-<pre><code>commit 481b4dccf4fedf4ed9d7f4e83ae5c19a07f7e12e
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-Date:   Tue Feb 18 21:39:23 2014 +0100
+<pre><code>commit <span class="hljs-number">481</span>b4dccf4fedf4ed9d7f4e83ae5c19a07f7e12e
+<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
+<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
-    Story #34 - Poker cards now have a real back picture</code></pre>
-<figure>
+    Story <span class="hljs-preprocessor">#34 - Poker cards now have a real back picture</span>
+</code></pre><figure>
     <figcaption>Et c&#39;est le succèèèèèèès</figcaption>
 </figure>
 
@@ -305,24 +243,24 @@ que honnêtement…</p>
 <p>Vous ne le savez peut être pas, mais Git, dans sa grande bonté, garde une référence de toutes vos actions, de tous les endroits où vous vous êtes déplacez.
 Ce registre, c&#39;est le <em>references log</em>, et en plus on peut y accéder simplement grâce à la commande <code>git reflog</code> (sans déconner). Faisons un petit tour
 dans le miens:</p>
-<pre><code>481b4dc HEAD@{0}: rebase -i (finish): returning to refs/heads/master
-481b4dc HEAD@{1}: rebase -i (fixup): Story #34 - Poker cards now have a real back picture
-8fd5835 HEAD@{2}: rebase -i (continue): Story #34 - Poker cards now have a real back picture
-ca4ff95 HEAD@{3}: checkout: moving from master to ca4ff952310d6246216e83f49309b32b2d2fa010
-e739e7c HEAD@{4}: rebase -i (finish): returning to refs/heads/master
-e739e7c HEAD@{5}: checkout: moving from master to e739e7c
-e739e7c HEAD@{6}: rebase -i (finish): returning to refs/heads/master
-e739e7c HEAD@{7}: checkout: moving from master to e739e7c
-e739e7c HEAD@{8}: rebase -i (finish): returning to refs/heads/master
-e739e7c HEAD@{9}: checkout: moving from master to e739e7c
-e739e7c HEAD@{10}: rebase -i (finish): returning to refs/heads/master
-e739e7c HEAD@{11}: checkout: moving from master to e739e7c
-e739e7c HEAD@{12}: commit: Now my new functionality finally works
-551b243 HEAD@{13}: commit: misc
-9db49a3 HEAD@{14}: commit (amend): stuff
-af7fc36 HEAD@{15}: commit: misc
-ca4ff95 HEAD@{16}: commit (initial): first commit</code></pre>
-<figure>
+<pre><code><span class="hljs-number">481</span>b4dc HEAD@{<span class="hljs-number">0</span>}: rebase -i (finish): <span class="hljs-keyword">returning</span> <span class="hljs-keyword">to</span> refs/heads/master
+<span class="hljs-number">481</span>b4dc HEAD@{<span class="hljs-number">1</span>}: rebase -i (fixup): Story <span class="hljs-comment">#34 - Poker cards now have a real back picture</span>
+<span class="hljs-number">8</span>fd5835 HEAD@{<span class="hljs-number">2</span>}: rebase -i (<span class="hljs-keyword">continue</span>): Story <span class="hljs-comment">#34 - Poker cards now have a real back picture</span>
+ca4ff95 HEAD@{<span class="hljs-number">3</span>}: checkout: moving <span class="hljs-keyword">from</span> master <span class="hljs-keyword">to</span> ca4ff952310d6246216e83f49309b32b2d2fa010
+e739e7c HEAD@{<span class="hljs-number">4</span>}: rebase -i (finish): <span class="hljs-keyword">returning</span> <span class="hljs-keyword">to</span> refs/heads/master
+e739e7c HEAD@{<span class="hljs-number">5</span>}: checkout: moving <span class="hljs-keyword">from</span> master <span class="hljs-keyword">to</span> e739e7c
+e739e7c HEAD@{<span class="hljs-number">6</span>}: rebase -i (finish): <span class="hljs-keyword">returning</span> <span class="hljs-keyword">to</span> refs/heads/master
+e739e7c HEAD@{<span class="hljs-number">7</span>}: checkout: moving <span class="hljs-keyword">from</span> master <span class="hljs-keyword">to</span> e739e7c
+e739e7c HEAD@{<span class="hljs-number">8</span>}: rebase -i (finish): <span class="hljs-keyword">returning</span> <span class="hljs-keyword">to</span> refs/heads/master
+e739e7c HEAD@{<span class="hljs-number">9</span>}: checkout: moving <span class="hljs-keyword">from</span> master <span class="hljs-keyword">to</span> e739e7c
+e739e7c HEAD@{<span class="hljs-number">10</span>}: rebase -i (finish): <span class="hljs-keyword">returning</span> <span class="hljs-keyword">to</span> refs/heads/master
+e739e7c HEAD@{<span class="hljs-number">11</span>}: checkout: moving <span class="hljs-keyword">from</span> master <span class="hljs-keyword">to</span> e739e7c
+e739e7c HEAD@{<span class="hljs-number">12</span>}: commit: Now <span class="hljs-keyword">my</span> new functionality finally works
+<span class="hljs-number">551</span>b243 HEAD@{<span class="hljs-number">13</span>}: commit: misc
+<span class="hljs-number">9</span>db49a3 HEAD@{<span class="hljs-number">14</span>}: commit (amend): stuff
+af7fc36 HEAD@{<span class="hljs-number">15</span>}: commit: misc
+ca4ff95 HEAD@{<span class="hljs-number">16</span>}: commit (initial): <span class="hljs-keyword">first</span> commit
+</code></pre><figure>
     <figcaption>Il est beau mon reflog, il est frais</figcaption>
 </figure>
 
@@ -331,158 +269,42 @@ fait quelques tests avant d&#39;écrire cette partie de l&#39;article). Chaque o
 dans lequel il était au moment de l&#39;opération. Bien, imaginons que j&#39;ai fait n&#39;importe quoi avec le rebase et que je veuille retrouver mon état précédent, et bien
 il me suffira ici de faire un <code>git checkout e739e7c</code> (dans votre cas la ligne sera probablement plus simple à trouver). Et là si je refais un <code>git log</code>, miracle:</p>
 <pre><code>commit e739e7c0248b841b0250eb85d99a1b4ba149149d
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-Date:   Tue Feb 18 21:39:50 2014 +0100
+<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
+<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">50</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
     Now my new functionality finally works
 
-commit 551b243525d826afcfece3e2c4c471ebd1e91779
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-Date:   Tue Feb 18 21:39:23 2014 +0100
+commit <span class="hljs-number">551</span>b243525d826afcfece3e2c4c471ebd1e91779
+<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
+<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
     misc
 
-commit 9db49a39fdb05a54adcfc2b46832818ef05b9c72
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-Date:   Tue Feb 18 21:38:43 2014 +0100
+commit <span class="hljs-number">9</span>db49a39fdb05a54adcfc2b46832818ef05b9c72
+<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
+<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">43</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
     stuff
 
 commit ca4ff952310d6246216e83f49309b32b2d2fa010
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-Date:   Tue Feb 18 21:38:35 2014 +0100
+<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
+<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">35</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
-    first commit</code></pre>
-<p>Vous voilà retombés sur vos pieds! Vous n&#39;avez plus qu&#39;à reconnecter votre branche à ce commit si jamais vous en aviez une et vous êtes reparti pour de nouvelles
+    first commit
+</code></pre><p>Vous voilà retombés sur vos pieds! Vous n&#39;avez plus qu&#39;à reconnecter votre branche à ce commit si jamais vous en aviez une et vous êtes reparti pour de nouvelles
 aventures.</p>
 <p>Sachez tout de même que ce <em>references log</em> peut être effacé, et il est même conseillé de le faire régulièrement pour des problématiques de performance de Git sur
 votre dépôt; conserver tous ces commits peut devenir coûteux à la longue. La commande <code>git gc</code> pour <em>garbage collector</em> s&#39;occupera de faire le ménage
 pour vous.</p>
 <p>Voilà, on arrive au bout de notre aventure, j&#39;espère que vous avez appris quelque chose et que Git vous fait maintenant moins peur.</p>
 <p>Amike,</p>
-
-
-
-<section class="putainde-AboutTheAuthor">
-  
-    
-    <a class="putainde-AboutTheAuthor-avatar putainde-Author-avatar" href="http://erwyn.piwany.com">
-      <img src="http://www.gravatar.com/avatar/73af1b4a749651d146a756e7830f10da.png?s=300&amp;d=https%3A%2F%2Fidenticons.github.com%2Fc0863a4414cba6aa95014df9e3d9f6a5.png" />
-    </a>
-    
-  
-  <h1 class="putainde-AboutTheAuthor-title">
-    Écrit par
-    <strong class="putainde-AboutTheAuthor-name">Erwyn</strong>
-    <a class="putainde-AboutTheAuthor-url" href="http://erwyn.piwany.com"><i class="icon icon_home"> </i></a>
-    <a class="putainde-AboutTheAuthor-twitter" href="https://twitter.com/Erwyn"><i class="icon icon_twitter"> </i></a>
-    <a class="putainde-AboutTheAuthor-github" href="https://github.com/erwyn"><i class="icon icon_github"> </i></a>
-  </h1>
-  
-    
-    <div class="putainde-AboutTheAuthor-bio--long"><p>Développeur tombé dans le web par inadvertance.
-Amoureux de l&#x27;agilité, l&#x27;amélioration continue, et l&#x27;auto-organisation.
-Passionné par les entreprises et les individus qui les composent.
-Producteur d&#x27;humour bas de gamme.
-Rêve d&#x27;aventures.</p>
-</div>
-  
-</section>
-
-
-
-
-
-<section class="putainde-Comments">
-  <h1 class="putainde-Comments-title">Comments</h1>
-  <div id="disqus_thread" aria-live="polite">
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
-</section>
-
-
-
-    </div>
-    
-    <aside class="putainde-Sidebar grid__cell unit-1-4--m">
-    <aside class="putainde-Sidebar-block">
-	<h1 class="putainde-Sidebar-block-title">On est partout !</h1>
-	<ul class="putainde-Sidebar-block-list--nobullet">
-		<li><a href="https://github.com/putaindecode"><i class="icon icon_github"></i> Github</a></li>
-		<li><a href="https://twitter.com/putaindecode"><i class="icon icon_twitter"></i> Twitter</a></li>
-		<li><a href="#derriere-toi,-c'est-affreux!" onclick="if (confirm('Attention Benjamin...!')) window.location = 'http://www.youtube.com/watch?v=MEKHaG9FxKY&t=44s'; return false;"><i class="icon icon_eye"></i> Derrière toi</a></li>
-	</ul>
-</aside>
-<aside class="putainde-Sidebar-block">
-	<h1 class="putainde-Sidebar-block-title">À avoir sous la main</h1>
-	<ul class="putainde-Sidebar-block-list--nobullet">
-		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues/new"><i class="icon icon_pencil"></i> Proposer un article</a></li>
-		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues?labels=post&state=open"><i class="icon icon_bookmarks"></i> Voir les propositions</a></li>
-		<li><a href="https://github.com/putaindecode/website/blob/master/src/posts/git/boutez-les-bugs-domptez-votre-historique/index.html.hbs"><i class="icon icon_edit"></i> Modifier cette page</a></li>
-	</ul>
-</aside>
-
-
-    </aside>
-    
-  </article>
-  
-    <footer class="putainde-Footer">
-
-    <div class="putainde-Footer-colophon grid">
-      <div class="putainde-Footer-colophon-left grid__cell unit-5-12--m">
-        <span class="putainde-Footer-colophon-item">© 1970 - 2013 Putain de Code !</span>
-        |
-        <a class="putainde-Footer-colophon-item" href="https://github.com/putaindecode">Contact</a>
-      </div>
-      <div class="putainde-Footer-colophon-center grid__cell unit-2-12--m">
-        <img class="putainde-Footer-logo" alt="Putain de code !" src="/assets/img/p!-logo.svg" />
-      </div>
-      <div class="putainde-Footer-colophon-right grid__cell unit-5-12--m">
-        <a class="putainde-Footer-colophon-item" href="feed.xml">Flux RSS</a>
-        |
-        <a class="putainde-Footer-colophon-item" href="projets/">Projets</a>
-        |
-        <span class="putainde-Footer-colophon-item">Made with ❤ by <a href="/le-crew/">le crew</a></span>
-      </div>
-    </div>
-  </footer>
-
-  
-</div>
-<script src="/assets/js/putaindecode.js?20140409071115"></script>
-
-
-	
-	<script>
-		var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
-		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-		g.src='//www.google-analytics.com/ga.js';
-		s.parentNode.insertBefore(g,s)}(document,'script'));
-	</script>
-	
-
-
-
-
-
-  <script>
-  var disqus_shortname = 'putaindecode',
-  
-  
-  
-  disqus_identifier = 'http://putaindecode.fr/posts/git/boutez-les-bugs-domptez-votre-historique/',
-  disqus_url = 'http://putaindecode.fr/posts/git/boutez-les-bugs-domptez-votre-historique/',
-  disqus_script = 'embed.js';
-  
-  (function(d,s) {
-  s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
-  (d.getElementsByTagName('head')[0]).appendChild(s);
-  })(document);
-  </script>
-
-
-
-</body>
-</html>
-
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/git/boutez-les-bugs-domptez-votre-historique/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/git/boutez-les-bugs-domptez-votre-historique/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/git/boutez-les-bugs-domptez-votre-historique/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><img src="http://www.gravatar.com/avatar/73af1b4a749651d146a756e7830f10da.png" alt="" class="putainde-Author-picture putainde-Avatar js-AnimateLoad"/><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> Erwyn</h3><div class="putainde-Author-social"><a href="http://erwyn.piwany.com"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/Erwyn"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/Erwyn"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur tombé dans le web par inadvertance. <br> Amoureux de l'agilité, l'amélioration continue, et l'auto-organisation. <br> Passionné par les entreprises et les individus qui les composent. <br> Producteur d'humour bas de gamme. <br> Rêve d'aventures.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">3 contributeurs</strong><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/Erwyn" data-tip="Erwyn" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/73af1b4a749651d146a756e7830f10da.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size4of12"><ul class="putainde-Footer-list"><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode">Contact</a></li><li><a href="../../../feed.xml">Flux RSS</a></li></ul></div><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text putainde-Footer-text--small">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/git/boutez-les-bugs-domptez-votre-historique/";
+var disqus_url = "http://putaindecode.fr/posts/git/boutez-les-bugs-domptez-votre-historique/";
+var disqus_script = "embed.js";;(function(d,s) {
+s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+(d.getElementsByTagName('head')[0]).appendChild(s)
+})(document)</script><script src="../../../scripts/index.js"></script><script>var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
+(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+g.src='//www.google-analytics.com/ga.js';
+s.parentNode.insertBefore(g,s)}(document,'script'));</script></body></html>

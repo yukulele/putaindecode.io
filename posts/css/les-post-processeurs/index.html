@@ -1,69 +1,4 @@
-
-<!DOCTYPE html>
-<!--
-  HEY YOU, STOP LOOKING AT MY SOURCE CODE
-  Just check it out directly on Github :
-
-  https://github.com/putaindecode/website.git
--->
-<html lang="fr" class="no-js no-touch ">
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-<script>(function(docEl) {
-  docEl.className = docEl.className.replace(/\bno-js\b/, 'js');
-  if ('ontouchstart' in docEl) { docEl.className = docEl.className.replace(/\bno-touch\b/, 'touch'); }
-})(document.documentElement);</script>
-
-<meta charset="utf-8">
-<title>Les post-processeurs CSS</title>
-<meta name="description" content="">
-<base href="http://putaindecode.fr/" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="feed.xml" rel="alternate" type="application/rss+xml">
-
-<link rel="stylesheet" href="/assets/css/putaindecode.css?20140409071115">
-
-
-
-
-</head>
-<body>
-
-<div class="">
-  <nav class="putainde-Nav">
-	<div class="grid">
-		<div class="grid__cell">
-			<a class="putainde-SiteTitle" href="/">
-				<img class="putainde-Logo" alt="Putain de Code !" src="/assets/img/p!-logo.svg" />
-				Putain de Code !
-			</a>
-
-			<span class="putainde-Baseline">On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</span>
-
-			<ul class="putainde-Nav-list">
-				<li class=""><a class="putainde-Nav-list-item " href="c-est-quoi-putaindecode">Putain de ... ?</a>
-        <li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
-				<li class=""><a class="putainde-Nav-list-item " href="posts/comment-contribuer/">Comment Contribuer ?</a>
-			</ul>
-		</div>
-	</div>
-</nav>
- 
-  <article class="putainde-Content grid putainde-Post">
-    <header class="putainde-Content-header grid__cell unit-1-1">
-      <h1 class="putainde-Content-title">Les post-processeurs CSS</h1>
-      <div class="putainde-Content-metas">
-        <span class="putainde-Content-meta putainde-Content-author">Par <span class="putainde-Author">MoOx</span></span>
-        <span class="putainde-Content-meta putainde-Content-date">Publié le: <span class="putainde-Date">mar. 08 avr. 2014</span></span>
-        <span class="putainde-Content-meta putainde-Content-readingTime">Temps de lecture: environ 6min</span>
-        <span class="putainde-Content-meta putainde-Content-tags">Tags: css,pré-processeur,post-processeur</span>
-      </div>
-    </header>
-    <div class="putainde-Content-body grid__cell unit-3-4--m">
-    
-
-
-<p>Vous avez surement entendu parler des <a href="http://iamvdo.me/blog/les-postprocesseurs-css"><em>post-processeurs CSS</em></a>.
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Les post-processeurs CSS</title><link rel="stylesheet" href="../../../stylesheets/index.css"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size7of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size5of12"><nav class="putainde-Nav"><a href="../../../c-est-quoi-putaindecode" class="putainde-Nav-item">Putain de ?</a><a href="../.." class="putainde-Nav-item">Les posts</a><a href="../../comment-contribuer" class="putainde-Nav-item">Contribuer</a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><header class="putainde-Post-header"><div class="putainde-Title"><h1 class="putainde-Title-text">Les post-processeurs CSS</h1></div><div class="putainde-Post-metas">Écrit par MoOx,<span class="putainde-Date"> le 8 avril 2014</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">css</li><li class="putainde-Tag">pré-processeur</li><li class="putainde-Tag">post-processeur</li></ul></header><div class="putainde-Post-md"><p>Vous avez surement entendu parler des <a href="http://iamvdo.me/blog/les-postprocesseurs-css"><em>post-processeurs CSS</em></a>.
 J&#39;ai personnellement pas mal fait référence à <del>ce concept</del> cette expression ces derniers temps.
 Que ce soit lorsque je vous racontais
 <a href="/posts/css/comment-en-finir-avec-les-prefixes/">comment se passer des préfixes CSS</a>
@@ -115,27 +50,30 @@ Et si on pouvait ajouter un petit coup de peinture magique, je dirais même auto
 afin d&#39;avoir ce fallback ?</p>
 <p>Et bien, on peut. Ça prend 20 secondes, et ça fera les choses bien, sans oubli.
 Exemple avec <a href="https://github.com/ctalkington/rework-rem-fallback">rework-rem-fallback</a></p>
-<pre><code class="language-js"><span class="cm-comment">// il faudrait installer les dépendances de la façon suivante</span>
-<span class="cm-comment">// $ npm i rework rework-rem-fallback</span>
+<pre><code class="lang-js"><span class="hljs-comment">// il faudrait installer les dépendances de la façon suivante</span>
+<span class="hljs-comment">// $ npm i rework rework-rem-fallback</span>
 
-<span class="cm-keyword">var</span> <span class="cm-variable">rework</span> = <span class="cm-variable">require</span>(<span class="cm-string">&#39;rework&#39;</span>) <span class="cm-comment">// le moteur rework, je reviens dessus après</span>
-  , <span class="cm-variable">remFallback</span> = <span class="cm-variable">require</span>(<span class="cm-string">&#39;rework-rem-fallback&#39;</span>) <span class="cm-comment">// le plugin rework</span>
+<span class="hljs-keyword">var</span> rework = <span class="hljs-keyword">require</span>(<span class="hljs-string">'rework'</span>) <span class="hljs-comment">// le moteur rework, je reviens dessus après</span>
+  , remFallback = <span class="hljs-keyword">require</span>(<span class="hljs-string">'rework-rem-fallback'</span>) <span class="hljs-comment">// le plugin rework</span>
 
-  <span class="cm-comment">// lecture du fichier css</span>
-  , <span class="cm-variable">css</span> = <span class="cm-variable">require</span>(<span class="cm-string">&#39;fs&#39;</span>).<span class="cm-property">readFileSync</span>(<span class="cm-string">&#39;dist/index.css&#39;</span>, <span class="cm-string">&#39;utf8&#39;</span>).<span class="cm-property">toString</span>()
+  <span class="hljs-comment">// lecture du fichier css</span>
+  , css = <span class="hljs-keyword">require</span>(<span class="hljs-string">'fs'</span>).readFileSync(<span class="hljs-string">'dist/index.css'</span>, <span class="hljs-string">'utf8'</span>).toString()
 
-  <span class="cm-comment">// on traite le CSS en indiquant à rework la source, et le plugin à utiliser</span>
-  , <span class="cm-variable">out</span> = <span class="cm-variable">rework</span>(<span class="cm-variable">css</span>).<span class="cm-property">use</span>(<span class="cm-variable">remFallback</span>()).<span class="cm-property">toString</span>()
+  <span class="hljs-comment">// on traite le CSS en indiquant à rework la source, et le plugin à utiliser</span>
+  , out = rework(css).<span class="hljs-keyword">use</span>(remFallback()).toString()
 
-  <span class="cm-comment">// ici on fait la même chose, mais comme si la font de base était en 14px</span>
-  , <span class="cm-variable">out14</span> = <span class="cm-variable">rework</span>(<span class="cm-variable">css</span>).<span class="cm-property">use</span>(<span class="cm-variable">remFallback</span>(<span class="cm-number">14</span>)).<span class="cm-property">toString</span>()</code></pre>
+  <span class="hljs-comment">// ici on fait la même chose, mais comme si la font de base était en 14px</span>
+  , out14 = rework(css).<span class="hljs-keyword">use</span>(remFallback(<span class="hljs-number">14</span>)).toString()
+</code></pre>
 <p>Avec l&#39;exemple d&#39;avant, et ce bout de CSS:</p>
-<pre><code class="language-css"><span class="cm-qualifier">.main-header</span> { <span class="cm-property">width</span><span class="cm-operator">:</span> <span class="cm-number">5rem</span> }</code></pre>
+<pre><code class="lang-css"><span class="hljs-class">.main-header</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">5</span>rem </span></span></span>}
+</code></pre>
 <p>... On obtiendra le résultat suivant:</p>
-<pre><code class="language-css"><span class="cm-qualifier">.main-header</span> {
-  <span class="cm-property">width</span><span class="cm-operator">:</span> <span class="cm-number">80px</span>;
-  <span class="cm-property">width</span><span class="cm-operator">:</span> <span class="cm-number">5rem</span>;
-}</code></pre>
+<pre><code class="lang-css"><span class="hljs-class">.main-header</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">80</span>px</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">5</span>rem</span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
 <p>Notre exemple n&#39;est pas intégré dans un
 <a href="http://www.24joursdeweb.fr/2013/automatisez-votre-workflow-front-end/">workflow automatisé</a>,
 mais c&#39;est juste pour vous montrer que c&#39;est l&#39;histoire de 5 lignes de code
@@ -219,125 +157,13 @@ je reste sur du <em>custom pré-processing</em> via Rework avec lequel je peux c
 <h3 id="prochaine-tape-faire-son-propre-pr-post-processeur-css-c-est-simple">Prochaine étape: faire son propre pré/post-processeur CSS, c&#39;est simple</h3>
 <p>Rework ayant un bon petit paquet de plugins déjà existants, c&#39;est assez simple de réaliser son propre pré-processeur via quelques lignes de code seulement.
 La mise en place et l&#39;automatisation feront l&#39;objet d&#39;un prochain article !</p>
-
-
-
-<section class="putainde-AboutTheAuthor">
-  
-    
-    <a class="putainde-AboutTheAuthor-avatar putainde-Author-avatar" href="http://moox.io">
-      <img src="https://gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d?s=300&amp;d=https%3A%2F%2Fidenticons.github.com%2Fc0863a4414cba6aa95014df9e3d9f6a5.png" />
-    </a>
-    
-  
-  <h1 class="putainde-AboutTheAuthor-title">
-    Écrit par
-    <strong class="putainde-AboutTheAuthor-name">MoOx</strong>
-    <a class="putainde-AboutTheAuthor-url" href="http://moox.io"><i class="icon icon_home"> </i></a>
-    <a class="putainde-AboutTheAuthor-twitter" href="https://twitter.com/MoOx"><i class="icon icon_twitter"> </i></a>
-    <a class="putainde-AboutTheAuthor-github" href="https://github.com/MoOx"><i class="icon icon_github"> </i></a>
-  </h1>
-  
-    
-    <div class="putainde-AboutTheAuthor-bio--long"><p>Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.<br>Il aime faire des calins à HTML, CSS et JavaScript en tant que Freelance (<em> et il est d&#x27;ailleurs, il est actuellement disponible</em>).</p>
-</div>
-  
-</section>
-
-
-
-
-
-<section class="putainde-Comments">
-  <h1 class="putainde-Comments-title">Comments</h1>
-  <div id="disqus_thread" aria-live="polite">
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
-</section>
-
-
-
-    </div>
-    
-    <aside class="putainde-Sidebar grid__cell unit-1-4--m">
-    <aside class="putainde-Sidebar-block">
-	<h1 class="putainde-Sidebar-block-title">On est partout !</h1>
-	<ul class="putainde-Sidebar-block-list--nobullet">
-		<li><a href="https://github.com/putaindecode"><i class="icon icon_github"></i> Github</a></li>
-		<li><a href="https://twitter.com/putaindecode"><i class="icon icon_twitter"></i> Twitter</a></li>
-		<li><a href="#derriere-toi,-c'est-affreux!" onclick="if (confirm('Attention Benjamin...!')) window.location = 'http://www.youtube.com/watch?v=MEKHaG9FxKY&t=44s'; return false;"><i class="icon icon_eye"></i> Derrière toi</a></li>
-	</ul>
-</aside>
-<aside class="putainde-Sidebar-block">
-	<h1 class="putainde-Sidebar-block-title">À avoir sous la main</h1>
-	<ul class="putainde-Sidebar-block-list--nobullet">
-		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues/new"><i class="icon icon_pencil"></i> Proposer un article</a></li>
-		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues?labels=post&state=open"><i class="icon icon_bookmarks"></i> Voir les propositions</a></li>
-		<li><a href="https://github.com/putaindecode/website/blob/master/src/posts/css/les-post-processeurs/index.html.hbs"><i class="icon icon_edit"></i> Modifier cette page</a></li>
-	</ul>
-</aside>
-
-
-    </aside>
-    
-  </article>
-  
-    <footer class="putainde-Footer">
-
-    <div class="putainde-Footer-colophon grid">
-      <div class="putainde-Footer-colophon-left grid__cell unit-5-12--m">
-        <span class="putainde-Footer-colophon-item">© 1970 - 2013 Putain de Code !</span>
-        |
-        <a class="putainde-Footer-colophon-item" href="https://github.com/putaindecode">Contact</a>
-      </div>
-      <div class="putainde-Footer-colophon-center grid__cell unit-2-12--m">
-        <img class="putainde-Footer-logo" alt="Putain de code !" src="/assets/img/p!-logo.svg" />
-      </div>
-      <div class="putainde-Footer-colophon-right grid__cell unit-5-12--m">
-        <a class="putainde-Footer-colophon-item" href="feed.xml">Flux RSS</a>
-        |
-        <a class="putainde-Footer-colophon-item" href="projets/">Projets</a>
-        |
-        <span class="putainde-Footer-colophon-item">Made with ❤ by <a href="/le-crew/">le crew</a></span>
-      </div>
-    </div>
-  </footer>
-
-  
-</div>
-<script src="/assets/js/putaindecode.js?20140409071115"></script>
-
-
-	
-	<script>
-		var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
-		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-		g.src='//www.google-analytics.com/ga.js';
-		s.parentNode.insertBefore(g,s)}(document,'script'));
-	</script>
-	
-
-
-
-
-
-  <script>
-  var disqus_shortname = 'putaindecode',
-  
-  
-  
-  disqus_identifier = 'http://putaindecode.fr/posts/css/les-post-processeurs/',
-  disqus_url = 'http://putaindecode.fr/posts/css/les-post-processeurs/',
-  disqus_script = 'embed.js';
-  
-  (function(d,s) {
-  s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
-  (d.getElementsByTagName('head')[0]).appendChild(s);
-  })(document);
-  </script>
-
-
-
-</body>
-</html>
-
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/css/les-post-processeurs/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/css/les-post-processeurs/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/css/les-post-processeurs/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Author-picture putainde-Avatar js-AnimateLoad"/><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> MoOx</h3><div class="putainde-Author-social"><a href="http://moox.io/"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/MoOx"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/MoOx"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.   <br> Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">4 contributeurs</strong><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/clairecoloma" data-tip="clairecoloma" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/63638ee1e60d9ca22adea00962632a6b.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/madx" data-tip="madx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/96006f57ca92ec95713532129b039d9c.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size4of12"><ul class="putainde-Footer-list"><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode">Contact</a></li><li><a href="../../../feed.xml">Flux RSS</a></li></ul></div><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text putainde-Footer-text--small">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/css/les-post-processeurs/";
+var disqus_url = "http://putaindecode.fr/posts/css/les-post-processeurs/";
+var disqus_script = "embed.js";;(function(d,s) {
+s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+(d.getElementsByTagName('head')[0]).appendChild(s)
+})(document)</script><script src="../../../scripts/index.js"></script><script>var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
+(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+g.src='//www.google-analytics.com/ga.js';
+s.parentNode.insertBefore(g,s)}(document,'script'));</script></body></html>

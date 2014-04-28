@@ -1,69 +1,5 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>De jQuery à Vanilla JS</title><link rel="stylesheet" href="../../../stylesheets/index.css"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size7of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size5of12"><nav class="putainde-Nav"><a href="../../../c-est-quoi-putaindecode" class="putainde-Nav-item">Putain de ?</a><a href="../.." class="putainde-Nav-item">Les posts</a><a href="../../comment-contribuer" class="putainde-Nav-item">Contribuer</a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><header class="putainde-Post-header"><div class="putainde-Title"><h1 class="putainde-Title-text">De jQuery à Vanilla JS</h1></div><div class="putainde-Post-metas">Écrit par kud,<span class="putainde-Date"> le 5 déc. 2013</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">javascript</li><li class="putainde-Tag">jquery</li><li class="putainde-Tag">vanillajs</li></ul></header><div class="putainde-Post-md"><figure class="putainde-Media putainde-Media--left"><img src="../../../images/posts/jquery-die.jpg" alt=""></figure>
 
-<!DOCTYPE html>
-<!--
-  HEY YOU, STOP LOOKING AT MY SOURCE CODE
-  Just check it out directly on Github :
-
-  https://github.com/putaindecode/website.git
--->
-<html lang="fr" class="no-js no-touch ">
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-<script>(function(docEl) {
-  docEl.className = docEl.className.replace(/\bno-js\b/, 'js');
-  if ('ontouchstart' in docEl) { docEl.className = docEl.className.replace(/\bno-touch\b/, 'touch'); }
-})(document.documentElement);</script>
-
-<meta charset="utf-8">
-<title>De jQuery à Vanilla JS</title>
-<meta name="description" content="">
-<base href="http://putaindecode.fr/" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="feed.xml" rel="alternate" type="application/rss+xml">
-
-<link rel="stylesheet" href="/assets/css/putaindecode.css?20140409071115">
-
-
-
-
-</head>
-<body>
-
-<div class="">
-  <nav class="putainde-Nav">
-	<div class="grid">
-		<div class="grid__cell">
-			<a class="putainde-SiteTitle" href="/">
-				<img class="putainde-Logo" alt="Putain de Code !" src="/assets/img/p!-logo.svg" />
-				Putain de Code !
-			</a>
-
-			<span class="putainde-Baseline">On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</span>
-
-			<ul class="putainde-Nav-list">
-				<li class=""><a class="putainde-Nav-list-item " href="c-est-quoi-putaindecode">Putain de ... ?</a>
-        <li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
-				<li class=""><a class="putainde-Nav-list-item " href="posts/comment-contribuer/">Comment Contribuer ?</a>
-			</ul>
-		</div>
-	</div>
-</nav>
- 
-  <article class="putainde-Content grid putainde-Post">
-    <header class="putainde-Content-header grid__cell unit-1-1">
-      <h1 class="putainde-Content-title">De jQuery à Vanilla JS</h1>
-      <div class="putainde-Content-metas">
-        <span class="putainde-Content-meta putainde-Content-author">Par <span class="putainde-Author">kud</span></span>
-        <span class="putainde-Content-meta putainde-Content-date">Publié le: <span class="putainde-Date">jeu. 05 déc. 2013</span></span>
-        <span class="putainde-Content-meta putainde-Content-readingTime">Temps de lecture: environ 5min</span>
-        <span class="putainde-Content-meta putainde-Content-tags">Tags: javascript,jquery,vanillajs</span>
-      </div>
-    </header>
-    <div class="putainde-Content-body grid__cell unit-3-4--m">
-    
-
-
-<p><img class="putainde-Img putainde-Img--left" alt="" src="/media/jquery-die.jpg"></p>
 <p>Oui alors jQuery, c&#39;est sûrement très bien, ça simplifie pas mal de choses et le <em>chaining</em> est intéressant mais eeeest-ce que vous connaissez l&#39;équivalent en <em>pur</em> JavaScript ? Pas sûr hein.</p>
 <p>Ce petit article vous propose de quoi peut-être vous faire changer d&#39;avis sur la bibliothèque qui pèse tout de même environ ~80ko.</p>
 <p><em>Note : <a href="http://vanilla-js.com/">Vanilla JS</a> n&#39;est pas un framework mais veut simplement dire &quot;à nu&quot;, c&#39;est du JavaScript sans bibliothèque.</em></p>
@@ -80,251 +16,155 @@
 <li><a href="/posts/js/de-jquery-a-vanillajs/#jsonp">JSONP</a></li>
 </ol>
 <h2 id="-v-nements">Évènements</h2>
-<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
-<span class="cm-variable">$</span>(<span class="cm-variable">document</span>).<span class="cm-property">ready</span>(<span class="cm-keyword">function</span>() {
-  <span class="cm-comment">// code</span>
+<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+$(document).ready(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  <span class="hljs-comment">// code</span>
 })
 
-<span class="cm-comment">// Vanilla</span>
-<span class="cm-variable">document</span>.<span class="cm-property">addEventListener</span>(<span class="cm-string">&#39;DOMContentLoaded&#39;</span>, <span class="cm-keyword">function</span>() {
-  <span class="cm-comment">// code</span>
-})</code></pre>
-<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
-<span class="cm-variable">$</span>(<span class="cm-string">&#39;a&#39;</span>).<span class="cm-property">click</span>(<span class="cm-keyword">function</span>() {
-  <span class="cm-comment">// code…</span>
+<span class="hljs-comment">// Vanilla</span>
+document.addEventListener(<span class="hljs-string">'DOMContentLoaded'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  <span class="hljs-comment">// code</span>
+})
+</code></pre>
+<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+$(<span class="hljs-string">'a'</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  <span class="hljs-comment">// code…</span>
 })
 
-<span class="cm-comment">// Vanilla</span>
-[].<span class="cm-property">forEach</span>.<span class="cm-property">call</span>(<span class="cm-variable">document</span>.<span class="cm-property">querySelectorAll</span>(<span class="cm-string">&#39;a&#39;</span>), <span class="cm-keyword">function</span>(<span class="cm-def">el</span>) {
-  <span class="cm-variable-2">el</span>.<span class="cm-property">addEventListener</span>(<span class="cm-string">&#39;click&#39;</span>, <span class="cm-keyword">function</span>() {
-    <span class="cm-comment">// code…</span>
+<span class="hljs-comment">// Vanilla</span>
+[].forEach.call(document.querySelectorAll(<span class="hljs-string">'a'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(el)</span> {</span>
+  el.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+    <span class="hljs-comment">// code…</span>
   })
-})</code></pre>
+})
+</code></pre>
 <h2 id="s-lecteurs">Sélecteurs</h2>
-<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">divs</span> = <span class="cm-variable">$</span>(<span class="cm-string">&#39;div&#39;</span>)
+<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+<span class="hljs-keyword">var</span> divs = $(<span class="hljs-string">'div'</span>)
 
-<span class="cm-comment">// Vanilla</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">divs</span> = <span class="cm-variable">document</span>.<span class="cm-property">querySelectorAll</span>(<span class="cm-string">&#39;div&#39;</span>)</code></pre>
-<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">newDiv</span> = <span class="cm-variable">$</span>(<span class="cm-string">&#39;&lt;div/&gt;&#39;</span>)
+<span class="hljs-comment">// Vanilla</span>
+<span class="hljs-keyword">var</span> divs = document.querySelectorAll(<span class="hljs-string">'div'</span>)
+</code></pre>
+<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+<span class="hljs-keyword">var</span> newDiv = $(<span class="hljs-string">'&lt;div/&gt;'</span>)
 
-<span class="cm-comment">// Vanilla</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">newDiv</span> = <span class="cm-variable">document</span>.<span class="cm-property">createElement</span>(<span class="cm-string">&#39;div&#39;</span>)</code></pre>
+<span class="hljs-comment">// Vanilla</span>
+<span class="hljs-keyword">var</span> newDiv = document.createElement(<span class="hljs-string">'div'</span>)
+</code></pre>
 <h2 id="attributs">Attributs</h2>
-<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
-<span class="cm-variable">$</span>(<span class="cm-string">&#39;img&#39;</span>).<span class="cm-property">filter</span>(<span class="cm-string">&#39;:first&#39;</span>).<span class="cm-property">attr</span>(<span class="cm-string">&#39;alt&#39;</span>, <span class="cm-string">&#39;My image&#39;</span>)
+<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+<span class="hljs-variable">$(</span><span class="hljs-string">'img'</span>).<span class="hljs-keyword">filter</span>(<span class="hljs-string">':first'</span>).attr(<span class="hljs-string">'alt'</span>, <span class="hljs-string">'My image'</span>)
 
-<span class="cm-comment">// Vanilla</span>
-<span class="cm-variable">document</span>.<span class="cm-property">querySelector</span>(<span class="cm-string">&#39;img&#39;</span>).<span class="cm-property">setAttribute</span>(<span class="cm-string">&#39;alt&#39;</span>, <span class="cm-string">&#39;My image&#39;</span>)</code></pre>
+<span class="hljs-comment">// Vanilla</span>
+document.querySelector(<span class="hljs-string">'img'</span>).setAttribute(<span class="hljs-string">'alt'</span>, <span class="hljs-string">'My image'</span>)
+</code></pre>
 <h2 id="classes">Classes</h2>
-<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
-<span class="cm-variable">newDiv</span>.<span class="cm-property">addClass</span>(<span class="cm-string">&#39;foo&#39;</span>)
+<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+newDiv.addClass(<span class="hljs-string">'foo'</span>)
 
-<span class="cm-comment">// Vanilla</span>
-<span class="cm-variable">newDiv</span>.<span class="cm-property">classList</span>.<span class="cm-property">add</span>(<span class="cm-string">&#39;foo&#39;</span>)</code></pre>
-<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
-<span class="cm-variable">newDiv</span>.<span class="cm-property">toggleClass</span>(<span class="cm-string">&#39;foo&#39;</span>)
+<span class="hljs-comment">// Vanilla</span>
+newDiv.classList.<span class="hljs-keyword">add</span>(<span class="hljs-string">'foo'</span>)
+</code></pre>
+<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+newDiv.toggleClass(<span class="hljs-string">'foo'</span>)
 
-<span class="cm-comment">// Vanilla</span>
-<span class="cm-variable">newDiv</span>.<span class="cm-property">classList</span>.<span class="cm-property">toggle</span>(<span class="cm-string">&#39;foo&#39;</span>)</code></pre>
+<span class="hljs-comment">// Vanilla</span>
+newDiv.classList.<span class="hljs-keyword">toggle</span>(<span class="hljs-string">'foo'</span>)
+</code></pre>
 <h2 id="manipulation">Manipulation</h2>
-<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
-<span class="cm-variable">$</span>(<span class="cm-string">&#39;body&#39;</span>).<span class="cm-property">append</span>(<span class="cm-variable">$</span>(<span class="cm-string">&#39;&lt;p/&gt;&#39;</span>))
+<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+$(<span class="hljs-string">'body'</span>).append($(<span class="hljs-string">'&lt;p/&gt;'</span>))
 
-<span class="cm-comment">// Vanilla</span>
-<span class="cm-variable">document</span>.<span class="cm-property">body</span>.<span class="cm-property">appendChild</span>(<span class="cm-variable">document</span>.<span class="cm-property">createElement</span>(<span class="cm-string">&#39;p&#39;</span>))</code></pre>
-<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">clonedElement</span> = <span class="cm-variable">$</span>(<span class="cm-string">&#39;#about&#39;</span>).<span class="cm-property">clone</span>()
+<span class="hljs-comment">// Vanilla</span>
+document.body.appendChild(document.createElement(<span class="hljs-string">'p'</span>))
+</code></pre>
+<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+<span class="hljs-keyword">var</span> clonedElement = $(<span class="hljs-string">'#about'</span>).clone()
 
-<span class="cm-comment">// Vanilla</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">clonedElement</span> = <span class="cm-variable">document</span>.<span class="cm-property">getElementById</span>(<span class="cm-string">&#39;about&#39;</span>).<span class="cm-property">cloneNode</span>(<span class="cm-atom">true</span>)</code></pre>
-<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
-<span class="cm-variable">$</span>(<span class="cm-string">&#39;#wrap&#39;</span>).<span class="cm-property">empty</span>()
-
-<span class="cm-comment">// Vanilla</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">wrap</span> = <span class="cm-variable">document</span>.<span class="cm-property">getElementById</span>(<span class="cm-string">&#39;wrap&#39;</span>)
-<span class="cm-keyword">while</span>(<span class="cm-variable">wrap</span>.<span class="cm-property">firstChild</span>) <span class="cm-variable">wrap</span>.<span class="cm-property">removeChild</span>(<span class="cm-variable">wrap</span>.<span class="cm-property">firstChild</span>)</code></pre>
+<span class="hljs-comment">// Vanilla</span>
+<span class="hljs-keyword">var</span> clonedElement = document.getElementById(<span class="hljs-string">'about'</span>).cloneNode(<span class="hljs-literal">true</span>)
+</code></pre>
+<pre><code class="lang-javascript">// jQuery
+$(<span class="hljs-string">'#wrap'</span>).<span class="hljs-constant">empty</span>()
+<span class="hljs-comment">
+// Vanilla</span>
+var <span class="hljs-operator">wrap</span> = document.getElementById(<span class="hljs-string">'wrap'</span>)
+<span class="hljs-keyword">while</span>(<span class="hljs-operator">wrap</span>.firstChild) <span class="hljs-operator">wrap</span>.removeChild(<span class="hljs-operator">wrap</span>.firstChild)
+</code></pre>
 <h2 id="navigation">Navigation</h2>
-<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">parent</span> = <span class="cm-variable">$</span>(<span class="cm-string">&#39;#about&#39;</span>).<span class="cm-property">parent</span>()
+<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+<span class="hljs-keyword">var</span> <span class="hljs-keyword">parent</span> = $(<span class="hljs-string">'#about'</span>).<span class="hljs-keyword">parent</span>()
 
-<span class="cm-comment">// Vanilla</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">parent</span> = <span class="cm-variable">document</span>.<span class="cm-property">getElementById</span>(<span class="cm-string">&#39;about&#39;</span>).<span class="cm-property">parentNode</span></code></pre>
-<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
-<span class="cm-keyword">if</span>(<span class="cm-variable">$</span>(<span class="cm-string">&#39;#wrap&#39;</span>).<span class="cm-property">is</span>(<span class="cm-string">&#39;:empty&#39;</span>))
+<span class="hljs-comment">// Vanilla</span>
+<span class="hljs-keyword">var</span> <span class="hljs-keyword">parent</span> = document.getElementById(<span class="hljs-string">'about'</span>).parentNode
+</code></pre>
+<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+<span class="hljs-keyword">if</span>($(<span class="hljs-string">'#wrap'</span>).<span class="hljs-keyword">is</span>(<span class="hljs-string">':empty'</span>))
 
-<span class="cm-comment">// Vanilla</span>
-<span class="cm-keyword">if</span>(!<span class="cm-variable">document</span>.<span class="cm-property">getElementById</span>(<span class="cm-string">&#39;wrap&#39;</span>).<span class="cm-property">hasChildNodes</span>())</code></pre>
-<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">nextElement</span> = <span class="cm-variable">$</span>(<span class="cm-string">&#39;#wrap&#39;</span>).<span class="cm-property">next</span>()
+<span class="hljs-comment">// Vanilla</span>
+<span class="hljs-keyword">if</span>(!document.getElementById(<span class="hljs-string">'wrap'</span>).hasChildNodes())
+</code></pre>
+<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+<span class="hljs-keyword">var</span> nextElement = $(<span class="hljs-string">'#wrap'</span>).next()
 
-<span class="cm-comment">// Vanilla</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">nextElement</span> = <span class="cm-variable">document</span>.<span class="cm-property">getElementById</span>(<span class="cm-string">&#39;wrap&#39;</span>).<span class="cm-property">nextSibling</span></code></pre>
+<span class="hljs-comment">// Vanilla</span>
+<span class="hljs-keyword">var</span> nextElement = document.getElementById(<span class="hljs-string">'wrap'</span>).nextSibling
+</code></pre>
 <h2 id="ajax">AJAX</h2>
 <h3 id="get">GET</h3>
-<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
-<span class="cm-variable">$</span>.<span class="cm-property">get</span>(<span class="cm-string">&#39;//example.com&#39;</span>, <span class="cm-keyword">function</span> (<span class="cm-def">data</span>) {
-  <span class="cm-comment">// code</span>
+<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+$.get(<span class="hljs-string">'//example.com'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
+  <span class="hljs-comment">// code</span>
 })
 
-<span class="cm-comment">// Vanilla</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">httpRequest</span> = <span class="cm-keyword">new</span> <span class="cm-variable">XMLHttpRequest</span>()
-<span class="cm-variable">httpRequest</span>.<span class="cm-property">onreadystatechange</span> = <span class="cm-keyword">function</span> (<span class="cm-def">data</span>) {
-  <span class="cm-comment">// code</span>
+<span class="hljs-comment">// Vanilla</span>
+<span class="hljs-keyword">var</span> httpRequest = <span class="hljs-keyword">new</span> XMLHttpRequest()
+httpRequest.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
+  <span class="hljs-comment">// code</span>
 }
-<span class="cm-variable">httpRequest</span>.<span class="cm-property">open</span>(<span class="cm-string">&#39;GET&#39;</span>, <span class="cm-variable">url</span>)
-<span class="cm-variable">httpRequest</span>.<span class="cm-property">send</span>()</code></pre>
+httpRequest.open(<span class="hljs-string">'GET'</span>, url)
+httpRequest.send()
+</code></pre>
 <h3 id="post">POST</h3>
-<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
-<span class="cm-variable">$</span>.<span class="cm-property">post</span>(<span class="cm-string">&#39;//example.com&#39;</span>, { <span class="cm-property">username</span>: <span class="cm-variable">username</span> }, <span class="cm-keyword">function</span> (<span class="cm-def">data</span>) {
-  <span class="cm-comment">// code</span>
+<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+$.post(<span class="hljs-string">'//example.com'</span>, { username: username }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
+  <span class="hljs-comment">// code</span>
 })
 
-<span class="cm-comment">// Vanilla</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">httpRequest</span> = <span class="cm-keyword">new</span> <span class="cm-variable">XMLHttpRequest</span>()
-<span class="cm-variable">httpRequest</span>.<span class="cm-property">onreadystatechange</span> = <span class="cm-keyword">function</span> (<span class="cm-def">data</span>) {
-  <span class="cm-comment">// code</span>
+<span class="hljs-comment">// Vanilla</span>
+<span class="hljs-keyword">var</span> httpRequest = <span class="hljs-keyword">new</span> XMLHttpRequest()
+httpRequest.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
+  <span class="hljs-comment">// code</span>
 }
-<span class="cm-variable">httpRequest</span>.<span class="cm-property">setRequestHeader</span>(<span class="cm-string">&#39;Content-Type&#39;</span>, <span class="cm-string">&#39;application/x-www-form-urlencoded&#39;</span>)
-<span class="cm-variable">httpRequest</span>.<span class="cm-property">open</span>(<span class="cm-string">&#39;POST&#39;</span>, <span class="cm-variable">url</span>)
-<span class="cm-variable">httpRequest</span>.<span class="cm-property">send</span>(<span class="cm-string">&#39;username=&#39;</span> + <span class="cm-variable">encodeURIComponent</span>(<span class="cm-variable">username</span>))</code></pre>
+httpRequest.setRequestHeader(<span class="hljs-string">'Content-Type'</span>, <span class="hljs-string">'application/x-www-form-urlencoded'</span>)
+httpRequest.open(<span class="hljs-string">'POST'</span>, url)
+httpRequest.send(<span class="hljs-string">'username='</span> + <span class="hljs-built_in">encodeURIComponent</span>(username))
+</code></pre>
 <h3 id="jsonp">JSONP</h3>
-<pre><code class="language-javascript"><span class="cm-comment">// jQuery</span>
-<span class="cm-variable">$</span>.<span class="cm-property">getJSON</span>(<span class="cm-string">&#39;//openexchangerates.org/latest.json?callback=?&#39;</span>, <span class="cm-keyword">function</span> (<span class="cm-def">data</span>) {
-  <span class="cm-comment">// code</span>
+<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+$.getJSON(<span class="hljs-string">'//openexchangerates.org/latest.json?callback=?'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
+  <span class="hljs-comment">// code</span>
 })
 
-<span class="cm-comment">// Vanilla</span>
-<span class="cm-keyword">function</span> <span class="cm-variable">success</span>(<span class="cm-def">data</span>) {
-  <span class="cm-comment">// code</span>
+<span class="hljs-comment">// Vanilla</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">success</span><span class="hljs-params">(data)</span> {</span>
+  <span class="hljs-comment">// code</span>
 }
-<span class="cm-keyword">var</span> <span class="cm-variable">scr</span> = <span class="cm-variable">document</span>.<span class="cm-property">createElement</span>(<span class="cm-string">&#39;script&#39;</span>)
-<span class="cm-variable">scr</span>.<span class="cm-property">src</span> = <span class="cm-string">&#39;//openexchangerates.org/latest.json?callback=formatCurrency&#39;</span>
-<span class="cm-variable">document</span>.<span class="cm-property">body</span>.<span class="cm-property">appendChild</span>(<span class="cm-variable">scr</span>)</code></pre>
+<span class="hljs-keyword">var</span> scr = document.createElement(<span class="hljs-string">'script'</span>)
+scr.src = <span class="hljs-string">'//openexchangerates.org/latest.json?callback=formatCurrency'</span>
+document.body.appendChild(scr)
+</code></pre>
 <p>Cela vous parait-il encore difficile de vous passer de jQuery ? :)</p>
 <p>Un grand merci à <a href="http://playground.deaxon.com/js/vanilla-js/">@deaxon</a> qui est à l&#39;origine de cet éclaircissement.</p>
 <h2 id="a-creuser">A creuser</h2>
 <p>Il existe une version minimaliste de jQuery basée sur la même API mais beaucoup plus légère s&#39;appelant <a href="http://zeptojs.com/">Zepto</a>. Il est actuellement utilisé en production sur le site mobile de ma boite.</p>
-
-
-
-<section class="putainde-AboutTheAuthor">
-  
-    
-    <a class="putainde-AboutTheAuthor-avatar putainde-Author-avatar" href="http://kud.io">
-      <img src="https://gravatar.com/avatar/7c72a078c8819fd10f1d11c24d4aa64b?s=300&amp;d=https%3A%2F%2Fidenticons.github.com%2Fc0863a4414cba6aa95014df9e3d9f6a5.png" />
-    </a>
-    
-  
-  <h1 class="putainde-AboutTheAuthor-title">
-    Écrit par
-    <strong class="putainde-AboutTheAuthor-name">kud</strong>
-    <a class="putainde-AboutTheAuthor-url" href="http://kud.io"><i class="icon icon_home"> </i></a>
-    <a class="putainde-AboutTheAuthor-twitter" href="https://twitter.com/_kud"><i class="icon icon_twitter"> </i></a>
-    <a class="putainde-AboutTheAuthor-github" href="https://github.com/kud"><i class="icon icon_github"> </i></a>
-  </h1>
-  
-    
-    <div class="putainde-AboutTheAuthor-bio--long"><p>Viking application designer (aka JavaScript engineer), batteur, photographe, amoureux de cinéma, n&#x27;aime pas les longues descriptions.</p>
-</div>
-  
-</section>
-
-
-
-
-
-<section class="putainde-Comments">
-  <h1 class="putainde-Comments-title">Comments</h1>
-  <div id="disqus_thread" aria-live="polite">
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
-</section>
-
-
-
-    </div>
-    
-    <aside class="putainde-Sidebar grid__cell unit-1-4--m">
-    <aside class="putainde-Sidebar-block">
-	<h1 class="putainde-Sidebar-block-title">On est partout !</h1>
-	<ul class="putainde-Sidebar-block-list--nobullet">
-		<li><a href="https://github.com/putaindecode"><i class="icon icon_github"></i> Github</a></li>
-		<li><a href="https://twitter.com/putaindecode"><i class="icon icon_twitter"></i> Twitter</a></li>
-		<li><a href="#derriere-toi,-c'est-affreux!" onclick="if (confirm('Attention Benjamin...!')) window.location = 'http://www.youtube.com/watch?v=MEKHaG9FxKY&t=44s'; return false;"><i class="icon icon_eye"></i> Derrière toi</a></li>
-	</ul>
-</aside>
-<aside class="putainde-Sidebar-block">
-	<h1 class="putainde-Sidebar-block-title">À avoir sous la main</h1>
-	<ul class="putainde-Sidebar-block-list--nobullet">
-		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues/new"><i class="icon icon_pencil"></i> Proposer un article</a></li>
-		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues?labels=post&state=open"><i class="icon icon_bookmarks"></i> Voir les propositions</a></li>
-		<li><a href="https://github.com/putaindecode/website/blob/master/src/posts/js/de-jquery-a-vanillajs/index.html.hbs"><i class="icon icon_edit"></i> Modifier cette page</a></li>
-	</ul>
-</aside>
-
-
-    </aside>
-    
-  </article>
-  
-    <footer class="putainde-Footer">
-
-    <div class="putainde-Footer-colophon grid">
-      <div class="putainde-Footer-colophon-left grid__cell unit-5-12--m">
-        <span class="putainde-Footer-colophon-item">© 1970 - 2013 Putain de Code !</span>
-        |
-        <a class="putainde-Footer-colophon-item" href="https://github.com/putaindecode">Contact</a>
-      </div>
-      <div class="putainde-Footer-colophon-center grid__cell unit-2-12--m">
-        <img class="putainde-Footer-logo" alt="Putain de code !" src="/assets/img/p!-logo.svg" />
-      </div>
-      <div class="putainde-Footer-colophon-right grid__cell unit-5-12--m">
-        <a class="putainde-Footer-colophon-item" href="feed.xml">Flux RSS</a>
-        |
-        <a class="putainde-Footer-colophon-item" href="projets/">Projets</a>
-        |
-        <span class="putainde-Footer-colophon-item">Made with ❤ by <a href="/le-crew/">le crew</a></span>
-      </div>
-    </div>
-  </footer>
-
-  
-</div>
-<script src="/assets/js/putaindecode.js?20140409071115"></script>
-
-
-	
-	<script>
-		var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
-		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-		g.src='//www.google-analytics.com/ga.js';
-		s.parentNode.insertBefore(g,s)}(document,'script'));
-	</script>
-	
-
-
-
-
-
-  <script>
-  var disqus_shortname = 'putaindecode',
-  
-  
-  
-  disqus_identifier = 'http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/',
-  disqus_url = 'http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/',
-  disqus_script = 'embed.js';
-  
-  (function(d,s) {
-  s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
-  (d.getElementsByTagName('head')[0]).appendChild(s);
-  })(document);
-  </script>
-
-
-
-</body>
-</html>
-
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/js/de-jquery-a-vanillajs/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/js/de-jquery-a-vanillajs/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/js/de-jquery-a-vanillajs/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><img src="http://www.gravatar.com/avatar/9713e529bef70eea8965e0dda2000334.png" alt="" class="putainde-Author-picture putainde-Avatar js-AnimateLoad"/><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> kud</h3><div class="putainde-Author-social"><a href="http://kud.io"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/_kud"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/kud"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Viking application designer (aka JavaScript engineer), batteur, photographe, amoureux de cinéma, n'aime pas les longues descriptions.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">3 contributeurs</strong><a href="https://github.com/kud" data-tip="kud" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/9713e529bef70eea8965e0dda2000334.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size4of12"><ul class="putainde-Footer-list"><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode">Contact</a></li><li><a href="../../../feed.xml">Flux RSS</a></li></ul></div><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text putainde-Footer-text--small">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/";
+var disqus_url = "http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/";
+var disqus_script = "embed.js";;(function(d,s) {
+s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+(d.getElementsByTagName('head')[0]).appendChild(s)
+})(document)</script><script src="../../../scripts/index.js"></script><script>var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
+(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+g.src='//www.google-analytics.com/ga.js';
+s.parentNode.insertBefore(g,s)}(document,'script'));</script></body></html>

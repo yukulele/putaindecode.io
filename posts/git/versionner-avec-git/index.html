@@ -1,69 +1,4 @@
-
-<!DOCTYPE html>
-<!--
-  HEY YOU, STOP LOOKING AT MY SOURCE CODE
-  Just check it out directly on Github :
-
-  https://github.com/putaindecode/website.git
--->
-<html lang="fr" class="no-js no-touch ">
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-<script>(function(docEl) {
-  docEl.className = docEl.className.replace(/\bno-js\b/, 'js');
-  if ('ontouchstart' in docEl) { docEl.className = docEl.className.replace(/\bno-touch\b/, 'touch'); }
-})(document.documentElement);</script>
-
-<meta charset="utf-8">
-<title>Versionner avec Git</title>
-<meta name="description" content="">
-<base href="http://putaindecode.fr/" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="feed.xml" rel="alternate" type="application/rss+xml">
-
-<link rel="stylesheet" href="/assets/css/putaindecode.css?20140409071115">
-
-
-
-
-</head>
-<body>
-
-<div class="">
-  <nav class="putainde-Nav">
-	<div class="grid">
-		<div class="grid__cell">
-			<a class="putainde-SiteTitle" href="/">
-				<img class="putainde-Logo" alt="Putain de Code !" src="/assets/img/p!-logo.svg" />
-				Putain de Code !
-			</a>
-
-			<span class="putainde-Baseline">On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</span>
-
-			<ul class="putainde-Nav-list">
-				<li class=""><a class="putainde-Nav-list-item " href="c-est-quoi-putaindecode">Putain de ... ?</a>
-        <li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
-				<li class=""><a class="putainde-Nav-list-item " href="posts/comment-contribuer/">Comment Contribuer ?</a>
-			</ul>
-		</div>
-	</div>
-</nav>
- 
-  <article class="putainde-Content grid putainde-Post">
-    <header class="putainde-Content-header grid__cell unit-1-1">
-      <h1 class="putainde-Content-title">Versionner avec Git</h1>
-      <div class="putainde-Content-metas">
-        <span class="putainde-Content-meta putainde-Content-author">Par <span class="putainde-Author">madx</span></span>
-        <span class="putainde-Content-meta putainde-Content-date">Publié le: <span class="putainde-Date">mer. 06 nov. 2013</span></span>
-        <span class="putainde-Content-meta putainde-Content-readingTime">Temps de lecture: environ 10min</span>
-        <span class="putainde-Content-meta putainde-Content-tags">Tags: git</span>
-      </div>
-    </header>
-    <div class="putainde-Content-body grid__cell unit-3-4--m">
-    
-
-
-<p>Chez Putain de Code, on aime se servir de <a href="http://git-scm.com/">Git</a> (et de GitHub, mais
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Versionner avec Git</title><link rel="stylesheet" href="../../../stylesheets/index.css"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size7of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size5of12"><nav class="putainde-Nav"><a href="../../../c-est-quoi-putaindecode" class="putainde-Nav-item">Putain de ?</a><a href="../.." class="putainde-Nav-item">Les posts</a><a href="../../comment-contribuer" class="putainde-Nav-item">Contribuer</a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><header class="putainde-Post-header"><div class="putainde-Title"><h1 class="putainde-Title-text">Versionner avec Git</h1></div><div class="putainde-Post-metas">Écrit par madx,<span class="putainde-Date"> le 6 nov. 2013</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">git</li></ul></header><div class="putainde-Post-md"><p>Chez Putain de Code, on aime se servir de <a href="http://git-scm.com/">Git</a> (et de GitHub, mais
 c&#39;est une autre histoire), même si certains d&#39;entre nous (comme Lionel) ne s&#39;en
 servent pas forcément bien.</p>
 <p>Pour éviter ce genre de mésaventures, on s&#39;est dit qu&#39;on allait consacrer une
@@ -120,7 +55,8 @@ nom local pour le dépôt. Il va récupérer le dépôt à l&#39;adresse spécif
 bien foutu hein ?) puis le mettre soit dans un dossier du même nom soit dans un
 dossier du nom spécifié en dernier argument.</p>
 <p>Par exemple, si je veux cloner le dépôt du site :</p>
-<pre><code class="language-bash"><span class="cm-def">$ git</span> clone https://github.com/putaindecode/website.git</code></pre>
+<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git clone <span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/github.com/putaindecode</span><span class="hljs-regexp">/website.git</span>
+</code></pre>
 <p>Ça va créer un dossier <code>website</code> avec le contenu du dépôt.</p>
 <p><code>clone</code> accepte plusieurs types d&#39;adresse : HTTP(S), SSH, protocole Git dédié et
 même des chemins locaux pour cloner un dépôt situé ailleurs sur le système de
@@ -130,9 +66,10 @@ bien pour lancer les vraies commandes intéressantes de Git.</p>
 <h2 id="premiers-commits">Premiers commits</h2>
 <p>Pour commencer à s&#39;amuser, écrivez un bout de code dans un fichier et
 sauvegardez le :</p>
-<pre><code class="language-bash"><span class="cm-def">$ cat</span> &gt; putain_de_hello_world.rb
-puts <span class="cm-string">&quot;Hello, putain de codeur !&quot;</span>
-^D</code></pre>
+<pre><code class="lang-bash"><span class="hljs-variable">$ </span>cat &gt; putain_de_hello_world.rb
+puts <span class="hljs-string">"Hello, putain de codeur !"</span>
+^<span class="hljs-constant">D</span>
+</code></pre>
 <p>On va tout se suite introduire l&#39;un des concepts déroutants de Git, <em>l&#39;Index</em>.
 Git utilise trois zones distinctes pour les fichiers : le dossier de travail
 (<em>Working Dir</em>) qui contient les fichiers dans leur version actuelle, <em>l&#39;Index</em>
@@ -154,31 +91,33 @@ difficile.</p>
 <p>Dans notre cas, notre fichier n&#39;est même pas encore suivi par Git ! Vous pouvez
 vérifier ça en utilisant <code>git status</code>, dont vous ne pourrez bientôt plus vous
 passer :</p>
-<pre><code class="language-bash"><span class="cm-def">$ git</span> status
-<span class="cm-comment"># Sur la branche master</span>
-<span class="cm-comment">#</span>
-<span class="cm-comment"># Validation initiale.</span>
-<span class="cm-comment">#</span>
-<span class="cm-comment"># Fichiers non suivis:</span>
-<span class="cm-comment">#   (utilisez &quot;git add &lt;fichier&gt;...&quot; pour inclure dans ce qui sera validé)</span>
-<span class="cm-comment">#</span>
-<span class="cm-comment">#    putain_de_hello_world.rb</span>
-Aucune modification indexée mais des fichiers non suivis sont présents (utilisez <span class="cm-string">&quot;git add&quot;</span> pour les suivre)</code></pre>
+<pre><code class="lang-bash">$ git status
+<span class="hljs-preprocessor"># Sur la branche master</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor"># Validation initiale.</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor"># Fichiers non suivis:</span>
+<span class="hljs-preprocessor">#   (utilisez "git add &lt;fichier&gt;..." pour inclure dans ce qui sera validé)</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor">#    putain_de_hello_world.rb</span>
+Aucune modification indexée mais des fichiers non suivis sont présents (utilisez <span class="hljs-string">"git add"</span> pour les suivre)
+</code></pre>
 <p>Pour pallier celà, on utilise <code>git add</code> pour l&#39;ajouter direct à l&#39;index.</p>
 <p>Dans notre cas, ça donne <code>git add putain_de_hello_world.rb</code></p>
 <p>On peut utilise <code>git add</code> pour ajouter des dossiers entiers, des motifs, … Mais
 soyez vigilants, c&#39;est une bonne source d&#39;erreurs souvent chiantes.</p>
 <p>Vous pouvez vérifier que <code>git add</code> a bien marché avec la commande <code>git status</code>,</p>
-<pre><code class="language-bash"><span class="cm-def">$ git</span> status
-<span class="cm-comment"># Sur la branche master</span>
-<span class="cm-comment">#</span>
-<span class="cm-comment"># Validation initiale.</span>
-<span class="cm-comment">#</span>
-<span class="cm-comment"># Modifications qui seront validées :</span>
-<span class="cm-comment">#   (utilisez &quot;git rm --cached &lt;fichier&gt;...&quot; pour désindexer)</span>
-<span class="cm-comment">#</span>
-<span class="cm-comment">#    nouveau : putain_de_hello_world.rb</span>
-<span class="cm-comment">#</span></code></pre>
+<pre><code class="lang-bash">$ git status
+<span class="hljs-preprocessor"># Sur la branche master</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor"># Validation initiale.</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor"># Modifications qui seront validées :</span>
+<span class="hljs-preprocessor">#   (utilisez "git rm --cached &lt;fichier&gt;..." pour désindexer)</span>
+<span class="hljs-preprocessor">#</span>
+<span class="hljs-preprocessor">#    nouveau : putain_de_hello_world.rb</span>
+<span class="hljs-preprocessor">#</span>
+</code></pre>
 <p>Ok c&#39;est prêt ! On lance maintenant <code>git commit</code> pour créer notre premier commit
 (pas con le <em>naming</em> de la commande hein ?). Si tout se passe bien vous devriez
 avoir un éditeur qui s&#39;ouvre pour écrire un message de commit. Prenez l&#39;habitude
@@ -186,9 +125,10 @@ de décrire votre changement sur la première ligne succintement et, si vous ave
 besoin de détails, sautez une ligne et détaillez les modifications.</p>
 <p>Un petit <code>git status</code> nous confirme qu&#39;on s&#39;est pas foiré (la preuve, tout est
 propre) :</p>
-<pre><code class="language-bash"><span class="cm-def">$ git</span> status
-<span class="cm-comment"># Sur la branche master</span>
-rien à valider, la copie de travail est propre</code></pre>
+<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git status
+<span class="hljs-comment"># Sur la branche master</span>
+rien à valider, la copie de travail est propre
+</code></pre>
 <h2 id="inspecter">Inspecter</h2>
 <p>Bon, c&#39;est bien beau de commiter, mais à un moment on arrive sur un projet en
 cours et on aimerait bien savoir où on en est. Pour ça vous pouvez utiliser un
@@ -198,30 +138,32 @@ Windows) ou retrousser vos poils de barbe et sortir le bon vieux <code>git log</
 de votre dépôt, avec des options en veux-tu en voilà pour personnaliser
 l&#39;affichage.</p>
 <p>Un <code>git log</code> basique ça ressemble à ça :</p>
-<pre><code class="language-bash"><span class="cm-def">$ git</span> log
-commit 8120de7b7139e46b9cbc1c3ee89a02962dbc198e
-Author: madx &lt;madx<span class="cm-operator">+</span>github@yapok.org&gt;
-Date:   Mon Nov <span class="cm-number">4</span> <span class="cm-number">23</span>:28:11 <span class="cm-number">2013</span> <span class="cm-operator">+</span>0100
+<pre><code class="lang-bash">$ git log
+<span class="hljs-operator"><span class="hljs-keyword">commit</span> <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
+Author: madx &lt;madx+github@yapok.org&gt;
+<span class="hljs-keyword">Date</span>:   Mon Nov <span class="hljs-number">4</span> <span class="hljs-number">23</span>:<span class="hljs-number">28</span>:<span class="hljs-number">11</span> <span class="hljs-number">2013</span> +<span class="hljs-number">0100</span>
 
-    Premier commit</code></pre>
+    Premier <span class="hljs-keyword">commit</span></span>
+</code></pre>
 <p>Oui, c&#39;est le commit que je viens de faire dans la partie précédente. Comment
 j&#39;en suis sûr ? Car je peux utiliser <code>git show</code> pour afficher les détails d&#39;un
 objet Git (il n&#39;y a pas que des commits, mais on verra ça une prochaine fois).</p>
 <p><code>git show</code> prend en argument le fameux <code>SHA1</code> du commit :</p>
-<pre><code class="language-bash"><span class="cm-def">$ git</span> show 8120de7b7139e46b9cbc1c3ee89a02962dbc198e
-commit 8120de7b7139e46b9cbc1c3ee89a02962dbc198e
-Author: madx &lt;madx<span class="cm-operator">+</span>github@yapok.org&gt;
-Date:   Mon Nov <span class="cm-number">4</span> <span class="cm-number">23</span>:28:11 <span class="cm-number">2013</span> <span class="cm-operator">+</span>0100
+<pre><code class="lang-bash">$ git show <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
+commit <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
+<span class="hljs-label">Author:</span> madx &lt;madx+github@yapok<span class="hljs-preprocessor">.org</span>&gt;
+<span class="hljs-label">Date:</span>   Mon Nov <span class="hljs-number">4</span> <span class="hljs-number">23</span>:<span class="hljs-number">28</span>:<span class="hljs-number">11</span> <span class="hljs-number">2013</span> +<span class="hljs-number">0100</span>
 
     Premier commit
 
-<span class="cm-builtin">diff</span> <span class="cm-attribute">--git</span> a/putain_de_hello_world.rb b/putain_de_hello_world.rb
-new file mode 100644
-index <span class="cm-number">0000000</span>..ded37dc
-<span class="cm-attribute">--</span><span class="cm-attribute">-</span> /dev/null
-<span class="cm-operator">+</span><span class="cm-operator">+</span><span class="cm-operator">+</span> b/putain_de_hello_world.rb
-@@ <span class="cm-attribute">-0</span>,0 <span class="cm-operator">+</span><span class="cm-number">1</span> @@
-<span class="cm-operator">+</span>puts <span class="cm-string">&quot;Hello, putain de codeur !!!&quot;</span></code></pre>
+diff --git a/putain_de_hello_world<span class="hljs-preprocessor">.rb</span> b/putain_de_hello_world<span class="hljs-preprocessor">.rb</span>
+new file mode <span class="hljs-number">100644</span>
+index <span class="hljs-number">0000000.</span><span class="hljs-preprocessor">.ded</span>37dc
+--- /dev/null
++++ b/putain_de_hello_world<span class="hljs-preprocessor">.rb</span>
+@@ -<span class="hljs-number">0</span>,<span class="hljs-number">0</span> +<span class="hljs-number">1</span> @@
++puts <span class="hljs-string">"Hello, putain de codeur !!!"</span>
+</code></pre>
 <p>Dit comme ça, ça a pas l&#39;air de casser trois pattes à un canard, mais c&#39;est la
 base de la base de la praticité. Je vous fait pas l&#39;insulte de vous expliquer le
 détails, vous êtes sans doute assez malins pour comprendre ce que git raconte
@@ -233,7 +175,7 @@ diff</code>, ce qui est bien pratique.</p>
 pages de <code>man</code>, c&#39;est la meilleure façon d&#39;apprendre. Après on va attaquer le
 gros morceau, celui qui fait la force de Git.</p>
 <figure>
-  <img src="/media/memes/mind_blown.gif" alt="Mind blown">
+  <img src="../../../images/posts/memes/mind_blown.gif" alt="Mind blown">
 </figure>
 
 <h2 id="branchement-et-fusions">Branchement et fusions</h2>
@@ -255,27 +197,28 @@ cette branche.</p>
 <p>On peut utiliser <code>git branch</code> sans argument pour lister les branches, celle avec
 un petit asterisque devant c&#39;est la branche courante.</p>
 <p>Essayons ça avec notre petit dépôt :</p>
-<pre><code class="language-bash"><span class="cm-def">$ git</span> branch
+<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git branch
 * master
-<span class="cm-def">$ git</span> checkout <span class="cm-attribute">-b</span> add-shebang
-Basculement sur la nouvelle branche <span class="cm-string">&#39;add-shebang&#39;</span>
-<span class="cm-def">$ vim</span> putain_de_hello_world.rb
-<span class="cm-def">$ git</span> status
-<span class="cm-comment"># Sur la branche add-shebang</span>
-<span class="cm-comment"># Modifications qui ne seront pas validées :</span>
-<span class="cm-comment">#   (utilisez &quot;git add &lt;fichier&gt;...&quot; pour mettre à jour ce qui sera validé)</span>
-<span class="cm-comment">#   (utilisez &quot;git checkout -- &lt;fichier&gt;...&quot; pour annuler les modifications dans la copie de travail)</span>
-<span class="cm-comment">#</span>
-<span class="cm-comment">#    modifié : putain_de_hello_world.rb</span>
-<span class="cm-comment">#</span>
-aucune modification n<span class="cm-string">&#39;a été ajoutée au commit (utilisez &quot;git add&quot; ou &quot;git commit -a&quot;)</span>
-<span class="cm-def">$ git</span> add putain_de_hello_world.rb
-<span class="cm-def">$ git</span> commit
+<span class="hljs-variable">$ </span>git checkout -b add-shebang
+<span class="hljs-constant">Basculement</span> sur la nouvelle branche <span class="hljs-string">'add-shebang'</span>
+<span class="hljs-variable">$ </span>vim putain_de_hello_world.rb
+<span class="hljs-variable">$ </span>git status
+<span class="hljs-comment"># Sur la branche add-shebang</span>
+<span class="hljs-comment"># Modifications qui ne seront pas validées :</span>
+<span class="hljs-comment">#   (utilisez "git add &lt;fichier&gt;..." pour mettre à jour ce qui sera validé)</span>
+<span class="hljs-comment">#   (utilisez "git checkout -- &lt;fichier&gt;..." pour annuler les modifications dans la copie de travail)</span>
+<span class="hljs-comment">#</span>
+<span class="hljs-comment">#    modifié : putain_de_hello_world.rb</span>
+<span class="hljs-comment">#</span>
+aucune modification n<span class="hljs-string">'a été ajoutée au commit (utilisez "git add" ou "git commit -a")
+$ git add putain_de_hello_world.rb
+$ git commit
 [add-shebang 5d48735] Add shebang
- <span class="cm-number">1</span> file changed, <span class="cm-number">1</span> insertion(<span class="cm-operator">+</span>)
-<span class="cm-def">$ git</span> log <span class="cm-attribute">--pretty</span><span class="cm-operator">=</span>oneline <span class="cm-attribute">--decorate</span>
+ 1 file changed, 1 insertion(+)
+$ git log --pretty=oneline --decorate
 5d48735fcc805d51e2e294df5d9d22d481250789 (HEAD, add-shebang) Add shebang
-8120de7b7139e46b9cbc1c3ee89a02962dbc198e (master) Premier commit</code></pre>
+8120de7b7139e46b9cbc1c3ee89a02962dbc198e (master) Premier commit</span>
+</code></pre>
 <p>Comme vous le voyez grâce à l&#39;option <code>--decorate--</code> de <code>git log</code>, on a bien
 notre branche qui pointe sur le dernier commit fait, alors que la branche de
 base fournie par Git, <code>master</code>, reste au commit précédent.</p>
@@ -285,13 +228,14 @@ base fournie par Git, <code>master</code>, reste au commit précédent.</p>
 la branche dans laquelle on va fusionner et en passant en argument la branche à
 fusionner.</p>
 <p>Si vous avez bien suivi, on va donc faire les choses suivantes :</p>
-<pre><code class="language-bash"><span class="cm-def">$ git</span> checkout master
-Basculement sur la branche <span class="cm-string">&#39;master&#39;</span>
-<span class="cm-def">$ git</span> merge add-shebang
-Updating 8120de7..5d48735
+<pre><code class="lang-bash">$ git checkout master
+Basculement sur la branche <span class="hljs-string">'master'</span>
+$ git <span class="hljs-built_in">merge</span> <span class="hljs-built_in">add</span>-shebang
+Updating <span class="hljs-number">8120</span>de7.<span class="hljs-number">.5</span>d48735
 Fast-forward
- putain_de_hello_world.rb | <span class="cm-number">1</span> <span class="cm-operator">+</span>
- <span class="cm-number">1</span> file changed, <span class="cm-number">1</span> insertion(<span class="cm-operator">+</span>)</code></pre>
+ putain_de_hello_world.rb | <span class="hljs-number">1</span> +
+ <span class="hljs-number">1</span> <span class="hljs-built_in">file</span> changed, <span class="hljs-number">1</span> insertion(+)
+</code></pre>
 <p>Vous remarquez que Git signale <em>Fast-forward</em>. Comme le commit pointé par
 <code>add-shebang</code> est un fils direct de celui de <code>master</code>, Git se contente de faire
 pointer <code>master</code> sur celui-ci, ce qui est beaucoup plus rapide.</p>
@@ -309,138 +253,14 @@ bien foutue.</p>
 Guide</a> de Roger Dudler est une bonne manière d&#39;apprendre.</p>
 <h2 id="hey-tu-veux-appliquer-a-pour-contribuer-putain-de-code-">Hey ! Tu veux appliquer ça pour contribuer à Putain de Code ?</h2>
 <p>Pas de problème, on a écrit un post exprès :
-<a href="posts/comment-contribuer/">Comment contribuer</a> !</p>
-
-
-
-<section class="putainde-AboutTheAuthor">
-  
-    
-    <a class="putainde-AboutTheAuthor-avatar putainde-Author-avatar" href="http://madx.me/">
-      <img src="https://gravatar.com/avatar/96006f57ca92ec95713532129b039d9c?s=300&amp;d=https%3A%2F%2Fidenticons.github.com%2Fc0863a4414cba6aa95014df9e3d9f6a5.png" />
-    </a>
-    
-  
-  <h1 class="putainde-AboutTheAuthor-title">
-    Écrit par
-    <strong class="putainde-AboutTheAuthor-name">madx</strong>
-    <a class="putainde-AboutTheAuthor-url" href="http://madx.me/"><i class="icon icon_home"> </i></a>
-    <a class="putainde-AboutTheAuthor-twitter" href="https://twitter.com/madx"><i class="icon icon_twitter"> </i></a>
-    <a class="putainde-AboutTheAuthor-github" href="https://github.com/madx"><i class="icon icon_github"> </i></a>
-  </h1>
-  
-    
-    <div class="putainde-AboutTheAuthor-bio--long"><p>Développeur Ruby et JavaScript, avec un goût prononcé pour la simplicité, le soleil, le pastis.
-Il n&#x27;aime pas OS X car, objectivement, c&#x27;est nul.
-Quand il n&#x27;est pas devant son ordi, il y a de grandes chances qu&#x27;il compense avec son téléphone.
-Spécialiste en développement d&#x27;applications inutiles.</p>
-</div>
-  
-</section>
-
-
-
-  <h2>Contributeurs</h2>
-  <ul>
-  
-    <li><a href="https://github.com/MoOx">@MoOx</a></li>
-  
-    <li><a href="https://github.com/Dridi">@Dridi</a></li>
-  
-  </ul>
-
-
-
-<section class="putainde-Comments">
-  <h1 class="putainde-Comments-title">Comments</h1>
-  <div id="disqus_thread" aria-live="polite">
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
-</section>
-
-
-
-    </div>
-    
-    <aside class="putainde-Sidebar grid__cell unit-1-4--m">
-    <aside class="putainde-Sidebar-block">
-	<h1 class="putainde-Sidebar-block-title">On est partout !</h1>
-	<ul class="putainde-Sidebar-block-list--nobullet">
-		<li><a href="https://github.com/putaindecode"><i class="icon icon_github"></i> Github</a></li>
-		<li><a href="https://twitter.com/putaindecode"><i class="icon icon_twitter"></i> Twitter</a></li>
-		<li><a href="#derriere-toi,-c'est-affreux!" onclick="if (confirm('Attention Benjamin...!')) window.location = 'http://www.youtube.com/watch?v=MEKHaG9FxKY&t=44s'; return false;"><i class="icon icon_eye"></i> Derrière toi</a></li>
-	</ul>
-</aside>
-<aside class="putainde-Sidebar-block">
-	<h1 class="putainde-Sidebar-block-title">À avoir sous la main</h1>
-	<ul class="putainde-Sidebar-block-list--nobullet">
-		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues/new"><i class="icon icon_pencil"></i> Proposer un article</a></li>
-		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues?labels=post&state=open"><i class="icon icon_bookmarks"></i> Voir les propositions</a></li>
-		<li><a href="https://github.com/putaindecode/website/blob/master/src/posts/git/versionner-avec-git/index.html.hbs"><i class="icon icon_edit"></i> Modifier cette page</a></li>
-	</ul>
-</aside>
-
-
-    </aside>
-    
-  </article>
-  
-    <footer class="putainde-Footer">
-
-    <div class="putainde-Footer-colophon grid">
-      <div class="putainde-Footer-colophon-left grid__cell unit-5-12--m">
-        <span class="putainde-Footer-colophon-item">© 1970 - 2013 Putain de Code !</span>
-        |
-        <a class="putainde-Footer-colophon-item" href="https://github.com/putaindecode">Contact</a>
-      </div>
-      <div class="putainde-Footer-colophon-center grid__cell unit-2-12--m">
-        <img class="putainde-Footer-logo" alt="Putain de code !" src="/assets/img/p!-logo.svg" />
-      </div>
-      <div class="putainde-Footer-colophon-right grid__cell unit-5-12--m">
-        <a class="putainde-Footer-colophon-item" href="feed.xml">Flux RSS</a>
-        |
-        <a class="putainde-Footer-colophon-item" href="projets/">Projets</a>
-        |
-        <span class="putainde-Footer-colophon-item">Made with ❤ by <a href="/le-crew/">le crew</a></span>
-      </div>
-    </div>
-  </footer>
-
-  
-</div>
-<script src="/assets/js/putaindecode.js?20140409071115"></script>
-
-
-	
-	<script>
-		var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
-		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-		g.src='//www.google-analytics.com/ga.js';
-		s.parentNode.insertBefore(g,s)}(document,'script'));
-	</script>
-	
-
-
-
-
-
-  <script>
-  var disqus_shortname = 'putaindecode',
-  
-  
-  
-  disqus_identifier = 'http://putaindecode.fr/posts/git/versionner-avec-git/',
-  disqus_url = 'http://putaindecode.fr/posts/git/versionner-avec-git/',
-  disqus_script = 'embed.js';
-  
-  (function(d,s) {
-  s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
-  (d.getElementsByTagName('head')[0]).appendChild(s);
-  })(document);
-  </script>
-
-
-
-</body>
-</html>
-
+<a href="/posts/comment-contribuer/">Comment contribuer</a> !</p>
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/git/versionner-avec-git/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/git/versionner-avec-git/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/git/versionner-avec-git/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><img src="http://www.gravatar.com/avatar/96006f57ca92ec95713532129b039d9c.png" alt="" class="putainde-Author-picture putainde-Avatar js-AnimateLoad"/><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> madx</h3><div class="putainde-Author-social"><a href="http://madx.me/"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/madx"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/madx"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur Ruby et JavaScript, avec un goût prononcé pour la simplicité, le soleil, le pastis. <br> Il n'aime pas OS X car, objectivement, c'est nul. <br> Quand il n'est pas devant son ordi, il y a de grandes chances qu'il compense avec son téléphone. <br> Spécialiste en développement d'applications inutiles.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">5 contributeurs</strong><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/madx" data-tip="madx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/96006f57ca92ec95713532129b039d9c.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/Dridi" data-tip="Dridi" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/default.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/kud" data-tip="kud" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/9713e529bef70eea8965e0dda2000334.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size4of12"><ul class="putainde-Footer-list"><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode">Contact</a></li><li><a href="../../../feed.xml">Flux RSS</a></li></ul></div><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text putainde-Footer-text--small">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/git/versionner-avec-git/";
+var disqus_url = "http://putaindecode.fr/posts/git/versionner-avec-git/";
+var disqus_script = "embed.js";;(function(d,s) {
+s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+(d.getElementsByTagName('head')[0]).appendChild(s)
+})(document)</script><script src="../../../scripts/index.js"></script><script>var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
+(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+g.src='//www.google-analytics.com/ga.js';
+s.parentNode.insertBefore(g,s)}(document,'script'));</script></body></html>

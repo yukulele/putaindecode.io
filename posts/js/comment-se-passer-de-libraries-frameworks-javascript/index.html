@@ -1,93 +1,31 @@
-
-<!DOCTYPE html>
-<!--
-  HEY YOU, STOP LOOKING AT MY SOURCE CODE
-  Just check it out directly on Github :
-
-  https://github.com/putaindecode/website.git
--->
-<html lang="fr" class="no-js no-touch ">
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-<script>(function(docEl) {
-  docEl.className = docEl.className.replace(/\bno-js\b/, 'js');
-  if ('ontouchstart' in docEl) { docEl.className = docEl.className.replace(/\bno-touch\b/, 'touch'); }
-})(document.documentElement);</script>
-
-<meta charset="utf-8">
-<title>Comment se passer de libraries/frameworks JavaScript</title>
-<meta name="description" content="">
-<base href="http://putaindecode.fr/" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="feed.xml" rel="alternate" type="application/rss+xml">
-
-<link rel="stylesheet" href="/assets/css/putaindecode.css?20140409071115">
-
-
-
-
-</head>
-<body>
-
-<div class="">
-  <nav class="putainde-Nav">
-	<div class="grid">
-		<div class="grid__cell">
-			<a class="putainde-SiteTitle" href="/">
-				<img class="putainde-Logo" alt="Putain de Code !" src="/assets/img/p!-logo.svg" />
-				Putain de Code !
-			</a>
-
-			<span class="putainde-Baseline">On voulait mettre une baseline mais on a pas été foutu d&#x27;en trouver une</span>
-
-			<ul class="putainde-Nav-list">
-				<li class=""><a class="putainde-Nav-list-item " href="c-est-quoi-putaindecode">Putain de ... ?</a>
-        <li class=""><a class="putainde-Nav-list-item " href="posts">Les Posts</a>
-				<li class=""><a class="putainde-Nav-list-item " href="posts/comment-contribuer/">Comment Contribuer ?</a>
-			</ul>
-		</div>
-	</div>
-</nav>
- 
-  <article class="putainde-Content grid putainde-Post">
-    <header class="putainde-Content-header grid__cell unit-1-1">
-      <h1 class="putainde-Content-title">Comment se passer de libraries/frameworks JavaScript</h1>
-      <div class="putainde-Content-metas">
-        <span class="putainde-Content-meta putainde-Content-author">Par <span class="putainde-Author">bloodyowl</span></span>
-        <span class="putainde-Content-meta putainde-Content-date">Publié le: <span class="putainde-Date">ven. 06 déc. 2013</span></span>
-        
-        <span class="putainde-Content-meta putainde-Content-tags">Tags: javascript,frameworks,libraries</span>
-      </div>
-    </header>
-    <div class="putainde-Content-body grid__cell unit-3-4--m">
-    
-
-
-<p><strong> Petite note préalable </strong> : Évidemment que ça ne marche pas sous les vieux navigateurs, cet article s&#39;adresse principalement à toi pour te faire comprendre comment les choses marchent.</p>
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Comment se passer de libraries/frameworks JavaScript</title><link rel="stylesheet" href="../../../stylesheets/index.css"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size7of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size5of12"><nav class="putainde-Nav"><a href="../../../c-est-quoi-putaindecode" class="putainde-Nav-item">Putain de ?</a><a href="../.." class="putainde-Nav-item">Les posts</a><a href="../../comment-contribuer" class="putainde-Nav-item">Contribuer</a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><header class="putainde-Post-header"><div class="putainde-Title"><h1 class="putainde-Title-text">Comment se passer de libraries/frameworks JavaScript</h1></div><div class="putainde-Post-metas">Écrit par bloodyowl,<span class="putainde-Date"> le 6 déc. 2013</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">javascript</li><li class="putainde-Tag">frameworks</li><li class="putainde-Tag">libraries</li></ul></header><div class="putainde-Post-md"><p><strong> Petite note préalable </strong> : Évidemment que ça ne marche pas sous les vieux navigateurs, cet article s&#39;adresse principalement à toi pour te faire comprendre comment les choses marchent.</p>
 <p>De plus en plus, le besoin de légèreté se fait sentir sur les pages. En dépit d&#39;un web plus rapide sur desktop, on a maintenant beaucoup de devices connectés via 3G ou Edge (un petit coucou au métro parisien). Du coup, tu te rendras vite compte qu&#39;embarquer jQuery + jQuery Mobile + jQuery UI et un tas d&#39;autres plug-ins grapillés sur le web, ça commence à peser.</p>
 <h2 id="pour-la-s-lection-d-lements">Pour la sélection d&#39;élements</h2>
 <p>Pour remplacer ton bon vieux <code>$</code> magique, <code>document.querySelectorAll</code> semble faire l&#39;affaire. En revanche, il retourne une instance de <code>NodeList</code>, pas d&#39;<code>Array</code>, ce qui ne nous arrange pas des masses.</p>
 <p>Du coup, on peut écrire une petite function toute con, qui nous retourne un <code>Array</code> et ses méthodes bien utiles.</p>
-<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">nativeSlice</span> = [].<span class="cm-variable">slice</span> <span class="cm-comment">// la méthode de conversion</span>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> nativeSlice = [].slice <span class="hljs-comment">// la méthode de conversion</span>
 
-<span class="cm-keyword">function</span> <span class="cm-variable">$</span>(<span class="cm-variable">selector</span>){
-  <span class="cm-keyword">var</span> <span class="cm-variable">list</span> = <span class="cm-variable">document</span>.<span class="cm-variable">querySelectorAll</span>(<span class="cm-variable">selector</span>)
-  <span class="cm-keyword">return</span> <span class="cm-variable">nativeSlice</span>.<span class="cm-variable">call</span>(<span class="cm-variable">list</span>)
-}</code></pre>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">$</span><span class="hljs-params">(selector)</span>{</span>
+  <span class="hljs-keyword">var</span> list = document.querySelectorAll(selector)
+  <span class="hljs-keyword">return</span> nativeSlice.call(list)
+}
+</code></pre>
 <p>Alternativement, tu peux utiliser <code>Array.apply(null, list)</code> plutôt que <code>nativeSlice.call(list)</code>, si vraiment ça te fait plaisir.</p>
 <p>Une troisième solution, un peu plus chiante au quotidien (et terriblement laide), c&#39;est d&#39;utiliser directement les méthodes qui t&#39;intéressent (ex. <code>[].forEach</code>) de cette façon :</p>
-<pre><code class="language-javascript">;[].<span class="cm-variable">forEach</span>.<span class="cm-variable">call</span>(<span class="cm-variable">document</span>.<span class="cm-variable">querySelectorAll</span>(<span class="cm-variable">selector</span>), <span class="cm-keyword">function</span>(<span class="cm-variable">element</span>){
-  <span class="cm-comment">// do something w/ element</span>
-})</code></pre>
+<pre><code class="lang-javascript">;[].<span class="hljs-keyword">forEach</span>.call(document.querySelectorAll(selector), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(element)</span>{</span>
+  <span class="hljs-comment">// do something w/ element</span>
+})
+</code></pre>
 <p>Pour en revenir à notre petite méthode <code>$</code>, on peut du coup faire :</p>
-<pre><code class="language-javascript"><span class="cm-comment">// prends bien l&#39;habitude de garder</span>
-<span class="cm-comment">// tes nodeLists si tu les réutilises</span>
+<pre><code class="lang-javascript"><span class="hljs-comment">// prends bien l'habitude de garder</span>
+<span class="hljs-comment">// tes nodeLists si tu les réutilises</span>
 
-<span class="cm-keyword">var</span> <span class="cm-variable">elements</span> = <span class="cm-variable">$</span>(<span class="cm-string">&quot;.my-elements-className&quot;</span>)
+<span class="hljs-keyword">var</span> elements = $(<span class="hljs-string">".my-elements-className"</span>)
 
-<span class="cm-variable">elements</span>.<span class="cm-property">forEach</span>(<span class="cm-keyword">function</span>(<span class="cm-def">element</span>){
-  <span class="cm-comment">// do something w/ element</span>
-})</code></pre>
+elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(element)</span>{</span>
+  <span class="hljs-comment">// do something w/ element</span>
+})
+</code></pre>
 <h3 id="pour-l-event-delegation">Pour l&#39;event delegation</h3>
 <p>L&#39;event delegation, c&#39;est bien, mangez-en. Ça permet entre autres de ne pas attacher 150 listeners uniques à 150 elements différents, mais à attacher un seul listener sur un parent commun, et analyser les sources des évenements à l&#39;intérieur en se basant sur le bubbling (remontée d&#39;évenement de la source au plus haut parent) ou capturing (descente d&#39;évenement du plus haut parent à la source, avant même que la source ne le reçoive).</p>
 <p>Pour faire de la délégation, on va procéder en trois temps :</p>
@@ -97,337 +35,236 @@
 <li>Si ça match, on garde l&#39;élement correspondant au sélecteur, sinon, exit</li>
 </ul>
 <p>Les browsers relativement récents possèdent une méthode : <code>matchesSelector</code> (et tous ses alias préfixés). Ce qu&#39;on peut donc faire, c&#39;est ceci :</p>
-<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">docEl</span> = <span class="cm-variable">document</span>.<span class="cm-property">documentElement</span>
-    <span class="cm-comment">// si c&#39;est dans docEl, c&#39;est que c&#39;est dispo</span>
-  , <span class="cm-variable">nativeMatchesSelector</span> =
-      <span class="cm-variable">docEl</span>.<span class="cm-property">matchesSelector</span> ||
-      <span class="cm-variable">docEl</span>.<span class="cm-property">webkitMatchesSelector</span> ||
-      <span class="cm-variable">docEl</span>.<span class="cm-property">mozMatchesSelector</span> ||
-      <span class="cm-variable">docEl</span>.<span class="cm-property">oMatchesSelector</span> ||
-      <span class="cm-variable">docEl</span>.<span class="cm-property">msMatchesSelector</span>
-  , <span class="cm-variable">matchesSelector</span> = <span class="cm-variable">nativeMatchesSelector</span> || <span class="cm-variable">matchesPolyfill</span>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> docEl = document.documentElement
+    <span class="hljs-comment">// si c'est dans docEl, c'est que c'est dispo</span>
+  , nativeMatchesSelector =
+      docEl.matchesSelector ||
+      docEl.webkitMatchesSelector ||
+      docEl.mozMatchesSelector ||
+      docEl.oMatchesSelector ||
+      docEl.msMatchesSelector
+  , matchesSelector = nativeMatchesSelector || matchesPolyfill
 
-<span class="cm-comment">// le polyfill utilise querySelectorAll</span>
-<span class="cm-comment">// et cherche dans le parent de l&#39;élement</span>
-<span class="cm-keyword">function</span> <span class="cm-variable">matchesPolyfill</span>(<span class="cm-def">selector</span>){
-  <span class="cm-keyword">var</span> <span class="cm-def">node</span> = <span class="cm-keyword">this</span>
-    , <span class="cm-def">parent</span> = <span class="cm-variable-2">node</span>.<span class="cm-property">parentNode</span>
-    , <span class="cm-def">query</span>, <span class="cm-def">index</span>, <span class="cm-def">length</span>
-  <span class="cm-keyword">if</span>(!<span class="cm-variable-2">parent</span> || <span class="cm-variable-2">parent</span>.<span class="cm-property">nodeType</span> != <span class="cm-number">1</span>) {
-    <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+<span class="hljs-comment">// le polyfill utilise querySelectorAll</span>
+<span class="hljs-comment">// et cherche dans le parent de l'élement</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">matchesPolyfill</span><span class="hljs-params">(selector)</span>{</span>
+  <span class="hljs-keyword">var</span> node = this
+    , <span class="hljs-keyword">parent</span> = node.parentNode
+    , query, index, length
+  <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">parent</span> || <span class="hljs-keyword">parent</span>.nodeType != <span class="hljs-number">1</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>
   }
-  <span class="cm-variable-2">query</span> = <span class="cm-variable-2">parent</span>.<span class="cm-property">querySelectorAll</span>(<span class="cm-variable-2">selector</span>)
-  <span class="cm-variable-2">index</span> = -<span class="cm-number">1</span>
-  <span class="cm-variable-2">length</span> = <span class="cm-variable-2">query</span>.<span class="cm-property">length</span>
-  <span class="cm-keyword">while</span>(++<span class="cm-variable-2">index</span> &lt; <span class="cm-variable-2">length</span>) {
-    <span class="cm-keyword">if</span>(<span class="cm-variable-2">query</span>[<span class="cm-variable-2">index</span>] == <span class="cm-variable-2">node</span>) <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+  query = <span class="hljs-keyword">parent</span>.querySelectorAll(selector)
+  index = -<span class="hljs-number">1</span>
+  length = query.length
+  <span class="hljs-keyword">while</span>(++index &lt; length) {
+    <span class="hljs-keyword">if</span>(query[index] == node) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>
   }
-  <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>
 }
 
-<span class="cm-keyword">function</span> <span class="cm-variable">getCurrentTarget</span>(<span class="cm-def">node</span>, <span class="cm-def">selector</span>){
-  <span class="cm-keyword">if</span>(<span class="cm-variable">matchesSelector</span>.<span class="cm-property">call</span>(<span class="cm-variable-2">node</span>, <span class="cm-variable-2">selector</span>)) <span class="cm-keyword">return</span> <span class="cm-variable-2">node</span>
-  <span class="cm-keyword">while</span>(<span class="cm-variable-2">node</span> = <span class="cm-variable-2">node</span>.<span class="cm-property">parentNode</span>) {
-    <span class="cm-keyword">if</span>(<span class="cm-variable-2">node</span>.<span class="cm-property">nodeType</span> != <span class="cm-number">1</span>) <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
-    <span class="cm-keyword">if</span>(<span class="cm-variable">matchesSelector</span>.<span class="cm-property">call</span>(<span class="cm-variable-2">node</span>, <span class="cm-variable-2">selector</span>)) <span class="cm-keyword">return</span> <span class="cm-variable-2">node</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCurrentTarget</span><span class="hljs-params">(node, selector)</span>{</span>
+  <span class="hljs-keyword">if</span>(matchesSelector.call(node, selector)) <span class="hljs-keyword">return</span> node
+  <span class="hljs-keyword">while</span>(node = node.parentNode) {
+    <span class="hljs-keyword">if</span>(node.nodeType != <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>
+    <span class="hljs-keyword">if</span>(matchesSelector.call(node, selector)) <span class="hljs-keyword">return</span> node
   }
-  <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
-}</code></pre>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>
+}
+</code></pre>
 <p>Dès lors, dans nos listeners, on pourra directement procéder ainsi :</p>
-<pre><code class="language-javascript"><span class="cm-variable">element</span>.<span class="cm-property">addEventListener</span>(<span class="cm-string">&quot;click&quot;</span>, <span class="cm-keyword">function</span>(<span class="cm-def">evt</span>){
-  <span class="cm-keyword">var</span> <span class="cm-def">currentTarget</span> = <span class="cm-variable">getCurrentTarget</span>(<span class="cm-variable-2">evt</span>.<span class="cm-property">target</span>, <span class="cm-string">&quot;.Button-action&quot;</span>)
-  <span class="cm-keyword">if</span>(!<span class="cm-variable-2">currentTarget</span>) <span class="cm-keyword">return</span>
-  <span class="cm-comment">// all good with currentTarget</span>
-})</code></pre>
+<pre><code class="lang-javascript">element.addEventListener(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(evt)</span>{</span>
+  <span class="hljs-keyword">var</span> currentTarget = getCurrentTarget(evt.target, <span class="hljs-string">".Button-action"</span>)
+  <span class="hljs-keyword">if</span>(!currentTarget) <span class="hljs-keyword">return</span>
+  <span class="hljs-comment">// all good with currentTarget</span>
+})
+</code></pre>
 <h3 id="pour-l-ajax">Pour l&#39;Ajax</h3>
 <p>Pourquoi est-ce que l&#39;on appelle ça encore Ajax, d&#39;ailleurs ? Bref.</p>
 <p>Simple comme bonjour :</p>
-<pre><code class="language-javascript"><span class="cm-keyword">function</span> <span class="cm-variable">isSuccessStatus</span>(<span class="cm-def">status</span>){
-  <span class="cm-keyword">return</span> <span class="cm-variable-2">status</span> &gt;= <span class="cm-number">200</span> &amp;&amp; <span class="cm-variable-2">status</span> &lt; <span class="cm-number">300</span> || <span class="cm-variable-2">status</span> == <span class="cm-number">304</span>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isSuccessStatus</span><span class="hljs-params">(status)</span>{</span>
+  <span class="hljs-keyword">return</span> status &gt;= <span class="hljs-number">200</span> &amp;&amp; status &lt; <span class="hljs-number">300</span> || status == <span class="hljs-number">304</span>
 }
 
-<span class="cm-keyword">function</span> <span class="cm-variable">ajax</span>(<span class="cm-def">options</span>){
-  <span class="cm-keyword">var</span> <span class="cm-def">xhr</span> = <span class="cm-keyword">new</span> <span class="cm-variable">XMLHttpRequest</span>()
-    , <span class="cm-def">done</span> = <span class="cm-atom">false</span>
-    , <span class="cm-def">async</span> = <span class="cm-variable-2">options</span>.<span class="cm-property">hasOwnProperty</span>(<span class="cm-string">&quot;async&quot;</span>) ? <span class="cm-variable-2">options</span>.<span class="cm-property">async</span> : <span class="cm-atom">true</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ajax</span><span class="hljs-params">(options)</span>{</span>
+  <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest()
+    , done = <span class="hljs-literal">false</span>
+    , async = options.hasOwnProperty(<span class="hljs-string">"async"</span>) ? options.async : <span class="hljs-literal">true</span>
 
-  <span class="cm-variable-2">xhr</span>.<span class="cm-property">open</span>(<span class="cm-variable-2">options</span>.<span class="cm-property">method</span> || <span class="cm-string">&quot;GET&quot;</span>, <span class="cm-variable-2">options</span>.<span class="cm-property">url</span>, <span class="cm-variable-2">async</span>)
+  xhr.open(options.method || <span class="hljs-string">"GET"</span>, options.url, async)
 
-  <span class="cm-variable-2">xhr</span>.<span class="cm-property">onreadystatechange</span> = <span class="cm-keyword">function</span>(){
-    <span class="cm-keyword">if</span>(<span class="cm-variable-2">done</span>) <span class="cm-keyword">return</span>
-    <span class="cm-keyword">if</span>(<span class="cm-keyword">this</span>.<span class="cm-property">readyState</span> != <span class="cm-number">4</span>) <span class="cm-keyword">return</span>
-    <span class="cm-variable-2">done</span> = <span class="cm-atom">true</span>
+  xhr.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-keyword">if</span>(done) <span class="hljs-keyword">return</span>
+    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.readyState != <span class="hljs-number">4</span>) <span class="hljs-keyword">return</span>
+    done = <span class="hljs-literal">true</span>
 
-    <span class="cm-keyword">if</span>(<span class="cm-variable">isSuccessStatus</span>(<span class="cm-keyword">this</span>.<span class="cm-property">status</span>)) {
-      <span class="cm-keyword">if</span>(<span class="cm-variable-2">options</span>.<span class="cm-property">success</span>) {
-        <span class="cm-variable-2">options</span>.<span class="cm-property">success</span>.<span class="cm-property">call</span>(<span class="cm-keyword">this</span>)
+    <span class="hljs-keyword">if</span>(isSuccessStatus(<span class="hljs-keyword">this</span>.status)) {
+      <span class="hljs-keyword">if</span>(options.success) {
+        options.success.call(<span class="hljs-keyword">this</span>)
       }
-      <span class="cm-keyword">return</span>
+      <span class="hljs-keyword">return</span>
     }
 
-    <span class="cm-keyword">if</span>(<span class="cm-variable-2">options</span>.<span class="cm-property">error</span>) {
-      <span class="cm-variable-2">options</span>.<span class="cm-property">error</span>.<span class="cm-property">call</span>(<span class="cm-keyword">this</span>)
+    <span class="hljs-keyword">if</span>(options.error) {
+      options.error.call(<span class="hljs-keyword">this</span>)
     }
   }
-  <span class="cm-variable">Object</span>.<span class="cm-property">keys</span>(<span class="cm-variable-2">options</span>.<span class="cm-property">headers</span> || {})
-    .<span class="cm-property">forEach</span>(<span class="cm-keyword">function</span>(<span class="cm-def">key</span>){
-      <span class="cm-variable-2">xhr</span>.<span class="cm-property">setRequestHeader</span>(<span class="cm-variable-2">key</span>, <span class="cm-variable-2">options</span>.<span class="cm-property">headers</span>[<span class="cm-variable-2">key</span>])
+  <span class="hljs-built_in">Object</span>.keys(options.headers || {})
+    .forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span>{</span>
+      xhr.setRequestHeader(key, options.headers[key])
     })
-  <span class="cm-variable-2">xhr</span>.<span class="cm-property">send</span>(<span class="cm-variable-2">options</span>.<span class="cm-property">data</span> || <span class="cm-atom">null</span>)
-  <span class="cm-keyword">return</span> <span class="cm-variable-2">xhr</span>
-}</code></pre>
+  xhr.send(options.data || <span class="hljs-literal">null</span>)
+  <span class="hljs-keyword">return</span> xhr
+}
+</code></pre>
 <p>Cette fonction offre un support basique de XHR :</p>
-<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">myXHR</span> = <span class="cm-variable">ajax</span>({
-    <span class="cm-property">url</span> : <span class="cm-string">&quot;api/users&quot;</span>
-  , <span class="cm-property">success</span> : <span class="cm-keyword">function</span>(){
-      <span class="cm-variable">doStuff</span>(<span class="cm-keyword">this</span>.<span class="cm-property">responseText</span>)
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myXHR = ajax({
+    url : <span class="hljs-string">"api/users"</span>
+  , success : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      doStuff(<span class="hljs-keyword">this</span>.responseText)
     }
-  , <span class="cm-property">error</span> : <span class="cm-keyword">function</span>(){
-      <span class="cm-variable">showError</span>(<span class="cm-keyword">this</span>.<span class="cm-property">status</span>)
+  , error : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      showError(<span class="hljs-keyword">this</span>.status)
     }
-})</code></pre>
+})
+</code></pre>
 <h3 id="es5-magic">ES5 magic</h3>
 <p>EcmaScript 5 délivre des petites méthodes très intéressantes pour se simplifier la vie, fortement inspirées par ce qu&#39;on a l&#39;habitude de trouver dans les bibliothèques ayant connu l&#39;âge d&#39;or, comme <a href="http://prototypejs.org">PrototypeJS</a> ou <a href="http://mootools.net">MooTools</a>.</p>
 <p>Dès lors, plutôt qu&#39;un ennuyeux :</p>
-<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">key</span>, <span class="cm-variable">item</span>
-<span class="cm-keyword">for</span>(<span class="cm-variable">key</span> <span class="cm-keyword">in</span> <span class="cm-variable">myObject</span>) {
-  <span class="cm-keyword">if</span>(<span class="cm-variable">myObject</span>.<span class="cm-property">hasOwnProperty</span>(<span class="cm-variable">key</span>)) {
-    <span class="cm-variable">item</span> = <span class="cm-variable">myObject</span>[<span class="cm-variable">key</span>]
-    <span class="cm-comment">// do something</span>
+<pre><code class="lang-javascript">var key, <span class="hljs-keyword">item</span>
+<span class="hljs-keyword">for</span>(key <span class="hljs-operator">in</span> myObject) {
+  <span class="hljs-keyword">if</span>(myObject.hasOwnProperty(key)) {
+    <span class="hljs-keyword">item</span> = myObject[key]
+   <span class="hljs-comment"> // do something</span>
   }
-}</code></pre>
+}
+</code></pre>
 <p>on peut se contenter d&#39;un :</p>
-<pre><code class="language-javascript"><span class="cm-variable">Object</span>.<span class="cm-property">keys</span>(<span class="cm-variable">myObject</span>)
-  .<span class="cm-property">forEach</span>(<span class="cm-keyword">function</span>(<span class="cm-def">key</span>){
-    <span class="cm-keyword">var</span> <span class="cm-def">item</span> = <span class="cm-variable">myObject</span>[<span class="cm-variable">i</span>]
-    <span class="cm-comment">// do something</span>
-  })</code></pre>
+<pre><code class="lang-javascript"><span class="hljs-built_in">Object</span>.keys(myObject)
+  .forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span>{</span>
+    <span class="hljs-keyword">var</span> item = myObject[i]
+    <span class="hljs-comment">// do something</span>
+  })
+</code></pre>
 <p>De même, on bénéficie de méthodes s&#39;avérant très utiles, comme
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype"><code>Array.prototype.map</code>, <code>Array.prototype.reduce</code>, <code>Array.prototype.filter</code></a>,
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object"><code>Object.create</code>, <code>Object.getPrototypeOf</code>, <code>Object.getOwnPropertyNames</code>, <code>Object.defineProperty</code></a>
 dont je t&#39;invite, si cela t&#39;intéresse, à te renseigner sur ces méthodes.
 Et si tu veux avoir plus de détails, read the fucking manual :
-<a href="http://es5.github.io"><a href="http://es5.github.io">http://es5.github.io</a></a>.</p>
+<a href="http://es5.github.io">http://es5.github.io</a>.</p>
 <h3 id="des-petits-d-tails-cools-du-c-t-des-events">Des petits détails cools du côté des events</h3>
 <p>Avec <code>addEventListener</code>, on peut aussi passer un objet comme listener, avec <code>handleEvent</code> pour interface :</p>
-<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">myElementClickEvents</span> = {
-    <span class="cm-property">element</span> : <span class="cm-variable">myElement</span>
-  , <span class="cm-property">callbacks</span> : []
-  , <span class="cm-variable">handleEvent</span> : <span class="cm-keyword">function</span>(<span class="cm-variable">evt</span>){
-      <span class="cm-keyword">var</span> <span class="cm-variable">self</span> = <span class="cm-keyword">this</span>
-      <span class="cm-keyword">this</span>.<span class="cm-variable">callbacks</span>.<span class="cm-variable">forEach</span>(<span class="cm-keyword">function</span>(<span class="cm-variable">item</span>){
-        <span class="cm-variable">item</span>.<span class="cm-variable">call</span>(<span class="cm-variable">self</span>.<span class="cm-variable">element</span>, <span class="cm-variable">evt</span>)
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myElementClickEvents = {
+    element : myElement
+  , callbacks : []
+  , handleEvent : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(evt)</span>{</span>
+      <span class="hljs-keyword">var</span> <span class="hljs-keyword">self</span> = this
+      this.callbacks.<span class="hljs-keyword">forEach</span>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
+        item.call(<span class="hljs-keyword">self</span>.element, evt)
       })
     }
 }
-<span class="cm-variable">myElement</span>.<span class="cm-variable">addEventListener</span>(<span class="cm-string">&quot;click&quot;</span>, <span class="cm-variable">myElementClickEvents</span>)
+myElement.addEventListener(<span class="hljs-string">"click"</span>, myElementClickEvents)
 
-<span class="cm-variable">myElementClickEvents</span>.<span class="cm-variable">callbacks</span>.<span class="cm-variable">push</span>(<span class="cm-keyword">function</span>(<span class="cm-variable">evt</span>){
-  <span class="cm-variable">console</span>.<span class="cm-variable">log</span>(<span class="cm-variable">evt</span>)
-})</code></pre>
+myElementClickEvents.callbacks.push(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(evt)</span>{</span>
+  console.log(evt)
+})
+</code></pre>
 <p>Avec ça, on peut facilement garder une trace de ce qu&#39;on passé comme listeners.</p>
 <h3 id="du-type-checking-">Du type checking ?</h3>
-<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">getClass</span> = <span class="cm-keyword">function</span>(<span class="cm-def">o</span>){ <span class="cm-keyword">return</span> <span class="cm-variable">Object</span>.<span class="cm-property">prototype</span>.<span class="cm-property">toString</span>.<span class="cm-property">call</span>(<span class="cm-variable-2">o</span>) }
-  , <span class="cm-variable">someString</span> = <span class="cm-keyword">new</span> <span class="cm-variable">String</span>(<span class="cm-string">&quot;foo&quot;</span>)
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> getClass = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(o)</span>{</span> <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(o) }
+  , someString = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-string">"foo"</span>)
 
-<span class="cm-keyword">typeof</span> <span class="cm-variable">someString</span> <span class="cm-comment">// &quot;object&quot;</span>
-<span class="cm-variable">getClass</span>(<span class="cm-variable">someString</span>) <span class="cm-comment">// &quot;[object String]&quot;, sounds more reasonable</span></code></pre>
+<span class="hljs-keyword">typeof</span> someString <span class="hljs-comment">// "object"</span>
+getClass(someString) <span class="hljs-comment">// "[object String]", sounds more reasonable</span>
+</code></pre>
 <h3 id="petit-bonus">Petit bonus</h3>
 <p>Un petit bonus rien que pour toi : pour avoir une syntaxe plus sympathique et plus claire que les prototypes.</p>
 <p>En principe, on fait comme ça :</p>
-<pre><code class="language-javascript"><span class="cm-keyword">function</span> <span class="cm-variable">Animal</span>(<span class="cm-def">name</span>){
-  <span class="cm-keyword">this</span>.<span class="cm-property">name</span> = <span class="cm-variable-2">name</span>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Animal</span><span class="hljs-params">(name)</span>{</span>
+  <span class="hljs-keyword">this</span>.name = name
 }
 
-<span class="cm-variable">Animal</span>.<span class="cm-property">prototype</span>.<span class="cm-property">getName</span> = <span class="cm-keyword">function</span>(){
-  <span class="cm-keyword">return</span> <span class="cm-keyword">this</span>.<span class="cm-property">name</span>
+Animal.prototype.getName = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.name
 }
 
-<span class="cm-keyword">function</span> <span class="cm-variable">Cat</span>(<span class="cm-def">name</span>){
-  <span class="cm-variable">Animal</span>.<span class="cm-property">call</span>(<span class="cm-keyword">this</span>, <span class="cm-variable-2">name</span>)
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Cat</span><span class="hljs-params">(name)</span>{</span>
+  Animal.call(<span class="hljs-keyword">this</span>, name)
 }
 
-<span class="cm-keyword">function</span> <span class="cm-variable">K</span>(){}
-<span class="cm-variable">K</span>.<span class="cm-property">prototype</span> = <span class="cm-variable">Animal</span>.<span class="cm-property">prototype</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">K</span><span class="hljs-params">()</span>{</span>}
+K.prototype = Animal.prototype
 
-<span class="cm-variable">Cat</span>.<span class="cm-property">prototype</span> = <span class="cm-keyword">new</span> <span class="cm-variable">K</span>
-<span class="cm-variable">Cat</span>.<span class="cm-property">prototype</span>.<span class="cm-property">constructor</span> = <span class="cm-variable">Cat</span>
-<span class="cm-variable">Cat</span>.<span class="cm-property">prototype</span>.<span class="cm-property">type</span> = <span class="cm-string">&quot;cat&quot;</span>
+Cat.prototype = <span class="hljs-keyword">new</span> K
+Cat.prototype.constructor = Cat
+Cat.prototype.type = <span class="hljs-string">"cat"</span>
 
-<span class="cm-keyword">var</span> <span class="cm-variable">myAnimal</span> = <span class="cm-keyword">new</span> <span class="cm-variable">Animal</span>(<span class="cm-string">&quot;Foo&quot;</span>)
-  , <span class="cm-variable">myCat</span> = <span class="cm-keyword">new</span> <span class="cm-variable">Cat</span>(<span class="cm-string">&quot;Bar&quot;</span>)
+<span class="hljs-keyword">var</span> myAnimal = <span class="hljs-keyword">new</span> Animal(<span class="hljs-string">"Foo"</span>)
+  , myCat = <span class="hljs-keyword">new</span> Cat(<span class="hljs-string">"Bar"</span>)
 
-<span class="cm-variable">myCat</span> <span class="cm-keyword">instanceof</span> <span class="cm-variable">Cat</span> <span class="cm-comment">// true</span>
-<span class="cm-variable">myCat</span> <span class="cm-keyword">instanceof</span> <span class="cm-variable">Animal</span> <span class="cm-comment">// true</span></code></pre>
+myCat <span class="hljs-keyword">instanceof</span> Cat <span class="hljs-comment">// true</span>
+myCat <span class="hljs-keyword">instanceof</span> Animal <span class="hljs-comment">// true</span>
+</code></pre>
 <p>Maintenant, à l&#39;aide de deux petites méthodes :</p>
-<pre><code class="language-javascript"><span class="cm-comment">// wow</span>
-<span class="cm-comment">//         many magic</span>
-<span class="cm-comment">//   very es5</span>
-<span class="cm-comment">//            wow</span>
-<span class="cm-keyword">function</span> <span class="cm-variable">extend</span>(<span class="cm-def">object</span>){
-  <span class="cm-keyword">var</span> <span class="cm-def">self</span> = <span class="cm-variable">Object</span>.<span class="cm-property">create</span>(<span class="cm-keyword">this</span>)
-  <span class="cm-keyword">if</span>(!<span class="cm-variable-2">object</span>) <span class="cm-keyword">return</span> <span class="cm-variable-2">self</span>
-  <span class="cm-variable">Object</span>.<span class="cm-property">keys</span>(<span class="cm-variable-2">object</span>)
-    .<span class="cm-property">forEach</span>(<span class="cm-keyword">function</span>(<span class="cm-def">key</span>){
-      <span class="cm-variable-2">self</span>[<span class="cm-variable-2">key</span>] = <span class="cm-variable-2">object</span>[<span class="cm-variable-2">key</span>]
+<pre><code class="lang-javascript"><span class="hljs-comment">// wow</span>
+<span class="hljs-comment">//         many magic</span>
+<span class="hljs-comment">//   very es5</span>
+<span class="hljs-comment">//            wow</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">extend</span><span class="hljs-params">(object)</span>{</span>
+  <span class="hljs-keyword">var</span> <span class="hljs-keyword">self</span> = Object.create(this)
+  <span class="hljs-keyword">if</span>(!object) <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>
+  Object.keys(object)
+    .<span class="hljs-keyword">forEach</span>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span>{</span>
+      <span class="hljs-keyword">self</span>[key] = object[key]
     })
-  <span class="cm-keyword">return</span> <span class="cm-variable-2">self</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>
 }
 
-<span class="cm-keyword">function</span> <span class="cm-variable">create</span>(){
-  <span class="cm-keyword">var</span> <span class="cm-def">self</span> = <span class="cm-variable">Object</span>.<span class="cm-property">create</span>(<span class="cm-keyword">this</span>)
-  <span class="cm-keyword">if</span>(<span class="cm-keyword">typeof</span> <span class="cm-variable-2">self</span>.<span class="cm-property">constructor</span> == <span class="cm-string">&quot;function&quot;</span>) {
-    <span class="cm-variable-2">self</span>.<span class="cm-property">constructor</span>.<span class="cm-property">apply</span>(<span class="cm-variable-2">self</span>, <span class="cm-variable-2">arguments</span>)
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">create</span><span class="hljs-params">()</span>{</span>
+  <span class="hljs-keyword">var</span> <span class="hljs-keyword">self</span> = Object.create(this)
+  <span class="hljs-keyword">if</span>(typeof <span class="hljs-keyword">self</span>.constructor == <span class="hljs-string">"function"</span>) {
+    <span class="hljs-keyword">self</span>.constructor.apply(<span class="hljs-keyword">self</span>, arguments)
   }
-  <span class="cm-keyword">return</span> <span class="cm-variable-2">self</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>
 }
 
-<span class="cm-keyword">var</span> <span class="cm-variable">klass</span> = {
-    <span class="cm-property">create</span> : <span class="cm-variable">create</span>
-  , <span class="cm-property">extend</span> : <span class="cm-variable">extend</span>
-}</code></pre>
+<span class="hljs-keyword">var</span> klass = {
+    create : create
+  , extend : extend
+}
+</code></pre>
 <p>Tu peux faire ça :</p>
-<pre><code class="language-javascript"><span class="cm-keyword">var</span> <span class="cm-variable">animal</span> = <span class="cm-variable">klass</span>.<span class="cm-property">extend</span>({
-    <span class="cm-property">constructor</span> : <span class="cm-keyword">function</span>(<span class="cm-def">name</span>){
-      <span class="cm-keyword">this</span>.<span class="cm-property">name</span> = <span class="cm-variable-2">name</span>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> animal = klass.extend({
+    constructor : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span>{</span>
+      <span class="hljs-keyword">this</span>.name = name
     }
-  , <span class="cm-property">getName</span> : <span class="cm-keyword">function</span>(){
-      <span class="cm-keyword">return</span> <span class="cm-keyword">this</span>.<span class="cm-property">name</span>
+  , getName : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.name
     }
 })
 
-<span class="cm-keyword">var</span> <span class="cm-variable">cat</span> = <span class="cm-variable">animal</span>.<span class="cm-property">extend</span>({
-    <span class="cm-property">constructor</span> : <span class="cm-keyword">function</span>(<span class="cm-def">name</span>){
-      <span class="cm-variable">animal</span>.<span class="cm-property">constructor</span>.<span class="cm-property">call</span>(<span class="cm-keyword">this</span>, <span class="cm-variable-2">name</span>)
+<span class="hljs-keyword">var</span> cat = animal.extend({
+    constructor : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span>{</span>
+      animal.constructor.call(<span class="hljs-keyword">this</span>, name)
     }
-  , <span class="cm-property">type</span> : <span class="cm-string">&quot;cat&quot;</span>
+  , type : <span class="hljs-string">"cat"</span>
 })
 
-<span class="cm-keyword">var</span> <span class="cm-variable">myAnimal</span> = <span class="cm-variable">animal</span>.<span class="cm-property">create</span>(<span class="cm-string">&quot;Foo&quot;</span>)
-  , <span class="cm-variable">myCat</span> = <span class="cm-variable">cat</span>.<span class="cm-property">create</span>(<span class="cm-string">&quot;Bar&quot;</span>)
+<span class="hljs-keyword">var</span> myAnimal = animal.create(<span class="hljs-string">"Foo"</span>)
+  , myCat = cat.create(<span class="hljs-string">"Bar"</span>)
 
-<span class="cm-variable">cat</span>.<span class="cm-property">isPrototypeOf</span>(<span class="cm-variable">myCat</span>) <span class="cm-comment">// true</span>
-<span class="cm-variable">animal</span>.<span class="cm-property">isPrototypeOf</span>(<span class="cm-variable">myCat</span>) <span class="cm-comment">// true</span></code></pre>
+cat.isPrototypeOf(myCat) <span class="hljs-comment">// true</span>
+animal.isPrototypeOf(myCat) <span class="hljs-comment">// true</span>
+</code></pre>
 <p>Voilà, j&#39;espère que cela a pu attiser ta curiosité d&#39;en apprendre plus sur le langage lui-même et le DOM.</p>
-
-
-
-<section class="putainde-AboutTheAuthor">
-  
-    
-    <a class="putainde-AboutTheAuthor-avatar putainde-Author-avatar" href="http://bloodyowl.github.io">
-      <img src="https://gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5?s=300&amp;d=https%3A%2F%2Fidenticons.github.com%2Fc0863a4414cba6aa95014df9e3d9f6a5.png" />
-    </a>
-    
-  
-  <h1 class="putainde-AboutTheAuthor-title">
-    Écrit par
-    <strong class="putainde-AboutTheAuthor-name">bloodyowl</strong>
-    <a class="putainde-AboutTheAuthor-url" href="http://bloodyowl.github.io"><i class="icon icon_home"> </i></a>
-    <a class="putainde-AboutTheAuthor-twitter" href="https://twitter.com/bloodyowl"><i class="icon icon_twitter"> </i></a>
-    <a class="putainde-AboutTheAuthor-github" href="https://github.com/bloodyowl"><i class="icon icon_github"> </i></a>
-  </h1>
-  
-    
-    <div class="putainde-AboutTheAuthor-bio--long"><p>Développeur front-end, aime la bonne bière artisanale, la musique, et JavaScript; n&#x27;aime ni les points virgules, ni les gens</p>
-</div>
-  
-</section>
-
-
-
-
-
-<section class="putainde-Comments">
-  <h1 class="putainde-Comments-title">Comments</h1>
-  <div id="disqus_thread" aria-live="polite">
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
-</section>
-
-
-
-    </div>
-    
-    <aside class="putainde-Sidebar grid__cell unit-1-4--m">
-    <aside class="putainde-Sidebar-block">
-	<h1 class="putainde-Sidebar-block-title">On est partout !</h1>
-	<ul class="putainde-Sidebar-block-list--nobullet">
-		<li><a href="https://github.com/putaindecode"><i class="icon icon_github"></i> Github</a></li>
-		<li><a href="https://twitter.com/putaindecode"><i class="icon icon_twitter"></i> Twitter</a></li>
-		<li><a href="#derriere-toi,-c'est-affreux!" onclick="if (confirm('Attention Benjamin...!')) window.location = 'http://www.youtube.com/watch?v=MEKHaG9FxKY&t=44s'; return false;"><i class="icon icon_eye"></i> Derrière toi</a></li>
-	</ul>
-</aside>
-<aside class="putainde-Sidebar-block">
-	<h1 class="putainde-Sidebar-block-title">À avoir sous la main</h1>
-	<ul class="putainde-Sidebar-block-list--nobullet">
-		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues/new"><i class="icon icon_pencil"></i> Proposer un article</a></li>
-		<li><a href="https://github.com/putaindecode/propositions-de-posts/issues?labels=post&state=open"><i class="icon icon_bookmarks"></i> Voir les propositions</a></li>
-		<li><a href="https://github.com/putaindecode/website/blob/master/src/posts/js/comment-se-passer-de-libraries-frameworks-javascript/index.html.hbs"><i class="icon icon_edit"></i> Modifier cette page</a></li>
-	</ul>
-</aside>
-
-
-    </aside>
-    
-  </article>
-  
-    <footer class="putainde-Footer">
-
-    <div class="putainde-Footer-colophon grid">
-      <div class="putainde-Footer-colophon-left grid__cell unit-5-12--m">
-        <span class="putainde-Footer-colophon-item">© 1970 - 2013 Putain de Code !</span>
-        |
-        <a class="putainde-Footer-colophon-item" href="https://github.com/putaindecode">Contact</a>
-      </div>
-      <div class="putainde-Footer-colophon-center grid__cell unit-2-12--m">
-        <img class="putainde-Footer-logo" alt="Putain de code !" src="/assets/img/p!-logo.svg" />
-      </div>
-      <div class="putainde-Footer-colophon-right grid__cell unit-5-12--m">
-        <a class="putainde-Footer-colophon-item" href="feed.xml">Flux RSS</a>
-        |
-        <a class="putainde-Footer-colophon-item" href="projets/">Projets</a>
-        |
-        <span class="putainde-Footer-colophon-item">Made with ❤ by <a href="/le-crew/">le crew</a></span>
-      </div>
-    </div>
-  </footer>
-
-  
-</div>
-<script src="/assets/js/putaindecode.js?20140409071115"></script>
-
-
-	
-	<script>
-		var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
-		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-		g.src='//www.google-analytics.com/ga.js';
-		s.parentNode.insertBefore(g,s)}(document,'script'));
-	</script>
-	
-
-
-
-
-
-  <script>
-  var disqus_shortname = 'putaindecode',
-  
-  
-  
-  disqus_identifier = 'http://putaindecode.fr/posts/js/comment-se-passer-de-libraries-frameworks-javascript/',
-  disqus_url = 'http://putaindecode.fr/posts/js/comment-se-passer-de-libraries-frameworks-javascript/',
-  disqus_script = 'embed.js';
-  
-  (function(d,s) {
-  s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
-  (d.getElementsByTagName('head')[0]).appendChild(s);
-  })(document);
-  </script>
-
-
-
-</body>
-</html>
-
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/js/comment-se-passer-de-libraries-frameworks-javascript/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/js/comment-se-passer-de-libraries-frameworks-javascript/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/js/comment-se-passer-de-libraries-frameworks-javascript/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Author-picture putainde-Avatar js-AnimateLoad"/><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> bloodyowl</h3><div class="putainde-Author-social"><a href="http://bloodyowl.io"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/bloodyowl"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/bloodyowl"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur front-end, aime la bonne bière artisanale, la musique, et JavaScript; n'aime ni les points virgules, ni les gens</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">2 contributeurs</strong><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size4of12"><ul class="putainde-Footer-list"><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode">Contact</a></li><li><a href="../../../feed.xml">Flux RSS</a></li></ul></div><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text putainde-Footer-text--small">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/js/comment-se-passer-de-libraries-frameworks-javascript/";
+var disqus_url = "http://putaindecode.fr/posts/js/comment-se-passer-de-libraries-frameworks-javascript/";
+var disqus_script = "embed.js";;(function(d,s) {
+s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+(d.getElementsByTagName('head')[0]).appendChild(s)
+})(document)</script><script src="../../../scripts/index.js"></script><script>var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
+(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+g.src='//www.google-analytics.com/ga.js';
+s.parentNode.insertBefore(g,s)}(document,'script'));</script></body></html>
