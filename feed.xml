@@ -1,4 +1,211 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 28 Apr 2014 21:05:41 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Les post-processeurs CSS</title><description><![CDATA[[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Tue, 29 Apr 2014 06:50:32 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Introduction à Gulp</title><description><![CDATA[[
+<p>Vous commencez tous à connaitre les <em>tasks runners</em>, ces outils qui permettent
+d&#39;automatiser les tâches de développement récurrentes.
+Personnellement
+ <a href="http://moox.io/slides/2013/grunt-before-after/">je n&#39;ai</a>
+ <a href="http://www.24joursdeweb.fr/2013/automatisez-votre-workflow-front-end/">pas arrêter</a>
+ <a href="http://moox.io/slides/2014/introduction-gulp/">d&#39;en parler</a>
+ depuis que
+ <a href="/posts/js/premiers-pas-avec-grunt/">Grunt</a>
+ à déterré  cette vielle problématique, assez récente pour le développement web côté front end.</p>
+<p>Il faut avouer que de part l&#39;évolution du développement web, côté front end,
+on voit beaucoup de personnes qui n&#39;ont pas de vrai base de développeur.
+Je veux dire par là non pas que ces personnes sont incompétentes, mais plutôt
+qu&#39;il manque parfois la bonne flemme du développeur, celle qui le pousse à <strong>développer</strong>
+des solutions techniques pour mieux développer des produits.
+Il manque un peu <a href="http://fr.wiktionary.org/wiki/algorithmie">d&#39;algorithmie</a>
+dans les veines, de curiosité et d&#39;amour du risque.
+Ce n&#39;est pas en restant dans sa zone de confort qu&#39;on va de l&#39;avant. Enfin si vous
+avez des exemples contraires, je suis preneur.
+Mais tout cela doit provenir du fait que pas mal de métiers dans le web sont nouveaux,
+dont celui de &quot;développeur web front end&quot; et que du coup, peu de personnes ont
+initialement suivi des formations appropriés (pour ma part je proviens d&#39;une
+formation <em>d&#39;analyste-programmeur</em>, conception et développement software quoi).
+Je remarque que niveau back-end il y a beaucoup moins de lacunes, du fait que
+les problématiques gérées de ce côté sont (il me semble) moins nouvelles.</p>
+<p>Bref. Je ne vais pas m&#39;éterniser sur une intro du pourquoi on met en place un task
+runner, ni faire une comparaison entre Make, Rake, Cake, Jake, Grunt, Brunch
+et Broccoli.
+Rentrons dans le vif. Parlons Gulp.</p>
+<h1 id="pourquoi-gulp">Pourquoi Gulp</h1>
+<p>Je vais faire court. Pour faire simple, son point fort réside dans le fait qu&#39;il utilise des
+<a href="http://dailyjs.com/2012/09/10/streams/">streams</a> (tl;dr: un flux de données - en mémoire)
+et qu&#39;il limite au maximum l&#39;utilisation de fichiers.
+Au point qu&#39;il existe une <a href="https://github.com/godaddy/gulp-header/issues/4#issuecomment-32111457">police Gulp</a>
+pour vous dire.
+Si vous voulez en savoir plus sur les streams, n&#39;hésitez pas à lire l&#39;article de
+Nicolas Froidure <a href="http://www.insertafter.com/articles-gulp_vs_grunt.html">Gulp remplacera-t-il Grunt ?</a>
+qui contient une partie explicative sur les streams.</p>
+<p>Dans la pratique cela évite d&#39;avoir un gruntfile qui, si on imagine une task
+sass -&gt; autoprefixer -&gt; csso, passe <a href="/posts/css/mise-en-place-autoprefixer/#autoprefixer-avec-grunt">3 fois par des lectures/écritures sur le système
+de fichiers</a>.</p>
+<figure>
+  <img src="http://jaysoo.ca/images/grunt-flow-2.png" alt="">
+  <figcaption>Sans stream</figcaption>
+</figure>
+
+<p>Et du coup au lieu d&#39;avoir un fichier de conf d&#39;une soixantaine de lignes, on arrive
+à avoir <a href="http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/#autoprefixer-avec-gulp">quelque chose de concis</a>
+(une vingtaine de ligne seulement).</p>
+<figure>
+  <img src="http://jaysoo.ca/images/gulp-flow.png" alt="">
+  <figcaption>Avec stream</figcaption>
+</figure>
+
+<h2 id="installation">Installation</h2>
+<p>Pour avoir la commande globale sur le système (comme grunt-cli) :</p>
+<pre><code class="lang-shell"><span class="hljs-variable">$ </span>npm i -g gulp
+</code></pre>
+<p>Ensuite dans votre projet :</p>
+<pre><code class="lang-shell">$ npm i <span class="hljs-attribute">-D</span> gulp gulp<span class="hljs-attribute">-util</span> gulp<span class="hljs-attribute">-plumber</span> gulp<span class="hljs-attribute">-WHATEVER</span>
+</code></pre>
+<p><em>Note : <code>npm i -D</code> == <code>npm install --save-dev</code>, c&#39;est cadeau.</em></p>
+<p>Bon dans mon exemple j&#39;ai mis un peu n&#39;importe quoi, donc on va faire un mini workflow de hipster hacker.</p>
+<h2 id="utilisation">Utilisation</h2>
+<p>On part avec une tâche très simple : pré-processeur CSS <a href="http://myth.io">Myth</a> et
+optimisation avec <a href="https://github.com/css/csso">CSSO</a>.</p>
+<pre><code class="lang-shell">$ mkdir putaindegulp <span class="hljs-subst">&amp;&amp;</span> cd putaindegulp
+$ npm init
+$ npm i <span class="hljs-attribute">-D</span> gulp gulp<span class="hljs-attribute">-util</span> gulp<span class="hljs-attribute">-plumber</span> gulp<span class="hljs-attribute">-myth</span> gulp<span class="hljs-attribute">-csso</span> minimist
+</code></pre>
+<pre><code class="lang-js">var gulp = require(<span class="hljs-string">"gulp"</span>)
+  , gutil = require(<span class="hljs-string">"gulp-util"</span>)
+  , plumber = require(<span class="hljs-string">"gulp-plumber"</span>)
+  , myth = require(<span class="hljs-string">"gulp-myth"</span>)
+  , csso = require(<span class="hljs-string">"gulp-csso"</span>)
+  , options = require(<span class="hljs-string">"minimist"</span>)(process<span class="hljs-preprocessor">.argv</span><span class="hljs-preprocessor">.slice</span>(<span class="hljs-number">2</span>))
+
+gulp<span class="hljs-preprocessor">.task</span>(<span class="hljs-string">"styles"</span>, function() {
+  gulp<span class="hljs-preprocessor">.src</span>(<span class="hljs-string">"./src/css/*.css"</span>)
+    <span class="hljs-preprocessor">.pipe</span>(options<span class="hljs-preprocessor">.production</span> ? plumber() : gutil<span class="hljs-preprocessor">.noop</span>())
+    <span class="hljs-preprocessor">.pipe</span>(myth({sourcemap: !options<span class="hljs-preprocessor">.production</span>}))
+    <span class="hljs-preprocessor">.pipe</span>(options<span class="hljs-preprocessor">.production</span> ? csso() : gutil<span class="hljs-preprocessor">.noop</span>())
+    <span class="hljs-preprocessor">.pipe</span>(gulp<span class="hljs-preprocessor">.dest</span>(<span class="hljs-string">"./dist/css/"</span>))
+})
+
+gulp<span class="hljs-preprocessor">.task</span>(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], function() {
+  gulp<span class="hljs-preprocessor">.watch</span>(<span class="hljs-string">"./src/css/**/*"</span>, [<span class="hljs-string">"styles"</span>])
+})
+</code></pre>
+<p>Voilà c&#39;est tout. Et heureusement.</p>
+<p>Bon, on se refait l&#39;exemple commenté :</p>
+<pre><code class="lang-js"><span class="hljs-comment">// bah là ok, on est obligé d'y passer pour avoir l'API Gulp</span>
+<span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp"</span>)
+
+<span class="hljs-comment">// Ça c'est optionnel, c'est pour avoir (entre autres la méthode noop())</span>
+<span class="hljs-comment">// je reviens dessus après</span>
+<span class="hljs-comment">// https://github.com/gulpjs/gulp-util</span>
+  , gutil = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-util"</span>)
+
+<span class="hljs-comment">// Là on a Mario le plombier qui fixe la tuyauterie foireuse.</span>
+<span class="hljs-comment">// Ce plugin patch le problème de stream avec node.js qui fait que tout le process</span>
+<span class="hljs-comment">// explose à la moindre erreur (pas pratique en cas de watch par exemple)</span>
+<span class="hljs-comment">// en gros, il remplace la méthode pipe et attrape les erreurs pour les ressortir gentiment</span>
+<span class="hljs-comment">// https://gist.github.com/floatdrop/8269868</span>
+  , plumber = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-plumber"</span>)
+
+<span class="hljs-comment">// Ici, rien de magique, du plugin en veux-tu en voilà</span>
+  , myth = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-myth"</span>)
+  , csso = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-csso"</span>)
+
+  <span class="hljs-comment">// ici on chope les options de la ligne de commande</span>
+  <span class="hljs-comment">// exemple: pour avoir options.production à true,</span>
+  <span class="hljs-comment">// il suffit de faire `gulp --production`</span>
+  , options = <span class="hljs-built_in">require</span>(<span class="hljs-string">"minimist"</span>)(process.argv.slice(<span class="hljs-number">2</span>))
+
+<span class="hljs-comment">// Définition d'une tâche, un nom et une fonction.</span>
+<span class="hljs-comment">// Ce qui est pratique c'est le fait de pouvoir mettre ce qu'on veut</span>
+<span class="hljs-comment">// y compris un console.log() ^^</span>
+<span class="hljs-comment">// un autre paramètre peut être ajouté avant la fonction, qui permet de préciser</span>
+<span class="hljs-comment">// les dépendances (cf task dev plus bas par exemple)</span>
+gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+
+  <span class="hljs-comment">// Ici on attrape les fichiers (glob classique)</span>
+  <span class="hljs-comment">// à la racine (on va considérer que nos fichiers finaux seront pas dans</span>
+  <span class="hljs-comment">// des sous dossiers, réservés aux partials &amp; co)</span>
+  gulp.src(<span class="hljs-string">"./src/css/*.css"</span>)
+
+    <span class="hljs-comment">// On utilise plumber que si on build en dev, sinon faut que ça pête qu'on</span>
+    <span class="hljs-comment">// soit prévenu lors d'un build pour la prod</span>
+    .pipe(options.production ? plumber() : gutil.noop())
+
+    <span class="hljs-comment">// Et là on pipe nos plugins</span>
+    <span class="hljs-comment">// toujours en jouant avec les options si besoin</span>
+    .pipe(myth({sourcemap: !options.production}))
+    .pipe(options.production ? csso() : gutil.noop())
+
+    <span class="hljs-comment">// Super important, on convertit nos streams en fichiers</span>
+    .pipe(gulp.dest(<span class="hljs-string">"./dist/css/"</span>))
+})
+
+<span class="hljs-comment">// Ici on a une tâche de dev qui lance un watch APRES avoir exécuté `styles` une fois</span>
+gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+
+  <span class="hljs-comment">// gulp.watch est natif (pas comme avec grunt)</span>
+  <span class="hljs-comment">// vous noterez qu'ici par exemple on va surveiller tous les fichiers</span>
+  <span class="hljs-comment">// et non pas ceux juste à la racine par exemple</span>
+  gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, [<span class="hljs-string">"styles"</span>])
+})
+
+<span class="hljs-comment">// Comme grunt, `gulp` sans argument lancera la tâche `default`.</span>
+</code></pre>
+<p>Bien entendu, vous avez déjà compris que si vous voulez remplacer myth par Sass,
+c&#39;est l&#39;histoire de 4 secondes.</p>
+<h2 id="putain-de-code-approuve-gulp-">Putain de Code approuve Gulp.</h2>
+<p>Ici on est carrément fan de Gulp. Il faut bien avouer que
+<a href="https://twitter.com/putaindecode/status/460868992396460032">ça va vite</a>
+(encore plus appréciable lorsque l&#39;on n&#39;a pas de SSD) et que c&#39;est plaisant à écrire.
+Pas de configurations pas spécialement verbeuse et trop espacé.
+Avec Gulp on se sent plus libre, moins contraint.
+Du coup, <strong>on a carrément fait notre site avec Gulp</strong>
+(puis au passage un petit refresh graphique tant qu&#39;à faire).</p>
+<p>Pour aller plus loin, vous n&#39;avez qu&#39;à ouvrir notre <a href="https://github.com/putaindecode/website/blob/master/Gulpfile.js">Gulpfile</a>
+et regarder nos <a href="https://github.com/putaindecode/website/tree/master/tasks">tasks</a>
+qui vont de <a href="https://github.com/putaindecode/website/blob/master/tasks/clean.js">la plus simple</a>
+à <a href="https://github.com/putaindecode/website/blob/master/tasks/contributors.js">la plus compliqué</a>.</p>
+<p>Pour voir des tâches plus &quot;real world example&quot; je vous invite à regarder les tasks suivantes :</p>
+<ul>
+<li><a href="https://github.com/putaindecode/website/blob/master/tasks/server.js">server</a>,
+le server de dév local avec livereload dedans;</li>
+<li><a href="https://github.com/putaindecode/website/blob/master/tasks/watch.js">watch</a>,
+le classique et si simple watcher;</li>
+<li><a href="https://github.com/putaindecode/website/blob/master/tasks/publish.js">publish</a>,
+la tâche pour publier le dossier <code>dist/</code> sur les <a href="https://pages.github.com/">gh-pages</a></li>
+<li><a href="https://github.com/putaindecode/website/blob/master/tasks/icons.js">icons</a>,
+qui transforme des svg en font d&#39;icones avec le bout de CSS qui va bien;</li>
+<li><a href="https://github.com/putaindecode/website/blob/master/tasks/scripts-linting.js">scripts-linting</a>,
+qui vérifie la qualité du code;</li>
+<li><a href="https://github.com/putaindecode/website/blob/master/tasks/scripts.js">scripts</a>,
+du <a href="/posts/js/browserify-all-the-things/">browserify</a> pour nos js côté client;</li>
+<li><a href="https://github.com/putaindecode/website/blob/master/tasks/stylesheets.js">stylesheets</a>,
+notre tâche qui mélange (pour l&#39;instant) stylus et rework (suite à une rixe à la récré, on n&#39;a pas réussi à se mettre d&#39;accord, donc chacun à rajouté son morceau);</li>
+</ul>
+<p>Bien entendu, si vous ne comprenez pas certaines parties, n&#39;hésitez pas à
+<a href="https://github.com/putaindecode/website/issues/new">ouvrir une issue</a>
+pour demander des explications.</p>
+<h2 id="vous-reprendrez-bien-un-peu-de-gulp-pardon-">Vous reprendrez bien un peu de... Gulp* ! Pardon.</h2>
+<p>Si vous avez encore envie de détails je vous renvois sur l&#39;article anglais
+<a href="http://markgoodyear.com/2014/01/getting-started-with-gulp/">Getting started with gulp</a>
+qui détaille tellement bien chaque point que même un anglophobe comprendrait.</p>
+<p>Vous avez aussi
+<a href="https://github.com/gulpjs/gulp/blob/master/docs/README.md">une documentation</a>
+très bien faite, qui comporte carrément
+<a href="https://github.com/gulpjs/gulp/tree/master/docs/recipes">des exemples <em>officiels</em> tout prêt</a>.</p>
+<p>Comme je vous disais plus tôt, les auteurs de Gulp sont assez carrés et &quot;valident&quot;
+(ou plutôt <em>invalident</em>) <a href="https://npmjs.org/search?q=gulpplugin">les plugins</a> qui
+ne respectent pas les
+<a href="https://github.com/gulpjs/gulp/blob/master/docs/writing-a-plugin/guidelines.md">règles</a>.
+Je trouve que c&#39;est gage de qualité.</p>
+<p>Pour finir quelques liens pour ceux qui en veulent toujours plus :</p>
+<ul>
+<li><a href="http://www.insertafter.com/articles-retour_experience_gulp.html">Gulp : Retour d&#39;expérience</a></li>
+<li><a href="http://jaysoo.ca/2014/01/27/gruntjs-vs-gulpjs/">Grunt vs. Gulp, au-delà des chiffres</a> (anglais)</li>
+</ul>
+<pre><code class="lang-shell"><span class="hljs-variable">$ </span>gulp bisous
+❯ ♡ 😘
+</code></pre>
+
+]]></description><pubDate>Tue, 29 Apr 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/introduction-gulp/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/introduction-gulp/</guid></item><item><title>Les post-processeurs CSS</title><description><![CDATA[[
 <p>Vous avez surement entendu parler des <a href="http://iamvdo.me/blog/les-postprocesseurs-css"><em>post-processeurs CSS</em></a>.
 J&#39;ai personnellement pas mal fait référence à <del>ce concept</del> cette expression ces derniers temps.
 Que ce soit lorsque je vous racontais
@@ -2107,7 +2314,60 @@ animal.isPrototypeOf(myCat) <span class="hljs-comment">// true</span>
 </code></pre>
 <p>Voilà, j&#39;espère que cela a pu attiser ta curiosité d&#39;en apprendre plus sur le langage lui-même et le DOM.</p>
 
-]]></description><pubDate>Fri, 06 Dec 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/comment-se-passer-de-libraries-frameworks-javascript/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/comment-se-passer-de-libraries-frameworks-javascript/</guid></item><item><title>De jQuery à Vanilla JS</title><description><![CDATA[[
+]]></description><pubDate>Fri, 06 Dec 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/comment-se-passer-de-libraries-frameworks-javascript/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/comment-se-passer-de-libraries-frameworks-javascript/</guid></item><item><title>ExternalInterface.call() de Flash (et Backbone), toute une histoire</title><description><![CDATA[[
+<figure class="putainde-Media putainde-Media--left"><img src="../../../images/posts/occupyflash.png" alt=""></figure>
+
+<p>Je voulais vous parler d&#39;un bug qui m&#39;a bien emmerdé récemment et comme j&#39;aimerais que vous ne perdiez pas de temps avec cela, un article s&#39;imposait.</p>
+<p><em>Note de la direction : j&#39;y connais rien en Flash (et je ne crois pas avoir trop envie de connaître en fait).</em></p>
+<p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu&#39;il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d&#39;un autre article. (Je dis ça à chaque fois, haha).</p>
+<h2 id="le-pitch">Le pitch</h2>
+<p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu&#39;il le souhaite afin de communiquer avec l&#39;application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l&#39;avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d&#39;évènement mais vous en avez d&#39;<a href="http://microjs.com/#event">autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
+<pre><code class="lang-javascript"> // on crée un objet vide
+App<span class="hljs-preprocessor">.FlashManager</span><span class="hljs-preprocessor">.Events</span> = {}
+
+// on lui ajoute les fonctionnalités des events Backbone
+_<span class="hljs-preprocessor">.extend</span>(App<span class="hljs-preprocessor">.FlashManager</span><span class="hljs-preprocessor">.Events</span>, Backbone<span class="hljs-preprocessor">.Events</span>)
+</code></pre>
+<p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d&#39;évènement façon Backbone</a>. Il pourra alors s&#39;écouter lui-même, écouter un autre objet, mais aussi déclencher des évènements.</p>
+<h2 id="c-t-flash">Côté Flash</h2>
+<p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l&#39;objet <code>ExternalInterface</code> :</p>
+<pre><code class="lang-javascript">ExternalInterface<span class="hljs-preprocessor">.call</span>(<span class="hljs-string">"window.App.FlashManager.Events.trigger"</span>, <span class="hljs-string">"my-event"</span>)
+// http://help<span class="hljs-preprocessor">.adobe</span><span class="hljs-preprocessor">.com</span>/en_US/FlashPlatform/reference/actionscript/<span class="hljs-number">3</span>/flash/external/ExternalInterface<span class="hljs-preprocessor">.html</span><span class="hljs-preprocessor">#call</span>
+</code></pre>
+<p>Et là, bug.</p>
+<h2 id="pourquoi-bug-">Pourquoi bug ?</h2>
+<p>Pour le moment, je ne sais pas vraiment. Je me pencherai plus sur le sujet dès que j&#39;ai un peu de temps, mais ce que je sais, c&#39;est que <code>ExtercalInterface.call()</code> ne s&#39;attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l&#39;<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153">objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur.</p>
+<h2 id="la-solution-c-t-javascript">La solution côté JavaScript</h2>
+<p>Pour contrer cela, je vous propose la solution suivante qui est de ne pas utiliser directement l&#39;objet <code>Backbone.Events|View</code> mais plutôt de passer par une interface, un objet proxy.</p>
+<p>Voici le schéma :</p>
+<ul>
+<li>Créer un objet simple qui contient les mêmes noms de méthodes que les objets évènements <strong>Backbone.js</strong> (en gros, se mapper sur l&#39;API Backbone)</li>
+<li>Utiliser <strong>Backbone.js</strong> dans les méthodes de cet objet <em>Proxy</em></li>
+</ul>
+<p>Exemple :</p>
+<pre><code class="lang-javascript">// Bridge between flash <span class="hljs-keyword">and</span> js
+App<span class="hljs-preprocessor">.FlashManager</span> = {}
+App<span class="hljs-preprocessor">.FlashManager</span><span class="hljs-preprocessor">.Events</span> = {}
+
+// Backbone events used for Flash
+App<span class="hljs-preprocessor">.InternalFlashManager</span> = {}
+App<span class="hljs-preprocessor">.InternalFlashManager</span><span class="hljs-preprocessor">.Events</span> = {}
+
+_<span class="hljs-preprocessor">.extend</span>(App<span class="hljs-preprocessor">.InternalFlashManager</span><span class="hljs-preprocessor">.Events</span>, Backbone<span class="hljs-preprocessor">.Events</span>)
+
+App<span class="hljs-preprocessor">.FlashManager</span><span class="hljs-preprocessor">.Events</span><span class="hljs-preprocessor">.trigger</span> = function(name, opts) {
+    App<span class="hljs-preprocessor">.InternalFlashManager</span><span class="hljs-preprocessor">.Events</span><span class="hljs-preprocessor">.trigger</span>(name, opts)
+
+    // Must return nothing not to loop JavaScript engine, important!
+    return
+}
+</code></pre>
+<h2 id="oh-et-">Oh et...</h2>
+<p>...il existe une version ayant plus ou moins le même souci que moi disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript retourne quelque chose de simple (un objet ayant que des atributs, pas de fonctions, ou encore un bouléen ou un <em>integer</em>).</p>
+
+]]></description><pubDate>Thu, 05 Dec 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</guid></item><item><title>De jQuery à Vanilla JS</title><description><![CDATA[[
 <figure class="putainde-Media putainde-Media--left"><img src="../../../images/posts/jquery-die.jpg" alt=""></figure>
 
 <p>Oui alors jQuery, c&#39;est sûrement très bien, ça simplifie pas mal de choses et le <em>chaining</em> est intéressant mais eeeest-ce que vous connaissez l&#39;équivalent en <em>pur</em> JavaScript ? Pas sûr hein.</p>
@@ -2269,60 +2529,7 @@ document.body.appendChild(scr)
 <h2 id="a-creuser">A creuser</h2>
 <p>Il existe une version minimaliste de jQuery basée sur la même API mais beaucoup plus légère s&#39;appelant <a href="http://zeptojs.com/">Zepto</a>. Il est actuellement utilisé en production sur le site mobile de ma boite.</p>
 
-]]></description><pubDate>Thu, 05 Dec 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/</guid></item><item><title>ExternalInterface.call() de Flash (et Backbone), toute une histoire</title><description><![CDATA[[
-<figure class="putainde-Media putainde-Media--left"><img src="../../../images/posts/occupyflash.png" alt=""></figure>
-
-<p>Je voulais vous parler d&#39;un bug qui m&#39;a bien emmerdé récemment et comme j&#39;aimerais que vous ne perdiez pas de temps avec cela, un article s&#39;imposait.</p>
-<p><em>Note de la direction : j&#39;y connais rien en Flash (et je ne crois pas avoir trop envie de connaître en fait).</em></p>
-<p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu&#39;il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d&#39;un autre article. (Je dis ça à chaque fois, haha).</p>
-<h2 id="le-pitch">Le pitch</h2>
-<p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu&#39;il le souhaite afin de communiquer avec l&#39;application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l&#39;avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d&#39;évènement mais vous en avez d&#39;<a href="http://microjs.com/#event">autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
-<pre><code class="lang-javascript"> // on crée un objet vide
-App<span class="hljs-preprocessor">.FlashManager</span><span class="hljs-preprocessor">.Events</span> = {}
-
-// on lui ajoute les fonctionnalités des events Backbone
-_<span class="hljs-preprocessor">.extend</span>(App<span class="hljs-preprocessor">.FlashManager</span><span class="hljs-preprocessor">.Events</span>, Backbone<span class="hljs-preprocessor">.Events</span>)
-</code></pre>
-<p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d&#39;évènement façon Backbone</a>. Il pourra alors s&#39;écouter lui-même, écouter un autre objet, mais aussi déclencher des évènements.</p>
-<h2 id="c-t-flash">Côté Flash</h2>
-<p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l&#39;objet <code>ExternalInterface</code> :</p>
-<pre><code class="lang-javascript">ExternalInterface<span class="hljs-preprocessor">.call</span>(<span class="hljs-string">"window.App.FlashManager.Events.trigger"</span>, <span class="hljs-string">"my-event"</span>)
-// http://help<span class="hljs-preprocessor">.adobe</span><span class="hljs-preprocessor">.com</span>/en_US/FlashPlatform/reference/actionscript/<span class="hljs-number">3</span>/flash/external/ExternalInterface<span class="hljs-preprocessor">.html</span><span class="hljs-preprocessor">#call</span>
-</code></pre>
-<p>Et là, bug.</p>
-<h2 id="pourquoi-bug-">Pourquoi bug ?</h2>
-<p>Pour le moment, je ne sais pas vraiment. Je me pencherai plus sur le sujet dès que j&#39;ai un peu de temps, mais ce que je sais, c&#39;est que <code>ExtercalInterface.call()</code> ne s&#39;attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l&#39;<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153">objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur.</p>
-<h2 id="la-solution-c-t-javascript">La solution côté JavaScript</h2>
-<p>Pour contrer cela, je vous propose la solution suivante qui est de ne pas utiliser directement l&#39;objet <code>Backbone.Events|View</code> mais plutôt de passer par une interface, un objet proxy.</p>
-<p>Voici le schéma :</p>
-<ul>
-<li>Créer un objet simple qui contient les mêmes noms de méthodes que les objets évènements <strong>Backbone.js</strong> (en gros, se mapper sur l&#39;API Backbone)</li>
-<li>Utiliser <strong>Backbone.js</strong> dans les méthodes de cet objet <em>Proxy</em></li>
-</ul>
-<p>Exemple :</p>
-<pre><code class="lang-javascript">// Bridge between flash <span class="hljs-keyword">and</span> js
-App<span class="hljs-preprocessor">.FlashManager</span> = {}
-App<span class="hljs-preprocessor">.FlashManager</span><span class="hljs-preprocessor">.Events</span> = {}
-
-// Backbone events used for Flash
-App<span class="hljs-preprocessor">.InternalFlashManager</span> = {}
-App<span class="hljs-preprocessor">.InternalFlashManager</span><span class="hljs-preprocessor">.Events</span> = {}
-
-_<span class="hljs-preprocessor">.extend</span>(App<span class="hljs-preprocessor">.InternalFlashManager</span><span class="hljs-preprocessor">.Events</span>, Backbone<span class="hljs-preprocessor">.Events</span>)
-
-App<span class="hljs-preprocessor">.FlashManager</span><span class="hljs-preprocessor">.Events</span><span class="hljs-preprocessor">.trigger</span> = function(name, opts) {
-    App<span class="hljs-preprocessor">.InternalFlashManager</span><span class="hljs-preprocessor">.Events</span><span class="hljs-preprocessor">.trigger</span>(name, opts)
-
-    // Must return nothing not to loop JavaScript engine, important!
-    return
-}
-</code></pre>
-<h2 id="oh-et-">Oh et...</h2>
-<p>...il existe une version ayant plus ou moins le même souci que moi disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
-<h2 id="conclusion">Conclusion</h2>
-<p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript retourne quelque chose de simple (un objet ayant que des atributs, pas de fonctions, ou encore un bouléen ou un <em>integer</em>).</p>
-
-]]></description><pubDate>Thu, 05 Dec 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</guid></item><item><title>Premiers pas avec Grunt</title><description><![CDATA[[
+]]></description><pubDate>Thu, 05 Dec 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/</guid></item><item><title>Premiers pas avec Grunt</title><description><![CDATA[[
 <figure class="putainde-Media putainde-Media--left"><img src="../../../images/posts/gruntjs.png" alt=""></figure>
 
 <p>Vous avez sûrement déjà entendu parler de <strong>Grunt</strong> à droite à gauche, en conférence, voire votre boite l&#39;utilise déjà mais vous ne savez toujours pas trop ce qui se cache derrière ce terme saugrenu digne d&#39;un personnage de Warcraft. Soit, ce n&#39;est pas bien grave. <strong>Grunt</strong> est simplement un <em>JavaScript Task Runner</em>, un outil vous permettant de créer des tâches automatisées en JavaScript. Forcément ce n&#39;est pas très parlant mais c&#39;est tout l&#39;intérêt de cet article, vous expliquer ce qu&#39;est <strong>Grunt</strong> et pourquoi il peut vous être utile dans un <em>workflow</em> de front-end dev.</p>
