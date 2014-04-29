@@ -222,25 +222,13 @@ module.exports = {
 }
 
 },{"./lib/create":6,"./lib/hasMethod":7,"bloody-collections/lib/extend":11}],6:[function(require,module,exports){
-// from lodash
-var toString = Object.prototype.toString
-  , isNativeRE = RegExp('^' +
-      String(toString)
-        .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-        .replace(/toString| for [^\]]+/g, '.*?') + '$'
-    )
-
-if(Object.create && isNativeRE.test(Object.create)) {
-  module.exports = Object.create
-  return
-}
-
-module.exports = function(object){
-  function F(){}
-  F.prototype = object
-  return new F()
-}
-
+module.exports =
+  Object.create ||
+  function(object){
+    function F(){}
+    F.prototype = object
+    return new F()
+  }
 },{}],7:[function(require,module,exports){
 module.exports = function(object, property){
   return typeof object[property] == "function"
