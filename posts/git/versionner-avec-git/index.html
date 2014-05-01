@@ -1,19 +1,19 @@
 <!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Versionner avec Git</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="Versionner avec Git"/><meta name="twitter:creator" content="@madx"/><meta name="twitter:image" content="http://www.gravatar.com/avatar/96006f57ca92ec95713532129b039d9c.png?s=200"/><meta property="og:title" content="Versionner avec Git"/><meta property="og:type" content="article"/><meta property="og:image" content="http://www.gravatar.com/avatar/96006f57ca92ec95713532129b039d9c.png?s=200"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size7of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size5of12"><nav class="putainde-Nav"><a href="../.." class="putainde-Nav-item">Les posts</a><a href="../../comment-contribuer" class="putainde-Nav-item">Contribuer</a><a href="irc://irc.freenode.net/putaindecode" class="putainde-Nav-item">IRC</a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Versionner avec Git</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas">Écrit par madx,<span class="putainde-Date"> le 6 nov. 2013</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">git</li></ul></header><div class="putainde-Post-md"><p>Chez Putain de Code, on aime se servir de <a href="http://git-scm.com/">Git</a> (et de GitHub, mais
-c&#39;est une autre histoire), même si certains d&#39;entre nous (comme Lionel) ne s&#39;en
+c’est une autre histoire), même si certains d’entre nous (comme Lionel) ne s’en
 servent pas forcément bien.</p>
-<p>Pour éviter ce genre de mésaventures, on s&#39;est dit qu&#39;on allait consacrer une
-série d&#39;articles à ce merveilleux gestionnaire de versions, et de vous en faire
+<p>Pour éviter ce genre de mésaventures, on s’est dit qu’on allait consacrer une
+série d’articles à ce merveilleux gestionnaire de versions, et de vous en faire
 profiter par la même occasion.</p>
-<p>Et si Git permet de faire à peu près ce qu&#39;on veut sur un dépôt, vous verrez
-qu&#39;on peut assez facilement réparer ses erreurs (et même celles des autres
+<p>Et si Git permet de faire à peu près ce qu’on veut sur un dépôt, vous verrez
+qu’on peut assez facilement réparer ses erreurs (et même celles des autres
 parfois !).</p>
-<h2 id="c-est-quoi-git-">C&#39;est quoi Git ?</h2>
+<h2 id="c-est-quoi-git-">C’est quoi Git ?</h2>
 <p>Si vous êtes un développeur un tant soit peu consciencieux, vous utilisez un
-gestionnaire de versions pour suivre l&#39;évolution de votre code. Non,
-<a href="http://roland.entierement.nu/blog/2008/01/22/cpold-la-poudre-verte-du-suivi-de-versions.html">CPOLD</a> n&#39;est pas un gestionnaire de versions.</p>
-<p>Git, c&#39;est un gestionnaire de versions décentralisé, aussi connu sous le terme
+gestionnaire de versions pour suivre l’évolution de votre code. Non,
+<a href="http://roland.entierement.nu/blog/2008/01/22/cpold-la-poudre-verte-du-suivi-de-versions.html">CPOLD</a> n’est pas un gestionnaire de versions.</p>
+<p>Git, c’est un gestionnaire de versions décentralisé, aussi connu sous le terme
 de DVCS (pour Distributed Version Control System) pour les amateurs.</p>
-<p>Le terme <em>distribué</em> est très important car c&#39;est ce qui le différencie d&#39;autres
+<p>Le terme <em>distribué</em> est très important car c’est ce qui le différencie d’autres
 gestionnaires historiquement plus connus comme Subversion (SVN) ou le vénérable
 CVS.</p>
 <p>Ça veut dire que chaque développeur possède sa propre copie du dépôt, chez lui,
@@ -21,22 +21,22 @@ localement, contraîrement à un gestionnaire centralisé ou tout est… central
 sur un même serveur (merci Captain Obvious).</p>
 <p>Git est principalement utilisable en ligne de commande, mais il existe des
 interfaces graphiques sous les principaux OS du marché (OS X, Linux, Windows).
-Ici on va traiter de la ligne de commande, car c&#39;est l&#39;arme de base du bon
+Ici on va traiter de la ligne de commande, car c’est l’arme de base du bon
 développeur.</p>
-<p>Je vous passe l&#39;installation, référez-vous à la documentation officielle pour
+<p>Je vous passe l’installation, référez-vous à la documentation officielle pour
 cette partie. (Ça se résume souvent à un <code>nom-du-package-manager install git</code>)</p>
 <h2 id="comment-a-marche-">Comment ça marche ?</h2>
-<p>Avant d&#39;attaquer la partie pratique, on va s&#39;attarder un peu à comment Git
-fonctionne, parce qu&#39;à mon sens c&#39;est essentiel pour comprendre rapidement ce
-qu&#39;il est possible de faire et pour se construire un modèle mental des
+<p>Avant d’attaquer la partie pratique, on va s’attarder un peu à comment Git
+fonctionne, parce qu’à mon sens c’est essentiel pour comprendre rapidement ce
+qu’il est possible de faire et pour se construire un modèle mental des
 opérations.</p>
 <p>Dans Git les commits sont tous reliés avec leur(s) parent(s) comme les maillons
-d&#39;une chaîne qui pourrait avoir des bifurcations. Chaque commit stocke des
-informations sur l&#39;état du dépôt à un instant donné (l&#39;état complet, pas
+d’une chaîne qui pourrait avoir des bifurcations. Chaque commit stocke des
+informations sur l’état du dépôt à un instant donné (l’état complet, pas
 uniquement un diff).</p>
 <p>On construit cette chaîne et ses bifurcations en créant des commits, en
 branchant et en fusionant une branche dans une autre.</p>
-<p>Enfin, une dernière chose que vous devez garder en tête c&#39;est qu&#39;un commit est
+<p>Enfin, une dernière chose que vous devez garder en tête c’est qu’un commit est
 définitif dans le sens ou on ne pourra jamais modifier son contenu (on pourra
 par contre le remplacer par un autre). Comme il est unique, il a un numéro qui
 est un haché <code>SHA1</code> de diverses informations.</p>
@@ -50,45 +50,45 @@ bien nommé <code>git clone</code>.</p>
 <p>Appellé sans argument, <code>git init</code> initialise un dépôt dans le dossier courant,
 on peut lui passer un nom de dépôt en argument pour le créer dans un
 sous-dossier spécifique du dossier courant.</p>
-<p>Du côté de <code>git clone</code>, on va passer l&#39;adresse d&#39;un dépôt, et optionnellement un
-nom local pour le dépôt. Il va récupérer le dépôt à l&#39;adresse spécifiée (c&#39;est
+<p>Du côté de <code>git clone</code>, on va passer l’adresse d’un dépôt, et optionnellement un
+nom local pour le dépôt. Il va récupérer le dépôt à l’adresse spécifiée (c’est
 bien foutu hein ?) puis le mettre soit dans un dossier du même nom soit dans un
 dossier du nom spécifié en dernier argument.</p>
 <p>Par exemple, si je veux cloner le dépôt du site :</p>
 <pre><code class="lang-bash"><span class="hljs-variable">$ </span>git clone <span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/github.com/putaindecode</span><span class="hljs-regexp">/website.git</span>
 </code></pre>
 <p>Ça va créer un dossier <code>website</code> avec le contenu du dépôt.</p>
-<p><code>clone</code> accepte plusieurs types d&#39;adresse : HTTP(S), SSH, protocole Git dédié et
+<p><code>clone</code> accepte plusieurs types d’adresse : HTTP(S), SSH, protocole Git dédié et
 même des chemins locaux pour cloner un dépôt situé ailleurs sur le système de
 fichiers.</p>
 <p>Pour la suite, il va falloir se placer dans un dépôt avec le petit <code>cd</code> qui va
 bien pour lancer les vraies commandes intéressantes de Git.</p>
 <h2 id="premiers-commits">Premiers commits</h2>
-<p>Pour commencer à s&#39;amuser, écrivez un bout de code dans un fichier et
+<p>Pour commencer à s’amuser, écrivez un bout de code dans un fichier et
 sauvegardez le :</p>
 <pre><code class="lang-bash"><span class="hljs-variable">$ </span>cat &gt; putain_de_hello_world.rb
 puts <span class="hljs-string">"Hello, putain de codeur !"</span>
 ^<span class="hljs-constant">D</span>
 </code></pre>
-<p>On va tout se suite introduire l&#39;un des concepts déroutants de Git, <em>l&#39;Index</em>.
+<p>On va tout se suite introduire l’un des concepts déroutants de Git, <em>l’Index</em>.
 Git utilise trois zones distinctes pour les fichiers : le dossier de travail
-(<em>Working Dir</em>) qui contient les fichiers dans leur version actuelle, <em>l&#39;Index</em>
+(<em>Working Dir</em>) qui contient les fichiers dans leur version actuelle, <em>l’Index</em>
 qui permet de stocker les modifications et <code>HEAD</code> qui pointe vers le dernier
 commit.</p>
-<p>L&#39;idée, c&#39;est qu&#39;on peut modifier les fichiers comme on le souhaite, et
-constuire le commit avec seulement les modifications que l&#39;on souhaite voir
+<p>L’idée, c’est qu’on peut modifier les fichiers comme on le souhaite, et
+constuire le commit avec seulement les modifications que l’on souhaite voir
 apparaître.</p>
-<p>Cette possibilité permet d&#39;avoir des commits atomiques, c&#39;est à dire qui
+<p>Cette possibilité permet d’avoir des commits atomiques, c’est à dire qui
 introduisent une modification simple. Ça évite de se retrouver avec un commit
-mammouth qui change tout le programme d&#39;un coup et qui est un enfer pour le
+mammouth qui change tout le programme d’un coup et qui est un enfer pour le
 futur développeur qui revient sur le code et qui cherche à comprendre la logique
-de sa construction. Ce développeur, c&#39;est vous dans 1 ou 2 semaines.</p>
-<p>Pour info, vous verrez parfois <em>l&#39;Index</em> appellé <em>Staging Area</em>, ou encore
+de sa construction. Ce développeur, c’est vous dans 1 ou 2 semaines.</p>
+<p>Pour info, vous verrez parfois <em>l’Index</em> appellé <em>Staging Area</em>, ou encore
 <em>Cache</em>.</p>
-<p>Git fournit des commandes pour passer les fichiers d&#39;un état à l&#39;autre. Elles
-sont certes parfois un peu obscures, mais dans l&#39;ensemble c&#39;est pas si
+<p>Git fournit des commandes pour passer les fichiers d’un état à l’autre. Elles
+sont certes parfois un peu obscures, mais dans l’ensemble c’est pas si
 difficile.</p>
-<p>Dans notre cas, notre fichier n&#39;est même pas encore suivi par Git ! Vous pouvez
+<p>Dans notre cas, notre fichier n’est même pas encore suivi par Git ! Vous pouvez
 vérifier ça en utilisant <code>git status</code>, dont vous ne pourrez bientôt plus vous
 passer :</p>
 <pre><code class="lang-bash">$ git status
@@ -102,10 +102,10 @@ passer :</p>
 <span class="hljs-preprocessor">#    putain_de_hello_world.rb</span>
 Aucune modification indexée mais des fichiers non suivis sont présents (utilisez <span class="hljs-string">"git add"</span> pour les suivre)
 </code></pre>
-<p>Pour pallier celà, on utilise <code>git add</code> pour l&#39;ajouter direct à l&#39;index.</p>
+<p>Pour pallier celà, on utilise <code>git add</code> pour l’ajouter direct à l’index.</p>
 <p>Dans notre cas, ça donne <code>git add putain_de_hello_world.rb</code></p>
 <p>On peut utilise <code>git add</code> pour ajouter des dossiers entiers, des motifs, … Mais
-soyez vigilants, c&#39;est une bonne source d&#39;erreurs souvent chiantes.</p>
+soyez vigilants, c’est une bonne source d’erreurs souvent chiantes.</p>
 <p>Vous pouvez vérifier que <code>git add</code> a bien marché avec la commande <code>git status</code>,</p>
 <pre><code class="lang-bash">$ git status
 <span class="hljs-preprocessor"># Sur la branche master</span>
@@ -118,25 +118,25 @@ soyez vigilants, c&#39;est une bonne source d&#39;erreurs souvent chiantes.</p>
 <span class="hljs-preprocessor">#    nouveau : putain_de_hello_world.rb</span>
 <span class="hljs-preprocessor">#</span>
 </code></pre>
-<p>Ok c&#39;est prêt ! On lance maintenant <code>git commit</code> pour créer notre premier commit
+<p>Ok c’est prêt ! On lance maintenant <code>git commit</code> pour créer notre premier commit
 (pas con le <em>naming</em> de la commande hein ?). Si tout se passe bien vous devriez
-avoir un éditeur qui s&#39;ouvre pour écrire un message de commit. Prenez l&#39;habitude
+avoir un éditeur qui s’ouvre pour écrire un message de commit. Prenez l’habitude
 de décrire votre changement sur la première ligne succintement et, si vous avez
 besoin de détails, sautez une ligne et détaillez les modifications.</p>
-<p>Un petit <code>git status</code> nous confirme qu&#39;on s&#39;est pas foiré (la preuve, tout est
+<p>Un petit <code>git status</code> nous confirme qu’on s’est pas foiré (la preuve, tout est
 propre) :</p>
 <pre><code class="lang-bash"><span class="hljs-variable">$ </span>git status
 <span class="hljs-comment"># Sur la branche master</span>
 rien à valider, la copie de travail est propre
 </code></pre>
 <h2 id="inspecter">Inspecter</h2>
-<p>Bon, c&#39;est bien beau de commiter, mais à un moment on arrive sur un projet en
+<p>Bon, c’est bien beau de commiter, mais à un moment on arrive sur un projet en
 cours et on aimerait bien savoir où on en est. Pour ça vous pouvez utiliser un
 outil graphique (il y en a pour <a href="https://wiki.gnome.org/Apps/Gitg">Linux</a>, <a href="http://gitx.frim.nl/">OS X</a> et même sûrement
 Windows) ou retrousser vos poils de barbe et sortir le bon vieux <code>git log</code>.</p>
-<p>C&#39;est un vrai couteau-suisse qui va vous permettre d&#39;inspecter tout l&#39;historique
+<p>C’est un vrai couteau-suisse qui va vous permettre d’inspecter tout l’historique
 de votre dépôt, avec des options en veux-tu en voilà pour personnaliser
-l&#39;affichage.</p>
+l’affichage.</p>
 <p>Un <code>git log</code> basique ça ressemble à ça :</p>
 <pre><code class="lang-bash">$ git log
 <span class="hljs-operator"><span class="hljs-keyword">commit</span> <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
@@ -145,9 +145,9 @@ Author: madx &lt;madx+github@yapok.org&gt;
 
     Premier <span class="hljs-keyword">commit</span></span>
 </code></pre>
-<p>Oui, c&#39;est le commit que je viens de faire dans la partie précédente. Comment
-j&#39;en suis sûr ? Car je peux utiliser <code>git show</code> pour afficher les détails d&#39;un
-objet Git (il n&#39;y a pas que des commits, mais on verra ça une prochaine fois).</p>
+<p>Oui, c’est le commit que je viens de faire dans la partie précédente. Comment
+j’en suis sûr ? Car je peux utiliser <code>git show</code> pour afficher les détails d’un
+objet Git (il n’y a pas que des commits, mais on verra ça une prochaine fois).</p>
 <p><code>git show</code> prend en argument le fameux <code>SHA1</code> du commit :</p>
 <pre><code class="lang-bash">$ git show <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
 commit <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
@@ -164,15 +164,15 @@ index <span class="hljs-number">0000000.</span><span class="hljs-preprocessor">.
 @@ -<span class="hljs-number">0</span>,<span class="hljs-number">0</span> +<span class="hljs-number">1</span> @@
 +puts <span class="hljs-string">"Hello, putain de codeur !!!"</span>
 </code></pre>
-<p>Dit comme ça, ça a pas l&#39;air de casser trois pattes à un canard, mais c&#39;est la
-base de la base de la praticité. Je vous fait pas l&#39;insulte de vous expliquer le
+<p>Dit comme ça, ça a pas l’air de casser trois pattes à un canard, mais c’est la
+base de la base de la praticité. Je vous fait pas l’insulte de vous expliquer le
 détails, vous êtes sans doute assez malins pour comprendre ce que git raconte
 sur la sortie de ces deux commandes.</p>
 <p>Remarquez que <code>git show</code> affiche en bonus les différences introduites par un
 fichier. Ces différences on peut aussi les voir avant de commiter avec <code>git
 diff</code>, ce qui est bien pratique.</p>
 <p>Entraînez vous maintenant à faire des commits, à inspecter et à farfouiller les
-pages de <code>man</code>, c&#39;est la meilleure façon d&#39;apprendre. Après on va attaquer le
+pages de <code>man</code>, c’est la meilleure façon d’apprendre. Après on va attaquer le
 gros morceau, celui qui fait la force de Git.</p>
 <figure>
   <img src="../../../images/posts/memes/mind_blown.gif" alt="Mind blown">
@@ -181,21 +181,21 @@ gros morceau, celui qui fait la force de Git.</p>
 <h2 id="branchement-et-fusions">Branchement et fusions</h2>
 <p>Créer une branche, ça permet de travailler sur une fonctionnalité ou un bug
 précis, sans encombrer la ligne de conduite principale, qui peut évoluer sous
-d&#39;autres contraintes.</p>
+d’autres contraintes.</p>
 <p>Dans Git, les branches sont une partie essentielle de quasiment tout <em>workflow</em>,
 et leur manipulation est très rapide et très légère.</p>
 <p>Pour en revenir à mon histoire de maillon, créer une branche revient à créer un
 point à partir duquel deux chaînes vont être possibles.</p>
-<p>C&#39;est aussi simple qu&#39;un <code>git branch le-nom-de-ma-branche</code>. Cette commande se
+<p>C’est aussi simple qu’un <code>git branch le-nom-de-ma-branche</code>. Cette commande se
 contente de créer la branche, pour se positionner dessus on utilise <code>git
 checkout</code> qui permet de naviguer de branche en branche tel Tarzan sur ses
 lianes.</p>
-<p>Comme c&#39;est super chiant à écrire, il existe un raccourci bien pratique : <code>git
+<p>Comme c’est super chiant à écrire, il existe un raccourci bien pratique : <code>git
 checkout -b</code>, auquel on passe un nom de branche comme pour <code>git branch</code>.</p>
-<p>Une fois qu&#39;on est bien sur la branche, tous les commits suivants seront liés à
+<p>Une fois qu’on est bien sur la branche, tous les commits suivants seront liés à
 cette branche.</p>
 <p>On peut utiliser <code>git branch</code> sans argument pour lister les branches, celle avec
-un petit asterisque devant c&#39;est la branche courante.</p>
+un petit asterisque devant c’est la branche courante.</p>
 <p>Essayons ça avec notre petit dépôt :</p>
 <pre><code class="lang-bash"><span class="hljs-variable">$ </span>git branch
 * master
@@ -219,7 +219,7 @@ $ git log --pretty=oneline --decorate
 5d48735fcc805d51e2e294df5d9d22d481250789 (HEAD, add-shebang) Add shebang
 8120de7b7139e46b9cbc1c3ee89a02962dbc198e (master) Premier commit</span>
 </code></pre>
-<p>Comme vous le voyez grâce à l&#39;option <code>--decorate--</code> de <code>git log</code>, on a bien
+<p>Comme vous le voyez grâce à l’option <code>--decorate--</code> de <code>git log</code>, on a bien
 notre branche qui pointe sur le dernier commit fait, alors que la branche de
 base fournie par Git, <code>master</code>, reste au commit précédent.</p>
 <p>Dernière étape avant la fin de cette article : le redouté et redoutable
@@ -245,12 +245,12 @@ conflits, mais on verra ça dans un prochain article !</p>
 <h2 id="la-suite">La suite</h2>
 <p>On a vu les bases, et très bientôt on va approfondir le sujet, en voyant
 notamment comment collaborer, comment résoudre des conflits ou des problèmes
-d&#39;utilisation de Git, tout ça dans la joie et la bonne humeur.</p>
+d’utilisation de Git, tout ça dans la joie et la bonne humeur.</p>
 <h2 id="r-f-rences">Références</h2>
 <p>Si vous voulez en savoir plus sur Git, la <a href="http://git-scm.com/documentation">documentation officielle</a> est plutôt
 bien foutue.</p>
 <p>Si vous aimez les petites références rapides et illustrées, le <a href="http://rogerdudler.github.io/git-guide/">Git
-Guide</a> de Roger Dudler est une bonne manière d&#39;apprendre.</p>
+Guide</a> de Roger Dudler est une bonne manière d’apprendre.</p>
 <h2 id="hey-tu-veux-appliquer-a-pour-contribuer-putain-de-code-">Hey ! Tu veux appliquer ça pour contribuer à Putain de Code ?</h2>
 <p>Pas de problème, on a écrit un post exprès :
 <a href="/posts/comment-contribuer/">Comment contribuer</a> !</p>

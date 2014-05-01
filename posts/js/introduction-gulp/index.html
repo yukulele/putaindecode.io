@@ -1,41 +1,41 @@
 <!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Introduction à Gulp</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="Introduction à Gulp"/><meta name="twitter:creator" content="@MoOx"/><meta name="twitter:image" content="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png?s=200"/><meta property="og:title" content="Introduction à Gulp"/><meta property="og:type" content="article"/><meta property="og:image" content="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png?s=200"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size7of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size5of12"><nav class="putainde-Nav"><a href="../.." class="putainde-Nav-item">Les posts</a><a href="../../comment-contribuer" class="putainde-Nav-item">Contribuer</a><a href="irc://irc.freenode.net/putaindecode" class="putainde-Nav-item">IRC</a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Introduction à Gulp</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas">Écrit par MoOx,<span class="putainde-Date"> le 29 avril 2014</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">javascript</li><li class="putainde-Tag">tools</li><li class="putainde-Tag">gulp</li></ul></header><div class="putainde-Post-md"><p>Vous commencez tous à connaitre les <em>tasks runners</em>, ces outils qui permettent
-d&#39;automatiser les tâches de développement récurrentes.
+d’automatiser les tâches de développement récurrentes.
 Personnellement
- <a href="http://moox.io/slides/2013/grunt-before-after/">je n&#39;ai</a>
+ <a href="http://moox.io/slides/2013/grunt-before-after/">je n’ai</a>
  <a href="http://www.24joursdeweb.fr/2013/automatisez-votre-workflow-front-end/">pas arrêté</a>
- <a href="http://moox.io/slides/2014/introduction-gulp/">d&#39;en parler</a>
+ <a href="http://moox.io/slides/2014/introduction-gulp/">d’en parler</a>
  depuis que
  <a href="/posts/js/premiers-pas-avec-grunt/">Grunt</a>
  à déterré cette vielle problématique, assez récente pour le développement Web côté front end.</p>
-<p>Il faut avouer que de par l&#39;évolution du développement Web, côté front end,
-on voit beaucoup de personnes qui n&#39;ont pas de vraies bases de développeur.
+<p>Il faut avouer que de par l’évolution du développement Web, côté front end,
+on voit beaucoup de personnes qui n’ont pas de vraies bases de développeur.
 Je veux dire par là non pas que ces personnes sont incompétentes, mais plutôt
-qu&#39;il manque parfois la bonne flemme du développeur, celle qui le pousse à <strong>développer</strong>
+qu’il manque parfois la bonne flemme du développeur, celle qui le pousse à <strong>développer</strong>
 des solutions techniques pour mieux développer des produits.
-Il manque un peu <a href="http://fr.wiktionary.org/wiki/algorithmie">d&#39;algorithmie</a>
-dans les veines, de curiosité et d&#39;amour du risque.
-Ce n&#39;est pas en restant dans sa zone de confort qu&#39;on va de l&#39;avant. Enfin si vous
+Il manque un peu <a href="http://fr.wiktionary.org/wiki/algorithmie">d’algorithmie</a>
+dans les veines, de curiosité et d’amour du risque.
+Ce n’est pas en restant dans sa zone de confort qu’on va de l’avant. Enfin si vous
 avez des exemples contraires, je suis preneur.
 Mais tout cela doit provenir du fait que pas mal de métiers dans le web sont nouveaux,
 dont celui de « développeur Web front end » et que du coup, peu de personnes ont
-initialement suivi des formations appropriés (pour ma part je proviens d&#39;une
-formation <em>d&#39;analyste-programmeur</em>, conception et développement software quoi).
+initialement suivi des formations appropriés (pour ma part je proviens d’une
+formation <em>d’analyste-programmeur</em>, conception et développement software quoi).
 Je remarque que niveau back end il y a beaucoup moins de lacunes, du fait que
 les problématiques gérées de ce côté sont (il me semble) moins nouvelles.</p>
-<p>Bref. Je ne vais pas m&#39;éterniser sur une intro du pourquoi on met en place un task
+<p>Bref. Je ne vais pas m’éterniser sur une intro du pourquoi on met en place un task
 runner, ni faire une comparaison entre Make, Rake, Cake, Jake, Grunt, Brunch
 et Broccoli.
 Rentrons dans le vif. Parlons Gulp.</p>
 <h1 id="pourquoi-gulp">Pourquoi Gulp</h1>
-<p>Je vais faire court. Pour faire simple, son point fort réside dans le fait qu&#39;il utilise des
+<p>Je vais faire court. Pour faire simple, son point fort réside dans le fait qu’il utilise des
 <a href="http://dailyjs.com/2012/09/10/streams/">streams</a> (tl;dr: un flux de données - en mémoire)
-et qu&#39;il limite au maximum l&#39;utilisation de fichiers.
-Au point qu&#39;il existe une <a href="https://github.com/godaddy/gulp-header/issues/4#issuecomment-32111457">police Gulp</a>
+et qu’il limite au maximum l’utilisation de fichiers.
+Au point qu’il existe une <a href="https://github.com/godaddy/gulp-header/issues/4#issuecomment-32111457">police Gulp</a>
 pour vous dire.
-Si vous voulez en savoir plus sur les streams, n&#39;hésitez pas à lire l&#39;article de
+Si vous voulez en savoir plus sur les streams, n’hésitez pas à lire l’article de
 Nicolas Froidure <a href="http://www.insertafter.com/articles-gulp_vs_grunt.html">Gulp remplacera-t-il Grunt ?</a>
 qui contient une partie explicative sur les streams.</p>
-<p>Dans la pratique cela évite d&#39;avoir un gruntfile qui, si on imagine une task
+<p>Dans la pratique cela évite d’avoir un gruntfile qui, si on imagine une task
 sass -&gt; autoprefixer -&gt; csso, passe <a href="/posts/css/mise-en-place-autoprefixer/#autoprefixer-avec-grunt">3 fois par des lectures/écritures sur le système
 de fichiers</a>.</p>
 <figure>
@@ -43,7 +43,7 @@ de fichiers</a>.</p>
   <figcaption>Sans stream</figcaption>
 </figure>
 
-<p>Et du coup au lieu d&#39;avoir un fichier de conf d&#39;une soixantaine de lignes, on arrive
+<p>Et du coup au lieu d’avoir un fichier de conf d’une soixantaine de lignes, on arrive
 à avoir <a href="http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/#autoprefixer-avec-gulp">quelque chose de concis</a>
 (une vingtaine de ligne seulement).</p>
 <figure>
@@ -58,8 +58,8 @@ de fichiers</a>.</p>
 <p>Ensuite dans votre projet :</p>
 <pre><code class="lang-shell">$ npm i <span class="hljs-attribute">-D</span> gulp gulp<span class="hljs-attribute">-util</span> gulp<span class="hljs-attribute">-plumber</span> gulp<span class="hljs-attribute">-WHATEVER</span>
 </code></pre>
-<p><em>Note : <code>npm i -D</code> == <code>npm install --save-dev</code>, c&#39;est cadeau.</em></p>
-<p>Bon dans mon exemple j&#39;ai mis un peu n&#39;importe quoi, donc on va faire un mini workflow de hipster hacker.</p>
+<p><em>Note : <code>npm i -D</code> == <code>npm install --save-dev</code>, c’est cadeau.</em></p>
+<p>Bon dans mon exemple j’ai mis un peu n’importe quoi, donc on va faire un mini workflow de hipster hacker.</p>
 <h2 id="utilisation">Utilisation</h2>
 <p>On part avec une tâche très simple : pré-processeur CSS <a href="http://myth.io">Myth</a> et
 optimisation avec <a href="https://github.com/css/csso">CSSO</a>.</p>
@@ -86,8 +86,8 @@ gulp<span class="hljs-preprocessor">.task</span>(<span class="hljs-string">"defa
   gulp<span class="hljs-preprocessor">.watch</span>(<span class="hljs-string">"./src/css/**/*"</span>, [<span class="hljs-string">"styles"</span>])
 })
 </code></pre>
-<p>Voilà c&#39;est tout. Et heureusement.</p>
-<p>Bon, on se refait l&#39;exemple commenté :</p>
+<p>Voilà c’est tout. Et heureusement.</p>
+<p>Bon, on se refait l’exemple commenté :</p>
 <pre><code class="lang-js"><span class="hljs-comment">// bah là ok, on est obligé d'y passer pour avoir l'API Gulp</span>
 <span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp"</span>)
 
@@ -149,16 +149,16 @@ gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string"
 <span class="hljs-comment">// Comme grunt, `gulp` sans argument lancera la tâche `default`.</span>
 </code></pre>
 <p>Bien entendu, vous avez déjà compris que si vous voulez remplacer Myth par Sass,
-c&#39;est l&#39;histoire de 4 secondes.</p>
+c’est l’histoire de 4 secondes.</p>
 <h2 id="putain-de-code-approuve-gulp-">Putain de Code approuve Gulp.</h2>
 <p>Ici on est carrément fan de Gulp. Il faut bien avouer que
 <a href="https://twitter.com/putaindecode/status/460868992396460032">ça va vite</a>
-(encore plus appréciable lorsque l&#39;on n&#39;a pas de SSD) et que c&#39;est plaisant à écrire.
+(encore plus appréciable lorsque l’on n’a pas de SSD) et que c’est plaisant à écrire.
 Pas de configurations pas spécialement verbeuse et trop espacée.
 Avec Gulp on se sent plus libre, moins contraint.
 Du coup, <strong>on a carrément fait notre site avec Gulp</strong>
-(puis au passage un petit refresh graphique tant qu&#39;à faire).</p>
-<p>Pour aller plus loin, vous n&#39;avez qu&#39;à ouvrir notre <a href="https://github.com/putaindecode/website/blob/master/Gulpfile.js">Gulpfile</a>
+(puis au passage un petit refresh graphique tant qu’à faire).</p>
+<p>Pour aller plus loin, vous n’avez qu’à ouvrir notre <a href="https://github.com/putaindecode/website/blob/master/Gulpfile.js">Gulpfile</a>
 et regarder nos <a href="https://github.com/putaindecode/website/tree/master/tasks">tasks</a>
 qui vont de <a href="https://github.com/putaindecode/website/blob/master/tasks/clean.js">la plus simple</a>
 à <a href="https://github.com/putaindecode/website/blob/master/tasks/contributors.js">la plus compliqué</a>.</p>
@@ -171,19 +171,19 @@ le classique et si simple watcher ;</li>
 <li><a href="https://github.com/putaindecode/website/blob/master/tasks/publish.js">publish</a>,
 la tâche pour publier le dossier <code>dist/</code> sur les <a href="https://pages.github.com/">gh-pages</a> ;</li>
 <li><a href="https://github.com/putaindecode/website/blob/master/tasks/icons.js">icons</a>,
-qui transforme des SVG en fontes d&#39;icones avec le bout de CSS qui va bien ;</li>
+qui transforme des SVG en fontes d’icones avec le bout de CSS qui va bien ;</li>
 <li><a href="https://github.com/putaindecode/website/blob/master/tasks/scripts-linting.js">scripts-linting</a>,
 qui vérifie la qualité du code ;</li>
 <li><a href="https://github.com/putaindecode/website/blob/master/tasks/scripts.js">scripts</a>,
 du <a href="/posts/js/browserify-all-the-things/">browserify</a> pour nos JS côté client ;</li>
 <li><a href="https://github.com/putaindecode/website/blob/master/tasks/stylesheets.js">stylesheets</a>,
-notre tâche qui mélange (pour l&#39;instant) Stylus et Rework (suite à une rixe à la récré, on n&#39;a pas réussi à se mettre d&#39;accord, donc chacun à rajouté son morceau) ;</li>
+notre tâche qui mélange (pour l’instant) Stylus et Rework (suite à une rixe à la récré, on n’a pas réussi à se mettre d’accord, donc chacun à rajouté son morceau) ;</li>
 </ul>
-<p>Bien entendu, si vous ne comprenez pas certaines parties, n&#39;hésitez pas à
+<p>Bien entendu, si vous ne comprenez pas certaines parties, n’hésitez pas à
 <a href="https://github.com/putaindecode/website/issues/new">ouvrir une issue</a>
 pour demander des explications.</p>
 <h2 id="vous-reprendrez-bien-un-peu-de-gulp-pardon-">Vous reprendrez bien un peu de… Gulp* ! Pardon.</h2>
-<p>Si vous avez encore envie de détails je vous renvoie sur l&#39;article anglais
+<p>Si vous avez encore envie de détails je vous renvoie sur l’article anglais
 <a href="http://markgoodyear.com/2014/01/getting-started-with-gulp/">Getting started with gulp</a>
 qui détaille tellement bien chaque point que même un anglophobe comprendrait.</p>
 <p>Vous avez aussi
@@ -194,10 +194,10 @@ très bien faite, qui comporte carrément
 (ou plutôt <em>invalident</em>) <a href="https://npmjs.org/search?q=gulpplugin">les plugins</a> qui
 ne respectent pas les
 <a href="https://github.com/gulpjs/gulp/blob/master/docs/writing-a-plugin/guidelines.md">règles</a>.
-Je trouve que c&#39;est gage de qualité.</p>
+Je trouve que c’est gage de qualité.</p>
 <p>Pour finir quelques liens pour ceux qui en veulent toujours plus :</p>
 <ul>
-<li><a href="http://www.insertafter.com/articles-retour_experience_gulp.html">Gulp : Retour d&#39;expérience</a></li>
+<li><a href="http://www.insertafter.com/articles-retour_experience_gulp.html">Gulp : Retour d’expérience</a></li>
 <li><a href="http://jaysoo.ca/2014/01/27/gruntjs-vs-gulpjs/">Grunt vs. Gulp, au-delà des chiffres</a> (anglais)</li>
 </ul>
 <pre><code class="lang-shell"><span class="hljs-variable">$ </span>gulp bisous

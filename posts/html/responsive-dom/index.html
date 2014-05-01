@@ -2,43 +2,43 @@
 webdesign</strong>, ça te dit quelque chose ? Oui ? Bon. Dans ce cas, tu as peut-être
 comme moi déjà été confronté à un cas de figure plutôt ennuyeux. Que tu sois
 adepte du <em>mobile-first</em> ou irréductible dégradateur progressiste, il est
-forcément arrivé un moment où tu t&#39;es dit cette chose toute bête :</p>
+forcément arrivé un moment où tu t’es dit cette chose toute bête :</p>
 <blockquote>
 <p>Ce serait quand même pas mal si cet élément était ici plutôt que là. Sauf que
 non.</p>
 </blockquote>
-<p>Le cas typique est celui d&#39;un menu un minimum complexe, dont on réordonnerait
-volontiers les éléments un chouïa au dessus ou en deçà d&#39;une certaine taille
-d&#39;écran. Et là, il faut bien avouer qu&#39;il n&#39;existe pas vraiment de solution
+<p>Le cas typique est celui d’un menu un minimum complexe, dont on réordonnerait
+volontiers les éléments un chouïa au dessus ou en deçà d’une certaine taille
+d’écran. Et là, il faut bien avouer qu’il n’existe pas vraiment de solution
 miracle.</p>
-<p>J&#39;entends déjà les plus teigneux vociférer qu&#39;avec une meilleure réflexion en
-amont, le <em>markup</em> aurait été mieux conçu et on n&#39;en serait pas là. Bien qu&#39;un
-peu facile, cette réponse peut s&#39;avérer vraie dans un certain nombre de cas
-(admire la phrase du mec qui ne se mouille pas). Mais quoi qu&#39;il en soit, si tu
-en es au stade de ce type de questionnement, c&#39;est qu&#39;il est de toute façon trop
+<p>J’entends déjà les plus teigneux vociférer qu’avec une meilleure réflexion en
+amont, le <em>markup</em> aurait été mieux conçu et on n’en serait pas là. Bien qu’un
+peu facile, cette réponse peut s’avérer vraie dans un certain nombre de cas
+(admire la phrase du mec qui ne se mouille pas). Mais quoi qu’il en soit, si tu
+en es au stade de ce type de questionnement, c’est qu’il est de toute façon trop
 tard pour faire machine arrière.</p>
-<p>Au train où va l&#39;innovation dans notre branche, surtout pour tout ce qui touche
-au mobile en général et à la conception web en particulier, il n&#39;est pas exclu
-que les bouts de ficelle que je vais t&#39;exposer ici soient obsolètes dans six
+<p>Au train où va l’innovation dans notre branche, surtout pour tout ce qui touche
+au mobile en général et à la conception web en particulier, il n’est pas exclu
+que les bouts de ficelle que je vais t’exposer ici soient obsolètes dans six
 mois, et que cet article fasse un comeback incroyable sur Twitter, les RT
 moquant gentiment les techniques précolombiennes auxquelles nous étions réduits
-il n&#39;y a encore pas si longtemps. Va savoir, je pourrais bien faire l&#39;objet
-d&#39;une célébrité paradoxalement décadente à la Rick Astley. En attendant, il
-s&#39;agit des seules solutions que je connais pour ce type de cas. Si tu as mieux à
-proposer, je te recommande chaudement de l&#39;ouvrir dans les commentaires pour
-qu&#39;on en bénéficie tous. C&#39;est bon, on y va ? Je t&#39;attends, moi !</p>
-<h2 id="-l-ancienne-do-repeat-yourself">À l&#39;ancienne : Do Repeat Yourself</h2>
-<p>Imagine une page de blog, où apparaissent consécutivement le titre de l&#39;article,
-la photo l&#39;illustrant, et enfin le texte. Comme une photo, selon la qualité de
+il n’y a encore pas si longtemps. Va savoir, je pourrais bien faire l’objet
+d’une célébrité paradoxalement décadente à la Rick Astley. En attendant, il
+s’agit des seules solutions que je connais pour ce type de cas. Si tu as mieux à
+proposer, je te recommande chaudement de l’ouvrir dans les commentaires pour
+qu’on en bénéficie tous. C’est bon, on y va ? Je t’attends, moi !</p>
+<h2 id="-l-ancienne-do-repeat-yourself">À l’ancienne : Do Repeat Yourself</h2>
+<p>Imagine une page de blog, où apparaissent consécutivement le titre de l’article,
+la photo l’illustrant, et enfin le texte. Comme une photo, selon la qualité de
 ta connexion, ça peut être un peu galère à charger sur mobile (et que la
 question des images en responsive design
 <a href="http://css-tricks.com/responsive-images-hard/">est encore un sacré bordel</a>), tu
 prends la décision de passer la photo en dessous du contenu textuel pour que tes
-visiteurs puissent lire leur article peinards même si la photo n&#39;a pas fini de
+visiteurs puissent lire leur article peinards même si la photo n’a pas fini de
 charger - et tu vas même en profiter pour la remplacer par une version plus
 light.</p>
 <p>Dans un tel cas, la meilleure solution peut encore être de dupliquer ta balise
-<code>img</code>, et de masquer l&#39;une ou l&#39;autre avec CSS en fonction de la taille d&#39;écran,
+<code>img</code>, et de masquer l’une ou l’autre avec CSS en fonction de la taille d’écran,
 grâce à une <code>media query</code>. Voilà un exemple rudimentaire :</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Mon super article<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
@@ -68,9 +68,9 @@ grâce à une <code>media query</code>. Voilà un exemple rudimentaire :</p>
 }
 </code></pre>
 <p>Évidemment, le gros inconvénient de ce type de solution est que qui dit
-duplication de contenu dit augmentation du poids total. Dans le cas d&#39;un contenu
-purement textuel, selon sa taille, cela peut être négligeable. J&#39;ai ici
-volontairement pris l&#39;exemple le moins adapté : une image, qu&#39;il ne faut
+duplication de contenu dit augmentation du poids total. Dans le cas d’un contenu
+purement textuel, selon sa taille, cela peut être négligeable. J’ai ici
+volontairement pris l’exemple le moins adapté : une image, qu’il ne faut
 absolument pas faire charger deux fois à nos visiteurs. On va tricher un peu
 avec JavaScript :</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
@@ -125,18 +125,18 @@ avec JavaScript :</p>
 window.addEventListener(<span class="hljs-string">'load'</span>, handleImages);
 window.addEventListener(<span class="hljs-string">'resize'</span>, handleImages);
 </code></pre>
-<p>Ainsi, seules les images nécessaires seront chargées avec la page. J&#39;applique
-également le même traitement au <code>resize</code> ; c&#39;est un peu bourrin, je te
-l&#39;accorde, on pourrait probablement faire plus fin avec <code>matchMedia</code>.</p>
-<p>Dans le cas d&#39;un visiteur naviguant sans JavaScript, seule l&#39;image mobile est
-chargée : je pars du principe qu&#39;étant donné qu&#39;on ne peut pas définir laquelle
-des deux versions de l&#39;image est la mieux adaptée pour lui, autant lui envoyer
+<p>Ainsi, seules les images nécessaires seront chargées avec la page. J’applique
+également le même traitement au <code>resize</code> ; c’est un peu bourrin, je te
+l’accorde, on pourrait probablement faire plus fin avec <code>matchMedia</code>.</p>
+<p>Dans le cas d’un visiteur naviguant sans JavaScript, seule l’image mobile est
+chargée : je pars du principe qu’étant donné qu’on ne peut pas définir laquelle
+des deux versions de l’image est la mieux adaptée pour lui, autant lui envoyer
 la plus légère.</p>
 <h2 id="js-powa-enquire-js">JS powa : enquire.js</h2>
-<p>La seconde solution peut tout à fait être réalisée &quot;à la main&quot;, mais je vais te
-parler d&#39;une petite librairie que j&#39;aime beaucoup et que j&#39;ai déjà utilisée dans
+<p>La seconde solution peut tout à fait être réalisée “à la main”, mais je vais te
+parler d’une petite librairie que j’aime beaucoup et que j’ai déjà utilisée dans
 ce genre de cas. Elle se nomme <a href="http://wicky.nillia.ms/enquire.js/">enquire.js</a>
-et permet tout simplement d&#39;affecter des callbacks à des media queries :</p>
+et permet tout simplement d’affecter des callbacks à des media queries :</p>
 <pre><code class="lang-javascript">enquire.register(<span class="hljs-string">'screen and (min-width: 768px)'</span>, {
   match: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
     <span class="hljs-comment">// L'écran fait 768px de large ou plus...</span>
@@ -148,7 +148,7 @@ et permet tout simplement d&#39;affecter des callbacks à des media queries :</p
   }
 });
 </code></pre>
-<p>Plutôt sympa, non ? Pour reprendre notre exemple de tout à l&#39;heure (le CSS n&#39;est
+<p>Plutôt sympa, non ? Pour reprendre notre exemple de tout à l’heure (le CSS n’est
 plus nécessaire) :</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Mon super article<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
@@ -185,24 +185,24 @@ enquire.register(<span class="hljs-string">'screen and (max-width: 767px)'</span
   switchImage(<span class="hljs-keyword">true</span>);
 });
 </code></pre>
-<p>On peut ainsi gérer facilement le chargement de l&#39;image, ainsi que son
-emplacement. J&#39;utilise ici deux handlers distincts pour m&#39;assurer qu&#39;enquire
+<p>On peut ainsi gérer facilement le chargement de l’image, ainsi que son
+emplacement. J’utilise ici deux handlers distincts pour m’assurer qu’enquire
 fait bien son boulot au chargement aussi, dans tous les cas (les callbacks
-<code>unmatch</code> ne sont appelés qu&#39;au redimensionnement, semble-t-il : avec un seul
-handler, l&#39;image n&#39;arrive donc jamais si on charge la page avec un écran d&#39;une
+<code>unmatch</code> ne sont appelés qu’au redimensionnement, semble-t-il : avec un seul
+handler, l’image n’arrive donc jamais si on charge la page avec un écran d’une
 largeur inférieure à 768px).</p>
-<h2 id="that-s-all-you-ve-got-bitch-">That&#39;s all you&#39;ve got, bitch?</h2>
-<p>On peut également, puisque tu y tiens tant, évoquer d&#39;autres solutions plus
-marginales mais qui méritent d&#39;être citées.</p>
+<h2 id="that-s-all-you-ve-got-bitch-">That’s all you’ve got, bitch?</h2>
+<p>On peut également, puisque tu y tiens tant, évoquer d’autres solutions plus
+marginales mais qui méritent d’être citées.</p>
 <h3 id="foundation">Foundation</h3>
 <p><a href="http://foundation.zurb.com/">Foundation</a> propose, dans sa version 5 (et
-peut-être même avant, j&#39;ai pas vérifié) un peu de sucre syntaxique HTML
+peut-être même avant, j’ai pas vérifié) un peu de sucre syntaxique HTML
 permettant de switcher (via JS, œuf corse) simplement entre différents contenus
-pour l&#39;élément sur lequel on l&#39;utilise.</p>
-<p>C&#39;est pas mal. Ça donne ça (tiré de <a href="http://foundation.zurb.com/docs/components/interchange.html">la doc</a>) :</p>
+pour l’élément sur lequel on l’utilise.</p>
+<p>C’est pas mal. Ça donne ça (tiré de <a href="http://foundation.zurb.com/docs/components/interchange.html">la doc</a>) :</p>
 <blockquote>
 <p>We use the data-interchange attribute on a markup container (probably a div)
-to do this. Here&#39;s an example which loads up a small, static map on mobile, a
+to do this. Here’s an example which loads up a small, static map on mobile, a
 larger static map for medium-sized devices, and a full interactive Google map
 on large display devices.</p>
 </blockquote>
@@ -216,13 +216,13 @@ on large display devices.</p>
 &lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 <p><code>small</code>, <code>medium</code> et <code>large</code> étant des raccourcis pour des media queries données
-(c&#39;est dans <a href="http://foundation.zurb.com/docs/components/interchange.html">la doc</a>,
-toujours. J&#39;insiste.)</p>
+(c’est dans <a href="http://foundation.zurb.com/docs/components/interchange.html">la doc</a>,
+toujours. J’insiste.)</p>
 <h3 id="flexbox-pas-toi-david-">Flexbox (pas toi, David)</h3>
-<p>On peut également, comme l&#39;a très justement souligné <a href="/#crew">lionelB</a>, se
+<p>On peut également, comme l’a très justement souligné <a href="/#crew">lionelB</a>, se
 pencher (mais pas trop) sur le cas de Flexbox, qui est un nouveau type de
 positionnement introduit en CSS3. La <a href="http://caniuse.com/#search=flexbox">compatibilité</a>
-n&#39;est pas encore au top (surtout grâce à IE, qui l&#39;eût cru) mais autant se tenir
+n’est pas encore au top (surtout grâce à IE, qui l’eût cru) mais autant se tenir
 prêts ! Pour ceux qui ont dormi, en gros, tu définis un conteneur :</p>
 <pre><code class="lang-css"><span class="hljs-class">.flex-container</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> flex</span></span>;
@@ -232,7 +232,7 @@ prêts ! Pour ceux qui ont dormi, en gros, tu définis un conteneur :</p>
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-flex</span></span>;
 <span class="hljs-rule">}</span></span>
 </code></pre>
-<p>...et tu donnes des numéros à ses enfants, comme à Bangkok :</p>
+<p>…et tu donnes des numéros à ses enfants, comme à Bangkok :</p>
 <pre><code class="lang-css"><span class="hljs-class">.title</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">order</span>:<span class="hljs-value"> <span class="hljs-number">1</span></span></span>;
 <span class="hljs-rule">}</span></span>
@@ -260,22 +260,22 @@ Bien sûr, tu as été assez malin pour mettre ton image en dernier dans le DOM.
   <span class="hljs-rule">}</span></span>
 }
 </code></pre>
-<p>Et voilà, pas besoin d&#39;avoir fait Pollypocket pour percevoir à quel point la
-flexibilité et la propreté du code que cette technique nous permet d&#39;écrire
-résolvent notre problème en deux secondes douze. Ce n&#39;est évidemment ici que la
+<p>Et voilà, pas besoin d’avoir fait Pollypocket pour percevoir à quel point la
+flexibilité et la propreté du code que cette technique nous permet d’écrire
+résolvent notre problème en deux secondes douze. Ce n’est évidemment ici que la
 partie émergée du flexberg ; il y a des tas de bonnes ressources qui vous
 expliqueront ça en long, en large et en travers bien mieux que moi, notamment
 <a href="http://www.adobe.com/devnet/html5/articles/working-with-flexbox-the-new-spec.html">cet article</a>
-sur lequel j&#39;ai honteusement pompé les snippets de cette partie.</p>
+sur lequel j’ai honteusement pompé les snippets de cette partie.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p>Comme tu l&#39;as vu, rien de ce que je t&#39;ai montré n&#39;est réellement satisfaisant :
-pour pouvoir contrôler le positionnement d&#39;un élément dans le DOM dans le cadre
-d&#39;un webdesign responsive, tu dois soit le dupliquer et jouer à cache-cache,
+<p>Comme tu l’as vu, rien de ce que je t’ai montré n’est réellement satisfaisant :
+pour pouvoir contrôler le positionnement d’un élément dans le DOM dans le cadre
+d’un webdesign responsive, tu dois soit le dupliquer et jouer à cache-cache,
 soit le déplacer avec JavaScript. Aussi, je serais ravi que tu partages ton
-opinion, tes idées ou tes retours d&#39;XP à ce sujet. Ça me fera de la lecture pour
+opinion, tes idées ou tes retours d’XP à ce sujet. Ça me fera de la lecture pour
 passer le temps, et toi tu feras quelque chose de constructif !</p>
 <p>Il est temps pour moi de te laisser reprendre le cours de ta vie. Peut-être nos
-routes se croiseront-elles de nouveau. Dans l&#39;intervalle, va, vis, et code !</p>
+routes se croiseront-elles de nouveau. Dans l’intervalle, va, vis, et code !</p>
 </div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/html/responsive-dom/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/html/responsive-dom/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/html/responsive-dom/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><img src="http://www.gravatar.com/avatar/259cfb842be0d236e68340b1c330cc88.png" alt="" class="putainde-Author-picture putainde-Avatar js-AnimateLoad"/><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> neemzy</h3><div class="putainde-Author-social"><a href="http://www.zaibatsu.fr"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/_neemzy"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/neemzy"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur full-stack tombé dans le web quand il était petit. <br> Fait surtout du PHP, mais aussi de plus en plus de JavaScript. <br> A une peur irraisonnée des utilisateurs de Mac / Ruby / Sass. <br> Atteint du syndrome de Patrick Modiano qui l'empêche parfois de finir ses</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">3 contributeurs</strong><a href="https://github.com/neemzy" data-tip="neemzy" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/259cfb842be0d236e68340b1c330cc88.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size4of12"><ul class="putainde-Footer-list"><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode">Contact</a></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../c-est-quoi-putaindecode">Putain de ?</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li></ul></div><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text putainde-Footer-text--small">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/html/responsive-dom/";
 var disqus_url = "http://putaindecode.fr/posts/html/responsive-dom/";

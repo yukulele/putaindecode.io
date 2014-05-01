@@ -1,13 +1,13 @@
 <!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Comment en finir avec les préfixes CSS</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="Comment en finir avec les préfixes CSS"/><meta name="twitter:creator" content="@MoOx"/><meta name="twitter:image" content="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png?s=200"/><meta property="og:title" content="Comment en finir avec les préfixes CSS"/><meta property="og:type" content="article"/><meta property="og:image" content="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png?s=200"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size7of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size5of12"><nav class="putainde-Nav"><a href="../.." class="putainde-Nav-item">Les posts</a><a href="../../comment-contribuer" class="putainde-Nav-item">Contribuer</a><a href="irc://irc.freenode.net/putaindecode" class="putainde-Nav-item">IRC</a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Comment en finir avec les préfixes CSS</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas">Écrit par MoOx,<span class="putainde-Date"> le 25 fév. 2014</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">css</li><li class="putainde-Tag">préfixe</li><li class="putainde-Tag">pré-processeur</li><li class="putainde-Tag">post-processeur</li></ul></header><div class="putainde-Post-md"><p>En mettant de côté le débat trollesque <em>faut-il ou pas des préfixes CSS ?</em>
 (car avouons-le, ils sont là, il faut faire avec), on ne va pas se le cacher,
-les préfixes CSS ça nous brise tous les... touches du clavier.
+les préfixes CSS ça nous brise tous les… touches du clavier.
 Eh bien oui, sans automatisation on est obligé de se taper des caractères en plus.
 Même avec un IDE correct, on peut faire ça rapidement, mais ça nécessite
 presque à chaque fois une action de notre part.</p>
 <h2 id="pr-fixer-via-des-outils-en-ligne">Préfixer via des outils en ligne</h2>
 <p>Les élèves au fond de la classe me montreront de suite des solutions comme
-<a href="http://prefixmycss.com/">prefixmycss.com</a> ou l&#39;ancien prefixr.
-Inopinément, un moche &quot;Mourrez moi sile vou pler&quot; sort de mon corps.
+<a href="http://prefixmycss.com/">prefixmycss.com</a> ou l’ancien prefixr.
+Inopinément, un moche “Mourrez moi sile vou pler” sort de mon corps.
 Non, sérieusement, ce n’est pas une façon de faire ça. Aller sur une web app à
 chaque fois que je veux préfixer mes CSS ? Sérieusement ?
 Vous avez qu’à aussi faire un service postal où j’envoie mes fichiers CSS dans
@@ -41,7 +41,7 @@ se post, comporte <b>en premier exemple</b> un mixin pour <code>box-shadow</code
 <p>Certaines propriétés comme <code>box-shadow</code>, ou encore <code>border-radius</code>, sont
 aujourd’hui préfixées à tort, car comme on peut le voir sur le site de
 <a href="http://caniuse.com/">CanIUse.com</a>, elles n’ont plus vraiment besoin d’être préfixées, à
-moins que vous supportiez encore Firefox 3.6, Safari iOS 3 ou Android 2...
+moins que vous supportiez encore Firefox 3.6, Safari iOS 3 ou Android 2…
 Je vous renvoie rapidement sur ce (vieil) article de Chris Coyier
 <a href="http://css-tricks.com/do-we-need-box-shadow-prefixes/">Do we need box-shadow or border-radius prefixes anymore?</a>
 en guise de mémo :)</p>
@@ -50,9 +50,9 @@ Donc on ne peut pas être au top pour connaître quand il faut ou quand il n’y
 besoin de préfixer x ou y (oui bon x et y ne sont pas des propriétés CSS, c’est
 pour l’exemple).
 Qui sait qu’on peut enfin arrêter de préfixer box-sizing dans Firefox depuis la 29 ?
-Ou la 30 je ne sais plus...</p>
-<p>Bon mais alors comment faire ? J’entends les fayots du premier rang parler d’auto...
-auto... AUTOPREFIXER ?!</p>
+Ou la 30 je ne sais plus…</p>
+<p>Bon mais alors comment faire ? J’entends les fayots du premier rang parler d’auto…
+auto… AUTOPREFIXER ?!</p>
 <p>MAIS C’EST POSSIBLE ÇA ?</p>
 <p>Bon allons à l’essentiel, assez trollé.</p>
 <h1 id="autoprefixer">Autoprefixer</h1>
@@ -69,7 +69,7 @@ qui ont un usage global &gt; à Y% de trafic, ou encore une version minimale don
 <span class="hljs-comment">// Je supporte 2 versions en arrière, et minimum BlackBerry 10 et Android 4</span>
 <span class="hljs-function">autoprefixer(<span class="hljs-string">"last 2 version"</span>, <span class="hljs-string">"BlackBerry 10"</span>, <span class="hljs-string">"Android 4"</span>)</span><span class="hljs-class">.process</span>(css)<span class="hljs-class">.css</span>;
 </code></pre>
-<p>Dans ces lignes de code JavaScript... Quoi attendez c’est en JavaScript ? Oh le
+<p>Dans ces lignes de code JavaScript… Quoi attendez c’est en JavaScript ? Oh le
 fourbe, il nous recale sa techno de front-end de mes deux.
 Bon faites pas les relous, que vous soyez front-end ou back-end, vous avez Node.js hein ?</p>
 <p>Donc aucune inquiétude, il existe une commande pour que vous puissiez faire ça rapidement :</p>
@@ -118,7 +118,7 @@ Mais ça, je vous en parle la prochaine fois ;)</p>
 <hr />
 
 <p>PS: Convaincu par cette solution ? Tant mieux, elle est simple à mettre en place.
-Tout ça est décrit dans la <a href="/posts/css/mise-en-place-autoprefixer/">mise en place d&#39;autoprefixer</a>
+Tout ça est décrit dans la <a href="/posts/css/mise-en-place-autoprefixer/">mise en place d’autoprefixer</a>
 avec des exemples concrets pour ajouter ça dans un workflow existant.</p>
 </div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/css/comment-en-finir-avec-les-prefixes/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/css/comment-en-finir-avec-les-prefixes/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/css/comment-en-finir-avec-les-prefixes/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Author-picture putainde-Avatar js-AnimateLoad"/><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> MoOx</h3><div class="putainde-Author-social"><a href="http://moox.io/"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/MoOx"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/MoOx"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.   <br> Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">3 contributeurs</strong><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/kud" data-tip="kud" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/9713e529bef70eea8965e0dda2000334.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size4of12"><ul class="putainde-Footer-list"><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode">Contact</a></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../c-est-quoi-putaindecode">Putain de ?</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li></ul></div><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text putainde-Footer-text--small">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/";

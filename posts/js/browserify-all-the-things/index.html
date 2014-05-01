@@ -1,61 +1,61 @@
 <!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>BROWSERIFY ALL THE THINGS</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="BROWSERIFY ALL THE THINGS"/><meta name="twitter:creator" content="@MoOx"/><meta name="twitter:image" content="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png?s=200"/><meta property="og:title" content="BROWSERIFY ALL THE THINGS"/><meta property="og:type" content="article"/><meta property="og:image" content="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png?s=200"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size7of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size5of12"><nav class="putainde-Nav"><a href="../.." class="putainde-Nav-item">Les posts</a><a href="../../comment-contribuer" class="putainde-Nav-item">Contribuer</a><a href="irc://irc.freenode.net/putaindecode" class="putainde-Nav-item">IRC</a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">BROWSERIFY ALL THE THINGS</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas">Écrit par MoOx,<span class="putainde-Date"> le 15 jan. 2014</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">javascript</li><li class="putainde-Tag">amd</li><li class="putainde-Tag">commonjs</li><li class="putainde-Tag">browserify</li></ul></header><div class="putainde-Post-md"><p>Alors que je prends goût à me passer de frameworks (principalement à cause des
-courbes d&#39;apprentissage et des éventuelles lourdeurs et/ou restrictions que cela
-impose, mais c&#39;est une autre histoire),
-je cherchais la meilleure façon d&#39;écrire des micro composants réutilisables.</p>
-<p>Pour le JavaScript, j&#39;ai commencé il y a bien longtemps par des extensions/plugins
+courbes d’apprentissage et des éventuelles lourdeurs et/ou restrictions que cela
+impose, mais c’est une autre histoire),
+je cherchais la meilleure façon d’écrire des micro composants réutilisables.</p>
+<p>Pour le JavaScript, j’ai commencé il y a bien longtemps par des extensions/plugins
 <a href="http://prototypejs.org/">Prototype</a>, puis peu de temps après, du plugins
 <a href="http://plugins.jquery.com/">jQuery</a> à la pelle.
-Souvent à tord puisque j&#39;utilisais peut être 1% de la librairie en dépendance -
+Souvent à tord puisque j’utilisais peut être 1% de la librairie en dépendance -
 exemple avec mon <a href="https://github.com/MoOx/jQuery.Loading-Indicator/">indicateur de chargement avec sémaphore</a>
 ou encore mon <a href="https://github.com/MoOx/jQuery.External-Links/">plugin qui ouvre les liens externes avec du target blank automatique</a>.</p>
-<p><b>Je ne ferais plus jamais ça pour la simple raison du ratio &quot;poids / % d&#39;utilisation&quot; de la dépendance.</b></p>
-<p>Alors oui, utiliser jQuery a peut-être du bon. Mais s&#39;en passer aussi.
-<a href="/posts/js/de-jquery-a-vanillajs/">C&#39;est faisable pour pleins de petites choses</a>.
-<a href="/posts/js/comment-se-passer-de-libraries-frameworks-javascript/">Et c&#39;est pas forcément difficile</a>.</p>
+<p><b>Je ne ferais plus jamais ça pour la simple raison du ratio “poids / % d’utilisation” de la dépendance.</b></p>
+<p>Alors oui, utiliser jQuery a peut-être du bon. Mais s’en passer aussi.
+<a href="/posts/js/de-jquery-a-vanillajs/">C’est faisable pour pleins de petites choses</a>.
+<a href="/posts/js/comment-se-passer-de-libraries-frameworks-javascript/">Et c’est pas forcément difficile</a>.</p>
 <p>Car si je veux utiliser mon petit script qui ajoute des targets blank automatiquement,
  devoir inclure jQuery pour si peu, ça fait mal à mes kilobites.</p>
 <p>En attendant <a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules">
-la gestion de modules via ES6</a>, il nous faut gérer aujourd&#39;hui nos composants
+la gestion de modules via ES6</a>, il nous faut gérer aujourd’hui nos composants
 et dépendances à la main.
-Encore qu&#39;on pourrait faire un transpiler pour utiliser cette syntaxe (ça existe
-déjà, il n&#39;y a qu&#39;à voir sur GitHub), mais là on ne ferait que créer une nouvelle
+Encore qu’on pourrait faire un transpiler pour utiliser cette syntaxe (ça existe
+déjà, il n’y a qu’à voir sur GitHub), mais là on ne ferait que créer une nouvelle
 définition de module.</p>
-<p>Côté back-end, on a déjà ce qu&#39;il faut en JavaScript avec la gestion
+<p>Côté back-end, on a déjà ce qu’il faut en JavaScript avec la gestion
 <a href="http://nodejs.org/api/modules.html">des modules en Node</a>.
 Un simple <code>require(&#39;module&#39;)</code> va tenter de récupérer un module avec ce nom.
-Un module n&#39;est rien d&#39;autre qu&#39;un fichier JavaScript. Node va essayer de loader
+Un module n’est rien d’autre qu’un fichier JavaScript. Node va essayer de loader
 un <code>.js</code>, puis <code>.json</code> et enfin <code>.node</code> si besoin), qui lui même peut
-éventuellement charger d&#39;autres dépendances (les dépendances sont gérées localement)
+éventuellement charger d’autres dépendances (les dépendances sont gérées localement)
 tout en prenant en compte les packages NPM.
-Même si <a href="http://nodejs.org/">Node</a> n&#39;implémente pas totalement
-<a href="http://wiki.commonjs.org/wiki/CommonJS">CommonJS</a>, un projet de développement d&#39;une API pour
+Même si <a href="http://nodejs.org/">Node</a> n’implémente pas totalement
+<a href="http://wiki.commonjs.org/wiki/CommonJS">CommonJS</a>, un projet de développement d’une API pour
 écrire des programmes en JavaScript ailleurs que dans le navigateur,
 la façon de faire est assez proche.</p>
 <figure><img src="../../../images/posts/browserify.png" alt=""></figure>
 
-<p>L&#39;idée de <a href="http://browserify.org/">Browserify</a> est d&#39;amener cette façon de faire
+<p>L’idée de <a href="http://browserify.org/">Browserify</a> est d’amener cette façon de faire
 dans le navigateur.</p>
-<p>À côté de ça, vous me direz qu&#39;on a déjà <a href="http://requirejs.org/">RequireJS</a>
+<p>À côté de ça, vous me direz qu’on a déjà <a href="http://requirejs.org/">RequireJS</a>
 pour un résultat similaire.</p>
-<p>RequireJS implémente l&#39;API AMD  (Asynchronous Module Definition),
-différent de l&#39;API CommonJS.
+<p>RequireJS implémente l’API AMD  (Asynchronous Module Definition),
+différent de l’API CommonJS.
 Cette API, dérivée de CommonJS, se veut adaptée au navigateur. Son principal atout
 étant le chargement des modules de manière asynchrone.
-En théorie, c&#39;est super.</p>
+En théorie, c’est super.</p>
 <p>Sauf que dans la pratique (du moins quelque chose de simple et classique,
-disons pour l&#39;exemple du petit JavaScript pour améliorer une page web, ou encore
-une simple <em>single page webapp</em> (SPA)) ce n&#39;est pas forcément pertinent.</p>
-<p>En effet charger des modules de manières asynchrones n&#39;est forcément pas optimisé
-lorsqu&#39;il s&#39;agit de faire des pages qui se chargent rapidement.
+disons pour l’exemple du petit JavaScript pour améliorer une page web, ou encore
+une simple <em>single page webapp</em> (SPA)) ce n’est pas forcément pertinent.</p>
+<p>En effet charger des modules de manières asynchrones n’est forcément pas optimisé
+lorsqu’il s’agit de faire des pages qui se chargent rapidement.
 Il suffit de penser aux problématiques de débits selon la vitesse de la connexion
-au réseau (Edge, faible 3G...) et donc nombre de requêtes HTTP qui peuvent nous
+au réseau (Edge, faible 3G…) et donc nombre de requêtes HTTP qui peuvent nous
 faire souffrir de gros ralentissement pour se rendre compte que cela peut poser
 problème.</p>
 <p>En plus de cela, je trouve personnellement dégueulasse  la façon de déclarer les
-modules AMD, mais ça ce n&#39;est qu&#39;un détail.</p>
+modules AMD, mais ça ce n’est qu’un détail.</p>
 <p>Comparons les différentes méthodes comme on nous les montre sur le site de
 <a href="http://requirejs.org/docs/whyamd.html">RequireJS</a> :</p>
-<p>Le web aujourd&#39;hui:</p>
+<p>Le web aujourd’hui:</p>
 <pre><code class="lang-js">(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
     <span class="hljs-keyword">var</span> $ = <span class="hljs-keyword">this</span>.jQuery;
 
@@ -75,7 +75,7 @@ exports.myExample = <span class="hljs-function"><span class="hljs-keyword">funct
 Il faut bien que ces chaînes soient déclarées quelque part.</p>
 <p>Côté RequireJS (AMD), on doit éventuellement mapper toutes ces chaînes à la main,
 dans le fichier configuration.
-De plus la déclaration des dépendances se faisant dans l&#39;entête du module, ça peut
+De plus la déclaration des dépendances se faisant dans l’entête du module, ça peut
 devenir lourd :</p>
 <pre><code class="lang-js">define([ <span class="hljs-string">"require"</span>, <span class="hljs-string">"jquery"</span>, <span class="hljs-string">"blade/object"</span>, <span class="hljs-string">"blade/fn"</span>, <span class="hljs-string">"rdapi"</span>,
          <span class="hljs-string">"oauth"</span>, <span class="hljs-string">"blade/jig"</span>, <span class="hljs-string">"blade/url"</span>, <span class="hljs-string">"dispatch"</span>, <span class="hljs-string">"accounts"</span>,
@@ -90,18 +90,18 @@ devenir lourd :</p>
 });
 </code></pre>
 <p>Bon vous me direz que si un module a autant de dépendances, il y a peut être un
-problème en amont et vous n&#39;aurez pas tort.</p>
+problème en amont et vous n’aurez pas tort.</p>
 <p>Côté Browserify (CommonJS like), les dépendances externes proviennent (à la base)
 de NPM.
 On a donc rien à mapper nul part. Puis pour avoir un module local, il suffit de
 faire un <code>require(&#39;./mon/module&#39;)</code>, et Browserify se chargera de régler la
 dépendance (et je vous montre encore mieux après).</p>
-<p>RequireJS propose un &quot;optimizer&quot;, qui au final ne fait que supprimer son point fort:
+<p>RequireJS propose un “optimizer”, qui au final ne fait que supprimer son point fort:
 le côté asynchrone du téléchargement des modules.
 Du coup on se retrouve avec tout RequireJS dans la source ET toutes les dépendances avec le mapping.
 Il y a bien une façon de vraiment optimiser par bundle quand on cherche un peu
 dans la doc, mais
-<a href="http://requirejs.org/docs/optimization.html#wholemultipage">ça n&#39;est pas vraiment mis en avant</a>.
+<a href="http://requirejs.org/docs/optimization.html#wholemultipage">ça n’est pas vraiment mis en avant</a>.
 Il existe aussi <a href="https://github.com/jrburke/almond">Almond.js</a> qui se veut être
 plus léger, mais du coup, utiliser RequireJS pour optimiser avec Almond, je ne
 trouve pas ça cohérent.</p>
@@ -110,25 +110,25 @@ intéressent pas), attaquons le corps du sujet.</p>
 <h2>Installation de Browserify</h2>
 
 <p>Si vous souhaitez accéder à la commande via le terminal, la chose la plus simple
-à faire est d&#39;installer le paquet en global.</p>
+à faire est d’installer le paquet en global.</p>
 <pre><code class="lang-bash"><span class="hljs-variable">$ </span>npm install -g browserify
 </code></pre>
-<p>Si vous ne l&#39;installez pas en global (sans l&#39;option <code>-g</code>, vous aurez la commande
+<p>Si vous ne l’installez pas en global (sans l’option <code>-g</code>, vous aurez la commande
 accessible dans <code>./node_modules/.bin/browserify</code>).
-Mais selon votre workflow, vous pouvez l&#39;utiliser via une tâche
+Mais selon votre workflow, vous pouvez l’utiliser via une tâche
 <a href="https://www.npmjs.org/package/grunt-browserify">grunt-browserify</a>
 ou <a href="https://www.npmjs.org/package/gulp-browserify">gulp-browserify</a>.</p>
 <h2>Utilisation de Browserify</h2>
 
-<p>Partons d&#39;un simple fichier <code>main.js</code>:</p>
+<p>Partons d’un simple fichier <code>main.js</code>:</p>
 <pre><code class="lang-js"><span class="hljs-function">alert(<span class="hljs-string">'Hello world !'</span>)</span>;
 </code></pre>
-<p>Sans aucune dépendance, ça n&#39;a que peu de sens, mais c&#39;est plus pour montrer un
+<p>Sans aucune dépendance, ça n’a que peu de sens, mais c’est plus pour montrer un
 dernier point intéressant.</p>
 <p>Je le compile avec la commande suivante:</p>
 <pre><code class="lang-bash">$ browserify main<span class="hljs-preprocessor">.js</span> -o bundle<span class="hljs-preprocessor">.js</span>
 </code></pre>
-<p>J&#39;obtiens le fichier suivant.</p>
+<p>J’obtiens le fichier suivant.</p>
 <pre><code class="lang-js">(function e(t,n,r){function s(o,u){if(!n[<span class="hljs-link_label">o</span>]){if(!t[<span class="hljs-link_label">o</span>]){var a=typeof require=="function"&amp;&amp;require;if(!u&amp;&amp;a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[<span class="hljs-link_label">o</span>]={exports:{}};t[<span class="hljs-link_label">o</span>][<span class="hljs-link_reference">0</span>].call(f.exports,function(e){var n=t[<span class="hljs-link_label">o</span>][<span class="hljs-link_reference">1</span>][<span class="hljs-link_label">e</span>];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&amp;&amp;require;for(var o=0;o<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">r.length;o++)s(r[o]);return</span> <span class="hljs-attribute">s</span>})({<span class="hljs-attribute">1:</span>[<span class="hljs-attribute">function</span>(<span class="hljs-attribute">require</span>,<span class="hljs-attribute">module</span>,<span class="hljs-attribute">exports</span>){
 <span class="hljs-attribute">alert</span>('<span class="hljs-attribute">Hello</span> <span class="hljs-attribute">world</span> !');
 
@@ -136,9 +136,9 @@ dernier point intéressant.</p>
 },{}]},{},[<span class="hljs-attribute">1</span>])</span></span>
 </code></pre>
 <p>On reconnaît notre ligne en plein milieu. Avec un ajout conséquent. Ça peut paraître
-beaucoup, mais c&#39;est rien comparé à la
+beaucoup, mais c’est rien comparé à la
 <a href="http://requirejs.org/docs/release/2.1.10/minified/require.js">source de RequireJS</a></p>
-<p>Bon du coup partons avec un exemple peut être plus représentatif qu&#39;on peut voir
+<p>Bon du coup partons avec un exemple peut être plus représentatif qu’on peut voir
 sur la homepage de Browserify.</p>
 <pre><code class="lang-js"><span class="hljs-reserved">var</span> foo = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./foo'</span>);
 <span class="hljs-reserved">var</span> gamma = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gamma'</span>);
@@ -150,32 +150,32 @@ sur la homepage de Browserify.</p>
 <p>Ici on aura en plus <code>foo.js</code></p>
 <pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(n)</span></span> { <span class="hljs-keyword">return</span> n * <span class="hljs-number">11</span> }
 </code></pre>
-<p>Et le module <code>gamma</code> qu&#39;on a installé depuis NPM</p>
+<p>Et le module <code>gamma</code> qu’on a installé depuis NPM</p>
 <pre><code class="lang-bash">$ npm <span class="hljs-built_in">i</span> <span class="hljs-built_in">gamma</span>
 </code></pre>
-<p><small><i><code>i</code> est l&#39;alias de <code>install</code>.</i></small></p>
+<p><small><i><code>i</code> est l’alias de <code>install</code>.</i></small></p>
 <p>Avec la même commande que précédement (et donc le même ajout), Browserify va parser
-l&#39;arbre syntaxique abstrait (AST) des appels à <code>require()</code> et va créer un graph
+l’arbre syntaxique abstrait (AST) des appels à <code>require()</code> et va créer un graph
 des dépendances du projet.<br>Un fois ceci fait, il va simplement ajuster les chemins et déclarer les fonctions
-mappées dans un object par leur identifiant. Lorsqu&#39;une fonction appelle <code>require</code>,
+mappées dans un object par leur identifiant. Lorsqu’une fonction appelle <code>require</code>,
 le petit bout de script ajouté va se charger de retourner la dépendance.</p>
-<p>Notez qu&#39;on peut aussi simplement utiliser une redirection de sortie de commande
+<p>Notez qu’on peut aussi simplement utiliser une redirection de sortie de commande
 pour gérer le fichier final:</p>
 <pre><code class="lang-bash">$ browserify main<span class="hljs-preprocessor">.js</span> &gt; bundle<span class="hljs-preprocessor">.js</span>
 </code></pre>
-<p>Du coup on a plus qu&#39;à utiliser une simple balise <code>&lt;script&gt;</code> pour incorporer ça
+<p>Du coup on a plus qu’à utiliser une simple balise <code>&lt;script&gt;</code> pour incorporer ça
 dans nos pages web.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"bundle.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 </code></pre>
 <h2>Les transformations avec Browserify</h2>
 
-<p>Tant qu&#39;à utiliser un outil, autant l&#39;exploiter jusqu&#39;au bout. Car pour l&#39;instant
-je n&#39;ai parlé que de NPM.
-Que faire si mon module n&#39;est pas sur NPM ?
+<p>Tant qu’à utiliser un outil, autant l’exploiter jusqu’au bout. Car pour l’instant
+je n’ai parlé que de NPM.
+Que faire si mon module n’est pas sur NPM ?
 Bon déjà je double check, car maintenant la plupart des librairies y sont
 (jQuery, Backbone et Jean passe).
-Si ce n&#39;est pas le cas, je pourrais toujours faire <code>npm i https//adresse.git</code>
-mais si le paquet n&#39;a pas de <code>package.json</code> avec le <code>main</code> bien rempli, ça ne va
+Si ce n’est pas le cas, je pourrais toujours faire <code>npm i https//adresse.git</code>
+mais si le paquet n’a pas de <code>package.json</code> avec le <code>main</code> bien rempli, ça ne va
 pas forcément être le mieux.</p>
 <p>Cela dit, si mon paquet est prévu pour Bower par exemple, il existe une <i>transformation</i>
 prévue pour aider Browserify à résoudre les références aux paquets pour les
@@ -190,18 +190,18 @@ Dans le même esprit, on va retrouver de nombreuses transformations telles que :
 <li><code>es6ify</code>: pour écrire du JavaScript ES6 (compilé en ES5),</li>
 <li><code>uglifyify</code>: appliquer uglify.</li>
 </ul>
-<p>Il existe plein <a href="https://www.npmjs.org/browse/keyword/browserify">d&#39;autres transformations</a>
-qui s&#39;adapteront sûrement à vos besoins.</p>
-<p>Du coup la ligne ultime pour consommer a peu près n&#39;importe quel module :</p>
+<p>Il existe plein <a href="https://www.npmjs.org/browse/keyword/browserify">d’autres transformations</a>
+qui s’adapteront sûrement à vos besoins.</p>
+<p>Du coup la ligne ultime pour consommer a peu près n’importe quel module :</p>
 <pre><code class="lang-bash">browserify <span class="hljs-attribute">-t</span> debowerify <span class="hljs-attribute">-t</span> decomponentify <span class="hljs-attribute">-t</span> deamdify <span class="hljs-attribute">-t</span> deglobalify <span class="hljs-attribute">-t</span> es6ify main<span class="hljs-built_in">.</span>js <span class="hljs-subst">&gt;</span> bundle<span class="hljs-built_in">.</span>js
 </code></pre>
-<p>L&#39;équivalent avec les tâches Grunt ou Gulp sera tout aussi simple via un tableau.
+<p>L’équivalent avec les tâches Grunt ou Gulp sera tout aussi simple via un tableau.
 Pensez bien à installer ces dépendances avant:</p>
 <pre><code class="lang-bash"><span class="hljs-comment">npm</span> <span class="hljs-comment">install</span> <span class="hljs-comment">debowerify</span> <span class="hljs-comment">decomponentify</span> <span class="hljs-comment">deamdify</span> <span class="hljs-comment">deglobalify</span> <span class="hljs-comment">es6ify</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">save</span>
 </code></pre>
 <h2>Ecrire un module pour Browserify (mais pas que)</h2>
 
-<p>Consommer c&#39;est bien, mais faire c&#39;est <del>mieux</del> bien aussi.</p>
+<p>Consommer c’est bien, mais faire c’est <del>mieux</del> bien aussi.</p>
 <figure><img src="../../../images/posts/browserify-potter.png" alt=""></figure>
 
 <p>Tout droit sorti de <a href="https://github.com/umdjs/umd">UMD</a> (Universal Module Definition),

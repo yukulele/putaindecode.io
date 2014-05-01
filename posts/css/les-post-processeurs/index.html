@@ -1,53 +1,53 @@
 <!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Les post-processeurs CSS</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="Les post-processeurs CSS"/><meta name="twitter:creator" content="@MoOx"/><meta name="twitter:image" content="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png?s=200"/><meta property="og:title" content="Les post-processeurs CSS"/><meta property="og:type" content="article"/><meta property="og:image" content="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png?s=200"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size7of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size5of12"><nav class="putainde-Nav"><a href="../.." class="putainde-Nav-item">Les posts</a><a href="../../comment-contribuer" class="putainde-Nav-item">Contribuer</a><a href="irc://irc.freenode.net/putaindecode" class="putainde-Nav-item">IRC</a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Les post-processeurs CSS</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas">Écrit par MoOx,<span class="putainde-Date"> le 8 avril 2014</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">css</li><li class="putainde-Tag">pré-processeur</li><li class="putainde-Tag">post-processeur</li></ul></header><div class="putainde-Post-md"><p>Vous avez surement entendu parler des <a href="http://iamvdo.me/blog/les-postprocesseurs-css"><em>post-processeurs CSS</em></a>.
-J&#39;ai personnellement pas mal fait référence à <del>ce concept</del> cette expression ces derniers temps.
+J’ai personnellement pas mal fait référence à <del>ce concept</del> cette expression ces derniers temps.
 Que ce soit lorsque je vous racontais
 <a href="/posts/css/comment-en-finir-avec-les-prefixes/">comment se passer des préfixes CSS</a>
 ou lors
-<a href="/posts/css/le-point-sur-les-preprocesseurs/">d&#39;un point sur les pré-processeurs CSS</a>.
-N&#39;y a-t-il rien qui vous a fait tiquer ?</p>
+<a href="/posts/css/le-point-sur-les-preprocesseurs/">d’un point sur les pré-processeurs CSS</a>.
+N’y a-t-il rien qui vous a fait tiquer ?</p>
 <h2 id="du-post-processing-">Du post-processing ?</h2>
 <p>Bon on va pas jouer sur les mots mais quand même un peu. <em>Post</em> ça veut dire après.
 Mais après quoi ? Après du <em>processing</em>. Donc en théorie après que la feuille de
 style ait été traitée.</p>
 <p>Si on revient sur <em>pré-processeurs</em>, on a quelques choses de sensé.
-On travaille sur la feuille de style avant qu&#39;elle n&#39;ait été traitée.
+On travaille sur la feuille de style avant qu’elle n’ait été traitée.
 Traitée par qui ? Je dirais le navigateur pas vous ?
 Dans ce cas le pré-processing est tout à fait logique.</p>
 <p>Mais le post-processing ? Du vrai post-processing ça existe ? Oui et ça ressemblerait à ça par exemple :
 <a href="http://jsfiddle.net/yyx990803/B5JTg/">Interpolation de CSS avec Vue.js</a> (enfin je crois).
 Ici on a un process sur du CSS existant, déjà traité par le navigateur.</p>
-<p>Bon ok j&#39;avoue que je pinaille un peu. On pourrait considérer que le &quot;process&quot;,
-c&#39;est le fait d&#39;améliorer sa feuille de style et dans ce cas, on pourrait accepter pré- et post-process.
+<p>Bon ok j’avoue que je pinaille un peu. On pourrait considérer que le “process”,
+c’est le fait d’améliorer sa feuille de style et dans ce cas, on pourrait accepter pré- et post-process.
 Mais ça reste pas super exact de mon point de vue.</p>
 <p>Du coup on appelle ça comment les post-processeurs ?
 Devrait-on appeler ça du <em>post-pré-processing</em> ? Je vous le demande.</p>
-<p>Assez plaisanté, passons donc à l&#39;explication de ce qu&#39;on appelera le <em>post-processing.</em></p>
+<p>Assez plaisanté, passons donc à l’explication de ce qu’on appelera le <em>post-processing.</em></p>
 <h2 id="le-post-processing">Le post-processing</h2>
 <p>Quel est la différence avec du pré-processing ? Pour répondre à cette question,
-il faut bien définir ce qu&#39;est le pré-processing dans notre contexte.</p>
+il faut bien définir ce qu’est le pré-processing dans notre contexte.</p>
 <h3 id="le-pr-processing-css">Le pré-processing CSS</h3>
 <p>Le pré-processing est un pré-traitement avant le traitment final. Dans le cas de feuille de style,
 on travaille donc sur des pré-feuilles de style. Ce ne sont donc pas des feuilles de style.
 Comment les différencie-t-on ? La syntaxe.</p>
-<p>Hola hola, calmez-vous. J&#39;en entends déjà chouiner qu&#39;avec Sass, Less et Stylus,
+<p>Hola hola, calmez-vous. J’en entends déjà chouiner qu’avec Sass, Less et Stylus,
 on peut coller du CSS valide et Ça Marche™. Oui ça marche. Mais seulement dans ce sens.
 Si on essaye de faire parser un <code>@foreach</code>, <code>@include</code> ou ce genre de nouveautés
 apportés par un pré-processeur, votre navigateur il va faire la gueule.</p>
-<p>En effet un pré-processeur n&#39;est rien d&#39;autre qu&#39;un langage. Un nouveau.
+<p>En effet un pré-processeur n’est rien d’autre qu’un langage. Un nouveau.
 Il ajoute des éléments à ce langage, et change même éventuellement la syntaxe.
-Certes il peut s&#39;appuyer sur un langage existant (par exemple la syntaxe Scss de Sass, ou la syntaxe Less )
-mais ça n&#39;est pas obligé (exemple avec l&#39;ancienne syntaxe Sass, ou encore pour changer de registre, CoffeeScript pour du JavaScript).</p>
+Certes il peut s’appuyer sur un langage existant (par exemple la syntaxe Scss de Sass, ou la syntaxe Less )
+mais ça n’est pas obligé (exemple avec l’ancienne syntaxe Sass, ou encore pour changer de registre, CoffeeScript pour du JavaScript).</p>
 <h3 id="diff-rence-entre-post-processing-et-pr-processing">Différence entre post-processing et pré-processing</h3>
 <p>Avant de parler des différences il nous faut un cas concret pour y voir plus clair.
 Autoprefixer est un très bon exemple, mais je vais vous en montrer un encore plus pertinent: les fallbacks REM.
-J&#39;espère que vous connaissez le REM (root EM), cette unité CSS très utile qui permet d&#39;avoir la souplesse de l&#39;unité EM,
-en se basant non sur l&#39;élement parent, mais l&#39;élement root (donc le document).
-Cette unité CSS n&#39;est par exemple pas compatible avec IE8, et certain d&#39;entre vous doivent encore le supporter.</p>
+J’espère que vous connaissez le REM (root EM), cette unité CSS très utile qui permet d’avoir la souplesse de l’unité EM,
+en se basant non sur l’élement parent, mais l’élement root (donc le document).
+Cette unité CSS n’est par exemple pas compatible avec IE8, et certain d’entre vous doivent encore le supporter.</p>
 <p>On a donc vu pas mal de mixins genre <code>rem2px()</code> pour ajouter un fallback, via des pré-processeurs CSS.
-Sauf que là, il semble beaucoup plus pertinent de ne pas alourdir son code (car on y ajoute rien d&#39;intéressant),
-surtout lorsque c&#39;est pour supporter de vieux navigateurs.
+Sauf que là, il semble beaucoup plus pertinent de ne pas alourdir son code (car on y ajoute rien d’intéressant),
+surtout lorsque c’est pour supporter de vieux navigateurs.
 Et si on pouvait ajouter un petit coup de peinture magique, je dirais même automatique,
-afin d&#39;avoir ce fallback ?</p>
+afin d’avoir ce fallback ?</p>
 <p>Et bien, on peut. Ça prend 20 secondes, et ça fera les choses bien, sans oubli.
 Exemple avec <a href="https://github.com/ctalkington/rework-rem-fallback">rework-rem-fallback</a></p>
 <pre><code class="lang-js"><span class="hljs-comment">// il faudrait installer les dépendances de la façon suivante</span>
@@ -65,98 +65,98 @@ Exemple avec <a href="https://github.com/ctalkington/rework-rem-fallback">rework
   <span class="hljs-comment">// ici on fait la même chose, mais comme si la font de base était en 14px</span>
   , out14 = rework(css).<span class="hljs-keyword">use</span>(remFallback(<span class="hljs-number">14</span>)).toString()
 </code></pre>
-<p>Avec l&#39;exemple d&#39;avant, et ce bout de CSS:</p>
+<p>Avec l’exemple d’avant, et ce bout de CSS:</p>
 <pre><code class="lang-css"><span class="hljs-class">.main-header</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">5</span>rem </span></span></span>}
 </code></pre>
-<p>... On obtiendra le résultat suivant:</p>
+<p>… On obtiendra le résultat suivant:</p>
 <pre><code class="lang-css"><span class="hljs-class">.main-header</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">80</span>px</span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">5</span>rem</span></span>;
 <span class="hljs-rule">}</span></span>
 </code></pre>
-<p>Notre exemple n&#39;est pas intégré dans un
+<p>Notre exemple n’est pas intégré dans un
 <a href="http://www.24joursdeweb.fr/2013/automatisez-votre-workflow-front-end/">workflow automatisé</a>,
-mais c&#39;est juste pour vous montrer que c&#39;est l&#39;histoire de 5 lignes de code
-et pas autant de lignes que de fois où l&#39;on a <code>rem</code> dans sa feuille de style.</p>
-<p>Sexy n&#39;est-ce pas ?</p>
-<p>L&#39;autre grosse différence entre le pré- et le post-processing, c&#39;est le langage.
-Ce post-processing s&#39;effectue après du pré-processing. Donc après que le pré-processeur,
+mais c’est juste pour vous montrer que c’est l’histoire de 5 lignes de code
+et pas autant de lignes que de fois où l’on a <code>rem</code> dans sa feuille de style.</p>
+<p>Sexy n’est-ce pas ?</p>
+<p>L’autre grosse différence entre le pré- et le post-processing, c’est le langage.
+Ce post-processing s’effectue après du pré-processing. Donc après que le pré-processeur,
 cet autre langage, ait fait son boulot.</p>
-<p><strong>Le post-processing s&#39;effectue sur du CSS de manière transparente.</strong></p>
-<p><em>Ce processing s&#39;effectue sur du vrai CSS (disons la syntaxe CSS).</em></p>
-<p>Cette syntaxe étant très simple (se résumant principalement à <code>selecteur { prop: value }</code> - oui y&#39;a les règles <code>@*</code> en plus je sais),
-<a href="https://github.com/reworkcss/css-parse#performance">c&#39;est très rapide à parser</a>.</p>
+<p><strong>Le post-processing s’effectue sur du CSS de manière transparente.</strong></p>
+<p><em>Ce processing s’effectue sur du vrai CSS (disons la syntaxe CSS).</em></p>
+<p>Cette syntaxe étant très simple (se résumant principalement à <code>selecteur { prop: value }</code> - oui y’a les règles <code>@*</code> en plus je sais),
+<a href="https://github.com/reworkcss/css-parse#performance">c’est très rapide à parser</a>.</p>
 <h2 id="pourquoi-du-post-processing-">Pourquoi du post-processing ?</h2>
 <p>Comme on vient de le voir avec les 2 points précédents, on a déjà 3 bonnes raisons :</p>
 <ul>
-<li>la simplicité (pour certains cas de figures, c&#39;est plus pertinent, ça évite trop de code et des
+<li>la simplicité (pour certains cas de figures, c’est plus pertinent, ça évite trop de code et des
 oublis)</li>
 <li>la vitesse</li>
 <li>le fait de pouvoir brancher ses propres plugins</li>
 </ul>
-<p>Je sais pas vous mais moi ça me suffit. Et en cherchant mieux, on pourrait sûrement trouver d&#39;autres arguments.
-(<em>Rappel : d&#39;ailleurs n&#39;hésitez pas à modifier cet article si vous en avez</em>).</p>
+<p>Je sais pas vous mais moi ça me suffit. Et en cherchant mieux, on pourrait sûrement trouver d’autres arguments.
+(<em>Rappel : d’ailleurs n’hésitez pas à modifier cet article si vous en avez</em>).</p>
 <h2 id="avec-quoi-doit-on-post-processer-ces-css-">Avec quoi doit-on post-processer ces CSS ?</h2>
-<p>Comme vous avez pu le voir tout à l&#39;heure j&#39;ai pris dans un exemple Rework,
+<p>Comme vous avez pu le voir tout à l’heure j’ai pris dans un exemple Rework,
 mais il existe aussi PostCSS, plus récent.</p>
 <h3 id="-rework-https-github-com-reworkcss-rework-"><a href="https://github.com/reworkcss/rework">Rework</a></h3>
 <p>Rework a été initié par le grand <a href="https://github.com/visionmedia">TJ Holowaychuck</a>,
 cette machine de guerre (<a href="http://www.quora.com/TJ-Holowaychuk-1/How-is-TJ-Holowaychuk-so-insanely-productive">que certains ne pensent même pas humain</a> pour vous dire).
 TJ était il fut un temps utilisateur de Sass, il avait donc même commencé le
 portage de <a href="https://github.com/stunti/sass.js">Sass en Node</a>.
-Il a dû se rendre compte bien avant nous que ce n&#39;était finalement pas forcément la meilleure option.
-Il a donc développé <a href="https://github.com/LearnBoost/stylus/">Stylus</a> (si, si, c&#39;est bien lui),
-le temps de comprendre qu&#39;une autre approche était possible (pour info, il ne maintient maintenant plus Stylus).</p>
-<p>C&#39;est donc <a href="https://github.com/reworkcss/rework/commit/0a7be255bfe753d03f93c7072351266fa636e80a">le 1er Septembre 2012 qu&#39;il pousse la première version de Rework</a>.</p>
-<p>L&#39;objectif de Rework n&#39;est pas spécialement de gérer du post-process.
+Il a dû se rendre compte bien avant nous que ce n’était finalement pas forcément la meilleure option.
+Il a donc développé <a href="https://github.com/LearnBoost/stylus/">Stylus</a> (si, si, c’est bien lui),
+le temps de comprendre qu’une autre approche était possible (pour info, il ne maintient maintenant plus Stylus).</p>
+<p>C’est donc <a href="https://github.com/reworkcss/rework/commit/0a7be255bfe753d03f93c7072351266fa636e80a">le 1er Septembre 2012 qu’il pousse la première version de Rework</a>.</p>
+<p>L’objectif de Rework n’est pas spécialement de gérer du post-process.
 Rework se place comme un manipulateur de CSS, permettant (entre autres) :</p>
 <ul>
-<li>l&#39;automatisation d&#39;ajout des préfixes</li>
+<li>l’automatisation d’ajout des préfixes</li>
 <li>la création de nouvelles propriétés</li>
-<li>l&#39;intégration d&#39;images inline</li>
+<li>l’intégration d’images inline</li>
 </ul>
-<p>Vous me direz que ça ressemble vachement à un pré-processeur n&#39;est-ce pas ?
-Vu l&#39;historique que je viens de vous conter et <a href="https://github.com/reworkcss/rework#plugins">les plugins par défaut</a>,
-vous aurez bien compris que c&#39;est l&#39;idée : faire un moteur de pré-processeur où l&#39;on y branche des plugins pour ajouter nos propres fonctionnalités.
-C&#39;est grâce à ce projet qu&#39;Autoprefixer a initialement vu le jour d&#39;ailleurs.</p>
+<p>Vous me direz que ça ressemble vachement à un pré-processeur n’est-ce pas ?
+Vu l’historique que je viens de vous conter et <a href="https://github.com/reworkcss/rework#plugins">les plugins par défaut</a>,
+vous aurez bien compris que c’est l’idée : faire un moteur de pré-processeur où l’on y branche des plugins pour ajouter nos propres fonctionnalités.
+C’est grâce à ce projet qu’Autoprefixer a initialement vu le jour d’ailleurs.</p>
 <h3 id="-postcss-https-github-com-ai-postcss-"><a href="https://github.com/ai/postcss">PostCSS</a></h3>
-<p>Beaucoup plus récent, PostCSS a été écrit par l&#39;auteur d&#39;Autoprefixer.</p>
+<p>Beaucoup plus récent, PostCSS a été écrit par l’auteur d’Autoprefixer.</p>
 <blockquote>
 <p>Heu mais quoi ? Tu viens de nous dire que Autoprefixer utilisait Rework ?!</p>
 </blockquote>
-<p>Oui <em>c&#39;était</em> le cas. <em>Utilisait</em>. L&#39;auteur de PostCSS s&#39;explique dans <a href="https://github.com/ai/postcss#rework">son README</a>.
-Il y indique que, bien que très similaire, Rework et PostCSS n&#39;ont pas été développé pour les mêmes raisons.
-C&#39;est ce qui explique les différences au niveau des moteurs.
-PostCSS se veut plus préservateur par rapport à votre source d&#39;origine,
+<p>Oui <em>c’était</em> le cas. <em>Utilisait</em>. L’auteur de PostCSS s’explique dans <a href="https://github.com/ai/postcss#rework">son README</a>.
+Il y indique que, bien que très similaire, Rework et PostCSS n’ont pas été développé pour les mêmes raisons.
+C’est ce qui explique les différences au niveau des moteurs.
+PostCSS se veut plus préservateur par rapport à votre source d’origine,
 et gère donc mieux sourcemap, peut conserver votre espacement et indentation,
 parse de manière plus sécurisé (vu que ça se veut mieux gérer le code legacy).</p>
-<p>Dans la pratique je n&#39;ai jamais eu de problème avec Rework, me souciant peu de la mise en forme de la sortie CSS.
+<p>Dans la pratique je n’ai jamais eu de problème avec Rework, me souciant peu de la mise en forme de la sortie CSS.
 Mais PostCSS semble avoir une API plus haut niveau et plus souple pour mieux travailler les feuilles de styles.</p>
 <h3 id="rework-ou-postcss-">Rework ou PostCSS ?</h3>
-<p>Tout dépend ce que vous voulez faire. Si vous avez en tête l&#39;idée de développer un outil,
-je pencherais plus vers PostCSS. Mais en temps qu&#39;utilisateur, pour l&#39;instant, définitivement Rework.</p>
+<p>Tout dépend ce que vous voulez faire. Si vous avez en tête l’idée de développer un outil,
+je pencherais plus vers PostCSS. Mais en temps qu’utilisateur, pour l’instant, définitivement Rework.</p>
 <p>Ce dernier a clairement beaucoup plus de plugins existants. Voyez par vous-mêmes :</p>
 <ul>
 <li><a href="https://www.npmjs.org/search?q=rework">npmjs.org/search?q=rework</a></li>
 <li><a href="https://www.npmjs.org/search?q=postcss">npmjs.org/search?q=postcss</a></li>
 </ul>
-<h2 id="rework-ce-n-est-pas-_que_-du-post-processing-">Rework ce n&#39;est pas <em>que</em> du post-processing ?</h2>
-<p>Oui en effet, comme je le disais avant, c&#39;est pas le but. C&#39;est du &quot;processing&quot;.
-Pré-, post-... Qu&#39;est-ce que ça change dans le fond hein ?</p>
-<p>L&#39;idée, en temps que développeur, est d&#39;améliorer le confort d&#39;écriture sans contrainte.
-Comme je l&#39;ai indiqué <a href="/posts/css/le-point-sur-les-preprocesseurs/#mon-avis-sur-les-pr-processeurs">précédemment</a>,
-j&#39;ai laché les pré-processeurs &quot;classiques&quot; ayant l&#39;impression d&#39;utiliser un tank pour tuer une mouche.
-Car au fond pour 90% (si ce n&#39;est plus) d&#39;entres nous,
+<h2 id="rework-ce-n-est-pas-_que_-du-post-processing-">Rework ce n’est pas <em>que</em> du post-processing ?</h2>
+<p>Oui en effet, comme je le disais avant, c’est pas le but. C’est du “processing”.
+Pré-, post-… Qu’est-ce que ça change dans le fond hein ?</p>
+<p>L’idée, en temps que développeur, est d’améliorer le confort d’écriture sans contrainte.
+Comme je l’ai indiqué <a href="/posts/css/le-point-sur-les-preprocesseurs/#mon-avis-sur-les-pr-processeurs">précédemment</a>,
+j’ai laché les pré-processeurs “classiques” ayant l’impression d’utiliser un tank pour tuer une mouche.
+Car au fond pour 90% (si ce n’est plus) d’entres nous,
 que nous faut-il pour bien développer des feuilles de styles ?
-Un peu d&#39;organisation, des variables et un poil de math ?
-Personnellement je me contente de ça. Pour l&#39;organisation, je suis devenu fan de BEM
+Un peu d’organisation, des variables et un poil de math ?
+Personnellement je me contente de ça. Pour l’organisation, je suis devenu fan de BEM
 (on vous en parle bientôt).</p>
 <p><strong>Et en attendant de vraiment pouvoir utiliser les variables CSS associé à <code>calc()</code>,
-je reste sur du <em>custom pré-processing</em> via Rework avec lequel je peux coder avec la syntaxe des specs (même si c&#39;est en draft), plus future-proof.</strong></p>
-<p>J&#39;aime conserver la syntaxe CSS et avoir un process ultra-rapide et transparent.</p>
-<h3 id="prochaine-tape-faire-son-propre-pr-post-processeur-css-c-est-simple">Prochaine étape: faire son propre pré/post-processeur CSS, c&#39;est simple</h3>
-<p>Rework ayant un bon petit paquet de plugins déjà existants, c&#39;est assez simple de réaliser son propre pré-processeur via quelques lignes de code seulement.
-La mise en place et l&#39;automatisation feront l&#39;objet d&#39;un prochain article !</p>
+je reste sur du <em>custom pré-processing</em> via Rework avec lequel je peux coder avec la syntaxe des specs (même si c’est en draft), plus future-proof.</strong></p>
+<p>J’aime conserver la syntaxe CSS et avoir un process ultra-rapide et transparent.</p>
+<h3 id="prochaine-tape-faire-son-propre-pr-post-processeur-css-c-est-simple">Prochaine étape: faire son propre pré/post-processeur CSS, c’est simple</h3>
+<p>Rework ayant un bon petit paquet de plugins déjà existants, c’est assez simple de réaliser son propre pré-processeur via quelques lignes de code seulement.
+La mise en place et l’automatisation feront l’objet d’un prochain article !</p>
 </div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/css/les-post-processeurs/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/css/les-post-processeurs/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/css/les-post-processeurs/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Author-picture putainde-Avatar js-AnimateLoad"/><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> MoOx</h3><div class="putainde-Author-social"><a href="http://moox.io/"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/MoOx"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/MoOx"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.   <br> Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">4 contributeurs</strong><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/clairecoloma" data-tip="clairecoloma" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/63638ee1e60d9ca22adea00962632a6b.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/madx" data-tip="madx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/96006f57ca92ec95713532129b039d9c.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size4of12"><ul class="putainde-Footer-list"><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode">Contact</a></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../c-est-quoi-putaindecode">Putain de ?</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li></ul></div><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text putainde-Footer-text--small">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/css/les-post-processeurs/";
 var disqus_url = "http://putaindecode.fr/posts/css/les-post-processeurs/";

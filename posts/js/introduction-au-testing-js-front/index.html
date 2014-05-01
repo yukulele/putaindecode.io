@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Introduction au testing js front</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="Introduction au testing js front"/><meta name="twitter:creator" content="@bloodyowl"/><meta name="twitter:image" content="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png?s=200"/><meta property="og:title" content="Introduction au testing js front"/><meta property="og:type" content="article"/><meta property="og:image" content="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png?s=200"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size7of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size5of12"><nav class="putainde-Nav"><a href="../.." class="putainde-Nav-item">Les posts</a><a href="../../comment-contribuer" class="putainde-Nav-item">Contribuer</a><a href="irc://irc.freenode.net/putaindecode" class="putainde-Nav-item">IRC</a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Introduction au testing js front</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas">Écrit par bloodyowl,<span class="putainde-Date"> le 1 mai 2014</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">javascript</li><li class="putainde-Tag">tape</li><li class="putainde-Tag">unit-test</li><li class="putainde-Tag">browserify</li></ul></header><div class="putainde-Post-md"><p>Les tests automatisés en front-end ont longtemps été ignorés,
 et le sont encore trop.</p>
-<p>Écrire des tests peut paraître chiant, mais le temps qu&#39;ils rapportent
-compense largement celui que l&#39;on passe à les écrire.</p>
+<p>Écrire des tests peut paraître chiant, mais le temps qu’ils rapportent
+compense largement celui que l’on passe à les écrire.</p>
 <h2 id="-crire-du-js-testable">écrire du js testable</h2>
 <p>Prenons un exemple simple et moche :</p>
 <pre><code class="lang-javascript"><span class="hljs-comment">//app.js</span>
@@ -36,7 +36,7 @@ app.cart.addToCart = <span class="hljs-function"><span class="hljs-keyword">func
 </code></pre>
 <p>Mais ne souhaitez probablement pas rendre vos méthodes accessibles à la console.</p>
 <p>Utilisez un module-system : <a href="http://browserify.org">browserify</a> ou
-<a href="http://requirejs.org">requirejs</a> (si vous n&#39;avez pas besoin de chargement
+<a href="http://requirejs.org">requirejs</a> (si vous n’avez pas besoin de chargement
 conditionnel et souhaitez créer un bundle par build, utilisez browserify qui
 possède une syntaxe beaucoup plus sympathique et une codebase réduite, vous
 pourrez même <code>require</code> depuis un module npm).</p>
@@ -52,10 +52,10 @@ module.exports = {
 <p>Vous pourrez ainsi séparer proprement votre application en modules et les tester individuellement.</p>
 <h3 id="2-oui-mais-les-modules-interd-pendants-alors-">2. oui, mais les modules interdépendants alors ?</h3>
 <p>Là, ça devient un peu plus tricky.
-Ce que je conseille à titre personnel c&#39;est d&#39;utiliser des events
-pour faire communiquer les différentes parties de l&#39;application.</p>
-<p>Cela permet d&#39;éviter d&#39;utiliser des mocks d&#39;autres parties de l&#39;application partout.</p>
-<p>Par exemple, si je souhaite tester le fait qu&#39;un click sur <code>.js-updateCart</code>
+Ce que je conseille à titre personnel c’est d’utiliser des events
+pour faire communiquer les différentes parties de l’application.</p>
+<p>Cela permet d’éviter d’utiliser des mocks d’autres parties de l’application partout.</p>
+<p>Par exemple, si je souhaite tester le fait qu’un click sur <code>.js-updateCart</code>
 déclanchera bien <code>updateCart</code> :</p>
 <pre><code class="lang-javascript"><span class="hljs-comment">//view.js</span>
 
@@ -89,7 +89,7 @@ module.exports = view.extend({
   }
 })
 </code></pre>
-<p>et je n&#39;aurais qu&#39;à écouter cet event depuis <code>cart</code> :</p>
+<p>et je n’aurais qu’à écouter cet event depuis <code>cart</code> :</p>
 <pre><code class="lang-javascript"><span class="hljs-comment">// cart.js</span>
 <span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
 <span class="hljs-keyword">var</span> catalog = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../catalog"</span>)
@@ -151,7 +151,7 @@ tape(<span class="hljs-string">"cart"</span>, <span class="hljs-function"><span 
 <h2 id="tester-tous-les-cas-possibles">tester tous les cas possibles</h2>
 <p>Ce sont souvent les edge-cases qui nous font nous arracher les cheveux.
 Pour pallier ces soucis, tester en profondeur est essentiel.</p>
-<p>Prenons un exemple, une méthode qui teste si la valeur qu&#39;on lui passe est
+<p>Prenons un exemple, une méthode qui teste si la valeur qu’on lui passe est
 une <code>string</code>.</p>
 <p>On serait tenté de simplement tester les résultats positifs de cette façon :</p>
 <pre><code class="lang-javascript">tape(<span class="hljs-string">"type.isString on strings"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
@@ -172,20 +172,20 @@ une <code>string</code>.</p>
   test.<span class="hljs-keyword">end</span>()
 })
 </code></pre>
-<p>permettent ici d&#39;identifier qu&#39;en réalité on a besoin de :</p>
+<p>permettent ici d’identifier qu’en réalité on a besoin de :</p>
 <pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> {</span>
   <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(value) == <span class="hljs-string">"[object String]"</span>
 }
 </code></pre>
-<p>Et c&#39;est à la force des résultats de tests que vous identifierez rapidement
+<p>Et c’est à la force des résultats de tests que vous identifierez rapidement
 vous familiariserez à tous ces edge-cases.</p>
 <p>À chaque correctif de bug, ajoutez des tests (mais ça, vous le saviez déjà).</p>
 <h2 id="cross-browser-testing">cross-browser testing</h2>
-<p>À l&#39;heure actuelle, où l&#39;on se trouve notamment très souvent avec du
+<p>À l’heure actuelle, où l’on se trouve notamment très souvent avec du
 feature testing.
 Pour le tester complètement, on doit se servir de vrais navigateurs :
 un headless (certes, très pratique) comme <a href="http://phantomjs.org">phantomjs</a>
-ne permettra pas d&#39;obtenir 100% de coverage.</p>
+ne permettra pas d’obtenir 100% de coverage.</p>
 <pre><code class="lang-javascript">var supportsAnimationFrame =
   !!(
     win.requestAnimationFrame <span class="hljs-string">||</span>
@@ -199,9 +199,9 @@ ne permettra pas d&#39;obtenir 100% de coverage.</p>
     win.msRequestAnimationFrame
   )
 </code></pre>
-<p>De plus, vous pouvez par habitude être tenté d&#39;utiliser un
+<p>De plus, vous pouvez par habitude être tenté d’utiliser un
 <code>Array.prototype.forEach</code> alors que votre scope navigateur inclut
-IE8; seuls des tests sur un vrai browser vous permettront d&#39;identifier le souci.</p>
+IE8; seuls des tests sur un vrai browser vous permettront d’identifier le souci.</p>
 <p>Je vous conseille fortement testling, très simple à intégrer dans vos
 modules, et gratuit pour tout projet open-source.</p>
 <p>Dans le <code>package.json</code> :</p>
@@ -221,12 +221,12 @@ modules, et gratuit pour tout projet open-source.</p>
   </span>}
 </span>}
 </code></pre>
-<p>Et ajouter un webhook dans l&#39;admin de votre repository GitHub pointant vers</p>
+<p>Et ajouter un webhook dans l’admin de votre repository GitHub pointant vers</p>
 <blockquote>
 <p><a href="http://git.testling.com">http://git.testling.com</a></p>
 </blockquote>
-<p>Vous pouvez l&#39;utiliser avec tape (son test harness par défaut)
-Mocha, QUnit et n&#39;importe quelle bibliothèque
+<p>Vous pouvez l’utiliser avec tape (son test harness par défaut)
+Mocha, QUnit et n’importe quelle bibliothèque
 de test supportant <code>TAP</code> comme indiqué sur
 <a href="https://ci.testling.com/guide/custom_libraries">le site de testling</a>.</p>
 <p>Vous trouverez aussi des alternatives populaires

@@ -1,54 +1,54 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Git, boutez les bugs, domptez votre historique!</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="Git, boutez les bugs, domptez votre historique!"/><meta name="twitter:creator" content="@Erwyn"/><meta name="twitter:image" content="http://www.gravatar.com/avatar/73af1b4a749651d146a756e7830f10da.png?s=200"/><meta property="og:title" content="Git, boutez les bugs, domptez votre historique!"/><meta property="og:type" content="article"/><meta property="og:image" content="http://www.gravatar.com/avatar/73af1b4a749651d146a756e7830f10da.png?s=200"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size7of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size5of12"><nav class="putainde-Nav"><a href="../.." class="putainde-Nav-item">Les posts</a><a href="../../comment-contribuer" class="putainde-Nav-item">Contribuer</a><a href="irc://irc.freenode.net/putaindecode" class="putainde-Nav-item">IRC</a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Git, boutez les bugs, domptez votre historique!</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas">Écrit par Erwyn,<span class="putainde-Date"> le 27 fév. 2014</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">git</li></ul></header><div class="putainde-Post-md"><p>Vous viendez de lire l&#39;<a href="/posts/git/versionner-avec-git/">article de madx</a> sur le gestionnaire
-de version Git et vous vous dites que vous aimeriez en découvrir plus! Vous l&#39;utilisez déjà mais êtes
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Git, boutez les bugs, domptez votre historique!</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="Git, boutez les bugs, domptez votre historique!"/><meta name="twitter:creator" content="@Erwyn"/><meta name="twitter:image" content="http://www.gravatar.com/avatar/73af1b4a749651d146a756e7830f10da.png?s=200"/><meta property="og:title" content="Git, boutez les bugs, domptez votre historique!"/><meta property="og:type" content="article"/><meta property="og:image" content="http://www.gravatar.com/avatar/73af1b4a749651d146a756e7830f10da.png?s=200"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size7of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size5of12"><nav class="putainde-Nav"><a href="../.." class="putainde-Nav-item">Les posts</a><a href="../../comment-contribuer" class="putainde-Nav-item">Contribuer</a><a href="irc://irc.freenode.net/putaindecode" class="putainde-Nav-item">IRC</a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Git, boutez les bugs, domptez votre historique!</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas">Écrit par Erwyn,<span class="putainde-Date"> le 27 fév. 2014</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">git</li></ul></header><div class="putainde-Post-md"><p>Vous viendez de lire l’<a href="/posts/git/versionner-avec-git/">article de madx</a> sur le gestionnaire
+de version Git et vous vous dites que vous aimeriez en découvrir plus! Vous l’utilisez déjà mais êtes
 en quête de quelques nouvelles (ou pas) astuces à vous mettre sous la dent! Bienvenue!</p>
-<p>Si vous désirez vous servir de cet article comme d&#39;un tutoriel il est recommandé d&#39;avoir quelques
-bases concernant l&#39;utilisation et le fonctionnement de Git (commits/branches/etc…).</p>
+<p>Si vous désirez vous servir de cet article comme d’un tutoriel il est recommandé d’avoir quelques
+bases concernant l’utilisation et le fonctionnement de Git (commits/branches/etc…).</p>
 <p>Allez, je ne vous fais pas plus attendre, voici ma liste des fonctionnalités Git dont je ne
 saurais plus me passer:</p>
-<h2 id="git-lg-l-alias-qui-vous-parle-d-histoire">git lg, l&#39;alias qui vous parle d&#39;Histoire</h2>
-<p>À l&#39;aide, à l&#39;aide je ne comprends plus rien à l&#39;historique de mon dépôt Git!
-J&#39;ai créé un monstre… Pas de panique! J&#39;ai pour vous l&#39;alias qu&#39;il vous faut,
+<h2 id="git-lg-l-alias-qui-vous-parle-d-histoire">git lg, l’alias qui vous parle d’Histoire</h2>
+<p>À l’aide, à l’aide je ne comprends plus rien à l’historique de mon dépôt Git!
+J’ai créé un monstre… Pas de panique! J’ai pour vous l’alias qu’il vous faut,
 honteusement pompé de <a href="https://coderwall.com/p/euwpig">ce site</a>, mais
-comme j&#39;ai pas d&#39;honneur… Pour le mettre en place il suffit d&#39;entrer la commande
+comme j’ai pas d’honneur… Pour le mettre en place il suffit d’entrer la commande
 suivante dans votre terminal préféré:</p>
 <pre><code class="lang-bash">$ git config --global alias.lg <span class="hljs-string">"log --color --graph --pretty=format:'<span class="hljs-variable">%Cred</span><span class="hljs-variable">%h</span><span class="hljs-variable">%Creset</span> -<span class="hljs-variable">%C</span>(yellow)<span class="hljs-variable">%d</span><span class="hljs-variable">%Creset</span> <span class="hljs-variable">%s</span> <span class="hljs-variable">%Cgreen</span>(<span class="hljs-variable">%cr</span>) <span class="hljs-variable">%C</span>(bold blue)&lt;<span class="hljs-variable">%an</span>&gt;<span class="hljs-variable">%Creset</span>' --abbrev-commit"</span>
 </code></pre>
-<p>Au cas où vous ne seriez pas à l&#39;aise avec ce genre de choses, sachez simplement que la commande
-<code>git config --global alias.lg</code> permet d&#39;inscrire à votre configuration générale un nouvel alias (
+<p>Au cas où vous ne seriez pas à l’aise avec ce genre de choses, sachez simplement que la commande
+<code>git config --global alias.lg</code> permet d’inscrire à votre configuration générale un nouvel alias (
 ici lg). Le reste est ce que doit faire cet alias, à savoir afficher un historique reformaté de votre
 dépôt Git.</p>
-<p>Allez, je vous met au défi d&#39;oser taper un coup de <code>git lg</code> dans votre terminal
-maintenant (dans un dépôt Git bien entendu banane). Pour l&#39;exemple, je l&#39;ai réalisé dans le dépôt
+<p>Allez, je vous met au défi d’oser taper un coup de <code>git lg</code> dans votre terminal
+maintenant (dans un dépôt Git bien entendu banane). Pour l’exemple, je l’ai réalisé dans le dépôt
 de Putain De Code:</p>
 <figure>
   <img src="../../../images/posts/git/boutez-les-bugs-domptez-votre-historique/omagad-history.png" alt="capture historique">
-  <figcaption>Le pouvoir de l&#39;arc en ciel</figcaption>
+  <figcaption>Le pouvoir de l’arc en ciel</figcaption>
 </figure>
 
-<p>Eh oui, sous vos yeux ébahis se dessine maintenant l&#39;historique de votre dépôt!
+<p>Eh oui, sous vos yeux ébahis se dessine maintenant l’historique de votre dépôt!
 Tout y est: créations de branches, commits, merges, les miaouOnes… Voilà, vous ne pourrez plus
-dire que vous n&#39;y comprenez rien, vous seriez un fieffé menteur.</p>
+dire que vous n’y comprenez rien, vous seriez un fieffé menteur.</p>
 <h2 id="git-bisect-trouver-et-punir">git bisect, trouver et punir</h2>
-<p>S&#39;il y a bien quelque chose d&#39;agaçant dans l&#39;activité de développement, c&#39;est que bien
+<p>S’il y a bien quelque chose d’agaçant dans l’activité de développement, c’est que bien
 souvent on est amené à travailler en équipe, et évidemment, il y en a toujours
-un pour introduire des Putain De Bugs. Alors c&#39;est parti on sort le débugger pour
-l&#39;autre ingrat, on place les <code>console.log</code> et autres <code>var_dump()</code> pour trouver d&#39;où
-peut bien venir ce fichu problème, et on se coule un café parce qu&#39;entre nous, ça peut
+un pour introduire des Putain De Bugs. Alors c’est parti on sort le débugger pour
+l’autre ingrat, on place les <code>console.log</code> et autres <code>var_dump()</code> pour trouver d’où
+peut bien venir ce fichu problème, et on se coule un café parce qu’entre nous, ça peut
 prendre du temps.</p>
 <p>Heureusement pour nous, là aussi Git est au rendez-vous avec sa fonctionnalité de <em>bisecting</em>. Je vous vois déjà en
 train de baver devant votre écran, mais non, Git ne va pas corriger vos bugs bien évidemment, il va vous aider
-à trouver le changement dans le code qui l&#39;a fait apparaître et ceci grâce à la commande <code>git bisect</code>.</p>
-<p>Pour lancer une <em>bisection</em> par Git il suffit d&#39;entrer <code>git bisect start</code> dans votre terminal préféré
+à trouver le changement dans le code qui l’a fait apparaître et ceci grâce à la commande <code>git bisect</code>.</p>
+<p>Pour lancer une <em>bisection</em> par Git il suffit d’entrer <code>git bisect start</code> dans votre terminal préféré
 et le tour est joué!</p>
 <pre><code class="lang-bash"><span class="hljs-variable">$ </span>git bisect start
 $
 </code></pre>
 <figure>
-    <figcaption> Capitaine, regardez il n&#39;y a rien </figcaption>
+    <figcaption> Capitaine, regardez il n’y a rien </figcaption>
 </figure>
 
-<p>Oui bon d&#39;accord, il va falloir s&#39;investir un peu plus pour parvenir à nos fins. Pour l&#39;instant Git est
-passé en mode <em>bisection</em>, maintenant il a besoin d&#39;informations pour s&#39;exécuter:</p>
+<p>Oui bon d’accord, il va falloir s’investir un peu plus pour parvenir à nos fins. Pour l’instant Git est
+passé en mode <em>bisection</em>, maintenant il a besoin d’informations pour s’exécuter:</p>
 <ul>
 <li>Un commit où le bug est présent</li>
 <li>Un commit où le bug est absent</li>
@@ -56,8 +56,8 @@ passé en mode <em>bisection</em>, maintenant il a besoin d&#39;informations pou
 <p>Imaginons que le commit sur lequel nous sommes comporte le bug, nous allons donc le signaler à Git avec
 <code>git bisect bad</code>. Nous allons ensuite nous déplacer sur un commit plus ancien qui ne comporte pas le bug et
 le signaler à son tour: <code>git bisect good</code>.</p>
-<p>Git va alors se mettre en route et vous déplacer automatiquement de commit en commit. Pour chacun d&#39;eux vous n&#39;aurez
-qu&#39;à le déclarer bon ou mauvais comme expliqué au dessus, jusqu&#39;à ce que Git vous fournisse le premier commit
+<p>Git va alors se mettre en route et vous déplacer automatiquement de commit en commit. Pour chacun d’eux vous n’aurez
+qu’à le déclarer bon ou mauvais comme expliqué au dessus, jusqu’à ce que Git vous fournisse le premier commit
 comportant le bug, celui dont le changement a révélé le disfonctionnement.</p>
 <pre><code class="lang-bash">$ git bisect bad
 1082351d9157e98aed1bbee8b9ad6deedca1288f is the first bad <span class="hljs-operator"><span class="hljs-keyword">commit</span>
@@ -73,18 +73,18 @@ Author: Maxime Thirouin &lt;m@***.io&gt;
     <figcaption>1, 2, 3, Soleil!</figcaption>
 </figure>
 
-<p>Et voilà, le tour est joué, en plus Git vous a positionné sur ce commit, il ne manque plus qu&#39;un petit coup de
-<code>git show</code> et vous savez tout. Pour revenir à votre travail, un simple <code>git bisect reset</code> fera l&#39;affaire!
-Il ne vous reste plus qu&#39;à punir la personne fautive, mais pour ça je vous laisse avec votre imagination,
+<p>Et voilà, le tour est joué, en plus Git vous a positionné sur ce commit, il ne manque plus qu’un petit coup de
+<code>git show</code> et vous savez tout. Pour revenir à votre travail, un simple <code>git bisect reset</code> fera l’affaire!
+Il ne vous reste plus qu’à punir la personne fautive, mais pour ça je vous laisse avec votre imagination,
 je suis sûr que vous trouverez.</p>
-<p>Pour les fanatiques de l&#39;efficacité et de l&#39;automatisation, sachez que Git en a encore dans le ventre. Si vous
+<p>Pour les fanatiques de l’efficacité et de l’automatisation, sachez que Git en a encore dans le ventre. Si vous
 connaissez déjà un bon et un mauvais commit, vous pouvez tout simplement lancer la <em>bissection</em> à grand coup de
-<code>git bisect start MAUVAIS_COMMIT BON_COMMIT</code> et si, cerise sur le gâteau, vous êtes en possession d&#39;une suite de tests
+<code>git bisect start MAUVAIS_COMMIT BON_COMMIT</code> et si, cerise sur le gâteau, vous êtes en possession d’une suite de tests
 unitaires (oui non je sais faut pas déconner), <code>git bisect run &lt;votre_script&gt;</code> vous permettra de la lancer et la
 recherche du premier commit défectueux se fera alors toute seule!</p>
 <h2 id="git-rebase-du-pur-story-telling">git rebase, du pur story-telling</h2>
-<p>Je ne sais pas s&#39;il vous est déjà arrivé de naviguer dans les dépôts Git de projets libres, mais souvent on y trouve que très
-peu de commits poubelles, ces commits avec comme message &quot;step&quot; ou autre &quot;stuff&quot;. Chaque commit correspond à une fonctionnalité,
+<p>Je ne sais pas s’il vous est déjà arrivé de naviguer dans les dépôts Git de projets libres, mais souvent on y trouve que très
+peu de commits poubelles, ces commits avec comme message “step” ou autre “stuff”. Chaque commit correspond à une fonctionnalité,
 un bug fix, une unité logique cohérente. Je ne sais pas pour vous, mais personnellement un <em>git log</em> ne ressemble pas à
 ça chez moi!</p>
 <pre><code>commit e739e7c0248b841b0250eb85d99a1b4ba149149d
@@ -114,22 +114,22 @@ commit ca4ff952310d6246216e83f49309b32b2d2fa010
     <figcaption>best git log, ever</figcaption>
 </figure>
 
-<p>Bien que l&#39;on essaye de nous faire croire que les logiciels libres sont codés par des rockstars, ce qui permet de justifier le
-mythe du <em>1 commit = 1 fonctionnalité</em>, vous n&#39;êtes pas dupes; l&#39;historique Git de ces dépôts est bel et bien retravaillé, et ceci dans
-le but de maintenir sa cohérence et de permettre à tous les contributeurs de le comprendre. Si cela s&#39;applique particulièrement
-dans le cadre des logiciels libres, il n&#39;en est pas moins satisfaisant d&#39;avoir également un historique clair sur ses propres dépôts.</p>
-<p>Pour cela, l&#39;arme de choix s&#39;appelle <code>git rebase</code>. Cette fonctionnalité permet de réécrire l&#39;historique de vos dépôts, de
-réorganiser les commits, d&#39;en supprimer, de changer leur message associé etc… La fonctionnalité est assez simple à utiliser, nous allons
-prendre exemple sur l&#39;historique présenté ci-dessus: je voudrais supprimer le commit dont le message est &#39;stuff&#39; parce que finalement il
-s&#39;avère inutile. Je veux également fusionner le commit &#39;misc&#39; avec le commit &#39;Now my new functionality finally works&#39; et renommer ce dernier
-pour qu&#39;il soit plus explicite et fasse référence à ma User Story correspondante dans mon outil de tracking préféré.</p>
-<p>Pour commencer, il faut dire jusqu&#39;à quel commit on souhaite effectuer cette réécriture; pour cela, dans mon cas, deux solutions:</p>
+<p>Bien que l’on essaye de nous faire croire que les logiciels libres sont codés par des rockstars, ce qui permet de justifier le
+mythe du <em>1 commit = 1 fonctionnalité</em>, vous n’êtes pas dupes; l’historique Git de ces dépôts est bel et bien retravaillé, et ceci dans
+le but de maintenir sa cohérence et de permettre à tous les contributeurs de le comprendre. Si cela s’applique particulièrement
+dans le cadre des logiciels libres, il n’en est pas moins satisfaisant d’avoir également un historique clair sur ses propres dépôts.</p>
+<p>Pour cela, l’arme de choix s’appelle <code>git rebase</code>. Cette fonctionnalité permet de réécrire l’historique de vos dépôts, de
+réorganiser les commits, d’en supprimer, de changer leur message associé etc… La fonctionnalité est assez simple à utiliser, nous allons
+prendre exemple sur l’historique présenté ci-dessus: je voudrais supprimer le commit dont le message est ‘stuff’ parce que finalement il
+s’avère inutile. Je veux également fusionner le commit ‘misc’ avec le commit ‘Now my new functionality finally works’ et renommer ce dernier
+pour qu’il soit plus explicite et fasse référence à ma User Story correspondante dans mon outil de tracking préféré.</p>
+<p>Pour commencer, il faut dire jusqu’à quel commit on souhaite effectuer cette réécriture; pour cela, dans mon cas, deux solutions:</p>
 <ul>
-<li>Faire référence à partir de HEAD (l&#39;étiquette courante), ici: HEAD~3 (je veux réécrire jusqu&#39;au commit avant &#39;stuff&#39;)</li>
-<li>Fournir le SHA1 du commit avant &#39;stuff&#39; (ici 2645b1cdbdd72bea6c392c011320556997327761)</li>
+<li>Faire référence à partir de HEAD (l’étiquette courante), ici: HEAD~3 (je veux réécrire jusqu’au commit avant ‘stuff’)</li>
+<li>Fournir le SHA1 du commit avant ‘stuff’ (ici 2645b1cdbdd72bea6c392c011320556997327761)</li>
 </ul>
-<p>Je vais utiliser la première méthode (le choix n&#39;influe en rien sur la suite), et donc lancer la réécriture en invoquant la commande: <code>git rebase -i HEAD~3</code>
-( -i voulant dire de lancer un <em>rebase</em> en mode intéractif). Voici ce qui m&#39;est alors présenté:</p>
+<p>Je vais utiliser la première méthode (le choix n’influe en rien sur la suite), et donc lancer la réécriture en invoquant la commande: <code>git rebase -i HEAD~3</code>
+( -i voulant dire de lancer un <em>rebase</em> en mode intéractif). Voici ce qui m’est alors présenté:</p>
 <pre><code>pick <span class="hljs-number">9</span>db49a3 stuff
 pick <span class="hljs-number">551</span>b243 misc
 pick e739e7c Now my <span class="hljs-keyword">new</span> functionality finally works
@@ -151,26 +151,26 @@ pick e739e7c Now my <span class="hljs-keyword">new</span> functionality finally 
 <span class="hljs-preprocessor"># However, if you remove everything, the rebase will be aborted.</span>
 <span class="hljs-preprocessor">#</span>
 <span class="hljs-preprocessor"># Note that empty commits are commented out</span>
-</code></pre><p>Git m&#39;affiche tous les commits concernés par l&#39;opération (en ordre inverse), devant chacun d&#39;eux, la mention <em>pick</em>, et une légende en bas.
-<em>pick</em>, comme l&#39;indique la légende, signifie que ce commit sera conservé, mais je peux remplacer cette mention par les suivantes:</p>
+</code></pre><p>Git m’affiche tous les commits concernés par l’opération (en ordre inverse), devant chacun d’eux, la mention <em>pick</em>, et une légende en bas.
+<em>pick</em>, comme l’indique la légende, signifie que ce commit sera conservé, mais je peux remplacer cette mention par les suivantes:</p>
 <ul>
 <li>reword : modifier le message de commit.</li>
-<li>edit : utiliser le commit mais me laisser le modifier avec un <code>git commit --amend</code> qui permet de commiter l&#39;état courant de la copie de travail en
-l&#39;incorporant au commit précédent.</li>
+<li>edit : utiliser le commit mais me laisser le modifier avec un <code>git commit --amend</code> qui permet de commiter l’état courant de la copie de travail en
+l’incorporant au commit précédent.</li>
 <li>squash : utiliser le commit en le fusionnant avec le commit précédent.</li>
 <li>fixup : utiliser le commit en le fusionnant avec le commit précédent et ne pas utiliser son message associé.</li>
 <li>exec : exécuter une commande sur ce commit.</li>
 </ul>
 <p>En plus de ces différentes mentions, je peux également effectuer deux autres actions:</p>
 <ul>
-<li>déplacer un commit, ce qui aura pour effet final de le déplacer dans l&#39;historique.</li>
-<li>supprimer un commit, ce qui aura comme résultat de le faire disparaître de l&#39;historique.</li>
+<li>déplacer un commit, ce qui aura pour effet final de le déplacer dans l’historique.</li>
+<li>supprimer un commit, ce qui aura comme résultat de le faire disparaître de l’historique.</li>
 </ul>
 <p>Pour ma part, je vais:</p>
 <ul>
-<li>supprimer la première ligne parce que j&#39;ai décidé que le commit &#39;stuff&#39; ne me servait à rien.</li>
-<li>mettre la mention reword devant le commit &#39;misc&#39;, car je vais fusionner le dernier commit avec celui-ci et mettre un nouveau message.</li>
-<li>mettre la mention fixup devant le commit &#39;Now my new functionality finally works&#39; car je vais le fusionner au précédent et abandonner son message.</li>
+<li>supprimer la première ligne parce que j’ai décidé que le commit ‘stuff’ ne me servait à rien.</li>
+<li>mettre la mention reword devant le commit ‘misc’, car je vais fusionner le dernier commit avec celui-ci et mettre un nouveau message.</li>
+<li>mettre la mention fixup devant le commit ‘Now my new functionality finally works’ car je vais le fusionner au précédent et abandonner son message.</li>
 </ul>
 <p>Ce qui nous donne le résultat suivant:</p>
 <pre><code>reword <span class="hljs-number">551</span>b243 misc
@@ -197,10 +197,10 @@ fixup e739e7c Now my <span class="hljs-keyword">new</span> functionality finally
     <figcaption>Attention chérie, ça va trancher</figcaption>
 </figure>
 
-<p>Il n&#39;y a plus qu&#39;à sauvegarder et quitter (:x dans vim) pour que la machine se mette en route. Si certaines actions que vous avez effectuées, notamment
-le déplacement de commits, provoquent des conflits, Git va vous demander de les résoudre au fur et à mesure; il suffit pour cela d&#39;éditer vos fichiers, puis
+<p>Il n’y a plus qu’à sauvegarder et quitter (:x dans vim) pour que la machine se mette en route. Si certaines actions que vous avez effectuées, notamment
+le déplacement de commits, provoquent des conflits, Git va vous demander de les résoudre au fur et à mesure; il suffit pour cela d’éditer vos fichiers, puis
 de les marquer comme résolus au moyen de la commande <code>git add &lt;lefichier&gt;</code> avant de reprendre avec la commande <code>git rebase --continue</code>. Comme convenu,
-Git vous demande d&#39;éditer le message du commit marqué en <em>reword</em>:</p>
+Git vous demande d’éditer le message du commit marqué en <em>reword</em>:</p>
 <pre><code>Story #<span class="hljs-number">34</span> - Poker cards now have a real back picture
 
 <span class="hljs-preprocessor"># Please enter the commit message for your changes. Lines starting</span>
@@ -215,33 +215,33 @@ Git vous demande d&#39;éditer le message du commit marqué en <em>reword</em>:<
 <span class="hljs-preprocessor"># modified:   README.txt</span>
 <span class="hljs-preprocessor">#</span>
 </code></pre><figure>
-    <figcaption>Un commit qu&#39;il est mieux pour le relire</figcaption>
+    <figcaption>Un commit qu’il est mieux pour le relire</figcaption>
 </figure>
 
-<p>L&#39;opération va continuer puis Git va vous rendre la main. Il vous suffit alors de faire un <code>git log</code> pour apprécier le résultat:</p>
+<p>L’opération va continuer puis Git va vous rendre la main. Il vous suffit alors de faire un <code>git log</code> pour apprécier le résultat:</p>
 <pre><code>commit <span class="hljs-number">481</span>b4dccf4fedf4ed9d7f4e83ae5c19a07f7e12e
 <span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
 <span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
     Story <span class="hljs-preprocessor">#34 - Poker cards now have a real back picture</span>
 </code></pre><figure>
-    <figcaption>Et c&#39;est le succèèèèèèès</figcaption>
+    <figcaption>Et c’est le succèèèèèèès</figcaption>
 </figure>
 
-<p>Vous n&#39;avez plus qu&#39;un seul commit tout beau tout propre! Vous pouvez maintenant le pousser sur votre dépôt et vous vanter d&#39;avoir un bel historique, parce
+<p>Vous n’avez plus qu’un seul commit tout beau tout propre! Vous pouvez maintenant le pousser sur votre dépôt et vous vanter d’avoir un bel historique, parce
 que vous aussi, vous êtes une rockstar :).</p>
-<p>Pour ceux qui désirent aller encore plus loin dans l&#39;automatisation de ce processus de rebase, je vous conseille d&#39;aller jeter un œil à l&#39;utilisation
-de l&#39;option <a href="http://madx.me/articles/git_rebase_autosquash.html">--autosquash</a>.</p>
-<h2 id="git-reflog-la-commande-de-celui-qui-a-fait-n-importe-quoi">git reflog, la commande de celui qui a fait n&#39;importe quoi</h2>
-<p>Voici venu le temps <del>des rires et des chants</del> de la denière commande que je souhaitais vous présenter, j&#39;ai nommé <code>git reflog</code>. Cette commande
-c&#39;est votre <em>joker</em>, elle assure votre survie, notamment si vous avez été assez zinzins pour suivre les exemples donnés dans cet article, parce
+<p>Pour ceux qui désirent aller encore plus loin dans l’automatisation de ce processus de rebase, je vous conseille d’aller jeter un œil à l’utilisation
+de l’option <a href="http://madx.me/articles/git_rebase_autosquash.html">—autosquash</a>.</p>
+<h2 id="git-reflog-la-commande-de-celui-qui-a-fait-n-importe-quoi">git reflog, la commande de celui qui a fait n’importe quoi</h2>
+<p>Voici venu le temps <del>des rires et des chants</del> de la denière commande que je souhaitais vous présenter, j’ai nommé <code>git reflog</code>. Cette commande
+c’est votre <em>joker</em>, elle assure votre survie, notamment si vous avez été assez zinzins pour suivre les exemples donnés dans cet article, parce
 que honnêtement…</p>
 <figure>
     <img src="http://i1.kym-cdn.com/photos/images/newsfeed/000/305/224/3e1.jpg" alt="I have no idea what I&#39;m doing">
 </figure>
 
 <p>Vous ne le savez peut être pas, mais Git, dans sa grande bonté, garde une référence de toutes vos actions, de tous les endroits où vous vous êtes déplacez.
-Ce registre, c&#39;est le <em>references log</em>, et en plus on peut y accéder simplement grâce à la commande <code>git reflog</code> (sans déconner). Faisons un petit tour
+Ce registre, c’est le <em>references log</em>, et en plus on peut y accéder simplement grâce à la commande <code>git reflog</code> (sans déconner). Faisons un petit tour
 dans le miens:</p>
 <pre><code><span class="hljs-number">481</span>b4dc HEAD@{<span class="hljs-number">0</span>}: rebase -i (finish): <span class="hljs-keyword">returning</span> <span class="hljs-keyword">to</span> refs/heads/master
 <span class="hljs-number">481</span>b4dc HEAD@{<span class="hljs-number">1</span>}: rebase -i (fixup): Story <span class="hljs-comment">#34 - Poker cards now have a real back picture</span>
@@ -264,9 +264,9 @@ ca4ff95 HEAD@{<span class="hljs-number">16</span>}: commit (initial): <span clas
     <figcaption>Il est beau mon reflog, il est frais</figcaption>
 </figure>
 
-<p>On voit ici l&#39;ensemble de mes opérations apparaître comme le <em>rebase</em> effectué précédemment (bon d&#39;accord il apparaît plusieurs fois parce que j&#39;ai
-fait quelques tests avant d&#39;écrire cette partie de l&#39;article). Chaque opération possède un SHA1 qui est en fait une référence vers le commit concerné, dans l&#39;état
-dans lequel il était au moment de l&#39;opération. Bien, imaginons que j&#39;ai fait n&#39;importe quoi avec le rebase et que je veuille retrouver mon état précédent, et bien
+<p>On voit ici l’ensemble de mes opérations apparaître comme le <em>rebase</em> effectué précédemment (bon d’accord il apparaît plusieurs fois parce que j’ai
+fait quelques tests avant d’écrire cette partie de l’article). Chaque opération possède un SHA1 qui est en fait une référence vers le commit concerné, dans l’état
+dans lequel il était au moment de l’opération. Bien, imaginons que j’ai fait n’importe quoi avec le rebase et que je veuille retrouver mon état précédent, et bien
 il me suffira ici de faire un <code>git checkout e739e7c</code> (dans votre cas la ligne sera probablement plus simple à trouver). Et là si je refais un <code>git log</code>, miracle:</p>
 <pre><code>commit e739e7c0248b841b0250eb85d99a1b4ba149149d
 <span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
@@ -291,12 +291,12 @@ commit ca4ff952310d6246216e83f49309b32b2d2fa010
 <span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">35</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
     first commit
-</code></pre><p>Vous voilà retombés sur vos pieds! Vous n&#39;avez plus qu&#39;à reconnecter votre branche à ce commit si jamais vous en aviez une et vous êtes reparti pour de nouvelles
+</code></pre><p>Vous voilà retombés sur vos pieds! Vous n’avez plus qu’à reconnecter votre branche à ce commit si jamais vous en aviez une et vous êtes reparti pour de nouvelles
 aventures.</p>
 <p>Sachez tout de même que ce <em>references log</em> peut être effacé, et il est même conseillé de le faire régulièrement pour des problématiques de performance de Git sur
-votre dépôt; conserver tous ces commits peut devenir coûteux à la longue. La commande <code>git gc</code> pour <em>garbage collector</em> s&#39;occupera de faire le ménage
+votre dépôt; conserver tous ces commits peut devenir coûteux à la longue. La commande <code>git gc</code> pour <em>garbage collector</em> s’occupera de faire le ménage
 pour vous.</p>
-<p>Voilà, on arrive au bout de notre aventure, j&#39;espère que vous avez appris quelque chose et que Git vous fait maintenant moins peur.</p>
+<p>Voilà, on arrive au bout de notre aventure, j’espère que vous avez appris quelque chose et que Git vous fait maintenant moins peur.</p>
 <p>Amike,</p>
 </div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/git/boutez-les-bugs-domptez-votre-historique/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/git/boutez-les-bugs-domptez-votre-historique/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/git/boutez-les-bugs-domptez-votre-historique/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><img src="http://www.gravatar.com/avatar/73af1b4a749651d146a756e7830f10da.png" alt="" class="putainde-Author-picture putainde-Avatar js-AnimateLoad"/><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> Erwyn</h3><div class="putainde-Author-social"><a href="http://erwyn.piwany.com"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/Erwyn"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/Erwyn"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur tombé dans le web par inadvertance. <br> Amoureux de l'agilité, l'amélioration continue, et l'auto-organisation. <br> Passionné par les entreprises et les individus qui les composent. <br> Producteur d'humour bas de gamme. <br> Rêve d'aventures.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">3 contributeurs</strong><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/Erwyn" data-tip="Erwyn" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/73af1b4a749651d146a756e7830f10da.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size4of12"><ul class="putainde-Footer-list"><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode">Contact</a></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../c-est-quoi-putaindecode">Putain de ?</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li></ul></div><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text putainde-Footer-text--small">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/git/boutez-les-bugs-domptez-votre-historique/";
