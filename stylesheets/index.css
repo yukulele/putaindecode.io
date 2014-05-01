@@ -757,8 +757,16 @@ img {
   color: #999;
 }
 
+.putainde-Post-readingTime {
+  -webkit-animation: ReadingTimeAppear 0.3s ease-in-out;
+  animation: ReadingTimeAppear 0.3s ease-in-out;
+}
+
 .putainde-Post-readingTime--hidden {
-  display: none;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-animation: none;
+  animation: none;
 }
 
 .putainde-Post-contents {
@@ -957,6 +965,39 @@ img {
 
 #disqus_thread {
   margin: 3.125rem 0 1.5625rem;
+}
+
+@-webkit-keyframes ReadingTimeAppear {
+  0% {
+    opacity: 0;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes ReadingTimeAppear {
+  0% {
+    opacity: 0;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes ReadingTimeAppear {
+  0% {
+    opacity: 0;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 .AttrTip {
