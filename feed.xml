@@ -1,4 +1,262 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Tue, 29 Apr 2014 07:17:12 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Introduction à Gulp</title><description><![CDATA[[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Thu, 01 May 2014 14:37:00 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Introduction au testing js front</title><description><![CDATA[[
+<h1 id="introduction-au-testing-js-front">introduction au testing js front</h1>
+<p>Les tests automatisés en front-end ont longtemps été ignorés,
+et le sont encore trop.</p>
+<p>Écrire des tests peut paraître chiant, mais le temps qu&#39;ils rapportent
+compense largement celui que l&#39;on passe à les écrire.</p>
+<h2 id="-crire-du-js-testable">écrire du js testable</h2>
+<p>Prenons un exemple simple et moche :</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">//app.js</span>
+;(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+
+  <span class="hljs-keyword">var</span> cart = $(<span class="hljs-string">"#cart"</span>)
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addToCart</span><span class="hljs-params">(id)</span>{</span>
+    <span class="hljs-keyword">var</span> element = $(<span class="hljs-string">"&lt;li&gt;&lt;/li&gt;"</span>)
+    element.html(catalog[id])
+    cart.append(element)
+  }
+
+  $(<span class="hljs-string">".js-updateCart"</span>)
+    .on(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span>{</span>
+      addToCart($(<span class="hljs-keyword">this</span>).data(<span class="hljs-string">"id"</span>))
+    })
+
+})()
+</code></pre>
+<p>Tester ce code est particulièrement lourd, pour plusieurs raisons :</p>
+<ul>
+<li>les functions à tester ne sont pas accessibles</li>
+<li>on doit simuler un <code>click</code> pour tester un comportement logique.</li>
+<li>on doit créer un element et modifier sont <code>data-id</code> à chaque cas souhaité.</li>
+<li>pour tester <code>addToCart</code> on doit aller regarder dans le DOM.</li>
+</ul>
+<h3 id="1-rendez-accessibles-vos-m-thodes-au-test-runner">1. rendez accessibles vos méthodes au test runner</h3>
+<p>Vous pouvez utiliser un namespace adéquat.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> app = window.app = {}
+app.cart = {}
+app.cart.addToCart = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span> <span class="hljs-comment">/* … */</span> }
+</code></pre>
+<p>Mais ne souhaitez probablement pas rendre vos méthodes accessibles à la console.</p>
+<p>Utilisez un module-system : <a href="http://browserify.org">browserify</a> ou
+<a href="http://requirejs.org">requirejs</a> (si vous n&#39;avez pas besoin de chargement
+conditionnel et souhaitez créer un bundle par build, utilisez browserify qui
+possède une syntaxe beaucoup plus sympathique et une codebase réduite, vous
+pourrez même <code>require</code> depuis un module npm).</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"jquery"</span>) <span class="hljs-comment">// oh, un module npm</span>
+
+module.exports = {
+  element : $(<span class="hljs-string">"#cart"</span>),
+  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-comment">/* … */</span>
+  }
+}
+</code></pre>
+<p>Vous pourrez ainsi séparer proprement votre application en modules et les tester individuellement.</p>
+<h3 id="2-oui-mais-les-modules-interd-pendants-alors-">2. oui, mais les modules interdépendants alors ?</h3>
+<p>Là, ça devient un peu plus tricky.
+Ce que je conseille à titre personnel c&#39;est d&#39;utiliser des events
+pour faire communiquer les différentes parties de l&#39;application.</p>
+<p>Cela permet d&#39;éviter d&#39;utiliser des mocks d&#39;autres parties de l&#39;application partout.</p>
+<p>Par exemple, si je souhaite tester le fait qu&#39;un click sur <code>.js-updateCart</code>
+déclanchera bien <code>updateCart</code> :</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">//view.js</span>
+
+<span class="hljs-comment">// view est une petite class qui route les events</span>
+<span class="hljs-comment">// en rendant les listeners accessibles aux tests</span>
+<span class="hljs-comment">// vous pouvez très facilement en concevoir une</span>
+<span class="hljs-comment">// à votre goût en quelques lignes de code</span>
+<span class="hljs-keyword">var</span> view = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../lib/view"</span>)
+
+<span class="hljs-comment">// eventbus est l'event bus de l'application, il orchestre </span>
+<span class="hljs-comment">// la communication entre les différents modules </span>
+<span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
+
+<span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"jquery"</span>)
+
+module.exports = view.extend({
+  element : document.body,
+  events : [
+    {
+      type : <span class="hljs-string">"click"</span>,
+      selector : <span class="hljs-string">".js-addToCart"</span>,
+      listener : <span class="hljs-string">"addToCart"</span>
+    }
+  ],
+  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span>{</span>
+    <span class="hljs-keyword">var</span> target = eventObject.currentTarget
+    <span class="hljs-keyword">var</span> id = $(target).data(<span class="hljs-string">"id"</span>)
+    eventbus.fire(<span class="hljs-string">"addToCart"</span>, {
+      id : id
+    })
+  }
+})
+</code></pre>
+<p>et je n&#39;aurais qu&#39;à écouter cet event depuis <code>cart</code> :</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// cart.js</span>
+<span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
+<span class="hljs-keyword">var</span> catalog = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../catalog"</span>)
+
+module.exports = {
+  initialize : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-keyword">this</span>._addToCart = <span class="hljs-keyword">this</span>.addToCart.bind(<span class="hljs-keyword">this</span>)
+    eventbus.listen(<span class="hljs-string">"addToCart"</span>, <span class="hljs-keyword">this</span>._addToCart)
+  },
+  release : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    eventbus.stopListening(<span class="hljs-string">"addToCart"</span>, <span class="hljs-keyword">this</span>._addToCart)
+  },
+  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span>{</span>
+    <span class="hljs-comment">// et on a eventObject.id</span>
+    <span class="hljs-keyword">this</span>.products.push(catalog[eventObject.currentTarget.data(<span class="hljs-string">"id"</span>)])
+  }
+}
+</code></pre>
+<p>Grâce à cette architecture, je vais pouvoir tester individuellement
+les deux modules.</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// view.test.js</span>
+
+<span class="hljs-keyword">var</span> tape = <span class="hljs-built_in">require</span>(<span class="hljs-string">"tape"</span>)
+<span class="hljs-keyword">var</span> view = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../app/view"</span>)
+<span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
+<span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"jquery"</span>)
+
+tape(<span class="hljs-string">"view"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span>{</span>
+  test.plan(<span class="hljs-number">1</span>)
+  <span class="hljs-keyword">var</span> element = $(<span class="hljs-string">"&lt;div&gt;&lt;/div&gt;"</span>)
+  element.data(<span class="hljs-string">"id"</span>, <span class="hljs-number">1</span>)
+  <span class="hljs-comment">// on teste facilement l'envoi</span>
+  eventbus.listen(<span class="hljs-string">"addToCart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span>{</span>
+    test.equal(eventObject.id, <span class="hljs-number">1</span>)
+  })
+  view.addToCart({
+    currentTarget : element
+  })
+})
+</code></pre>
+<pre><code class="lang-javascript"><span class="hljs-comment">// cart.test.js</span>
+
+<span class="hljs-keyword">var</span> tape = <span class="hljs-built_in">require</span>(<span class="hljs-string">"tape"</span>)
+<span class="hljs-keyword">var</span> cart = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../app/cart"</span>)
+<span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
+<span class="hljs-keyword">var</span> catalog = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../catalog"</span>)
+
+tape(<span class="hljs-string">"cart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span>{</span>
+  cart.initialize()
+  eventbus.fireSync(<span class="hljs-string">"addToCart"</span>, {id:<span class="hljs-number">1</span>})
+  test.deepEqual(
+    cart[<span class="hljs-number">0</span>],
+    catalog[<span class="hljs-number">1</span>],
+    <span class="hljs-string">"receives addToCart event"</span>
+  )
+  test.end()
+})
+</code></pre>
+<h2 id="tester-tous-les-cas-possibles">tester tous les cas possibles</h2>
+<p>Ce sont souvent les edge-cases qui nous font nous arracher les cheveux.
+Pour pallier ces soucis, tester en profondeur est essentiel.</p>
+<p>Prenons un exemple, une méthode qui teste si la valeur qu&#39;on lui passe est
+une <code>string</code>.</p>
+<p>On serait tenté de simplement tester les résultats positifs de cette façon :</p>
+<pre><code class="lang-javascript">tape(<span class="hljs-string">"type.isString on strings"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
+  test.equal(<span class="hljs-built_in">type</span>.isString(<span class="hljs-string">""</span>), <span class="hljs-keyword">true</span>)
+  test.<span class="hljs-keyword">end</span>()
+})
+</code></pre>
+<p>Or, si par mégarde ma méthode <code>isString</code> se révèle être :</p>
+<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> {</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> value == <span class="hljs-string">"string"</span>
+}
+</code></pre>
+<p>on ne vérifie pas le cas <code>type.isString(new String(&quot;&quot;))</code>.</p>
+<p>Du coup, des tests complets :</p>
+<pre><code class="lang-javascript">tape(<span class="hljs-string">"type.isString on strings"</span>, <span class="hljs-keyword">function</span>(test){
+  test.equal(<span class="hljs-class"><span class="hljs-keyword">type</span>.<span class="hljs-title">isString</span>(</span><span class="hljs-string">""</span>), <span class="hljs-keyword">true</span>)
+  test.equal(<span class="hljs-class"><span class="hljs-keyword">type</span>.<span class="hljs-title">isString</span>(</span><span class="hljs-keyword">new</span> String(<span class="hljs-string">""</span>)), <span class="hljs-keyword">false</span>)
+  test.<span class="hljs-keyword">end</span>()
+})
+</code></pre>
+<p>permettent ici d&#39;identifier qu&#39;en réalité on a besoin de :</p>
+<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> {</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(value) == <span class="hljs-string">"[object String]"</span>
+}
+</code></pre>
+<p>Et c&#39;est à la force des résultats de tests que vous identifierez rapidement
+vous familiariserez à tous ces edge-cases.</p>
+<p>À chaque correctif de bug, ajoutez des tests (mais ça, vous le saviez déjà).</p>
+<h2 id="cross-browser-testing">cross-browser testing</h2>
+<p>À l&#39;heure actuelle, où l&#39;on se trouve notamment très souvent avec du
+feature testing.
+Pour le tester complètement, on doit se servir de vrais navigateurs :
+un headless (certes, très pratique) comme <a href="http://phantomjs.org">phantomjs</a>
+ne permettra pas d&#39;obtenir 100% de coverage.</p>
+<pre><code class="lang-javascript">var supportsAnimationFrame =
+  !!(
+    win.requestAnimationFrame <span class="hljs-string">||</span>
+    win.webkitRequestAnimationFrame <span class="hljs-string">||</span>
+    win.mozRequestAnimationFrame <span class="hljs-string">||</span>
+    win.ORequestAnimationFrame <span class="hljs-string">||</span>
+    <span class="hljs-comment">// vous avez fait une faute de frappe,</span>
+    <span class="hljs-comment">// et mis un `O` majuscule, seul un</span>
+    <span class="hljs-comment">// test sur les version concernées d'Opera</span>
+    <span class="hljs-comment">// vous permettront de l'identifier</span>
+    win.msRequestAnimationFrame
+  )
+</code></pre>
+<p>De plus, vous pouvez par habitude être tenté d&#39;utiliser un
+<code>Array.prototype.forEach</code> alors que votre scope navigateur inclut
+IE8; seuls des tests sur un vrai browser vous permettront d&#39;identifier le souci.</p>
+<p>Je vous conseille fortement testling, très simple à intégrer dans vos
+modules, et gratuit pour tout projet open-source.</p>
+<p>Dans le <code>package.json</code> :</p>
+<pre><code class="lang-json">{
+  "<span class="hljs-attribute">testling</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">files</span>": <span class="hljs-value"><span class="hljs-string">"test/**/*.js"</span></span>,
+    "<span class="hljs-attribute">browsers</span>": <span class="hljs-value">[
+      <span class="hljs-string">"ie/9..latest"</span>,
+      <span class="hljs-string">"chrome/22..latest"</span>,
+      <span class="hljs-string">"firefox/16..latest"</span>,
+      <span class="hljs-string">"safari/6..latest"</span>,
+      <span class="hljs-string">"opera/11.0..latest"</span>,
+      <span class="hljs-string">"iphone/6..latest"</span>,
+      <span class="hljs-string">"ipad/6..latest"</span>,
+      <span class="hljs-string">"android-browser/latest"</span>
+    ]
+  </span>}
+</span>}
+</code></pre>
+<p>Et ajouter un webhook dans l&#39;admin de votre repository GitHub pointant vers</p>
+<blockquote>
+<p><a href="http://git.testling.com">http://git.testling.com</a></p>
+</blockquote>
+<p>Vous pouvez l&#39;utiliser avec tape (son test harness par défaut)
+Mocha, QUnit et n&#39;importe quelle bibliothèque
+de test supportant <code>TAP</code> comme indiqué sur
+<a href="https://ci.testling.com/guide/custom_libraries">le site de testling</a>.</p>
+<p>Vous trouverez aussi des alternatives populaires
+<a href="http://www.browserstack.com">similaires</a>,
+ou ayant <a href="http://karma-runner.github.io">une approche différente</a>.</p>
+<p>Par ailleurs, si dans votre code il existe des variations entre les navigateurs,
+vous pouvez utiliser du test conditionnel :</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">if</span>(typeof {}.__proto__ == <span class="hljs-string">"object"</span>){
+  test.equal(<span class="hljs-keyword">list</span>.__proto__ === <span class="hljs-keyword">Array</span>.prototype, <span class="hljs-keyword">false</span>, <span class="hljs-string">"__proto__ isn't Array.prototype"</span>)
+} <span class="hljs-keyword">else</span> {
+  test.equal(<span class="hljs-keyword">list</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-keyword">Array</span>, <span class="hljs-keyword">false</span>, <span class="hljs-string">"Isn't a window Array"</span>)
+}
+</code></pre>
+<p>Happy testing!</p>
+<pre><code class="lang-shell">$ testling
+
+TAP version <span class="hljs-number">13</span>
+<span class="hljs-preprocessor"># tests</span>
+ok <span class="hljs-number">1</span> bisous
+
+<span class="hljs-number">1.</span><span class="hljs-number">.1</span>
+<span class="hljs-preprocessor"># tests 1</span>
+<span class="hljs-preprocessor"># pass  1</span>
+
+<span class="hljs-preprocessor"># ok</span>
+</code></pre>
+
+]]></description><pubDate>Thu, 01 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/introduction-au-testing-js-front/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/introduction-au-testing-js-front/</guid></item><item><title>Introduction à Gulp</title><description><![CDATA[[
 <p>Vous commencez tous à connaitre les <em>tasks runners</em>, ces outils qui permettent
 d&#39;automatiser les tâches de développement récurrentes.
 Personnellement
@@ -3918,240 +4176,4 @@ Guide</a> de Roger Dudler est une bonne manière d&#39;apprendre.</p>
 <p>Pas de problème, on a écrit un post exprès :
 <a href="/posts/comment-contribuer/">Comment contribuer</a> !</p>
 
-]]></description><pubDate>Wed, 06 Nov 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/git/versionner-avec-git/</link><guid isPermaLink="true">http://putaindecode.fr/posts/git/versionner-avec-git/</guid></item><item><title>Comment contribuer ?</title><description><![CDATA[[
-<p>Ici, chez Putain de Code, dans notre building 8 étages vitres teintées avec
-masseuses et coke à volonté et à n&#39;importe quelle heure de la journée, on sait
-qu&#39;on va forcément t&#39;aider à comprendre pas mal de trucs, mais on sait aussi
-qu&#39;on peut faire des fois des erreurs dans les articles (à cause de la coke)
-ou tout simplement qu&#39;il existe des types encore plus hipster
-que <a href="/#crew">bloodyowl</a> et qui voudront profiter de
-notre renomée inter<del>nationale</del>galactique pour se faire un peu de visibilité
-en proposant un post. Du coup, on s&#39;attend vraiment à ce que tu aides à faire
-avancer le bouzin, que t&#39;apportes ta pierre à l&#39;édifice quoi (oui on t&#39;apprend
-des expressions aussi), ou ta PR au repo comme on dit dans le monde des
-développeurs des internets.</p>
-<h2 id="github">GitHub</h2>
-<ul>
-<li><p>Déjà, si t&#39;en as pas, crée toi un compte GitHub (avant qu&#39;on te caillasse),
-et vu que tu commences à lire des ressources sur notre site, crois moi que
-tu vas commencer à le faire chauffer plus vite que prévu.</p>
-</li>
-<li><p>Ensuite il faut que tu installes tout le nécessaire pour bosser sur un
-<em>repo</em> GitHub (oui on va commencer à utiliser des anglicismes dès maintenant
-donc habitues toi y, <em>repo</em> = dépôt de code, comme tu peux le constater, la
-francisation, c&#39;est moche), on va te faire un post qui va regrouper tout ce
-qu&#39;il te faut pour installer et configurer Git pour bosser sur GitHub.</p>
-</li>
-<li><p>Après, il faut que tu crées ce qu&#39;on appelle un <em>fork</em> du repo. Un fork
-c&#39;est juste ta propre copie du repo. Bah ouais, tu vas pas directement
-travailler sur notre repo et nous le crader sans qu&#39;on puisse bouger
-l&#39;orteil. Non monsieur, sur GitHub on est des gens civilisés et on créé sa
-propre copie dans son coin avant de demander à papa si on a le droit
-d&#39;apporter les modifs sur le repo principal.</p>
-</li>
-<li><p>Pour ça, clique sur le bouton <em>Fork</em> en haut à droite du repo. GitHub va
-créer une copie du repo sur ton propre compte GitHub, où tu pourras
-travailler tranquillement.</p>
-<figure>
-  <img src="../../../images/posts/github/fork-button.jpg" alt="Bouton Fork">
-  <figcaption>Clique au fond à droite</figcaption>
-</figure>
-</li>
-<li><p>Maintenant que t&#39;as enfin notre magnifique repo dans ton compte, tu devrais
-te sentir honoré. Une fois que t&#39;as appelé toute ta famille et les 3
-pèquenauds qui te servent d&#39;amis, tu dois pouvoir y coder dessus sur ton PC.
-On va partir du principe que tu t&#39;appelles Clint. Et que ton nom c&#39;est
-Horris. T&#39;as donc choisi comme pseudo GitHub <code>clinthorris</code> (oui t&#39;aurais du
-réfléchir toi aussi). Donc tu te débrouilles pour aller dans un dossier vide
-et tu vas cloner notre repo. Cloner = faire une copie d&#39;un repo distant (sur
-les serveurs de GitHub par exemple) en local (ton vieux Pentium II sous XP
-dans notre cas). Ensuite il faut que tu te rendes dans ce dossier en ligne
-de commande (sous Windows tu y vas avec l&#39;invite de commande mais on te
-prévient qu&#39;on va pas être copains longtemps, trouve un OS décent putain,
-sous Mac OS X tu utilises le terminal, et sous Linux je pense qu&#39;on a pas à
-t&#39;expliquer).</p>
-<pre><code class="lang-shell"><span class="hljs-variable">$ </span>git clone <span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/github.com/clinthorris</span><span class="hljs-regexp">/website.git putaindecode</span>
-</code></pre>
-</li>
-<li><p>Ensuite tu dois ajouter ce qu&#39;on appelle une remote. Une remote c&#39;est une
-référence du repo principal, le beau, le grand, le nôtre. En gros, ça va te
-servir que si tu fais une modification ou une contribution sur notre site
-aujourd&#39;hui, et que dans un mois tu veuilles encore en faire, tu pourras
-facilement rattraper tout ce qu&#39;on aura fait entre temps. La remote en
-rapport avec le repo principal, on l&#39;appelle souvent <em>upstream</em></p>
-<pre><code class="lang-shell">  <span class="hljs-char">$ </span>cd putaindecode
-  <span class="hljs-char">$ </span>git remote add upstream <span class="hljs-method">https:</span>//github.com/putaindecode/website.git
-  <span class="hljs-char">$ </span>git fetch upstream
-</code></pre>
-</li>
-<li><p>Alors là, normalement, t&#39;as le dossier propre et frais, pêché du matin. Vu
-que notre site pète la classe, et qu&#39;on l&#39;a fait en utilisant
-<a href="https://github.com/gulpjs/gulp">Gulp</a>.
-Pour faire ça, c&#39;est finalement pas si compliqué, tu vas lire le
-README.md à la racine du repo. On fait exprès de pas te le dire ici parce
-que c&#39;est un peu une convention pour tous les projets Open Source, et que ça
-te fait pas de mal de commencer à apprendre à bien bosser.</p>
-</li>
-<li><p>Une fois ton site tout installé, t&#39;as plus qu&#39;à aller dans ton dossier grâce
-à la ligne de commande, et à taper <code>$ npm start</code>, tu verras quelques
-trucs s&#39;exécuter, ne t&#39;inquiètes pas. À la fin du processus, ça
-devrait te lancer le site en local dans le browser. Là j&#39;espère que tu te
-rends compte qu&#39;avec une seule ligne de commande on t&#39;a fait tourner un site
-complet. Et là on te voit déjà en train de baver et te rappeler tes longues
-soirées en train d&#39;installer PHP, MySQL, un WordPress, la bonne version des
-plugins, de la conf à n&#39;en plus finir... ah qu&#39;est-ce que tu pouvais être
-niais. Ça a quand même bien plus la classe notre solution, non ?</p>
-</li>
-<li><p>Maintenant que t&#39;as tout, t&#39;as plus qu&#39;à lancer <del>notepad++</del> ton éditeur
-favori et te préparer à modifier ou proposer les fichiers que tu veux. Ce
-que t&#39;as à retenir, c&#39;est que tu vas surtout bosser dans le dossier <code>/src</code></p>
-</li>
-</ul>
-<h2 id="correction-d-un-post-existant">Correction d&#39;un post existant</h2>
-<p>Bon ok, on a compris, t&#39;es timide, tu te sens pas encore prêt à nous écrire un
-magnifique post sur ton tout dernier projet, tu préfères juste nous aider à
-améliorer notre contenu. Bah on te remercie quand même tu vois, parce qu&#39;on
-est des types sympas.</p>
-<ul>
-<li><p>Alors déjà, on aime pas juste donner une liste d&#39;ordres sans expliquer pour
-que tu puisses comprendre ce que tu fais. Donc notre site, il a été fait
-à la main (on a pondu un générateur de site statique bien pimpé, parce que oui,
-y&#39;a pas que Wordpress pour faire un site) en se basant sur gulp
-(un esclave qui te permet d&#39;éxécuter des tâches répétitives en JavaScript)
-et quelques autres truc cools. Tu pourrais éventuellement jeter un coup d&#39;œil
-<a href="https://github.com/putaindecode/website/blob/master/package.json">aux dépendances du projet</a>,
-histoire de savoir de quoi on cause.</p>
-</li>
-<li><p>Tous nos posts sont contenus dans <code>pages/posts/</code>. Si jamais c&#39;est sur
-autre chose qu&#39;un post, farfouille un peu et tu trouveras, les noms des
-dossiers sont assez explicites et de toute façon les URLs sur notre site
-ressemblent bizarrement (en vrai c&#39;est pas bizarre hein, t&#39;avais compris)
-aux noms des dossiers.</p>
-</li>
-<li><p>Donc, une fois le fichier trouvé, tu remarqueras que la syntaxe à
-l&#39;intérieur, c&#39;est pas du HTML. C&#39;est un truc bizzare avec des dièses et des
-étoiles. On appelle ça du
-<a href="http://fr.wikipedia.org/wiki/Markdown"><em>Markdown</em></a>. On va te laisser aller
-chercher si tu veux connaitre plus en détail. Mais normalement en voyant le
-reste du post autour de toi, tu devrais comprendre assez vite. Tu peux
-toujours faire du HTML, mais franchement, le Markdown a été créé pour ce
-genre de tâches, c&#39;est un bon moment pour l&#39;apprendre.</p>
-</li>
-<li><p>Avant de faire les modifications direct dans le fichier, on va te demander
-de faire une branche, c&#39;est une bonne pratique et ça nous permettra de voir
-exactement ce que t&#39;auras modifié, c&#39;est beaucoup plus simple. Du coup tu
-fais simplement un :</p>
-<pre><code class="lang-shell">$ git checkout <span class="hljs-attribute">-b</span> fix<span class="hljs-built_in">.</span>nom<span class="hljs-attribute">-du</span><span class="hljs-attribute">-post</span>
-</code></pre>
-</li>
-<li><p>Fais les modifications que tu veux dans le fichier, là on peut pas t&#39;aider,
-c&#39;est à toi de jouer.</p>
-</li>
-<li><p>Normalement si t&#39;avais bien lancé le <code>npm start</code> tout à l&#39;heure, y&#39;a un
-processus <em>watch</em> (en gros un truc qui surveilles ton projet) qui est lancé
-et qui détecte que t&#39;as changé un fichier, du coup, grâce au watch couplé à
-un processus appelé <em>livereload</em> ton navigateur va rafraichir les fichiers
-nécessaires en direct. T&#39;as rien à faire c&#39;est magique. Enfin si, tu dois juste
-retourner dans ton browser ça devrait déjà être à jour.</p>
-</li>
-<li><p>Une fois que tout est bon, tu peux passer à l&#39;étape de validation de tes
-modifications (étape commune pour la modification d&#39;un post existant ou la
-proposition d&#39;un nouveau)</p>
-</li>
-</ul>
-<h2 id="proposition-d-un-nouveau-post">Proposition d&#39;un nouveau post</h2>
-<ul>
-<li><p>Alors pour proposer un nouveau post déjà, il te faut une idée. Et on te
-prévient que si tu nous sort un post sur la liste des plugins jQuery les
-plus en vogue cette semaine, on va te trouver. On va chercher ton IP, on va
-tracer ton adresse, et on va te trouver. Et tu vas comprendre que parmi
-nous, y&#39;a des types qui sont pas du tout copains avec jQuery et qui sont pas
-tendres du tout.</p>
-</li>
-<li><p>Il faut aussi que tu fasses attention à ne pas bosser sur le même post que
-quelqu&#39;un d&#39;autre et pour ça tu dois aller jeter un coup d&#39;oeil du côté des
-issues en cours avec le label <code>post</code>. Allez, on est sympa, t&#39;as <a href="https://github.com/putaindecode/website/issues?labels=post&amp;page=1&amp;state=open">le
-lien</a>.</p>
-</li>
-<li><p>Bref, une fois ton idée trouvée, il faut que tu crées le post pour pouvoir
-commencer à écrire dans le fichier. Tout d&#39;abord tu vas devoir créer une
-nouvelle branche. C&#39;est une pratique qu&#39;on demande à tout le monde, même
-nous en interne on bosse sur des branches. Donc tout d&#39;abord :</p>
-<pre><code class="lang-shell">$ git checkout <span class="hljs-attribute">-b</span> post<span class="hljs-built_in">.</span>titre<span class="hljs-attribute">-court</span><span class="hljs-attribute">-du</span><span class="hljs-attribute">-post</span>
-</code></pre>
-<p>Ensuite il va falloir que tu crées les fichiers nécessaires pour le brouillon
-du post.
-Pour ça, tu vas dans <code>/pages/posts/</code> et tu regardes comment ça se passe.
-C&#39;est plutôt simple. Tu créés un dossier avec le nom qui va bien avec un fichier
-<code>.jade</code> pour les metas de l&#39;article, et un <code>.md</code> pour le contenu.</p>
-</li>
-<li><p>Tu peux maintenant éditer ton fichier (en MarkDown) dans le fichier .md,
-Amuse toi, créé ton contenu, rédige bien tout comme tu veux.</p>
-</li>
-<li><p>Tu devrais pouvoir te balader sur le site et trouver ton article sur la page
-des posts: <a href="http://localhost:4242/posts/">http://localhost:4242/posts/</a> .
-Avec la tâche <code>$ npm start</code> lancée normalement tout (ou presque) se rafraichira
-automatiquement.
-Si ce n&#39;est pas le cas, relance la tâche <code>$ npm start</code>.
-Si là tu as une erreur qui t&#39;échappes, on t&#39;invite à
-<a href="https://github.com/putaindecode/website/issues/new">ouvrir une issue</a>.</p>
-</li>
-<li><p>En l&#39;état tu devrais pouvoir consulter sur le site lancé localement ton post,
-voir s&#39;il sort correctement et s&#39;il est présentable à ton goût.
-Tu pourras le consulter sur une URL du type
-<code>http://localhost:4242/post/nom-du-post/</code>. Mais tu le sais déjà puisque t&#39;as
-bien suivi et que t&#39;es passé par la page des brouillons.</p>
-</li>
-<li><p>Une fois que tout est bon, tu peux passer à l&#39;étape de validation de tes
-modifications (étape commune pour la modification d&#39;un post existant ou la
-proposition d&#39;un nouveau)</p>
-</li>
-</ul>
-<h2 id="validation-de-tes-modifications">Validation de tes modifications</h2>
-<ul>
-<li><p>Il faut tout d&#39;abord pousser tes modifications sur ton <code>fork</code>. Pour ça on va
-d&#39;abord ajouter les fichier que tu as modifié à l&#39;index de fichiers à
-commit. Tu peux faire ça tout simplement avec un :</p>
-<pre><code class="lang-shell">$ git add <span class="hljs-attribute">-A</span> pages/posts/nom<span class="hljs-attribute">-du</span><span class="hljs-attribute">-post</span>
-</code></pre>
-<p>Cette commande ajoute tous les fichiers dans le dossier que tu as créé.
-Si tu as ajouter des fichiers à l&#39;exterieur de ce dossier, tu devras les
-ajouter. Exemple:</p>
-<pre><code class="lang-shell">$ git <span class="hljs-keyword">add</span> images/memes/trollface<span class="hljs-preprocessor">.jpg</span>
-</code></pre>
-<p>Ensuite on va dire à git de valider ces modifications de code :</p>
-<pre><code class="lang-shell"><span class="hljs-variable">$ </span>git commit -m <span class="hljs-string">"Un petit message sympa expliquant le correctif/post"</span>
-</code></pre>
-<p>Et on va finir en disant qu&#39;on veut envoyer tout ça sur ton fork qui est
-situé sur GitHub :</p>
-<pre><code class="lang-shell"><span class="hljs-variable">$ </span>git push -u
-</code></pre>
-</li>
-<li><p>Voila ! Si tu vas voir ton <code>fork</code> sur GitHub tu verras ton commit et les
-modifications que tu as apportées normalement. Il ne te reste plus qu&#39;à nous
-soumettre ces modifications. Pour ça tu vas faire ce qu&#39;on appelle une Pull
-Request (PR)</p>
-</li>
-<li><p>Il te suffit de cliquer sur le bouton vert qui représente 2 flèches en sens
-inverse à côté du nom de ta branche en dessous du nombre de commits /
-branches / etc.</p>
-<figure>
-  <img src="../../../images/posts/github/pull-request-button.jpg" alt="Bouton Pull Request">
-  <figcaption>C&#39;est bon tu le vois là le bouton ?</figcaption>
-</figure>
-</li>
-<li><p>Sélectionnes les bonnes branches et ajoute nous un beau titre et une belle
-description de Pull Request en essayant au moins de commencer par <code>Post: Nom du post</code>
-ou <code>Fix: Nom du post</code></p>
-</li>
-<li><p>Et voila ! Tu n&#39;as qu&#39;à attendre de nos nouvelles maintenant. D&#39;ailleurs au
-passage, si tu veux, tu peux en profiter pour nous suivre <a href="https://twitter.com/putaindecode">sur
-twitter</a>, et tu pourras nous lâcher un
-message avec ta PR ou ton issue en lien, histoire de nous mettre la pression.</p>
-</li>
-</ul>
-<h2 id="hey-tu-veux-mieux-comprendre-git-">Hey ! Tu veux mieux comprendre Git ?</h2>
-<p>Pour découvrir Git plus en détails, on t&#39;invite à lire notre article
-<a href="/posts/git/versionner-avec-git/">Versionner avec Git</a></p>
-
-]]></description><pubDate>Tue, 05 Nov 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/comment-contribuer/</link><guid isPermaLink="true">http://putaindecode.fr/posts/comment-contribuer/</guid></item></channel></rss>
+]]></description><pubDate>Wed, 06 Nov 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/git/versionner-avec-git/</link><guid isPermaLink="true">http://putaindecode.fr/posts/git/versionner-avec-git/</guid></item></channel></rss>
