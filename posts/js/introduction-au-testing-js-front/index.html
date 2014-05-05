@@ -2,8 +2,7 @@
 et le sont encore trop.</p>
 <p>Écrire des tests peut paraître chiant, mais le temps qu’ils rapportent
 compense largement celui que l’on passe à les écrire.</p>
-<h2 id="-crire-du-js-testable">Écrire du js testable</h2>
-<p>Prenons un exemple simple et moche :</p>
+<h2 id="ecrire-du-js-testable"><a class="putainde-Title-anchor" href="#ecrire-du-js-testable">#</a>Écrire du js testable</h2><p>Prenons un exemple simple et moche :</p>
 <pre><code class="lang-javascript"><span class="hljs-comment">//app.js</span>
 ;(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
 
@@ -28,8 +27,7 @@ compense largement celui que l’on passe à les écrire.</p>
 <li>on doit créer un element et modifier sont <code>data-id</code> à chaque cas souhaité.</li>
 <li>pour tester <code>addToCart</code> on doit aller regarder dans le DOM.</li>
 </ul>
-<h3 id="1-rendez-accessibles-vos-m-thodes-au-test-runner">1. Rendez accessibles vos méthodes au test runner</h3>
-<p>Vous pouvez utiliser un namespace adéquat.</p>
+<h3 id="1-rendez-accessibles-vos-methodes-au-test-runner"><a class="putainde-Title-anchor" href="#1-rendez-accessibles-vos-methodes-au-test-runner">#</a>1. Rendez accessibles vos méthodes au test runner</h3><p>Vous pouvez utiliser un namespace adéquat.</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> app = window.app = {}
 app.cart = {}
 app.cart.addToCart = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span> <span class="hljs-comment">/* … */</span> }
@@ -51,8 +49,7 @@ module.exports = {
 }
 </code></pre>
 <p>Vous pourrez ainsi séparer proprement votre application en modules et les tester individuellement.</p>
-<h3 id="2-oui-mais-les-modules-interd-pendants-alors-">2. Oui, mais les modules interdépendants alors ?</h3>
-<p>Là, ça devient un peu plus tricky.
+<h3 id="2-oui-mais-les-modules-interdependants-alors-"><a class="putainde-Title-anchor" href="#2-oui-mais-les-modules-interdependants-alors-">#</a>2. Oui, mais les modules interdépendants alors ?</h3><p>Là, ça devient un peu plus tricky.
 Ce que je conseille à titre personnel c’est d’utiliser des events
 pour faire communiquer les différentes parties de l’application.</p>
 <p>Cela permet d’éviter d’utiliser des mocks d’autres parties de l’application partout.</p>
@@ -149,8 +146,7 @@ tape(<span class="hljs-string">"cart"</span>, <span class="hljs-function"><span 
   test.end()
 })
 </code></pre>
-<h2 id="tester-tous-les-cas-possibles">Tester tous les cas possibles</h2>
-<p>Ce sont souvent les edge-cases qui nous font nous arracher les cheveux.
+<h2 id="tester-tous-les-cas-possibles"><a class="putainde-Title-anchor" href="#tester-tous-les-cas-possibles">#</a>Tester tous les cas possibles</h2><p>Ce sont souvent les edge-cases qui nous font nous arracher les cheveux.
 Pour pallier ces soucis, tester en profondeur est essentiel.</p>
 <p>Prenons un exemple, une méthode qui teste si la valeur qu’on lui passe est
 une <code>string</code>.</p>
@@ -181,8 +177,7 @@ une <code>string</code>.</p>
 <p>Et c’est à la force des résultats de tests que vous identifierez rapidement
 vous familiariserez à tous ces edge-cases.</p>
 <p>À chaque correctif de bug, ajoutez des tests (mais ça, vous le saviez déjà).</p>
-<h2 id="cross-browser-testing">Cross-browser testing</h2>
-<p>À l’heure actuelle, où l’on se trouve notamment très souvent avec du
+<h2 id="cross-browser-testing"><a class="putainde-Title-anchor" href="#cross-browser-testing">#</a>Cross-browser testing</h2><p>À l’heure actuelle, où l’on se trouve notamment très souvent avec du
 feature testing.
 Pour le tester complètement, on doit se servir de vrais navigateurs :
 un headless (certes, très pratique) comme <a href="http://phantomjs.org">phantomjs</a>

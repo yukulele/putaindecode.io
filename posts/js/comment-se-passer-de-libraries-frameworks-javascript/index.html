@@ -1,7 +1,6 @@
 <!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Comment se passer de libraries/frameworks JavaScript</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="Comment se passer de libraries/frameworks JavaScript"/><meta name="twitter:creator" content="@bloodyowl"/><meta name="twitter:image" content="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png?s=200"/><meta property="og:title" content="Comment se passer de libraries/frameworks JavaScript"/><meta property="og:type" content="article"/><meta property="og:image" content="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png?s=200"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size7of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size5of12"><nav class="putainde-Nav"><a href="../.." class="putainde-Nav-item">Les articles</a><a href="../../comment-contribuer" class="putainde-Nav-item">Contribuer</a><a href="irc://irc.freenode.net/putaindecode" class="putainde-Nav-item">IRC</a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Comment se passer de libraries/frameworks JavaScript</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas">Écrit par <a href="http://github.com/bloodyowl">bloodyowl</a>,<span class="putainde-Date"> le 6 déc. 2013</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">javascript</li><li class="putainde-Tag">frameworks</li><li class="putainde-Tag">libraries</li></ul></header><div class="putainde-Post-md"><p><strong> Petite note préalable </strong> : Évidemment que ça ne marche pas sous les vieux navigateurs, cet article s’adresse principalement à toi pour te faire comprendre comment les choses marchent.</p>
 <p>De plus en plus, le besoin de légèreté se fait sentir sur les pages. En dépit d’un web plus rapide sur desktop, on a maintenant beaucoup de devices connectés via 3G ou Edge (un petit coucou au métro parisien). Du coup, tu te rendras vite compte qu’embarquer jQuery + jQuery Mobile + jQuery UI et un tas d’autres plug-ins grapillés sur le web, ça commence à peser.</p>
-<h2 id="pour-la-s-lection-d-lements">Pour la sélection d’élements</h2>
-<p>Pour remplacer ton bon vieux <code>$</code> magique, <code>document.querySelectorAll</code> semble faire l’affaire. En revanche, il retourne une instance de <code>NodeList</code>, pas d’<code>Array</code>, ce qui ne nous arrange pas des masses.</p>
+<h2 id="pour-la-selection-d-elements"><a class="putainde-Title-anchor" href="#pour-la-selection-d-elements">#</a>Pour la sélection d’élements</h2><p>Pour remplacer ton bon vieux <code>$</code> magique, <code>document.querySelectorAll</code> semble faire l’affaire. En revanche, il retourne une instance de <code>NodeList</code>, pas d’<code>Array</code>, ce qui ne nous arrange pas des masses.</p>
 <p>Du coup, on peut écrire une petite function toute con, qui nous retourne un <code>Array</code> et ses méthodes bien utiles.</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> nativeSlice = [].slice <span class="hljs-comment">// la méthode de conversion</span>
 
@@ -26,8 +25,7 @@ elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function
   <span class="hljs-comment">// do something w/ element</span>
 })
 </code></pre>
-<h3 id="pour-l-event-delegation">Pour l’event delegation</h3>
-<p>L’event delegation, c’est bien, mangez-en. Ça permet entre autres de ne pas attacher 150 listeners uniques à 150 elements différents, mais à attacher un seul listener sur un parent commun, et analyser les sources des évenements à l’intérieur en se basant sur le bubbling (remontée d’évenement de la source au plus haut parent) ou capturing (descente d’évenement du plus haut parent à la source, avant même que la source ne le reçoive).</p>
+<h3 id="pour-l-event-delegation"><a class="putainde-Title-anchor" href="#pour-l-event-delegation">#</a>Pour l’event delegation</h3><p>L’event delegation, c’est bien, mangez-en. Ça permet entre autres de ne pas attacher 150 listeners uniques à 150 elements différents, mais à attacher un seul listener sur un parent commun, et analyser les sources des évenements à l’intérieur en se basant sur le bubbling (remontée d’évenement de la source au plus haut parent) ou capturing (descente d’évenement du plus haut parent à la source, avant même que la source ne le reçoive).</p>
 <p>Pour faire de la délégation, on va procéder en trois temps :</p>
 <ul>
 <li>Choper <code>event.target</code></li>
@@ -79,8 +77,7 @@ elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function
   <span class="hljs-comment">// all good with currentTarget</span>
 })
 </code></pre>
-<h3 id="pour-l-ajax">Pour l’Ajax</h3>
-<p>Pourquoi est-ce que l’on appelle ça encore Ajax, d’ailleurs ? Bref.</p>
+<h3 id="pour-l-ajax"><a class="putainde-Title-anchor" href="#pour-l-ajax">#</a>Pour l’Ajax</h3><p>Pourquoi est-ce que l’on appelle ça encore Ajax, d’ailleurs ? Bref.</p>
 <p>Simple comme bonjour :</p>
 <pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isSuccessStatus</span><span class="hljs-params">(status)</span>{</span>
   <span class="hljs-keyword">return</span> status &gt;= <span class="hljs-number">200</span> &amp;&amp; status &lt; <span class="hljs-number">300</span> || status == <span class="hljs-number">304</span>
@@ -128,8 +125,7 @@ elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function
     }
 })
 </code></pre>
-<h3 id="es5-magic">ES5 magic</h3>
-<p>EcmaScript 5 délivre des petites méthodes très intéressantes pour se simplifier la vie, fortement inspirées par ce qu’on a l’habitude de trouver dans les bibliothèques ayant connu l’âge d’or, comme <a href="http://prototypejs.org">PrototypeJS</a> ou <a href="http://mootools.net">MooTools</a>.</p>
+<h3 id="es5-magic"><a class="putainde-Title-anchor" href="#es5-magic">#</a>ES5 magic</h3><p>EcmaScript 5 délivre des petites méthodes très intéressantes pour se simplifier la vie, fortement inspirées par ce qu’on a l’habitude de trouver dans les bibliothèques ayant connu l’âge d’or, comme <a href="http://prototypejs.org">PrototypeJS</a> ou <a href="http://mootools.net">MooTools</a>.</p>
 <p>Dès lors, plutôt qu’un ennuyeux :</p>
 <pre><code class="lang-javascript">var key, <span class="hljs-keyword">item</span>
 <span class="hljs-keyword">for</span>(key <span class="hljs-operator">in</span> myObject) {
@@ -152,8 +148,7 @@ elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function
 dont je t’invite, si cela t’intéresse, à te renseigner sur ces méthodes.
 Et si tu veux avoir plus de détails, read the fucking manual :
 <a href="http://es5.github.io">http://es5.github.io</a>.</p>
-<h3 id="des-petits-d-tails-cools-du-c-t-des-events">Des petits détails cools du côté des events</h3>
-<p>Avec <code>addEventListener</code>, on peut aussi passer un objet comme listener, avec <code>handleEvent</code> pour interface :</p>
+<h3 id="des-petits-details-cools-du-cote-des-events"><a class="putainde-Title-anchor" href="#des-petits-details-cools-du-cote-des-events">#</a>Des petits détails cools du côté des events</h3><p>Avec <code>addEventListener</code>, on peut aussi passer un objet comme listener, avec <code>handleEvent</code> pour interface :</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myElementClickEvents = {
     element : myElement
   , callbacks : []
@@ -171,15 +166,13 @@ myElementClickEvents.callbacks.push(<span class="hljs-function"><span class="hlj
 })
 </code></pre>
 <p>Avec ça, on peut facilement garder une trace de ce qu’on passé comme listeners.</p>
-<h3 id="du-type-checking-">Du type checking ?</h3>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> getClass = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(o)</span>{</span> <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(o) }
+<h3 id="du-type-checking-"><a class="putainde-Title-anchor" href="#du-type-checking-">#</a>Du type checking ?</h3><pre><code class="lang-javascript"><span class="hljs-keyword">var</span> getClass = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(o)</span>{</span> <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(o) }
   , someString = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-string">"foo"</span>)
 
 <span class="hljs-keyword">typeof</span> someString <span class="hljs-comment">// "object"</span>
 getClass(someString) <span class="hljs-comment">// "[object String]", sounds more reasonable</span>
 </code></pre>
-<h3 id="petit-bonus">Petit bonus</h3>
-<p>Un petit bonus rien que pour toi : pour avoir une syntaxe plus sympathique et plus claire que les prototypes.</p>
+<h3 id="petit-bonus"><a class="putainde-Title-anchor" href="#petit-bonus">#</a>Petit bonus</h3><p>Un petit bonus rien que pour toi : pour avoir une syntaxe plus sympathique et plus claire que les prototypes.</p>
 <p>En principe, on fait comme ça :</p>
 <pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Animal</span><span class="hljs-params">(name)</span>{</span>
   <span class="hljs-keyword">this</span>.name = name

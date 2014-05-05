@@ -4,8 +4,7 @@
 <p>Ce petit article vous propose de quoi peut-être vous faire changer d’avis sur la bibliothèque qui pèse tout de même environ ~80ko.</p>
 <p><em>Note : <a href="http://vanilla-js.com/">Vanilla JS</a> n’est pas un framework mais veut simplement dire “à nu”, c’est du JavaScript sans bibliothèque.</em></p>
 <p>C’est parti !</p>
-<h2 id="table-des-mati-res">Table des matières</h2>
-<ol>
+<h2 id="table-des-matieres"><a class="putainde-Title-anchor" href="#table-des-matieres">#</a>Table des matières</h2><ol>
 <li><a href="/posts/js/de-jquery-a-vanillajs/#-v-nements">Évènements</a></li>
 <li><a href="/posts/js/de-jquery-a-vanillajs/#s-lecteurs">Sélecteurs</a></li>
 <li><a href="/posts/js/de-jquery-a-vanillajs/#attributs">Attributs</a></li>
@@ -15,8 +14,7 @@
 <li><a href="/posts/js/de-jquery-a-vanillajs/#ajax">AJAX</a></li>
 <li><a href="/posts/js/de-jquery-a-vanillajs/#jsonp">JSONP</a></li>
 </ol>
-<h2 id="-v-nements">Évènements</h2>
-<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+<h2 id="evenements"><a class="putainde-Title-anchor" href="#evenements">#</a>Évènements</h2><pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
 $(document).ready(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
   <span class="hljs-comment">// code</span>
 })
@@ -38,8 +36,7 @@ $(<span class="hljs-string">'a'</span>).click(<span class="hljs-function"><span 
   })
 })
 </code></pre>
-<h2 id="s-lecteurs">Sélecteurs</h2>
-<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+<h2 id="selecteurs"><a class="putainde-Title-anchor" href="#selecteurs">#</a>Sélecteurs</h2><pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
 <span class="hljs-keyword">var</span> divs = $(<span class="hljs-string">'div'</span>)
 
 <span class="hljs-comment">// Vanilla</span>
@@ -51,15 +48,13 @@ $(<span class="hljs-string">'a'</span>).click(<span class="hljs-function"><span 
 <span class="hljs-comment">// Vanilla</span>
 <span class="hljs-keyword">var</span> newDiv = document.createElement(<span class="hljs-string">'div'</span>)
 </code></pre>
-<h2 id="attributs">Attributs</h2>
-<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+<h2 id="attributs"><a class="putainde-Title-anchor" href="#attributs">#</a>Attributs</h2><pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
 <span class="hljs-variable">$(</span><span class="hljs-string">'img'</span>).<span class="hljs-keyword">filter</span>(<span class="hljs-string">':first'</span>).attr(<span class="hljs-string">'alt'</span>, <span class="hljs-string">'My image'</span>)
 
 <span class="hljs-comment">// Vanilla</span>
 document.querySelector(<span class="hljs-string">'img'</span>).setAttribute(<span class="hljs-string">'alt'</span>, <span class="hljs-string">'My image'</span>)
 </code></pre>
-<h2 id="classes">Classes</h2>
-<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+<h2 id="classes"><a class="putainde-Title-anchor" href="#classes">#</a>Classes</h2><pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
 newDiv.addClass(<span class="hljs-string">'foo'</span>)
 
 <span class="hljs-comment">// Vanilla</span>
@@ -71,8 +66,7 @@ newDiv.toggleClass(<span class="hljs-string">'foo'</span>)
 <span class="hljs-comment">// Vanilla</span>
 newDiv.classList.<span class="hljs-keyword">toggle</span>(<span class="hljs-string">'foo'</span>)
 </code></pre>
-<h2 id="manipulation">Manipulation</h2>
-<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+<h2 id="manipulation"><a class="putainde-Title-anchor" href="#manipulation">#</a>Manipulation</h2><pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
 $(<span class="hljs-string">'body'</span>).append($(<span class="hljs-string">'&lt;p/&gt;'</span>))
 
 <span class="hljs-comment">// Vanilla</span>
@@ -91,8 +85,7 @@ $(<span class="hljs-string">'#wrap'</span>).<span class="hljs-constant">empty</s
 var <span class="hljs-operator">wrap</span> = document.getElementById(<span class="hljs-string">'wrap'</span>)
 <span class="hljs-keyword">while</span>(<span class="hljs-operator">wrap</span>.firstChild) <span class="hljs-operator">wrap</span>.removeChild(<span class="hljs-operator">wrap</span>.firstChild)
 </code></pre>
-<h2 id="navigation">Navigation</h2>
-<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+<h2 id="navigation"><a class="putainde-Title-anchor" href="#navigation">#</a>Navigation</h2><pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
 <span class="hljs-keyword">var</span> <span class="hljs-keyword">parent</span> = $(<span class="hljs-string">'#about'</span>).<span class="hljs-keyword">parent</span>()
 
 <span class="hljs-comment">// Vanilla</span>
@@ -110,9 +103,7 @@ var <span class="hljs-operator">wrap</span> = document.getElementById(<span clas
 <span class="hljs-comment">// Vanilla</span>
 <span class="hljs-keyword">var</span> nextElement = document.getElementById(<span class="hljs-string">'wrap'</span>).nextSibling
 </code></pre>
-<h2 id="ajax">AJAX</h2>
-<h3 id="get">GET</h3>
-<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+<h2 id="ajax"><a class="putainde-Title-anchor" href="#ajax">#</a>AJAX</h2><h3 id="get"><a class="putainde-Title-anchor" href="#get">#</a>GET</h3><pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
 $.get(<span class="hljs-string">'//example.com'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
   <span class="hljs-comment">// code</span>
 })
@@ -125,8 +116,7 @@ httpRequest.onreadystatechange = <span class="hljs-function"><span class="hljs-k
 httpRequest.open(<span class="hljs-string">'GET'</span>, url)
 httpRequest.send()
 </code></pre>
-<h3 id="post">POST</h3>
-<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+<h3 id="post"><a class="putainde-Title-anchor" href="#post">#</a>POST</h3><pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
 $.post(<span class="hljs-string">'//example.com'</span>, { username: username }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
   <span class="hljs-comment">// code</span>
 })
@@ -140,8 +130,7 @@ httpRequest.setRequestHeader(<span class="hljs-string">'Content-Type'</span>, <s
 httpRequest.open(<span class="hljs-string">'POST'</span>, url)
 httpRequest.send(<span class="hljs-string">'username='</span> + <span class="hljs-built_in">encodeURIComponent</span>(username))
 </code></pre>
-<h3 id="jsonp">JSONP</h3>
-<pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
+<h3 id="jsonp"><a class="putainde-Title-anchor" href="#jsonp">#</a>JSONP</h3><pre><code class="lang-javascript"><span class="hljs-comment">// jQuery</span>
 $.getJSON(<span class="hljs-string">'//openexchangerates.org/latest.json?callback=?'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
   <span class="hljs-comment">// code</span>
 })
@@ -156,8 +145,7 @@ document.body.appendChild(scr)
 </code></pre>
 <p>Cela vous parait-il encore difficile de vous passer de jQuery ? :)</p>
 <p>Un grand merci à <a href="http://playground.deaxon.com/js/vanilla-js/">@deaxon</a> qui est à l’origine de cet éclaircissement.</p>
-<h2 id="a-creuser">A creuser</h2>
-<p>Il existe une version minimaliste de jQuery basée sur la même API mais beaucoup plus légère s’appelant <a href="http://zeptojs.com/">Zepto</a>. Il est actuellement utilisé en production sur le site mobile de ma boite.</p>
+<h2 id="a-creuser"><a class="putainde-Title-anchor" href="#a-creuser">#</a>A creuser</h2><p>Il existe une version minimaliste de jQuery basée sur la même API mais beaucoup plus légère s’appelant <a href="http://zeptojs.com/">Zepto</a>. Il est actuellement utilisé en production sur le site mobile de ma boite.</p>
 </div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/js/de-jquery-a-vanillajs/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/js/de-jquery-a-vanillajs/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/js/de-jquery-a-vanillajs/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><img src="http://www.gravatar.com/avatar/9713e529bef70eea8965e0dda2000334.png" alt="" class="putainde-Author-picture putainde-Avatar js-AnimateLoad"/><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> kud</h3><div class="putainde-Author-social"><a href="http://kud.io"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/_kud"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/kud"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Viking UI engineer (ouais frontend dev avec du node.js quoi), batteur, photographe, amoureux de cinéma, n'aime pas les longues descriptions.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">3 contributeurs</strong><a href="https://github.com/kud" data-tip="kud" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/9713e529bef70eea8965e0dda2000334.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size4of12"><ul class="putainde-Footer-list"><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode">Contact</a></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../c-est-quoi-putaindecode">Putain de ?</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li></ul></div><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/";
 var disqus_url = "http://putaindecode.fr/posts/js/de-jquery-a-vanillajs/";
