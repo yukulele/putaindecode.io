@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Fri, 02 May 2014 06:49:52 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Introduction au testing js front</title><description><![CDATA[[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 05 May 2014 09:03:54 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Introduction au testing js front</title><description><![CDATA[[
 <p>Les tests automatisés en front-end ont longtemps été ignorés,
 et le sont encore trop.</p>
 <p>Écrire des tests peut paraître chiant, mais le temps qu’ils rapportent
@@ -256,7 +256,291 @@ ok <span class="hljs-number">1</span> bisous
 <span class="hljs-preprocessor"># ok</span>
 </code></pre>
 
-]]></description><pubDate>Thu, 01 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/introduction-au-testing-js-front/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/introduction-au-testing-js-front/</guid></item><item><title>Introduction à Gulp</title><description><![CDATA[[
+]]></description><pubDate>Thu, 01 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/introduction-au-testing-js-front/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/introduction-au-testing-js-front/</guid></item><item><title>Petite définition de BEM</title><description><![CDATA[[
+<p><strong><a href="http://bem.info">BEM</a></strong> n’est ni une marque de voiture ni un groupe de musique, et encore moins une onomatopée (quoique). C’est plutôt une façon de nommer les classes en CSS, une convention en d’autres termes voire une méthodologie.</p>
+<p>Dans cet article, je ne vous expliquerai pas pourquoi il faut préférer BEM à une autre convention, je vous explique surtout comment l’utiliser.</p>
+<p><strong>BEM</strong> apporte une solution à un problème majeur en informatique : le nommage.</p>
+<p>Il n’y a rien de plus compliqué en informatique que de nommer un objet : besoin d’être explicite, ne doit pas être trop générique, ni trop compliqué, ni trop verbeux (ça, ça reste à voir avec BEM…).</p>
+<p>Lorsque l’on nomme un objet, une méthode, une fonction, une classe, on se doit d’être avant tout compréhensible. Une personne devant lire votre code doit directement comprendre de quoi vous parlez. Cette personne peut très bien être vous 6 mois, 1 an après. Je pense sincèrement qu’un code clair vaut toute la documentation du monde. Je ne dis pas qu’il ne faut pas documenter mais un code doit être facilement compréhensible, la documentation doit juste apporter un contexte, une situation particulière.</p>
+<p>Bref, <strong>BEM</strong> est le sigle pour <em>Block</em>, <em>Element</em>, <em>Modifier</em>. Qu’est-ce que cela veut dire.</p>
+<p>Prenons par exemple site web. Nous avons un ensemble avec dedans deux onglets et en dessous le contenu de chaque onglet.</p>
+<p>Nous allons définir ce que sont le <em>block</em>, le ou les <em>elements</em> et les <em>modifiers</em>.</p>
+<p>Dans ce cas précis, le <em>block</em> est le conteneur, l’ensemble, ce qui entoure le tout. Appelons-le “Window”.</p>
+<p>Nous avons alors aussi les <em>elements</em> suivants : les onglets, que nous allons nommer “Tab”, et le contenu, là où il y a le texte de chaque onglet “Content”.</p>
+<p>Comment cela se traduit en <strong>BEM</strong> :</p>
+<ul>
+<li>Notre <em>block</em> s’appelant “Window” sera alors <code>.Window</code></li>
+<li>Nos <em>elements</em> “Tab” seront <code>.Window-tab</code></li>
+<li>Notre <em>element</em> “Content” sera <code>.Window-content</code></li>
+</ul>
+<p>Jusque là, cela devrait aller :</p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+
+<span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+
+  <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+
+  <span class="hljs-rule">}</span></span>
+</code></pre>
+<p>Ce qui revient de manère générique à :</p>
+<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
+
+}</span>
+
+  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
+
+  }</span>
+</code></pre>
+<p>Oui, je vous conseille d’indenter votre code afin de grouper vos classes.</p>
+<p>Maintenant, nous allons définir ce qu’est un <em>modifier</em>. Un <em>modifier</em> change l’état de l’élément, il peut s’appliquer aussi bien sur un <em>block</em>, qu’un <em>element</em>.</p>
+<p>Si par exemple je souhaite mettre en actif un onglet (le mettre en avant car séléctionné), je ferai alors <code>.Window-tab--active</code>, soit :</p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+
+<span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
+  <span class="hljs-rule">}</span></span>
+
+    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+    <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+
+  <span class="hljs-rule">}</span></span>
+</code></pre>
+<p>J’aimerais aussi afficher ou non le contenu. Pour cela, je vais lui rajouter un <em>modifier</em></p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+
+<span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
+  <span class="hljs-rule">}</span></span>
+
+    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+    <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+  <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content--hidden</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
+  <span class="hljs-rule">}</span></span>
+</code></pre>
+<p>J’aurais très bien pu inverser et dire que par défaut le contenu est caché et je lui rajoute la classe <code>.Window-tab--active</code> pour l’afficher (<code>display: block</code>) mais lorsqu’il s’agit de cacher ou de faire appaître des éléments, je vous conseille vivement de plutôt ajouter un <em>modifier</em> qui cache les éléments, car cela évite de se prendre la tête sur quel <code>display</code> mettre par défaut. Là, vous mettez un <code>display: none</code> et voilà, qu’importe si celui de base est un <code>inline</code>, <code>inline-block</code>, <code>table-cell</code> ou autre.</p>
+<p>Du coup, nous avons maintenant nos différents types de classes. Cela se résume de manière générique à :</p>
+<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
+
+}</span>
+
+  .<span class="hljs-keyword">Block</span>--modifier <span class="hljs-list">{
+
+  }</span>
+
+  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
+
+  }</span>
+
+    .<span class="hljs-keyword">Block</span>-element--modifier <span class="hljs-list">{
+
+    }</span>
+</code></pre>
+<p>Ce qui donne <code>.Block-element--modifier</code> (notre <strong>BEM</strong>).</p>
+<p>Parlons maintenant du cas des termes multiples dans chaque partie. Voici comment cela se traduit.</p>
+<p><code>.MyBlock-myElement--myModifier</code></p>
+<p>Les <em>blocks</em> sont en “PascalCase” (ou UpperCamelCase), les <em>elements</em> et <em>modifiers</em> sont en “camelCase” (ou lowerCamelCase). Nous séparons le <em>block</em> de l’élément par “-“ et le <em>block</em> ou l’ <em>element</em> d’un <em>modifier</em> par “—“.</p>
+<p>Maintenant, vous savez tout sur <strong>BEM</strong>. Sachez qu’il existe tout de même plusieurs conventions de <strong>BEM</strong>. Celle que je vous ai apprise là est la norme de <strong>montage.js</strong> mais il y en a d’autres par exemple qui n’utilisent pas les majuscules et font ce genre de choses : <code>.my-block__my-element--my-modifier</code>. Il s’avère que c’est la <a href="http://bem.info/method/definitions/#naming-for-independent-css-classes">convention pseudo-officile</a>.</p>
+<p>L’inconvénient de ceci est que c’est moins lisible au premier abord qui est quoi, et de plus, les <code>_</code> ne permettent pas de sélectionner facilement un terme en <em>double-cliquant</em> dessus.</p>
+<p>Deux petites choses avant de partir.</p>
+<p>Dans le but d’éviter de vous faire écraser vos propriétés par quelqu’un d’autre (une bibliothèque, un <em>SDK</em>), je vous conseille de rajouter votre organisation.</p>
+<p>Typiquement, ça donne <code>.org-Block-element--modifier</code>. Tout en minuscule et si possible ne pas dépasser les 3 lettres car vous allez devoir le répéter à chaque fois et ça peut être lourd.</p>
+<p>La deuxième chose est la classe qui sert de sélecteur en JavaScript. Plutôt que <em>binder</em> un élément via sa classe “CSS” (à chaque classe sa responsabilité), il est nettement préférable de créer une classe spécifique au JavaScript. Cela donne : <code>.org-js-Block-element--modifier</code>. Il suffit simplement de rajouter <code>-js</code> entre l’organisation et le <em>block</em>.</p>
+<p>Nous arrivons à la convention suivante : <code>.org[-js]-Block[-element][--modifier]</code></p>
+<p>Certains vous diront qu’ils mettent <code>.js-org-</code> mais étant donné que je considère cela comme un <em>namespace</em> global (autant css que js), je préfère mettre l’ <code>org</code> au début.</p>
+<p>Voilà, voilà, c’est certes un peu déroutant au début, et ca parait très verbeux mais cela vous permettra d’éviter de nooooooombreux soucis de nommage de classes où vous vous emmèlerez les pinceaux à coup de :</p>
+<pre><code class="lang-css"><span class="hljs-class">.footer</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> underline</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.content</span> <span class="hljs-class">.footer</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> none</span></span>; <span class="hljs-comment">/* annule la propriété du précédent sélecteur */</span>
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p>Ciao les kids.</p>
+
+]]></description><pubDate>Thu, 01 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/petite-definition-bem/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/petite-definition-bem/</guid></item><item><title>Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML</title><description><![CDATA[[
+<p>Mardi 29 avril s’est déroulée la troisième table ronde qui est finalement la première sous le nom de <strong>{p!}</strong>. Une petite explication s’impose étant donné que nous allons en faire de plus en plus et que je souhaite vraiment vous faire un compte rendu sur chacun de ces évènements.</p>
+<h2 id="pr-ambule">Préambule</h2>
+<p>Partant du constant qu’il est difficile d’apprendre et d’échanger en conférence du fait du manque du niveau assez élevé (trop de gens avec un niveau différent, il faut forcément s’aligner) et à sens unique (une personne parle, les autres écoutent), nous avons décidé de créer des tables rondes où un fil conducteur est suivi amenant à débattre, échanger, affirmer.</p>
+<p>Attention, je ne dis pas que les conférences ne servent à rien mais à mon sens elles sont trop magistrales et parfois trop marketing (coucou WebRTC Paris).</p>
+<p>Les premières tables rondes n’étaient pas sous le nom de <strong>p!</strong>, elles étaient plutôt de mon initiative (@_kud) dans le but de rassembler des gens que j’appréciais et dont je connaissais le niveau afin de progresser tous ensembles.</p>
+<p>Je tiens à vous mettre en garde ici que les propos tenus ne sont pas forcément toujours justifiés, c’est un compte rendu qui synthétise des choix que vous devriez sûrement explorer par vous-même ou au travers de d’autres articles <strong>p!</strong>.</p>
+<p>Bon allez, on y va.</p>
+<h2 id="o-">Où ?</h2>
+<p>C’est cette fois-ci Altima qui nous a gentillement accueilli dans ses locaux.</p>
+<p><a href="http://www.altima.fr">Altima</a> est une agence web composée de 6 bureaux dans le monde, proposant des expertises notamment dans les domaines du design, UX, SEO, in-store, hosting, et développement.</p>
+<p>On les remercie bien fort, tout était nickel.</p>
+<h2 id="th-mes">Thèmes</h2>
+<p>Voici le fil conducteur de la soirée.</p>
+<ul>
+<li>les resets / normalize, lesquels, pourquoi, quand ?</li>
+<li>stratégie de dossiers / fichiers (architecture)</li>
+<li>OOCSS, BEM, SMACSS, Atomique etc.</li>
+<li>sémantique</li>
+<li>accessibilité</li>
+<li>les pièges de l’intégration (e.g. display: inline-block)</li>
+<li>unités px, rem, em, pt</li>
+<li>CSS Frameworks ? lesquels ? pourquoi ? quand ?</li>
+</ul>
+<h2 id="qui-">Qui ?</h2>
+<p>Voici les personnes présentes. Si vous avez d’ailleurs le moindre problème avec ce qui est dit dans cet article, c’est à eux que vous devriez vous adresser. 😊</p>
+<table>
+<thead>
+<tr>
+<th>Membres</th>
+<th style="text-align:center">Statut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://twitter.com/_kud">_kud</a></td>
+<td style="text-align:center">👮</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/bloodyowl">bloodyowl</a></td>
+<td style="text-align:center">🏠</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/yannickc">yannickc</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/dhoko_">dhoko_</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/philippebarbosa">philippebarbosa</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/tchak13">tchak13</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/remitbri">remitbri</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/dizwix">dizwix</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="c-est-parti">C’est parti</h2>
+<h3 id="reset-normalize">Reset / Normalize</h3>
+<p>Bon, alors, commençons. Ce sont évidemment les resets / normalizes qui débutent étant donné que c’est la base de toute intégration.</p>
+<p>Pour rappel, la différence entre un normalize et un reset est simple.</p>
+<ul>
+<li>Le <strong>normalize</strong> fait en sorte que les styles de base se ressemblent sur tous les navigateurs.</li>
+<li>Le <strong>reset</strong> va plus loin que ça puisqu’il s’occupe d’écraser totalement les styles par défaut pour finalement n’avoir aucun style sur votre page lorque vous débutez votre intégration.</li>
+</ul>
+<p>Bref, peu ou pas de gens dans cette salle utilisent finalement des resets. Les resets sont uniquement intéressants lors d’applications très poussées où le style par défaut des navigateurs n’est pas du tout pertinent. Mais attention, ceci peut être dangereux car il est plus compliqué de retrouver le style par défaut d’un navigateur que de le supprimer. D’où l’intérêt du normalize.</p>
+<p>Je vous indique tout de même les plus connus :</p>
+<ul>
+<li><a href="http://meyerweb.com/eric/tools/css/reset/">Le reset d’Eric Meyer</a></li>
+<li><a href="http://necolas.github.io/normalize.css/">Le normalize de Necolas</a></li>
+</ul>
+<h3 id="strat-gie-de-fichiers">Stratégie de fichiers</h3>
+<p>Allez, on continue, stratégie de fichiers, où est ce qu’on range tout ce beau monde, comment on s’y retrouve.</p>
+<p>On en a discuté un peu, certains préfèrent mettre leurs fichiers dans directement dans le <em>root</em> du projet, moi je préfère le mettre dans un dossier <code>/src</code> afin de bien différencier source, sortie, et fichiers de configuration du projet. Ce qui donne ceci :</p>
+<pre><code>.
+├── README.md
+├── bin <span class="hljs-comment">// executables</span>
+├── dist <span class="hljs-comment">// fichiers finaux</span>
+├── src <span class="hljs-comment">// votre application</span>
+│   ├── assets <span class="hljs-comment">// fichiers statiques (pas de compilation)</span>
+│   ├── collections
+│   ├── events
+│   ├── glyphicons <span class="hljs-comment">// svg qui seront transformés en font</span>
+│   ├── images
+│   ├── lib
+│   ├── models
+│   ├── styles
+│   │   ├── base
+│   │   ├── <span class="hljs-keyword">shared</span>
+│   │   ├── views
+│   │   ├── <span class="hljs-keyword">import</span>.css
+│   │   └── shame.css <span class="hljs-comment">// hack css où il est obligatoire de commenter pourquoi</span>
+│   ├── routers
+│   ├── templates
+│   └── views
+│   ├── app.js
+│   ├── bootstrap.js
+|   └── <span class="hljs-keyword">import</span>.json
+├── gulpfile.js
+├── Makefile
+├── <span class="hljs-keyword">package</span>.json
+</code></pre><h3 id="oocss-bem-smacss-whatever-else">OOCSS, BEM, SMACSS, whatever else</h3>
+<p>Haaaaaaa, grand débat ici. Quelle est la meilleure façon, la meileure manière de maintenir du CSS, de nommer ses classes, d’avoir des conventions de nommage.</p>
+<p>Tout d’abord, on s’est tous accordés sur un point : OOCSS, SMACSS, le reste, ça ne marche pas. Ca marche pas parce que ça casse dans certains cas la sémantique, dans d’autres cas, ça revient à faire du style inline mais avec des noms de classes style <code>.left</code> pour un <code>float: left</code>. On a tous plus ou moins essayé et ça devient vite le bordel. On s’est aussi accordés, mais ça c’est évident, qu’avoir une convention de nommage est primordiale pour maintenir correctement du style (ou autre d’ailleurs).
+Et surtout il n’est plus nécessaire d’utiliser les IDs. Les IDs doivent servir uniquement dans le cas de la combinaison label/input, mais sinon ils empêchent toute généralisation d’un block.</p>
+<p>Il est clair qu’après des années d’intégration, le constat est là, la cascade, ce n’est vraiment pas l’idéal. Cela reste toujours aussi difficile de faire du css generique et/ou maintenable, et c’est justement en quoi BEM permet de résoudre à la fois les problématiques de cascade mais aussi de nommage.</p>
+<p>Il y a de nombreux articles sur BEM, sur ses conventions (oui il peut y avoir plusieurs conventions de nommage, BEM reste plus une méthologie).</p>
+<p>En quelques termes, BEM redéfinit la cascade en ne plus l’utilisant comme par exemple : <code>.header .title.is-active</code> mais <code>.header__title--is-active</code>, BEM venant de Block, Element, Modifier. C’est exactement ce que je viens de découper en une seule classe plutôt que 3.</p>
+<p>Pour ma part, j’utilise la convention de nommage qui se rapproche très fortément du framework JavaScript “Montage.js” : <code>.org-(js-)-MyBlock-myElement--myModifier</code>.</p>
+<p>Je ne souhaite volontairement pas m’étendre sur le sujet car je vous invite à lire <a href="/posts/css/petite-definition-bem/">mon article à ce sujet</a>.</p>
+<p>Je vous laisse tout de même deux articles à ce sujet qui présentent plutôt bien le principe (ils sont en anglais).</p>
+<ul>
+<li><a href="http://www.smashingmagazine.com/2012/04/16/a-new-front-end-methodology-bem/">A New Front-End Methodology: BEM</a></li>
+<li><a href="http://webdesign.tutsplus.com/articles/an-introduction-to-the-bem-methodology--cms-19403">An Introduction to the BEM Methodology</a></li>
+</ul>
+<h3 id="s-mantique">Sémantique</h3>
+<p>On est tous d’accord, faire de la sémantique oui, quand cela ne va pas à l’encontre de la maintenabilité et de la réutilisation de code.</p>
+<p>Pour ma part, trop de fois je me suis pris la tête sur la sémantique au point de faire des classes uniques qui ont du sens mais qui <code>@extend</code> (voir pré-processeurs) une classe générique.</p>
+<h3 id="accessibilit-">Accessibilité</h3>
+<p>Pour être franc, l’accessibilité a un coût en terme de temps qui n’est jamais négligeable et rentre souvent en conflit avec l’UX d’une personne sans handicap.</p>
+<p>Typiquement, imaginons que nous avons un formulaire bancaire, comment faire un boucle uniquement sur ce formulaire (pratique dans le cas d’une personne sans handicap) tout en ne contraignant la navigation “classique” ?</p>
+<p>Le constat est là aussi, nous sommes tous ici sensibilisés par l’accessibilité, nous essayons d’en faire le plus possible (souvent sur notre temps libre ou entre deux tâches) mais personne n’administre du temps à cela.</p>
+<p>Une éventuelle solution a émmergé durant les discussions : pourquoi ne pourrait-on pas connaître d’emblée la situation de l’utilisateur lorsqu’il arrive sur le site ?</p>
+<p>Un navigateur dédié à certains handicaps devrait être détectable d’entée de jeu et que l’on puisse nous développeurs faire en conséquence dans ce cas là.</p>
+<p>C’est exactement comme l’histoire de résolution / bande passante. Le w3c nous propose à l’heure actuelle de détecter la résolution pour faire en conséquence sur notre site, or, ce n’est pas du tout le pivot intéressant, c’est surtout la bande passante qui nous permet d’ajuster notre site web.</p>
+<p>Bref, comme souvent, le W3C est à la rue, n’avance pas comme le web avance (vite, très vite) et les outils nous font défaut à l’heure actuelle pour répondre à certains besoins. (Note : je ne dis pas qu’ils ne font pas un bon boulot ou que ce n’est pas compliqué, je dis simplement qu’il y a un grand écart encore les besoins et les solutions à l’heure actuelle sur plusieurs domaines : l’accessibilité, la video, la capacité de fournir un site en fonction de la bande passante plutôt que la résolution, etc, etc).</p>
+<h3 id="les-pi-ges-de-l-int-gration-e-g-display-inline-block-">Les pièges de l’intégration (e.g. display: inline-block)</h3>
+<p>Pour inline-block par exemple, il n’y a malheureusement pas le choix de soit coller les balises, soit minifier le html (ou la partie ayant des inline-block), soit de mettre des commentaires.</p>
+<p>Les layouts seront toujours aussi pénibles tant que les flexbox ne sont pas supportés par la majorité des navigateurs du marché. Les 3 solutions principales pour le moment : float, inline-block, table(-cell).</p>
+<p>En ce qui concerne le box-sizing, il sauve beaucoup d’intégration. Il faut juste voir le support des navigateurs que vous supportez. 
+Oh et attention, tous les navigateurs ne font pas 16px de base. Je dis ça si vous utilisez les <code>(r)em</code> (qui sont expliqués juste après).</p>
+<p>Enfin, <code>&lt;input type=&quot;number&quot;&gt;</code> est tout buggé sous Firefox. Par exemple, mettre min=”1900” sur cet input et que vous cliquez sur le “+”, vous commencerez à “1” et non “1900”… Je sens que je vais devoir encore faire un ticket. :’)</p>
+<h3 id="unit-s-px-rem-em-pt-">Unités px, rem, em, pt, %</h3>
+<p>Pour être clair, personne n’utilise des <code>pt</code>, les <code>px</code>, faut les oublier de plus en plus, et <code>rem</code> est sûrement le plus simple et le mieux mais dépend malheureusement de vos supports navigateurs où dans quels cas il faut souvent se rabattre sur les <code>em</code>. Le pourcentage est forcément préconisé.</p>
+<h3 id="css-frameworks-lesquels-pourquoi-quand-">CSS Frameworks ? lesquels ? pourquoi ? quand ?</h3>
+<p><a href="http://foundation.zurb.com/">Foundation</a>, <a href="http://getbootstrap.com/">Bootstrap</a>, <a href="http://purecss.io/">pure</a> sont les plus connus (et peut-être les pires). Il ne vous serviront uniquement que dans le cas d’une <a href="http://fr.wikipedia.org/wiki/Preuve_de_concept">PoC</a> ou une administration de site (<em>back-office</em>).</p>
+<p>Par contre, <a href="http://topcoat.io/">topcoat</a> peut se révéler assez intéressant de par sa haute personnalisation et de son <em>BEM-way</em>. Eventuellement <a href="http://inuitcss.com/">inuit.css</a> sinon.</p>
+<h3 id="bonus">Bonus</h3>
+<p>Lors de cas de contenus affichés via de l’ajax, pensez de plus en plus à faire du “prerender”, c’est à dire que pendant que le contenu se charge, au lieu de mettre des <em>spinners</em>, <em>loaders</em>, <em>toussa</em>, essayez de mettre des visuels qui ressembleront à l’élément final. C’est ce que fait par exemple facebook, et c’est pas mal du tout. Tenez :</p>
+<p><img src="data:image/jpg;base64,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bwUv1pT7Au3gpfrSn2BdvBS/WlPsC7eCl+tKfYHhvCev1yt+0RGTJqlrxR8SP/ej5tHo06C/19M3/8QAHhEAAgMAAwEBAQAAAAAAAAAAAAECERIDMTJAECD/2gAIAQIBAT8AlJo3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3Ii20cnYuvx9FFFFFDXzQ8nJ2Lr8fRTMsyxqvoh5OTs0aG7+yHk5OymUymUymUymUymUymUymUymUymUymUymUymUymU/5h5OTstlstlstlstlstlstlstlstlstlstlstlstlstlv+YeTk7NM0zTNM0zTNM0zTNM0zTNM0zTNM0zTNM0zTNM0zTNM0zTG2/wBh5OTstFotFotFotFotFotD+OHk5O/vh5OTv74eTk7++Hk5O/vh5OTv74eTk7++Hk5O/vh5OTv74eTk7++Hk5O/vh5OTv74eTk7++HklGzDMMwzDMMwzDMMwzDMMwzDMMwzDMMwzDMMwzDMMwzDMMwzDMMwyKpH//EAB0RAAMBAQEBAQEBAAAAAAAAAAABEhExAkAQICH/2gAIAQMBAT8AS0lEolEolEolEolEolEolEolEolEolEolEolEolEolEolEofTzwffzz000000T35n088H3889NRSKQnv0Pp54NayRLPsfTzw1Go1Go1Go1Go1Go1Go1Go1Go1Go1Go1Go1Go1Gr+X088MRiMRiMRiMRiMRiMRiMRiMRiMRiMRiMRiMRiMRi/l9PPBrSUSiUSiUSiUSiUSiUSiUSiUSiUSiUSiUSiUSiUShLP19PPDGYzGYzGYzGYzGYzGL43088+99PPPvfTzz73088+99PPPvfTzz73088+99PPPvfTzz73088+99PPPvfTzz730Twoooooooooooooooooooooooooooooof8ArP/Z
+"></p>
+<p>Voilà pour cette table ronde, j’espère que le compte rendu vous a plu. Il est évident que c’est sûrement plus intéressant en direct, on essayera peut-être par la suite de faire du streaming (live) ou du podcast, à voir.</p>
+<p>N’hésitez pas à continuer le débat dans les commentaires.</p>
+<p>Pour ma part, j’ai déjà d’autres articles “dans le pipe” (comme disent certains marketeux). Je vous retrouve bientôt ici ou sur Twitter, kiss.</p>
+
+]]></description><pubDate>Wed, 30 Apr 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</link><guid isPermaLink="true">http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</guid></item><item><title>Introduction à Gulp</title><description><![CDATA[[
 <p>Vous commencez tous à connaitre les <em>tasks runners</em>, ces outils qui permettent
 d’automatiser les tâches de développement récurrentes.
 Personnellement
@@ -1597,66 +1881,7 @@ Mais ça, je vous en parle la prochaine fois ;)</p>
 Tout ça est décrit dans la <a href="/posts/css/mise-en-place-autoprefixer/">mise en place d’autoprefixer</a>
 avec des exemples concrets pour ajouter ça dans un workflow existant.</p>
 
-]]></description><pubDate>Tue, 25 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</guid></item><item><title>Sublime Text en tant qu'éditeur Markdown</title><description><![CDATA[[
-<p>La vie de développeur n’est jamais facile. Tu souhaites faire quelque chose de précis et tu te retrouves à faire totalement autre chose, <em>patchant</em> ci ou tu as découvert ça.</p>
-<p>Typiquement, j’étais tranquillement en train d’écrire un article pour <strong>p!</strong> qui n’avait rien à voir avec celui actuel, et je me retrouve à personnaliser mon Sublime Text pour Markdown car ne souhaitant plus utiliser autre chose que celui-ci pour l’écriture.</p>
-<p>Il y a certes le très bon <a href="http://mouapp.com/">Mou.app</a> (<code>$ brew cask install mou</code>) sur Mac OS X mais comme indiqué, il n’est que pour Mac, or il m’arrive parfois d’être sur Windows.
-De plus, les éditeurs en ligne comme <a href="https://stackedit.io/">stackedit.io</a> ou <a href="http://dillinger.io/">dillinger.io</a> sont pratiques mais comme j’ai tendance à stocker mes brouillons sur <a href="https://db.tt/nTkiSUb">dropbox</a>, ces outils vous demandent l’accès de toute votre dropbox, chose que je n’aime pas spécialement.</p>
-<p>Bref, tout ça pour dire que tout centraliser sur Sublime Text et utiliser dropbox pour écrire des articles me semble une pratique plutôt agréable.</p>
-<p>Pour cela, quittez totalement vos éditeurs Markdown et installez les plugins Sublime Text qui vont bien.</p>
-<h2 id="markdownediting">MarkdownEditing</h2>
-<p>Premièrement, <a href="http://ttscoff.github.io/MarkdownEditing/">MarkdownEditing</a>, ce petit plugin est votre parfait compagnon qui vous permettra d’avoir la bonne coloration syntaxique de votre Markdown. Il vous permettra de mettre en évidence les liens, le code, et tout le reste. Du bonheur donc.</p>
-<p><img src="../../../images/posts/preview-markdownediting.png" alt=""></p>
-<p>Oui alors, j’ai fait quelques configurations car à la base, ca ressemble plutôt à ça :</p>
-<p><img src="../../../images/posts/preview-markdownediting-light.png" alt=""></p>
-<p>Si vous souhaitez modifier Sublime Text mais uniquement pour le format Markdown, faites : <code>Preferences &gt; Browse Packages...</code> puis aller dans <code>User</code> et créez un fichier <code>Markdown.sublime-settings</code>. Celui-ci sera lu et appliqué à chaque fois que vous éditerez un fichier Markdown.</p>
-<p>Voici ce que j’ai pour le moment :</p>
-<pre><code>{
-  "<span class="hljs-attribute">color_scheme</span>": <span class="hljs-value"><span class="hljs-string">"Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme"</span></span>,
-  "<span class="hljs-attribute">enable_table_editor</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
-  "<span class="hljs-attribute">table_editor_syntax</span>": <span class="hljs-value"><span class="hljs-string">"Auto"</span></span>,
-  "<span class="hljs-attribute">tab_size</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,
-  "<span class="hljs-attribute">extensions</span>":
-  <span class="hljs-value">[
-    <span class="hljs-string">"mdown"</span>,
-    <span class="hljs-string">"txt"</span>,
-    <span class="hljs-string">"md"</span>
-  ]
-</span>}
-</code></pre><p>Le thème <code>dark</code> pour pas se niquer les yeux (coucou <a href="https://twitter.com/bloodyowl">@bloodyowl</a>), j’active aussi d’autres plugins dont je vais vous parler d’ici peu, j’affecte le spacing à <code>2</code>, et je déclare que j’utiliserai l’éditeur Markdown pour ce genre de fichiers : <code>.mdown</code>, <code>.txt</code>, <code>.md</code>.</p>
-<p>Bien, passons à la suite.</p>
-<h2 id="markdown-preview">Markdown Preview</h2>
-<p>Notre cher <a href="https://twitter.com/revolunet">@revolunet</a> a fait un excellent plugin Markdown pour Sublime Text: <a href="https://github.com/revolunet/sublimetext-markdown-preview">Sublime Text Markdown Preview</a>. Celui-ci permet d’avoir un rendu de votre Markdown en <code>.html</code>. Vous pouvez soit compiler votre Markdown pour créer un fichier HTML, soit l’ouvrir directement dans votre navigateur.</p>
-<p>Différents formats disponibles :</p>
-<ul>
-<li>Python Markdown</li>
-<li>Github Flavored Markdown</li>
-</ul>
-<p>Un autre parfait compagnon en somme, qui quant à lui s’occupera de digérer l’excellent article que vous êtes en train d’écrire.</p>
-<p>Je vous parlerai éventuellement un jour de <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> qui permet de faire ce genre de choses mais en un peu plus complet et générique (Sublime Text n’est pas nécessaire) mais c’est un poil plus complexe. Jettez-y un œil tout de même.</p>
-<h2 id="smartmarkdown">SmartMarkdown</h2>
-<p><a href="https://github.com/demon386/SmartMarkdown">Petit plugin</a> intéressant qui vous permettra de cacher des parties de votre texte en le repliant. Par exemple, vous vous mettez devant un titre du style <code>##</code> et vous appuyez sur <code>tab</code>, cela repliera votre texte. Plutôt pratique pour se focaliser.</p>
-<p><img src="../../../images/posts/preview-smartmarkdown.png" alt=""></p>
-<h2 id="sublimetableeditor">SublimeTableEditor</h2>
-<p>Précédemment dans ma configuration Markdown, vous avez pu voir ceci :</p>
-<pre><code>  <span class="hljs-string">"enable_table_editor"</span>: <span class="hljs-literal">true</span>,
-  <span class="hljs-string">"table_editor_syntax"</span>: <span class="hljs-string">"Auto"</span>,
-</code></pre><p>Cela permet de configurer <a href="https://github.com/vkocubinsky/SublimeTableEditor">SublimeTableEditor</a> qui vous permettra de correctement aligner vos tableaux dans Markdown.</p>
-<p>Et voilà. Avec tout ceci, vous êtes paré(e) à écrire votre Markdown dans de bonnes conditions. Plus qu’à mettre du Jazz et vous préparer une tasse de thé et c’est parti.</p>
-<h2 id="bonus-markdown-extended">Bonus : Markdown Extended</h2>
-<p>Il est possible que vous n’aimiez pas forcément MarkdownEditing, et dans ce cas je vous propose un autre plugin pas inintéressant non plus s’appelant <a href="https://github.com/jonschlinkert/sublime-markdown-extended">Markdown Extended</a>. Il vous permettra d’avoir la bonne coloration syntaxique lorsque vous écrivez du code dans votre éditeur.</p>
-<h4 id="avant">Avant</h4>
-<p><img src="../../../images/posts/preview-markdownextended-before.png" alt=""></p>
-<h4 id="apr-s">Après</h4>
-<p><img src="../../../images/posts/preview-markdownextended-after.png" alt=""></p>
-<p>Oh et j’oubliais, voici quelques documentations sur Markdown histoire de bien l’utiliser :</p>
-<ul>
-<li><a href="http://daringfireball.net/projects/markdown/syntax">Documentation officielle</a></li>
-<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></li>
-<li><a href="http://warpedvisions.org/projects/markdown-cheat-sheet.md">Another Markdown Cheatsheet</a></li>
-</ul>
-
-]]></description><pubDate>Thu, 20 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</link><guid isPermaLink="true">http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</guid></item><item><title>La puissance de dnsmasq</title><description><![CDATA[[
+]]></description><pubDate>Tue, 25 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</guid></item><item><title>La puissance de dnsmasq</title><description><![CDATA[[
 <p>Dernièrement, j’ai voulu accéder avec mon Smartphone à ma machine virtuelle (<em>VM</em>) de développement qui se trouve sur mon poste de travail (<em>machine ou poste hôte</em>). Ma machine virtuelle me permet de reproduire à l’identique la production afin d’avoir le moins de marge d’erreur possible entre la phase de développement et la phase de mise en production.</p>
 <p>A ce moment là, j’accédais à ma machine virtuelle à partir de mon poste via le fichier <em>hosts</em> comprenant ceci :</p>
 <pre><code><span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.145</span> monsite<span class="hljs-preprocessor">.dev</span>
@@ -1795,7 +2020,66 @@ $ <span class="hljs-built_in">sudo</span> launchctl load /Library/LaunchDaemons/
 <p>Autre point, évitez, mais vraiment, de nommer vos noms de domaines personnels en <code>.local</code>. En effet, ceux-ci sont plutôt réservés à l’environnement Mac OS X. Ils sont d’ailleurs en rapport avec <strong>_mdnsresponder</strong>. Les <code>.local</code> permettent à n’importe quel produit Apple sur le réseau de se connecter à d’autres postes Apple via <code>nom-de-l-appareil.local</code>. Votre connexion pourrait alors s’emméler entre le serveur dns de <strong>Bonjour</strong> et votre propre serveur dns.</p>
 <p>Happy coding !</p>
 
-]]></description><pubDate>Thu, 20 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</link><guid isPermaLink="true">http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</guid></item><item><title>BROWSERIFY ALL THE THINGS</title><description><![CDATA[[
+]]></description><pubDate>Thu, 20 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</link><guid isPermaLink="true">http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</guid></item><item><title>Sublime Text en tant qu'éditeur Markdown</title><description><![CDATA[[
+<p>La vie de développeur n’est jamais facile. Tu souhaites faire quelque chose de précis et tu te retrouves à faire totalement autre chose, <em>patchant</em> ci ou tu as découvert ça.</p>
+<p>Typiquement, j’étais tranquillement en train d’écrire un article pour <strong>p!</strong> qui n’avait rien à voir avec celui actuel, et je me retrouve à personnaliser mon Sublime Text pour Markdown car ne souhaitant plus utiliser autre chose que celui-ci pour l’écriture.</p>
+<p>Il y a certes le très bon <a href="http://mouapp.com/">Mou.app</a> (<code>$ brew cask install mou</code>) sur Mac OS X mais comme indiqué, il n’est que pour Mac, or il m’arrive parfois d’être sur Windows.
+De plus, les éditeurs en ligne comme <a href="https://stackedit.io/">stackedit.io</a> ou <a href="http://dillinger.io/">dillinger.io</a> sont pratiques mais comme j’ai tendance à stocker mes brouillons sur <a href="https://db.tt/nTkiSUb">dropbox</a>, ces outils vous demandent l’accès de toute votre dropbox, chose que je n’aime pas spécialement.</p>
+<p>Bref, tout ça pour dire que tout centraliser sur Sublime Text et utiliser dropbox pour écrire des articles me semble une pratique plutôt agréable.</p>
+<p>Pour cela, quittez totalement vos éditeurs Markdown et installez les plugins Sublime Text qui vont bien.</p>
+<h2 id="markdownediting">MarkdownEditing</h2>
+<p>Premièrement, <a href="http://ttscoff.github.io/MarkdownEditing/">MarkdownEditing</a>, ce petit plugin est votre parfait compagnon qui vous permettra d’avoir la bonne coloration syntaxique de votre Markdown. Il vous permettra de mettre en évidence les liens, le code, et tout le reste. Du bonheur donc.</p>
+<p><img src="../../../images/posts/preview-markdownediting.png" alt=""></p>
+<p>Oui alors, j’ai fait quelques configurations car à la base, ca ressemble plutôt à ça :</p>
+<p><img src="../../../images/posts/preview-markdownediting-light.png" alt=""></p>
+<p>Si vous souhaitez modifier Sublime Text mais uniquement pour le format Markdown, faites : <code>Preferences &gt; Browse Packages...</code> puis aller dans <code>User</code> et créez un fichier <code>Markdown.sublime-settings</code>. Celui-ci sera lu et appliqué à chaque fois que vous éditerez un fichier Markdown.</p>
+<p>Voici ce que j’ai pour le moment :</p>
+<pre><code>{
+  "<span class="hljs-attribute">color_scheme</span>": <span class="hljs-value"><span class="hljs-string">"Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme"</span></span>,
+  "<span class="hljs-attribute">enable_table_editor</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+  "<span class="hljs-attribute">table_editor_syntax</span>": <span class="hljs-value"><span class="hljs-string">"Auto"</span></span>,
+  "<span class="hljs-attribute">tab_size</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,
+  "<span class="hljs-attribute">extensions</span>":
+  <span class="hljs-value">[
+    <span class="hljs-string">"mdown"</span>,
+    <span class="hljs-string">"txt"</span>,
+    <span class="hljs-string">"md"</span>
+  ]
+</span>}
+</code></pre><p>Le thème <code>dark</code> pour pas se niquer les yeux (coucou <a href="https://twitter.com/bloodyowl">@bloodyowl</a>), j’active aussi d’autres plugins dont je vais vous parler d’ici peu, j’affecte le spacing à <code>2</code>, et je déclare que j’utiliserai l’éditeur Markdown pour ce genre de fichiers : <code>.mdown</code>, <code>.txt</code>, <code>.md</code>.</p>
+<p>Bien, passons à la suite.</p>
+<h2 id="markdown-preview">Markdown Preview</h2>
+<p>Notre cher <a href="https://twitter.com/revolunet">@revolunet</a> a fait un excellent plugin Markdown pour Sublime Text: <a href="https://github.com/revolunet/sublimetext-markdown-preview">Sublime Text Markdown Preview</a>. Celui-ci permet d’avoir un rendu de votre Markdown en <code>.html</code>. Vous pouvez soit compiler votre Markdown pour créer un fichier HTML, soit l’ouvrir directement dans votre navigateur.</p>
+<p>Différents formats disponibles :</p>
+<ul>
+<li>Python Markdown</li>
+<li>Github Flavored Markdown</li>
+</ul>
+<p>Un autre parfait compagnon en somme, qui quant à lui s’occupera de digérer l’excellent article que vous êtes en train d’écrire.</p>
+<p>Je vous parlerai éventuellement un jour de <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> qui permet de faire ce genre de choses mais en un peu plus complet et générique (Sublime Text n’est pas nécessaire) mais c’est un poil plus complexe. Jettez-y un œil tout de même.</p>
+<h2 id="smartmarkdown">SmartMarkdown</h2>
+<p><a href="https://github.com/demon386/SmartMarkdown">Petit plugin</a> intéressant qui vous permettra de cacher des parties de votre texte en le repliant. Par exemple, vous vous mettez devant un titre du style <code>##</code> et vous appuyez sur <code>tab</code>, cela repliera votre texte. Plutôt pratique pour se focaliser.</p>
+<p><img src="../../../images/posts/preview-smartmarkdown.png" alt=""></p>
+<h2 id="sublimetableeditor">SublimeTableEditor</h2>
+<p>Précédemment dans ma configuration Markdown, vous avez pu voir ceci :</p>
+<pre><code>  <span class="hljs-string">"enable_table_editor"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-string">"table_editor_syntax"</span>: <span class="hljs-string">"Auto"</span>,
+</code></pre><p>Cela permet de configurer <a href="https://github.com/vkocubinsky/SublimeTableEditor">SublimeTableEditor</a> qui vous permettra de correctement aligner vos tableaux dans Markdown.</p>
+<p>Et voilà. Avec tout ceci, vous êtes paré(e) à écrire votre Markdown dans de bonnes conditions. Plus qu’à mettre du Jazz et vous préparer une tasse de thé et c’est parti.</p>
+<h2 id="bonus-markdown-extended">Bonus : Markdown Extended</h2>
+<p>Il est possible que vous n’aimiez pas forcément MarkdownEditing, et dans ce cas je vous propose un autre plugin pas inintéressant non plus s’appelant <a href="https://github.com/jonschlinkert/sublime-markdown-extended">Markdown Extended</a>. Il vous permettra d’avoir la bonne coloration syntaxique lorsque vous écrivez du code dans votre éditeur.</p>
+<h4 id="avant">Avant</h4>
+<p><img src="../../../images/posts/preview-markdownextended-before.png" alt=""></p>
+<h4 id="apr-s">Après</h4>
+<p><img src="../../../images/posts/preview-markdownextended-after.png" alt=""></p>
+<p>Oh et j’oubliais, voici quelques documentations sur Markdown histoire de bien l’utiliser :</p>
+<ul>
+<li><a href="http://daringfireball.net/projects/markdown/syntax">Documentation officielle</a></li>
+<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></li>
+<li><a href="http://warpedvisions.org/projects/markdown-cheat-sheet.md">Another Markdown Cheatsheet</a></li>
+</ul>
+
+]]></description><pubDate>Thu, 20 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</link><guid isPermaLink="true">http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</guid></item><item><title>BROWSERIFY ALL THE THINGS</title><description><![CDATA[[
 <p>Alors que je prends goût à me passer de frameworks (principalement à cause des
 courbes d’apprentissage et des éventuelles lourdeurs et/ou restrictions que cela
 impose, mais c’est une autre histoire),
@@ -3709,471 +3993,4 @@ dev à chaque changement de projet.</li>
 <li><a href="http://jolicode.com/blog/cuisinez-vos-serveurs-comme-un-chef-premiere-partie">Cuisinez vos serveurs comme un Chef – Première partie</a></li>
 </ul>
 
-]]></description><pubDate>Fri, 08 Nov 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/env/vagrant-enlarge-your-vm/</link><guid isPermaLink="true">http://putaindecode.fr/posts/env/vagrant-enlarge-your-vm/</guid></item><item><title>HTML ? Hâche-Thé-Aime-Elle vous dites ?</title><description><![CDATA[[
-<p>Ahh, le HTML. LE <a href="http://fr.wikipedia.org/wiki/HTML">H.T.M.L</a>. Sacré langage hein ?</p>
-<p>On le connait tous ce fameux truc qu’on retrouve dans pas mal d’URLs : <code>.html</code>.
-Oui d’accord par le passé on avait l’extension de radin <code>.htm</code>, mais elle n’a
-clairement pas duré.</p>
-<p>Vous vous demandez déjà ce qu’il-y-a à raconter sur l’HTML peut être ? Et bien,
-je ne suis pas là pour vous apprendre toutes les balises, leurs enfants, parents,
-les cousins cousines, patati patata… Ah ça non, j’ai autre chose à faire,
-et vous aussi. Et si c’est ce que vous cherchez, vous trouverez ce qu’il vous
-faut sur <a href="http://docs.webplatform.org/wiki/html/elements">tout</a>
-<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">un</a>
-<a href="http://www.w3.org/html/wg/drafts/html/CR/dom.html#elements">tas</a>
-<a href="http://en.wikipedia.org/wiki/HTML_element">d’autres</a>
-<a href="http://www.vectorskin.com/referentiels-standards-w3c/balises-html5/">sites</a>.</p>
-<p>Ce que je vais faire par contre, c’est tenter de partager un document sérieux
-(dans le fond hein) avec tout pleins de conseils super pertinents pour que vous
-écriviez de l’HTML comme personne.
-Non je déconne. En fait, ça va être la grosse marrade avec les trucs
-les plus nazes que je peux vous raconter. C’est parti mon jQuéri.</p>
-<h2 id="l-ancien-testament">L’ancien testament</h2>
-<p>Si vous avez ouvert ne serait-ce que quelques documents HTML dans votre vie,
-vous avez du croiser ce qu’on appelle un <a href="http://fr.wikipedia.org/wiki/Doctype">doctype</a>
-qui ressemble à ça:</p>
-<pre><code class="lang-html"><span class="hljs-doctype">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span>
-</code></pre>
-<p>Vous pourrez remarquer dans ce <del>petit</del> gros bout de code bien relou qu’il y’a
-une <a href="http://fr.wikipedia.org/wiki/Uniform_Resource_Locator">URL</a>:
-c’est tout simplement la DTD (doctype) du langage en question.
-Avec les spécifications pour la validation, toussa toussa…
-Si vous avez 2 minutes, allez jeter un coup d’oeil.</p>
-<p>Je ne vais pas vous le cacher, et même si en théorie, par héritage de SGML/XML
-ça part d’une bonne intention, dans la pratique ça sert juste à se toucher la
-nouille sur la validation.
-Car aujourd’hui HTML (5) n’est clairement plus du XML.</p>
-<p>Oui bon ok, moi même à une époque j’ai eu ma passe où je collais ce petit badge
-partout dans mes footers:</p>
-<figure>
-  <a href="http://validator.w3.org/check?uri=referer">
-    <img src="http://www.w3.org/Icons/valid-xhtml10"
-        alt="Valid XHTML 1.0 Transitional" height="31" width="88" />
-  </a>
-  <figcaption>Ça pète la classe hein ?</figcaption>
-</figure>
-
-<p>Mais bon les conneries, ça va un moment.
-Pour info, j’ai du valider le code suivant pour obtenir ce logo:</p>
-<pre><code class="lang-html"><span class="hljs-doctype">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span>
- <span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.w3.org/1999/xhtml"</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
-
-<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
-</code></pre>
-<p>Ben dites donc, c’est propre tout ça. Un petit document tout vide mais déjà
-bien rempli.
-Mais attendez en 2013, on peut pas faire mieux ? Oh si !</p>
-<h2 id="le-nouveau-testament">Le nouveau testament</h2>
-<pre><code class="lang-html"><span class="hljs-doctype">&lt;!doctype html&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
-</code></pre>
-<p>Il faut savoir qu’un simple document <em>valide</em>, peut se résumer à ça.
-Oui oui mes cocos, ce document est parfaitement valide. Voilà j’voulais vous le
-dire. Arrêtez d’utiliser des doctypes dans tous les sens, ça ne sert à rien.
-Sachant la qualité du code qu’on trouve sur les internets, les navigateurs
-s’arrêtent au parsing lorsqu’ils voient ça <code>&lt;!doctype html</code>
-(C’est <a href="http://paulrouget.com/">Paul Rouget</a> qui me l’a dit, je le crois donc
-sur parole).
-Et après ma petite parenthèse ci dessous, je vais vous expliquer pourquoi.</p>
-<p>Car je sais ce que certains vont me rétorquer.</p>
-<blockquote>
-<p>Oui mais moi monsieur, je valide en <strong>XHTML 1.1 Strict Turbo X Prime Ultra</strong><br />
-Puis ton document valide là, il sera valide quand HTML5 sera finalisé…</p>
-</blockquote>
-<p>Dans un sens ils n’auraient pas tort. Mais dans la pratique, les navigateurs
-s’en contre branlent de savoir quel type d’HTML vous utilisez
-<small>(à moins que vous aimiez jouer avec la mort et que vous utilisez le
-prologue XML lorsque vous servez de l’XHTML…)</small>.
-Car quand bien même vous utilisez un doctype à rallonge, il est tout à fait
-possible que vous vous chiiez, et que vous laissiez des erreurs.
-Oui, l’erreur est humaine…
-Puis HTML 5 est déjà bien implémenté dans les grandes lignes. Et ça car il est
-presque rétrocompatible.
-Vous devriez le comprendre d’ici la fin de cet écrit. Ou pas. Mais je vous le
-dit, il a été pensé dans ce sens.</p>
-<p>Revenons à la validation. Du coup à quoi ça sert de valider ?
-On va voir ça par un exemple digne des plus grands diplômes.</p>
-<h2 id="ce-p-fout-la-merde-">Ce <code>&lt;p&gt;</code> fout la merde.</h2>
-<p>Prenons le code suivant:</p>
-<pre><code class="lang-html"><span class="xml"><span class="vbscript"></span></span><span class="hljs-expression">{{<span class="hljs-variable">include</span> <span class="hljs-string">"src/posts/html/hache-the-aime-elle-vous-dites/notvalid.html.hbs"</span>}}</span><span class="xml"><span class="vbscript"></span></span>
-</code></pre>
-<p>Certains d’entre vous ont du remarquer la coquille.
-Celle-là, mes élèves qui découvrent le HTML me la font à chaque fois lorsqu’ils
-codent leur super CV
-(super exercice tavu, ils apprécient particulièrement le titre).</p>
-<p>Toi là au fond, t’as pas repéré le souci encore ?</p>
-<p>Regarde plutôt le rendu:</p>
-<iframe
-  class="putainde-Post-iframe"
-  height="350"
-  src="/posts/html/hache-the-aime-elle-vous-dites/notvalid.html">
-</iframe>
-
-<blockquote>
-<p>WAT ?
-ET MON MARGIN BOTTOM KESSIFÉLÀ EN DEUBEULE ?</p>
-</blockquote>
-<p>Le rapport avec la validation me direz-vous ? Et bien plutôt que de perdre du
-temps à comprendre le pourquoi du comment, en validant le code ci dessus,
-l’erreur vous est implicitement expliquée
-(oui ce code n’a qu’une seule erreur à la validation).</p>
-<blockquote>
-<p>Line 17, Column 4: <strong>No p element in scope but a p end tag seen.</strong></p>
-</blockquote>
-<p>Typiquement, il faut savoir comprendre un message d’erreur et savoir lire entre
-les lignes. Pas faire “mais monsieur, j’comprends pas là” (d’ailleurs mes élèves
-valident tous leur code, pour apprendre sur le tas, c’est une bonne façon).</p>
-<p>Celui là nous dit en gros : <em>je ne vois pas d’element <strong>p</strong> à fermer dans le coin</em>.
-Ca veut dire que… Ça veut dire que mon <strong>p</strong> ouvert n’est pas reconnu ?
-Mais attend qu’est-ce que c’est que cette histoire ?!</p>
-<p>Si vous prenez 10 secondes pour inspecter ce code, vous allez vite vous
-aperçevoir qu’il est parsé ainsi:</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>…<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>…<span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-</code></pre>
-<p><em>Mais qu’est-ce que… ? Hein ? Mais ? Quoi ? Comment ?</em></p>
-<p>Oui vous avez bien vu. L’HTML est parsé n’importe comment. Enfin non il est parsé
-comme il peut, au mieux.
-Je pense que là vous commencez à comprendre ?</p>
-<p>Ce que j’essaye de vous montrer par là, ce qu’il faut toujours faire attention
-entre ce qu’on écrit et ce qu’on pense avoir comme résultat, même avec du
-<em>simple</em> HTML.</p>
-<p><strong>Bon après j’espère qu’en 2013, vous avez tous le réflexe d’inspecter
-l’HTML dès que vous avez un truc bizarre en CSS ou en JavaScript… Si
-c’est pas encore le cas, prenez l’habitude.</strong></p>
-<h2 id="mais-du-coup-le-navigateur-il-fait-n-importe-quoi-">Mais du coup le navigateur il fait n’importe quoi ?</h2>
-<p>Le navigateur essaye clairement de faire au mieux.
-Si vous inspectez l’exemple précédent, vous vous apercevrez aussi que je n’ai
-mis aucune balise <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> ou <code>&lt;body&gt;</code>.
-Pourquoi ? Ben car le parseur le fait à ma place.
-Mais pourquoi il fait ça ?
-Tout simplement car on oublie (très - trop ?) souvent de bien écrire.
-Comme quand j’écris en.</p>
-<p>La balise <a href="https://developer.mozilla.org/fr/docs/Web/HTML/Element/tbody"><code>&lt;tbody&gt;</code></a>
-est un bon exemple.
-Si vous inspectez vos tableaux HTML, vous verrez vite fait que cette balise, que
-quasiment personne ne connait/utilise, est pourtant nécessaire/utile.
-Mais du coup, si je me fais une petite requête JavaScript
-<code>document.querySelectorAll(&#39;table &gt; tr&#39;)</code>,
-il est fort possible que je n’aie pas ce que je souhaite.
-<a href="http://codepen.io/MoOx/pen/esFjx">La preuve</a>.</p>
-<p>Voyons une autre exemple: mettons nous à la place d’un navigateur si,
-alors que je suis en XHTML 1.1 Strict, je lui glisse une balise <code>&lt;center&gt;</code>.</p>
-<ul>
-<li><p><strong>Cas 1.</strong> Je n’ai pas fait attention au doctype et je veux vraiment une balise
-<code>&lt;center&gt;</code> : bah là, rien à dire à part <em>Merci</em>. Le navigateur essaye clairement
-de faire au mieux, et dans un cas comme celui là, on ne peut que le remercier.</p>
-</li>
-<li><p><strong>Cas 2.</strong> Je sais exactement dans quel doctype je suis, j’ai conscience de ce
-que je fais: je joue au con, tant pis pour ma gueule !</p>
-</li>
-</ul>
-<p>Dans tous les cas, le navigateur va laisser passer cette balise au cas où que.
-Puis bon faut avouer que c’est super pratique cette balise hein ?
-Comme <code>&lt;blink&gt;</code> et <code>&lt;marquee&gt;</code> quoi. ❤</p>
-<figure>
-  <img src="../../../images/posts/memes/canthandlemyswag.gif" alt="Can&#39;t handle my swag">
-  <figcaption><marquee>Marquee for the win.</marquee></figcaption>
-</figure>
-
-<h2 id="note-de-service">Note de service</h2>
-<p>S’il vous plaît mesdames messieurs, lorsque vous faites du CSS inline, ou que
-vous incorporez un JavaScript, arrêtez vous à des choses simples,
-qui fonctionnent :</p>
-<ul>
-<li><p><code>&lt;style&gt;</code> suffit. Pas besoin de mettre un type, un langage etc. Et ça vous
-évitera des <a href="http://codepen.io/MoOx/pen/sEzuJ">prises de têtes à la con</a>.
-Puis vous avez déjà utilisé autre chose que du CSS vous ?!</p>
-</li>
-<li><p><code>&lt;script&gt;</code>, idem, même sur IE 6.
-Pareil que précédement, pas besoin de mettre un hideux
-<code>&lt;script type=&quot;text/javascript&quot; language=&quot;JavaScript 1.1&quot;&gt;</code>.
-La moindre faute de frappe ne pardonne pas.
-Aucun intêret de se fatiguer, sauf si votre <a href="https://code.google.com/p/ruby-in-browser/">script n’est pas du JavaScript</a>.</p>
-</li>
-</ul>
-<h2 id="le-mot-de-la-fin">Le mot de la fin</h2>
-<p>Ne soyez jamais sûr de vous, que ce soit pour écrire de l’HTML ou faire une mise
-en prod’ un vendredi soir à <a href="http://www.miximum.fr/le-bug-de-17h30.html">17h30</a>.
-Faites pas les malins. Ne sous-estimez pas HTML.
-Si ça merde quelque part, vérifiez plus loin que le bout de votre nez, que votre
-règle CSS qui marche pas, ou votre morceau de JavaScript buggé.</p>
-<h2 id="-aller-plus-loiiin-allez-plus-haaauuut-https-www-youtube-com-watch-v-bcylqudsn5g-t-39s-"><a href="https://www.youtube.com/watch?v=BCYLQUdsN5g&amp;t=39s">Aller plus loiiin, allez plus haaauuut… !</a></h2>
-<ul>
-<li><a href="https://github.com/necolas/idiomatic-html" lang="en">idiomatic-html</a>
-(<a href="http://fr.wikipedia.org/wiki/Idiomatique">ceci n’est pas une contraction d’<em>idiot</em> et d’<em>automatique</em></a>).</li>
-<li><a href="https://github.com/necolas/idiomatic-css" lang="en">idiomatic-css</a> (traduction incluse)</li>
-<li>Validation automatique dans un workflow Grunt:<ul>
-<li><a href="https://github.com/praveenvijayan/grunt-html-validation">praveenvijayan/grunt-html-validation</a></li>
-<li><a href="https://github.com/jzaefferer/grunt-html">jzaefferer/grunt-html</a> (basé sur validator.nu)</li>
-</ul>
-</li>
-</ul>
-
-]]></description><pubDate>Thu, 07 Nov 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/html/hache-the-aime-elle-vous-dites/</link><guid isPermaLink="true">http://putaindecode.fr/posts/html/hache-the-aime-elle-vous-dites/</guid></item><item><title>Versionner avec Git</title><description><![CDATA[[
-<p>Chez Putain de Code, on aime se servir de <a href="http://git-scm.com/">Git</a> (et de GitHub, mais
-c’est une autre histoire), même si certains d’entre nous (comme Lionel) ne s’en
-servent pas forcément bien.</p>
-<p>Pour éviter ce genre de mésaventures, on s’est dit qu’on allait consacrer une
-série d’articles à ce merveilleux gestionnaire de versions, et de vous en faire
-profiter par la même occasion.</p>
-<p>Et si Git permet de faire à peu près ce qu’on veut sur un dépôt, vous verrez
-qu’on peut assez facilement réparer ses erreurs (et même celles des autres
-parfois !).</p>
-<h2 id="c-est-quoi-git-">C’est quoi Git ?</h2>
-<p>Si vous êtes un développeur un tant soit peu consciencieux, vous utilisez un
-gestionnaire de versions pour suivre l’évolution de votre code. Non,
-<a href="http://roland.entierement.nu/blog/2008/01/22/cpold-la-poudre-verte-du-suivi-de-versions.html">CPOLD</a> n’est pas un gestionnaire de versions.</p>
-<p>Git, c’est un gestionnaire de versions décentralisé, aussi connu sous le terme
-de DVCS (pour Distributed Version Control System) pour les amateurs.</p>
-<p>Le terme <em>distribué</em> est très important car c’est ce qui le différencie d’autres
-gestionnaires historiquement plus connus comme Subversion (SVN) ou le vénérable
-CVS.</p>
-<p>Ça veut dire que chaque développeur possède sa propre copie du dépôt, chez lui,
-localement, contraîrement à un gestionnaire centralisé ou tout est… centralisé
-sur un même serveur (merci Captain Obvious).</p>
-<p>Git est principalement utilisable en ligne de commande, mais il existe des
-interfaces graphiques sous les principaux OS du marché (OS X, Linux, Windows).
-Ici on va traiter de la ligne de commande, car c’est l’arme de base du bon
-développeur.</p>
-<p>Je vous passe l’installation, référez-vous à la documentation officielle pour
-cette partie. (Ça se résume souvent à un <code>nom-du-package-manager install git</code>)</p>
-<h2 id="comment-a-marche-">Comment ça marche ?</h2>
-<p>Avant d’attaquer la partie pratique, on va s’attarder un peu à comment Git
-fonctionne, parce qu’à mon sens c’est essentiel pour comprendre rapidement ce
-qu’il est possible de faire et pour se construire un modèle mental des
-opérations.</p>
-<p>Dans Git les commits sont tous reliés avec leur(s) parent(s) comme les maillons
-d’une chaîne qui pourrait avoir des bifurcations. Chaque commit stocke des
-informations sur l’état du dépôt à un instant donné (l’état complet, pas
-uniquement un diff).</p>
-<p>On construit cette chaîne et ses bifurcations en créant des commits, en
-branchant et en fusionant une branche dans une autre.</p>
-<p>Enfin, une dernière chose que vous devez garder en tête c’est qu’un commit est
-définitif dans le sens ou on ne pourra jamais modifier son contenu (on pourra
-par contre le remplacer par un autre). Comme il est unique, il a un numéro qui
-est un haché <code>SHA1</code> de diverses informations.</p>
-<p>Ces <code>SHA1</code> sont utilisé à foison, habituez-y vous !</p>
-<p>Voilà, maintenant sortons nous les doigts et regardons comment ça marche
-concrètement.</p>
-<h2 id="cr-er-ou-r-cup-rer-un-repo">Créer ou récupérer un repo</h2>
-<p>Il y a deux manières de créer un dépôt Git : soit on en veut un tout neuf et on
-utilise <code>git init</code>, soit on veut cloner un dépôt déjà existant et on utilise le
-bien nommé <code>git clone</code>.</p>
-<p>Appellé sans argument, <code>git init</code> initialise un dépôt dans le dossier courant,
-on peut lui passer un nom de dépôt en argument pour le créer dans un
-sous-dossier spécifique du dossier courant.</p>
-<p>Du côté de <code>git clone</code>, on va passer l’adresse d’un dépôt, et optionnellement un
-nom local pour le dépôt. Il va récupérer le dépôt à l’adresse spécifiée (c’est
-bien foutu hein ?) puis le mettre soit dans un dossier du même nom soit dans un
-dossier du nom spécifié en dernier argument.</p>
-<p>Par exemple, si je veux cloner le dépôt du site :</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git clone <span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/github.com/putaindecode</span><span class="hljs-regexp">/website.git</span>
-</code></pre>
-<p>Ça va créer un dossier <code>website</code> avec le contenu du dépôt.</p>
-<p><code>clone</code> accepte plusieurs types d’adresse : HTTP(S), SSH, protocole Git dédié et
-même des chemins locaux pour cloner un dépôt situé ailleurs sur le système de
-fichiers.</p>
-<p>Pour la suite, il va falloir se placer dans un dépôt avec le petit <code>cd</code> qui va
-bien pour lancer les vraies commandes intéressantes de Git.</p>
-<h2 id="premiers-commits">Premiers commits</h2>
-<p>Pour commencer à s’amuser, écrivez un bout de code dans un fichier et
-sauvegardez le :</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>cat &gt; putain_de_hello_world.rb
-puts <span class="hljs-string">"Hello, putain de codeur !"</span>
-^<span class="hljs-constant">D</span>
-</code></pre>
-<p>On va tout se suite introduire l’un des concepts déroutants de Git, <em>l’Index</em>.
-Git utilise trois zones distinctes pour les fichiers : le dossier de travail
-(<em>Working Dir</em>) qui contient les fichiers dans leur version actuelle, <em>l’Index</em>
-qui permet de stocker les modifications et <code>HEAD</code> qui pointe vers le dernier
-commit.</p>
-<p>L’idée, c’est qu’on peut modifier les fichiers comme on le souhaite, et
-constuire le commit avec seulement les modifications que l’on souhaite voir
-apparaître.</p>
-<p>Cette possibilité permet d’avoir des commits atomiques, c’est à dire qui
-introduisent une modification simple. Ça évite de se retrouver avec un commit
-mammouth qui change tout le programme d’un coup et qui est un enfer pour le
-futur développeur qui revient sur le code et qui cherche à comprendre la logique
-de sa construction. Ce développeur, c’est vous dans 1 ou 2 semaines.</p>
-<p>Pour info, vous verrez parfois <em>l’Index</em> appellé <em>Staging Area</em>, ou encore
-<em>Cache</em>.</p>
-<p>Git fournit des commandes pour passer les fichiers d’un état à l’autre. Elles
-sont certes parfois un peu obscures, mais dans l’ensemble c’est pas si
-difficile.</p>
-<p>Dans notre cas, notre fichier n’est même pas encore suivi par Git ! Vous pouvez
-vérifier ça en utilisant <code>git status</code>, dont vous ne pourrez bientôt plus vous
-passer :</p>
-<pre><code class="lang-bash">$ git status
-<span class="hljs-preprocessor"># Sur la branche master</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor"># Validation initiale.</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor"># Fichiers non suivis:</span>
-<span class="hljs-preprocessor">#   (utilisez "git add &lt;fichier&gt;..." pour inclure dans ce qui sera validé)</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor">#    putain_de_hello_world.rb</span>
-Aucune modification indexée mais des fichiers non suivis sont présents (utilisez <span class="hljs-string">"git add"</span> pour les suivre)
-</code></pre>
-<p>Pour pallier celà, on utilise <code>git add</code> pour l’ajouter direct à l’index.</p>
-<p>Dans notre cas, ça donne <code>git add putain_de_hello_world.rb</code></p>
-<p>On peut utilise <code>git add</code> pour ajouter des dossiers entiers, des motifs, … Mais
-soyez vigilants, c’est une bonne source d’erreurs souvent chiantes.</p>
-<p>Vous pouvez vérifier que <code>git add</code> a bien marché avec la commande <code>git status</code>,</p>
-<pre><code class="lang-bash">$ git status
-<span class="hljs-preprocessor"># Sur la branche master</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor"># Validation initiale.</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor"># Modifications qui seront validées :</span>
-<span class="hljs-preprocessor">#   (utilisez "git rm --cached &lt;fichier&gt;..." pour désindexer)</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor">#    nouveau : putain_de_hello_world.rb</span>
-<span class="hljs-preprocessor">#</span>
-</code></pre>
-<p>Ok c’est prêt ! On lance maintenant <code>git commit</code> pour créer notre premier commit
-(pas con le <em>naming</em> de la commande hein ?). Si tout se passe bien vous devriez
-avoir un éditeur qui s’ouvre pour écrire un message de commit. Prenez l’habitude
-de décrire votre changement sur la première ligne succintement et, si vous avez
-besoin de détails, sautez une ligne et détaillez les modifications.</p>
-<p>Un petit <code>git status</code> nous confirme qu’on s’est pas foiré (la preuve, tout est
-propre) :</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git status
-<span class="hljs-comment"># Sur la branche master</span>
-rien à valider, la copie de travail est propre
-</code></pre>
-<h2 id="inspecter">Inspecter</h2>
-<p>Bon, c’est bien beau de commiter, mais à un moment on arrive sur un projet en
-cours et on aimerait bien savoir où on en est. Pour ça vous pouvez utiliser un
-outil graphique (il y en a pour <a href="https://wiki.gnome.org/Apps/Gitg">Linux</a>, <a href="http://gitx.frim.nl/">OS X</a> et même sûrement
-Windows) ou retrousser vos poils de barbe et sortir le bon vieux <code>git log</code>.</p>
-<p>C’est un vrai couteau-suisse qui va vous permettre d’inspecter tout l’historique
-de votre dépôt, avec des options en veux-tu en voilà pour personnaliser
-l’affichage.</p>
-<p>Un <code>git log</code> basique ça ressemble à ça :</p>
-<pre><code class="lang-bash">$ git log
-<span class="hljs-operator"><span class="hljs-keyword">commit</span> <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
-Author: madx &lt;madx+github@yapok.org&gt;
-<span class="hljs-keyword">Date</span>:   Mon Nov <span class="hljs-number">4</span> <span class="hljs-number">23</span>:<span class="hljs-number">28</span>:<span class="hljs-number">11</span> <span class="hljs-number">2013</span> +<span class="hljs-number">0100</span>
-
-    Premier <span class="hljs-keyword">commit</span></span>
-</code></pre>
-<p>Oui, c’est le commit que je viens de faire dans la partie précédente. Comment
-j’en suis sûr ? Car je peux utiliser <code>git show</code> pour afficher les détails d’un
-objet Git (il n’y a pas que des commits, mais on verra ça une prochaine fois).</p>
-<p><code>git show</code> prend en argument le fameux <code>SHA1</code> du commit :</p>
-<pre><code class="lang-bash">$ git show <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
-commit <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
-<span class="hljs-label">Author:</span> madx &lt;madx+github@yapok<span class="hljs-preprocessor">.org</span>&gt;
-<span class="hljs-label">Date:</span>   Mon Nov <span class="hljs-number">4</span> <span class="hljs-number">23</span>:<span class="hljs-number">28</span>:<span class="hljs-number">11</span> <span class="hljs-number">2013</span> +<span class="hljs-number">0100</span>
-
-    Premier commit
-
-diff --git a/putain_de_hello_world<span class="hljs-preprocessor">.rb</span> b/putain_de_hello_world<span class="hljs-preprocessor">.rb</span>
-new file mode <span class="hljs-number">100644</span>
-index <span class="hljs-number">0000000.</span><span class="hljs-preprocessor">.ded</span>37dc
---- /dev/null
-+++ b/putain_de_hello_world<span class="hljs-preprocessor">.rb</span>
-@@ -<span class="hljs-number">0</span>,<span class="hljs-number">0</span> +<span class="hljs-number">1</span> @@
-+puts <span class="hljs-string">"Hello, putain de codeur !!!"</span>
-</code></pre>
-<p>Dit comme ça, ça a pas l’air de casser trois pattes à un canard, mais c’est la
-base de la base de la praticité. Je vous fait pas l’insulte de vous expliquer le
-détails, vous êtes sans doute assez malins pour comprendre ce que git raconte
-sur la sortie de ces deux commandes.</p>
-<p>Remarquez que <code>git show</code> affiche en bonus les différences introduites par un
-fichier. Ces différences on peut aussi les voir avant de commiter avec <code>git
-diff</code>, ce qui est bien pratique.</p>
-<p>Entraînez vous maintenant à faire des commits, à inspecter et à farfouiller les
-pages de <code>man</code>, c’est la meilleure façon d’apprendre. Après on va attaquer le
-gros morceau, celui qui fait la force de Git.</p>
-<figure>
-  <img src="../../../images/posts/memes/mind_blown.gif" alt="Mind blown">
-</figure>
-
-<h2 id="branchement-et-fusions">Branchement et fusions</h2>
-<p>Créer une branche, ça permet de travailler sur une fonctionnalité ou un bug
-précis, sans encombrer la ligne de conduite principale, qui peut évoluer sous
-d’autres contraintes.</p>
-<p>Dans Git, les branches sont une partie essentielle de quasiment tout <em>workflow</em>,
-et leur manipulation est très rapide et très légère.</p>
-<p>Pour en revenir à mon histoire de maillon, créer une branche revient à créer un
-point à partir duquel deux chaînes vont être possibles.</p>
-<p>C’est aussi simple qu’un <code>git branch le-nom-de-ma-branche</code>. Cette commande se
-contente de créer la branche, pour se positionner dessus on utilise <code>git
-checkout</code> qui permet de naviguer de branche en branche tel Tarzan sur ses
-lianes.</p>
-<p>Comme c’est super chiant à écrire, il existe un raccourci bien pratique : <code>git
-checkout -b</code>, auquel on passe un nom de branche comme pour <code>git branch</code>.</p>
-<p>Une fois qu’on est bien sur la branche, tous les commits suivants seront liés à
-cette branche.</p>
-<p>On peut utiliser <code>git branch</code> sans argument pour lister les branches, celle avec
-un petit asterisque devant c’est la branche courante.</p>
-<p>Essayons ça avec notre petit dépôt :</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git branch
-* master
-<span class="hljs-variable">$ </span>git checkout -b add-shebang
-<span class="hljs-constant">Basculement</span> sur la nouvelle branche <span class="hljs-string">'add-shebang'</span>
-<span class="hljs-variable">$ </span>vim putain_de_hello_world.rb
-<span class="hljs-variable">$ </span>git status
-<span class="hljs-comment"># Sur la branche add-shebang</span>
-<span class="hljs-comment"># Modifications qui ne seront pas validées :</span>
-<span class="hljs-comment">#   (utilisez "git add &lt;fichier&gt;..." pour mettre à jour ce qui sera validé)</span>
-<span class="hljs-comment">#   (utilisez "git checkout -- &lt;fichier&gt;..." pour annuler les modifications dans la copie de travail)</span>
-<span class="hljs-comment">#</span>
-<span class="hljs-comment">#    modifié : putain_de_hello_world.rb</span>
-<span class="hljs-comment">#</span>
-aucune modification n<span class="hljs-string">'a été ajoutée au commit (utilisez "git add" ou "git commit -a")
-$ git add putain_de_hello_world.rb
-$ git commit
-[add-shebang 5d48735] Add shebang
- 1 file changed, 1 insertion(+)
-$ git log --pretty=oneline --decorate
-5d48735fcc805d51e2e294df5d9d22d481250789 (HEAD, add-shebang) Add shebang
-8120de7b7139e46b9cbc1c3ee89a02962dbc198e (master) Premier commit</span>
-</code></pre>
-<p>Comme vous le voyez grâce à l’option <code>--decorate--</code> de <code>git log</code>, on a bien
-notre branche qui pointe sur le dernier commit fait, alors que la branche de
-base fournie par Git, <code>master</code>, reste au commit précédent.</p>
-<p>Dernière étape avant la fin de cette article : le redouté et redoutable
-<code>merge</code> !</p>
-<p>Pour fusionner nos deux branches on va utiliser cette commande en se plaçant sur
-la branche dans laquelle on va fusionner et en passant en argument la branche à
-fusionner.</p>
-<p>Si vous avez bien suivi, on va donc faire les choses suivantes :</p>
-<pre><code class="lang-bash">$ git checkout master
-Basculement sur la branche <span class="hljs-string">'master'</span>
-$ git <span class="hljs-built_in">merge</span> <span class="hljs-built_in">add</span>-shebang
-Updating <span class="hljs-number">8120</span>de7.<span class="hljs-number">.5</span>d48735
-Fast-forward
- putain_de_hello_world.rb | <span class="hljs-number">1</span> +
- <span class="hljs-number">1</span> <span class="hljs-built_in">file</span> changed, <span class="hljs-number">1</span> insertion(+)
-</code></pre>
-<p>Vous remarquez que Git signale <em>Fast-forward</em>. Comme le commit pointé par
-<code>add-shebang</code> est un fils direct de celui de <code>master</code>, Git se contente de faire
-pointer <code>master</code> sur celui-ci, ce qui est beaucoup plus rapide.</p>
-<p>Dans le cas où on a eu des modifications sur <code>master</code> entre temps, on aurait eu
-une vraie fusion des contenus des commits, avec éventuellement une résolution de
-conflits, mais on verra ça dans un prochain article !</p>
-<h2 id="la-suite">La suite</h2>
-<p>On a vu les bases, et très bientôt on va approfondir le sujet, en voyant
-notamment comment collaborer, comment résoudre des conflits ou des problèmes
-d’utilisation de Git, tout ça dans la joie et la bonne humeur.</p>
-<h2 id="r-f-rences">Références</h2>
-<p>Si vous voulez en savoir plus sur Git, la <a href="http://git-scm.com/documentation">documentation officielle</a> est plutôt
-bien foutue.</p>
-<p>Si vous aimez les petites références rapides et illustrées, le <a href="http://rogerdudler.github.io/git-guide/">Git
-Guide</a> de Roger Dudler est une bonne manière d’apprendre.</p>
-<h2 id="hey-tu-veux-appliquer-a-pour-contribuer-putain-de-code-">Hey ! Tu veux appliquer ça pour contribuer à Putain de Code ?</h2>
-<p>Pas de problème, on a écrit un post exprès :
-<a href="/posts/comment-contribuer/">Comment contribuer</a> !</p>
-
-]]></description><pubDate>Wed, 06 Nov 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/git/versionner-avec-git/</link><guid isPermaLink="true">http://putaindecode.fr/posts/git/versionner-avec-git/</guid></item></channel></rss>
+]]></description><pubDate>Fri, 08 Nov 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/env/vagrant-enlarge-your-vm/</link><guid isPermaLink="true">http://putaindecode.fr/posts/env/vagrant-enlarge-your-vm/</guid></item></channel></rss>

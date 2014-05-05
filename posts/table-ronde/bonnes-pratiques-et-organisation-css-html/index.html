@@ -1,0 +1,172 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML"/><meta name="twitter:creator" content="@_kud"/><meta name="twitter:image" content="http://www.gravatar.com/avatar/9713e529bef70eea8965e0dda2000334.png?s=200"/><meta property="og:title" content="Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML"/><meta property="og:type" content="article"/><meta property="og:image" content="http://www.gravatar.com/avatar/9713e529bef70eea8965e0dda2000334.png?s=200"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size7of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size5of12"><nav class="putainde-Nav"><a href="../.." class="putainde-Nav-item">Les articles</a><a href="../../comment-contribuer" class="putainde-Nav-item">Contribuer</a><a href="irc://irc.freenode.net/putaindecode" class="putainde-Nav-item">IRC</a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas">Écrit par <a href="http://github.com/kud">kud</a>,<span class="putainde-Date"> le 30 avril 2014</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">table-ronde</li><li class="putainde-Tag">css</li><li class="putainde-Tag">html</li></ul></header><div class="putainde-Post-md"><p>Mardi 29 avril s’est déroulée la troisième table ronde qui est finalement la première sous le nom de <strong>{p!}</strong>. Une petite explication s’impose étant donné que nous allons en faire de plus en plus et que je souhaite vraiment vous faire un compte rendu sur chacun de ces évènements.</p>
+<h2 id="pr-ambule">Préambule</h2>
+<p>Partant du constant qu’il est difficile d’apprendre et d’échanger en conférence du fait du manque du niveau assez élevé (trop de gens avec un niveau différent, il faut forcément s’aligner) et à sens unique (une personne parle, les autres écoutent), nous avons décidé de créer des tables rondes où un fil conducteur est suivi amenant à débattre, échanger, affirmer.</p>
+<p>Attention, je ne dis pas que les conférences ne servent à rien mais à mon sens elles sont trop magistrales et parfois trop marketing (coucou WebRTC Paris).</p>
+<p>Les premières tables rondes n’étaient pas sous le nom de <strong>p!</strong>, elles étaient plutôt de mon initiative (@_kud) dans le but de rassembler des gens que j’appréciais et dont je connaissais le niveau afin de progresser tous ensembles.</p>
+<p>Je tiens à vous mettre en garde ici que les propos tenus ne sont pas forcément toujours justifiés, c’est un compte rendu qui synthétise des choix que vous devriez sûrement explorer par vous-même ou au travers de d’autres articles <strong>p!</strong>.</p>
+<p>Bon allez, on y va.</p>
+<h2 id="o-">Où ?</h2>
+<p>C’est cette fois-ci Altima qui nous a gentillement accueilli dans ses locaux.</p>
+<p><a href="http://www.altima.fr">Altima</a> est une agence web composée de 6 bureaux dans le monde, proposant des expertises notamment dans les domaines du design, UX, SEO, in-store, hosting, et développement.</p>
+<p>On les remercie bien fort, tout était nickel.</p>
+<h2 id="th-mes">Thèmes</h2>
+<p>Voici le fil conducteur de la soirée.</p>
+<ul>
+<li>les resets / normalize, lesquels, pourquoi, quand ?</li>
+<li>stratégie de dossiers / fichiers (architecture)</li>
+<li>OOCSS, BEM, SMACSS, Atomique etc.</li>
+<li>sémantique</li>
+<li>accessibilité</li>
+<li>les pièges de l’intégration (e.g. display: inline-block)</li>
+<li>unités px, rem, em, pt</li>
+<li>CSS Frameworks ? lesquels ? pourquoi ? quand ?</li>
+</ul>
+<h2 id="qui-">Qui ?</h2>
+<p>Voici les personnes présentes. Si vous avez d’ailleurs le moindre problème avec ce qui est dit dans cet article, c’est à eux que vous devriez vous adresser. 😊</p>
+<table>
+<thead>
+<tr>
+<th>Membres</th>
+<th style="text-align:center">Statut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://twitter.com/_kud">_kud</a></td>
+<td style="text-align:center">👮</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/bloodyowl">bloodyowl</a></td>
+<td style="text-align:center">🏠</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/yannickc">yannickc</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/dhoko_">dhoko_</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/philippebarbosa">philippebarbosa</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/tchak13">tchak13</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/remitbri">remitbri</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/dizwix">dizwix</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="c-est-parti">C’est parti</h2>
+<h3 id="reset-normalize">Reset / Normalize</h3>
+<p>Bon, alors, commençons. Ce sont évidemment les resets / normalizes qui débutent étant donné que c’est la base de toute intégration.</p>
+<p>Pour rappel, la différence entre un normalize et un reset est simple.</p>
+<ul>
+<li>Le <strong>normalize</strong> fait en sorte que les styles de base se ressemblent sur tous les navigateurs.</li>
+<li>Le <strong>reset</strong> va plus loin que ça puisqu’il s’occupe d’écraser totalement les styles par défaut pour finalement n’avoir aucun style sur votre page lorque vous débutez votre intégration.</li>
+</ul>
+<p>Bref, peu ou pas de gens dans cette salle utilisent finalement des resets. Les resets sont uniquement intéressants lors d’applications très poussées où le style par défaut des navigateurs n’est pas du tout pertinent. Mais attention, ceci peut être dangereux car il est plus compliqué de retrouver le style par défaut d’un navigateur que de le supprimer. D’où l’intérêt du normalize.</p>
+<p>Je vous indique tout de même les plus connus :</p>
+<ul>
+<li><a href="http://meyerweb.com/eric/tools/css/reset/">Le reset d’Eric Meyer</a></li>
+<li><a href="http://necolas.github.io/normalize.css/">Le normalize de Necolas</a></li>
+</ul>
+<h3 id="strat-gie-de-fichiers">Stratégie de fichiers</h3>
+<p>Allez, on continue, stratégie de fichiers, où est ce qu’on range tout ce beau monde, comment on s’y retrouve.</p>
+<p>On en a discuté un peu, certains préfèrent mettre leurs fichiers dans directement dans le <em>root</em> du projet, moi je préfère le mettre dans un dossier <code>/src</code> afin de bien différencier source, sortie, et fichiers de configuration du projet. Ce qui donne ceci :</p>
+<pre><code>.
+├── README.md
+├── bin <span class="hljs-comment">// executables</span>
+├── dist <span class="hljs-comment">// fichiers finaux</span>
+├── src <span class="hljs-comment">// votre application</span>
+│   ├── assets <span class="hljs-comment">// fichiers statiques (pas de compilation)</span>
+│   ├── collections
+│   ├── events
+│   ├── glyphicons <span class="hljs-comment">// svg qui seront transformés en font</span>
+│   ├── images
+│   ├── lib
+│   ├── models
+│   ├── styles
+│   │   ├── base
+│   │   ├── <span class="hljs-keyword">shared</span>
+│   │   ├── views
+│   │   ├── <span class="hljs-keyword">import</span>.css
+│   │   └── shame.css <span class="hljs-comment">// hack css où il est obligatoire de commenter pourquoi</span>
+│   ├── routers
+│   ├── templates
+│   └── views
+│   ├── app.js
+│   ├── bootstrap.js
+|   └── <span class="hljs-keyword">import</span>.json
+├── gulpfile.js
+├── Makefile
+├── <span class="hljs-keyword">package</span>.json
+</code></pre><h3 id="oocss-bem-smacss-whatever-else">OOCSS, BEM, SMACSS, whatever else</h3>
+<p>Haaaaaaa, grand débat ici. Quelle est la meilleure façon, la meileure manière de maintenir du CSS, de nommer ses classes, d’avoir des conventions de nommage.</p>
+<p>Tout d’abord, on s’est tous accordés sur un point : OOCSS, SMACSS, le reste, ça ne marche pas. Ca marche pas parce que ça casse dans certains cas la sémantique, dans d’autres cas, ça revient à faire du style inline mais avec des noms de classes style <code>.left</code> pour un <code>float: left</code>. On a tous plus ou moins essayé et ça devient vite le bordel. On s’est aussi accordés, mais ça c’est évident, qu’avoir une convention de nommage est primordiale pour maintenir correctement du style (ou autre d’ailleurs).
+Et surtout il n’est plus nécessaire d’utiliser les IDs. Les IDs doivent servir uniquement dans le cas de la combinaison label/input, mais sinon ils empêchent toute généralisation d’un block.</p>
+<p>Il est clair qu’après des années d’intégration, le constat est là, la cascade, ce n’est vraiment pas l’idéal. Cela reste toujours aussi difficile de faire du css generique et/ou maintenable, et c’est justement en quoi BEM permet de résoudre à la fois les problématiques de cascade mais aussi de nommage.</p>
+<p>Il y a de nombreux articles sur BEM, sur ses conventions (oui il peut y avoir plusieurs conventions de nommage, BEM reste plus une méthologie).</p>
+<p>En quelques termes, BEM redéfinit la cascade en ne plus l’utilisant comme par exemple : <code>.header .title.is-active</code> mais <code>.header__title--is-active</code>, BEM venant de Block, Element, Modifier. C’est exactement ce que je viens de découper en une seule classe plutôt que 3.</p>
+<p>Pour ma part, j’utilise la convention de nommage qui se rapproche très fortément du framework JavaScript “Montage.js” : <code>.org-(js-)-MyBlock-myElement--myModifier</code>.</p>
+<p>Je ne souhaite volontairement pas m’étendre sur le sujet car je vous invite à lire <a href="/posts/css/petite-definition-bem/">mon article à ce sujet</a>.</p>
+<p>Je vous laisse tout de même deux articles à ce sujet qui présentent plutôt bien le principe (ils sont en anglais).</p>
+<ul>
+<li><a href="http://www.smashingmagazine.com/2012/04/16/a-new-front-end-methodology-bem/">A New Front-End Methodology: BEM</a></li>
+<li><a href="http://webdesign.tutsplus.com/articles/an-introduction-to-the-bem-methodology--cms-19403">An Introduction to the BEM Methodology</a></li>
+</ul>
+<h3 id="s-mantique">Sémantique</h3>
+<p>On est tous d’accord, faire de la sémantique oui, quand cela ne va pas à l’encontre de la maintenabilité et de la réutilisation de code.</p>
+<p>Pour ma part, trop de fois je me suis pris la tête sur la sémantique au point de faire des classes uniques qui ont du sens mais qui <code>@extend</code> (voir pré-processeurs) une classe générique.</p>
+<h3 id="accessibilit-">Accessibilité</h3>
+<p>Pour être franc, l’accessibilité a un coût en terme de temps qui n’est jamais négligeable et rentre souvent en conflit avec l’UX d’une personne sans handicap.</p>
+<p>Typiquement, imaginons que nous avons un formulaire bancaire, comment faire un boucle uniquement sur ce formulaire (pratique dans le cas d’une personne sans handicap) tout en ne contraignant la navigation “classique” ?</p>
+<p>Le constat est là aussi, nous sommes tous ici sensibilisés par l’accessibilité, nous essayons d’en faire le plus possible (souvent sur notre temps libre ou entre deux tâches) mais personne n’administre du temps à cela.</p>
+<p>Une éventuelle solution a émmergé durant les discussions : pourquoi ne pourrait-on pas connaître d’emblée la situation de l’utilisateur lorsqu’il arrive sur le site ?</p>
+<p>Un navigateur dédié à certains handicaps devrait être détectable d’entée de jeu et que l’on puisse nous développeurs faire en conséquence dans ce cas là.</p>
+<p>C’est exactement comme l’histoire de résolution / bande passante. Le w3c nous propose à l’heure actuelle de détecter la résolution pour faire en conséquence sur notre site, or, ce n’est pas du tout le pivot intéressant, c’est surtout la bande passante qui nous permet d’ajuster notre site web.</p>
+<p>Bref, comme souvent, le W3C est à la rue, n’avance pas comme le web avance (vite, très vite) et les outils nous font défaut à l’heure actuelle pour répondre à certains besoins. (Note : je ne dis pas qu’ils ne font pas un bon boulot ou que ce n’est pas compliqué, je dis simplement qu’il y a un grand écart encore les besoins et les solutions à l’heure actuelle sur plusieurs domaines : l’accessibilité, la video, la capacité de fournir un site en fonction de la bande passante plutôt que la résolution, etc, etc).</p>
+<h3 id="les-pi-ges-de-l-int-gration-e-g-display-inline-block-">Les pièges de l’intégration (e.g. display: inline-block)</h3>
+<p>Pour inline-block par exemple, il n’y a malheureusement pas le choix de soit coller les balises, soit minifier le html (ou la partie ayant des inline-block), soit de mettre des commentaires.</p>
+<p>Les layouts seront toujours aussi pénibles tant que les flexbox ne sont pas supportés par la majorité des navigateurs du marché. Les 3 solutions principales pour le moment : float, inline-block, table(-cell).</p>
+<p>En ce qui concerne le box-sizing, il sauve beaucoup d’intégration. Il faut juste voir le support des navigateurs que vous supportez. 
+Oh et attention, tous les navigateurs ne font pas 16px de base. Je dis ça si vous utilisez les <code>(r)em</code> (qui sont expliqués juste après).</p>
+<p>Enfin, <code>&lt;input type=&quot;number&quot;&gt;</code> est tout buggé sous Firefox. Par exemple, mettre min=”1900” sur cet input et que vous cliquez sur le “+”, vous commencerez à “1” et non “1900”… Je sens que je vais devoir encore faire un ticket. :’)</p>
+<h3 id="unit-s-px-rem-em-pt-">Unités px, rem, em, pt, %</h3>
+<p>Pour être clair, personne n’utilise des <code>pt</code>, les <code>px</code>, faut les oublier de plus en plus, et <code>rem</code> est sûrement le plus simple et le mieux mais dépend malheureusement de vos supports navigateurs où dans quels cas il faut souvent se rabattre sur les <code>em</code>. Le pourcentage est forcément préconisé.</p>
+<h3 id="css-frameworks-lesquels-pourquoi-quand-">CSS Frameworks ? lesquels ? pourquoi ? quand ?</h3>
+<p><a href="http://foundation.zurb.com/">Foundation</a>, <a href="http://getbootstrap.com/">Bootstrap</a>, <a href="http://purecss.io/">pure</a> sont les plus connus (et peut-être les pires). Il ne vous serviront uniquement que dans le cas d’une <a href="http://fr.wikipedia.org/wiki/Preuve_de_concept">PoC</a> ou une administration de site (<em>back-office</em>).</p>
+<p>Par contre, <a href="http://topcoat.io/">topcoat</a> peut se révéler assez intéressant de par sa haute personnalisation et de son <em>BEM-way</em>. Eventuellement <a href="http://inuitcss.com/">inuit.css</a> sinon.</p>
+<h3 id="bonus">Bonus</h3>
+<p>Lors de cas de contenus affichés via de l’ajax, pensez de plus en plus à faire du “prerender”, c’est à dire que pendant que le contenu se charge, au lieu de mettre des <em>spinners</em>, <em>loaders</em>, <em>toussa</em>, essayez de mettre des visuels qui ressembleront à l’élément final. C’est ce que fait par exemple facebook, et c’est pas mal du tout. Tenez :</p>
+<p><img src="data:image/jpg;base64,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bwUv1pT7Au3gpfrSn2BdvBS/WlPsC7eCl+tKfYHhvCev1yt+0RGTJqlrxR8SP/ej5tHo06C/19M3/8QAHhEAAgMAAwEBAQAAAAAAAAAAAAECERIDMTJAECD/2gAIAQIBAT8AlJo3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3Ii20cnYuvx9FFFFFDXzQ8nJ2Lr8fRTMsyxqvoh5OTs0aG7+yHk5OymUymUymUymUymUymUymUymUymUymUymUymUymU/5h5OTstlstlstlstlstlstlstlstlstlstlstlstlstlv+YeTk7NM0zTNM0zTNM0zTNM0zTNM0zTNM0zTNM0zTNM0zTNM0zTG2/wBh5OTstFotFotFotFotFotD+OHk5O/vh5OTv74eTk7++Hk5O/vh5OTv74eTk7++Hk5O/vh5OTv74eTk7++Hk5O/vh5OTv74eTk7++HklGzDMMwzDMMwzDMMwzDMMwzDMMwzDMMwzDMMwzDMMwzDMMwzDMMwyKpH//EAB0RAAMBAQEBAQEBAAAAAAAAAAABEhExAkAQICH/2gAIAQMBAT8AS0lEolEolEolEolEolEolEolEolEolEolEolEolEolEolEofTzwffzz000000T35n088H3889NRSKQnv0Pp54NayRLPsfTzw1Go1Go1Go1Go1Go1Go1Go1Go1Go1Go1Go1Go1Gr+X088MRiMRiMRiMRiMRiMRiMRiMRiMRiMRiMRiMRiMRi/l9PPBrSUSiUSiUSiUSiUSiUSiUSiUSiUSiUSiUSiUSiUShLP19PPDGYzGYzGYzGYzGYzGL43088+99PPPvfTzz73088+99PPPvfTzz73088+99PPPvfTzz73088+99PPPvfTzz730Twoooooooooooooooooooooooooooooof8ArP/Z
+"></p>
+<p>Voilà pour cette table ronde, j’espère que le compte rendu vous a plu. Il est évident que c’est sûrement plus intéressant en direct, on essayera peut-être par la suite de faire du streaming (live) ou du podcast, à voir.</p>
+<p>N’hésitez pas à continuer le débat dans les commentaires.</p>
+<p>Pour ma part, j’ai déjà d’autres articles “dans le pipe” (comme disent certains marketeux). Je vous retrouve bientôt ici ou sur Twitter, kiss.</p>
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><img src="http://www.gravatar.com/avatar/9713e529bef70eea8965e0dda2000334.png" alt="" class="putainde-Author-picture putainde-Avatar js-AnimateLoad"/><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> kud</h3><div class="putainde-Author-social"><a href="http://kud.io"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/_kud"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/kud"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Viking UI engineer (ouais frontend dev avec du node.js quoi), batteur, photographe, amoureux de cinéma, n'aime pas les longues descriptions.</p></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size4of12"><ul class="putainde-Footer-list"><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode">Contact</a></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../c-est-quoi-putaindecode">Putain de ?</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li></ul></div><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/";
+var disqus_url = "http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/";
+var disqus_script = "embed.js";;(function(d,s) {
+s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+(d.getElementsByTagName('head')[0]).appendChild(s)
+})(document)</script><script src="../../../scripts/index.js"></script><script>var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
+(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+g.src='//www.google-analytics.com/ga.js';
+s.parentNode.insertBefore(g,s)}(document,'script'));</script></body></html>
