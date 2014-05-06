@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>NPM comme package manager pour le front-end</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="NPM comme package manager pour le front-end"/><meta name="twitter:creator" content="@kewah"/><meta name="twitter:image" content="http://www.gravatar.com/avatar/a784456bf9c7902bec153445c50f015c.png?s=200"/><meta property="og:title" content="NPM comme package manager pour le front-end"/><meta property="og:type" content="article"/><meta property="og:image" content="http://www.gravatar.com/avatar/a784456bf9c7902bec153445c50f015c.png?s=200"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size7of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size5of12"><nav class="putainde-Nav"><a href="../.." class="putainde-Nav-item">Les articles</a><a href="../../comment-contribuer" class="putainde-Nav-item">Contribuer</a><a href="irc://irc.freenode.net/putaindecode" class="putainde-Nav-item">IRC</a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">NPM comme package manager pour le front-end</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas">Écrit par <a href="http://github.com/kewah">kewah</a>,<span class="putainde-Date"> le 6 mai 2014</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">npm</li><li class="putainde-Tag">package manager</li><li class="putainde-Tag">javascript</li><li class="putainde-Tag">css</li></ul></header><div class="putainde-Post-md"><p>NPM, le package manager de Node.js, a grandement participé au succès de ce dernier.
+Il facilite la création, le partage et l’installation de modules.
+Il permet aux développeurs de suivre la <a href="http://www.faqs.org/docs/artu/ch01s06.html">philosophie Unix</a>
+où chaque module fait une seule tâche (évite la complexité, facilite la réutilisation et les tests).</p>
+<p>Cependant NPM ne se limite pas aux modules JavaScript. Il est en effet possible
+de publier tout type de fichier et c’est là que ça devient intéressant pour nos
+modules front-end, qui peuvent aussi être CSS, HTML, fonts, etc.</p>
+<h2 id="module-javascript"><a class="putainde-Title-anchor" href="#module-javascript">#</a>Module JavaScript</h2><p>Si vous n’êtes pas familier avec la création d’un module JavaScript, je vous
+conseille d’exécuter la commande <code>npm init</code> qui va vous aider à générer votre
+<code>package.json</code> (fichier de configuration utilisé par NPM). Le champ
+“<a href="https://www.npmjs.org/doc/json.html#main">main</a>“ définit le point d’entrée de
+votre module.</p>
+<pre><code class="lang-json">{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"putaindemodule"</span></span>,
+  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.0.1"</span></span>,
+  "<span class="hljs-attribute">main</span>": <span class="hljs-value"><span class="hljs-string">"index.js"</span>
+</span>}
+</code></pre>
+<p>Dans un article précédent, il vous a été présenté le développement d’une application
+autour de <a href="/posts/js/browserify-all-the-things/">modules JavaScript avec Browserify</a>.</p>
+<h2 id="module-pour-tout-type-de-fichier"><a class="putainde-Title-anchor" href="#module-pour-tout-type-de-fichier">#</a>Module pour tout type de fichier</h2><p>C’est grâce au champ “<a href="https://www.npmjs.org/doc/json.html#files">files</a>“ que
+l’on peut définir la liste des fichiers que l’on va publier (autre que les fichiers JavaScript).
+Voici un exemple de <code>package.json</code> d’un module pour un système de grille CSS.</p>
+<pre><code class="lang-json">{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"putaindegrid"</span></span>,
+  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.0.1"</span></span>,
+  "<span class="hljs-attribute">files</span>": <span class="hljs-value">[
+    <span class="hljs-string">"grid.css"</span>
+  ]
+</span>}
+</code></pre>
+<p>Il ne reste de plus qu’à le <a href="https://gist.github.com/coolaj86/1318304">publier</a>
+et à l’installer (<code>npm install putaindegrid --save</code>) dans vos différents projets
+où vous en aurez besoin. Votre fichier <code>grid.css</code> est accessible dans le dossier
+<code>node_modules/putaindegrid/grid.css</code>, vous pouvez donc l’inclure dans votre page
+HTML. (Ou l’<code>@import</code>er dans votre fichier Sass/Less principal.)</p>
+<pre><code class="lang-html">&lt;link href=<span class="hljs-string">"node_modules/putaindegrid/grid.css"</span> rel=<span class="hljs-string">"stylesheet"</span> <span class="hljs-keyword">type</span>=<span class="hljs-string">"text/css"</span>&gt;
+</code></pre>
+<h2 id="pourquoi-npm-plutot-qu-un-autre-package-manager-"><a class="putainde-Title-anchor" href="#pourquoi-npm-plutot-qu-un-autre-package-manager-">#</a>Pourquoi NPM plutôt qu’un autre package manager ?</h2><ul>
+<li>Il a déjà fait ses preuves comme package manager pour Node.js.</li>
+<li>Pas besoin d’installer un nouvel outil, NPM étant installé avec Node.js, ce qui
+évite un lot de bugs et de fichiers de configuration supplémentaires (un simple <code>package.json</code> suffit).</li>
+<li>Et surtout, toutes les dépendances de votre projet peuvent être gérées via NPM:
+votre tasks runner et ses plugins (<a href="/posts/js/introduction-gulp/">Gulp</a>, <a href="/posts/js/premiers-pas-avec-grunt/">Grunt</a> &amp; co), vos <a href="/posts/js/browserify-all-the-things/">modules JavaScript</a>, vos <a href="/posts/js/introduction-au-testing-js-front/">tests</a>
+et comme on vient de le voir, vos fichiers de style.</li>
+</ul>
+<p>Dans le cas où vous n’auriez pas envie de passer par l’étape de publication
+(<code>npm publish</code>) pour diverses raisons, sachez qu’il est possible
+d’<a href="https://www.npmjs.org/doc/cli/npm-install.html">installer</a> des packages qui ne
+sont pas publiés. Mon alternative favorite étant l’utilisation du namespace Github
+<code>npm install user/repo --save</code>.<br>Cependant, même si vous ne publiez pas votre module, lorsque vous en modifiez le
+code n’oubliez jamais de mettre à jour sa version suivant la convention
+<a href="http://semver.org/">semver</a>. Sinon vous serez susceptible d’inclure des bugs dans
+les projets qui l’utilisent. Ce qui implique :</p>
+<ul>
+<li>Mettre à jour le champ “version” de votre <code>package.json</code> (vous pouvez vous
+aider des commandes <code>npm version patch</code>, <code>npm version minor</code> et <code>npm version major</code>).</li>
+<li>Ajouter un tag git (<code>git tag -a 0.1.0 -m &quot;Initial release&quot;</code>).</li>
+</ul>
+<p>NPM est une excellente solution pour gérer les dépendences de votre projet, aussi
+bien pour vos outils de build, que pour vos assets front-end. Je pense qu’il est
+important de garder les choses simples, en commençant par utiliser un seul
+gestionnaire de dépendances, dans le cas où celui-ci n’intègre pas d’autres
+fonctionnalités que le téléchargement de modules.  </p>
+<p>Bye bye Bower!</p>
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/frontend/npm-comme-package-manager-pour-le-front-end/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/frontend/npm-comme-package-manager-pour-le-front-end/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/frontend/npm-comme-package-manager-pour-le-front-end/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><img src="http://www.gravatar.com/avatar/a784456bf9c7902bec153445c50f015c.png" alt="" class="putainde-Author-picture putainde-Avatar js-AnimateLoad"/><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> kewah</h3><div class="putainde-Author-social"><a href="http://www.kewah.com"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/kewah"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/kewah"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur front-end, code à North Kingdom. <br> Vit là-haut dans le nord à Stockholm.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">2 contributeurs</strong><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/kewah" data-tip="kewah" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/a784456bf9c7902bec153445c50f015c.png" alt="" class="putainde-Contributor-avatar putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size4of12"><ul class="putainde-Footer-list"><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode">Contact</a></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../c-est-quoi-putaindecode">Putain de ?</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li></ul></div><div class="Grid-cell u-size4of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/";
+var disqus_url = "http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/";
+var disqus_script = "embed.js";;(function(d,s) {
+s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+(d.getElementsByTagName('head')[0]).appendChild(s)
+})(document)</script><script src="../../../scripts/index.js"></script><script>var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
+(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+g.src='//www.google-analytics.com/ga.js';
+s.parentNode.insertBefore(g,s)}(document,'script'));</script></body></html>

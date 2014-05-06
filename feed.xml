@@ -1,4 +1,71 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 05 May 2014 10:19:01 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Petite définition de BEM</title><description><![CDATA[[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Tue, 06 May 2014 05:34:41 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>NPM comme package manager pour le front-end</title><description><![CDATA[[
+<p>NPM, le package manager de Node.js, a grandement participé au succès de ce dernier.
+Il facilite la création, le partage et l’installation de modules.
+Il permet aux développeurs de suivre la <a href="http://www.faqs.org/docs/artu/ch01s06.html">philosophie Unix</a>
+où chaque module fait une seule tâche (évite la complexité, facilite la réutilisation et les tests).</p>
+<p>Cependant NPM ne se limite pas aux modules JavaScript. Il est en effet possible
+de publier tout type de fichier et c’est là que ça devient intéressant pour nos
+modules front-end, qui peuvent aussi être CSS, HTML, fonts, etc.</p>
+<h2 id="module-javascript"><a class="putainde-Title-anchor" href="#module-javascript">#</a>Module JavaScript</h2><p>Si vous n’êtes pas familier avec la création d’un module JavaScript, je vous
+conseille d’exécuter la commande <code>npm init</code> qui va vous aider à générer votre
+<code>package.json</code> (fichier de configuration utilisé par NPM). Le champ
+“<a href="https://www.npmjs.org/doc/json.html#main">main</a>“ définit le point d’entrée de
+votre module.</p>
+<pre><code class="lang-json">{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"putaindemodule"</span></span>,
+  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.0.1"</span></span>,
+  "<span class="hljs-attribute">main</span>": <span class="hljs-value"><span class="hljs-string">"index.js"</span>
+</span>}
+</code></pre>
+<p>Dans un article précédent, il vous a été présenté le développement d’une application
+autour de <a href="/posts/js/browserify-all-the-things/">modules JavaScript avec Browserify</a>.</p>
+<h2 id="module-pour-tout-type-de-fichier"><a class="putainde-Title-anchor" href="#module-pour-tout-type-de-fichier">#</a>Module pour tout type de fichier</h2><p>C’est grâce au champ “<a href="https://www.npmjs.org/doc/json.html#files">files</a>“ que
+l’on peut définir la liste des fichiers que l’on va publier (autre que les fichiers JavaScript).
+Voici un exemple de <code>package.json</code> d’un module pour un système de grille CSS.</p>
+<pre><code class="lang-json">{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"putaindegrid"</span></span>,
+  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.0.1"</span></span>,
+  "<span class="hljs-attribute">files</span>": <span class="hljs-value">[
+    <span class="hljs-string">"grid.css"</span>
+  ]
+</span>}
+</code></pre>
+<p>Il ne reste de plus qu’à le <a href="https://gist.github.com/coolaj86/1318304">publier</a>
+et à l’installer (<code>npm install putaindegrid --save</code>) dans vos différents projets
+où vous en aurez besoin. Votre fichier <code>grid.css</code> est accessible dans le dossier
+<code>node_modules/putaindegrid/grid.css</code>, vous pouvez donc l’inclure dans votre page
+HTML. (Ou l’<code>@import</code>er dans votre fichier Sass/Less principal.)</p>
+<pre><code class="lang-html">&lt;link href=<span class="hljs-string">"node_modules/putaindegrid/grid.css"</span> rel=<span class="hljs-string">"stylesheet"</span> <span class="hljs-keyword">type</span>=<span class="hljs-string">"text/css"</span>&gt;
+</code></pre>
+<h2 id="pourquoi-npm-plutot-qu-un-autre-package-manager-"><a class="putainde-Title-anchor" href="#pourquoi-npm-plutot-qu-un-autre-package-manager-">#</a>Pourquoi NPM plutôt qu’un autre package manager ?</h2><ul>
+<li>Il a déjà fait ses preuves comme package manager pour Node.js.</li>
+<li>Pas besoin d’installer un nouvel outil, NPM étant installé avec Node.js, ce qui
+évite un lot de bugs et de fichiers de configuration supplémentaires (un simple <code>package.json</code> suffit).</li>
+<li>Et surtout, toutes les dépendances de votre projet peuvent être gérées via NPM:
+votre tasks runner et ses plugins (<a href="/posts/js/introduction-gulp/">Gulp</a>, <a href="/posts/js/premiers-pas-avec-grunt/">Grunt</a> &amp; co), vos <a href="/posts/js/browserify-all-the-things/">modules JavaScript</a>, vos <a href="/posts/js/introduction-au-testing-js-front/">tests</a>
+et comme on vient de le voir, vos fichiers de style.</li>
+</ul>
+<p>Dans le cas où vous n’auriez pas envie de passer par l’étape de publication
+(<code>npm publish</code>) pour diverses raisons, sachez qu’il est possible
+d’<a href="https://www.npmjs.org/doc/cli/npm-install.html">installer</a> des packages qui ne
+sont pas publiés. Mon alternative favorite étant l’utilisation du namespace Github
+<code>npm install user/repo --save</code>.<br>Cependant, même si vous ne publiez pas votre module, lorsque vous en modifiez le
+code n’oubliez jamais de mettre à jour sa version suivant la convention
+<a href="http://semver.org/">semver</a>. Sinon vous serez susceptible d’inclure des bugs dans
+les projets qui l’utilisent. Ce qui implique :</p>
+<ul>
+<li>Mettre à jour le champ “version” de votre <code>package.json</code> (vous pouvez vous
+aider des commandes <code>npm version patch</code>, <code>npm version minor</code> et <code>npm version major</code>).</li>
+<li>Ajouter un tag git (<code>git tag -a 0.1.0 -m &quot;Initial release&quot;</code>).</li>
+</ul>
+<p>NPM est une excellente solution pour gérer les dépendences de votre projet, aussi
+bien pour vos outils de build, que pour vos assets front-end. Je pense qu’il est
+important de garder les choses simples, en commençant par utiliser un seul
+gestionnaire de dépendances, dans le cas où celui-ci n’intègre pas d’autres
+fonctionnalités que le téléchargement de modules.  </p>
+<p>Bye bye Bower!</p>
+
+]]></description><pubDate>Tue, 06 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</guid></item><item><title>Petite définition de BEM</title><description><![CDATA[[
 <p><strong><a href="http://bem.info">BEM</a></strong> n’est ni une marque de voiture ni un groupe de musique, et encore moins une onomatopée (quoique). C’est plutôt une façon de nommer les classes en CSS, une convention en d’autres termes voire une méthodologie.</p>
 <p>Dans cet article, je ne vous expliquerai pas pourquoi il faut préférer BEM à une autre convention, je vous explique surtout comment l’utiliser.</p>
 <p><strong>BEM</strong> apporte une solution à un problème majeur en informatique : le nommage.</p>
@@ -3736,115 +3803,4 @@ envisager de faire la même chose pour découpler tes modèles et la logique mé
 <p>En attendant il ne me reste qu’à te souhaiter une bonne coding night, tu as
 toutes les armes nécessaires pour gérer mongo dans ton projet revel. ;-)</p>
 
-]]></description><pubDate>Mon, 11 Nov 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/backend/golang-structurer-revel-et-mgo/</link><guid isPermaLink="true">http://putaindecode.fr/posts/backend/golang-structurer-revel-et-mgo/</guid></item><item><title>Vagrant, enlarge your VM</title><description><![CDATA[[
-<p>Vagrant, au cas où tu ne connaîtrais pas encore, permet de fournir des
-environnements de développements reproductibles, facilement configurables et
-qui se partagent entre les membres de l’équipe. En gros, tu vas pouvoir décrire
-et configurer des machines virtuelles (VM) depuis un seul fichier texte,
-le <code>Vagrantfile</code>.  Plutôt pratique pour avoir un environnement de dev
-équivalent à celui de la prod. Et tout cela avec un processus simplifié
-à l’extrême.</p>
-<h1 id="et-c-est-pour-qui-le-beau-joujou-"><a class="putainde-Title-anchor" href="#et-c-est-pour-qui-le-beau-joujou-">#</a>Et c’est pour qui le beau joujou ?</h1><p>Vagrant s’adresse principalement à toi, mais aussi à un public
-de <strong>développeurs</strong> qui souhaitent pouvoir mettre en place rapidement
-un environnement de dev avec une machine virtuelle (genre apache-php-<em>sql)
-sans y passer trop de temps.
-Vagrant, c’est aussi pour des <em>*devops</em></em> qui voudraient tester la mise en
-place et le provisioning de leur infra.
-Dans la doc, ils disent même que ça s’adresse aux designers
-(pour dire si c’est simple) mais faut pas déconner non plus,
-on a jamais vu un designer dégainer une console :)</p>
-<p>Globalement le workflow vagrant se résume à 2-3 commandes,</p>
-<ol>
-<li><code>vagrant init</code> au début du projet
-Puis</li>
-<li><code>vagrant up</code> pour lancer la VM.</li>
-<li><code>vagrant halt</code>pour l’arrêter.</li>
-</ol>
-<h1 id="etape-1-vagrant-init"><a class="putainde-Title-anchor" href="#etape-1-vagrant-init">#</a>Etape 1 - vagrant init</h1><p>Vagrant fournit un support pour les principales plateformes de virtualisation,
-appelées Provider dans la langue de Justin Bieber et avec par défaut celui
-pour virtualbox.  Et  cerise sur le clafoutis, tu as aussi la possibilité
-de configurer / provisionner tes box avec des scripts Chef ou Puppet
-(ou juste un script shell si t’es old-school \o/ ).</p>
-<p>Bon, je suppose que c’est encore un peu flou, alors voilà comme ça se présente.
-Une fois installé ( <a href="http://downloads.vagrantup.com/">http://downloads.vagrantup.com/</a> ), tu devrais avoir
-une nouvelle commande de dispo.
-Alors dégaine ton terminal et envoie un <code>vagrant init</code>. Ça devrait créer
-un fichier <code>Vagrantfile</code>  qui va décrire ta machine virtuelle
-(ne t’inquiète pas, c’est juste écrit en Ruby).
-En gros de quelle box de base tu pars, comment tu la configures (réseaux,
-dossier partagé entre la VM et le Host, ta machine réelle) et comment tu
-la provisionnes (via un shell, avec un script Puppet…)</p>
-<h2 id="la-config-de-la-box"><a class="putainde-Title-anchor" href="#la-config-de-la-box">#</a>La config de la box</h2><p>Ensuite voilà les quelques points à paramétrer.</p>
-<ul>
-<li><code>config.vm.box = &quot;base&quot;</code>pour spécifier le nom d’une box préalablement
-téléchargée.</li>
-<li><code>config.vm.box_url = &quot;http://domain.com/path/to/above.box&quot;</code> Tu remplaces
-par l’url de la box de tes rêves. Tu peux trouver une liste assez complètes
-de box plus ou moins configurées sur le site <a href="http://www.vagrantbox.es/">http://www.vagrantbox.es/</a>
-( ProTip™: Choisis bien le provider correspondant à ton gestionnaire de VM)</li>
-<li><code>config.vm.network :forwarded_port, guest: 80, host: 8080</code> Pratique
-pour accéder au serveur qui tourne sur la VM. Après tu retrouves un peu
-les mêmes options de config réseaux qu’avec virtualbox
-(réseaux privés, connexion par pont…)</li>
-<li><code># config.vm.synced_folder &quot;../data&quot;, &quot;/vagrant_data&quot;</code> Avec ça,
-tu vas pouvoir ajouter un répertoire qui sera partagé
-avec ta machine virtuelle.
-Par défaut, Vagrant te permet d’accéder au répertoire courant
-depuis <code>/home/vagrant</code> dans la VM.</li>
-</ul>
-<h2 id="le-provisioning-de-box"><a class="putainde-Title-anchor" href="#le-provisioning-de-box">#</a>le provisioning de box</h2><p>Alors attention, c’est un des trucs cools avec vagrant. Avant, quand tu
-voulais te monter une VM pour travailler, il fallait aussi la configurer,
-installer les bonnes versions de chaque brique que le projet utilisé. Ça‎
-pouvait être long, pénible, et surtout prendre du temps.
-Avec Vagrant, tu peux automatiser cette partie, soit en utilisant simplement
-un script, soit avec un moyen moderne comme Chef ou Puppet. Et si jamais t’as
-besoin d’un truc particulier, une config que tu utilises souvent, tu peux
-toujours packager la box que t’as configuré avec amour pour pouvoir la
-réutiliser dès que l’occasion se présente. Sinon tu peux déjà trouver pas mal
-de box déjà prêtes à l’emploi, avec ou sans support pour puppet, chef…</p>
-<p>La suite du fichier contient des exemples de type de provisioning
-(Puppet, Chef solo ou Chef server)
-Et si jamais tu souhaites lancer un script de provisioning :</p>
-<pre><code class="lang-ruby">Vagrant.configure(<span class="hljs-string">"2"</span>) <span class="hljs-built_in">do</span> |config|
-  config.vm.provision <span class="hljs-string">"shell"</span>, path: <span class="hljs-string">"provision.sh"</span>
-<span class="hljs-function"><span class="hljs-keyword">end</span></span>
-</code></pre>
-<blockquote>
-<p>Vagrant te permet aussi de créer tes propres box déjà provisionnées via
-la commande vagrant package. C’est assez pratique quand tu dois
-télécharger-compiler-installer tout l’internet</p>
-</blockquote>
-<h1 id="etape-2-vagrant-up"><a class="putainde-Title-anchor" href="#etape-2-vagrant-up">#</a>Etape 2 - vagrant up</h1><p>Bon, la première fois risque de prendre du temps, parce que vagrant
-va télécharger ta box, puis lancer le provisioning. Profites-en pour faire
-un tour sur <a href="http://vim-adventures.com/">http://vim-adventures.com/</a> et jouer un peu en attendant.</p>
-<p>Une fois terminé, tu as maintenant une box dispo avec laquelle travailler.</p>
-<h1 id="etape-3-joie-o-"><a class="putainde-Title-anchor" href="#etape-3-joie-o-">#</a>Etape 3 - Joie \o/.</h1><p>Je pensais faire une troisième partie sur comment arrêter la VM mais
-ça présente pas vraiment d’intérêt car ça tient en une ligne de commande.</p>
-<p>Bref, le point important de tout ça, c’est que les autres relous de ton équipe
-ne pourront plus dire que pourtant ça marche bien chez eux, et qu’ils
-comprennent pas, c’est vraiment étrange… enfin sauf s’ils sont
-de mauvaise foi :)</p>
-<ul>
-<li>L’intégrateur n’aura plus à se taper 14 installations de trucs en
-ligne de commande qu’il ne retient jamais, pour rajouter un bout de css
-ou de js.
-(ProTip™: là, ça rentre sur un post-it !)</li>
-<li>Le dev backend n’aura plus à pleurer quand on lui demande de remettre le nez
-dans une projet vieux de 2 ans avec que des versions de php / ruby ou mysql
-dépassées qui vont casser la superbe config qu’il a mis 1 semaine à fignoler
-avec les dernières techno à la mode.</li>
-<li>l’admin sys pourra packager les box de chaque projets, provisionnées
-et configurées et pour éviter d’avoir à configurer les postes des autres
-dev à chaque changement de projet.</li>
-</ul>
-<h1 id="quelques-commande-pratiques"><a class="putainde-Title-anchor" href="#quelques-commande-pratiques">#</a>Quelques commande pratiques</h1><blockquote>
-<p><code>vagrant ssh</code> te permet de te connecter en mode terminal
-<code>vagrant status</code> pour les têtes <del>à claques</del> en l’air</p>
-</blockquote>
-<h1 id="quelques-liens"><a class="putainde-Title-anchor" href="#quelques-liens">#</a>Quelques liens</h1><ul>
-<li><a href="http://docs.vagrantup.com/v2/">la documentation officielle de <del>viagra</del> vagrant</a></li>
-<li><a href="https://github.com/putaindecode/propositions-de-posts/issues/4">Virtualisation sur OSx et accès à localhost</a></li>
-<li><a href="http://jolicode.com/blog/cuisinez-vos-serveurs-comme-un-chef-premiere-partie">Cuisinez vos serveurs comme un Chef – Première partie</a></li>
-</ul>
-
-]]></description><pubDate>Fri, 08 Nov 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/env/vagrant-enlarge-your-vm/</link><guid isPermaLink="true">http://putaindecode.fr/posts/env/vagrant-enlarge-your-vm/</guid></item></channel></rss>
+]]></description><pubDate>Mon, 11 Nov 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/backend/golang-structurer-revel-et-mgo/</link><guid isPermaLink="true">http://putaindecode.fr/posts/backend/golang-structurer-revel-et-mgo/</guid></item></channel></rss>
