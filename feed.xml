@@ -1,20 +1,20 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 12 May 2014 09:04:39 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 12 May 2014 09:16:12 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[[
 <p>(Grosse grosse blague ce titre…)</p>
-<p><a href="https://twitter.com/kewah">@kewah</a> nous a récemment parlé de <a href="/posts/frontend/npm-comme-package-manager-pour-le-front-end/"><strong>npm</strong> comme front-end packager manager</a>, je vais aller encore plus loin. Je vais vous dévoiler comment installer des projets qui n’ont pas de <code>package.json</code>. Oui, car c’est bien beau de virer Bower (oh que oui c’est beau) mais comme <strong>npm</strong> requiert constamment un <code>package.json</code>, on ne va pas pouvoir télécharger grand chose sauf si on fait des <em>PR</em> afin d’ajouter ce fichier sur les projets que l’on souhaite obtenir.</p>
+<p><a href="https://twitter.com/kewah">@kewah</a> nous a récemment parlé de <a href="/posts/frontend/npm-comme-package-manager-pour-le-front-end/"><strong>npm</strong> comme front-end packager manager</a>, je vais aller encore plus loin. Je vais vous dévoiler comment installer des projets qui n’ont pas de <code>package.json</code>. Oui, car c’est bien beau de virer Bower (oh que oui c’est beau) mais comme npm requiert constamment un <code>package.json</code>, on ne va pas pouvoir télécharger grand chose sauf si on fait des <em>PR</em> afin d’ajouter ce fichier sur les projets que l’on souhaite obtenir.</p>
 <p>C’est pourquoi je vais vous parler de <a href="https://github.com/shama/napa"><strong>napa</strong></a>.</p>
-<p><strong>napa</strong> est un <em>helper for installing stuff without a package.json with npm</em>. Pardon, <strong>napa</strong> est un aideur pour installer des trucs sans un package.json avec npm. BON. <strong>napa</strong> vous aide à travers npm à installer des modules qui n’ont pas de package.json. C’est plus clair là ?</p>
-<p><strong>napa</strong> est ce qui manque à <strong>npm</strong> où <strong>bower</strong> avait justement son utilité : télécharger n’importe quel <em>package</em> <em>front</em> n’importe où. Mais plutôt que d’installer un autre <em>packager</em>, <strong>napa</strong> s’insère directement dans <strong>npm</strong> afin de ne pas perturber le <em>workflow</em>, et ça, j’apprécie grandement.</p>
+<p>napa est un <em>helper for installing stuff without a package.json with npm</em>. Pardon, napa est un aideur pour installer des trucs sans un package.json avec npm. BON. napa vous aide à travers npm à installer des modules qui n’ont pas de package.json. C’est plus clair là ?</p>
+<p>napa est ce qui manque à npm où bower avait justement son utilité : télécharger n’importe quel <em>package</em> <em>front</em> n’importe où. Mais plutôt que d’installer un autre <em>packager</em>, napa s’insère directement dans npm afin de ne pas perturber le <em>workflow</em>, et ça, j’apprécie grandement.</p>
 <p>Simple, tout simple. Dans un premier temps, téléchargez-le :</p>
 <pre><code><span class="hljs-comment">$</span> <span class="hljs-comment">npm</span> <span class="hljs-comment">install</span> <span class="hljs-comment">napa</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">save</span><span class="hljs-literal">-</span><span class="hljs-comment">dev</span>
-</code></pre><p>Cela ajoutera <strong>napa</strong> au <code>package.json</code>.</p>
+</code></pre><p>Cela ajoutera napa au <code>package.json</code>.</p>
 <p>Puis dans <code>package.json</code>, ajoutez :</p>
 <pre><code>{
   "<span class="hljs-attribute">scripts</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">install</span>": <span class="hljs-value"><span class="hljs-string">"napa"</span>
   </span>}
 </span>}
-</code></pre><p>Cela permettra de lancer <strong>napa</strong> à chaque fois que vous faites <code>npm install</code>.</p>
-<p>Afin d’ajouter les projets qui seront téléchargés par <strong>napa</strong> et donc par <strong>npm</strong>, il suffit d’ajouter un objet <em>napa</em> toujours dans <code>package.json</code> :</p>
+</code></pre><p>Cela permettra de lancer napa à chaque fois que vous faites <code>npm install</code>.</p>
+<p>Afin d’ajouter les projets qui seront téléchargés par napa et donc par npm, il suffit d’ajouter un objet <code>napa</code> toujours dans <code>package.json</code> :</p>
 <pre><code>{
   "<span class="hljs-attribute">napa</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">foo</span>": <span class="hljs-value"><span class="hljs-string">"username/repo"</span></span>,
@@ -60,11 +60,11 @@
   "<span class="hljs-attribute">readmeFilename</span>": <span class="hljs-value"><span class="hljs-string">"readme.md"</span>
 </span>}
 </code></pre><p>Top non ?</p>
-<p>Note : <strong>napa</strong> et <strong>npm-shrinkwrap</strong>, c’est pas encore ça, alors n’hésitez pas à supprimer la partie “napa” avant de lancer votre génération de npm shrinkwrap.</p>
+<p>Note : napa et npm-shrinkwrap, c’est pas encore ça, alors n’hésitez pas à supprimer la partie “napa” avant de lancer votre génération de npm-shrinkwrap.</p>
 <p>Bon download à vous.</p>
 
 ]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</guid></item><item><title>npm: choisir la bonne version de ses dépendances</title><description><![CDATA[[
-<p>Pas plus tard qu’hier, alors que je travaillais tranquillement, apparu soudainement un bug dans mon <em>workflow</em> de <em>build</em>. Il ne m’était plus possible avec <a href="https://github.com/gruntjs/grunt-contrib-clean"><code>grunt-contrib-clean</code></a> de supprimer des fichiers. Hmmm, balot, car sans la suppression, mon <em>workflow</em> devenait tout bancal. Bien. Il me fallut remonter la rivière - comme souvent, en tant que développeur - afin de constater où était le bug. Je suis alors tombé sur <a href="https://github.com/isaacs/rimraf"><code>rimraf</code></a> (bon c’était pas bien loin) qui s’était vu être mis à jour il y a à peine 12 heures, comprenant un bug.</p>
+<p>Pas plus tard qu’hier, alors que je travaillais tranquillement, apparu soudainement un bug dans mon <em>workflow</em> de <em>build</em>. Il ne m’était plus possible avec <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> de supprimer des fichiers. Hmmm, ballot, car sans la suppression, mon <em>workflow</em> devenait tout bancal. Bien. Il me fallut remonter la rivière - comme souvent, en tant que développeur - afin de constater où était le bug. Je suis alors tombé sur <a href="https://github.com/isaacs/rimraf">rimraf</a> (bon c’était pas bien loin) qui s’était vu être mis à jour il y a à peine 12 heures, comprenant un bug.</p>
 <h2 id="contexte"><a class="putainde-Title-anchor" href="#contexte">#</a>Contexte</h2><p>Bon, vous voyez le topo ?</p>
 <pre><code>{
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean"</span></span>,
@@ -72,12 +72,12 @@
     "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value"><span class="hljs-string">"~2.2.1"</span>
   </span>}
 </span>}
-</code></pre><p><a href="https://github.com/gruntjs/grunt-contrib-clean"><code>grunt-contrib-clean</code></a> qui contient en <code>dependencies</code> <a href="https://github.com/isaacs/rimraf"><code>rimraf</code></a> avec une version bugguée. Oh la belle affaire. Oui car <code>~2.2.1</code> veut dire “<a href="https://github.com/isaacs/node-semver#ranges">Raisonnablement proche de 2.2.1</a>“, ce qui se traduit par télécharger la dernière version en <code>2.2.x</code>, soit la <code>2.2.7</code> (celle bugguée) lorsque je mis à jour le package <a href="https://github.com/gruntjs/grunt-contrib-clean"><code>grunt-contrib-clean</code></a>.</p>
-<h2 id="le-hic"><a class="putainde-Title-anchor" href="#le-hic">#</a>Le hic</h2><p>Une question m’est venue : comment faire en sorte de figer la version de <code>rimraf</code> qui est une dépendance de dépendance ?</p>
+</code></pre><p><a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> qui contient en <em>dependencies</em> <a href="https://github.com/isaacs/rimraf">rimraf</a> avec une version bugguée. Oh la belle affaire. Oui car <code>~2.2.1</code> veut dire “<a href="https://github.com/isaacs/node-semver#ranges">Raisonnablement proche de 2.2.1</a>“, ce qui se traduit par télécharger la dernière version en <code>2.2.x</code>, soit la <code>2.2.7</code> (celle bugguée) lorsque je mis à jour le package <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a>.</p>
+<h2 id="le-hic"><a class="putainde-Title-anchor" href="#le-hic">#</a>Le hic</h2><p>Une question m’est venue : comment faire en sorte de figer la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> qui est une dépendance de dépendance ?</p>
 <p>Ha ! Pas évident comme ça.</p>
-<p>J’ai d’abord essayé sans trop d’espoir de télécharger <a href="https://github.com/isaacs/rimraf"><code>rimraf</code></a> lui-même en <code>2.2.6</code> mais vu que chaque dépendance à ses propres dépendances et qu’elles ne se les partagent pas… c’était peine perdue.</p>
-<p>J’ai donc cherché, cherché, et je suis tombé sur <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html"><code>npm-shrinkwrap</code></a>: “Lock down dependency versions”. Bingo !</p>
-<h2 id="npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances"><a class="putainde-Title-anchor" href="#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>npm-shrinkwrap, la solution pour figer vos depéndances, toutes vos dépendances</h2><p><a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html"><code>npm-shrinkwrap</code></a> va vous permettre de définir avec précision chaque version de chaque dépendance.</p>
+<p>J’ai d’abord essayé sans trop d’espoir de télécharger <a href="https://github.com/isaacs/rimraf">rimraf</a> lui-même en <code>2.2.6</code> mais vu que chaque dépendance à ses propres dépendances et qu’elles ne se les partagent pas… c’était peine perdue.</p>
+<p>J’ai donc cherché, cherché, et je suis tombé sur <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a>: “Lock down dependency versions”. Bingo !</p>
+<h2 id="npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances"><a class="putainde-Title-anchor" href="#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>npm-shrinkwrap, la solution pour figer vos depéndances, toutes vos dépendances</h2><p><a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a> va vous permettre de définir avec précision chaque version de chaque dépendance.</p>
 <p>Pour cela, faites d’abord un <code>npm install</code> (si vous avez évidemment un <code>package.json</code>) afin d’installer vos <code>node_modules</code>. Une fois cela fait, lancez <code>npm shrinkwrap</code> qui créera le fichier <code>npm-shrinkwrap.json</code> qui comprendra toutes les définitions de chaque dépendance.</p>
 <h3 id="figer-une-dependance-de-dependance"><a class="putainde-Title-anchor" href="#figer-une-dependance-de-dependance">#</a>Figer une dépendance de dépendance</h3><p>Simple, regardez :</p>
 <pre><code>{
@@ -97,9 +97,9 @@
     </span>}
   </span>}
 </span>}
-</code></pre><p>J’ai défini la version de <a href="https://github.com/isaacs/rimraf"><code>rimraf</code></a> dans <code>dependencies.grunt-contrib-clean.dependencies.rimraf</code>.</p>
-<p>Bon, je ne connais pas tout par coeur non plus, <code>npm shrinkwrap</code> vous écrira la totalité du fichier avec toutes les définitions mais j’ai volontairement tout supprimé et gardé uniquement la partie <a href="https://github.com/gruntjs/grunt-contrib-clean"><code>grunt-contrib-clean</code></a> car seule cette partie est à figer. Quand je dis supprimer, je parle réellement dans le fichier final, pas juste ici dans l’article.</p>
-<p>Vous aurez toute l’explication de <code>npm-shrinkwrap</code> sur la <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">documentation officielle [en]</a>.</p>
+</code></pre><p>J’ai défini la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> dans <code>dependencies.grunt-contrib-clean.dependencies.rimraf</code>.</p>
+<p>Bon, je ne connais pas tout par coeur non plus, npm-shrinkwrap vous écrira la totalité du fichier avec toutes les définitions mais j’ai volontairement tout supprimé et gardé uniquement la partie <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> car seule cette partie est à figer. Quand je dis supprimer, je parle réellement dans le fichier final, pas juste ici dans l’article.</p>
+<p>Vous aurez toute l’explication de npm-shrinkwrap sur la <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">documentation officielle [en]</a>.</p>
 <h2 id="choisir-la-bonne-strategie-de-version"><a class="putainde-Title-anchor" href="#choisir-la-bonne-strategie-de-version">#</a>Choisir la bonne stratégie de version</h2><p>Parce qu’il est important de savoir quelle version exacte nous souhaitons installer dans notre projet, il faut définir avec précisions ces versions dans <code>package.json</code>.</p>
 <p>Vous pouvez avoir <code>1.2.1</code> ou encore <code>~1.4.6</code> ou bien encore <code>^2.3.1</code>. Mais que veulent dire <code>^</code> ou <code>~</code> ?</p>
 <ul>
@@ -111,7 +111,7 @@
 <p>Pour plus d’information sur la définition des versions, <a href="https://github.com/isaacs/node-semver#ranges">c’est par là</a> (Oh mon dieu, il a fait un lien avec un “cliquez ici”).</p>
 <p>Bon. C’est bon ? Vous avez tout compris ? Okay, vous pouvez passer à <a href="/posts/npm/napa-ou-comment-telecharger-package-napa-package-json/"><strong>napa</strong></a> maintenant qui vous aidera grandement sur le téléchargement de projets n’ayant pas de <code>package.json</code>.</p>
 <p>En ce qui concerne npm, je m’arrête là, et vous propose une petite solution afin d’augmenter la vitesse de vos installations de node modules.</p>
-<h2 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h2><p>Envie d’accélérer vos installations <strong>npm</strong> ? Je vous conseille <a href="https://github.com/vvo/npm-pkgr">npm-pkgr</a>.</p>
+<h2 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h2><p>Envie d’accélérer vos installations npm ? Je vous conseille <a href="https://github.com/vvo/npm-pkgr">npm-pkgr</a>.</p>
 <p>Il hashera votre <code>package.json</code> pour savoir s’il a été modifié ou non, et en fonction de ça, il lancera <code>npm install</code> ou non. Sacré gain de temps (surtout si vous faites des <code>npm install</code> à chaque <em>deploy</em>).</p>
 <p>You are now a npm master. 👨</p>
 
