@@ -1,4 +1,137 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 12 May 2014 12:46:02 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Tue, 13 May 2014 05:30:02 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Array.reduce par l'exemple</title><description><![CDATA[[
+<p>Souvent méconnue, la fonction <code>Array#reduce</code> se révèle super pratique dès lors
+ qu’on prenne un peu le temps de faire un peu plus connaissance.
+ Ce n’est que dernièrement que je me suis rendu compte que reduce pouvait servir
+ à bien plus de chose que ce qui était présenté dans les documentations.</p>
+<p>Voici donc un petit tour d’horizon des cas d’utilisation de cette fonction.
+Mais avant cela, et histoire de faire les présentations, voici l’intro tirée de
+la documentation de <a href="https://developer.mozilla.org/fr/docs/JavaScript/Reference/Objets_globaux/Array/reduce">MDN</a>.</p>
+<blockquote>
+<p><strong><em>Résumé</em></strong>
+La méthode reduce() applique une
+fonction sur un accumulateur et chaque valeur d’une liste (de la gauche
+vers la droite) de sorte à le réduire à une seule valeur.</p>
+</blockquote>
+<h2 id="le-classique-operer-une-somme-sur-un-tableau"><a class="putainde-Title-anchor" href="#le-classique-operer-une-somme-sur-un-tableau">#</a>Le classique: Opérer une somme sur un tableau</h2><p>C’est souvent l’exemple qui illustre le plus les documentations. <code>Array#reduce</code>
+va permettre de parcourir le tableau, et pour chaque élément, appeler une fonction
+avec les paramètres suivants :</p>
+<ul>
+<li>le résultat de la précédente exécution de cette fonction (aussi appelé l’accumulateur).</li>
+<li>l’élément courant.</li>
+<li>l’index de l’élément courant.</li>
+<li>le tableau sur lequel on est entrain d’itérer</li>
+</ul>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> sum = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>].reduce( <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">( memo, val)</span>{</span>
+  <span class="hljs-keyword">return</span> memo + val;
+});
+</code></pre>
+<p>En fait, <code>Array#reduce</code> accepte un deuxième argument après la fonction de callback.
+ Cet argument sera utilisé comme accumulateur lors de la première exécution.
+ Et c’est justement cela qui est intéressant et qui rend le reduce plutôt pratique.</p>
+<h2 id="chercher-remplacer-avec-plusieurs-motifs"><a class="putainde-Title-anchor" href="#chercher-remplacer-avec-plusieurs-motifs">#</a>Chercher/remplacer avec plusieurs motifs</h2><p>Imaginons que vous souhaitiez appliquer plusieurs opérations de rechercher/remplacer
+sur une chaine de caractère. Si vous avez une liste de motifs et leur valeur correspondante,
+ reduce permet de faire cela assez simplement, genre en 3 lignes.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> input = <span class="hljs-string">"I'm %USER% and I live in %COUNTRY%"</span>
+<span class="hljs-keyword">var</span> datas = [{token:<span class="hljs-string">'%USER%'</span>, <span class="hljs-keyword">value</span>:<span class="hljs-string">'lionel'</span>}, {token:<span class="hljs-string">'%COUNTRY%'</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">'France'</span>}]
+
+<span class="hljs-keyword">var</span> output = datas.reduce( function(memo, item){
+  <span class="hljs-keyword">return</span> memo.replace(item.token, item.<span class="hljs-keyword">value</span>);
+}, input);
+</code></pre>
+<h2 id="realiser-un-groupby"><a class="putainde-Title-anchor" href="#realiser-un-groupby">#</a>Réaliser un groupBy</h2><p>Reduce peut aussi nous permettre d’effectuer des manipulations comme des groupBy
+ sur un tableau (bon avec l’aide de petits helpers).</p>
+<p>Prenons comme point de départ cette liste de stat représentant un découpage par
+site et par famille de navigateurs. Nous aimerions pouvoir grouper les résultats par site :</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> stats = [
+  {<span class="hljs-string">"site"</span>:<span class="hljs-string">"google.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"Chrome"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"50%"</span>},
+  {<span class="hljs-string">"site"</span>:<span class="hljs-string">"google.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"FireFox"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"30%"</span>},
+  {<span class="hljs-string">"site"</span>:<span class="hljs-string">"google.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"Internet Explorer"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"20%"</span>},
+  {<span class="hljs-string">"site"</span>:<span class="hljs-string">"mozilla.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"FireFox"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"60%"</span>},
+  {<span class="hljs-string">"site"</span>:<span class="hljs-string">"mozilla.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"Internet Explorer"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"20%"</span>},
+  {<span class="hljs-string">"site"</span>:<span class="hljs-string">"microsoft.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"Chrome"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"10%"</span>},
+  {<span class="hljs-string">"site"</span>:<span class="hljs-string">"microsoft.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"FireFox"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"20%"</span>},
+];
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareSite</span><span class="hljs-params">(site, item)</span>{</span>
+  <span class="hljs-keyword">return</span> site === item.site
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">containSite</span><span class="hljs-params">(site, items)</span> {</span>
+  <span class="hljs-keyword">return</span> items.some( compareSite.bind(<span class="hljs-literal">null</span>, site) )
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span><span class="hljs-params">(memo, item)</span>{</span>
+  <span class="hljs-keyword">var</span> site = memo.filter( containSite.bind(<span class="hljs-literal">null</span>, item.site) );
+  <span class="hljs-keyword">if</span> (site.length &gt; <span class="hljs-number">0</span>) {
+    site[<span class="hljs-number">0</span>].push(item)
+  } <span class="hljs-keyword">else</span> {
+    memo.push([item])
+  }
+  <span class="hljs-keyword">return</span> memo
+}
+<span class="hljs-comment">// Nous utilisons un tableau vide comme accumulateur</span>
+<span class="hljs-keyword">var</span> results = stats.reduce( groupBySite, [] );
+</code></pre>
+<p>Concernant cet exemple, on pouvait arriver au même résultat en déclarant une variable
+ qui aurait le rôle d’accumulateur et un Array.forEach :</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> results = {};
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span><span class="hljs-params">( item)</span>{</span>
+  <span class="hljs-keyword">var</span> site = results.filter( containSite.bind(<span class="hljs-keyword">null</span>, item.site) );
+  <span class="hljs-keyword">if</span> (site.length &gt; <span class="hljs-number">0</span>) {
+    site[<span class="hljs-number">0</span>].push(item)
+  } <span class="hljs-keyword">else</span> {
+    results.push([item])
+  }
+}
+
+stats.<span class="hljs-keyword">forEach</span>( groupBySite );
+</code></pre>
+<p>Mais ici, la fonction <code>groupBySite</code> devient bien moins ré-utilisable car elle
+dépend directement de la variable results, déclarée au dessus.</p>
+<h3 id="a-noter"><a class="putainde-Title-anchor" href="#a-noter">#</a>À noter</h3><p>L’utilisation de  <code>Function.bind</code> nous permet de réutiliser les fonctions <code>compareSite</code>
+et <code>containSite</code> en fixant leur premier paramètre. Ainsi <code>compareSite.bind(null, &#39;mozilla.fr&#39;)</code> équivaut à :</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareMozilla</span><span class="hljs-params">(item)</span>{</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-string">"mozilla.fr"</span> === item.site;
+}
+</code></pre>
+<p>D’ailleurs, on pourrait assez simplement rendre <code>groupBySite</code> générique pour la réutiliser avec un <code>groupByBrowser</code>.</p>
+<h2 id="manipuler-la-structure-des-donnees"><a class="putainde-Title-anchor" href="#manipuler-la-structure-des-donnees">#</a>Manipuler la structure des données</h2><p><code>Array#reduce</code> peut aussi permettre de manipuler la structure de vos données et pouvoir la modifier.
+Par exemple, voici une liste de sites avec, pour chaque site, le pourcentage de visite par navigateur.
+Imaginons que nous souhaitons changer la structure de l’objet pour grouper ces
+résultats par type de navigateur plutôt que par site. Là encore <code>Array#reduce</code> s’avère plutôt pratique.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> datas = {
+      <span class="hljs-string">"gogle.fr"</span> : [
+       {name: <span class="hljs-string">"Chrome"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"50%"</span>},
+        {name: <span class="hljs-string">"FireFox"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"30%"</span>},
+        {name: <span class="hljs-string">"Internet Explorer"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"20%"</span> }
+      ],
+      <span class="hljs-string">"mozilla.fr"</span> : [
+        {name: <span class="hljs-string">"Chrome"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"20%"</span>},
+        {name: <span class="hljs-string">"FireFox"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"60%"</span>},
+        {name: <span class="hljs-string">"Internet Explorer"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"20%"</span>}
+      ] ,
+      <span class="hljs-string">"microsoft.fr"</span> : [
+        {name: <span class="hljs-string">"Chrome"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"10%"</span>},
+        {name: <span class="hljs-string">"FireFox"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"20%"</span>},
+        {name: <span class="hljs-string">"Internet Explorer"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"70%"</span>}
+      ]
+    };
+
+function groupByOS( site, memo, browser){
+  <span class="hljs-keyword">if</span> (!memo[browser.name]){
+    memo[browser.name] = [];
+  }
+  memo[browser.name].push({site:site, <span class="hljs-keyword">value</span>: browser.<span class="hljs-keyword">value</span>});
+  <span class="hljs-keyword">return</span> memo
+}
+
+<span class="hljs-keyword">var</span> results = Object.keys(datas).reduce( function (memo, site) {
+  <span class="hljs-keyword">return</span> datas[site].reduce(groupByBrowser.bind(<span class="hljs-keyword">null</span>, site), memo)
+}, {});
+</code></pre>
+<p>J’espère que vous avez appréciez ces quelques exemples d’utilisation de <code>Array#reduce</code>.
+Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article ou via les commentaires !</p>
+
+]]></description><pubDate>Tue, 13 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/array-reduce/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/array-reduce/</guid></item><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[[
 <p>(Grosse grosse blague ce titre…)</p>
 <p><a href="https://twitter.com/kewah">@kewah</a> nous a récemment parlé de <a href="/posts/frontend/npm-comme-package-manager-pour-le-front-end/"><strong>npm</strong> comme front-end packager manager</a>, je vais aller encore plus loin. Je vais vous dévoiler comment installer des projets qui n’ont pas de <code>package.json</code>. Oui, car c’est bien beau de virer Bower (oh que oui c’est beau) mais comme npm requiert constamment un <code>package.json</code>, on ne va pas pouvoir télécharger grand chose sauf si on fait des <em>PR</em> afin d’ajouter ce fichier sur les projets que l’on souhaite obtenir.</p>
 <p>C’est pourquoi je vais vous parler de <a href="https://github.com/shama/napa"><strong>napa</strong></a>.</p>
@@ -223,127 +356,7 @@ gestionnaire de dépendances, dans le cas où celui-ci n’intègre pas d’autr
 fonctionnalités que le téléchargement de modules.  </p>
 <p>Bye bye Bower!</p>
 
-]]></description><pubDate>Tue, 06 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</guid></item><item><title>Petite définition de BEM</title><description><![CDATA[[
-<p><strong><a href="http://bem.info">BEM</a></strong> n’est ni une marque de voiture ni un groupe de musique, et encore moins une onomatopée (quoique). C’est plutôt une façon de nommer les classes en CSS, une convention en d’autres termes voire une méthodologie.</p>
-<p>Dans cet article, je ne vous expliquerai pas pourquoi il faut préférer BEM à une autre convention, je vous explique surtout comment l’utiliser.</p>
-<p><strong>BEM</strong> apporte une solution à un problème majeur en informatique : le nommage.</p>
-<p>Il n’y a rien de plus compliqué en informatique que de nommer un objet : besoin d’être explicite, ne doit pas être trop générique, ni trop compliqué, ni trop verbeux (ça, ça reste à voir avec BEM…).</p>
-<p>Lorsque l’on nomme un objet, une méthode, une fonction, une classe, on se doit d’être avant tout compréhensible. Une personne devant lire votre code doit directement comprendre de quoi vous parlez. Cette personne peut très bien être vous 6 mois, 1 an après. Je pense sincèrement qu’un code clair vaut toute la documentation du monde. Je ne dis pas qu’il ne faut pas documenter mais un code doit être facilement compréhensible, la documentation doit juste apporter un contexte, une situation particulière.</p>
-<p>Bref, <strong>BEM</strong> est le sigle pour <em>Block</em>, <em>Element</em>, <em>Modifier</em>. Qu’est-ce que cela veut dire.</p>
-<p>Prenons par exemple un site web. Nous avons un ensemble avec dedans deux onglets et en dessous le contenu de chaque onglet.</p>
-<p>Nous allons définir ce que sont le <em>block</em>, le ou les <em>elements</em> et les <em>modifiers</em>.</p>
-<p>Dans ce cas précis, le <em>block</em> est le conteneur, l’ensemble, ce qui entoure le tout. Appelons-le “Window”.</p>
-<p>Nous avons alors aussi les <em>elements</em> suivants : les onglets, que nous allons nommer “Tab”, et le contenu, là où il y a le texte de chaque onglet “Content”.</p>
-<p>Comment cela se traduit en <strong>BEM</strong> :</p>
-<ul>
-<li>Notre <em>block</em> s’appelant “Window” sera alors <code>.Window</code></li>
-<li>Nos <em>elements</em> “Tab” seront <code>.Window-tab</code></li>
-<li>Notre <em>element</em> “Content” sera <code>.Window-content</code></li>
-</ul>
-<p>Jusque là, cela devrait aller :</p>
-<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
-
-<span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
-
-  <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
-
-  <span class="hljs-rule">}</span></span>
-</code></pre>
-<p>Ce qui revient de manère générique à :</p>
-<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
-
-}</span>
-
-  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
-
-  }</span>
-</code></pre>
-<p>Oui, je vous conseille d’indenter votre code afin de grouper vos classes.</p>
-<p>Maintenant, nous allons définir ce qu’est un <em>modifier</em>. Un <em>modifier</em> change l’état de l’élément, il peut s’appliquer aussi bien sur un <em>block</em>, qu’un <em>element</em>.</p>
-<p>Si par exemple je souhaite mettre en actif un onglet (le mettre en avant car séléctionné), je ferai alors <code>.Window-tab--active</code>, soit :</p>
-<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
-
-<span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
-  <span class="hljs-rule">}</span></span>
-
-    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
-      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-    <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
-
-  <span class="hljs-rule">}</span></span>
-</code></pre>
-<p>J’aimerais aussi afficher ou non le contenu. Pour cela, je vais lui rajouter un <em>modifier</em></p>
-<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
-
-<span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
-  <span class="hljs-rule">}</span></span>
-
-    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
-      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-    <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
-  <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content--hidden</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
-  <span class="hljs-rule">}</span></span>
-</code></pre>
-<p>J’aurais très bien pu inverser et dire que par défaut le contenu est caché et je lui rajoute la classe <code>.Window-tab--active</code> pour l’afficher (<code>display: block</code>) mais lorsqu’il s’agit de cacher ou de faire appaître des éléments, je vous conseille vivement de plutôt ajouter un <em>modifier</em> qui cache les éléments, car cela évite de se prendre la tête sur quel <code>display</code> mettre par défaut. Là, vous mettez un <code>display: none</code> et voilà, qu’importe si celui de base est un <code>inline</code>, <code>inline-block</code>, <code>table-cell</code> ou autre.</p>
-<p>Du coup, nous avons maintenant nos différents types de classes. Cela se résume de manière générique à :</p>
-<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
-
-}</span>
-
-  .<span class="hljs-keyword">Block</span>--modifier <span class="hljs-list">{
-
-  }</span>
-
-  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
-
-  }</span>
-
-    .<span class="hljs-keyword">Block</span>-element--modifier <span class="hljs-list">{
-
-    }</span>
-</code></pre>
-<p>Ce qui donne <code>.Block-element--modifier</code> (notre <strong>BEM</strong>).</p>
-<p>Parlons maintenant du cas des termes multiples dans chaque partie. Voici comment cela se traduit.</p>
-<p><code>.MyBlock-myElement--myModifier</code></p>
-<p>Les <em>blocks</em> sont en “PascalCase” (ou UpperCamelCase), les <em>elements</em> et <em>modifiers</em> sont en “camelCase” (ou lowerCamelCase). Nous séparons le <em>block</em> de l’élément par “-“ et le <em>block</em> ou l’ <em>element</em> d’un <em>modifier</em> par “—“.</p>
-<p>Maintenant, vous savez tout sur <strong>BEM</strong>. Sachez qu’il existe tout de même plusieurs conventions de <strong>BEM</strong>. Celle que je vous ai apprise là est la norme de <strong>montage.js</strong> mais il y en a d’autres par exemple qui n’utilisent pas les majuscules et font ce genre de choses : <code>.my-block__my-element--my-modifier</code>. Il s’avère que c’est la <a href="http://bem.info/method/definitions/#naming-for-independent-css-classes">convention pseudo-officielle</a>.</p>
-<p>L’inconvénient de ceci est que c’est moins lisible au premier abord qui est quoi, et de plus, les <code>_</code> ne permettent pas de sélectionner facilement un terme en <em>double-cliquant</em> dessus.</p>
-<p>Deux petites choses avant de partir.</p>
-<p>Dans le but d’éviter de vous faire écraser vos propriétés par quelqu’un d’autre (une bibliothèque, un <em>SDK</em>), je vous conseille de rajouter votre organisation.</p>
-<p>Typiquement, ça donne <code>.org-Block-element--modifier</code>. Tout en minuscule et si possible ne pas dépasser les 3 lettres car vous allez devoir le répéter à chaque fois et ça peut être lourd.</p>
-<p>La deuxième chose est la classe qui sert de sélecteur en JavaScript. Plutôt que <em>binder</em> un élément via sa classe “CSS” (à chaque classe sa responsabilité), il est nettement préférable de créer une classe spécifique au JavaScript. Cela donne : <code>.org-js-Block-element--modifier</code>. Il suffit simplement de rajouter <code>-js</code> entre l’organisation et le <em>block</em>.</p>
-<p>Nous arrivons à la convention suivante : <code>.org[-js]-Block[-element][--modifier]</code></p>
-<p>Certains vous diront qu’ils mettent <code>.js-org-</code> mais étant donné que je considère cela comme un <em>namespace</em> global (autant css que js), je préfère mettre l’ <code>org</code> au début.</p>
-<p>Voilà, voilà, c’est certes un peu déroutant au début, et ca parait très verbeux mais cela vous permettra d’éviter de nooooooombreux soucis de nommage de classes où vous vous emmèlerez les pinceaux à coup de :</p>
-<pre><code class="lang-css"><span class="hljs-class">.footer</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> underline</span></span>;
-<span class="hljs-rule">}</span></span>
-
-<span class="hljs-class">.content</span> <span class="hljs-class">.footer</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> none</span></span>; <span class="hljs-comment">/* annule la propriété du précédent sélecteur */</span>
-<span class="hljs-rule">}</span></span>
-</code></pre>
-<p>Ciao les kids.</p>
-
-]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/petite-definition-bem/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/petite-definition-bem/</guid></item><item><title>Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML</title><description><![CDATA[[
+]]></description><pubDate>Tue, 06 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</guid></item><item><title>Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML</title><description><![CDATA[[
 <p>Mardi 29 avril s’est déroulée la troisième table ronde qui est finalement la première sous le nom de <strong>{p!}</strong>. Une petite explication s’impose étant donné que nous allons en faire de plus en plus et que je souhaite vraiment vous faire un compte rendu sur chacun de ces évènements.</p>
 <h2 id="preambule"><a class="putainde-Title-anchor" href="#preambule">#</a>Préambule</h2><p>Partant du constat qu’il est difficile d’apprendre et d’échanger en conférence du fait du manque du niveau assez élevé (trop de gens avec un niveau différent, il faut forcément s’aligner) et à sens unique (une personne parle, les autres écoutent), nous avons décidé de créer des tables rondes où un fil conducteur est suivi amenant à débattre, échanger, affirmer.</p>
 <p>Attention, je ne dis pas que les conférences ne servent à rien mais à mon sens elles sont trop magistrales et parfois trop marketing (coucou WebRTC Paris).</p>
@@ -486,7 +499,127 @@ Oh et attention, tous les navigateurs ne font pas 16px de base. Je dis ça si vo
 <p>N’hésitez pas à continuer le débat dans les commentaires.</p>
 <p>Pour ma part, j’ai déjà d’autres articles “dans le pipe” (comme disent certains marketeux). Je vous retrouve bientôt ici ou sur Twitter, kiss.</p>
 
-]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</link><guid isPermaLink="true">http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</guid></item><item><title>Introduction au testing js front</title><description><![CDATA[[
+]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</link><guid isPermaLink="true">http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</guid></item><item><title>Petite définition de BEM</title><description><![CDATA[[
+<p><strong><a href="http://bem.info">BEM</a></strong> n’est ni une marque de voiture ni un groupe de musique, et encore moins une onomatopée (quoique). C’est plutôt une façon de nommer les classes en CSS, une convention en d’autres termes voire une méthodologie.</p>
+<p>Dans cet article, je ne vous expliquerai pas pourquoi il faut préférer BEM à une autre convention, je vous explique surtout comment l’utiliser.</p>
+<p><strong>BEM</strong> apporte une solution à un problème majeur en informatique : le nommage.</p>
+<p>Il n’y a rien de plus compliqué en informatique que de nommer un objet : besoin d’être explicite, ne doit pas être trop générique, ni trop compliqué, ni trop verbeux (ça, ça reste à voir avec BEM…).</p>
+<p>Lorsque l’on nomme un objet, une méthode, une fonction, une classe, on se doit d’être avant tout compréhensible. Une personne devant lire votre code doit directement comprendre de quoi vous parlez. Cette personne peut très bien être vous 6 mois, 1 an après. Je pense sincèrement qu’un code clair vaut toute la documentation du monde. Je ne dis pas qu’il ne faut pas documenter mais un code doit être facilement compréhensible, la documentation doit juste apporter un contexte, une situation particulière.</p>
+<p>Bref, <strong>BEM</strong> est le sigle pour <em>Block</em>, <em>Element</em>, <em>Modifier</em>. Qu’est-ce que cela veut dire.</p>
+<p>Prenons par exemple un site web. Nous avons un ensemble avec dedans deux onglets et en dessous le contenu de chaque onglet.</p>
+<p>Nous allons définir ce que sont le <em>block</em>, le ou les <em>elements</em> et les <em>modifiers</em>.</p>
+<p>Dans ce cas précis, le <em>block</em> est le conteneur, l’ensemble, ce qui entoure le tout. Appelons-le “Window”.</p>
+<p>Nous avons alors aussi les <em>elements</em> suivants : les onglets, que nous allons nommer “Tab”, et le contenu, là où il y a le texte de chaque onglet “Content”.</p>
+<p>Comment cela se traduit en <strong>BEM</strong> :</p>
+<ul>
+<li>Notre <em>block</em> s’appelant “Window” sera alors <code>.Window</code></li>
+<li>Nos <em>elements</em> “Tab” seront <code>.Window-tab</code></li>
+<li>Notre <em>element</em> “Content” sera <code>.Window-content</code></li>
+</ul>
+<p>Jusque là, cela devrait aller :</p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+
+<span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+
+  <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+
+  <span class="hljs-rule">}</span></span>
+</code></pre>
+<p>Ce qui revient de manère générique à :</p>
+<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
+
+}</span>
+
+  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
+
+  }</span>
+</code></pre>
+<p>Oui, je vous conseille d’indenter votre code afin de grouper vos classes.</p>
+<p>Maintenant, nous allons définir ce qu’est un <em>modifier</em>. Un <em>modifier</em> change l’état de l’élément, il peut s’appliquer aussi bien sur un <em>block</em>, qu’un <em>element</em>.</p>
+<p>Si par exemple je souhaite mettre en actif un onglet (le mettre en avant car séléctionné), je ferai alors <code>.Window-tab--active</code>, soit :</p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+
+<span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
+  <span class="hljs-rule">}</span></span>
+
+    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+    <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+
+  <span class="hljs-rule">}</span></span>
+</code></pre>
+<p>J’aimerais aussi afficher ou non le contenu. Pour cela, je vais lui rajouter un <em>modifier</em></p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+
+<span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
+  <span class="hljs-rule">}</span></span>
+
+    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+    <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+  <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content--hidden</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
+  <span class="hljs-rule">}</span></span>
+</code></pre>
+<p>J’aurais très bien pu inverser et dire que par défaut le contenu est caché et je lui rajoute la classe <code>.Window-tab--active</code> pour l’afficher (<code>display: block</code>) mais lorsqu’il s’agit de cacher ou de faire appaître des éléments, je vous conseille vivement de plutôt ajouter un <em>modifier</em> qui cache les éléments, car cela évite de se prendre la tête sur quel <code>display</code> mettre par défaut. Là, vous mettez un <code>display: none</code> et voilà, qu’importe si celui de base est un <code>inline</code>, <code>inline-block</code>, <code>table-cell</code> ou autre.</p>
+<p>Du coup, nous avons maintenant nos différents types de classes. Cela se résume de manière générique à :</p>
+<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
+
+}</span>
+
+  .<span class="hljs-keyword">Block</span>--modifier <span class="hljs-list">{
+
+  }</span>
+
+  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
+
+  }</span>
+
+    .<span class="hljs-keyword">Block</span>-element--modifier <span class="hljs-list">{
+
+    }</span>
+</code></pre>
+<p>Ce qui donne <code>.Block-element--modifier</code> (notre <strong>BEM</strong>).</p>
+<p>Parlons maintenant du cas des termes multiples dans chaque partie. Voici comment cela se traduit.</p>
+<p><code>.MyBlock-myElement--myModifier</code></p>
+<p>Les <em>blocks</em> sont en “PascalCase” (ou UpperCamelCase), les <em>elements</em> et <em>modifiers</em> sont en “camelCase” (ou lowerCamelCase). Nous séparons le <em>block</em> de l’élément par “-“ et le <em>block</em> ou l’ <em>element</em> d’un <em>modifier</em> par “—“.</p>
+<p>Maintenant, vous savez tout sur <strong>BEM</strong>. Sachez qu’il existe tout de même plusieurs conventions de <strong>BEM</strong>. Celle que je vous ai apprise là est la norme de <strong>montage.js</strong> mais il y en a d’autres par exemple qui n’utilisent pas les majuscules et font ce genre de choses : <code>.my-block__my-element--my-modifier</code>. Il s’avère que c’est la <a href="http://bem.info/method/definitions/#naming-for-independent-css-classes">convention pseudo-officielle</a>.</p>
+<p>L’inconvénient de ceci est que c’est moins lisible au premier abord qui est quoi, et de plus, les <code>_</code> ne permettent pas de sélectionner facilement un terme en <em>double-cliquant</em> dessus.</p>
+<p>Deux petites choses avant de partir.</p>
+<p>Dans le but d’éviter de vous faire écraser vos propriétés par quelqu’un d’autre (une bibliothèque, un <em>SDK</em>), je vous conseille de rajouter votre organisation.</p>
+<p>Typiquement, ça donne <code>.org-Block-element--modifier</code>. Tout en minuscule et si possible ne pas dépasser les 3 lettres car vous allez devoir le répéter à chaque fois et ça peut être lourd.</p>
+<p>La deuxième chose est la classe qui sert de sélecteur en JavaScript. Plutôt que <em>binder</em> un élément via sa classe “CSS” (à chaque classe sa responsabilité), il est nettement préférable de créer une classe spécifique au JavaScript. Cela donne : <code>.org-js-Block-element--modifier</code>. Il suffit simplement de rajouter <code>-js</code> entre l’organisation et le <em>block</em>.</p>
+<p>Nous arrivons à la convention suivante : <code>.org[-js]-Block[-element][--modifier]</code></p>
+<p>Certains vous diront qu’ils mettent <code>.js-org-</code> mais étant donné que je considère cela comme un <em>namespace</em> global (autant css que js), je préfère mettre l’ <code>org</code> au début.</p>
+<p>Voilà, voilà, c’est certes un peu déroutant au début, et ca parait très verbeux mais cela vous permettra d’éviter de nooooooombreux soucis de nommage de classes où vous vous emmèlerez les pinceaux à coup de :</p>
+<pre><code class="lang-css"><span class="hljs-class">.footer</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> underline</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.content</span> <span class="hljs-class">.footer</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> none</span></span>; <span class="hljs-comment">/* annule la propriété du précédent sélecteur */</span>
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p>Ciao les kids.</p>
+
+]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/petite-definition-bem/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/petite-definition-bem/</guid></item><item><title>Introduction au testing js front</title><description><![CDATA[[
 <p>Les tests automatisés en front-end ont longtemps été ignorés,
 et le sont encore trop.</p>
 <p>Écrire des tests peut paraître chiant, mais le temps qu’ils rapportent
@@ -2031,7 +2164,59 @@ Mais ça, je vous en parle la prochaine fois ;)</p>
 Tout ça est décrit dans la <a href="/posts/css/mise-en-place-autoprefixer/">mise en place d’autoprefixer</a>
 avec des exemples concrets pour ajouter ça dans un workflow existant.</p>
 
-]]></description><pubDate>Tue, 25 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</guid></item><item><title>La puissance de dnsmasq</title><description><![CDATA[[
+]]></description><pubDate>Tue, 25 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</guid></item><item><title>Sublime Text en tant qu'éditeur Markdown</title><description><![CDATA[[
+<p>La vie de développeur n’est jamais facile. Tu souhaites faire quelque chose de précis et tu te retrouves à faire totalement autre chose, <em>patchant</em> ci ou tu as découvert ça.</p>
+<p>Typiquement, j’étais tranquillement en train d’écrire un article pour <strong>p!</strong> qui n’avait rien à voir avec celui actuel, et je me retrouve à personnaliser mon Sublime Text pour Markdown car ne souhaitant plus utiliser autre chose que celui-ci pour l’écriture.</p>
+<p>Il y a certes le très bon <a href="http://mouapp.com/">Mou.app</a> (<code>$ brew cask install mou</code>) sur Mac OS X mais comme indiqué, il n’est que pour Mac, or il m’arrive parfois d’être sur Windows.
+De plus, les éditeurs en ligne comme <a href="https://stackedit.io/">stackedit.io</a> ou <a href="http://dillinger.io/">dillinger.io</a> sont pratiques mais comme j’ai tendance à stocker mes brouillons sur <a href="https://db.tt/nTkiSUb">dropbox</a>, ces outils vous demandent l’accès de toute votre dropbox, chose que je n’aime pas spécialement.</p>
+<p>Bref, tout ça pour dire que tout centraliser sur Sublime Text et utiliser dropbox pour écrire des articles me semble une pratique plutôt agréable.</p>
+<p>Pour cela, quittez totalement vos éditeurs Markdown et installez les plugins Sublime Text qui vont bien.</p>
+<h2 id="markdownediting"><a class="putainde-Title-anchor" href="#markdownediting">#</a>MarkdownEditing</h2><p>Premièrement, <a href="http://ttscoff.github.io/MarkdownEditing/">MarkdownEditing</a>, ce petit plugin est votre parfait compagnon qui vous permettra d’avoir la bonne coloration syntaxique de votre Markdown. Il vous permettra de mettre en évidence les liens, le code, et tout le reste. Du bonheur donc.</p>
+<p><img src="../../../images/posts/preview-markdownediting.png" alt=""></p>
+<p>Oui alors, j’ai fait quelques configurations car à la base, ca ressemble plutôt à ça :</p>
+<p><img src="../../../images/posts/preview-markdownediting-light.png" alt=""></p>
+<p>Si vous souhaitez modifier Sublime Text mais uniquement pour le format Markdown, faites : <code>Preferences &gt; Browse Packages...</code> puis aller dans <code>User</code> et créez un fichier <code>Markdown.sublime-settings</code>. Celui-ci sera lu et appliqué à chaque fois que vous éditerez un fichier Markdown.</p>
+<p>Voici ce que j’ai pour le moment :</p>
+<pre><code>{
+  "<span class="hljs-attribute">color_scheme</span>": <span class="hljs-value"><span class="hljs-string">"Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme"</span></span>,
+  "<span class="hljs-attribute">enable_table_editor</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+  "<span class="hljs-attribute">table_editor_syntax</span>": <span class="hljs-value"><span class="hljs-string">"Auto"</span></span>,
+  "<span class="hljs-attribute">tab_size</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,
+  "<span class="hljs-attribute">extensions</span>":
+  <span class="hljs-value">[
+    <span class="hljs-string">"mdown"</span>,
+    <span class="hljs-string">"txt"</span>,
+    <span class="hljs-string">"md"</span>
+  ]
+</span>}
+</code></pre><p>Le thème <code>dark</code> pour pas se niquer les yeux (coucou <a href="https://twitter.com/bloodyowl">@bloodyowl</a>), j’active aussi d’autres plugins dont je vais vous parler d’ici peu, j’affecte le spacing à <code>2</code>, et je déclare que j’utiliserai l’éditeur Markdown pour ce genre de fichiers : <code>.mdown</code>, <code>.txt</code>, <code>.md</code>.</p>
+<p>Bien, passons à la suite.</p>
+<h2 id="markdown-preview"><a class="putainde-Title-anchor" href="#markdown-preview">#</a>Markdown Preview</h2><p>Notre cher <a href="https://twitter.com/revolunet">@revolunet</a> a fait un excellent plugin Markdown pour Sublime Text: <a href="https://github.com/revolunet/sublimetext-markdown-preview">Sublime Text Markdown Preview</a>. Celui-ci permet d’avoir un rendu de votre Markdown en <code>.html</code>. Vous pouvez soit compiler votre Markdown pour créer un fichier HTML, soit l’ouvrir directement dans votre navigateur.</p>
+<p>Différents formats disponibles :</p>
+<ul>
+<li>Python Markdown</li>
+<li>Github Flavored Markdown</li>
+</ul>
+<p>Un autre parfait compagnon en somme, qui quant à lui s’occupera de digérer l’excellent article que vous êtes en train d’écrire.</p>
+<p>Je vous parlerai éventuellement un jour de <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> qui permet de faire ce genre de choses mais en un peu plus complet et générique (Sublime Text n’est pas nécessaire) mais c’est un poil plus complexe. Jettez-y un œil tout de même.</p>
+<h2 id="smartmarkdown"><a class="putainde-Title-anchor" href="#smartmarkdown">#</a>SmartMarkdown</h2><p><a href="https://github.com/demon386/SmartMarkdown">Petit plugin</a> intéressant qui vous permettra de cacher des parties de votre texte en le repliant. Par exemple, vous vous mettez devant un titre du style <code>##</code> et vous appuyez sur <code>tab</code>, cela repliera votre texte. Plutôt pratique pour se focaliser.</p>
+<p><img src="../../../images/posts/preview-smartmarkdown.png" alt=""></p>
+<h2 id="sublimetableeditor"><a class="putainde-Title-anchor" href="#sublimetableeditor">#</a>SublimeTableEditor</h2><p>Précédemment dans ma configuration Markdown, vous avez pu voir ceci :</p>
+<pre><code>  <span class="hljs-string">"enable_table_editor"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-string">"table_editor_syntax"</span>: <span class="hljs-string">"Auto"</span>,
+</code></pre><p>Cela permet de configurer <a href="https://github.com/vkocubinsky/SublimeTableEditor">SublimeTableEditor</a> qui vous permettra de correctement aligner vos tableaux dans Markdown.</p>
+<p>Et voilà. Avec tout ceci, vous êtes paré(e) à écrire votre Markdown dans de bonnes conditions. Plus qu’à mettre du Jazz et vous préparer une tasse de thé et c’est parti.</p>
+<h2 id="bonus-markdown-extended"><a class="putainde-Title-anchor" href="#bonus-markdown-extended">#</a>Bonus : Markdown Extended</h2><p>Il est possible que vous n’aimiez pas forcément MarkdownEditing, et dans ce cas je vous propose un autre plugin pas inintéressant non plus s’appelant <a href="https://github.com/jonschlinkert/sublime-markdown-extended">Markdown Extended</a>. Il vous permettra d’avoir la bonne coloration syntaxique lorsque vous écrivez du code dans votre éditeur.</p>
+<h4 id="avant"><a class="putainde-Title-anchor" href="#avant">#</a>Avant</h4><p><img src="../../../images/posts/preview-markdownextended-before.png" alt=""></p>
+<h4 id="apres"><a class="putainde-Title-anchor" href="#apres">#</a>Après</h4><p><img src="../../../images/posts/preview-markdownextended-after.png" alt=""></p>
+<p>Oh et j’oubliais, voici quelques documentations sur Markdown histoire de bien l’utiliser :</p>
+<ul>
+<li><a href="http://daringfireball.net/projects/markdown/syntax">Documentation officielle</a></li>
+<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></li>
+<li><a href="http://warpedvisions.org/projects/markdown-cheat-sheet.md">Another Markdown Cheatsheet</a></li>
+</ul>
+
+]]></description><pubDate>Thu, 20 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</link><guid isPermaLink="true">http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</guid></item><item><title>La puissance de dnsmasq</title><description><![CDATA[[
 <p>Dernièrement, j’ai voulu accéder avec mon Smartphone à ma machine virtuelle (<em>VM</em>) de développement qui se trouve sur mon poste de travail (<em>machine ou poste hôte</em>). Ma machine virtuelle me permet de reproduire à l’identique la production afin d’avoir le moins de marge d’erreur possible entre la phase de développement et la phase de mise en production.</p>
 <p>A ce moment là, j’accédais à ma machine virtuelle à partir de mon poste via le fichier <em>hosts</em> comprenant ceci :</p>
 <pre><code><span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.145</span> monsite<span class="hljs-preprocessor">.dev</span>
@@ -2162,59 +2347,7 @@ $ <span class="hljs-built_in">sudo</span> launchctl load /Library/LaunchDaemons/
 <p>Autre point, évitez, mais vraiment, de nommer vos noms de domaines personnels en <code>.local</code>. En effet, ceux-ci sont plutôt réservés à l’environnement Mac OS X. Ils sont d’ailleurs en rapport avec <strong>_mdnsresponder</strong>. Les <code>.local</code> permettent à n’importe quel produit Apple sur le réseau de se connecter à d’autres postes Apple via <code>nom-de-l-appareil.local</code>. Votre connexion pourrait alors s’emméler entre le serveur dns de <strong>Bonjour</strong> et votre propre serveur dns.</p>
 <p>Happy coding !</p>
 
-]]></description><pubDate>Thu, 20 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</link><guid isPermaLink="true">http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</guid></item><item><title>Sublime Text en tant qu'éditeur Markdown</title><description><![CDATA[[
-<p>La vie de développeur n’est jamais facile. Tu souhaites faire quelque chose de précis et tu te retrouves à faire totalement autre chose, <em>patchant</em> ci ou tu as découvert ça.</p>
-<p>Typiquement, j’étais tranquillement en train d’écrire un article pour <strong>p!</strong> qui n’avait rien à voir avec celui actuel, et je me retrouve à personnaliser mon Sublime Text pour Markdown car ne souhaitant plus utiliser autre chose que celui-ci pour l’écriture.</p>
-<p>Il y a certes le très bon <a href="http://mouapp.com/">Mou.app</a> (<code>$ brew cask install mou</code>) sur Mac OS X mais comme indiqué, il n’est que pour Mac, or il m’arrive parfois d’être sur Windows.
-De plus, les éditeurs en ligne comme <a href="https://stackedit.io/">stackedit.io</a> ou <a href="http://dillinger.io/">dillinger.io</a> sont pratiques mais comme j’ai tendance à stocker mes brouillons sur <a href="https://db.tt/nTkiSUb">dropbox</a>, ces outils vous demandent l’accès de toute votre dropbox, chose que je n’aime pas spécialement.</p>
-<p>Bref, tout ça pour dire que tout centraliser sur Sublime Text et utiliser dropbox pour écrire des articles me semble une pratique plutôt agréable.</p>
-<p>Pour cela, quittez totalement vos éditeurs Markdown et installez les plugins Sublime Text qui vont bien.</p>
-<h2 id="markdownediting"><a class="putainde-Title-anchor" href="#markdownediting">#</a>MarkdownEditing</h2><p>Premièrement, <a href="http://ttscoff.github.io/MarkdownEditing/">MarkdownEditing</a>, ce petit plugin est votre parfait compagnon qui vous permettra d’avoir la bonne coloration syntaxique de votre Markdown. Il vous permettra de mettre en évidence les liens, le code, et tout le reste. Du bonheur donc.</p>
-<p><img src="../../../images/posts/preview-markdownediting.png" alt=""></p>
-<p>Oui alors, j’ai fait quelques configurations car à la base, ca ressemble plutôt à ça :</p>
-<p><img src="../../../images/posts/preview-markdownediting-light.png" alt=""></p>
-<p>Si vous souhaitez modifier Sublime Text mais uniquement pour le format Markdown, faites : <code>Preferences &gt; Browse Packages...</code> puis aller dans <code>User</code> et créez un fichier <code>Markdown.sublime-settings</code>. Celui-ci sera lu et appliqué à chaque fois que vous éditerez un fichier Markdown.</p>
-<p>Voici ce que j’ai pour le moment :</p>
-<pre><code>{
-  "<span class="hljs-attribute">color_scheme</span>": <span class="hljs-value"><span class="hljs-string">"Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme"</span></span>,
-  "<span class="hljs-attribute">enable_table_editor</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
-  "<span class="hljs-attribute">table_editor_syntax</span>": <span class="hljs-value"><span class="hljs-string">"Auto"</span></span>,
-  "<span class="hljs-attribute">tab_size</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,
-  "<span class="hljs-attribute">extensions</span>":
-  <span class="hljs-value">[
-    <span class="hljs-string">"mdown"</span>,
-    <span class="hljs-string">"txt"</span>,
-    <span class="hljs-string">"md"</span>
-  ]
-</span>}
-</code></pre><p>Le thème <code>dark</code> pour pas se niquer les yeux (coucou <a href="https://twitter.com/bloodyowl">@bloodyowl</a>), j’active aussi d’autres plugins dont je vais vous parler d’ici peu, j’affecte le spacing à <code>2</code>, et je déclare que j’utiliserai l’éditeur Markdown pour ce genre de fichiers : <code>.mdown</code>, <code>.txt</code>, <code>.md</code>.</p>
-<p>Bien, passons à la suite.</p>
-<h2 id="markdown-preview"><a class="putainde-Title-anchor" href="#markdown-preview">#</a>Markdown Preview</h2><p>Notre cher <a href="https://twitter.com/revolunet">@revolunet</a> a fait un excellent plugin Markdown pour Sublime Text: <a href="https://github.com/revolunet/sublimetext-markdown-preview">Sublime Text Markdown Preview</a>. Celui-ci permet d’avoir un rendu de votre Markdown en <code>.html</code>. Vous pouvez soit compiler votre Markdown pour créer un fichier HTML, soit l’ouvrir directement dans votre navigateur.</p>
-<p>Différents formats disponibles :</p>
-<ul>
-<li>Python Markdown</li>
-<li>Github Flavored Markdown</li>
-</ul>
-<p>Un autre parfait compagnon en somme, qui quant à lui s’occupera de digérer l’excellent article que vous êtes en train d’écrire.</p>
-<p>Je vous parlerai éventuellement un jour de <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> qui permet de faire ce genre de choses mais en un peu plus complet et générique (Sublime Text n’est pas nécessaire) mais c’est un poil plus complexe. Jettez-y un œil tout de même.</p>
-<h2 id="smartmarkdown"><a class="putainde-Title-anchor" href="#smartmarkdown">#</a>SmartMarkdown</h2><p><a href="https://github.com/demon386/SmartMarkdown">Petit plugin</a> intéressant qui vous permettra de cacher des parties de votre texte en le repliant. Par exemple, vous vous mettez devant un titre du style <code>##</code> et vous appuyez sur <code>tab</code>, cela repliera votre texte. Plutôt pratique pour se focaliser.</p>
-<p><img src="../../../images/posts/preview-smartmarkdown.png" alt=""></p>
-<h2 id="sublimetableeditor"><a class="putainde-Title-anchor" href="#sublimetableeditor">#</a>SublimeTableEditor</h2><p>Précédemment dans ma configuration Markdown, vous avez pu voir ceci :</p>
-<pre><code>  <span class="hljs-string">"enable_table_editor"</span>: <span class="hljs-literal">true</span>,
-  <span class="hljs-string">"table_editor_syntax"</span>: <span class="hljs-string">"Auto"</span>,
-</code></pre><p>Cela permet de configurer <a href="https://github.com/vkocubinsky/SublimeTableEditor">SublimeTableEditor</a> qui vous permettra de correctement aligner vos tableaux dans Markdown.</p>
-<p>Et voilà. Avec tout ceci, vous êtes paré(e) à écrire votre Markdown dans de bonnes conditions. Plus qu’à mettre du Jazz et vous préparer une tasse de thé et c’est parti.</p>
-<h2 id="bonus-markdown-extended"><a class="putainde-Title-anchor" href="#bonus-markdown-extended">#</a>Bonus : Markdown Extended</h2><p>Il est possible que vous n’aimiez pas forcément MarkdownEditing, et dans ce cas je vous propose un autre plugin pas inintéressant non plus s’appelant <a href="https://github.com/jonschlinkert/sublime-markdown-extended">Markdown Extended</a>. Il vous permettra d’avoir la bonne coloration syntaxique lorsque vous écrivez du code dans votre éditeur.</p>
-<h4 id="avant"><a class="putainde-Title-anchor" href="#avant">#</a>Avant</h4><p><img src="../../../images/posts/preview-markdownextended-before.png" alt=""></p>
-<h4 id="apres"><a class="putainde-Title-anchor" href="#apres">#</a>Après</h4><p><img src="../../../images/posts/preview-markdownextended-after.png" alt=""></p>
-<p>Oh et j’oubliais, voici quelques documentations sur Markdown histoire de bien l’utiliser :</p>
-<ul>
-<li><a href="http://daringfireball.net/projects/markdown/syntax">Documentation officielle</a></li>
-<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></li>
-<li><a href="http://warpedvisions.org/projects/markdown-cheat-sheet.md">Another Markdown Cheatsheet</a></li>
-</ul>
-
-]]></description><pubDate>Thu, 20 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</link><guid isPermaLink="true">http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</guid></item><item><title>BROWSERIFY ALL THE THINGS</title><description><![CDATA[[
+]]></description><pubDate>Thu, 20 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</link><guid isPermaLink="true">http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</guid></item><item><title>BROWSERIFY ALL THE THINGS</title><description><![CDATA[[
 <p>Alors que je prends goût à me passer de frameworks (principalement à cause des
 courbes d’apprentissage et des éventuelles lourdeurs et/ou restrictions que cela
 impose, mais c’est une autre histoire),
@@ -2978,51 +3111,4 @@ animal.isPrototypeOf(myCat) <span class="hljs-comment">// true</span>
 </code></pre>
 <p>Voilà, j’espère que cela a pu attiser ta curiosité d’en apprendre plus sur le langage lui-même et le DOM.</p>
 
-]]></description><pubDate>Fri, 06 Dec 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/comment-se-passer-de-libraries-frameworks-javascript/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/comment-se-passer-de-libraries-frameworks-javascript/</guid></item><item><title>ExternalInterface.call() de Flash (et Backbone), toute une histoire</title><description><![CDATA[[
-<figure class="putainde-Media putainde-Media--left"><img src="../../../images/posts/occupyflash.png" alt=""></figure>
-
-<p>Je voulais vous parler d’un bug qui m’a bien emmerdé récemment et comme j’aimerais que vous ne perdiez pas de temps avec cela, un article s’imposait.</p>
-<p><em>Note de la direction : j’y connais rien en Flash (et je ne crois pas avoir trop envie de connaître en fait).</em></p>
-<p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu’il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d’un autre article. (Je dis ça à chaque fois, haha).</p>
-<h2 id="le-pitch"><a class="putainde-Title-anchor" href="#le-pitch">#</a>Le pitch</h2><p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu’il le souhaite afin de communiquer avec l’application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l’avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d’évènement mais vous en avez d’<a href="http://microjs.com/#event">autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
-<pre><code class="lang-javascript"> // on crée un objet vide
-App<span class="hljs-preprocessor">.FlashManager</span><span class="hljs-preprocessor">.Events</span> = {}
-
-// on lui ajoute les fonctionnalités des events Backbone
-_<span class="hljs-preprocessor">.extend</span>(App<span class="hljs-preprocessor">.FlashManager</span><span class="hljs-preprocessor">.Events</span>, Backbone<span class="hljs-preprocessor">.Events</span>)
-</code></pre>
-<p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d’évènement façon Backbone</a>. Il pourra alors s’écouter lui-même, écouter un autre objet, mais aussi déclencher des évènements.</p>
-<h2 id="cote-flash"><a class="putainde-Title-anchor" href="#cote-flash">#</a>Côté Flash</h2><p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l’objet <code>ExternalInterface</code> :</p>
-<pre><code class="lang-javascript">ExternalInterface<span class="hljs-preprocessor">.call</span>(<span class="hljs-string">"window.App.FlashManager.Events.trigger"</span>, <span class="hljs-string">"my-event"</span>)
-// http://help<span class="hljs-preprocessor">.adobe</span><span class="hljs-preprocessor">.com</span>/en_US/FlashPlatform/reference/actionscript/<span class="hljs-number">3</span>/flash/external/ExternalInterface<span class="hljs-preprocessor">.html</span><span class="hljs-preprocessor">#call</span>
-</code></pre>
-<p>Et là, bug.</p>
-<h2 id="pourquoi-bug-"><a class="putainde-Title-anchor" href="#pourquoi-bug-">#</a>Pourquoi bug ?</h2><p>Pour le moment, je ne sais pas vraiment. Je me pencherai plus sur le sujet dès que j’ai un peu de temps, mais ce que je sais, c’est que <code>ExtercalInterface.call()</code> ne s’attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l’<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153">objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur.</p>
-<h2 id="la-solution-cote-javascript"><a class="putainde-Title-anchor" href="#la-solution-cote-javascript">#</a>La solution côté JavaScript</h2><p>Pour contrer cela, je vous propose la solution suivante qui est de ne pas utiliser directement l’objet <code>Backbone.Events|View</code> mais plutôt de passer par une interface, un objet proxy.</p>
-<p>Voici le schéma :</p>
-<ul>
-<li>Créer un objet simple qui contient les mêmes noms de méthodes que les objets évènements <strong>Backbone.js</strong> (en gros, se mapper sur l’API Backbone)</li>
-<li>Utiliser <strong>Backbone.js</strong> dans les méthodes de cet objet <em>Proxy</em></li>
-</ul>
-<p>Exemple :</p>
-<pre><code class="lang-javascript">// Bridge between flash <span class="hljs-keyword">and</span> js
-App<span class="hljs-preprocessor">.FlashManager</span> = {}
-App<span class="hljs-preprocessor">.FlashManager</span><span class="hljs-preprocessor">.Events</span> = {}
-
-// Backbone events used for Flash
-App<span class="hljs-preprocessor">.InternalFlashManager</span> = {}
-App<span class="hljs-preprocessor">.InternalFlashManager</span><span class="hljs-preprocessor">.Events</span> = {}
-
-_<span class="hljs-preprocessor">.extend</span>(App<span class="hljs-preprocessor">.InternalFlashManager</span><span class="hljs-preprocessor">.Events</span>, Backbone<span class="hljs-preprocessor">.Events</span>)
-
-App<span class="hljs-preprocessor">.FlashManager</span><span class="hljs-preprocessor">.Events</span><span class="hljs-preprocessor">.trigger</span> = function(name, opts) {
-    App<span class="hljs-preprocessor">.InternalFlashManager</span><span class="hljs-preprocessor">.Events</span><span class="hljs-preprocessor">.trigger</span>(name, opts)
-
-    // Must return nothing not to loop JavaScript engine, important!
-    return
-}
-</code></pre>
-<h2 id="oh-et-"><a class="putainde-Title-anchor" href="#oh-et-">#</a>Oh et…</h2><p>…il existe une version ayant plus ou moins le même souci que moi disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
-<h2 id="conclusion"><a class="putainde-Title-anchor" href="#conclusion">#</a>Conclusion</h2><p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript retourne quelque chose de simple (un objet ayant que des atributs, pas de fonctions, ou encore un bouléen ou un <em>integer</em>).</p>
-
-]]></description><pubDate>Thu, 05 Dec 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/</guid></item></channel></rss>
+]]></description><pubDate>Fri, 06 Dec 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/comment-se-passer-de-libraries-frameworks-javascript/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/comment-se-passer-de-libraries-frameworks-javascript/</guid></item></channel></rss>
