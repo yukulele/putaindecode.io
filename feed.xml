@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Tue, 13 May 2014 05:30:02 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Array.reduce par l'exemple</title><description><![CDATA[[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Tue, 13 May 2014 09:56:01 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Array.reduce par l'exemple</title><description><![CDATA[[
 <p>Souvent méconnue, la fonction <code>Array#reduce</code> se révèle super pratique dès lors
  qu’on prenne un peu le temps de faire un peu plus connaissance.
  Ce n’est que dernièrement que je me suis rendu compte que reduce pouvait servir
@@ -32,9 +32,9 @@ avec les paramètres suivants :</p>
 sur une chaine de caractère. Si vous avez une liste de motifs et leur valeur correspondante,
  reduce permet de faire cela assez simplement, genre en 3 lignes.</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> input = <span class="hljs-string">"I'm %USER% and I live in %COUNTRY%"</span>
-<span class="hljs-keyword">var</span> datas = [{token:<span class="hljs-string">'%USER%'</span>, <span class="hljs-keyword">value</span>:<span class="hljs-string">'lionel'</span>}, {token:<span class="hljs-string">'%COUNTRY%'</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">'France'</span>}]
+<span class="hljs-keyword">var</span> data = [{token:<span class="hljs-string">'%USER%'</span>, <span class="hljs-keyword">value</span>:<span class="hljs-string">'lionel'</span>}, {token:<span class="hljs-string">'%COUNTRY%'</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">'France'</span>}]
 
-<span class="hljs-keyword">var</span> output = datas.reduce( function(memo, item){
+<span class="hljs-keyword">var</span> output = data.reduce( function(memo, item){
   <span class="hljs-keyword">return</span> memo.replace(item.token, item.<span class="hljs-keyword">value</span>);
 }, input);
 </code></pre>
@@ -98,8 +98,8 @@ et <code>containSite</code> en fixant leur premier paramètre. Ainsi <code>compa
 Par exemple, voici une liste de sites avec, pour chaque site, le pourcentage de visite par navigateur.
 Imaginons que nous souhaitons changer la structure de l’objet pour grouper ces
 résultats par type de navigateur plutôt que par site. Là encore <code>Array#reduce</code> s’avère plutôt pratique.</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> datas = {
-      <span class="hljs-string">"gogle.fr"</span> : [
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> data = {
+      <span class="hljs-string">"google.fr"</span> : [
        {name: <span class="hljs-string">"Chrome"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"50%"</span>},
         {name: <span class="hljs-string">"FireFox"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"30%"</span>},
         {name: <span class="hljs-string">"Internet Explorer"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"20%"</span> }
@@ -124,8 +124,8 @@ function groupByOS( site, memo, browser){
   <span class="hljs-keyword">return</span> memo
 }
 
-<span class="hljs-keyword">var</span> results = Object.keys(datas).reduce( function (memo, site) {
-  <span class="hljs-keyword">return</span> datas[site].reduce(groupByBrowser.bind(<span class="hljs-keyword">null</span>, site), memo)
+<span class="hljs-keyword">var</span> results = Object.keys(data).reduce( function (memo, site) {
+  <span class="hljs-keyword">return</span> data[site].reduce(groupByBrowser.bind(<span class="hljs-keyword">null</span>, site), memo)
 }, {});
 </code></pre>
 <p>J’espère que vous avez appréciez ces quelques exemples d’utilisation de <code>Array#reduce</code>.
