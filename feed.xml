@@ -1,4 +1,57 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Thu, 15 May 2014 04:04:11 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Créez vos iconfonts avec gulp-iconfont</title><description><![CDATA[[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Thu, 15 May 2014 13:57:57 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Se mettre au frontend en 2014, par où commencer ?</title><description><![CDATA[[
+<p>Un de nos lecteurs nous a récemment envoyé un email avec tout un tas de questions; nous avons apprécié le geste et plutôt qu’uniquement lui répondre, nous souhaitions en faire profiter tout le monde.</p>
+<hr>
+<blockquote>
+<p>Salut putain de code,</p>
+</blockquote>
+<p>Salut :)</p>
+<blockquote>
+<p>Je viens d’être embauché en tant que Product Designer et il est prévu que je fasse du front. Malheureusement, pour diverses raisons, je n’ai plus pratiqué ce métier depuis au moins 1 an. Je continue bien sûr de suivre ce qui se fait mais j’ai comme la sensation de me sentir un peu largué alors que c’était un sujet sur lequel je me sentais vraiment bien. On a un produit SaaS qui tourne sur Rails &amp; Angular, qui demande beaucoup de maintenabilité et une bonne optimisation. Là où j’interviens, c’est sur la définition et la création de la V2. Seulement avant de m’engager sur des sujets que je ne maîtrise plus, je souhaiterais avoir un peu plus d’information.</p>
+</blockquote>
+<p>Yes, pas de problème, dis-nous tout.</p>
+<blockquote>
+<p>Au niveau de mes besoins, il me faudrait, je pense, une solution fiable avec une première base de modules prédéfinis (même une version light) pour une question de rendement et d’optimisation du dev. Mon premier avis serait d’utiliser un Bootstrap avec Sass grâce à tout son système de modals / tableaux / tabs / grid / etc… seulement j’ai lu le contraire donc je me retrouve perdu.  Dans vos articles {P!}, vous dîtes qu’il vaut mieux éviter des Frameworks du type Bootstrap, mais… pourquoi ? </p>
+</blockquote>
+<p>Les frameworks comme Bootstrap ne sont pas forcément une mauvaise chose, ils te permettent de mettre les bases d’un site, très pratique pour aller vite et surtout faire des administrations. En revanche ils proposent des structures avec des conventions CSS n’aidant pas forcément à finir avec un front-end maintenable. De plus, cela force à <em>override</em> tout l’aspect visuel dès que ton design est personnalisé. Finalement, tu passes plus de temps à <em>overrider</em> un framework qui ne te convient pas tant que ça que de te créer ton propre ui kit. (sans compter le risque de voir ton site péter lors d’une mise à jour d’un framework).</p>
+<blockquote>
+<p>Avec une charte un peu custom, n’est-il pas préférable de se baser sur des composants pré-existants pour faciliter la charge et le temps passé à dev ? Il est peut-être possible d’en récupérer des similaires de façon individuel autre part ?</p>
+</blockquote>
+<p>Si, effectivement, des solutions comme <a href="http://topcoat.io/">topcoat</a> sont moins <em>opinionated</em> par exemple et permettent vraiment de personnaliser tous les éléments proposés par défaut.
+Il faut vraiment trouver un framework qui fait que le strict nécessaire sans design finalement.</p>
+<blockquote>
+<p>Et les préprocesseurs (Sass surtout) c’est vraiment une bonne idée sur ce type de projet ou tu vois des contre-indications ?</p>
+</blockquote>
+<p>Les préprocesseurs CSS sont généralement une bonne chose, ils apportent de nombreuses options intéressants telles que les variables, les fonctions, là où le w3c met un certain temps à les sortir. Cependant, tous les préprocesseurs ne se ressemblent pas. Certains ont leur propre écriture comme Stylus ou Sass (Sass, pas scss). Certains sont aussi plus lents à compiler que d’autre (coucou Sass). Nous préconisons un pseudo “post-processor” qui s’appelle <a href="https://github.com/reworkcss/rework">Rework</a>. Avec rework, tu ajoutes juste les processing dont tu as besoin, et tout ça, généralement, sans casser le style d’écriture d’un fichier css (article à prevoir).</p>
+<blockquote>
+<p>Quant à mon workflow, j’aimerais tout reprendre depuis le début pour repartir sur des bases saines. Tu pourrais m’indiquer les indispensables sur Sublime Text (Config, Plugins) et autres outils ?</p>
+</blockquote>
+<p>Orf, ca dépend de chacun mais en général, voici ce qu’on te préconise :</p>
+<ul>
+<li>Editeur : <a href="http://www.sublimetext.com/">Sublime text</a> (avec BracketHighlighter, Color Highlighter, DocBlockr, EditorConfig, Emmet, Emmet CSS, HTML5, INI, JavaScript Console, JsFormat, Markdown Preview, MarkdownEditing, Modific, Placeholders, Theme - Flatland, Unicode Character Highlighter)
+ou <a href="http://atom.io">Atom</a> (<code>apm install editorconfig docblockr htmlhint csslint linter linter-jscs linter-jshint css-color-highlighting atom-prettify open-in-github-app gist-it autocomplete-plus</code>).<br>Pour être à jour sur ces éditeurs, n’hésite pas à Suivre <a href="https://twitter.com/SublimePackages">@SublimePackages</a> et <a href="https://twitter.com/Atom_Packages">@Atom_Packages</a> sur Twitter.</li>
+<li>Terminal : <a href="http://www.iterm2.com/">iterm2</a> sur mac, ou terminal de base</li>
+<li>Shell : zsh (<code>brew install zsh</code>), <a href="https://github.com/sorin-ionescu/prezto">prezto (plugin zsh)</a> </li>
+<li><a href="http://nightly.mozilla.org/">Firefox Nightly</a> ou <a href="http://www.google.com/intl/fr/chrome/browser/canary.html">Chrome Canary</a></li>
+</ul>
+<blockquote>
+<p>Je vois souvent passer du NPM / Grunt / Bower / Yo &amp; Co mais jamais vraiment eu le temps de m’y plonger dedans. Il est possible d’avoir un petit résumé et/ou un moyen d’apprendre le plus vite possible ?</p>
+</blockquote>
+<p>Tout d’abord lis ceci : <a href="http://www.24joursdeweb.fr/2013/automatisez-votre-workflow-front-end/">Automatisez votre workflow front-end</a>.</p>
+<p>Pour le reste :</p>
+<ul>
+<li><p><a href="https://www.npmjs.org/">NPM</a> : NPM’s not a Package Manager, permet de gérer les versions de ce que tu utilises à la fois comme bibliothèque front ou outils de dev. Il sert aussi d’interface de ligne de commande permettant de <a href="/posts/frontend/npm-comme-package-manager-pour-le-front-end/">lancer des commandes définies dans le package.json</a>.</p>
+</li>
+<li><p><a href="http://bower.io/">Bower</a> ne sert pas à grand chose, c’est une abstraction par dessus NPM. Nous pensons qu’il tend à mourir. [<a href="/posts/frontend/npm-comme-package-manager-pour-le-front-end/">1</a>] [<a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/">2</a>]</p>
+</li>
+<li><p><a href="http://gruntjs.com/">Grunt</a> est un <em>task-runner</em>, il te permet d’automatiser les actions que tu répètes souvent : concatener des scripts, preprocessing HTML &amp; CSS, copie des assets… Nous te conseillons d’utiliser gulp, beaucoup plus rapide et simple à prendre en main. [<a href="/posts/js/introduction-gulp/">1</a>] [<a href="/posts/js/premiers-pas-avec-grunt/">2</a>]</p>
+</li>
+</ul>
+<blockquote>
+<p>Merci beaucoup !</p>
+</blockquote>
+<p>Tout le plaisir est pour nous. ;)</p>
+
+]]></description><pubDate>Thu, 15 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/interview/se-mettre-au-frontend-en-2014-par-ou-commencer/</link><guid isPermaLink="true">http://putaindecode.fr/posts/interview/se-mettre-au-frontend-en-2014-par-ou-commencer/</guid></item><item><title>Créez vos iconfonts avec gulp-iconfont</title><description><![CDATA[[
 <p>Après <a href="/posts/js/introduction-gulp/">notre introduction sur gulp</a>, je vous propose de créer vos propres fontes à partir d’icônes.</p>
 <p>J’ai bien galéré lorsque j’ai dû passer de <strong>grunt</strong> à <strong>gulp</strong>. Non pas que gulp soit compliqué mais retrouver exactement le même <em>workflow</em> qu’avant, sachant que gulp est jeune et que les <em>plugins</em> sont bien moins nombreux que sur grunt, c’est pas si évident que ça.</p>
 <p>M’enfin, il y a toujours une solution à un problème.</p>
@@ -410,127 +463,7 @@ gestionnaire de dépendances, dans le cas où celui-ci n’intègre pas d’autr
 fonctionnalités que le téléchargement de modules.  </p>
 <p>Bye bye Bower!</p>
 
-]]></description><pubDate>Tue, 06 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</guid></item><item><title>Petite définition de BEM</title><description><![CDATA[[
-<p><strong><a href="http://bem.info">BEM</a></strong> n’est ni une marque de voiture ni un groupe de musique, et encore moins une onomatopée (quoique). C’est plutôt une façon de nommer les classes en CSS, une convention en d’autres termes voire une méthodologie.</p>
-<p>Dans cet article, je ne vous expliquerai pas pourquoi il faut préférer BEM à une autre convention, je vous explique surtout comment l’utiliser.</p>
-<p><strong>BEM</strong> apporte une solution à un problème majeur en informatique : le nommage.</p>
-<p>Il n’y a rien de plus compliqué en informatique que de nommer un objet : besoin d’être explicite, ne doit pas être trop générique, ni trop compliqué, ni trop verbeux (ça, ça reste à voir avec BEM…).</p>
-<p>Lorsque l’on nomme un objet, une méthode, une fonction, une classe, on se doit d’être avant tout compréhensible. Une personne devant lire votre code doit directement comprendre de quoi vous parlez. Cette personne peut très bien être vous 6 mois, 1 an après. Je pense sincèrement qu’un code clair vaut toute la documentation du monde. Je ne dis pas qu’il ne faut pas documenter mais un code doit être facilement compréhensible, la documentation doit juste apporter un contexte, une situation particulière.</p>
-<p>Bref, <strong>BEM</strong> est le sigle pour <em>Block</em>, <em>Element</em>, <em>Modifier</em>. Qu’est-ce que cela veut dire.</p>
-<p>Prenons par exemple un site web. Nous avons un ensemble avec dedans deux onglets et en dessous le contenu de chaque onglet.</p>
-<p>Nous allons définir ce que sont le <em>block</em>, le ou les <em>elements</em> et les <em>modifiers</em>.</p>
-<p>Dans ce cas précis, le <em>block</em> est le conteneur, l’ensemble, ce qui entoure le tout. Appelons-le “Window”.</p>
-<p>Nous avons alors aussi les <em>elements</em> suivants : les onglets, que nous allons nommer “Tab”, et le contenu, là où il y a le texte de chaque onglet “Content”.</p>
-<p>Comment cela se traduit en <strong>BEM</strong> :</p>
-<ul>
-<li>Notre <em>block</em> s’appelant “Window” sera alors <code>.Window</code></li>
-<li>Nos <em>elements</em> “Tab” seront <code>.Window-tab</code></li>
-<li>Notre <em>element</em> “Content” sera <code>.Window-content</code></li>
-</ul>
-<p>Jusque là, cela devrait aller :</p>
-<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
-
-<span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
-
-  <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
-
-  <span class="hljs-rule">}</span></span>
-</code></pre>
-<p>Ce qui revient de manère générique à :</p>
-<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
-
-}</span>
-
-  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
-
-  }</span>
-</code></pre>
-<p>Oui, je vous conseille d’indenter votre code afin de grouper vos classes.</p>
-<p>Maintenant, nous allons définir ce qu’est un <em>modifier</em>. Un <em>modifier</em> change l’état de l’élément, il peut s’appliquer aussi bien sur un <em>block</em>, qu’un <em>element</em>.</p>
-<p>Si par exemple je souhaite mettre en actif un onglet (le mettre en avant car séléctionné), je ferai alors <code>.Window-tab--active</code>, soit :</p>
-<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
-
-<span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
-  <span class="hljs-rule">}</span></span>
-
-    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
-      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-    <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
-
-  <span class="hljs-rule">}</span></span>
-</code></pre>
-<p>J’aimerais aussi afficher ou non le contenu. Pour cela, je vais lui rajouter un <em>modifier</em></p>
-<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
-
-<span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
-  <span class="hljs-rule">}</span></span>
-
-    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
-      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-    <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
-  <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content--hidden</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
-  <span class="hljs-rule">}</span></span>
-</code></pre>
-<p>J’aurais très bien pu inverser et dire que par défaut le contenu est caché et je lui rajoute la classe <code>.Window-tab--active</code> pour l’afficher (<code>display: block</code>) mais lorsqu’il s’agit de cacher ou de faire appaître des éléments, je vous conseille vivement de plutôt ajouter un <em>modifier</em> qui cache les éléments, car cela évite de se prendre la tête sur quel <code>display</code> mettre par défaut. Là, vous mettez un <code>display: none</code> et voilà, qu’importe si celui de base est un <code>inline</code>, <code>inline-block</code>, <code>table-cell</code> ou autre.</p>
-<p>Du coup, nous avons maintenant nos différents types de classes. Cela se résume de manière générique à :</p>
-<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
-
-}</span>
-
-  .<span class="hljs-keyword">Block</span>--modifier <span class="hljs-list">{
-
-  }</span>
-
-  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
-
-  }</span>
-
-    .<span class="hljs-keyword">Block</span>-element--modifier <span class="hljs-list">{
-
-    }</span>
-</code></pre>
-<p>Ce qui donne <code>.Block-element--modifier</code> (notre <strong>BEM</strong>).</p>
-<p>Parlons maintenant du cas des termes multiples dans chaque partie. Voici comment cela se traduit.</p>
-<p><code>.MyBlock-myElement--myModifier</code></p>
-<p>Les <em>blocks</em> sont en “PascalCase” (ou UpperCamelCase), les <em>elements</em> et <em>modifiers</em> sont en “camelCase” (ou lowerCamelCase). Nous séparons le <em>block</em> de l’élément par “-“ et le <em>block</em> ou l’ <em>element</em> d’un <em>modifier</em> par “—“.</p>
-<p>Maintenant, vous savez tout sur <strong>BEM</strong>. Sachez qu’il existe tout de même plusieurs conventions de <strong>BEM</strong>. Celle que je vous ai apprise là est la norme de <strong>montage.js</strong> mais il y en a d’autres par exemple qui n’utilisent pas les majuscules et font ce genre de choses : <code>.my-block__my-element--my-modifier</code>. Il s’avère que c’est la <a href="http://bem.info/method/definitions/#naming-for-independent-css-classes">convention pseudo-officielle</a>.</p>
-<p>L’inconvénient de ceci est que c’est moins lisible au premier abord qui est quoi, et de plus, les <code>_</code> ne permettent pas de sélectionner facilement un terme en <em>double-cliquant</em> dessus.</p>
-<p>Deux petites choses avant de partir.</p>
-<p>Dans le but d’éviter de vous faire écraser vos propriétés par quelqu’un d’autre (une bibliothèque, un <em>SDK</em>), je vous conseille de rajouter votre organisation.</p>
-<p>Typiquement, ça donne <code>.org-Block-element--modifier</code>. Tout en minuscule et si possible ne pas dépasser les 3 lettres car vous allez devoir le répéter à chaque fois et ça peut être lourd.</p>
-<p>La deuxième chose est la classe qui sert de sélecteur en JavaScript. Plutôt que <em>binder</em> un élément via sa classe “CSS” (à chaque classe sa responsabilité), il est nettement préférable de créer une classe spécifique au JavaScript. Cela donne : <code>.org-js-Block-element--modifier</code>. Il suffit simplement de rajouter <code>-js</code> entre l’organisation et le <em>block</em>.</p>
-<p>Nous arrivons à la convention suivante : <code>.org[-js]-Block[-element][--modifier]</code></p>
-<p>Certains vous diront qu’ils mettent <code>.js-org-</code> mais étant donné que je considère cela comme un <em>namespace</em> global (autant css que js), je préfère mettre l’ <code>org</code> au début.</p>
-<p>Voilà, voilà, c’est certes un peu déroutant au début, et ca parait très verbeux mais cela vous permettra d’éviter de nooooooombreux soucis de nommage de classes où vous vous emmèlerez les pinceaux à coup de :</p>
-<pre><code class="lang-css"><span class="hljs-class">.footer</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> underline</span></span>;
-<span class="hljs-rule">}</span></span>
-
-<span class="hljs-class">.content</span> <span class="hljs-class">.footer</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> none</span></span>; <span class="hljs-comment">/* annule la propriété du précédent sélecteur */</span>
-<span class="hljs-rule">}</span></span>
-</code></pre>
-<p>Ciao les kids.</p>
-
-]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/petite-definition-bem/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/petite-definition-bem/</guid></item><item><title>Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML</title><description><![CDATA[[
+]]></description><pubDate>Tue, 06 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</guid></item><item><title>Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML</title><description><![CDATA[[
 <p>Mardi 29 avril s’est déroulée la troisième table ronde qui est finalement la première sous le nom de <strong>{p!}</strong>. Une petite explication s’impose étant donné que nous allons en faire de plus en plus et que je souhaite vraiment vous faire un compte rendu sur chacun de ces évènements.</p>
 <h2 id="preambule"><a class="putainde-Title-anchor" href="#preambule">#</a>Préambule</h2><p>Partant du constat qu’il est difficile d’apprendre et d’échanger en conférence du fait du manque du niveau assez élevé (trop de gens avec un niveau différent, il faut forcément s’aligner) et à sens unique (une personne parle, les autres écoutent), nous avons décidé de créer des tables rondes où un fil conducteur est suivi amenant à débattre, échanger, affirmer.</p>
 <p>Attention, je ne dis pas que les conférences ne servent à rien mais à mon sens elles sont trop magistrales et parfois trop marketing (coucou WebRTC Paris).</p>
@@ -673,7 +606,127 @@ Oh et attention, tous les navigateurs ne font pas 16px de base. Je dis ça si vo
 <p>N’hésitez pas à continuer le débat dans les commentaires.</p>
 <p>Pour ma part, j’ai déjà d’autres articles “dans le pipe” (comme disent certains marketeux). Je vous retrouve bientôt ici ou sur Twitter, kiss.</p>
 
-]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</link><guid isPermaLink="true">http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</guid></item><item><title>Introduction au testing js front</title><description><![CDATA[[
+]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</link><guid isPermaLink="true">http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</guid></item><item><title>Petite définition de BEM</title><description><![CDATA[[
+<p><strong><a href="http://bem.info">BEM</a></strong> n’est ni une marque de voiture ni un groupe de musique, et encore moins une onomatopée (quoique). C’est plutôt une façon de nommer les classes en CSS, une convention en d’autres termes voire une méthodologie.</p>
+<p>Dans cet article, je ne vous expliquerai pas pourquoi il faut préférer BEM à une autre convention, je vous explique surtout comment l’utiliser.</p>
+<p><strong>BEM</strong> apporte une solution à un problème majeur en informatique : le nommage.</p>
+<p>Il n’y a rien de plus compliqué en informatique que de nommer un objet : besoin d’être explicite, ne doit pas être trop générique, ni trop compliqué, ni trop verbeux (ça, ça reste à voir avec BEM…).</p>
+<p>Lorsque l’on nomme un objet, une méthode, une fonction, une classe, on se doit d’être avant tout compréhensible. Une personne devant lire votre code doit directement comprendre de quoi vous parlez. Cette personne peut très bien être vous 6 mois, 1 an après. Je pense sincèrement qu’un code clair vaut toute la documentation du monde. Je ne dis pas qu’il ne faut pas documenter mais un code doit être facilement compréhensible, la documentation doit juste apporter un contexte, une situation particulière.</p>
+<p>Bref, <strong>BEM</strong> est le sigle pour <em>Block</em>, <em>Element</em>, <em>Modifier</em>. Qu’est-ce que cela veut dire.</p>
+<p>Prenons par exemple un site web. Nous avons un ensemble avec dedans deux onglets et en dessous le contenu de chaque onglet.</p>
+<p>Nous allons définir ce que sont le <em>block</em>, le ou les <em>elements</em> et les <em>modifiers</em>.</p>
+<p>Dans ce cas précis, le <em>block</em> est le conteneur, l’ensemble, ce qui entoure le tout. Appelons-le “Window”.</p>
+<p>Nous avons alors aussi les <em>elements</em> suivants : les onglets, que nous allons nommer “Tab”, et le contenu, là où il y a le texte de chaque onglet “Content”.</p>
+<p>Comment cela se traduit en <strong>BEM</strong> :</p>
+<ul>
+<li>Notre <em>block</em> s’appelant “Window” sera alors <code>.Window</code></li>
+<li>Nos <em>elements</em> “Tab” seront <code>.Window-tab</code></li>
+<li>Notre <em>element</em> “Content” sera <code>.Window-content</code></li>
+</ul>
+<p>Jusque là, cela devrait aller :</p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+
+<span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+
+  <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+
+  <span class="hljs-rule">}</span></span>
+</code></pre>
+<p>Ce qui revient de manère générique à :</p>
+<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
+
+}</span>
+
+  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
+
+  }</span>
+</code></pre>
+<p>Oui, je vous conseille d’indenter votre code afin de grouper vos classes.</p>
+<p>Maintenant, nous allons définir ce qu’est un <em>modifier</em>. Un <em>modifier</em> change l’état de l’élément, il peut s’appliquer aussi bien sur un <em>block</em>, qu’un <em>element</em>.</p>
+<p>Si par exemple je souhaite mettre en actif un onglet (le mettre en avant car séléctionné), je ferai alors <code>.Window-tab--active</code>, soit :</p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+
+<span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
+  <span class="hljs-rule">}</span></span>
+
+    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+    <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+
+  <span class="hljs-rule">}</span></span>
+</code></pre>
+<p>J’aimerais aussi afficher ou non le contenu. Pour cela, je vais lui rajouter un <em>modifier</em></p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+
+<span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
+  <span class="hljs-rule">}</span></span>
+
+    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+    <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+  <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content--hidden</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
+  <span class="hljs-rule">}</span></span>
+</code></pre>
+<p>J’aurais très bien pu inverser et dire que par défaut le contenu est caché et je lui rajoute la classe <code>.Window-tab--active</code> pour l’afficher (<code>display: block</code>) mais lorsqu’il s’agit de cacher ou de faire appaître des éléments, je vous conseille vivement de plutôt ajouter un <em>modifier</em> qui cache les éléments, car cela évite de se prendre la tête sur quel <code>display</code> mettre par défaut. Là, vous mettez un <code>display: none</code> et voilà, qu’importe si celui de base est un <code>inline</code>, <code>inline-block</code>, <code>table-cell</code> ou autre.</p>
+<p>Du coup, nous avons maintenant nos différents types de classes. Cela se résume de manière générique à :</p>
+<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
+
+}</span>
+
+  .<span class="hljs-keyword">Block</span>--modifier <span class="hljs-list">{
+
+  }</span>
+
+  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
+
+  }</span>
+
+    .<span class="hljs-keyword">Block</span>-element--modifier <span class="hljs-list">{
+
+    }</span>
+</code></pre>
+<p>Ce qui donne <code>.Block-element--modifier</code> (notre <strong>BEM</strong>).</p>
+<p>Parlons maintenant du cas des termes multiples dans chaque partie. Voici comment cela se traduit.</p>
+<p><code>.MyBlock-myElement--myModifier</code></p>
+<p>Les <em>blocks</em> sont en “PascalCase” (ou UpperCamelCase), les <em>elements</em> et <em>modifiers</em> sont en “camelCase” (ou lowerCamelCase). Nous séparons le <em>block</em> de l’élément par “-“ et le <em>block</em> ou l’ <em>element</em> d’un <em>modifier</em> par “—“.</p>
+<p>Maintenant, vous savez tout sur <strong>BEM</strong>. Sachez qu’il existe tout de même plusieurs conventions de <strong>BEM</strong>. Celle que je vous ai apprise là est la norme de <strong>montage.js</strong> mais il y en a d’autres par exemple qui n’utilisent pas les majuscules et font ce genre de choses : <code>.my-block__my-element--my-modifier</code>. Il s’avère que c’est la <a href="http://bem.info/method/definitions/#naming-for-independent-css-classes">convention pseudo-officielle</a>.</p>
+<p>L’inconvénient de ceci est que c’est moins lisible au premier abord qui est quoi, et de plus, les <code>_</code> ne permettent pas de sélectionner facilement un terme en <em>double-cliquant</em> dessus.</p>
+<p>Deux petites choses avant de partir.</p>
+<p>Dans le but d’éviter de vous faire écraser vos propriétés par quelqu’un d’autre (une bibliothèque, un <em>SDK</em>), je vous conseille de rajouter votre organisation.</p>
+<p>Typiquement, ça donne <code>.org-Block-element--modifier</code>. Tout en minuscule et si possible ne pas dépasser les 3 lettres car vous allez devoir le répéter à chaque fois et ça peut être lourd.</p>
+<p>La deuxième chose est la classe qui sert de sélecteur en JavaScript. Plutôt que <em>binder</em> un élément via sa classe “CSS” (à chaque classe sa responsabilité), il est nettement préférable de créer une classe spécifique au JavaScript. Cela donne : <code>.org-js-Block-element--modifier</code>. Il suffit simplement de rajouter <code>-js</code> entre l’organisation et le <em>block</em>.</p>
+<p>Nous arrivons à la convention suivante : <code>.org[-js]-Block[-element][--modifier]</code></p>
+<p>Certains vous diront qu’ils mettent <code>.js-org-</code> mais étant donné que je considère cela comme un <em>namespace</em> global (autant css que js), je préfère mettre l’ <code>org</code> au début.</p>
+<p>Voilà, voilà, c’est certes un peu déroutant au début, et ca parait très verbeux mais cela vous permettra d’éviter de nooooooombreux soucis de nommage de classes où vous vous emmèlerez les pinceaux à coup de :</p>
+<pre><code class="lang-css"><span class="hljs-class">.footer</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> underline</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.content</span> <span class="hljs-class">.footer</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> none</span></span>; <span class="hljs-comment">/* annule la propriété du précédent sélecteur */</span>
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p>Ciao les kids.</p>
+
+]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/petite-definition-bem/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/petite-definition-bem/</guid></item><item><title>Introduction au testing js front</title><description><![CDATA[[
 <p>Les tests automatisés en front-end ont longtemps été ignorés,
 et le sont encore trop.</p>
 <p>Écrire des tests peut paraître chiant, mais le temps qu’ils rapportent
@@ -987,7 +1040,7 @@ de fichiers</a>.</p>
 </code></pre>
 <p><em>Note : <code>npm i -D</code> == <code>npm install --save-dev</code>, c’est cadeau.</em></p>
 <p>Bon dans mon exemple j’ai mis un peu n’importe quoi, donc on va faire un mini workflow de hipster hacker.</p>
-<h2 id="utilisation"><a class="putainde-Title-anchor" href="#utilisation">#</a>Utilisation</h2><p>On part avec une tâche très simple : pré-processeur CSS <a href="http://myth.io">Myth</a> et
+<h2 id="utilisation"><a class="putainde-Title-anchor" href="#utilisation">#</a>Utilisation</h2><p>On part avec une tâche très simple : pré-processeur CSS <a href="http://www.myth.io">Myth</a> et
 optimisation avec <a href="https://github.com/css/csso">CSSO</a>.</p>
 <pre><code class="lang-shell">$ mkdir putaindegulp <span class="hljs-subst">&amp;&amp;</span> cd putaindegulp
 $ npm init
@@ -1115,7 +1168,7 @@ qui détaille tellement bien chaque point que même un anglophobe comprendrait.<
 très bien faite, qui comporte carrément
 <a href="https://github.com/gulpjs/gulp/tree/master/docs/recipes">des exemples <em>officiels</em> tout prêts</a>.</p>
 <p>Comme je vous disais plus tôt, les auteurs de Gulp sont assez carrés et valident
-(ou plutôt <em>invalident</em>) <a href="https://npmjs.org/search?q=gulpplugin">les plugins</a> qui
+(ou plutôt <em>invalident</em>) <a href="https://www.npmjs.org/search?q=gulpplugin">les plugins</a> qui
 ne respectent pas les
 <a href="https://github.com/gulpjs/gulp/blob/master/docs/writing-a-plugin/guidelines.md">règles</a>.
 Je trouve que c’est gage de qualité.</p>
@@ -1353,7 +1406,7 @@ sont gérés les mixins conditionnels. Je passe sur ce point gerbant.</p>
 <p>Bibliotèques construites sur Less :</p>
 <ul>
 <li><a href="http://lesshat.madebysource.com/">LESS Hat</a>,</li>
-<li><a href="http://lesselements.com/">LESS Elements</a>.</li>
+<li><a href="http://www.lesselements.com/">LESS Elements</a>.</li>
 </ul>
 <h3 id="-a-href-http-learnboost-github-io-stylus-stylus-a-"><a class="putainde-Title-anchor" href="#-a-href-http-learnboost-github-io-stylus-stylus-a-">#</a><a href="http://learnboost.github.io/stylus/">Stylus</a></h3><p>Stylus se veut plus transparent que les autres pré-processeurs. C’est un point
 réussi puisqu’il permet d’avoir des mixins transparents au niveau écriture.
@@ -2218,7 +2271,59 @@ Mais ça, je vous en parle la prochaine fois ;)</p>
 Tout ça est décrit dans la <a href="/posts/css/mise-en-place-autoprefixer/">mise en place d’autoprefixer</a>
 avec des exemples concrets pour ajouter ça dans un workflow existant.</p>
 
-]]></description><pubDate>Tue, 25 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</guid></item><item><title>La puissance de dnsmasq</title><description><![CDATA[[
+]]></description><pubDate>Tue, 25 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</guid></item><item><title>Sublime Text en tant qu'éditeur Markdown</title><description><![CDATA[[
+<p>La vie de développeur n’est jamais facile. Tu souhaites faire quelque chose de précis et tu te retrouves à faire totalement autre chose, <em>patchant</em> ci ou tu as découvert ça.</p>
+<p>Typiquement, j’étais tranquillement en train d’écrire un article pour <strong>p!</strong> qui n’avait rien à voir avec celui actuel, et je me retrouve à personnaliser mon Sublime Text pour Markdown car ne souhaitant plus utiliser autre chose que celui-ci pour l’écriture.</p>
+<p>Il y a certes le très bon <a href="http://mouapp.com/">Mou.app</a> (<code>$ brew cask install mou</code>) sur Mac OS X mais comme indiqué, il n’est que pour Mac, or il m’arrive parfois d’être sur Windows.
+De plus, les éditeurs en ligne comme <a href="https://stackedit.io/">stackedit.io</a> ou <a href="http://dillinger.io/">dillinger.io</a> sont pratiques mais comme j’ai tendance à stocker mes brouillons sur <a href="https://db.tt/nTkiSUb">dropbox</a>, ces outils vous demandent l’accès de toute votre dropbox, chose que je n’aime pas spécialement.</p>
+<p>Bref, tout ça pour dire que tout centraliser sur Sublime Text et utiliser dropbox pour écrire des articles me semble une pratique plutôt agréable.</p>
+<p>Pour cela, quittez totalement vos éditeurs Markdown et installez les plugins Sublime Text qui vont bien.</p>
+<h2 id="markdownediting"><a class="putainde-Title-anchor" href="#markdownediting">#</a>MarkdownEditing</h2><p>Premièrement, <a href="http://ttscoff.github.io/MarkdownEditing/">MarkdownEditing</a>, ce petit plugin est votre parfait compagnon qui vous permettra d’avoir la bonne coloration syntaxique de votre Markdown. Il vous permettra de mettre en évidence les liens, le code, et tout le reste. Du bonheur donc.</p>
+<p><img src="../../../images/posts/preview-markdownediting.png" alt=""></p>
+<p>Oui alors, j’ai fait quelques configurations car à la base, ca ressemble plutôt à ça :</p>
+<p><img src="../../../images/posts/preview-markdownediting-light.png" alt=""></p>
+<p>Si vous souhaitez modifier Sublime Text mais uniquement pour le format Markdown, faites : <code>Preferences &gt; Browse Packages...</code> puis aller dans <code>User</code> et créez un fichier <code>Markdown.sublime-settings</code>. Celui-ci sera lu et appliqué à chaque fois que vous éditerez un fichier Markdown.</p>
+<p>Voici ce que j’ai pour le moment :</p>
+<pre><code>{
+  "<span class="hljs-attribute">color_scheme</span>": <span class="hljs-value"><span class="hljs-string">"Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme"</span></span>,
+  "<span class="hljs-attribute">enable_table_editor</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+  "<span class="hljs-attribute">table_editor_syntax</span>": <span class="hljs-value"><span class="hljs-string">"Auto"</span></span>,
+  "<span class="hljs-attribute">tab_size</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,
+  "<span class="hljs-attribute">extensions</span>":
+  <span class="hljs-value">[
+    <span class="hljs-string">"mdown"</span>,
+    <span class="hljs-string">"txt"</span>,
+    <span class="hljs-string">"md"</span>
+  ]
+</span>}
+</code></pre><p>Le thème <code>dark</code> pour pas se niquer les yeux (coucou <a href="https://twitter.com/bloodyowl">@bloodyowl</a>), j’active aussi d’autres plugins dont je vais vous parler d’ici peu, j’affecte le spacing à <code>2</code>, et je déclare que j’utiliserai l’éditeur Markdown pour ce genre de fichiers : <code>.mdown</code>, <code>.txt</code>, <code>.md</code>.</p>
+<p>Bien, passons à la suite.</p>
+<h2 id="markdown-preview"><a class="putainde-Title-anchor" href="#markdown-preview">#</a>Markdown Preview</h2><p>Notre cher <a href="https://twitter.com/revolunet">@revolunet</a> a fait un excellent plugin Markdown pour Sublime Text: <a href="https://github.com/revolunet/sublimetext-markdown-preview">Sublime Text Markdown Preview</a>. Celui-ci permet d’avoir un rendu de votre Markdown en <code>.html</code>. Vous pouvez soit compiler votre Markdown pour créer un fichier HTML, soit l’ouvrir directement dans votre navigateur.</p>
+<p>Différents formats disponibles :</p>
+<ul>
+<li>Python Markdown</li>
+<li>Github Flavored Markdown</li>
+</ul>
+<p>Un autre parfait compagnon en somme, qui quant à lui s’occupera de digérer l’excellent article que vous êtes en train d’écrire.</p>
+<p>Je vous parlerai éventuellement un jour de <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> qui permet de faire ce genre de choses mais en un peu plus complet et générique (Sublime Text n’est pas nécessaire) mais c’est un poil plus complexe. Jettez-y un œil tout de même.</p>
+<h2 id="smartmarkdown"><a class="putainde-Title-anchor" href="#smartmarkdown">#</a>SmartMarkdown</h2><p><a href="https://github.com/demon386/SmartMarkdown">Petit plugin</a> intéressant qui vous permettra de cacher des parties de votre texte en le repliant. Par exemple, vous vous mettez devant un titre du style <code>##</code> et vous appuyez sur <code>tab</code>, cela repliera votre texte. Plutôt pratique pour se focaliser.</p>
+<p><img src="../../../images/posts/preview-smartmarkdown.png" alt=""></p>
+<h2 id="sublimetableeditor"><a class="putainde-Title-anchor" href="#sublimetableeditor">#</a>SublimeTableEditor</h2><p>Précédemment dans ma configuration Markdown, vous avez pu voir ceci :</p>
+<pre><code>  <span class="hljs-string">"enable_table_editor"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-string">"table_editor_syntax"</span>: <span class="hljs-string">"Auto"</span>,
+</code></pre><p>Cela permet de configurer <a href="https://github.com/vkocubinsky/SublimeTableEditor">SublimeTableEditor</a> qui vous permettra de correctement aligner vos tableaux dans Markdown.</p>
+<p>Et voilà. Avec tout ceci, vous êtes paré(e) à écrire votre Markdown dans de bonnes conditions. Plus qu’à mettre du Jazz et vous préparer une tasse de thé et c’est parti.</p>
+<h2 id="bonus-markdown-extended"><a class="putainde-Title-anchor" href="#bonus-markdown-extended">#</a>Bonus : Markdown Extended</h2><p>Il est possible que vous n’aimiez pas forcément MarkdownEditing, et dans ce cas je vous propose un autre plugin pas inintéressant non plus s’appelant <a href="https://github.com/jonschlinkert/sublime-markdown-extended">Markdown Extended</a>. Il vous permettra d’avoir la bonne coloration syntaxique lorsque vous écrivez du code dans votre éditeur.</p>
+<h4 id="avant"><a class="putainde-Title-anchor" href="#avant">#</a>Avant</h4><p><img src="../../../images/posts/preview-markdownextended-before.png" alt=""></p>
+<h4 id="apres"><a class="putainde-Title-anchor" href="#apres">#</a>Après</h4><p><img src="../../../images/posts/preview-markdownextended-after.png" alt=""></p>
+<p>Oh et j’oubliais, voici quelques documentations sur Markdown histoire de bien l’utiliser :</p>
+<ul>
+<li><a href="http://daringfireball.net/projects/markdown/syntax">Documentation officielle</a></li>
+<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></li>
+<li><a href="http://warpedvisions.org/projects/markdown-cheat-sheet.md">Another Markdown Cheatsheet</a></li>
+</ul>
+
+]]></description><pubDate>Thu, 20 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</link><guid isPermaLink="true">http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</guid></item><item><title>La puissance de dnsmasq</title><description><![CDATA[[
 <p>Dernièrement, j’ai voulu accéder avec mon Smartphone à ma machine virtuelle (<em>VM</em>) de développement qui se trouve sur mon poste de travail (<em>machine ou poste hôte</em>). Ma machine virtuelle me permet de reproduire à l’identique la production afin d’avoir le moins de marge d’erreur possible entre la phase de développement et la phase de mise en production.</p>
 <p>A ce moment là, j’accédais à ma machine virtuelle à partir de mon poste via le fichier <em>hosts</em> comprenant ceci :</p>
 <pre><code><span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.145</span> monsite<span class="hljs-preprocessor">.dev</span>
@@ -2349,59 +2454,7 @@ $ <span class="hljs-built_in">sudo</span> launchctl load /Library/LaunchDaemons/
 <p>Autre point, évitez, mais vraiment, de nommer vos noms de domaines personnels en <code>.local</code>. En effet, ceux-ci sont plutôt réservés à l’environnement Mac OS X. Ils sont d’ailleurs en rapport avec <strong>_mdnsresponder</strong>. Les <code>.local</code> permettent à n’importe quel produit Apple sur le réseau de se connecter à d’autres postes Apple via <code>nom-de-l-appareil.local</code>. Votre connexion pourrait alors s’emméler entre le serveur dns de <strong>Bonjour</strong> et votre propre serveur dns.</p>
 <p>Happy coding !</p>
 
-]]></description><pubDate>Thu, 20 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</link><guid isPermaLink="true">http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</guid></item><item><title>Sublime Text en tant qu'éditeur Markdown</title><description><![CDATA[[
-<p>La vie de développeur n’est jamais facile. Tu souhaites faire quelque chose de précis et tu te retrouves à faire totalement autre chose, <em>patchant</em> ci ou tu as découvert ça.</p>
-<p>Typiquement, j’étais tranquillement en train d’écrire un article pour <strong>p!</strong> qui n’avait rien à voir avec celui actuel, et je me retrouve à personnaliser mon Sublime Text pour Markdown car ne souhaitant plus utiliser autre chose que celui-ci pour l’écriture.</p>
-<p>Il y a certes le très bon <a href="http://mouapp.com/">Mou.app</a> (<code>$ brew cask install mou</code>) sur Mac OS X mais comme indiqué, il n’est que pour Mac, or il m’arrive parfois d’être sur Windows.
-De plus, les éditeurs en ligne comme <a href="https://stackedit.io/">stackedit.io</a> ou <a href="http://dillinger.io/">dillinger.io</a> sont pratiques mais comme j’ai tendance à stocker mes brouillons sur <a href="https://db.tt/nTkiSUb">dropbox</a>, ces outils vous demandent l’accès de toute votre dropbox, chose que je n’aime pas spécialement.</p>
-<p>Bref, tout ça pour dire que tout centraliser sur Sublime Text et utiliser dropbox pour écrire des articles me semble une pratique plutôt agréable.</p>
-<p>Pour cela, quittez totalement vos éditeurs Markdown et installez les plugins Sublime Text qui vont bien.</p>
-<h2 id="markdownediting"><a class="putainde-Title-anchor" href="#markdownediting">#</a>MarkdownEditing</h2><p>Premièrement, <a href="http://ttscoff.github.io/MarkdownEditing/">MarkdownEditing</a>, ce petit plugin est votre parfait compagnon qui vous permettra d’avoir la bonne coloration syntaxique de votre Markdown. Il vous permettra de mettre en évidence les liens, le code, et tout le reste. Du bonheur donc.</p>
-<p><img src="../../../images/posts/preview-markdownediting.png" alt=""></p>
-<p>Oui alors, j’ai fait quelques configurations car à la base, ca ressemble plutôt à ça :</p>
-<p><img src="../../../images/posts/preview-markdownediting-light.png" alt=""></p>
-<p>Si vous souhaitez modifier Sublime Text mais uniquement pour le format Markdown, faites : <code>Preferences &gt; Browse Packages...</code> puis aller dans <code>User</code> et créez un fichier <code>Markdown.sublime-settings</code>. Celui-ci sera lu et appliqué à chaque fois que vous éditerez un fichier Markdown.</p>
-<p>Voici ce que j’ai pour le moment :</p>
-<pre><code>{
-  "<span class="hljs-attribute">color_scheme</span>": <span class="hljs-value"><span class="hljs-string">"Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme"</span></span>,
-  "<span class="hljs-attribute">enable_table_editor</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
-  "<span class="hljs-attribute">table_editor_syntax</span>": <span class="hljs-value"><span class="hljs-string">"Auto"</span></span>,
-  "<span class="hljs-attribute">tab_size</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,
-  "<span class="hljs-attribute">extensions</span>":
-  <span class="hljs-value">[
-    <span class="hljs-string">"mdown"</span>,
-    <span class="hljs-string">"txt"</span>,
-    <span class="hljs-string">"md"</span>
-  ]
-</span>}
-</code></pre><p>Le thème <code>dark</code> pour pas se niquer les yeux (coucou <a href="https://twitter.com/bloodyowl">@bloodyowl</a>), j’active aussi d’autres plugins dont je vais vous parler d’ici peu, j’affecte le spacing à <code>2</code>, et je déclare que j’utiliserai l’éditeur Markdown pour ce genre de fichiers : <code>.mdown</code>, <code>.txt</code>, <code>.md</code>.</p>
-<p>Bien, passons à la suite.</p>
-<h2 id="markdown-preview"><a class="putainde-Title-anchor" href="#markdown-preview">#</a>Markdown Preview</h2><p>Notre cher <a href="https://twitter.com/revolunet">@revolunet</a> a fait un excellent plugin Markdown pour Sublime Text: <a href="https://github.com/revolunet/sublimetext-markdown-preview">Sublime Text Markdown Preview</a>. Celui-ci permet d’avoir un rendu de votre Markdown en <code>.html</code>. Vous pouvez soit compiler votre Markdown pour créer un fichier HTML, soit l’ouvrir directement dans votre navigateur.</p>
-<p>Différents formats disponibles :</p>
-<ul>
-<li>Python Markdown</li>
-<li>Github Flavored Markdown</li>
-</ul>
-<p>Un autre parfait compagnon en somme, qui quant à lui s’occupera de digérer l’excellent article que vous êtes en train d’écrire.</p>
-<p>Je vous parlerai éventuellement un jour de <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> qui permet de faire ce genre de choses mais en un peu plus complet et générique (Sublime Text n’est pas nécessaire) mais c’est un poil plus complexe. Jettez-y un œil tout de même.</p>
-<h2 id="smartmarkdown"><a class="putainde-Title-anchor" href="#smartmarkdown">#</a>SmartMarkdown</h2><p><a href="https://github.com/demon386/SmartMarkdown">Petit plugin</a> intéressant qui vous permettra de cacher des parties de votre texte en le repliant. Par exemple, vous vous mettez devant un titre du style <code>##</code> et vous appuyez sur <code>tab</code>, cela repliera votre texte. Plutôt pratique pour se focaliser.</p>
-<p><img src="../../../images/posts/preview-smartmarkdown.png" alt=""></p>
-<h2 id="sublimetableeditor"><a class="putainde-Title-anchor" href="#sublimetableeditor">#</a>SublimeTableEditor</h2><p>Précédemment dans ma configuration Markdown, vous avez pu voir ceci :</p>
-<pre><code>  <span class="hljs-string">"enable_table_editor"</span>: <span class="hljs-literal">true</span>,
-  <span class="hljs-string">"table_editor_syntax"</span>: <span class="hljs-string">"Auto"</span>,
-</code></pre><p>Cela permet de configurer <a href="https://github.com/vkocubinsky/SublimeTableEditor">SublimeTableEditor</a> qui vous permettra de correctement aligner vos tableaux dans Markdown.</p>
-<p>Et voilà. Avec tout ceci, vous êtes paré(e) à écrire votre Markdown dans de bonnes conditions. Plus qu’à mettre du Jazz et vous préparer une tasse de thé et c’est parti.</p>
-<h2 id="bonus-markdown-extended"><a class="putainde-Title-anchor" href="#bonus-markdown-extended">#</a>Bonus : Markdown Extended</h2><p>Il est possible que vous n’aimiez pas forcément MarkdownEditing, et dans ce cas je vous propose un autre plugin pas inintéressant non plus s’appelant <a href="https://github.com/jonschlinkert/sublime-markdown-extended">Markdown Extended</a>. Il vous permettra d’avoir la bonne coloration syntaxique lorsque vous écrivez du code dans votre éditeur.</p>
-<h4 id="avant"><a class="putainde-Title-anchor" href="#avant">#</a>Avant</h4><p><img src="../../../images/posts/preview-markdownextended-before.png" alt=""></p>
-<h4 id="apres"><a class="putainde-Title-anchor" href="#apres">#</a>Après</h4><p><img src="../../../images/posts/preview-markdownextended-after.png" alt=""></p>
-<p>Oh et j’oubliais, voici quelques documentations sur Markdown histoire de bien l’utiliser :</p>
-<ul>
-<li><a href="http://daringfireball.net/projects/markdown/syntax">Documentation officielle</a></li>
-<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></li>
-<li><a href="http://warpedvisions.org/projects/markdown-cheat-sheet.md">Another Markdown Cheatsheet</a></li>
-</ul>
-
-]]></description><pubDate>Thu, 20 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</link><guid isPermaLink="true">http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</guid></item><item><title>BROWSERIFY ALL THE THINGS</title><description><![CDATA[[
+]]></description><pubDate>Thu, 20 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</link><guid isPermaLink="true">http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</guid></item><item><title>BROWSERIFY ALL THE THINGS</title><description><![CDATA[[
 <p>Alors que je prends goût à me passer de frameworks (principalement à cause des
 courbes d’apprentissage et des éventuelles lourdeurs et/ou restrictions que cela
 impose, mais c’est une autre histoire),
@@ -2637,278 +2690,4 @@ sans vous prendre la tête.</p>
 <p>Bisous.</p>
 <p><em>PS: pour tester browserify en live, c’est sur <a href="http://requirebin.com/">requirebin.com</a>.</em></p>
 
-]]></description><pubDate>Wed, 15 Jan 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/browserify-all-the-things/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/browserify-all-the-things/</guid></item><item><title>Responsive webdesign et structure du DOM</title><description><![CDATA[[
-<p>Bien, commençons par le commencement, si tu veux bien. Le <strong>responsive
-webdesign</strong>, ça te dit quelque chose ? Oui ? Bon. Dans ce cas, tu as peut-être
-comme moi déjà été confronté à un cas de figure plutôt ennuyeux. Que tu sois
-adepte du <em>mobile-first</em> ou irréductible dégradateur progressiste, il est
-forcément arrivé un moment où tu t’es dit cette chose toute bête :</p>
-<blockquote>
-<p>Ce serait quand même pas mal si cet élément était ici plutôt que là. Sauf que
-non.</p>
-</blockquote>
-<p>Le cas typique est celui d’un menu un minimum complexe, dont on réordonnerait
-volontiers les éléments un chouïa au dessus ou en deçà d’une certaine taille
-d’écran. Et là, il faut bien avouer qu’il n’existe pas vraiment de solution
-miracle.</p>
-<p>J’entends déjà les plus teigneux vociférer qu’avec une meilleure réflexion en
-amont, le <em>markup</em> aurait été mieux conçu et on n’en serait pas là. Bien qu’un
-peu facile, cette réponse peut s’avérer vraie dans un certain nombre de cas
-(admire la phrase du mec qui ne se mouille pas). Mais quoi qu’il en soit, si tu
-en es au stade de ce type de questionnement, c’est qu’il est de toute façon trop
-tard pour faire machine arrière.</p>
-<p>Au train où va l’innovation dans notre branche, surtout pour tout ce qui touche
-au mobile en général et à la conception web en particulier, il n’est pas exclu
-que les bouts de ficelle que je vais t’exposer ici soient obsolètes dans six
-mois, et que cet article fasse un comeback incroyable sur Twitter, les RT
-moquant gentiment les techniques précolombiennes auxquelles nous étions réduits
-il n’y a encore pas si longtemps. Va savoir, je pourrais bien faire l’objet
-d’une célébrité paradoxalement décadente à la Rick Astley. En attendant, il
-s’agit des seules solutions que je connais pour ce type de cas. Si tu as mieux à
-proposer, je te recommande chaudement de l’ouvrir dans les commentaires pour
-qu’on en bénéficie tous. C’est bon, on y va ? Je t’attends, moi !</p>
-<h2 id="a-l-ancienne-do-repeat-yourself"><a class="putainde-Title-anchor" href="#a-l-ancienne-do-repeat-yourself">#</a>À l’ancienne : Do Repeat Yourself</h2><p>Imagine une page de blog, où apparaissent consécutivement le titre de l’article,
-la photo l’illustrant, et enfin le texte. Comme une photo, selon la qualité de
-ta connexion, ça peut être un peu galère à charger sur mobile (et que la
-question des images en responsive design
-<a href="http://css-tricks.com/responsive-images-hard/">est encore un sacré bordel</a>), tu
-prends la décision de passer la photo en dessous du contenu textuel pour que tes
-visiteurs puissent lire leur article peinards même si la photo n’a pas fini de
-charger - et tu vas même en profiter pour la remplacer par une version plus
-light.</p>
-<p>Dans un tel cas, la meilleure solution peut encore être de dupliquer ta balise
-<code>img</code>, et de masquer l’une ou l’autre avec CSS en fonction de la taille d’écran,
-grâce à une <code>media query</code>. Voilà un exemple rudimentaire :</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Mon super article<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/mon/image/desktop.jpg"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"img-desktop"</span> /&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Lâche tes comm' !<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/mon/image/mobile.jpg"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"img-mobile"</span> /&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
-</code></pre>
-<pre><code class="lang-css"><span class="hljs-class">.img-desktop</span> <span class="hljs-rules">{
-  <span class="hljs-comment">/* Par défaut, l'image desktop est cachée */</span>
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
-<span class="hljs-rule">}</span></span>
-
-<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> screen and (min-width: <span class="hljs-number">768</span>px) </span>{
-  <span class="hljs-comment">/* Si on est sur "grand" écran, on affiche l'image desktop... */</span>
-  <span class="hljs-class">.img-desktop</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
-  <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-comment">/* ...et on masque l'image mobile */</span>
-  <span class="hljs-class">.img-mobile</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
-  <span class="hljs-rule">}</span></span>
-}
-</code></pre>
-<p>Évidemment, le gros inconvénient de ce type de solution est que qui dit
-duplication de contenu dit augmentation du poids total. Dans le cas d’un contenu
-purement textuel, selon sa taille, cela peut être négligeable. J’ai ici
-volontairement pris l’exemple le moins adapté : une image, qu’il ne faut
-absolument pas faire charger deux fois à nos visiteurs. On va tricher un peu
-avec JavaScript :</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Mon super article<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
-
-  <span class="hljs-comment">&lt;!-- Ces images ne seront pas chargées car elles n'ont pas d'attribut src --&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">data-src</span>=<span class="hljs-value">"/mon/image/desktop.jpg"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"img-desktop"</span> /&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Lâche tes comm' !<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">data-src</span>=<span class="hljs-value">"/mon/image/mobile.jpg"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"img-mobile"</span> /&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">noscript</span>&gt;</span>
-    <span class="hljs-comment">&lt;!-- Cette image ne sera chargée que si le visiteur n'a pas activé le JS --&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/mon/image/mobile.jpg"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"img-mobile img-noscript"</span> /&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">noscript</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
-</code></pre>
-<pre><code class="lang-css"><span class="hljs-class">.img-desktop</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
-<span class="hljs-rule">}</span></span>
-
-<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> screen and (min-width: <span class="hljs-number">768</span>px) </span>{
-  <span class="hljs-class">.img-desktop</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
-  <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.img-mobile</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
-  <span class="hljs-rule">}</span></span>
-}
-
-<span class="hljs-class">.img-noscript</span> <span class="hljs-rules">{
-  <span class="hljs-comment">/* On surcharge le style desktop pour s'assurer
-     que cette image s'affiche quelle que soit la taille de l'écran */</span>
-
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
-<span class="hljs-rule">}</span></span>
-</code></pre>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> handleImages = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-  <span class="hljs-comment">// On charge les images ayant l'attribut data-src,</span>
-  <span class="hljs-comment">// non encore chargées (attribut src indéfini)</span>
-  <span class="hljs-comment">// et non masquées par CSS</span>
-
-  [].<span class="hljs-keyword">forEach</span>.call(document.querySelectorAll(<span class="hljs-string">'img[data-src]:not([src])'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(el)</span> {</span>
-    <span class="hljs-keyword">if</span> (window.getComputedStyle(el).display != <span class="hljs-string">'none'</span>) {
-      el.src = el.getAttribute(<span class="hljs-string">'data-src'</span>);
-    }
-  });
-};
-
-window.addEventListener(<span class="hljs-string">'load'</span>, handleImages);
-window.addEventListener(<span class="hljs-string">'resize'</span>, handleImages);
-</code></pre>
-<p>Ainsi, seules les images nécessaires seront chargées avec la page. J’applique
-également le même traitement au <code>resize</code> ; c’est un peu bourrin, je te
-l’accorde, on pourrait probablement faire plus fin avec <code>matchMedia</code>.</p>
-<p>Dans le cas d’un visiteur naviguant sans JavaScript, seule l’image mobile est
-chargée : je pars du principe qu’étant donné qu’on ne peut pas définir laquelle
-des deux versions de l’image est la mieux adaptée pour lui, autant lui envoyer
-la plus légère.</p>
-<h2 id="js-powa-enquire-js"><a class="putainde-Title-anchor" href="#js-powa-enquire-js">#</a>JS powa : enquire.js</h2><p>La seconde solution peut tout à fait être réalisée “à la main”, mais je vais te
-parler d’une petite librairie que j’aime beaucoup et que j’ai déjà utilisée dans
-ce genre de cas. Elle se nomme <a href="http://wicky.nillia.ms/enquire.js/">enquire.js</a>
-et permet tout simplement d’affecter des callbacks à des media queries :</p>
-<pre><code class="lang-javascript">enquire.register(<span class="hljs-string">'screen and (min-width: 768px)'</span>, {
-  match: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-    <span class="hljs-comment">// L'écran fait 768px de large ou plus...</span>
-  },
-
-  unmatch: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-    <span class="hljs-comment">// ...et ici, 767px de large ou moins.</span>
-    <span class="hljs-comment">// La librairie repose sur matchMedia et matchMedia.addListener</span>
-  }
-});
-</code></pre>
-<p>Plutôt sympa, non ? Pour reprendre notre exemple de tout à l’heure (le CSS n’est
-plus nécessaire) :</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Mon super article<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">data-src</span>=<span class="hljs-value">"/mon/image/desktop.jpg"</span> <span class="hljs-attribute">data-mobile-src</span>=<span class="hljs-value">"/mon/image/mobile.jpg"</span> /&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Lâche tes comm' !<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">noscript</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/mon/image/mobile.jpg"</span> /&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">noscript</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
-</code></pre>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> content = document.querySelector(<span class="hljs-string">'p'</span>),
-
-  switchImage = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(isMobile)</span> {</span>
-    <span class="hljs-keyword">var</span> attr = isMobile ? <span class="hljs-string">'data-mobile-src'</span> : <span class="hljs-string">'data-src'</span>;
-
-    [].<span class="hljs-keyword">forEach</span>.call(document.querySelectorAll(<span class="hljs-string">'img['</span> + attr + <span class="hljs-string">']'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(el)</span> {</span>
-      <span class="hljs-comment">// On affecte l'une ou l'autre source à notre image,</span>
-      <span class="hljs-comment">// entraînant son chargement si nécessaire.</span>
-      el.src = el.getAttribute(attr);
-
-      <span class="hljs-comment">// On en profite pour la bouger avant ou après le contenu</span>
-      content.parentNode.insertBefore(el, isMobile ? content.nextSibling : content);
-    });
-  };
-
-enquire.register(<span class="hljs-string">'screen and (min-width: 768px)'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-  switchImage(<span class="hljs-keyword">false</span>);
-});
-
-enquire.register(<span class="hljs-string">'screen and (max-width: 767px)'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-  switchImage(<span class="hljs-keyword">true</span>);
-});
-</code></pre>
-<p>On peut ainsi gérer facilement le chargement de l’image, ainsi que son
-emplacement. J’utilise ici deux handlers distincts pour m’assurer qu’enquire
-fait bien son boulot au chargement aussi, dans tous les cas (les callbacks
-<code>unmatch</code> ne sont appelés qu’au redimensionnement, semble-t-il : avec un seul
-handler, l’image n’arrive donc jamais si on charge la page avec un écran d’une
-largeur inférieure à 768px).</p>
-<h2 id="that-s-all-you-ve-got-bitch-"><a class="putainde-Title-anchor" href="#that-s-all-you-ve-got-bitch-">#</a>That’s all you’ve got, bitch?</h2><p>On peut également, puisque tu y tiens tant, évoquer d’autres solutions plus
-marginales mais qui méritent d’être citées.</p>
-<h3 id="foundation"><a class="putainde-Title-anchor" href="#foundation">#</a>Foundation</h3><p><a href="http://foundation.zurb.com/">Foundation</a> propose, dans sa version 5 (et
-peut-être même avant, j’ai pas vérifié) un peu de sucre syntaxique HTML
-permettant de switcher (via JS, œuf corse) simplement entre différents contenus
-pour l’élément sur lequel on l’utilise.</p>
-<p>C’est pas mal. Ça donne ça (tiré de <a href="http://foundation.zurb.com/docs/components/interchange.html">la doc</a>) :</p>
-<blockquote>
-<p>We use the data-interchange attribute on a markup container (probably a div)
-to do this. Here’s an example which loads up a small, static map on mobile, a
-larger static map for medium-sized devices, and a full interactive Google map
-on large display devices.</p>
-</blockquote>
-<pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> data-interchange=<span class="hljs-string">"[../examples/interchange/default.html, (small)],
-                       [../examples/interchange/medium.html, (medium)],
-                       [../examples/interchange/large.html, (large)]"</span>&gt;
-  &lt;<span class="hljs-keyword">div</span> data-alert <span class="hljs-type">class</span>=<span class="hljs-string">"alert-box secondary radius"</span>&gt;
-    This <span class="hljs-keyword">is</span> <span class="hljs-keyword">the</span> default content.
-    &lt;a href=<span class="hljs-string">"#"</span> <span class="hljs-type">class</span>=<span class="hljs-string">"close"</span>&gt;&amp;<span class="hljs-keyword">times</span>;&lt;/a&gt;
-  &lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-</code></pre>
-<p><code>small</code>, <code>medium</code> et <code>large</code> étant des raccourcis pour des media queries données
-(c’est dans <a href="http://foundation.zurb.com/docs/components/interchange.html">la doc</a>,
-toujours. J’insiste.)</p>
-<h3 id="flexbox-pas-toi-david-"><a class="putainde-Title-anchor" href="#flexbox-pas-toi-david-">#</a>Flexbox (pas toi, David)</h3><p>On peut également, comme l’a très justement souligné <a href="/#crew">lionelB</a>, se
-pencher (mais pas trop) sur le cas de Flexbox, qui est un nouveau type de
-positionnement introduit en CSS3. La <a href="http://caniuse.com/#search=flexbox">compatibilité</a>
-n’est pas encore au top (surtout grâce à IE, qui l’eût cru) mais autant se tenir
-prêts ! Pour ceux qui ont dormi, en gros, tu définis un conteneur :</p>
-<pre><code class="lang-css"><span class="hljs-class">.flex-container</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> flex</span></span>;
-
-  <span class="hljs-comment">/* ou bien */</span>
-
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-flex</span></span>;
-<span class="hljs-rule">}</span></span>
-</code></pre>
-<p>…et tu donnes des numéros à ses enfants, comme à Bangkok :</p>
-<pre><code class="lang-css"><span class="hljs-class">.title</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">order</span>:<span class="hljs-value"> <span class="hljs-number">1</span></span></span>;
-<span class="hljs-rule">}</span></span>
-
-<span class="hljs-class">.content</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">order</span>:<span class="hljs-value"> <span class="hljs-number">2</span></span></span>;
-<span class="hljs-rule">}</span></span>
-
-<span class="hljs-class">.image</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">order</span>:<span class="hljs-value"> <span class="hljs-number">3</span></span></span>;
-<span class="hljs-rule">}</span></span>
-
-<span class="hljs-comment">/*
-Bien sûr, tu as été assez malin pour mettre ton image en dernier dans le DOM...
-...n'est-ce pas ?
-*/</span>
-
-<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> screen and (min-width: <span class="hljs-number">768</span>px) </span>{
-  <span class="hljs-class">.content</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">order</span>:<span class="hljs-value"> <span class="hljs-number">3</span></span></span>;
-  <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.image</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">order</span>:<span class="hljs-value"> <span class="hljs-number">2</span></span></span>;
-  <span class="hljs-rule">}</span></span>
-}
-</code></pre>
-<p>Et voilà, pas besoin d’avoir fait Pollypocket pour percevoir à quel point la
-flexibilité et la propreté du code que cette technique nous permet d’écrire
-résolvent notre problème en deux secondes douze. Ce n’est évidemment ici que la
-partie émergée du flexberg ; il y a des tas de bonnes ressources qui vous
-expliqueront ça en long, en large et en travers bien mieux que moi, notamment
-<a href="http://www.adobe.com/devnet/html5/articles/working-with-flexbox-the-new-spec.html">cet article</a>
-sur lequel j’ai honteusement pompé les snippets de cette partie.</p>
-<h2 id="conclusion"><a class="putainde-Title-anchor" href="#conclusion">#</a>Conclusion</h2><p>Comme tu l’as vu, rien de ce que je t’ai montré n’est réellement satisfaisant :
-pour pouvoir contrôler le positionnement d’un élément dans le DOM dans le cadre
-d’un webdesign responsive, tu dois soit le dupliquer et jouer à cache-cache,
-soit le déplacer avec JavaScript. Aussi, je serais ravi que tu partages ton
-opinion, tes idées ou tes retours d’XP à ce sujet. Ça me fera de la lecture pour
-passer le temps, et toi tu feras quelque chose de constructif !</p>
-<p>Il est temps pour moi de te laisser reprendre le cours de ta vie. Peut-être nos
-routes se croiseront-elles de nouveau. Dans l’intervalle, va, vis, et code !</p>
-
-]]></description><pubDate>Thu, 26 Dec 2013 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/html/responsive-dom/</link><guid isPermaLink="true">http://putaindecode.fr/posts/html/responsive-dom/</guid></item></channel></rss>
+]]></description><pubDate>Wed, 15 Jan 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/browserify-all-the-things/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/browserify-all-the-things/</guid></item></channel></rss>
