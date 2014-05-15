@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Wed, 14 May 2014 10:16:44 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Créez vos iconfonts avec gulp-iconfont</title><description><![CDATA[[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Thu, 15 May 2014 04:04:11 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Créez vos iconfonts avec gulp-iconfont</title><description><![CDATA[[
 <p>Après <a href="/posts/js/introduction-gulp/">notre introduction sur gulp</a>, je vous propose de créer vos propres fontes à partir d’icônes.</p>
 <p>J’ai bien galéré lorsque j’ai dû passer de <strong>grunt</strong> à <strong>gulp</strong>. Non pas que gulp soit compliqué mais retrouver exactement le même <em>workflow</em> qu’avant, sachant que gulp est jeune et que les <em>plugins</em> sont bien moins nombreux que sur grunt, c’est pas si évident que ça.</p>
 <p>M’enfin, il y a toujours une solution à un problème.</p>
@@ -6,15 +6,17 @@
 <p>Je me suis creusé les méninges et j’ai finalement trouvé. Cette solution, je vous la propose.</p>
 <h2 id="gulp-iconfont"><a class="putainde-Title-anchor" href="#gulp-iconfont">#</a>gulp-iconfont</h2><p>Tout d’abord, installez <strong>gulp</strong> (évident…) et faites ce que vous avez à faire avec gulp.</p>
 <p>Maintenant, vous êtes prêt(e) ? Okay, go.</p>
-<h3 id="intallez-les-em-packages-em-adequats"><a class="putainde-Title-anchor" href="#intallez-les-em-packages-em-adequats">#</a>Intallez les <em>packages</em> adéquats</h3><p>Oui, deux packages, <a href="https://github.com/nfroidure/gulp-iconfont">gulp-iconfont</a> et <a href="https://github.com/backflip/gulp-iconfont-css">gulp-iconfont-css</a>.</p>
-<pre><code>$ npm install gulp<span class="hljs-attribute">-iconfont</span> gulp<span class="hljs-attribute">-iconfont</span><span class="hljs-attribute">-css</span> <span class="hljs-subst">--</span>save<span class="hljs-attribute">-dev</span>
-</code></pre><h3 id="importez-les"><a class="putainde-Title-anchor" href="#importez-les">#</a>Importez-les</h3><pre><code><span class="hljs-comment">// import</span>
+<h3 id="installez-les-em-packages-em-adequats"><a class="putainde-Title-anchor" href="#installez-les-em-packages-em-adequats">#</a>Installez les <em>packages</em> adéquats</h3><p>Oui, deux packages, <a href="https://github.com/nfroidure/gulp-iconfont">gulp-iconfont</a> et <a href="https://github.com/backflip/gulp-iconfont-css">gulp-iconfont-css</a>.</p>
+<pre><code class="lang-shell">$ npm install gulp<span class="hljs-attribute">-iconfont</span> gulp<span class="hljs-attribute">-iconfont</span><span class="hljs-attribute">-css</span> <span class="hljs-subst">--</span>save<span class="hljs-attribute">-dev</span>
+</code></pre>
+<h3 id="importez-les"><a class="putainde-Title-anchor" href="#importez-les">#</a>Importez-les</h3><pre><code class="lang-js"><span class="hljs-comment">// import</span>
 <span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>)
 
 <span class="hljs-keyword">var</span> iconfont = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-iconfont'</span>)
   , iconfontCss = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-iconfont-css'</span>)
-</code></pre><h3 id="creez-votre-propre-t-che-gulp"><a class="putainde-Title-anchor" href="#creez-votre-propre-t-che-gulp">#</a>Créez votre propre tâche gulp</h3><p>Je préconise d’appeler toute transformation d’une image vers une fonte “glyphicon”.</p>
-<pre><code><span class="hljs-comment">// glyphicons</span>
+</code></pre>
+<h3 id="creez-votre-propre-t-che-gulp"><a class="putainde-Title-anchor" href="#creez-votre-propre-t-che-gulp">#</a>Créez votre propre tâche gulp</h3><p>Je préconise d’appeler toute transformation d’une image vers une fonte “glyphicon”.</p>
+<pre><code class="lang-js"><span class="hljs-comment">// glyphicons</span>
 gulp.task(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
  <span class="hljs-keyword">return</span> gulp.src(<span class="hljs-string">'src/glyphicons/**/*'</span>) <span class="hljs-comment">// où sont vos svg</span>
     .pipe(iconfontCss({
@@ -27,8 +29,9 @@ gulp.task(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-funct
      }))
     .pipe( gulp.dest(<span class="hljs-string">'src/assets/fonts'</span>) )
 })
-</code></pre><h3 id="le-final"><a class="putainde-Title-anchor" href="#le-final">#</a>Le final</h3><p>Voilà l’écriture entière de la tâche :</p>
-<pre><code><span class="hljs-comment">// import</span>
+</code></pre>
+<h3 id="le-final"><a class="putainde-Title-anchor" href="#le-final">#</a>Le final</h3><p>Voilà l’écriture entière de la tâche :</p>
+<pre><code class="lang-js"><span class="hljs-comment">// import</span>
 <span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>)
 
 <span class="hljs-keyword">var</span> iconfont = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-iconfont'</span>)
@@ -46,7 +49,8 @@ gulp.task(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-funct
      }))
     .pipe( gulp.dest(<span class="hljs-string">'src/assets/fonts'</span>) )
 })
-</code></pre><p>Et voilà, on est bon. On peut transformer nos <em>svg</em> en <em>font</em>. \o/</p>
+</code></pre>
+<p>Et voilà, on est bon. On peut transformer nos <em>svg</em> en <em>font</em>. \o/</p>
 
 ]]></description><pubDate>Wed, 14 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/creez-vos-iconfonts-avec-gulp-iconfont/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/creez-vos-iconfonts-avec-gulp-iconfont/</guid></item><item><title>Array.reduce par l'exemple</title><description><![CDATA[[
 <p>Souvent méconnue, la fonction <code>Array#reduce</code> se révèle super pratique dès lors
