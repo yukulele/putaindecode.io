@@ -195,9 +195,9 @@ module.exports = klass.extend({
 
 },{"bloody-class":5,"bloody-immediate":14}],5:[function(require,module,exports){
 var extend = require("bloody-collections/lib/extend")
-var hasMethod = require("./lib/hasMethod")
-var create = require("./lib/create")
-var K = function(){}
+  , hasMethod = require("./lib/hasMethod")
+  , create = require("./lib/create")
+  , K = function(){}
 
 module.exports = {
   extend : function(object){
@@ -207,7 +207,6 @@ module.exports = {
   },
   create : function(){
     var instance = create(this)
-    instance._accessors = {}
     if(hasMethod(instance, "constructor")) {
       instance.constructor.apply(instance, arguments)
     }
@@ -217,16 +216,6 @@ module.exports = {
     if(hasMethod(this, "destructor")) {
       this.destructor.apply(this, arguments)
     }
-    this._accessors = {}
-  },
-  accessor : function(methodName){
-    var thisValue = this
-    if(this._accessors.hasOwnProperty(methodName)) {
-      return this._accessors[methodName]
-    }
-    return this._accessors[methodName] = function(){
-      return thisValue[methodName].apply(thisValue, arguments)
-    }
   },
   constructor : K,
   destructor : K
@@ -235,20 +224,21 @@ module.exports = {
 },{"./lib/create":6,"./lib/hasMethod":7,"bloody-collections/lib/extend":11}],6:[function(require,module,exports){
 // from lodash
 var toString = Object.prototype.toString
-var isNativeRE = RegExp('^' +
-    String(toString)
-      .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-      .replace(/toString| for [^\]]+/g, '.*?') + '$'
-  )
+  , isNativeRE = RegExp('^' +
+      String(toString)
+        .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+        .replace(/toString| for [^\]]+/g, '.*?') + '$'
+    )
 
 if(Object.create && isNativeRE.test(Object.create)) {
   module.exports = Object.create
-} else {
-  module.exports = function(object){
-    function F(){}
-    F.prototype = object
-    return new F()
-  }
+  return
+}
+
+module.exports = function(object){
+  function F(){}
+  F.prototype = object
+  return new F()
 }
 
 },{}],7:[function(require,module,exports){
