@@ -896,9 +896,9 @@ if (typeof window.Element === "undefined" || "classList" in document.documentEle
 }
 
 var prototype = Array.prototype
-  , push = prototype.push
-  , splice = prototype.splice
-  , join = prototype.join
+var push = prototype.push
+var splice = prototype.splice
+var join = prototype.join
 
 function DOMTokenList(el) {
   this.el = el;
@@ -975,7 +975,7 @@ module.exports = observable.create()
 
 },{"bloody-observable":3}],40:[function(require,module,exports){
 var cornea = require("cornea")
-  , tags = require("../models/tags")
+var tags = require("../models/tags")
 
 module.exports = cornea.extend({
   element : ".js-Column",
@@ -997,7 +997,7 @@ module.exports = cornea.extend({
 
 },{"../models/tags":39,"cornea":22}],41:[function(require,module,exports){
 var cornea = require("cornea")
-  , curry = require("bloody-curry")
+var curry = require("bloody-curry")
 
 module.exports = cornea.extend({
   element : document.documentElement,
@@ -1070,7 +1070,7 @@ module.exports = cornea.extend({
 
 },{"cornea":22}],43:[function(require,module,exports){
 var cornea = require("cornea")
-  , tags = require("../models/tags")
+var tags = require("../models/tags")
 
 module.exports = cornea.extend({
   element : ".js-Posts",
@@ -1102,7 +1102,9 @@ module.exports = cornea.extend({
     }
   },
   updatePosts : function(tags){
-    var key, id, element
+    var key
+    var id
+    var element
     this.showAll()
     for(key in tags) {
       for(id in this.map) {
@@ -1130,7 +1132,7 @@ module.exports = cornea.extend({
 
 },{"../models/tags":39,"cornea":22}],44:[function(require,module,exports){
 var cornea = require("cornea")
-  , smoothScroll = require("bloody-scroll")
+var smoothScroll = require("bloody-scroll")
 
 module.exports = cornea.extend({
   element : document.body,
@@ -1146,7 +1148,7 @@ module.exports = cornea.extend({
   ],
   scrollTo : function(eventObject, target){
     var hash = window.location.hash
-      , element
+    var element
     if(target) {
       hash = target.hash
       eventObject.preventDefault()
