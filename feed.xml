@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Sat, 17 May 2014 13:35:55 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Se mettre au frontend en 2014, par où commencer ?</title><description><![CDATA[[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Sat, 17 May 2014 13:46:43 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Se mettre au frontend en 2014, par où commencer ?</title><description><![CDATA[[
 <p>Un de nos lecteurs nous a récemment envoyé un email avec tout un tas de questions; nous avons apprécié le geste et plutôt qu’uniquement lui répondre, nous souhaitions en faire profiter tout le monde.</p>
 <hr>
 <blockquote>
@@ -238,59 +238,7 @@ function groupByOS( site, memo, browser){
 <p>J’espère que vous avez appréciez ces quelques exemples d’utilisation de <code>Array#reduce</code>.
 Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article ou via les commentaires !</p>
 
-]]></description><pubDate>Tue, 13 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/array-reduce/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/array-reduce/</guid></item><item><title>npm: choisir la bonne version de ses dépendances</title><description><![CDATA[[
-<p>Pas plus tard qu’hier, alors que je travaillais tranquillement, apparu soudainement un bug dans mon <em>workflow</em> de <em>build</em>. Il ne m’était plus possible avec <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> de supprimer des fichiers. Hmmm, ballot, car sans la suppression, mon <em>workflow</em> devenait tout bancal. Bien. Il me fallut remonter la rivière - comme souvent, en tant que développeur - afin de constater où était le bug. Je suis alors tombé sur <a href="https://github.com/isaacs/rimraf">rimraf</a> (bon c’était pas bien loin) qui s’était vu être mis à jour il y a à peine 12 heures, comprenant un bug.</p>
-<h2 id="contexte"><a class="putainde-Title-anchor" href="#contexte">#</a>Contexte</h2><p>Bon, vous voyez le topo ?</p>
-<pre><code>{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean"</span></span>,
-  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value"><span class="hljs-string">"~2.2.1"</span>
-  </span>}
-</span>}
-</code></pre><p><a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> qui contient en <em>dependencies</em> <a href="https://github.com/isaacs/rimraf">rimraf</a> avec une version bugguée. Oh la belle affaire. Oui car <code>~2.2.1</code> veut dire “<a href="https://github.com/isaacs/node-semver#ranges">Raisonnablement proche de 2.2.1</a>“, ce qui se traduit par télécharger la dernière version en <code>2.2.x</code>, soit la <code>2.2.7</code> (celle bugguée) lorsque je mis à jour le package <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a>.</p>
-<h2 id="le-hic"><a class="putainde-Title-anchor" href="#le-hic">#</a>Le hic</h2><p>Une question m’est venue : comment faire en sorte de figer la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> qui est une dépendance de dépendance ?</p>
-<p>Ha ! Pas évident comme ça.</p>
-<p>J’ai d’abord essayé sans trop d’espoir de télécharger <a href="https://github.com/isaacs/rimraf">rimraf</a> lui-même en <code>2.2.6</code> mais vu que chaque dépendance à ses propres dépendances et qu’elles ne se les partagent pas… c’était peine perdue.</p>
-<p>J’ai donc cherché, cherché, et je suis tombé sur <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a>: “Lock down dependency versions”. Bingo !</p>
-<h2 id="npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances"><a class="putainde-Title-anchor" href="#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>npm-shrinkwrap, la solution pour figer vos depéndances, toutes vos dépendances</h2><p><a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a> va vous permettre de définir avec précision chaque version de chaque dépendance.</p>
-<p>Pour cela, faites d’abord un <code>npm install</code> (si vous avez évidemment un <code>package.json</code>) afin d’installer vos <code>node_modules</code>. Une fois cela fait, lancez <code>npm shrinkwrap</code> qui créera le fichier <code>npm-shrinkwrap.json</code> qui comprendra toutes les définitions de chaque dépendance.</p>
-<h3 id="figer-une-dependance-de-dependance"><a class="putainde-Title-anchor" href="#figer-une-dependance-de-dependance">#</a>Figer une dépendance de dépendance</h3><p>Simple, regardez :</p>
-<pre><code>{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"my-project"</span></span>,
-  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"1.0.0"</span></span>,
-  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">grunt-contrib-clean</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.5.0"</span></span>,
-      "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean@~0.5.*"</span></span>,
-      "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-        "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"2.2.6"</span></span>,
-          "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"rimraf@~2.2.1"</span></span>,
-          "<span class="hljs-attribute">resolved</span>": <span class="hljs-value"><span class="hljs-string">"https://registry.npmjs.org/rimraf/-/rimraf-2.2.6.tgz"</span>
-        </span>}
-      </span>}
-    </span>}
-  </span>}
-</span>}
-</code></pre><p>J’ai défini la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> dans <code>dependencies.grunt-contrib-clean.dependencies.rimraf</code>.</p>
-<p>Bon, je ne connais pas tout par coeur non plus, npm-shrinkwrap vous écrira la totalité du fichier avec toutes les définitions mais j’ai volontairement tout supprimé et gardé uniquement la partie <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> car seule cette partie est à figer. Quand je dis supprimer, je parle réellement dans le fichier final, pas juste ici dans l’article.</p>
-<p>Vous aurez toute l’explication de npm-shrinkwrap sur la <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">documentation officielle [en]</a>.</p>
-<h2 id="choisir-la-bonne-strategie-de-version"><a class="putainde-Title-anchor" href="#choisir-la-bonne-strategie-de-version">#</a>Choisir la bonne stratégie de version</h2><p>Parce qu’il est important de savoir quelle version exacte nous souhaitons installer dans notre projet, il faut définir avec précisions ces versions dans <code>package.json</code>.</p>
-<p>Vous pouvez avoir <code>1.2.1</code> ou encore <code>~1.4.6</code> ou bien encore <code>^2.3.1</code>. Mais que veulent dire <code>^</code> ou <code>~</code> ?</p>
-<ul>
-<li><code>1.2.1</code> : cette version exacte</li>
-<li><code>~1.4.6</code> : raisonnablement proche de <code>1.4.6</code></li>
-<li><code>^2.3.1</code> : compatible avec <code>2.3.1</code></li>
-</ul>
-<p>Il est clair que lu comme ça, le plus intéressant est le <code>^</code> et c’est justement <a href="http://fredkschott.com/post/2014/02/npm-no-longer-defaults-to-tildes/">celui qui est choisi maintenant [en]</a> lorsque l’on fait un <code>npm install --save</code>. Cool non ?!</p>
-<p>Pour plus d’information sur la définition des versions, <a href="https://github.com/isaacs/node-semver#ranges">c’est par là</a> (Oh mon dieu, il a fait un lien avec un “cliquez ici”).</p>
-<p>Bon. C’est bon ? Vous avez tout compris ? Okay, vous pouvez passer à <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/"><strong>napa</strong></a> maintenant qui vous aidera grandement sur le téléchargement de projets n’ayant pas de <code>package.json</code>.</p>
-<p>En ce qui concerne npm, je m’arrête là, et vous propose une petite solution afin d’augmenter la vitesse de vos installations de node modules.</p>
-<h2 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h2><p>Envie d’accélérer vos installations npm ? Je vous conseille <a href="https://github.com/vvo/npm-pkgr">npm-pkgr</a>.</p>
-<p>Il hashera votre <code>package.json</code> pour savoir s’il a été modifié ou non, et en fonction de ça, il lancera <code>npm install</code> ou non. Sacré gain de temps (surtout si vous faites des <code>npm install</code> à chaque <em>deploy</em>).</p>
-<p>You are now a npm master. 👨</p>
-
-]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/npm-choisir-version/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/npm-choisir-version/</guid></item><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[[
+]]></description><pubDate>Tue, 13 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/array-reduce/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/array-reduce/</guid></item><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[[
 <p>(Grosse grosse blague ce titre…)</p>
 <p><a href="https://twitter.com/kewah">@kewah</a> nous a récemment parlé de <a href="/posts/frontend/npm-comme-package-manager-pour-le-front-end/"><strong>npm</strong> comme front-end packager manager</a>, je vais aller encore plus loin. Je vais vous dévoiler comment installer des projets qui n’ont pas de <code>package.json</code>. Oui, car c’est bien beau de virer Bower (oh que oui c’est beau) mais comme npm requiert constamment un <code>package.json</code>, on ne va pas pouvoir télécharger grand chose sauf si on fait des <em>PR</em> afin d’ajouter ce fichier sur les projets que l’on souhaite obtenir.</p>
 <p>C’est pourquoi je vais vous parler de <a href="https://github.com/shama/napa"><strong>napa</strong></a>.</p>
@@ -355,7 +303,59 @@ Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article
 <p>Note : napa et npm-shrinkwrap, c’est pas encore ça, alors n’hésitez pas à supprimer la partie “napa” avant de lancer votre génération de npm-shrinkwrap.</p>
 <p>Bon download à vous.</p>
 
-]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</guid></item><item><title>Premiers pas avec Ruby</title><description><![CDATA[[
+]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</guid></item><item><title>npm: choisir la bonne version de ses dépendances</title><description><![CDATA[[
+<p>Pas plus tard qu’hier, alors que je travaillais tranquillement, apparu soudainement un bug dans mon <em>workflow</em> de <em>build</em>. Il ne m’était plus possible avec <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> de supprimer des fichiers. Hmmm, ballot, car sans la suppression, mon <em>workflow</em> devenait tout bancal. Bien. Il me fallut remonter la rivière - comme souvent, en tant que développeur - afin de constater où était le bug. Je suis alors tombé sur <a href="https://github.com/isaacs/rimraf">rimraf</a> (bon c’était pas bien loin) qui s’était vu être mis à jour il y a à peine 12 heures, comprenant un bug.</p>
+<h2 id="contexte"><a class="putainde-Title-anchor" href="#contexte">#</a>Contexte</h2><p>Bon, vous voyez le topo ?</p>
+<pre><code>{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean"</span></span>,
+  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value"><span class="hljs-string">"~2.2.1"</span>
+  </span>}
+</span>}
+</code></pre><p><a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> qui contient en <em>dependencies</em> <a href="https://github.com/isaacs/rimraf">rimraf</a> avec une version bugguée. Oh la belle affaire. Oui car <code>~2.2.1</code> veut dire “<a href="https://github.com/isaacs/node-semver#ranges">Raisonnablement proche de 2.2.1</a>“, ce qui se traduit par télécharger la dernière version en <code>2.2.x</code>, soit la <code>2.2.7</code> (celle bugguée) lorsque je mis à jour le package <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a>.</p>
+<h2 id="le-hic"><a class="putainde-Title-anchor" href="#le-hic">#</a>Le hic</h2><p>Une question m’est venue : comment faire en sorte de figer la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> qui est une dépendance de dépendance ?</p>
+<p>Ha ! Pas évident comme ça.</p>
+<p>J’ai d’abord essayé sans trop d’espoir de télécharger <a href="https://github.com/isaacs/rimraf">rimraf</a> lui-même en <code>2.2.6</code> mais vu que chaque dépendance à ses propres dépendances et qu’elles ne se les partagent pas… c’était peine perdue.</p>
+<p>J’ai donc cherché, cherché, et je suis tombé sur <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a>: “Lock down dependency versions”. Bingo !</p>
+<h2 id="npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances"><a class="putainde-Title-anchor" href="#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>npm-shrinkwrap, la solution pour figer vos depéndances, toutes vos dépendances</h2><p><a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a> va vous permettre de définir avec précision chaque version de chaque dépendance.</p>
+<p>Pour cela, faites d’abord un <code>npm install</code> (si vous avez évidemment un <code>package.json</code>) afin d’installer vos <code>node_modules</code>. Une fois cela fait, lancez <code>npm shrinkwrap</code> qui créera le fichier <code>npm-shrinkwrap.json</code> qui comprendra toutes les définitions de chaque dépendance.</p>
+<h3 id="figer-une-dependance-de-dependance"><a class="putainde-Title-anchor" href="#figer-une-dependance-de-dependance">#</a>Figer une dépendance de dépendance</h3><p>Simple, regardez :</p>
+<pre><code>{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"my-project"</span></span>,
+  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"1.0.0"</span></span>,
+  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">grunt-contrib-clean</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.5.0"</span></span>,
+      "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean@~0.5.*"</span></span>,
+      "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"2.2.6"</span></span>,
+          "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"rimraf@~2.2.1"</span></span>,
+          "<span class="hljs-attribute">resolved</span>": <span class="hljs-value"><span class="hljs-string">"https://registry.npmjs.org/rimraf/-/rimraf-2.2.6.tgz"</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}
+</span>}
+</code></pre><p>J’ai défini la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> dans <code>dependencies.grunt-contrib-clean.dependencies.rimraf</code>.</p>
+<p>Bon, je ne connais pas tout par coeur non plus, npm-shrinkwrap vous écrira la totalité du fichier avec toutes les définitions mais j’ai volontairement tout supprimé et gardé uniquement la partie <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> car seule cette partie est à figer. Quand je dis supprimer, je parle réellement dans le fichier final, pas juste ici dans l’article.</p>
+<p>Vous aurez toute l’explication de npm-shrinkwrap sur la <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">documentation officielle [en]</a>.</p>
+<h2 id="choisir-la-bonne-strategie-de-version"><a class="putainde-Title-anchor" href="#choisir-la-bonne-strategie-de-version">#</a>Choisir la bonne stratégie de version</h2><p>Parce qu’il est important de savoir quelle version exacte nous souhaitons installer dans notre projet, il faut définir avec précisions ces versions dans <code>package.json</code>.</p>
+<p>Vous pouvez avoir <code>1.2.1</code> ou encore <code>~1.4.6</code> ou bien encore <code>^2.3.1</code>. Mais que veulent dire <code>^</code> ou <code>~</code> ?</p>
+<ul>
+<li><code>1.2.1</code> : cette version exacte</li>
+<li><code>~1.4.6</code> : raisonnablement proche de <code>1.4.6</code></li>
+<li><code>^2.3.1</code> : compatible avec <code>2.3.1</code></li>
+</ul>
+<p>Il est clair que lu comme ça, le plus intéressant est le <code>^</code> et c’est justement <a href="http://fredkschott.com/post/2014/02/npm-no-longer-defaults-to-tildes/">celui qui est choisi maintenant [en]</a> lorsque l’on fait un <code>npm install --save</code>. Cool non ?!</p>
+<p>Pour plus d’information sur la définition des versions, <a href="https://github.com/isaacs/node-semver#ranges">c’est par là</a> (Oh mon dieu, il a fait un lien avec un “cliquez ici”).</p>
+<p>Bon. C’est bon ? Vous avez tout compris ? Okay, vous pouvez passer à <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/"><strong>napa</strong></a> maintenant qui vous aidera grandement sur le téléchargement de projets n’ayant pas de <code>package.json</code>.</p>
+<p>En ce qui concerne npm, je m’arrête là, et vous propose une petite solution afin d’augmenter la vitesse de vos installations de node modules.</p>
+<h2 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h2><p>Envie d’accélérer vos installations npm ? Je vous conseille <a href="https://github.com/vvo/npm-pkgr">npm-pkgr</a>.</p>
+<p>Il hashera votre <code>package.json</code> pour savoir s’il a été modifié ou non, et en fonction de ça, il lancera <code>npm install</code> ou non. Sacré gain de temps (surtout si vous faites des <code>npm install</code> à chaque <em>deploy</em>).</p>
+<p>You are now a npm master. 👨</p>
+
+]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/npm-choisir-version/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/npm-choisir-version/</guid></item><item><title>Premiers pas avec Ruby</title><description><![CDATA[[
 <h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><pre><code class="lang-sh"><span class="hljs-char">$ </span>git clone <span class="hljs-method">git:</span>//github.com/sstephenson/rbenv.git ~/.rbenv
 <span class="hljs-char">$ </span>echo <span class="hljs-string">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> &gt;&gt; ~/.bashrc
 <span class="hljs-char">$ </span>echo <span class="hljs-string">'eval "$(rbenv init -)"'</span> &gt;&gt; ~/.bashrc
@@ -463,7 +463,127 @@ gestionnaire de dépendances, dans le cas où celui-ci n’intègre pas d’autr
 fonctionnalités que le téléchargement de modules.  </p>
 <p>Bye bye Bower!</p>
 
-]]></description><pubDate>Tue, 06 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</guid></item><item><title>Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML</title><description><![CDATA[[
+]]></description><pubDate>Tue, 06 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</guid></item><item><title>Petite définition de BEM</title><description><![CDATA[[
+<p><strong><a href="http://bem.info">BEM</a></strong> n’est ni une marque de voiture ni un groupe de musique, et encore moins une onomatopée (quoique). C’est plutôt une façon de nommer les classes en CSS, une convention en d’autres termes voire une méthodologie.</p>
+<p>Dans cet article, je ne vous expliquerai pas pourquoi il faut préférer BEM à une autre convention, je vous explique surtout comment l’utiliser.</p>
+<p><strong>BEM</strong> apporte une solution à un problème majeur en informatique : le nommage.</p>
+<p>Il n’y a rien de plus compliqué en informatique que de nommer un objet : besoin d’être explicite, ne doit pas être trop générique, ni trop compliqué, ni trop verbeux (ça, ça reste à voir avec BEM…).</p>
+<p>Lorsque l’on nomme un objet, une méthode, une fonction, une classe, on se doit d’être avant tout compréhensible. Une personne devant lire votre code doit directement comprendre de quoi vous parlez. Cette personne peut très bien être vous 6 mois, 1 an après. Je pense sincèrement qu’un code clair vaut toute la documentation du monde. Je ne dis pas qu’il ne faut pas documenter mais un code doit être facilement compréhensible, la documentation doit juste apporter un contexte, une situation particulière.</p>
+<p>Bref, <strong>BEM</strong> est le sigle pour <em>Block</em>, <em>Element</em>, <em>Modifier</em>. Qu’est-ce que cela veut dire.</p>
+<p>Prenons par exemple un site web. Nous avons un ensemble avec dedans deux onglets et en dessous le contenu de chaque onglet.</p>
+<p>Nous allons définir ce que sont le <em>block</em>, le ou les <em>elements</em> et les <em>modifiers</em>.</p>
+<p>Dans ce cas précis, le <em>block</em> est le conteneur, l’ensemble, ce qui entoure le tout. Appelons-le “Window”.</p>
+<p>Nous avons alors aussi les <em>elements</em> suivants : les onglets, que nous allons nommer “Tab”, et le contenu, là où il y a le texte de chaque onglet “Content”.</p>
+<p>Comment cela se traduit en <strong>BEM</strong> :</p>
+<ul>
+<li>Notre <em>block</em> s’appelant “Window” sera alors <code>.Window</code></li>
+<li>Nos <em>elements</em> “Tab” seront <code>.Window-tab</code></li>
+<li>Notre <em>element</em> “Content” sera <code>.Window-content</code></li>
+</ul>
+<p>Jusque là, cela devrait aller :</p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+
+<span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+
+  <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+
+  <span class="hljs-rule">}</span></span>
+</code></pre>
+<p>Ce qui revient de manère générique à :</p>
+<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
+
+}</span>
+
+  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
+
+  }</span>
+</code></pre>
+<p>Oui, je vous conseille d’indenter votre code afin de grouper vos classes.</p>
+<p>Maintenant, nous allons définir ce qu’est un <em>modifier</em>. Un <em>modifier</em> change l’état de l’élément, il peut s’appliquer aussi bien sur un <em>block</em>, qu’un <em>element</em>.</p>
+<p>Si par exemple je souhaite mettre en actif un onglet (le mettre en avant car séléctionné), je ferai alors <code>.Window-tab--active</code>, soit :</p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+
+<span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
+  <span class="hljs-rule">}</span></span>
+
+    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+    <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+
+  <span class="hljs-rule">}</span></span>
+</code></pre>
+<p>J’aimerais aussi afficher ou non le contenu. Pour cela, je vais lui rajouter un <em>modifier</em></p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+
+<span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
+  <span class="hljs-rule">}</span></span>
+
+    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+    <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+  <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content--hidden</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
+  <span class="hljs-rule">}</span></span>
+</code></pre>
+<p>J’aurais très bien pu inverser et dire que par défaut le contenu est caché et je lui rajoute la classe <code>.Window-tab--active</code> pour l’afficher (<code>display: block</code>) mais lorsqu’il s’agit de cacher ou de faire appaître des éléments, je vous conseille vivement de plutôt ajouter un <em>modifier</em> qui cache les éléments, car cela évite de se prendre la tête sur quel <code>display</code> mettre par défaut. Là, vous mettez un <code>display: none</code> et voilà, qu’importe si celui de base est un <code>inline</code>, <code>inline-block</code>, <code>table-cell</code> ou autre.</p>
+<p>Du coup, nous avons maintenant nos différents types de classes. Cela se résume de manière générique à :</p>
+<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
+
+}</span>
+
+  .<span class="hljs-keyword">Block</span>--modifier <span class="hljs-list">{
+
+  }</span>
+
+  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
+
+  }</span>
+
+    .<span class="hljs-keyword">Block</span>-element--modifier <span class="hljs-list">{
+
+    }</span>
+</code></pre>
+<p>Ce qui donne <code>.Block-element--modifier</code> (notre <strong>BEM</strong>).</p>
+<p>Parlons maintenant du cas des termes multiples dans chaque partie. Voici comment cela se traduit.</p>
+<p><code>.MyBlock-myElement--myModifier</code></p>
+<p>Les <em>blocks</em> sont en “PascalCase” (ou UpperCamelCase), les <em>elements</em> et <em>modifiers</em> sont en “camelCase” (ou lowerCamelCase). Nous séparons le <em>block</em> de l’élément par “-“ et le <em>block</em> ou l’ <em>element</em> d’un <em>modifier</em> par “—“.</p>
+<p>Maintenant, vous savez tout sur <strong>BEM</strong>. Sachez qu’il existe tout de même plusieurs conventions de <strong>BEM</strong>. Celle que je vous ai apprise là est la norme de <strong>montage.js</strong> mais il y en a d’autres par exemple qui n’utilisent pas les majuscules et font ce genre de choses : <code>.my-block__my-element--my-modifier</code>. Il s’avère que c’est la <a href="http://bem.info/method/definitions/#naming-for-independent-css-classes">convention pseudo-officielle</a>.</p>
+<p>L’inconvénient de ceci est que c’est moins lisible au premier abord qui est quoi, et de plus, les <code>_</code> ne permettent pas de sélectionner facilement un terme en <em>double-cliquant</em> dessus.</p>
+<p>Deux petites choses avant de partir.</p>
+<p>Dans le but d’éviter de vous faire écraser vos propriétés par quelqu’un d’autre (une bibliothèque, un <em>SDK</em>), je vous conseille de rajouter votre organisation.</p>
+<p>Typiquement, ça donne <code>.org-Block-element--modifier</code>. Tout en minuscule et si possible ne pas dépasser les 3 lettres car vous allez devoir le répéter à chaque fois et ça peut être lourd.</p>
+<p>La deuxième chose est la classe qui sert de sélecteur en JavaScript. Plutôt que <em>binder</em> un élément via sa classe “CSS” (à chaque classe sa responsabilité), il est nettement préférable de créer une classe spécifique au JavaScript. Cela donne : <code>.org-js-Block-element--modifier</code>. Il suffit simplement de rajouter <code>-js</code> entre l’organisation et le <em>block</em>.</p>
+<p>Nous arrivons à la convention suivante : <code>.org[-js]-Block[-element][--modifier]</code></p>
+<p>Certains vous diront qu’ils mettent <code>.js-org-</code> mais étant donné que je considère cela comme un <em>namespace</em> global (autant css que js), je préfère mettre l’ <code>org</code> au début.</p>
+<p>Voilà, voilà, c’est certes un peu déroutant au début, et ca parait très verbeux mais cela vous permettra d’éviter de nooooooombreux soucis de nommage de classes où vous vous emmèlerez les pinceaux à coup de :</p>
+<pre><code class="lang-css"><span class="hljs-class">.footer</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> underline</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.content</span> <span class="hljs-class">.footer</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> none</span></span>; <span class="hljs-comment">/* annule la propriété du précédent sélecteur */</span>
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p>Ciao les kids.</p>
+
+]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/petite-definition-bem/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/petite-definition-bem/</guid></item><item><title>Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML</title><description><![CDATA[[
 <p>Mardi 29 avril s’est déroulée la troisième table ronde qui est finalement la première sous le nom de <strong>{p!}</strong>. Une petite explication s’impose étant donné que nous allons en faire de plus en plus et que je souhaite vraiment vous faire un compte rendu sur chacun de ces évènements.</p>
 <h2 id="preambule"><a class="putainde-Title-anchor" href="#preambule">#</a>Préambule</h2><p>Partant du constat qu’il est difficile d’apprendre et d’échanger en conférence du fait du manque du niveau assez élevé (trop de gens avec un niveau différent, il faut forcément s’aligner) et à sens unique (une personne parle, les autres écoutent), nous avons décidé de créer des tables rondes où un fil conducteur est suivi amenant à débattre, échanger, affirmer.</p>
 <p>Attention, je ne dis pas que les conférences ne servent à rien mais à mon sens elles sont trop magistrales et parfois trop marketing (coucou WebRTC Paris).</p>
@@ -606,127 +726,7 @@ Oh et attention, tous les navigateurs ne font pas 16px de base. Je dis ça si vo
 <p>N’hésitez pas à continuer le débat dans les commentaires.</p>
 <p>Pour ma part, j’ai déjà d’autres articles “dans le pipe” (comme disent certains marketeux). Je vous retrouve bientôt ici ou sur Twitter, kiss.</p>
 
-]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</link><guid isPermaLink="true">http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</guid></item><item><title>Petite définition de BEM</title><description><![CDATA[[
-<p><strong><a href="http://bem.info">BEM</a></strong> n’est ni une marque de voiture ni un groupe de musique, et encore moins une onomatopée (quoique). C’est plutôt une façon de nommer les classes en CSS, une convention en d’autres termes voire une méthodologie.</p>
-<p>Dans cet article, je ne vous expliquerai pas pourquoi il faut préférer BEM à une autre convention, je vous explique surtout comment l’utiliser.</p>
-<p><strong>BEM</strong> apporte une solution à un problème majeur en informatique : le nommage.</p>
-<p>Il n’y a rien de plus compliqué en informatique que de nommer un objet : besoin d’être explicite, ne doit pas être trop générique, ni trop compliqué, ni trop verbeux (ça, ça reste à voir avec BEM…).</p>
-<p>Lorsque l’on nomme un objet, une méthode, une fonction, une classe, on se doit d’être avant tout compréhensible. Une personne devant lire votre code doit directement comprendre de quoi vous parlez. Cette personne peut très bien être vous 6 mois, 1 an après. Je pense sincèrement qu’un code clair vaut toute la documentation du monde. Je ne dis pas qu’il ne faut pas documenter mais un code doit être facilement compréhensible, la documentation doit juste apporter un contexte, une situation particulière.</p>
-<p>Bref, <strong>BEM</strong> est le sigle pour <em>Block</em>, <em>Element</em>, <em>Modifier</em>. Qu’est-ce que cela veut dire.</p>
-<p>Prenons par exemple un site web. Nous avons un ensemble avec dedans deux onglets et en dessous le contenu de chaque onglet.</p>
-<p>Nous allons définir ce que sont le <em>block</em>, le ou les <em>elements</em> et les <em>modifiers</em>.</p>
-<p>Dans ce cas précis, le <em>block</em> est le conteneur, l’ensemble, ce qui entoure le tout. Appelons-le “Window”.</p>
-<p>Nous avons alors aussi les <em>elements</em> suivants : les onglets, que nous allons nommer “Tab”, et le contenu, là où il y a le texte de chaque onglet “Content”.</p>
-<p>Comment cela se traduit en <strong>BEM</strong> :</p>
-<ul>
-<li>Notre <em>block</em> s’appelant “Window” sera alors <code>.Window</code></li>
-<li>Nos <em>elements</em> “Tab” seront <code>.Window-tab</code></li>
-<li>Notre <em>element</em> “Content” sera <code>.Window-content</code></li>
-</ul>
-<p>Jusque là, cela devrait aller :</p>
-<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
-
-<span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
-
-  <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
-
-  <span class="hljs-rule">}</span></span>
-</code></pre>
-<p>Ce qui revient de manère générique à :</p>
-<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
-
-}</span>
-
-  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
-
-  }</span>
-</code></pre>
-<p>Oui, je vous conseille d’indenter votre code afin de grouper vos classes.</p>
-<p>Maintenant, nous allons définir ce qu’est un <em>modifier</em>. Un <em>modifier</em> change l’état de l’élément, il peut s’appliquer aussi bien sur un <em>block</em>, qu’un <em>element</em>.</p>
-<p>Si par exemple je souhaite mettre en actif un onglet (le mettre en avant car séléctionné), je ferai alors <code>.Window-tab--active</code>, soit :</p>
-<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
-
-<span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
-  <span class="hljs-rule">}</span></span>
-
-    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
-      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-    <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
-
-  <span class="hljs-rule">}</span></span>
-</code></pre>
-<p>J’aimerais aussi afficher ou non le contenu. Pour cela, je vais lui rajouter un <em>modifier</em></p>
-<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
-
-<span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
-  <span class="hljs-rule">}</span></span>
-
-    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
-      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-    <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
-  <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content--hidden</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
-  <span class="hljs-rule">}</span></span>
-</code></pre>
-<p>J’aurais très bien pu inverser et dire que par défaut le contenu est caché et je lui rajoute la classe <code>.Window-tab--active</code> pour l’afficher (<code>display: block</code>) mais lorsqu’il s’agit de cacher ou de faire appaître des éléments, je vous conseille vivement de plutôt ajouter un <em>modifier</em> qui cache les éléments, car cela évite de se prendre la tête sur quel <code>display</code> mettre par défaut. Là, vous mettez un <code>display: none</code> et voilà, qu’importe si celui de base est un <code>inline</code>, <code>inline-block</code>, <code>table-cell</code> ou autre.</p>
-<p>Du coup, nous avons maintenant nos différents types de classes. Cela se résume de manière générique à :</p>
-<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
-
-}</span>
-
-  .<span class="hljs-keyword">Block</span>--modifier <span class="hljs-list">{
-
-  }</span>
-
-  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
-
-  }</span>
-
-    .<span class="hljs-keyword">Block</span>-element--modifier <span class="hljs-list">{
-
-    }</span>
-</code></pre>
-<p>Ce qui donne <code>.Block-element--modifier</code> (notre <strong>BEM</strong>).</p>
-<p>Parlons maintenant du cas des termes multiples dans chaque partie. Voici comment cela se traduit.</p>
-<p><code>.MyBlock-myElement--myModifier</code></p>
-<p>Les <em>blocks</em> sont en “PascalCase” (ou UpperCamelCase), les <em>elements</em> et <em>modifiers</em> sont en “camelCase” (ou lowerCamelCase). Nous séparons le <em>block</em> de l’élément par “-“ et le <em>block</em> ou l’ <em>element</em> d’un <em>modifier</em> par “—“.</p>
-<p>Maintenant, vous savez tout sur <strong>BEM</strong>. Sachez qu’il existe tout de même plusieurs conventions de <strong>BEM</strong>. Celle que je vous ai apprise là est la norme de <strong>montage.js</strong> mais il y en a d’autres par exemple qui n’utilisent pas les majuscules et font ce genre de choses : <code>.my-block__my-element--my-modifier</code>. Il s’avère que c’est la <a href="http://bem.info/method/definitions/#naming-for-independent-css-classes">convention pseudo-officielle</a>.</p>
-<p>L’inconvénient de ceci est que c’est moins lisible au premier abord qui est quoi, et de plus, les <code>_</code> ne permettent pas de sélectionner facilement un terme en <em>double-cliquant</em> dessus.</p>
-<p>Deux petites choses avant de partir.</p>
-<p>Dans le but d’éviter de vous faire écraser vos propriétés par quelqu’un d’autre (une bibliothèque, un <em>SDK</em>), je vous conseille de rajouter votre organisation.</p>
-<p>Typiquement, ça donne <code>.org-Block-element--modifier</code>. Tout en minuscule et si possible ne pas dépasser les 3 lettres car vous allez devoir le répéter à chaque fois et ça peut être lourd.</p>
-<p>La deuxième chose est la classe qui sert de sélecteur en JavaScript. Plutôt que <em>binder</em> un élément via sa classe “CSS” (à chaque classe sa responsabilité), il est nettement préférable de créer une classe spécifique au JavaScript. Cela donne : <code>.org-js-Block-element--modifier</code>. Il suffit simplement de rajouter <code>-js</code> entre l’organisation et le <em>block</em>.</p>
-<p>Nous arrivons à la convention suivante : <code>.org[-js]-Block[-element][--modifier]</code></p>
-<p>Certains vous diront qu’ils mettent <code>.js-org-</code> mais étant donné que je considère cela comme un <em>namespace</em> global (autant css que js), je préfère mettre l’ <code>org</code> au début.</p>
-<p>Voilà, voilà, c’est certes un peu déroutant au début, et ca parait très verbeux mais cela vous permettra d’éviter de nooooooombreux soucis de nommage de classes où vous vous emmèlerez les pinceaux à coup de :</p>
-<pre><code class="lang-css"><span class="hljs-class">.footer</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> underline</span></span>;
-<span class="hljs-rule">}</span></span>
-
-<span class="hljs-class">.content</span> <span class="hljs-class">.footer</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> none</span></span>; <span class="hljs-comment">/* annule la propriété du précédent sélecteur */</span>
-<span class="hljs-rule">}</span></span>
-</code></pre>
-<p>Ciao les kids.</p>
-
-]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/petite-definition-bem/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/petite-definition-bem/</guid></item><item><title>Introduction au testing js front</title><description><![CDATA[[
+]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</link><guid isPermaLink="true">http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</guid></item><item><title>Introduction au testing js front</title><description><![CDATA[[
 <p>Les tests automatisés en front-end ont longtemps été ignorés,
 et le sont encore trop.</p>
 <p>Écrire des tests peut paraître chiant, mais le temps qu’ils rapportent
