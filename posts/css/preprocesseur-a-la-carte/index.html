@@ -192,7 +192,7 @@ gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"
       reworkPlugins.vars(), <span class="hljs-comment">// notez que certains plugins nécessite d'être éxecuté (retourant une fonction dynamique)</span>
       reworkPlugins.calc,
       reworkPlugins.colorFn,
-      reworkPlugins.remFallback,
+      reworkPlugins.remFallback(),
       reworkPlugins.ieLimits
     ))
     .pipe(autoprefixer())
@@ -244,10 +244,12 @@ Il ne reste plus grand chose à faire si ce n’est ajouter livereload en plus p
 <pre><code class="lang-css"><span class="hljs-tag">html</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100</span>%</span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100</span>%</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">16</span>px</span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1</span>rem</span></span>;
 <span class="hljs-rule">}</span></span>
 
 <span class="hljs-tag">p</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">12</span>px <span class="hljs-number">0</span></span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0.75</span>rem <span class="hljs-number">0</span></span></span>;
 <span class="hljs-rule">}</span></span>
 
