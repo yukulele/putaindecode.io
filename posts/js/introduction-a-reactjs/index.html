@@ -1,0 +1,147 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Introduction à ReactJS</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="Introduction à ReactJS"/><meta name="twitter:creator" content="@bloodyowl"/><meta name="twitter:image" content="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png?s=200"/><meta property="og:title" content="Introduction à ReactJS"/><meta property="og:type" content="article"/><meta property="og:image" content="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png?s=200"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"><link rel="alternate" href="../../../feed.xml" title="Putain de code !" type="application/atom+xml"></head><body><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size5of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size7of12"><nav class="putainde-Nav"><a href="../.." data-tip="" class="putainde-Nav-item  "><i class="putainde-Icon putainde-Icon--bookmark"></i> Articles</a><a href="../../../c-est-quoi-putaindecode" data-tip="" class="putainde-Nav-item  "><i class="putainde-Icon putainde-Icon--text-file"></i> Readme</a><a href="../../comment-contribuer" data-tip="" class="putainde-Nav-item  "><i class="putainde-Icon putainde-Icon--pencil"></i> Participer</a><a href="https://github.com/putaindecode/" data-tip="GitHub" class="putainde-Nav-item  putainde-Nav-item--icon AttrTip AttrTip--bottom"><i class="putainde-Icon putainde-Icon--github"></i></a><a href="https://twitter.com/putaindecode/" data-tip="Twitter" class="putainde-Nav-item  putainde-Nav-item--icon AttrTip AttrTip--bottom"><i class="putainde-Icon putainde-Icon--twitter"></i></a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Introduction à ReactJS</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas">Écrit par <a href="https://github.com/bloodyowl">bloodyowl</a>,<span class="putainde-Date"> le 4 juin 2014</span>. <span data-tip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden AttrTip AttrTip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">javascript</li><li class="putainde-Tag">reactjs</li></ul></header><div class="putainde-Post-md"><p>Cela fait maintenant un an que ReactJS est open-sourced.
+C’est l’occasion de présenter le petit dernier de la vague MV*.</p>
+<h2 id="les-differentes-approches-d-ui"><a class="putainde-Title-anchor" href="#les-differentes-approches-d-ui">#</a>Les différentes approches d’UI</h2><h3 id="backbone"><a class="putainde-Title-anchor" href="#backbone">#</a>Backbone</h3><p><a href="http://backbonejs.org">Backbone</a> apporte une simplification dans la
+déclaration d’évenements,
+il reste cependant très peu impliqué dans le rendering.
+Le choix de laisser l’utilisateur décider de tout concernant
+<code>Backbone.View</code> est positif pour de nombreux projets, mais rend
+la gestion du DOM pénible.</p>
+<p>Pour faire du data-binding, <code>Backbone</code> ne propose naturellement rien,
+et l’on doit faire appel à des mixins supplémentaires pour le mettre
+en place sans s’arracher les cheveux.</p>
+<p>De plus, c’est souvent un moteur de templating comme
+Handlebars ou Jade qui génére la vue originale. On se retrouve donc avec
+un joli <code>this.$el.html(this.template(data))</code> dans la méthode <code>render()</code>
+qui va provoquer des jolies horreurs visuelles
+(ie. les images se rechargent, les videos sont réinitialisées).</p>
+<p>En somme, Backbone est très sympathique pour structurer
+son code proprement, mais concernant l’UI, n’aide absolument pas à réduire
+la compléxité liée aux états du DOM.</p>
+<h3 id="angular"><a class="putainde-Title-anchor" href="#angular">#</a>Angular</h3><p><a href="https://angularjs.org">Angular</a> propose une approche beaucoup plus travaillée,
+en imposant un moteur de templating HTML (on peut utiliser du preprocessing)
+et on déclare ses bindings très simplement avec une syntaxe <code>{{mustache}}</code>.</p>
+<p>On déclare les évenements à l’aide d’attributs <code>ng-{eventName}</code>.</p>
+<p>Sur le papier, angular est très sympathique
+(je ne prendrais pas parti sur le dirty checking), mais il a selon moi
+des défauts de conceptions assez problématiques. Par exemple, si vous utilisez
+un système de modules (requirejs ou <a href="posts/js/browserify-all-the-things/">browserify</a>),
+vous devez tout de même déclarer vos controllers dans <code>window</code>. <em>sorry what?</em></p>
+<h3 id="ember"><a class="putainde-Title-anchor" href="#ember">#</a>Ember</h3><p><a href="http://emberjs.com">Ember</a> est un framework très bien pensé et très travaillé.
+Il intègre très bien les concepts de <code>data-binding</code> à l’aide de <a href="https://developer.mozilla.org/en-US/docs/Web/API/range">DOM Ranges</a>.
+Il propose des conventions fortes, et contrairement à la plupart des <em>a priori</em>,
+est très simple à prendre en main.
+Les subviews sont très simples à utiliser à l’aide d’<code>{{outlet}}</code>.</p>
+<p>Pour résumer, ember et angular proposent de vraies solutions pour la gestion
+de l’UI. Cependant les deux conservent cette démarche :</p>
+<ul>
+<li>on <em>render</em> (génère et insère le bout de DOM) une fois</li>
+<li>on update les bindings</li>
+</ul>
+<h3 id="react"><a class="putainde-Title-anchor" href="#react">#</a>React</h3><p><a href="http://facebook.github.io/react/">React</a> change complètement d’approche.
+Il part d’un constat simple :
+le fait que le DOM ait constamment un état différent, c’est chiant à gérer.</p>
+<p>Du coup, et si on appelait <code>.render()</code> à chaque modification ?
+Ça a l’air stupide, hein ? Pas tant que ça en fait.</p>
+<p>React implémente un <strong>DOM virtuel</strong>, une représentation interne du DOM
+extrêmement rapide. Il inclut par ailleurs son propre système d’évenements,
+ce qui permet à React de faire bénéficier de la phase de capturing les navigateurs
+n’implémentant pas <code>EventTarget</code> (oui, IE8, c’est toi que je regarde).</p>
+<p>La méthode <code>render</code> retourne des objets correspondant à la représentation
+interne du DOM virtuel.</p>
+<p>Les classes React se définissent par leur <code>state</code>.
+Lorsque l’on crée une classe, on définit une méthode <code>getInitialState</code> qui
+retournera un état initial.</p>
+<p>Après cela, le seul moyen de changer l’état est d’indiquer à <code>this.setState</code>
+quelles valeurs de l’état ont changé afin de mettre à jour le DOM.</p>
+<p>Une classe React se voit passer des propriétés au moment d’être instanciée : les
+<code>props</code>. À ne pas confondre avec le <code>state</code>, son contenu ne doit être
+manipulé que par l’extérieur de la classe (bien que celle-ci puisse obtenir
+des valeurs par défaut en définissant une méthode <code>getDefaultProps</code> qui les
+retourne).</p>
+<p>Le <code>state</code>, en revanche, ne doit être modifié qu’au sein des méthodes propres
+à la classe.</p>
+<p>Le principal avantage est que l’on est certain, du fait de l’appel systématique
+à <code>render</code>, que notre composant React aura la représentation attendue pour un état
+donné.</p>
+<p>Un des autres avantages de React est son algorithme de diff interne.
+Le DOM virtuel va être comparé avec la version visible, et React effectue
+à l’aide d’opérations simples les seuls changements nécessaires.</p>
+<p>Cela résoud des problématiques comme la position du curseur dans un champ texte
+qui effectue du two-way data-binding; puisque l’algorithme n’y voit pas de
+changement nécessaire, le champ texte n’est pas modifié et l’on garde donc le focus.
+Du même fait, si vous avez un gif qui boucle, il ne se relancera pas
+inopinément.</p>
+<p>React est idéalement utilisé avec jsx, un pré-processeur js qui permet
+d’écrire les templates avec une syntaxe xml (voir l’exemple plus bas),
+ce qui permet à des novices de le prendre en main très rapidement.</p>
+<h2 id="creons-un-component-react-"><a class="putainde-Title-anchor" href="#creons-un-component-react-">#</a>Créons un component react :</h2><pre><code class="lang-javascript"><span class="hljs-keyword">var</span> View = React.createClass({
+  getInitialState : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-comment">// état initial</span>
+    <span class="hljs-keyword">return</span> {
+      checked : <span class="hljs-literal">false</span>
+    }
+  },
+  getDefaultProps : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-comment">// si `this.props.label` n'est pas présent, ce sera `"?"`</span>
+    <span class="hljs-keyword">return</span> {
+      label : <span class="hljs-string">"?"</span>
+    }
+  },
+  toggle : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-comment">// on crée un nouvel état (les états de react sont immutable)</span>
+    <span class="hljs-comment">// et on déclenche le render</span>
+    <span class="hljs-keyword">this</span>.setState({
+      checked : !<span class="hljs-keyword">this</span>.state.checked
+    })
+  },
+  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-comment">// petit addon pour se simplifier la vie</span>
+    <span class="hljs-keyword">var</span> classes = React.addons.classSet({
+      <span class="hljs-string">"list-item"</span> : <span class="hljs-literal">true</span>,
+      <span class="hljs-string">"list-item--valid"</span> : <span class="hljs-keyword">this</span>.state.checked
+    })
+    <span class="hljs-keyword">return</span> (
+      &lt;div className={classes}&gt;
+        {<span class="hljs-comment">/* notre binding tout simple */</span>}
+        &lt;input checked={<span class="hljs-keyword">this</span>.state.checked} type=<span class="hljs-string">"checkbox"</span> onChange={<span class="hljs-keyword">this</span>.toggle} /&gt;
+        {<span class="hljs-keyword">this</span>.props.label}
+      &lt;/div&gt;
+    )
+  }
+})
+
+<span class="hljs-comment">// on mount le component, et l'on passe le label</span>
+<span class="hljs-keyword">var</span> view = React.renderComponent(&lt;View label=<span class="hljs-string">"helloworld"</span> /&gt;, document.getElementById(<span class="hljs-string">"id"</span>))
+<span class="hljs-comment">// et hop</span>
+view.toggle()
+</code></pre>
+<h2 id="sum-up-des-avantages-de-react"><a class="putainde-Title-anchor" href="#sum-up-des-avantages-de-react">#</a>Sum up des avantages de react</h2><p>React a bien compris ces points :</p>
+<ul>
+<li>le DOM est lent, du moins en écriture, et limiter les interactions avec
+ce dernier est essentiel</li>
+<li>devoir continuellement penser à l’état du DOM à l’instant <code>n</code> n’est pas
+une préoccupation que nous devrions avoir en développant l’UI de nos
+composants</li>
+<li>les concepts d’immutabilité (un objet ne change pas, on en crée un nouveau à
+chaque changement) et de composition (composer une classe de différentes
+fonctionnalités sans devoir créer des chaînes d’héritage complexes) ont de
+grands intérêts, trop peu utilisés en front-end.</li>
+</ul>
+<p>En bonus, React, même s’il n’impose pas de bibliothèque pour les
+data et la communication des modules, offre une approche nommée
+<a href="http://facebook.github.io/react/docs/flux-overview.html">flux</a> très
+intéressante et vous offrant des clés pour concevoir une app avec en
+tête les paradigmes pensés pour React.</p>
+<p>Last but not least, vous pouvez render vos composants React depuis le serveur
+et la lib sera assez intelligente pour reconnaitre les composants déjà générés
+pour ne pas les render systématiquement, c’est pas beau, ça ?</p>
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/js/introduction-a-reactjs/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/js/introduction-a-reactjs/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/js/introduction-a-reactjs/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> bloodyowl</h3><div class="putainde-Author-social"><a href="http://bloodyowl.io"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/bloodyowl"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/bloodyowl"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur front-end, aime la bonne bière artisanale, la musique, et JavaScript; n'aime ni les points virgules, ni les gens</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">2 contributeurs</strong><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/lionelB" data-tip="lionelB" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/03edc8b4edc19d91202e69c65c5baeff.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-tip="GitHub" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--github"></i></a><a href="https://twitter.com/putaindecode/" data-tip="Twitter" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--twitter"></i></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/js/introduction-a-reactjs/";
+var disqus_url = "http://putaindecode.fr/posts/js/introduction-a-reactjs/";
+var disqus_script = "embed.js";;(function(d,s) {
+s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+(d.getElementsByTagName('head')[0]).appendChild(s)
+})(document)</script><script src="../../../scripts/index.js"></script><script>var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
+(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+g.src='//www.google-analytics.com/ga.js';
+s.parentNode.insertBefore(g,s)}(document,'script'));</script></body></html>
