@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Fri, 06 Jun 2014 15:29:29 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Introduction à ReactJS</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Sun, 08 Jun 2014 14:25:41 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Introduction à ReactJS</title><description><![CDATA[
 <p>Cela fait maintenant un an que ReactJS est open-sourced.
 C’est l’occasion de présenter le petit dernier de la vague MV*.</p>
 <h2 id="les-differentes-approches-d-ui"><a class="putainde-Title-anchor" href="#les-differentes-approches-d-ui">#</a>Les différentes approches d’UI</h2><h3 id="backbone"><a class="putainde-Title-anchor" href="#backbone">#</a>Backbone</h3><p><a href="http://backbonejs.org">Backbone</a> apporte une simplification dans la
@@ -22,11 +22,7 @@ la compléxité liée aux états du DOM.</p>
 en imposant un moteur de templating HTML (on peut utiliser du preprocessing)
 et on déclare ses bindings très simplement avec une syntaxe <code>{{mustache}}</code>.</p>
 <p>On déclare les évenements à l’aide d’attributs <code>ng-{eventName}</code>.</p>
-<p>Sur le papier, angular est très sympathique
-(je ne prendrais pas parti sur le dirty checking), mais il a selon moi
-des défauts de conceptions assez problématiques. Par exemple, si vous utilisez
-un système de modules (requirejs ou <a href="posts/js/browserify-all-the-things/">browserify</a>),
-vous devez tout de même déclarer vos controllers dans <code>window</code>. <em>sorry what?</em></p>
+<p>Sur le papier, angular est donc très sympathique (je ne prendrais pas parti sur le dirty checking).</p>
 <h3 id="ember"><a class="putainde-Title-anchor" href="#ember">#</a>Ember</h3><p><a href="http://emberjs.com">Ember</a> est un framework très bien pensé et très travaillé.
 Il intègre très bien les concepts de <code>data-binding</code> à l’aide de <a href="https://developer.mozilla.org/en-US/docs/Web/API/range">DOM Ranges</a>.
 Il propose des conventions fortes, et contrairement à la plupart des <em>a priori</em>,
@@ -649,59 +645,7 @@ function groupByBrowser( site, memo, browser){
 <p>J’espère que vous avez appréciez ces quelques exemples d’utilisation de <code>Array#reduce</code>.
 Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article ou via les commentaires !</p>
 
-]]></description><pubDate>Tue, 13 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/array-reduce/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/array-reduce/</guid></item><item><title>npm: choisir la bonne version de ses dépendances</title><description><![CDATA[
-<p>Pas plus tard qu’hier, alors que je travaillais tranquillement, apparu soudainement un bug dans mon <em>workflow</em> de <em>build</em>. Il ne m’était plus possible avec <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> de supprimer des fichiers. Hmmm, ballot, car sans la suppression, mon <em>workflow</em> devenait tout bancal. Bien. Il me fallut remonter la rivière - comme souvent, en tant que développeur - afin de constater où était le bug. Je suis alors tombé sur <a href="https://github.com/isaacs/rimraf">rimraf</a> (bon c’était pas bien loin) qui s’était vu être mis à jour il y a à peine 12 heures, comprenant un bug.</p>
-<h2 id="contexte"><a class="putainde-Title-anchor" href="#contexte">#</a>Contexte</h2><p>Bon, vous voyez le topo ?</p>
-<pre><code>{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean"</span></span>,
-  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value"><span class="hljs-string">"~2.2.1"</span>
-  </span>}
-</span>}
-</code></pre><p><a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> qui contient en <em>dependencies</em> <a href="https://github.com/isaacs/rimraf">rimraf</a> avec une version bugguée. Oh la belle affaire. Oui car <code>~2.2.1</code> veut dire “<a href="https://github.com/isaacs/node-semver#ranges">Raisonnablement proche de 2.2.1</a>“, ce qui se traduit par télécharger la dernière version en <code>2.2.x</code>, soit la <code>2.2.7</code> (celle bugguée) lorsque je mis à jour le package <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a>.</p>
-<h2 id="le-hic"><a class="putainde-Title-anchor" href="#le-hic">#</a>Le hic</h2><p>Une question m’est venue : comment faire en sorte de figer la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> qui est une dépendance de dépendance ?</p>
-<p>Ha ! Pas évident comme ça.</p>
-<p>J’ai d’abord essayé sans trop d’espoir de télécharger <a href="https://github.com/isaacs/rimraf">rimraf</a> lui-même en <code>2.2.6</code> mais vu que chaque dépendance à ses propres dépendances et qu’elles ne se les partagent pas… c’était peine perdue.</p>
-<p>J’ai donc cherché, cherché, et je suis tombé sur <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a>: “Lock down dependency versions”. Bingo !</p>
-<h2 id="npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances"><a class="putainde-Title-anchor" href="#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>npm-shrinkwrap, la solution pour figer vos depéndances, toutes vos dépendances</h2><p><a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a> va vous permettre de définir avec précision chaque version de chaque dépendance.</p>
-<p>Pour cela, faites d’abord un <code>npm install</code> (si vous avez évidemment un <code>package.json</code>) afin d’installer vos <code>node_modules</code>. Une fois cela fait, lancez <code>npm shrinkwrap</code> qui créera le fichier <code>npm-shrinkwrap.json</code> qui comprendra toutes les définitions de chaque dépendance.</p>
-<h3 id="figer-une-dependance-de-dependance"><a class="putainde-Title-anchor" href="#figer-une-dependance-de-dependance">#</a>Figer une dépendance de dépendance</h3><p>Simple, regardez :</p>
-<pre><code>{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"my-project"</span></span>,
-  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"1.0.0"</span></span>,
-  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">grunt-contrib-clean</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.5.0"</span></span>,
-      "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean@~0.5.*"</span></span>,
-      "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-        "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"2.2.6"</span></span>,
-          "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"rimraf@~2.2.1"</span></span>,
-          "<span class="hljs-attribute">resolved</span>": <span class="hljs-value"><span class="hljs-string">"https://registry.npmjs.org/rimraf/-/rimraf-2.2.6.tgz"</span>
-        </span>}
-      </span>}
-    </span>}
-  </span>}
-</span>}
-</code></pre><p>J’ai défini la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> dans <code>dependencies.grunt-contrib-clean.dependencies.rimraf</code>.</p>
-<p>Bon, je ne connais pas tout par coeur non plus, npm-shrinkwrap vous écrira la totalité du fichier avec toutes les définitions mais j’ai volontairement tout supprimé et gardé uniquement la partie <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> car seule cette partie est à figer. Quand je dis supprimer, je parle réellement dans le fichier final, pas juste ici dans l’article.</p>
-<p>Vous aurez toute l’explication de npm-shrinkwrap sur la <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">documentation officielle [en]</a>.</p>
-<h2 id="choisir-la-bonne-strategie-de-version"><a class="putainde-Title-anchor" href="#choisir-la-bonne-strategie-de-version">#</a>Choisir la bonne stratégie de version</h2><p>Parce qu’il est important de savoir quelle version exacte nous souhaitons installer dans notre projet, il faut définir avec précisions ces versions dans <code>package.json</code>.</p>
-<p>Vous pouvez avoir <code>1.2.1</code> ou encore <code>~1.4.6</code> ou bien encore <code>^2.3.1</code>. Mais que veulent dire <code>^</code> ou <code>~</code> ?</p>
-<ul>
-<li><code>1.2.1</code> : cette version exacte</li>
-<li><code>~1.4.6</code> : raisonnablement proche de <code>1.4.6</code></li>
-<li><code>^2.3.1</code> : compatible avec <code>2.3.1</code></li>
-</ul>
-<p>Il est clair que lu comme ça, le plus intéressant est le <code>^</code> et c’est justement <a href="http://fredkschott.com/post/2014/02/npm-no-longer-defaults-to-tildes/">celui qui est choisi maintenant [en]</a> lorsque l’on fait un <code>npm install --save</code>. Cool non ?!</p>
-<p>Pour plus d’information sur la définition des versions, <a href="https://github.com/isaacs/node-semver#ranges">c’est par là</a> (Oh mon dieu, il a fait un lien avec un “cliquez ici”).</p>
-<p>Bon. C’est bon ? Vous avez tout compris ? Okay, vous pouvez passer à <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/"><strong>napa</strong></a> maintenant qui vous aidera grandement sur le téléchargement de projets n’ayant pas de <code>package.json</code>.</p>
-<p>En ce qui concerne npm, je m’arrête là, et vous propose une petite solution afin d’augmenter la vitesse de vos installations de node modules.</p>
-<h2 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h2><p>Envie d’accélérer vos installations npm ? Je vous conseille <a href="https://github.com/vvo/npm-pkgr">npm-pkgr</a>.</p>
-<p>Il hashera votre <code>package.json</code> pour savoir s’il a été modifié ou non, et en fonction de ça, il lancera <code>npm install</code> ou non. Sacré gain de temps (surtout si vous faites des <code>npm install</code> à chaque <em>deploy</em>).</p>
-<p>You are now a npm master. 👨</p>
-
-]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/npm-choisir-version/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/npm-choisir-version/</guid></item><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[
+]]></description><pubDate>Tue, 13 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/array-reduce/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/array-reduce/</guid></item><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[
 <p>(Grosse grosse blague ce titre…)</p>
 <p><a href="https://twitter.com/kewah">@kewah</a> nous a récemment parlé de <a href="/posts/frontend/npm-comme-package-manager-pour-le-front-end/"><strong>npm</strong> comme front-end packager manager</a>, je vais aller encore plus loin. Je vais vous dévoiler comment installer des projets qui n’ont pas de <code>package.json</code>. Oui, car c’est bien beau de virer Bower (oh que oui c’est beau) mais comme npm requiert constamment un <code>package.json</code>, on ne va pas pouvoir télécharger grand chose sauf si on fait des <em>PR</em> afin d’ajouter ce fichier sur les projets que l’on souhaite obtenir.</p>
 <p>C’est pourquoi je vais vous parler de <a href="https://github.com/shama/napa"><strong>napa</strong></a>.</p>
@@ -766,7 +710,59 @@ Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article
 <p>Note : napa et npm-shrinkwrap, c’est pas encore ça, alors n’hésitez pas à supprimer la partie “napa” avant de lancer votre génération de npm-shrinkwrap.</p>
 <p>Bon download à vous.</p>
 
-]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</guid></item><item><title>Premiers pas avec Ruby</title><description><![CDATA[
+]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</guid></item><item><title>npm: choisir la bonne version de ses dépendances</title><description><![CDATA[
+<p>Pas plus tard qu’hier, alors que je travaillais tranquillement, apparu soudainement un bug dans mon <em>workflow</em> de <em>build</em>. Il ne m’était plus possible avec <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> de supprimer des fichiers. Hmmm, ballot, car sans la suppression, mon <em>workflow</em> devenait tout bancal. Bien. Il me fallut remonter la rivière - comme souvent, en tant que développeur - afin de constater où était le bug. Je suis alors tombé sur <a href="https://github.com/isaacs/rimraf">rimraf</a> (bon c’était pas bien loin) qui s’était vu être mis à jour il y a à peine 12 heures, comprenant un bug.</p>
+<h2 id="contexte"><a class="putainde-Title-anchor" href="#contexte">#</a>Contexte</h2><p>Bon, vous voyez le topo ?</p>
+<pre><code>{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean"</span></span>,
+  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value"><span class="hljs-string">"~2.2.1"</span>
+  </span>}
+</span>}
+</code></pre><p><a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> qui contient en <em>dependencies</em> <a href="https://github.com/isaacs/rimraf">rimraf</a> avec une version bugguée. Oh la belle affaire. Oui car <code>~2.2.1</code> veut dire “<a href="https://github.com/isaacs/node-semver#ranges">Raisonnablement proche de 2.2.1</a>“, ce qui se traduit par télécharger la dernière version en <code>2.2.x</code>, soit la <code>2.2.7</code> (celle bugguée) lorsque je mis à jour le package <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a>.</p>
+<h2 id="le-hic"><a class="putainde-Title-anchor" href="#le-hic">#</a>Le hic</h2><p>Une question m’est venue : comment faire en sorte de figer la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> qui est une dépendance de dépendance ?</p>
+<p>Ha ! Pas évident comme ça.</p>
+<p>J’ai d’abord essayé sans trop d’espoir de télécharger <a href="https://github.com/isaacs/rimraf">rimraf</a> lui-même en <code>2.2.6</code> mais vu que chaque dépendance à ses propres dépendances et qu’elles ne se les partagent pas… c’était peine perdue.</p>
+<p>J’ai donc cherché, cherché, et je suis tombé sur <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a>: “Lock down dependency versions”. Bingo !</p>
+<h2 id="npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances"><a class="putainde-Title-anchor" href="#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>npm-shrinkwrap, la solution pour figer vos depéndances, toutes vos dépendances</h2><p><a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a> va vous permettre de définir avec précision chaque version de chaque dépendance.</p>
+<p>Pour cela, faites d’abord un <code>npm install</code> (si vous avez évidemment un <code>package.json</code>) afin d’installer vos <code>node_modules</code>. Une fois cela fait, lancez <code>npm shrinkwrap</code> qui créera le fichier <code>npm-shrinkwrap.json</code> qui comprendra toutes les définitions de chaque dépendance.</p>
+<h3 id="figer-une-dependance-de-dependance"><a class="putainde-Title-anchor" href="#figer-une-dependance-de-dependance">#</a>Figer une dépendance de dépendance</h3><p>Simple, regardez :</p>
+<pre><code>{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"my-project"</span></span>,
+  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"1.0.0"</span></span>,
+  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">grunt-contrib-clean</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.5.0"</span></span>,
+      "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean@~0.5.*"</span></span>,
+      "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"2.2.6"</span></span>,
+          "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"rimraf@~2.2.1"</span></span>,
+          "<span class="hljs-attribute">resolved</span>": <span class="hljs-value"><span class="hljs-string">"https://registry.npmjs.org/rimraf/-/rimraf-2.2.6.tgz"</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}
+</span>}
+</code></pre><p>J’ai défini la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> dans <code>dependencies.grunt-contrib-clean.dependencies.rimraf</code>.</p>
+<p>Bon, je ne connais pas tout par coeur non plus, npm-shrinkwrap vous écrira la totalité du fichier avec toutes les définitions mais j’ai volontairement tout supprimé et gardé uniquement la partie <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> car seule cette partie est à figer. Quand je dis supprimer, je parle réellement dans le fichier final, pas juste ici dans l’article.</p>
+<p>Vous aurez toute l’explication de npm-shrinkwrap sur la <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">documentation officielle [en]</a>.</p>
+<h2 id="choisir-la-bonne-strategie-de-version"><a class="putainde-Title-anchor" href="#choisir-la-bonne-strategie-de-version">#</a>Choisir la bonne stratégie de version</h2><p>Parce qu’il est important de savoir quelle version exacte nous souhaitons installer dans notre projet, il faut définir avec précisions ces versions dans <code>package.json</code>.</p>
+<p>Vous pouvez avoir <code>1.2.1</code> ou encore <code>~1.4.6</code> ou bien encore <code>^2.3.1</code>. Mais que veulent dire <code>^</code> ou <code>~</code> ?</p>
+<ul>
+<li><code>1.2.1</code> : cette version exacte</li>
+<li><code>~1.4.6</code> : raisonnablement proche de <code>1.4.6</code></li>
+<li><code>^2.3.1</code> : compatible avec <code>2.3.1</code></li>
+</ul>
+<p>Il est clair que lu comme ça, le plus intéressant est le <code>^</code> et c’est justement <a href="http://fredkschott.com/post/2014/02/npm-no-longer-defaults-to-tildes/">celui qui est choisi maintenant [en]</a> lorsque l’on fait un <code>npm install --save</code>. Cool non ?!</p>
+<p>Pour plus d’information sur la définition des versions, <a href="https://github.com/isaacs/node-semver#ranges">c’est par là</a> (Oh mon dieu, il a fait un lien avec un “cliquez ici”).</p>
+<p>Bon. C’est bon ? Vous avez tout compris ? Okay, vous pouvez passer à <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/"><strong>napa</strong></a> maintenant qui vous aidera grandement sur le téléchargement de projets n’ayant pas de <code>package.json</code>.</p>
+<p>En ce qui concerne npm, je m’arrête là, et vous propose une petite solution afin d’augmenter la vitesse de vos installations de node modules.</p>
+<h2 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h2><p>Envie d’accélérer vos installations npm ? Je vous conseille <a href="https://github.com/vvo/npm-pkgr">npm-pkgr</a>.</p>
+<p>Il hashera votre <code>package.json</code> pour savoir s’il a été modifié ou non, et en fonction de ça, il lancera <code>npm install</code> ou non. Sacré gain de temps (surtout si vous faites des <code>npm install</code> à chaque <em>deploy</em>).</p>
+<p>You are now a npm master. 👨</p>
+
+]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/npm-choisir-version/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/npm-choisir-version/</guid></item><item><title>Premiers pas avec Ruby</title><description><![CDATA[
 <h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><pre><code class="lang-sh"><span class="hljs-char">$ </span>git clone <span class="hljs-method">git:</span>//github.com/sstephenson/rbenv.git ~/.rbenv
 <span class="hljs-char">$ </span>echo <span class="hljs-string">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> &gt;&gt; ~/.bashrc
 <span class="hljs-char">$ </span>echo <span class="hljs-string">'eval "$(rbenv init -)"'</span> &gt;&gt; ~/.bashrc
@@ -2682,56 +2678,135 @@ pré-processeurs c’est so 2000. Regarde par là <a href="/posts/css/le-point-s
 Tout ça est décrit dans la <a href="/posts/css/mise-en-place-autoprefixer/">mise en place d’autoprefixer</a>
 avec des exemples concrets pour ajouter ça dans un workflow existant.</p>
 
-]]></description><pubDate>Tue, 25 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</guid></item><item><title>Sublime Text en tant qu'éditeur Markdown</title><description><![CDATA[
-<p>La vie de développeur n’est jamais facile. Tu souhaites faire quelque chose de précis et tu te retrouves à faire totalement autre chose, <em>patchant</em> ci ou tu as découvert ça.</p>
-<p>Typiquement, j’étais tranquillement en train d’écrire un article pour <strong>p!</strong> qui n’avait rien à voir avec celui actuel, et je me retrouve à personnaliser mon Sublime Text pour Markdown car ne souhaitant plus utiliser autre chose que celui-ci pour l’écriture.</p>
-<p>Il y a certes le très bon <a href="http://mouapp.com/">Mou.app</a> (<code>$ brew cask install mou</code>) sur Mac OS X mais comme indiqué, il n’est que pour Mac, or il m’arrive parfois d’être sur Windows.
-De plus, les éditeurs en ligne comme <a href="https://stackedit.io/">stackedit.io</a> ou <a href="http://dillinger.io/">dillinger.io</a> sont pratiques mais comme j’ai tendance à stocker mes brouillons sur <a href="https://db.tt/nTkiSUb">dropbox</a>, ces outils vous demandent l’accès de toute votre dropbox, chose que je n’aime pas spécialement.</p>
-<p>Bref, tout ça pour dire que tout centraliser sur Sublime Text et utiliser dropbox pour écrire des articles me semble une pratique plutôt agréable.</p>
-<p>Pour cela, quittez totalement vos éditeurs Markdown et installez les plugins Sublime Text qui vont bien.</p>
-<h2 id="markdownediting"><a class="putainde-Title-anchor" href="#markdownediting">#</a>MarkdownEditing</h2><p>Premièrement, <a href="http://ttscoff.github.io/MarkdownEditing/">MarkdownEditing</a>, ce petit plugin est votre parfait compagnon qui vous permettra d’avoir la bonne coloration syntaxique de votre Markdown. Il vous permettra de mettre en évidence les liens, le code, et tout le reste. Du bonheur donc.</p>
-<p><img src="../../../images/posts/preview-markdownediting.png" alt=""></p>
-<p>Oui alors, j’ai fait quelques configurations car à la base, ca ressemble plutôt à ça :</p>
-<p><img src="../../../images/posts/preview-markdownediting-light.png" alt=""></p>
-<p>Si vous souhaitez modifier Sublime Text mais uniquement pour le format Markdown, faites : <code>Preferences &gt; Browse Packages...</code> puis aller dans <code>User</code> et créez un fichier <code>Markdown.sublime-settings</code>. Celui-ci sera lu et appliqué à chaque fois que vous éditerez un fichier Markdown.</p>
-<p>Voici ce que j’ai pour le moment :</p>
-<pre><code>{
-  "<span class="hljs-attribute">color_scheme</span>": <span class="hljs-value"><span class="hljs-string">"Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme"</span></span>,
-  "<span class="hljs-attribute">enable_table_editor</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
-  "<span class="hljs-attribute">table_editor_syntax</span>": <span class="hljs-value"><span class="hljs-string">"Auto"</span></span>,
-  "<span class="hljs-attribute">tab_size</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,
-  "<span class="hljs-attribute">extensions</span>":
-  <span class="hljs-value">[
-    <span class="hljs-string">"mdown"</span>,
-    <span class="hljs-string">"txt"</span>,
-    <span class="hljs-string">"md"</span>
-  ]
-</span>}
-</code></pre><p>Le thème <code>dark</code> pour pas se niquer les yeux (coucou <a href="https://twitter.com/bloodyowl">@bloodyowl</a>), j’active aussi d’autres plugins dont je vais vous parler d’ici peu, j’affecte le spacing à <code>2</code>, et je déclare que j’utiliserai l’éditeur Markdown pour ce genre de fichiers : <code>.mdown</code>, <code>.txt</code>, <code>.md</code>.</p>
-<p>Bien, passons à la suite.</p>
-<h2 id="markdown-preview"><a class="putainde-Title-anchor" href="#markdown-preview">#</a>Markdown Preview</h2><p>Notre cher <a href="https://twitter.com/revolunet">@revolunet</a> a fait un excellent plugin Markdown pour Sublime Text: <a href="https://github.com/revolunet/sublimetext-markdown-preview">Sublime Text Markdown Preview</a>. Celui-ci permet d’avoir un rendu de votre Markdown en <code>.html</code>. Vous pouvez soit compiler votre Markdown pour créer un fichier HTML, soit l’ouvrir directement dans votre navigateur.</p>
-<p>Différents formats disponibles :</p>
+]]></description><pubDate>Tue, 25 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/comment-en-finir-avec-les-prefixes/</guid></item><item><title>La puissance de dnsmasq</title><description><![CDATA[
+<p>Dernièrement, j’ai voulu accéder avec mon Smartphone à ma machine virtuelle (<em>VM</em>) de développement qui se trouve sur mon poste de travail (<em>machine ou poste hôte</em>). Ma machine virtuelle me permet de reproduire à l’identique la production afin d’avoir le moins de marge d’erreur possible entre la phase de développement et la phase de mise en production.</p>
+<p>A ce moment là, j’accédais à ma machine virtuelle à partir de mon poste via le fichier <em>hosts</em> comprenant ceci :</p>
+<pre><code><span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.145</span> monsite<span class="hljs-preprocessor">.dev</span>
+</code></pre><p>Le problème est que seul mon poste est au courant de la résolution du nom de domaine de par cette méthode.</p>
+<p>Étant donné qu’il est laborieux de changer des <em>hosts</em> sur un appareil comme un téléphone et que je n’ai pas non plus envie de dupliquer cette modification sur chaque appareil, il me fallait trouver une solution généralisée.</p>
+<p>C’est là que <strong><a href="http://fr.wikipedia.org/wiki/Dnsmasq">dnsmasq</a></strong> entre en jeu.</p>
+<blockquote>
+<p>Dnsmasq est un serveur léger pour fournir les services DNS, DHCP, Bootstrap Protocol et TFTP pour un petit réseau, voire pour un poste de travail. Il permet d’offrir un service de nommage des machines du réseau interne non intégrées au service de nommage global (i.e. le service DNS d’Internet). Le service de nommage est associé au service d’adressage de telle manière que les machines dont le bail DHCP est fourni par Dnsmasq peuvent avoir automatiquement un nom DNS sur le réseau interne. Le logiciel offre un service DHCP statique ou dynamique.</p>
+</blockquote>
+<h2 id="dnsmasq-le-serveur-dns-tout-petit"><a class="putainde-Title-anchor" href="#dnsmasq-le-serveur-dns-tout-petit">#</a>dnsmasq, le serveur dns tout petit</h2><p><strong>dnsmasq</strong> va me permettre de faire plusieurs choses :</p>
 <ul>
-<li>Python Markdown</li>
-<li>Github Flavored Markdown</li>
+<li>accélérer la résolution dns</li>
+<li>ne pas polluer le réseau interne de la boite avec des résolutions de domaines propre à votre poste (imaginez que vous soyez plusieurs à avoir <em>monsite.dev</em> (ce qui est le cas dans notre boite)); une résolution se ferait uniquement vers un seul poste donc impossible de faire sans si vous êtes plusieurs</li>
+<li>ne pas dupliquer sur chacun appareil la résolution dns</li>
+<li>réussir à résoudre un nom de domaine sur un appareil où le fichier <em>hosts</em> est difficile voire impossible d’accès</li>
 </ul>
-<p>Un autre parfait compagnon en somme, qui quant à lui s’occupera de digérer l’excellent article que vous êtes en train d’écrire.</p>
-<p>Je vous parlerai éventuellement un jour de <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> qui permet de faire ce genre de choses mais en un peu plus complet et générique (Sublime Text n’est pas nécessaire) mais c’est un poil plus complexe. Jettez-y un œil tout de même.</p>
-<h2 id="smartmarkdown"><a class="putainde-Title-anchor" href="#smartmarkdown">#</a>SmartMarkdown</h2><p><a href="https://github.com/demon386/SmartMarkdown">Petit plugin</a> intéressant qui vous permettra de cacher des parties de votre texte en le repliant. Par exemple, vous vous mettez devant un titre du style <code>##</code> et vous appuyez sur <code>tab</code>, cela repliera votre texte. Plutôt pratique pour se focaliser.</p>
-<p><img src="../../../images/posts/preview-smartmarkdown.png" alt=""></p>
-<h2 id="sublimetableeditor"><a class="putainde-Title-anchor" href="#sublimetableeditor">#</a>SublimeTableEditor</h2><p>Précédemment dans ma configuration Markdown, vous avez pu voir ceci :</p>
-<pre><code>  <span class="hljs-string">"enable_table_editor"</span>: <span class="hljs-literal">true</span>,
-  <span class="hljs-string">"table_editor_syntax"</span>: <span class="hljs-string">"Auto"</span>,
-</code></pre><p>Cela permet de configurer <a href="https://github.com/vkocubinsky/SublimeTableEditor">SublimeTableEditor</a> qui vous permettra de correctement aligner vos tableaux dans Markdown.</p>
-<p>Et voilà. Avec tout ceci, vous êtes paré(e) à écrire votre Markdown dans de bonnes conditions. Plus qu’à mettre du Jazz et vous préparer une tasse de thé et c’est parti.</p>
-<h2 id="bonus-markdown-extended"><a class="putainde-Title-anchor" href="#bonus-markdown-extended">#</a>Bonus : Markdown Extended</h2><p>Il est possible que vous n’aimiez pas forcément MarkdownEditing, et dans ce cas je vous propose un autre plugin pas inintéressant non plus s’appelant <a href="https://github.com/jonschlinkert/sublime-markdown-extended">Markdown Extended</a>. Il vous permettra d’avoir la bonne coloration syntaxique lorsque vous écrivez du code dans votre éditeur.</p>
-<h4 id="avant"><a class="putainde-Title-anchor" href="#avant">#</a>Avant</h4><p><img src="../../../images/posts/preview-markdownextended-before.png" alt=""></p>
-<h4 id="apres"><a class="putainde-Title-anchor" href="#apres">#</a>Après</h4><p><img src="../../../images/posts/preview-markdownextended-after.png" alt=""></p>
-<p>Oh et j’oubliais, voici quelques documentations sur Markdown histoire de bien l’utiliser :</p>
+<p>Cependant, tout n’est pas si rose, je vais vous montrer pourquoi après.</p>
+<h3 id="partage-de-connexion"><a class="putainde-Title-anchor" href="#partage-de-connexion">#</a>Partage de connexion</h3><p>Je vous propose dans un premier temps de partager votre connexion via le Wifi sous Mac OS X afin :</p>
 <ul>
-<li><a href="http://daringfireball.net/projects/markdown/syntax">Documentation officielle</a></li>
-<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></li>
-<li><a href="http://warpedvisions.org/projects/markdown-cheat-sheet.md">Another Markdown Cheatsheet</a></li>
+<li>d’avoir constamment un débit stable et performant; étant donné que vous êtes souvent devant votre poste pour tester sur différents appareils, en partageant votre connexion via Wifi, vous vous assurez d’avoir un excellent débit, chose qui n’est pas toujours évidente quand le wifi de votre boite est un peu / souvent trop loin</li>
+<li>d’utiliser le serveur dns (dnsmasq) que vous allez monter</li>
 </ul>
+<p>Pour cela, il suffit de faire : <code>System Preferences &gt; Sharing &gt; Internet Sharing</code> puis choisir <code>Ethernet</code> en source, et <code>Wifi</code> en sortie. (Je vous conseille d’ailleurs de protéger votre Wifi avec une clé WPA2).</p>
+<figure><img src="../../../images/posts/macosx-network-sharing.png" alt=""></figure>
 
-]]></description><pubDate>Thu, 20 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</link><guid isPermaLink="true">http://putaindecode.fr/posts/sublime-text/sublime-text-et-markdown/</guid></item></channel></rss>
+<p><em>Ici, c’est USB Ethernet en source car je suis sur un Mac Book Air donc aucun port ethernet natif mais choisissez Ethernet si possible.</em></p>
+<p>Une fois que le partage de connexion via Wifi est activé, vous pouvez vous y connecter avec votre smartphone (ou tablette).</p>
+<p>Cela crée alors un nouveau réseau privé entre votre machine hôte et votre téléphone avec des adresses comme <code>192.168.2.x</code>. La machine hôte aura sûrement l’adresse <code>192.168.2.1</code> et votre téléphone très probablement <code>192.168.2.2</code>.</p>
+<p>C’est alors un autre réseau que le réseau interne à la boite en <code>192.168.1.x</code>.</p>
+<p>Notez aussi que la machine hôte, faisant bridge, donne les informations en cascade aux appareils connectés. Ce que vous spécifiez comme serveurs dns sur la machine hôte sera alors ceux utilisés par les appareils étant connectés à votre partage de réseau.</p>
+<h3 id="aaaah-dnsmasq-"><a class="putainde-Title-anchor" href="#aaaah-dnsmasq-">#</a>Aaaah dnsmasq !</h3><p>On est sous Mac OS X, la vie est si simple, on installe <strong>dnsmasq</strong> via <strong>homebrew</strong>.</p>
+<h4 id="dnsmasq-via-homebrew"><a class="putainde-Title-anchor" href="#dnsmasq-via-homebrew">#</a>dnsmasq via homebrew</h4><pre><code><span class="hljs-variable">$ </span>brew install dnsmasq
+</code></pre><h4 id="configuration-de-dnsmasq"><a class="putainde-Title-anchor" href="#configuration-de-dnsmasq">#</a>configuration de dnsmasq</h4><p>Une fois installé, on copie la configuration :</p>
+<pre><code>$ <span class="hljs-keyword">cp</span> /usr/local/opt/dnsmasq/dnsmasq<span class="hljs-preprocessor">.conf</span><span class="hljs-preprocessor">.example</span> /usr/local/etc/dnsmasq<span class="hljs-preprocessor">.conf</span>
+</code></pre><p>puis on édite le comme ceci :</p>
+<pre><code><span class="hljs-preprocessor"># Add domains which you want to force to an IP address here.</span>
+<span class="hljs-preprocessor"># The example below send any host in double-click.net to a local</span>
+<span class="hljs-preprocessor"># web-server.</span>
+<span class="hljs-preprocessor">#address=/double-click.net/127.0.0.1</span>
+address=/monsite.dev/<span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.145</span>
+
+<span class="hljs-preprocessor"># If you want dnsmasq to listen for DHCP and DNS requests only on</span>
+<span class="hljs-preprocessor"># specified interfaces (and the loopback) give the name of the</span>
+<span class="hljs-preprocessor"># interface (eg eth0) here.</span>
+<span class="hljs-preprocessor"># Repeat the line for more than one interface.</span>
+<span class="hljs-preprocessor">#interface=</span>
+<span class="hljs-preprocessor"># Or you can specify which interface _not_ to listen on</span>
+<span class="hljs-preprocessor">#except-interface=</span>
+<span class="hljs-preprocessor"># Or which to listen on by address (remember to include 127.0.0.1 if</span>
+<span class="hljs-preprocessor"># you use this.)</span>
+listen-address=<span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>
+<span class="hljs-preprocessor"># If you don't want dnsmasq to read /etc/hosts, uncomment the</span>
+<span class="hljs-preprocessor"># following line.</span>
+no-hosts
+</code></pre><p>Nous précisons dans un premier temps la résolution du nom de domaine <code>monsite.dev</code> (notez que c’est du wildcard, donc pas besoin de préciser les sous-domaines), puis nous indiquons que le serveur DNS marche sur toutes les IPs de la machine hôte et enfin nous indiquons que nous ne voulons pas prendre en compte le fichier <code>/etc/hosts</code> vu qu’on spécifie les résolutions via <code>address</code>.</p>
+<p>Cela permettra à terme de ne plus gérer le fichier <code>/etc/hosts</code> et de tout spécifier dans <code>dnsmasq.conf</code>.</p>
+<h4 id="lancer-dnsmasq-au-demarrage-de-la-machine"><a class="putainde-Title-anchor" href="#lancer-dnsmasq-au-demarrage-de-la-machine">#</a>lancer dnsmasq au démarrage de la machine</h4><p>On copie le fichier de démon dans le dossier qui va bien puis on lance le démon.</p>
+<pre><code>$ <span class="hljs-built_in">sudo</span> cp -fv /usr/local/opt/dnsmasq/*.plist /Library/LaunchDaemons
+$ <span class="hljs-built_in">sudo</span> launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
+</code></pre><h4 id="utiliser-le-serveur-dnsmasq"><a class="putainde-Title-anchor" href="#utiliser-le-serveur-dnsmasq">#</a>utiliser le serveur dnsmasq</h4><p>Etant donné que vous partagez votre connexion et que votre poste fait hôte, le serveur dns utilisé sera celui installé sur votre poste, donc rien à faire.</p>
+<p>Sinon :</p>
+<ul>
+<li><p>vous pouvez changer le serveur dns de la machine hôte dans <code>network</code> et dans ce cas, que ce soit sur vos appareils connectés au wifi ou votre machine principale, vous utiliserez <strong>dnsmasq</strong> mais je vous le déconseile car j’ai constaté que j’atteignais trop facilement le nombre de connexions maximum.</p>
+</li>
+<li><p>vous pouvez aussi modifier le serveur dns de l’appareil connecté au wifi partagé :</p>
+</li>
+</ul>
+<p><em>(Sous Android)</em></p>
+<p><code>Wifi &gt; Press on the current connnection &gt; Modify network &gt; Show advanced options</code></p>
+<figure><img src="../../../images/posts/android-network-advanced.jpg" alt=""></figure>
+
+<p>Mais quel intérêt car vous devrez faire cela sur tous vos appareils connectés</p>
+<ul>
+<li>vous pouvez aussi éditer le fichier <code>/etc/bootpd.plist</code> qui définit toute votre configuration de partage de connexion :</li>
+</ul>
+<pre><code>$ <span class="hljs-built_in">sudo</span> <span class="hljs-variable">$EDITOR</span> /etc/bootpd.plist
+</code></pre><pre><code class="lang-xml"><span class="hljs-pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="hljs-doctype">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">plist</span> <span class="hljs-attribute">version</span>=<span class="hljs-value">"1.0"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">dict</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">key</span>&gt;</span>Subnets<span class="hljs-tag">&lt;/<span class="hljs-title">key</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">array</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">dict</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">key</span>&gt;</span>_creator<span class="hljs-tag">&lt;/<span class="hljs-title">key</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">string</span>&gt;</span>com.apple.InternetSharing<span class="hljs-tag">&lt;/<span class="hljs-title">string</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">key</span>&gt;</span>allocate<span class="hljs-tag">&lt;/<span class="hljs-title">key</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">true</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">key</span>&gt;</span>dhcp_domain_name_server<span class="hljs-tag">&lt;/<span class="hljs-title">key</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">array</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">string</span>&gt;</span>192.168.2.1<span class="hljs-tag">&lt;/<span class="hljs-title">string</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">array</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">key</span>&gt;</span>dhcp_router<span class="hljs-tag">&lt;/<span class="hljs-title">key</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">string</span>&gt;</span>192.168.2.1<span class="hljs-tag">&lt;/<span class="hljs-title">string</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">key</span>&gt;</span>lease_max<span class="hljs-tag">&lt;/<span class="hljs-title">key</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">integer</span>&gt;</span>86400<span class="hljs-tag">&lt;/<span class="hljs-title">integer</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">key</span>&gt;</span>lease_min<span class="hljs-tag">&lt;/<span class="hljs-title">key</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">integer</span>&gt;</span>86400<span class="hljs-tag">&lt;/<span class="hljs-title">integer</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">key</span>&gt;</span>name<span class="hljs-tag">&lt;/<span class="hljs-title">key</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">string</span>&gt;</span>192.168.2/24<span class="hljs-tag">&lt;/<span class="hljs-title">string</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">key</span>&gt;</span>net_address<span class="hljs-tag">&lt;/<span class="hljs-title">key</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">string</span>&gt;</span>192.168.2.0<span class="hljs-tag">&lt;/<span class="hljs-title">string</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">key</span>&gt;</span>net_mask<span class="hljs-tag">&lt;/<span class="hljs-title">key</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">string</span>&gt;</span>255.255.255.0<span class="hljs-tag">&lt;/<span class="hljs-title">string</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">key</span>&gt;</span>net_range<span class="hljs-tag">&lt;/<span class="hljs-title">key</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">array</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">string</span>&gt;</span>192.168.2.2<span class="hljs-tag">&lt;/<span class="hljs-title">string</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">string</span>&gt;</span>192.168.2.254<span class="hljs-tag">&lt;/<span class="hljs-title">string</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">array</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">dict</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">array</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">key</span>&gt;</span>bootp_enabled<span class="hljs-tag">&lt;/<span class="hljs-title">key</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">false</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">key</span>&gt;</span>detect_other_dhcp_server<span class="hljs-tag">&lt;/<span class="hljs-title">key</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">true</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">key</span>&gt;</span>dhcp_enabled<span class="hljs-tag">&lt;/<span class="hljs-title">key</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">array</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">string</span>&gt;</span>bridge100<span class="hljs-tag">&lt;/<span class="hljs-title">string</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">array</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">key</span>&gt;</span>use_server_config_for_dhcp_options<span class="hljs-tag">&lt;/<span class="hljs-title">key</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">false</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">dict</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">plist</span>&gt;</span>
+</code></pre>
+<p><code>192.168.2.1</code> est l’adresse de votre machine hôte dans le réseau de partage.</p>
+<h2 id="oh-oui-j-oubliais-mac-os-x-peut-etre-lourd-parfois"><a class="putainde-Title-anchor" href="#oh-oui-j-oubliais-mac-os-x-peut-etre-lourd-parfois">#</a>Oh oui, j’oubliais, Mac OS X peut être lourd parfois</h2><p>Oui, quand vous créez un partage de connexion sur Mac OS X, il lance son propre serveur dns s’appelant <strong>_mdnsresponder</strong>. C’est le système <em>Bonjour</em> de iOS/Mac OS X permettant à n’importe quel appareil Apple de communiquer entre eux. Le problème c’est qu’il risque de marcher sur les pieds de <strong>dnsmasq</strong>.</p>
+<p>Faites donc un <code>$ sudo lsof -i :53</code> et vous pourrez éventuellement voir que <strong>_mdnsresponder</strong> est lancé aussi bien en ipv6 qu’en ipv4 sur le port 53. Cela vous empêchera de lancer <strong>dnsmasq</strong>.</p>
+<p>Ce que je vous propose dans ces cas là, c’est de couper votre partage de connexion, puis notez le pid de <strong>_mdnsresponder</strong> via <code>$ sudo lsof -i :53</code>, de le <code>sudo kill :pid</code>, de lancer <code>$ sudo dnsmasq</code> puis de relancer le partage de connexion. Comme ça <strong>_mdnsresponser</strong> ne prendra plus la place de <strong>dnsmasq</strong>.</p>
+<p>Autre point, évitez, mais vraiment, de nommer vos noms de domaines personnels en <code>.local</code>. En effet, ceux-ci sont plutôt réservés à l’environnement Mac OS X. Ils sont d’ailleurs en rapport avec <strong>_mdnsresponder</strong>. Les <code>.local</code> permettent à n’importe quel produit Apple sur le réseau de se connecter à d’autres postes Apple via <code>nom-de-l-appareil.local</code>. Votre connexion pourrait alors s’emméler entre le serveur dns de <strong>Bonjour</strong> et votre propre serveur dns.</p>
+<p>Happy coding !</p>
+
+]]></description><pubDate>Thu, 20 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</link><guid isPermaLink="true">http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/</guid></item></channel></rss>
