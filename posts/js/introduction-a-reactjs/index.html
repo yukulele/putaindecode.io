@@ -39,8 +39,8 @@ le fait que le DOM ait constamment un état différent, c’est chiant à gérer
 <p>Du coup, et si on appelait <code>.render()</code> à chaque modification ?
 Ça a l’air stupide, hein ? Pas tant que ça en fait.</p>
 <p>React implémente un <strong>DOM virtuel</strong>, une représentation interne du DOM
-extrêmement rapide. Il inclut par ailleurs son propre système d’évenements,
-ce qui permet à React de faire bénéficier de la phase de capturing les navigateurs
+extrêmement rapide. Il inclut par ailleurs son propre système d’événements,
+ce qui permet à React de faire bénéficier de la phase de capturing aux navigateurs
 n’implémentant pas <code>EventTarget</code> (oui, IE8, c’est toi que je regarde).</p>
 <p>La méthode <code>render</code> retourne des objets correspondant à la représentation
 interne du DOM virtuel.</p>
@@ -57,8 +57,7 @@ retourne).</p>
 <p>Le <code>state</code>, en revanche, ne doit être modifié qu’au sein des méthodes propres
 à la classe.</p>
 <p>Le principal avantage est que l’on est certain, du fait de l’appel systématique
-à <code>render</code>, que notre composant React aura la représentation attendue pour un état
-donné.</p>
+à <code>render</code>, que notre composant React aura la représentation attendue pour un état donné.</p>
 <p>Un des autres avantages de React est son algorithme de diff interne.
 Le DOM virtuel va être comparé avec la version visible, et React effectue
 à l’aide d’opérations simples les seuls changements nécessaires.</p>
@@ -111,13 +110,13 @@ ce qui permet à des novices de le prendre en main très rapidement.</p>
 <span class="hljs-comment">// et hop</span>
 view.toggle()
 </code></pre>
-<h2 id="sum-up-des-avantages-de-react"><a class="putainde-Title-anchor" href="#sum-up-des-avantages-de-react">#</a>Sum up des avantages de react</h2><p>React a bien compris ces points :</p>
+<h2 id="sum-up-des-avantages-de-react"><a class="putainde-Title-anchor" href="#sum-up-des-avantages-de-react">#</a>Sum up des avantages de React</h2><p>React a bien compris ces points :</p>
 <ul>
 <li>le DOM est lent, du moins en écriture, et limiter les interactions avec
-ce dernier est essentiel</li>
+ce dernier est essentiel ;</li>
 <li>devoir continuellement penser à l’état du DOM à l’instant <code>n</code> n’est pas
 une préoccupation que nous devrions avoir en développant l’UI de nos
-composants</li>
+composants ;</li>
 <li>les concepts d’immutabilité (un objet ne change pas, on en crée un nouveau à
 chaque changement) et de composition (composer une classe de différentes
 fonctionnalités sans devoir créer des chaînes d’héritage complexes) ont de
@@ -131,7 +130,7 @@ tête les paradigmes pensés pour React.</p>
 <p>Last but not least, vous pouvez render vos composants React depuis le serveur
 et la lib sera assez intelligente pour reconnaitre les composants déjà générés
 pour ne pas les render systématiquement, c’est pas beau, ça ?</p>
-</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/js/introduction-a-reactjs/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/js/introduction-a-reactjs/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/js/introduction-a-reactjs/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> bloodyowl</h3><div class="putainde-Author-social"><a href="http://bloodyowl.io"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/bloodyowl"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/bloodyowl"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur front-end, aime la bonne bière artisanale, la musique, et JavaScript; n'aime ni les points virgules, ni les gens</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">2 contributeurs</strong><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/lionelB" data-tip="lionelB" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/03edc8b4edc19d91202e69c65c5baeff.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/js/introduction-a-reactjs/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/js/introduction-a-reactjs/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/js/introduction-a-reactjs/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> bloodyowl</h3><div class="putainde-Author-social"><a href="http://bloodyowl.io"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/bloodyowl"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/bloodyowl"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur front-end, aime la bonne bière artisanale, la musique, et JavaScript; n'aime ni les points virgules, ni les gens</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">3 contributeurs</strong><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/enguerran" data-tip="enguerran" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2e43fe3376aaf887aad755de94942fa0.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/lionelB" data-tip="lionelB" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/03edc8b4edc19d91202e69c65c5baeff.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-tip="GitHub" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--github"></i></a><a href="https://twitter.com/putaindecode/" data-tip="Twitter" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--twitter"></i></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/js/introduction-a-reactjs/";
 var disqus_url = "http://putaindecode.fr/posts/js/introduction-a-reactjs/";
 var disqus_script = "embed.js";;(function(d,s) {

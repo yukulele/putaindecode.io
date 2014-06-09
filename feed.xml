@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Sun, 08 Jun 2014 14:25:41 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Introduction à ReactJS</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 09 Jun 2014 09:08:49 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Introduction à ReactJS</title><description><![CDATA[
 <p>Cela fait maintenant un an que ReactJS est open-sourced.
 C’est l’occasion de présenter le petit dernier de la vague MV*.</p>
 <h2 id="les-differentes-approches-d-ui"><a class="putainde-Title-anchor" href="#les-differentes-approches-d-ui">#</a>Les différentes approches d’UI</h2><h3 id="backbone"><a class="putainde-Title-anchor" href="#backbone">#</a>Backbone</h3><p><a href="http://backbonejs.org">Backbone</a> apporte une simplification dans la
@@ -40,8 +40,8 @@ le fait que le DOM ait constamment un état différent, c’est chiant à gérer
 <p>Du coup, et si on appelait <code>.render()</code> à chaque modification ?
 Ça a l’air stupide, hein ? Pas tant que ça en fait.</p>
 <p>React implémente un <strong>DOM virtuel</strong>, une représentation interne du DOM
-extrêmement rapide. Il inclut par ailleurs son propre système d’évenements,
-ce qui permet à React de faire bénéficier de la phase de capturing les navigateurs
+extrêmement rapide. Il inclut par ailleurs son propre système d’événements,
+ce qui permet à React de faire bénéficier de la phase de capturing aux navigateurs
 n’implémentant pas <code>EventTarget</code> (oui, IE8, c’est toi que je regarde).</p>
 <p>La méthode <code>render</code> retourne des objets correspondant à la représentation
 interne du DOM virtuel.</p>
@@ -58,8 +58,7 @@ retourne).</p>
 <p>Le <code>state</code>, en revanche, ne doit être modifié qu’au sein des méthodes propres
 à la classe.</p>
 <p>Le principal avantage est que l’on est certain, du fait de l’appel systématique
-à <code>render</code>, que notre composant React aura la représentation attendue pour un état
-donné.</p>
+à <code>render</code>, que notre composant React aura la représentation attendue pour un état donné.</p>
 <p>Un des autres avantages de React est son algorithme de diff interne.
 Le DOM virtuel va être comparé avec la version visible, et React effectue
 à l’aide d’opérations simples les seuls changements nécessaires.</p>
@@ -112,13 +111,13 @@ ce qui permet à des novices de le prendre en main très rapidement.</p>
 <span class="hljs-comment">// et hop</span>
 view.toggle()
 </code></pre>
-<h2 id="sum-up-des-avantages-de-react"><a class="putainde-Title-anchor" href="#sum-up-des-avantages-de-react">#</a>Sum up des avantages de react</h2><p>React a bien compris ces points :</p>
+<h2 id="sum-up-des-avantages-de-react"><a class="putainde-Title-anchor" href="#sum-up-des-avantages-de-react">#</a>Sum up des avantages de React</h2><p>React a bien compris ces points :</p>
 <ul>
 <li>le DOM est lent, du moins en écriture, et limiter les interactions avec
-ce dernier est essentiel</li>
+ce dernier est essentiel ;</li>
 <li>devoir continuellement penser à l’état du DOM à l’instant <code>n</code> n’est pas
 une préoccupation que nous devrions avoir en développant l’UI de nos
-composants</li>
+composants ;</li>
 <li>les concepts d’immutabilité (un objet ne change pas, on en crée un nouveau à
 chaque changement) et de composition (composer une classe de différentes
 fonctionnalités sans devoir créer des chaînes d’héritage complexes) ont de
