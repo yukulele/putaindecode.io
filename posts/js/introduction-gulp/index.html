@@ -64,23 +64,23 @@ optimisation avec <a href="https://github.com/css/csso">CSSO</a>.</p>
 $ npm init
 $ npm i <span class="hljs-attribute">-D</span> gulp gulp<span class="hljs-attribute">-util</span> gulp<span class="hljs-attribute">-plumber</span> gulp<span class="hljs-attribute">-myth</span> gulp<span class="hljs-attribute">-csso</span> minimist
 </code></pre>
-<pre><code class="lang-js">var gulp = require(<span class="hljs-string">"gulp"</span>)
-  , gutil = require(<span class="hljs-string">"gulp-util"</span>)
-  , plumber = require(<span class="hljs-string">"gulp-plumber"</span>)
-  , myth = require(<span class="hljs-string">"gulp-myth"</span>)
-  , csso = require(<span class="hljs-string">"gulp-csso"</span>)
-  , options = require(<span class="hljs-string">"minimist"</span>)(process<span class="hljs-preprocessor">.argv</span><span class="hljs-preprocessor">.slice</span>(<span class="hljs-number">2</span>))
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp"</span>)
+<span class="hljs-keyword">var</span> gutil = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-util"</span>)
+<span class="hljs-keyword">var</span> plumber = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-plumber"</span>)
+<span class="hljs-keyword">var</span> myth = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-myth"</span>)
+<span class="hljs-keyword">var</span> csso = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-csso"</span>)
+<span class="hljs-keyword">var</span> options = <span class="hljs-built_in">require</span>(<span class="hljs-string">"minimist"</span>)(process.argv.slice(<span class="hljs-number">2</span>))
 
-gulp<span class="hljs-preprocessor">.task</span>(<span class="hljs-string">"styles"</span>, function() {
-  gulp<span class="hljs-preprocessor">.src</span>(<span class="hljs-string">"./src/css/*.css"</span>)
-    <span class="hljs-preprocessor">.pipe</span>(options<span class="hljs-preprocessor">.production</span> ? plumber() : gutil<span class="hljs-preprocessor">.noop</span>())
-    <span class="hljs-preprocessor">.pipe</span>(myth({sourcemap: !options<span class="hljs-preprocessor">.production</span>}))
-    <span class="hljs-preprocessor">.pipe</span>(options<span class="hljs-preprocessor">.production</span> ? csso() : gutil<span class="hljs-preprocessor">.noop</span>())
-    <span class="hljs-preprocessor">.pipe</span>(gulp<span class="hljs-preprocessor">.dest</span>(<span class="hljs-string">"./dist/css/"</span>))
+gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  gulp.src(<span class="hljs-string">"./src/css/*.css"</span>)
+    .pipe(options.production ? plumber() : gutil.noop())
+    .pipe(myth({sourcemap: !options.production}))
+    .pipe(options.production ? csso() : gutil.noop())
+    .pipe(gulp.dest(<span class="hljs-string">"./dist/css/"</span>))
 })
 
-gulp<span class="hljs-preprocessor">.task</span>(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], function() {
-  gulp<span class="hljs-preprocessor">.watch</span>(<span class="hljs-string">"./src/css/**/*"</span>, [<span class="hljs-string">"styles"</span>])
+gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, [<span class="hljs-string">"styles"</span>])
 })
 </code></pre>
 <p>Voilà c’est tout. Et heureusement.</p>
@@ -91,23 +91,23 @@ gulp<span class="hljs-preprocessor">.task</span>(<span class="hljs-string">"defa
   <span class="hljs-comment">// Ça c'est optionnel, c'est pour avoir (entre autres la méthode noop())</span>
   <span class="hljs-comment">// je reviens dessus après</span>
   <span class="hljs-comment">// https://github.com/gulpjs/gulp-util</span>
-  , gutil = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-util"</span>)
+<span class="hljs-keyword">var</span> gutil = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-util"</span>)
 
   <span class="hljs-comment">// Là on a Mario le plombier qui fixe la tuyauterie foireuse.</span>
   <span class="hljs-comment">// Ce plugin patch le problème de stream avec node.js qui fait que tout le process</span>
   <span class="hljs-comment">// explose à la moindre erreur (pas pratique en cas de watch par exemple)</span>
   <span class="hljs-comment">// en gros, il remplace la méthode pipe et attrape les erreurs pour les ressortir gentiment</span>
   <span class="hljs-comment">// https://gist.github.com/floatdrop/8269868</span>
-  , plumber = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-plumber"</span>)
+<span class="hljs-keyword">var</span> plumber = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-plumber"</span>)
 
   <span class="hljs-comment">// Ici, rien de magique, du plugin en veux-tu en voilà</span>
-  , myth = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-myth"</span>)
-  , csso = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-csso"</span>)
+<span class="hljs-keyword">var</span> myth = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-myth"</span>)
+<span class="hljs-keyword">var</span> csso = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-csso"</span>)
 
   <span class="hljs-comment">// ici on chope les options de la ligne de commande</span>
   <span class="hljs-comment">// exemple: pour avoir options.production à true,</span>
   <span class="hljs-comment">// il suffit de faire `gulp --production`</span>
-  , options = <span class="hljs-built_in">require</span>(<span class="hljs-string">"minimist"</span>)(process.argv.slice(<span class="hljs-number">2</span>))
+<span class="hljs-keyword">var</span> options = <span class="hljs-built_in">require</span>(<span class="hljs-string">"minimist"</span>)(process.argv.slice(<span class="hljs-number">2</span>))
 
 <span class="hljs-comment">// Définition d'une tâche, un nom et une fonction.</span>
 <span class="hljs-comment">// Ce qui est pratique c'est le fait de pouvoir mettre ce qu'on veut</span>
@@ -198,7 +198,7 @@ Je trouve que c’est gage de qualité.</p>
 <pre><code class="lang-shell"><span class="hljs-variable">$ </span>gulp bisous
 ❯ ♡ 😘
 </code></pre>
-</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/js/introduction-gulp/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/js/introduction-gulp/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/js/introduction-gulp/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> MoOx</h3><div class="putainde-Author-social"><a href="http://moox.io/"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/MoOx"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/MoOx"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.   <br> Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">2 contributeurs</strong><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/quentint" data-tip="quentint" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/794e98e18d210488a1b503b946b6db6a.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/js/introduction-gulp/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/js/introduction-gulp/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/js/introduction-gulp/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> MoOx</h3><div class="putainde-Author-social"><a href="http://moox.io/"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/MoOx"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/MoOx"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.   <br> Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-tip="GitHub" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--github"></i></a><a href="https://twitter.com/putaindecode/" data-tip="Twitter" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--twitter"></i></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/js/introduction-gulp/";
 var disqus_url = "http://putaindecode.fr/posts/js/introduction-gulp/";
 var disqus_script = "embed.js";;(function(d,s) {
