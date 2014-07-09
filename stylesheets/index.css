@@ -1,23 +1,10 @@
-/** @define Grid */
-
-/*! suitcss-components-grid v1.3.0 | MIT License | github.com/suitcss */
-
-
+/** @define Grid; use strict */
 
 /**
  * Core grid component
  *
  * DO NOT apply dimension or offset utilities to the `Grid` element. All cell
  * widths and offsets should be applied to child grid cells.
- *
- * Example uses:
- *
- * <div class="Grid [Grid--alignCenter|Grid--alignRight|Grid--withGutter]">
- *   <div class="Grid-cell [Grid-cell--center] u-size1of2"></div>
- *   <div class="Grid-cell u-size1of2"></div>
- *   <div class="Grid-cell u-size1of3"></div>
- *   <div class="Grid-cell u-size1of3"></div>
- * </div>
  */
 
 /* Grid container
@@ -87,13 +74,11 @@
  */
 
 .Grid--withGutter {
-  margin: 0 -webkit-calc(-0.5px * 1.5625rem);
-  margin: 0 calc(-0.5px * 1.5625rem);
+  margin: 0 -0.78125rem;
 }
 
 .Grid--withGutter > .Grid-cell {
-  padding: 0 -webkit-calc(0.5px * 1.5625rem);
-  padding: 0 calc(0.5px * 1.5625rem);
+  padding: 0 0.78125rem;
 }
 
 /* Grid cell
@@ -138,6 +123,10 @@
   display: block;
   margin: 0 auto;
 }
+
+/**
+ * Sizing utilities
+ */
 
 /* Intrinsic widths
    ========================================================================== */
@@ -312,8 +301,6 @@
   width: 91.66666666666666% !important;
 }
 
-
-
 html {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -407,14 +394,10 @@ small {
 
 /* ... and now just use var(--line-height) when you need some vertical spacing ! */
 
-
-
 ::-moz-selection {
   background: #444;
   color: #fff;
 }
-
-
 
 ::selection {
   background: #444;
@@ -436,8 +419,6 @@ body {
 img {
   border: 0;
 }
-
-
 
 .Grid {
   max-width: 60rem;
@@ -475,6 +456,9 @@ img {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-style: normal;
+  -webkit-font-feature-settings: normal;
+  -moz-font-feature-settings: normal;
+  font-feature-settings: normal;
   font-variant: normal;
   line-height: 1;
   font-weight: normal;
@@ -823,8 +807,6 @@ img {
   color: #2e4f89;
 }
 
-
-
 .putainde-Header {
   background: #c33;
   background: -webkit-gradient(linear, left top, left bottom, from(#c33), color-stop(10%, #c33));
@@ -870,7 +852,7 @@ img {
   top: 50%;
   left: 0;
   width: 2.625rem;
-  height: 2.625rem;
+  height: @width;
   -webkit-transition: .2s;
   transition: .2s;
   -webkit-transform: translateY(-50%);
@@ -881,7 +863,7 @@ img {
 @media (min-width: 54em) {
   .putainde-Logo {
     width: 4.6875rem;
-    height: 4.6875rem;
+    height: @width;
   }
 }
 
@@ -917,7 +899,7 @@ img {
 
 .putainde-Nav-item:hover,
 .putainde-Nav-item:focus {
-  background: rgba(0, 0, 0, .1);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .putainde-Nav-item--current::after {
@@ -1060,8 +1042,8 @@ img {
 .putainde-Tag {
   display: inline-block;
   background: #fdfdfd;
-  -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .03);
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .03);
+  -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
   padding: 0 1em;
   margin-right: .2rem;
   font-size: 0.833em;
@@ -1174,8 +1156,6 @@ img {
   text-decoration: underline;
 }
 
-
-
 .putainde-Post-md ul,
 .putainde-Post-md ol {
   padding: 0 0 0 1.75em;
@@ -1213,8 +1193,8 @@ img {
   border: 1px solid #ddd;
   background: #fafafa;
   border-radius: .3em;
-  -webkit-box-shadow: inset 0 0 0 .25em rgba(0, 0, 0, .02);
-  box-shadow: inset 0 0 0 .25em rgba(0, 0, 0, .02);
+  -webkit-box-shadow: inset 0 0 0 .25em rgba(0, 0, 0, 0.02);
+  box-shadow: inset 0 0 0 .25em rgba(0, 0, 0, 0.02);
 }
 
 .putainde-Post-md pre code {
@@ -1323,8 +1303,6 @@ img {
   border-bottom: 1px solid #eee;
 }
 
-
-
 .putainde-Post-md .putainde-Media--left {
   float: left;
   margin-right: 1rem;
@@ -1383,8 +1361,6 @@ img {
 #disqus_thread {
   margin: 3.125rem 0 1.5625rem;
 }
-
-
 
 .putainde-Avatar {
   border-radius: 100%;
@@ -1488,8 +1464,6 @@ img {
   font-size: .833rem;
 }
 
-
-
 .putainde-Contributors {
   -webkit-box-shadow: inset 0 1px 0 0 #ebeef0;
   box-shadow: inset 0 1px 0 0 #ebeef0;
@@ -1506,7 +1480,7 @@ img {
   margin-left: 1rem;
   display: inline-block;
   width: 2rem;
-  height: 2rem;
+  height: @width;
   vertical-align: middle;
 }
 
@@ -1613,8 +1587,8 @@ img {
 @media (max-width:54em) {
   .putainde-TagFilters {
     background: #fff;
-    -webkit-box-shadow: .2em 0 .4em rgba(0, 0, 0, .1), 1px 0 rgba(0, 0, 0, .1);
-    box-shadow: .2em 0 .4em rgba(0, 0, 0, .1), 1px 0 rgba(0, 0, 0, .1);
+    -webkit-box-shadow: .2em 0 .4em rgba(0, 0, 0, 0.1), 1px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: .2em 0 .4em rgba(0, 0, 0, 0.1), 1px 0 rgba(0, 0, 0, 0.1);
     z-index: 4;
     position: fixed;
     top: 0;

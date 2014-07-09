@@ -62,12 +62,12 @@ de notre CSS et nous fournis une API pour le manipuler.</p>
 </code></pre>
 <h3 id="plugin-rework"><a class="putainde-Title-anchor" href="#plugin-rework">#</a>Plugin Rework</h3><p>Un plugin Rework n’est rien d’autre qu’une fonction JavaScript.
 L’exemple suivant remplacera toutes les couleurs de texte par du noir.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> monPlugin = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">plugin</span><span class="hljs-params">(ast, reworkInstance)</span> {</span>
-  ast.rules.<span class="hljs-keyword">forEach</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rule)</span> {</span>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> monPlugin = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">plugin</span><span class="hljs-params">(ast, reworkInstance)</span> </span>{
+  ast.rules.<span class="hljs-keyword">forEach</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rule)</span> </span>{
     <span class="hljs-comment">// dans notre cas on ne veut que travailler sur des règles</span>
     <span class="hljs-keyword">if</span> (rule.type !== <span class="hljs-string">"rule"</span>) <span class="hljs-keyword">return</span>
 
-    rule.declarations.<span class="hljs-keyword">forEach</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(declaration, index)</span> {</span>
+    rule.declarations.<span class="hljs-keyword">forEach</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(declaration, index)</span> </span>{
       <span class="hljs-keyword">if</span> (declaration.property === <span class="hljs-string">"color"</span>) {
         declaration.value = <span class="hljs-string">'#000'</span>
       }
@@ -177,7 +177,7 @@ $ mkdir src &amp;&amp; mkdir src/styles &amp;&amp; touch src/styles/index.css
 }
 <span class="hljs-keyword">var</span> autoprefixer = <span class="hljs-keyword">require</span>(<span class="hljs-string">"gulp-autoprefixer"</span>)
 
-gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
   <span class="hljs-comment">// ici on prends toutes les CSS à la racine</span>
   <span class="hljs-comment">// on considère que celle dans des sous dossiers sont à importer</span>
   <span class="hljs-keyword">return</span> gulp.src(<span class="hljs-string">"./src/styles/*.css"</span>)
@@ -199,7 +199,7 @@ gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"
     .pipe(gulp.dest(<span class="hljs-string">"./dist/styles"</span>))
 })
 
-gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
   gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, [<span class="hljs-string">"styles"</span>])
 })
 </code></pre>
@@ -215,53 +215,53 @@ Il ne reste plus grand chose à faire si ce n’est ajouter livereload en plus p
 </code></pre>
 <p>Le watch est lancé, on peut remplir notre fichier CSS</p>
 <pre><code class="lang-css"><span class="hljs-pseudo">:root</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">--font-size</span>:<span class="hljs-value"> <span class="hljs-number">1</span>rem</span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">--line-height</span>:<span class="hljs-value"> <span class="hljs-number">1.5</span>rem</span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">--color-highlight</span>:<span class="hljs-value"> <span class="hljs-function">rgba(#f00, .<span class="hljs-number">8</span>)</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">--font-size</span>:<span class="hljs-value"> <span class="hljs-number">1rem</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">--line-height</span>:<span class="hljs-value"> <span class="hljs-number">1.5rem</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">--color-highlight</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-hexcolor">#f00</span>, .<span class="hljs-number">8</span>)</span></span>;
 <span class="hljs-rule">}</span></span>
 
 <span class="hljs-tag">html</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100</span>%</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
     <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> @width</span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">var(--font-size)</span>
+    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--font-size)
 </span></span></span>}
 
 <span class="hljs-tag">p</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-function">calc(<span class="hljs-function">var(--line-height)</span> / <span class="hljs-number">2</span>)</span> <span class="hljs-number">0</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--line-height) / <span class="hljs-number">2</span>) <span class="hljs-number">0</span></span></span>;
 <span class="hljs-rule">}</span></span>
 
 <span class="hljs-tag">a</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">var(--color-highlight)</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> all <span class="hljs-number">500</span>ms ease-out-back</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--color-highlight)</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> all <span class="hljs-number">500ms</span> ease-out-back</span></span>;
 <span class="hljs-rule">}</span></span>
 
 &amp;<span class="hljs-pseudo">:hover</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">color(<span class="hljs-function">var(--color-highlight)</span> <span class="hljs-function">lightness(-<span class="hljs-number">10</span>%)</span>)</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">trasnform</span>:<span class="hljs-value"> <span class="hljs-function">rotate(<span class="hljs-number">1</span>deg)</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-function">var</span>(--color-highlight) <span class="hljs-function">lightness</span>(-<span class="hljs-number">10%</span>))</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">trasnform</span>:<span class="hljs-value"> <span class="hljs-function">rotate</span>(<span class="hljs-number">1deg</span>)</span></span>;
 <span class="hljs-rule">}</span></span>
 </code></pre>
 <p>Et on obtiendra</p>
 <pre><code class="lang-css"><span class="hljs-tag">html</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100</span>%</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100</span>%</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">16</span>px</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1</span>rem</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">16px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1rem</span></span></span>;
 <span class="hljs-rule">}</span></span>
 
 <span class="hljs-tag">p</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">12</span>px <span class="hljs-number">0</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0.75</span>rem <span class="hljs-number">0</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">12px</span> <span class="hljs-number">0</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0.75rem</span> <span class="hljs-number">0</span></span></span>;
 <span class="hljs-rule">}</span></span>
 
 <span class="hljs-tag">a</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba(<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, .<span class="hljs-number">8</span>)</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">-webkit-transition</span>:<span class="hljs-value"> all <span class="hljs-number">500</span>ms <span class="hljs-function">cubic-bezier(<span class="hljs-number">0.175</span>, <span class="hljs-number">0.885</span>, <span class="hljs-number">0.320</span>, <span class="hljs-number">1.275</span>)</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> all <span class="hljs-number">500</span>ms <span class="hljs-function">cubic-bezier(<span class="hljs-number">0.175</span>, <span class="hljs-number">0.885</span>, <span class="hljs-number">0.320</span>, <span class="hljs-number">1.275</span>)</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, .<span class="hljs-number">8</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">-webkit-transition</span>:<span class="hljs-value"> all <span class="hljs-number">500ms</span> <span class="hljs-function">cubic-bezier</span>(<span class="hljs-number">0.175</span>, <span class="hljs-number">0.885</span>, <span class="hljs-number">0.320</span>, <span class="hljs-number">1.275</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> all <span class="hljs-number">500ms</span> <span class="hljs-function">cubic-bezier</span>(<span class="hljs-number">0.175</span>, <span class="hljs-number">0.885</span>, <span class="hljs-number">0.320</span>, <span class="hljs-number">1.275</span>)</span></span>;
 <span class="hljs-rule">}</span></span>
 
 <span class="hljs-tag">a</span><span class="hljs-pseudo">:hover</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba(<span class="hljs-number">204</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.8</span>)</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">rotate(<span class="hljs-number">1</span>deg)</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">204</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.8</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">rotate</span>(<span class="hljs-number">1deg</span>)</span></span>;
 <span class="hljs-rule">}</span></span>
 </code></pre>
 <p>Gardez bien en tête qu’avec le code CSS d’origine, vous avez (en majeur partie) un code futureproof.

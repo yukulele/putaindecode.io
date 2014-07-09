@@ -54,7 +54,7 @@ grâce à une <code>media query</code>. Voilà un exemple rudimentaire :</p>
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
 <span class="hljs-rule">}</span></span>
 
-<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> screen and (min-width: <span class="hljs-number">768</span>px) </span>{
+<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> screen and (min-width: <span class="hljs-number">768px</span>) </span>{
   <span class="hljs-comment">/* Si on est sur "grand" écran, on affiche l'image desktop... */</span>
   <span class="hljs-class">.img-desktop</span> <span class="hljs-rules">{
     <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
@@ -92,7 +92,7 @@ avec JavaScript :</p>
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
 <span class="hljs-rule">}</span></span>
 
-<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> screen and (min-width: <span class="hljs-number">768</span>px) </span>{
+<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> screen and (min-width: <span class="hljs-number">768px</span>) </span>{
   <span class="hljs-class">.img-desktop</span> <span class="hljs-rules">{
     <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
   <span class="hljs-rule">}</span></span>
@@ -109,20 +109,20 @@ avec JavaScript :</p>
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
 <span class="hljs-rule">}</span></span>
 </code></pre>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> handleImages = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> handleImages = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
   <span class="hljs-comment">// On charge les images ayant l'attribut data-src,</span>
   <span class="hljs-comment">// non encore chargées (attribut src indéfini)</span>
   <span class="hljs-comment">// et non masquées par CSS</span>
 
-  [].<span class="hljs-keyword">forEach</span>.call(document.querySelectorAll(<span class="hljs-string">'img[data-src]:not([src])'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(el)</span> {</span>
-    <span class="hljs-keyword">if</span> (window.getComputedStyle(el).display != <span class="hljs-string">'none'</span>) {
+  [].forEach.call(<span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'img[data-src]:not([src])'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(el)</span> </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.getComputedStyle(el).display != <span class="hljs-string">'none'</span>) {
       el.src = el.getAttribute(<span class="hljs-string">'data-src'</span>);
     }
   });
 };
 
-window.addEventListener(<span class="hljs-string">'load'</span>, handleImages);
-window.addEventListener(<span class="hljs-string">'resize'</span>, handleImages);
+<span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">'load'</span>, handleImages);
+<span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">'resize'</span>, handleImages);
 </code></pre>
 <p>Ainsi, seules les images nécessaires seront chargées avec la page. J’applique
 également le même traitement au <code>resize</code> ; c’est un peu bourrin, je te
@@ -136,11 +136,11 @@ parler d’une petite librairie que j’aime beaucoup et que j’ai déjà utili
 ce genre de cas. Elle se nomme <a href="http://wicky.nillia.ms/enquire.js/">enquire.js</a>
 et permet tout simplement d’affecter des callbacks à des media queries :</p>
 <pre><code class="lang-javascript">enquire.register(<span class="hljs-string">'screen and (min-width: 768px)'</span>, {
-  match: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  match: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-comment">// L'écran fait 768px de large ou plus...</span>
   },
 
-  unmatch: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  unmatch: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-comment">// ...et ici, 767px de large ou moins.</span>
     <span class="hljs-comment">// La librairie repose sur matchMedia et matchMedia.addListener</span>
   }
@@ -160,12 +160,12 @@ plus nécessaire) :</p>
   <span class="hljs-tag">&lt;/<span class="hljs-title">noscript</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
 </code></pre>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> content = document.querySelector(<span class="hljs-string">'p'</span>),
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> content = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'p'</span>),
 
-  switchImage = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(isMobile)</span> {</span>
+  switchImage = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(isMobile)</span> </span>{
     <span class="hljs-keyword">var</span> attr = isMobile ? <span class="hljs-string">'data-mobile-src'</span> : <span class="hljs-string">'data-src'</span>;
 
-    [].<span class="hljs-keyword">forEach</span>.call(document.querySelectorAll(<span class="hljs-string">'img['</span> + attr + <span class="hljs-string">']'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(el)</span> {</span>
+    [].forEach.call(<span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'img['</span> + attr + <span class="hljs-string">']'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(el)</span> </span>{
       <span class="hljs-comment">// On affecte l'une ou l'autre source à notre image,</span>
       <span class="hljs-comment">// entraînant son chargement si nécessaire.</span>
       el.src = el.getAttribute(attr);
@@ -175,12 +175,12 @@ plus nécessaire) :</p>
     });
   };
 
-enquire.register(<span class="hljs-string">'screen and (min-width: 768px)'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-  switchImage(<span class="hljs-keyword">false</span>);
+enquire.register(<span class="hljs-string">'screen and (min-width: 768px)'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  switchImage(<span class="hljs-literal">false</span>);
 });
 
-enquire.register(<span class="hljs-string">'screen and (max-width: 767px)'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-  switchImage(<span class="hljs-keyword">true</span>);
+enquire.register(<span class="hljs-string">'screen and (max-width: 767px)'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  switchImage(<span class="hljs-literal">true</span>);
 });
 </code></pre>
 <p>On peut ainsi gérer facilement le chargement de l’image, ainsi que son
@@ -245,7 +245,7 @@ Bien sûr, tu as été assez malin pour mettre ton image en dernier dans le DOM.
 ...n'est-ce pas ?
 */</span>
 
-<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> screen and (min-width: <span class="hljs-number">768</span>px) </span>{
+<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> screen and (min-width: <span class="hljs-number">768px</span>) </span>{
   <span class="hljs-class">.content</span> <span class="hljs-rules">{
     <span class="hljs-rule"><span class="hljs-attribute">order</span>:<span class="hljs-value"> <span class="hljs-number">3</span></span></span>;
   <span class="hljs-rule">}</span></span>
@@ -270,7 +270,7 @@ opinion, tes idées ou tes retours d’XP à ce sujet. Ça me fera de la lecture
 passer le temps, et toi tu feras quelque chose de constructif !</p>
 <p>Il est temps pour moi de te laisser reprendre le cours de ta vie. Peut-être nos
 routes se croiseront-elles de nouveau. Dans l’intervalle, va, vis, et code !</p>
-</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/html/responsive-dom/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/html/responsive-dom/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/html/responsive-dom/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/neemzy" data-tip="neemzy" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/259cfb842be0d236e68340b1c330cc88.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> neemzy</h3><div class="putainde-Author-social"><a href="http://www.zaibatsu.fr"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/_neemzy"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/neemzy"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur full-stack tombé dans le web quand il était petit. <br> Fait surtout du PHP, mais aussi de plus en plus de JavaScript. <br> A une peur irraisonnée des utilisateurs de Mac / Ruby / Sass. <br> Atteint du syndrome de Patrick Modiano qui l'empêche parfois de finir ses</p></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/html/responsive-dom/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/html/responsive-dom/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/html/responsive-dom/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/neemzy" data-tip="neemzy" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/259cfb842be0d236e68340b1c330cc88.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> neemzy</h3><div class="putainde-Author-social"><a href="http://www.zaibatsu.fr"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/_neemzy"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/neemzy"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur full-stack tombé dans le web quand il était petit. <br> Fait surtout du PHP, mais aussi de plus en plus de JavaScript. <br> A une peur irraisonnée des utilisateurs de Mac / Ruby / Sass. <br> Atteint du syndrome de Patrick Modiano qui l'empêche parfois de finir ses</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">3 contributeurs</strong><a href="https://github.com/neemzy" data-tip="neemzy" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/259cfb842be0d236e68340b1c330cc88.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-tip="GitHub" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--github"></i></a><a href="https://twitter.com/putaindecode/" data-tip="Twitter" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--twitter"></i></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/html/responsive-dom/";
 var disqus_url = "http://putaindecode.fr/posts/html/responsive-dom/";
 var disqus_script = "embed.js";;(function(d,s) {

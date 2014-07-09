@@ -20,7 +20,7 @@ avec les paramètres suivants :</p>
 <li>l’index de l’élément courant.</li>
 <li>le tableau sur lequel on est entrain d’itérer</li>
 </ul>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> sum = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>].reduce( <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">( memo, val)</span>{</span>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> sum = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>].reduce( <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">( memo, val)</span></span>{
   <span class="hljs-keyword">return</span> memo + val;
 });
 </code></pre>
@@ -31,10 +31,10 @@ avec les paramètres suivants :</p>
 sur une chaine de caractère. Si vous avez une liste de motifs et leur valeur correspondante,
  reduce permet de faire cela assez simplement, genre en 3 lignes.</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> input = <span class="hljs-string">"I'm %USER% and I live in %COUNTRY%"</span>
-<span class="hljs-keyword">var</span> data = [{token:<span class="hljs-string">'%USER%'</span>, <span class="hljs-keyword">value</span>:<span class="hljs-string">'lionel'</span>}, {token:<span class="hljs-string">'%COUNTRY%'</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">'France'</span>}]
+<span class="hljs-keyword">var</span> data = [{token:<span class="hljs-string">'%USER%'</span>, value:<span class="hljs-string">'lionel'</span>}, {token:<span class="hljs-string">'%COUNTRY%'</span>, value: <span class="hljs-string">'France'</span>}]
 
-<span class="hljs-keyword">var</span> output = data.reduce( function(memo, item){
-  <span class="hljs-keyword">return</span> memo.replace(item.token, item.<span class="hljs-keyword">value</span>);
+<span class="hljs-keyword">var</span> output = data.reduce( <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(memo, item)</span></span>{
+  <span class="hljs-keyword">return</span> memo.replace(item.token, item.value);
 }, input);
 </code></pre>
 <h2 id="realiser-un-groupby"><a class="putainde-Title-anchor" href="#realiser-un-groupby">#</a>Réaliser un groupBy</h2><p>Reduce peut aussi nous permettre d’effectuer des manipulations comme des groupBy
@@ -51,13 +51,13 @@ site et par famille de navigateurs. Nous aimerions pouvoir grouper les résultat
   {<span class="hljs-string">"site"</span>:<span class="hljs-string">"microsoft.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"FireFox"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"20%"</span>},
 ];
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareSite</span><span class="hljs-params">(site, item)</span>{</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareSite</span><span class="hljs-params">(site, item)</span></span>{
   <span class="hljs-keyword">return</span> site === item.site
 }
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">containSite</span><span class="hljs-params">(site, items)</span> {</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">containSite</span><span class="hljs-params">(site, items)</span> </span>{
   <span class="hljs-keyword">return</span> items.some( compareSite.bind(<span class="hljs-literal">null</span>, site) )
 }
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span><span class="hljs-params">(memo, item)</span>{</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span><span class="hljs-params">(memo, item)</span></span>{
   <span class="hljs-keyword">var</span> site = memo.filter( containSite.bind(<span class="hljs-literal">null</span>, item.site) );
   <span class="hljs-keyword">if</span> (site.length &gt; <span class="hljs-number">0</span>) {
     site[<span class="hljs-number">0</span>].push(item)
@@ -73,7 +73,7 @@ site et par famille de navigateurs. Nous aimerions pouvoir grouper les résultat
  qui aurait le rôle d’accumulateur et un Array.forEach :</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> results = {};
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span><span class="hljs-params">( item)</span>{</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span><span class="hljs-params">( item)</span></span>{
   <span class="hljs-keyword">var</span> site = results.filter( containSite.bind(<span class="hljs-keyword">null</span>, item.site) );
   <span class="hljs-keyword">if</span> (site.length &gt; <span class="hljs-number">0</span>) {
     site[<span class="hljs-number">0</span>].push(item)
@@ -88,7 +88,7 @@ stats.<span class="hljs-keyword">forEach</span>( groupBySite );
 dépend directement de la variable results, déclarée au dessus.</p>
 <h3 id="a-noter"><a class="putainde-Title-anchor" href="#a-noter">#</a>À noter</h3><p>L’utilisation de  <code>Function.bind</code> nous permet de réutiliser les fonctions <code>compareSite</code>
 et <code>containSite</code> en fixant leur premier paramètre. Ainsi <code>compareSite.bind(null, &#39;mozilla.fr&#39;)</code> équivaut à :</p>
-<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareMozilla</span><span class="hljs-params">(item)</span>{</span>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareMozilla</span><span class="hljs-params">(item)</span></span>{
   <span class="hljs-keyword">return</span> <span class="hljs-string">"mozilla.fr"</span> === item.site;
 }
 </code></pre>
@@ -127,9 +127,9 @@ function groupByBrowser( site, memo, browser){
   <span class="hljs-keyword">return</span> data[site].reduce(groupByBrowser.bind(<span class="hljs-keyword">null</span>, site), memo)
 }, {});
 </code></pre>
-<p>J’espère que vous avez appréciez ces quelques exemples d’utilisation de <code>Array#reduce</code>.
+<p>J’espère que vous avez apprécié ces quelques exemples d’utilisation de <code>Array#reduce</code>.
 Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article ou via les commentaires !</p>
-</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/js/array-reduce/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/js/array-reduce/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/js/array-reduce/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/lionelB" data-tip="lionelB" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/03edc8b4edc19d91202e69c65c5baeff.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> lionelB</h3><div class="putainde-Author-social"><a href="http://lumographe.fr/"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/b_lionel"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/lionelB"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur front-end indépendant et un peu bricoleur, les mains blanches, dans le plâtre dès la maternelle, les mains noires, dans le cambouis du vélo très vite après, les mains propres depuis, dans le code informatique… <br> Et quand il code pas, il rêve à son prochain voyage en vélo.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">2 contributeurs</strong><a href="https://github.com/lionelB" data-tip="lionelB" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/03edc8b4edc19d91202e69c65c5baeff.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/js/array-reduce/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/js/array-reduce/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/js/array-reduce/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/lionelB" data-tip="lionelB" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/03edc8b4edc19d91202e69c65c5baeff.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> lionelB</h3><div class="putainde-Author-social"><a href="http://lumographe.fr/"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/b_lionel"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/lionelB"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur front-end indépendant et un peu bricoleur, les mains blanches, dans le plâtre dès la maternelle, les mains noires, dans le cambouis du vélo très vite après, les mains propres depuis, dans le code informatique… <br> Et quand il code pas, il rêve à son prochain voyage en vélo.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">5 contributeurs</strong><a href="https://github.com/lionelB" data-tip="lionelB" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/03edc8b4edc19d91202e69c65c5baeff.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/Agmagor" data-tip="Agmagor" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/166632516b43cfdcd8ce01a519ea1f04.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/kud" data-tip="kud" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/9713e529bef70eea8965e0dda2000334.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/quentint" data-tip="quentint" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/794e98e18d210488a1b503b946b6db6a.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-tip="GitHub" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--github"></i></a><a href="https://twitter.com/putaindecode/" data-tip="Twitter" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--twitter"></i></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/js/array-reduce/";
 var disqus_url = "http://putaindecode.fr/posts/js/array-reduce/";
 var disqus_script = "embed.js";;(function(d,s) {

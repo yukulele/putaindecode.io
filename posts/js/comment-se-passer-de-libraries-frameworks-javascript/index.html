@@ -4,14 +4,14 @@
 <p>Du coup, on peut écrire une petite function toute con, qui nous retourne un <code>Array</code> et ses méthodes bien utiles.</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> nativeSlice = [].slice <span class="hljs-comment">// la méthode de conversion</span>
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">$</span><span class="hljs-params">(selector)</span>{</span>
-  <span class="hljs-keyword">var</span> list = document.querySelectorAll(selector)
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">$</span><span class="hljs-params">(selector)</span></span>{
+  <span class="hljs-keyword">var</span> list = <span class="hljs-built_in">document</span>.querySelectorAll(selector)
   <span class="hljs-keyword">return</span> nativeSlice.call(list)
 }
 </code></pre>
 <p>Alternativement, tu peux utiliser <code>Array.apply(null, list)</code> plutôt que <code>nativeSlice.call(list)</code>, si vraiment ça te fait plaisir.</p>
 <p>Une troisième solution, un peu plus chiante au quotidien (et terriblement laide), c’est d’utiliser directement les méthodes qui t’intéressent (ex. <code>[].forEach</code>) de cette façon :</p>
-<pre><code class="lang-javascript">;[].<span class="hljs-keyword">forEach</span>.call(document.querySelectorAll(selector), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(element)</span>{</span>
+<pre><code class="lang-javascript">;[].forEach.call(<span class="hljs-built_in">document</span>.querySelectorAll(selector), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(element)</span></span>{
   <span class="hljs-comment">// do something w/ element</span>
 })
 </code></pre>
@@ -21,7 +21,7 @@
 
 <span class="hljs-keyword">var</span> elements = $(<span class="hljs-string">".my-elements-className"</span>)
 
-elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(element)</span>{</span>
+elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(element)</span></span>{
   <span class="hljs-comment">// do something w/ element</span>
 })
 </code></pre>
@@ -45,7 +45,7 @@ elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function
 
 <span class="hljs-comment">// le polyfill utilise querySelectorAll</span>
 <span class="hljs-comment">// et cherche dans le parent de l'élement</span>
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">matchesPolyfill</span><span class="hljs-params">(selector)</span>{</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">matchesPolyfill</span><span class="hljs-params">(selector)</span></span>{
   <span class="hljs-keyword">var</span> node = this
   <span class="hljs-keyword">var</span> <span class="hljs-keyword">parent</span> = node.parentNode
   <span class="hljs-keyword">var</span> query, index, length
@@ -61,7 +61,7 @@ elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCurrentTarget</span><span class="hljs-params">(node, selector)</span>{</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCurrentTarget</span><span class="hljs-params">(node, selector)</span></span>{
   <span class="hljs-keyword">if</span>(matchesSelector.call(node, selector)) <span class="hljs-keyword">return</span> node
   <span class="hljs-keyword">while</span>(node = node.parentNode) {
     <span class="hljs-keyword">if</span>(node.nodeType != <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>
@@ -71,7 +71,7 @@ elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function
 }
 </code></pre>
 <p>Dès lors, dans nos listeners, on pourra directement procéder ainsi :</p>
-<pre><code class="lang-javascript">element.addEventListener(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(evt)</span>{</span>
+<pre><code class="lang-javascript">element.addEventListener(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(evt)</span></span>{
   <span class="hljs-keyword">var</span> currentTarget = getCurrentTarget(evt.target, <span class="hljs-string">".Button-action"</span>)
   <span class="hljs-keyword">if</span>(!currentTarget) <span class="hljs-keyword">return</span>
   <span class="hljs-comment">// all good with currentTarget</span>
@@ -79,18 +79,18 @@ elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function
 </code></pre>
 <h3 id="pour-l-ajax"><a class="putainde-Title-anchor" href="#pour-l-ajax">#</a>Pour l’Ajax</h3><p>Pourquoi est-ce que l’on appelle ça encore Ajax, d’ailleurs ? Bref.</p>
 <p>Simple comme bonjour :</p>
-<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isSuccessStatus</span><span class="hljs-params">(status)</span>{</span>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isSuccessStatus</span><span class="hljs-params">(status)</span></span>{
   <span class="hljs-keyword">return</span> status &gt;= <span class="hljs-number">200</span> &amp;&amp; status &lt; <span class="hljs-number">300</span> || status == <span class="hljs-number">304</span>
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ajax</span><span class="hljs-params">(options)</span>{</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ajax</span><span class="hljs-params">(options)</span></span>{
   <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest()
   <span class="hljs-keyword">var</span> done = <span class="hljs-literal">false</span>
   <span class="hljs-keyword">var</span> async = options.hasOwnProperty(<span class="hljs-string">"async"</span>) ? options.async : <span class="hljs-literal">true</span>
 
   xhr.open(options.method || <span class="hljs-string">"GET"</span>, options.url, async)
 
-  xhr.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+  xhr.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     <span class="hljs-keyword">if</span>(done) <span class="hljs-keyword">return</span>
     <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.readyState != <span class="hljs-number">4</span>) <span class="hljs-keyword">return</span>
     done = <span class="hljs-literal">true</span>
@@ -107,7 +107,7 @@ elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function
     }
   }
   <span class="hljs-built_in">Object</span>.keys(options.headers || {})
-    .forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span>{</span>
+    .forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span></span>{
       xhr.setRequestHeader(key, options.headers[key])
     })
   xhr.send(options.data || <span class="hljs-literal">null</span>)
@@ -117,10 +117,10 @@ elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function
 <p>Cette fonction offre un support basique de XHR :</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myXHR = ajax({
     url : <span class="hljs-string">"api/users"</span>,
-    success : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    success : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
       doStuff(<span class="hljs-keyword">this</span>.responseText)
     },
-    error : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    error : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
       showError(<span class="hljs-keyword">this</span>.status)
     }
 })
@@ -137,7 +137,7 @@ elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function
 </code></pre>
 <p>on peut se contenter d’un :</p>
 <pre><code class="lang-javascript"><span class="hljs-built_in">Object</span>.keys(myObject)
-  .forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span>{</span>
+  .forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span></span>{
     <span class="hljs-keyword">var</span> item = myObject[i]
     <span class="hljs-comment">// do something</span>
   })
@@ -152,21 +152,21 @@ Et si tu veux avoir plus de détails, read the fucking manual :
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myElementClickEvents = {
     element : myElement,
     callbacks : [],
-    handleEvent : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(evt)</span>{</span>
-      <span class="hljs-keyword">var</span> <span class="hljs-keyword">self</span> = this
-      this.callbacks.<span class="hljs-keyword">forEach</span>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
-        item.call(<span class="hljs-keyword">self</span>.element, evt)
+    handleEvent : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(evt)</span></span>{
+      <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>
+      <span class="hljs-keyword">this</span>.callbacks.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span></span>{
+        item.call(self.element, evt)
       })
     }
 }
 myElement.addEventListener(<span class="hljs-string">"click"</span>, myElementClickEvents)
 
-myElementClickEvents.callbacks.push(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(evt)</span>{</span>
-  console.log(evt)
+myElementClickEvents.callbacks.push(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(evt)</span></span>{
+  <span class="hljs-built_in">console</span>.log(evt)
 })
 </code></pre>
 <p>Avec ça, on peut facilement garder une trace de ce qu’on passé comme listeners.</p>
-<h3 id="du-type-checking-"><a class="putainde-Title-anchor" href="#du-type-checking-">#</a>Du type checking ?</h3><pre><code class="lang-javascript"><span class="hljs-keyword">var</span> getClass = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(o)</span>{</span> <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(o) }
+<h3 id="du-type-checking-"><a class="putainde-Title-anchor" href="#du-type-checking-">#</a>Du type checking ?</h3><pre><code class="lang-javascript"><span class="hljs-keyword">var</span> getClass = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(o)</span></span>{ <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(o) }
 <span class="hljs-keyword">var</span> someString = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-string">"foo"</span>)
 
 <span class="hljs-keyword">typeof</span> someString <span class="hljs-comment">// "object"</span>
@@ -174,19 +174,19 @@ getClass(someString) <span class="hljs-comment">// "[object String]", sounds mor
 </code></pre>
 <h3 id="petit-bonus"><a class="putainde-Title-anchor" href="#petit-bonus">#</a>Petit bonus</h3><p>Un petit bonus rien que pour toi : pour avoir une syntaxe plus sympathique et plus claire que les prototypes.</p>
 <p>En principe, on fait comme ça :</p>
-<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Animal</span><span class="hljs-params">(name)</span>{</span>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Animal</span><span class="hljs-params">(name)</span></span>{
   <span class="hljs-keyword">this</span>.name = name
 }
 
-Animal.prototype.getName = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+Animal.prototype.getName = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.name
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Cat</span><span class="hljs-params">(name)</span>{</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Cat</span><span class="hljs-params">(name)</span></span>{
   Animal.call(<span class="hljs-keyword">this</span>, name)
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">K</span><span class="hljs-params">()</span>{</span>}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">K</span><span class="hljs-params">()</span></span>{}
 K.prototype = Animal.prototype
 
 Cat.prototype = <span class="hljs-keyword">new</span> K
@@ -204,17 +204,17 @@ myCat <span class="hljs-keyword">instanceof</span> Animal <span class="hljs-comm
 <span class="hljs-comment">//         many magic</span>
 <span class="hljs-comment">//   very es5</span>
 <span class="hljs-comment">//            wow</span>
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">extend</span><span class="hljs-params">(object)</span>{</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">extend</span><span class="hljs-params">(object)</span></span>{
   <span class="hljs-keyword">var</span> <span class="hljs-keyword">self</span> = Object.create(this)
   <span class="hljs-keyword">if</span>(!object) <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>
   Object.keys(object)
-    .<span class="hljs-keyword">forEach</span>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span>{</span>
+    .<span class="hljs-keyword">forEach</span>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span></span>{
       <span class="hljs-keyword">self</span>[key] = object[key]
     })
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">create</span><span class="hljs-params">()</span>{</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">create</span><span class="hljs-params">()</span></span>{
   <span class="hljs-keyword">var</span> <span class="hljs-keyword">self</span> = Object.create(this)
   <span class="hljs-keyword">if</span>(typeof <span class="hljs-keyword">self</span>.constructor == <span class="hljs-string">"function"</span>) {
     <span class="hljs-keyword">self</span>.constructor.apply(<span class="hljs-keyword">self</span>, arguments)
@@ -229,16 +229,16 @@ myCat <span class="hljs-keyword">instanceof</span> Animal <span class="hljs-comm
 </code></pre>
 <p>Tu peux faire ça :</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> animal = klass.extend({
-    constructor : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span>{</span>
+    <span class="hljs-constructor"><span class="hljs-keyword">constructor</span> : function(name)</span>{
       <span class="hljs-keyword">this</span>.name = name
     },
-    getName : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    getName : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
       <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.name
     }
 })
 
 <span class="hljs-keyword">var</span> cat = animal.extend({
-    constructor : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span>{</span>
+    <span class="hljs-constructor"><span class="hljs-keyword">constructor</span> : function(name)</span>{
       animal.constructor.call(<span class="hljs-keyword">this</span>, name)
     },
     type : <span class="hljs-string">"cat"</span>
@@ -251,7 +251,7 @@ cat.isPrototypeOf(myCat) <span class="hljs-comment">// true</span>
 animal.isPrototypeOf(myCat) <span class="hljs-comment">// true</span>
 </code></pre>
 <p>Voilà, j’espère que cela a pu attiser ta curiosité d’en apprendre plus sur le langage lui-même et le DOM.</p>
-</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/js/comment-se-passer-de-libraries-frameworks-javascript/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/js/comment-se-passer-de-libraries-frameworks-javascript/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/js/comment-se-passer-de-libraries-frameworks-javascript/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> bloodyowl</h3><div class="putainde-Author-social"><a href="http://bloodyowl.io"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/bloodyowl"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/bloodyowl"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur front-end, aime la bonne bière artisanale, la musique, et JavaScript; n'aime ni les points virgules, ni les gens</p></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/js/comment-se-passer-de-libraries-frameworks-javascript/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/js/comment-se-passer-de-libraries-frameworks-javascript/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/js/comment-se-passer-de-libraries-frameworks-javascript/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> bloodyowl</h3><div class="putainde-Author-social"><a href="http://bloodyowl.io"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/bloodyowl"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/bloodyowl"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur front-end, aime la bonne bière artisanale, la musique, et JavaScript; n'aime ni les points virgules, ni les gens</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">2 contributeurs</strong><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-tip="GitHub" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--github"></i></a><a href="https://twitter.com/putaindecode/" data-tip="Twitter" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--twitter"></i></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/js/comment-se-passer-de-libraries-frameworks-javascript/";
 var disqus_url = "http://putaindecode.fr/posts/js/comment-se-passer-de-libraries-frameworks-javascript/";
 var disqus_script = "embed.js";;(function(d,s) {

@@ -52,7 +52,7 @@ nom local pour le dépôt. Il va récupérer le dépôt à l’adresse spécifi�
 bien foutu hein ?) puis le mettre soit dans un dossier du même nom soit dans un
 dossier du nom spécifié en dernier argument.</p>
 <p>Par exemple, si je veux cloner le dépôt du site :</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git clone <span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/github.com/putaindecode</span><span class="hljs-regexp">/website.git</span>
+<pre><code class="lang-bash">$ git clone http<span class="hljs-variable">s:</span>//github.<span class="hljs-keyword">com</span>/putaindecode/website.git
 </code></pre>
 <p>Ça va créer un dossier <code>website</code> avec le contenu du dépôt.</p>
 <p><code>clone</code> accepte plusieurs types d’adresse : HTTP(S), SSH, protocole Git dédié et
@@ -62,7 +62,7 @@ fichiers.</p>
 bien pour lancer les vraies commandes intéressantes de Git.</p>
 <h2 id="premiers-commits"><a class="putainde-Title-anchor" href="#premiers-commits">#</a>Premiers commits</h2><p>Pour commencer à s’amuser, écrivez un bout de code dans un fichier et
 sauvegardez le :</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>cat &gt; putain_de_hello_world.rb
+<pre><code class="lang-bash"><span class="hljs-input"><span class="hljs-prompt">$ cat &gt;</span> putain_de_hello_world.rb</span>
 puts <span class="hljs-string">"Hello, putain de codeur !"</span>
 ^<span class="hljs-constant">D</span>
 </code></pre>
@@ -121,9 +121,9 @@ de décrire votre changement sur la première ligne succintement et, si vous ave
 besoin de détails, sautez une ligne et détaillez les modifications.</p>
 <p>Un petit <code>git status</code> nous confirme qu’on s’est pas foiré (la preuve, tout est
 propre) :</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git status
-<span class="hljs-comment"># Sur la branche master</span>
-rien à valider, la copie de travail est propre
+<pre><code class="lang-bash">$ git status
+# Sur <span class="hljs-keyword">la</span> branche master
+rien à valider, <span class="hljs-keyword">la</span> copie de travail est propre
 </code></pre>
 <h2 id="inspecter"><a class="putainde-Title-anchor" href="#inspecter">#</a>Inspecter</h2><p>Bon, c’est bien beau de commiter, mais à un moment on arrive sur un projet en
 cours et on aimerait bien savoir où on en est. Pour ça vous pouvez utiliser un
@@ -136,7 +136,7 @@ l’affichage.</p>
 <pre><code class="lang-bash">$ git log
 <span class="hljs-operator"><span class="hljs-keyword">commit</span> <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
 Author: madx &lt;madx+github@yapok.org&gt;
-<span class="hljs-keyword">Date</span>:   Mon Nov <span class="hljs-number">4</span> <span class="hljs-number">23</span>:<span class="hljs-number">28</span>:<span class="hljs-number">11</span> <span class="hljs-number">2013</span> +<span class="hljs-number">0100</span>
+<span class="hljs-built_in">Date</span>:   Mon Nov <span class="hljs-number">4</span> <span class="hljs-number">23</span>:<span class="hljs-number">28</span>:<span class="hljs-number">11</span> <span class="hljs-number">2013</span> +<span class="hljs-number">0100</span>
 
     Premier <span class="hljs-keyword">commit</span></span>
 </code></pre>
@@ -144,20 +144,20 @@ Author: madx &lt;madx+github@yapok.org&gt;
 j’en suis sûr ? Car je peux utiliser <code>git show</code> pour afficher les détails d’un
 objet Git (il n’y a pas que des commits, mais on verra ça une prochaine fois).</p>
 <p><code>git show</code> prend en argument le fameux <code>SHA1</code> du commit :</p>
-<pre><code class="lang-bash">$ git show <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
-commit <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
-<span class="hljs-label">Author:</span> madx &lt;madx+github@yapok<span class="hljs-preprocessor">.org</span>&gt;
-<span class="hljs-label">Date:</span>   Mon Nov <span class="hljs-number">4</span> <span class="hljs-number">23</span>:<span class="hljs-number">28</span>:<span class="hljs-number">11</span> <span class="hljs-number">2013</span> +<span class="hljs-number">0100</span>
+<pre><code class="lang-bash">$ git <span class="hljs-operator"><span class="hljs-keyword">show</span> <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
+<span class="hljs-keyword">commit</span> <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
+Author: madx &lt;madx+github@yapok.org&gt;
+<span class="hljs-built_in">Date</span>:   Mon Nov <span class="hljs-number">4</span> <span class="hljs-number">23</span>:<span class="hljs-number">28</span>:<span class="hljs-number">11</span> <span class="hljs-number">2013</span> +<span class="hljs-number">0100</span>
 
-    Premier commit
+    Premier <span class="hljs-keyword">commit</span>
 
-diff --git a/putain_de_hello_world<span class="hljs-preprocessor">.rb</span> b/putain_de_hello_world<span class="hljs-preprocessor">.rb</span>
-new file mode <span class="hljs-number">100644</span>
-index <span class="hljs-number">0000000.</span><span class="hljs-preprocessor">.ded</span>37dc
---- /dev/null
-+++ b/putain_de_hello_world<span class="hljs-preprocessor">.rb</span>
+diff <span class="hljs-comment">--git a/putain_de_hello_world.rb b/putain_de_hello_world.rb</span>
+new file <span class="hljs-keyword">mode</span> <span class="hljs-number">100644</span>
+<span class="hljs-keyword">index</span> <span class="hljs-number">0000000.</span>.ded37dc
+<span class="hljs-comment">--- /dev/null</span>
++++ b/putain_de_hello_world.rb
 @@ -<span class="hljs-number">0</span>,<span class="hljs-number">0</span> +<span class="hljs-number">1</span> @@
-+puts <span class="hljs-string">"Hello, putain de codeur !!!"</span>
++puts <span class="hljs-string">"Hello, putain de codeur !!!"</span></span>
 </code></pre>
 <p>Dit comme ça, ça a pas l’air de casser trois pattes à un canard, mais c’est la
 base de la base de la praticité. Je vous fait pas l’insulte de vous expliquer le
@@ -223,12 +223,12 @@ la branche dans laquelle on va fusionner et en passant en argument la branche à
 fusionner.</p>
 <p>Si vous avez bien suivi, on va donc faire les choses suivantes :</p>
 <pre><code class="lang-bash">$ git checkout master
-Basculement sur la branche <span class="hljs-string">'master'</span>
-$ git <span class="hljs-built_in">merge</span> <span class="hljs-built_in">add</span>-shebang
-Updating <span class="hljs-number">8120</span>de7.<span class="hljs-number">.5</span>d48735
+Basculement sur <span class="hljs-keyword">la</span> branche <span class="hljs-string">'master'</span>
+$ git merge <span class="hljs-built_in">add</span>-shebang
+Updating <span class="hljs-number">8120</span>de7..<span class="hljs-number">5</span>d48735
 Fast-forward
  putain_de_hello_world.rb | <span class="hljs-number">1</span> +
- <span class="hljs-number">1</span> <span class="hljs-built_in">file</span> changed, <span class="hljs-number">1</span> insertion(+)
+ <span class="hljs-number">1</span> <span class="hljs-keyword">file</span> changed, <span class="hljs-number">1</span> insertion(+)
 </code></pre>
 <p>Vous remarquez que Git signale <em>Fast-forward</em>. Comme le commit pointé par
 <code>add-shebang</code> est un fils direct de celui de <code>master</code>, Git se contente de faire
@@ -245,7 +245,7 @@ bien foutue.</p>
 Guide</a> de Roger Dudler est une bonne manière d’apprendre.</p>
 <h2 id="hey-tu-veux-appliquer-a-pour-contribuer-a-putain-de-code-"><a class="putainde-Title-anchor" href="#hey-tu-veux-appliquer-a-pour-contribuer-a-putain-de-code-">#</a>Hey ! Tu veux appliquer ça pour contribuer à Putain de Code ?</h2><p>Pas de problème, on a écrit un post exprès :
 <a href="/posts/comment-contribuer/">Comment contribuer</a> !</p>
-</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/git/versionner-avec-git/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/git/versionner-avec-git/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/git/versionner-avec-git/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/madx" data-tip="madx" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/96006f57ca92ec95713532129b039d9c.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> madx</h3><div class="putainde-Author-social"><a href="http://madx.me/"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/madx"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/madx"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur Ruby et JavaScript, avec un goût prononcé pour la simplicité, le soleil, le pastis. <br> Il n'aime pas OS X car, objectivement, c'est nul. <br> Quand il n'est pas devant son ordi, il y a de grandes chances qu'il compense avec son téléphone. <br> Spécialiste en développement d'applications inutiles.</p></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/git/versionner-avec-git/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/git/versionner-avec-git/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/git/versionner-avec-git/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/madx" data-tip="madx" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/96006f57ca92ec95713532129b039d9c.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> madx</h3><div class="putainde-Author-social"><a href="http://madx.me/"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/madx"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/madx"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur Ruby et JavaScript, avec un goût prononcé pour la simplicité, le soleil, le pastis. <br> Il n'aime pas OS X car, objectivement, c'est nul. <br> Quand il n'est pas devant son ordi, il y a de grandes chances qu'il compense avec son téléphone. <br> Spécialiste en développement d'applications inutiles.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">5 contributeurs</strong><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/madx" data-tip="madx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/96006f57ca92ec95713532129b039d9c.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/Dridi" data-tip="Dridi" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/default.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/kud" data-tip="kud" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/9713e529bef70eea8965e0dda2000334.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-tip="GitHub" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--github"></i></a><a href="https://twitter.com/putaindecode/" data-tip="Twitter" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--twitter"></i></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/git/versionner-avec-git/";
 var disqus_url = "http://putaindecode.fr/posts/git/versionner-avec-git/";
 var disqus_script = "embed.js";;(function(d,s) {

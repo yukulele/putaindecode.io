@@ -4,17 +4,17 @@ et le sont encore trop.</p>
 compense largement celui que l’on passe à les écrire.</p>
 <h2 id="ecrire-du-js-testable"><a class="putainde-Title-anchor" href="#ecrire-du-js-testable">#</a>Écrire du js testable</h2><p>Prenons un exemple simple et moche :</p>
 <pre><code class="lang-javascript"><span class="hljs-comment">//app.js</span>
-;(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+;(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
 
   <span class="hljs-keyword">var</span> cart = $(<span class="hljs-string">"#cart"</span>)
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addToCart</span><span class="hljs-params">(id)</span>{</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addToCart</span><span class="hljs-params">(id)</span></span>{
     <span class="hljs-keyword">var</span> element = $(<span class="hljs-string">"&lt;li&gt;&lt;/li&gt;"</span>)
     element.html(catalog[id])
     cart.append(element)
   }
 
   $(<span class="hljs-string">".js-updateCart"</span>)
-    .on(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span>{</span>
+    .on(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span></span>{
       addToCart($(<span class="hljs-keyword">this</span>).data(<span class="hljs-string">"id"</span>))
     })
 
@@ -28,9 +28,9 @@ compense largement celui que l’on passe à les écrire.</p>
 <li>pour tester <code>addToCart</code> on doit aller regarder dans le DOM.</li>
 </ul>
 <h3 id="1-rendez-accessibles-vos-methodes-au-test-runner"><a class="putainde-Title-anchor" href="#1-rendez-accessibles-vos-methodes-au-test-runner">#</a>1. Rendez accessibles vos méthodes au test runner</h3><p>Vous pouvez utiliser un namespace adéquat.</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> app = window.app = {}
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> app = <span class="hljs-built_in">window</span>.app = {}
 app.cart = {}
-app.cart.addToCart = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span> <span class="hljs-comment">/* … */</span> }
+app.cart.addToCart = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{ <span class="hljs-comment">/* … */</span> }
 </code></pre>
 <p>Mais ne souhaitez probablement pas rendre vos méthodes accessibles à la console.</p>
 <p>Utilisez un module-system : <a href="http://browserify.org">browserify</a> ou
@@ -41,9 +41,9 @@ pourrez même <code>require</code> depuis un module npm
 <a href="/posts/js/browserify-all-the-things/">comme on vous l’explique dans un article dédié</a>).</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"jquery"</span>) <span class="hljs-comment">// oh, un module npm</span>
 
-module.exports = {
+<span class="hljs-built_in">module</span>.exports = {
   element : $(<span class="hljs-string">"#cart"</span>),
-  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     <span class="hljs-comment">/* … */</span>
   }
 }
@@ -69,8 +69,8 @@ déclanchera bien <code>updateCart</code> :</p>
 
 <span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"jquery"</span>)
 
-module.exports = view.extend({
-  element : document.body,
+<span class="hljs-built_in">module</span>.exports = view.extend({
+  element : <span class="hljs-built_in">document</span>.body,
   events : [
     {
       type : <span class="hljs-string">"click"</span>,
@@ -78,7 +78,7 @@ module.exports = view.extend({
       listener : <span class="hljs-string">"addToCart"</span>
     }
   ],
-  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span>{</span>
+  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span></span>{
     <span class="hljs-keyword">var</span> target = eventObject.currentTarget
     <span class="hljs-keyword">var</span> id = $(target).data(<span class="hljs-string">"id"</span>)
     eventbus.fire(<span class="hljs-string">"addToCart"</span>, {
@@ -92,15 +92,15 @@ module.exports = view.extend({
 <span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
 <span class="hljs-keyword">var</span> catalog = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../catalog"</span>)
 
-module.exports = {
-  initialize : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+<span class="hljs-built_in">module</span>.exports = {
+  initialize : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     <span class="hljs-keyword">this</span>._addToCart = <span class="hljs-keyword">this</span>.addToCart.bind(<span class="hljs-keyword">this</span>)
     eventbus.listen(<span class="hljs-string">"addToCart"</span>, <span class="hljs-keyword">this</span>._addToCart)
   },
-  release : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+  release : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     eventbus.stopListening(<span class="hljs-string">"addToCart"</span>, <span class="hljs-keyword">this</span>._addToCart)
   },
-  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span>{</span>
+  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span></span>{
     <span class="hljs-comment">// et on a eventObject.id</span>
     <span class="hljs-keyword">this</span>.products.push(catalog[eventObject.currentTarget.data(<span class="hljs-string">"id"</span>)])
   }
@@ -115,12 +115,12 @@ les deux modules.</p>
 <span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
 <span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"jquery"</span>)
 
-tape(<span class="hljs-string">"view"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span>{</span>
+tape(<span class="hljs-string">"view"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
   test.plan(<span class="hljs-number">1</span>)
   <span class="hljs-keyword">var</span> element = $(<span class="hljs-string">"&lt;div&gt;&lt;/div&gt;"</span>)
   element.data(<span class="hljs-string">"id"</span>, <span class="hljs-number">1</span>)
   <span class="hljs-comment">// on teste facilement l'envoi</span>
-  eventbus.listen(<span class="hljs-string">"addToCart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span>{</span>
+  eventbus.listen(<span class="hljs-string">"addToCart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span></span>{
     test.equal(eventObject.id, <span class="hljs-number">1</span>)
   })
   view.addToCart({
@@ -135,7 +135,7 @@ tape(<span class="hljs-string">"view"</span>, <span class="hljs-function"><span 
 <span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
 <span class="hljs-keyword">var</span> catalog = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../catalog"</span>)
 
-tape(<span class="hljs-string">"cart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span>{</span>
+tape(<span class="hljs-string">"cart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
   cart.initialize()
   eventbus.fireSync(<span class="hljs-string">"addToCart"</span>, {id:<span class="hljs-number">1</span>})
   test.deepEqual(
@@ -157,21 +157,21 @@ une <code>string</code>.</p>
 })
 </code></pre>
 <p>Or, si par mégarde ma méthode <code>isString</code> se révèle être :</p>
-<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> {</span>
+<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> value == <span class="hljs-string">"string"</span>
 }
 </code></pre>
 <p>on ne vérifie pas le cas <code>type.isString(new String(&quot;&quot;))</code>.</p>
 <p>Du coup, des tests complets :</p>
 <pre><code class="lang-javascript">tape(<span class="hljs-string">"type.isString on strings"</span>, <span class="hljs-keyword">function</span>(test){
-  test.equal(<span class="hljs-class"><span class="hljs-keyword">type</span>.<span class="hljs-title">isString</span>(</span><span class="hljs-string">""</span>), <span class="hljs-keyword">true</span>)
-  test.equal(<span class="hljs-class"><span class="hljs-keyword">type</span>.<span class="hljs-title">isString</span>(</span><span class="hljs-keyword">new</span> String(<span class="hljs-string">""</span>)), <span class="hljs-keyword">false</span>)
+  test.equal(<span class="hljs-class"><span class="hljs-keyword">type</span>.<span class="hljs-title">isString</span></span>(<span class="hljs-string">""</span>), <span class="hljs-keyword">true</span>)
+  test.equal(<span class="hljs-class"><span class="hljs-keyword">type</span>.<span class="hljs-title">isString</span></span>(<span class="hljs-keyword">new</span> String(<span class="hljs-string">""</span>)), <span class="hljs-keyword">false</span>)
   test.<span class="hljs-keyword">end</span>()
 })
 </code></pre>
 <p>permettent ici d’identifier qu’en réalité on a besoin de :</p>
-<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> {</span>
-  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(value) == <span class="hljs-string">"[object String]"</span>
+<pre><code class="lang-javascript"><span class="hljs-built_in">type</span>.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> {</span>
+  <span class="hljs-keyword">return</span> Object.prototype.toString.<span class="hljs-built_in">call</span>(value) == <span class="hljs-string">"[object String]"</span>
 }
 </code></pre>
 <p>Et c’est à la force des résultats de tests que vous identifierez rapidement
@@ -249,7 +249,7 @@ ok <span class="hljs-number">1</span> bisous
 
 <span class="hljs-preprocessor"># ok</span>
 </code></pre>
-</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/js/introduction-au-testing-js-front/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/js/introduction-au-testing-js-front/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/js/introduction-au-testing-js-front/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> bloodyowl</h3><div class="putainde-Author-social"><a href="http://bloodyowl.io"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/bloodyowl"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/bloodyowl"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur front-end, aime la bonne bière artisanale, la musique, et JavaScript; n'aime ni les points virgules, ni les gens</p></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/js/introduction-au-testing-js-front/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/js/introduction-au-testing-js-front/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/js/introduction-au-testing-js-front/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> bloodyowl</h3><div class="putainde-Author-social"><a href="http://bloodyowl.io"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/bloodyowl"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/bloodyowl"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur front-end, aime la bonne bière artisanale, la musique, et JavaScript; n'aime ni les points virgules, ni les gens</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">3 contributeurs</strong><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/lionelB" data-tip="lionelB" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/03edc8b4edc19d91202e69c65c5baeff.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-tip="GitHub" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--github"></i></a><a href="https://twitter.com/putaindecode/" data-tip="Twitter" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--twitter"></i></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/js/introduction-au-testing-js-front/";
 var disqus_url = "http://putaindecode.fr/posts/js/introduction-au-testing-js-front/";
 var disqus_script = "embed.js";;(function(d,s) {

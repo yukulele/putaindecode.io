@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Tue, 17 Jun 2014 14:12:46 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Un point sur les grilles CSS en inline-block</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Wed, 09 Jul 2014 05:16:52 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Un point sur les grilles CSS en inline-block</title><description><![CDATA[
 <p>Les grilles sont devenues incontournables pour le layout d’un site.
 <a href="http://justifygrid.com/#methodology">Plusieurs</a> <a href="https://github.com/suitcss/components-grid">méthodes</a>  <a href="http://www.palantir.net/blog/responsive-design-s-dirty-little-secret">existent</a> en attendant de pouvoir utiliser le Graal, <a href="http://dev.w3.org/csswg/css-grid/">CSS3 grid layout</a>.</p>
 <p>Mais en attendant, on bricole. Et une des solutions que j’aime bien consiste à utiliser des inline-block, car elle offre plusieurs avantages pratiques :</p>
@@ -33,13 +33,13 @@ C’est la méthode choisie dans le framework <a href="https://github.com/csswiz
 <span class="hljs-rule">}</span></span>
 <span class="hljs-class">.Grid-cell</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">16</span>px</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1</span>rem</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">16px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1rem</span></span></span>;
 <span class="hljs-rule">}</span></span>
 </code></pre><p>L’idée est de faire disparaître les caractères <em>espace</em> situés entre les balises enfants en réglant la taille de la police à zéro. Il suffit ensuite de ré-initialiser la taille sur les noeuds enfants <code>.Grid-cell</code>. Cette méthode est utilisée dans <a href="https://github.com/suitcss/components-grid">SUIT Grid</a>.</p>
 <p><em>Attention</em>, si votre scope navigateur va en dessous d’IE9, cette méthode fait perdre le bénéfice d’une intégration à base d’em puisque la taille de la typo sur les blocs enfants est désormais fixe.</p>
 <h2 id="appliquer-une-marge-negative-entre-les-blocs-enfants"><a class="putainde-Title-anchor" href="#appliquer-une-marge-negative-entre-les-blocs-enfants">#</a>Appliquer une marge négative entre les blocs enfants</h2><pre><code><span class="hljs-class">.Grid-cell</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> -<span class="hljs-number">4</span>px</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> -<span class="hljs-number">4px</span></span></span>;
 <span class="hljs-rule">}</span></span>
 </code></pre><p>Cette méthode n’est à mon sens pas très robuste, surtout sur des intégrations à base d’em, car on introduit un nombre magique qui dépend de plusieurs paramètre, comme la typo utilisée, sa taille de base, etc. Cette méthode demande donc de bien tester puisque les font disponibles ne seront pas les mêmes selon des équipements, les OS…</p>
 <h2 id="la-methode-kellum"><a class="putainde-Title-anchor" href="#la-methode-kellum">#</a>La méthode Kellum</h2><p>Ici, la méthode consiste à utiliser une font particulière contenant le caractère espace et dont la particularité est d’avoir une largeur nulle. Cette technique est décrite dans l’article de <a href="http://scottkellum.com/2013/10/25/the-new-kellum-method.html">Scott Kellum</a></p>
@@ -51,7 +51,7 @@ C’est la méthode choisie dans le framework <a href="https://github.com/csswiz
 
 <span class="hljs-class">.Grid-cell</span><span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">33.333333</span>%</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">33.333333%</span></span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value">sans-serif</span></span>;
 <span class="hljs-rule">}</span></span>
 </code></pre><p>L’inconvénient de cette technique est qu’elle nécessite le téléchargement d’un fichier font particulièr si le navigateur ne supporte pas éléments encodées en data-uri (en gros, en dessous d’ie8). Par contre, si vous utilisez une font d’icônes, rien ne vous empêche de combiner les deux, en ajoutant votre icône de largeur nulle avec vos icônes. Voici un aperçu sur <a href="http://codepen.io/lionelB/pen/fvyjH">codepen</a></p>
@@ -136,26 +136,26 @@ inopinément.</p>
 d’écrire les templates avec une syntaxe xml (voir l’exemple plus bas),
 ce qui permet à des novices de le prendre en main très rapidement.</p>
 <h2 id="creons-un-component-react-"><a class="putainde-Title-anchor" href="#creons-un-component-react-">#</a>Créons un component react :</h2><pre><code class="lang-javascript"><span class="hljs-keyword">var</span> View = React.createClass({
-  getInitialState : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+  getInitialState : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     <span class="hljs-comment">// état initial</span>
     <span class="hljs-keyword">return</span> {
       checked : <span class="hljs-literal">false</span>
     }
   },
-  getDefaultProps : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+  getDefaultProps : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     <span class="hljs-comment">// si `this.props.label` n'est pas présent, ce sera `"?"`</span>
     <span class="hljs-keyword">return</span> {
       label : <span class="hljs-string">"?"</span>
     }
   },
-  toggle : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+  toggle : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     <span class="hljs-comment">// on crée un nouvel état (les états de react sont immutable)</span>
     <span class="hljs-comment">// et on déclenche le render</span>
     <span class="hljs-keyword">this</span>.setState({
       checked : !<span class="hljs-keyword">this</span>.state.checked
     })
   },
-  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     <span class="hljs-comment">// petit addon pour se simplifier la vie</span>
     <span class="hljs-keyword">var</span> classes = React.addons.classSet({
       <span class="hljs-string">"list-item"</span> : <span class="hljs-literal">true</span>,
@@ -262,12 +262,12 @@ de notre CSS et nous fournis une API pour le manipuler.</p>
 </code></pre>
 <h3 id="plugin-rework"><a class="putainde-Title-anchor" href="#plugin-rework">#</a>Plugin Rework</h3><p>Un plugin Rework n’est rien d’autre qu’une fonction JavaScript.
 L’exemple suivant remplacera toutes les couleurs de texte par du noir.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> monPlugin = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">plugin</span><span class="hljs-params">(ast, reworkInstance)</span> {</span>
-  ast.rules.<span class="hljs-keyword">forEach</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rule)</span> {</span>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> monPlugin = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">plugin</span><span class="hljs-params">(ast, reworkInstance)</span> </span>{
+  ast.rules.<span class="hljs-keyword">forEach</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rule)</span> </span>{
     <span class="hljs-comment">// dans notre cas on ne veut que travailler sur des règles</span>
     <span class="hljs-keyword">if</span> (rule.type !== <span class="hljs-string">"rule"</span>) <span class="hljs-keyword">return</span>
 
-    rule.declarations.<span class="hljs-keyword">forEach</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(declaration, index)</span> {</span>
+    rule.declarations.<span class="hljs-keyword">forEach</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(declaration, index)</span> </span>{
       <span class="hljs-keyword">if</span> (declaration.property === <span class="hljs-string">"color"</span>) {
         declaration.value = <span class="hljs-string">'#000'</span>
       }
@@ -377,7 +377,7 @@ $ mkdir src &amp;&amp; mkdir src/styles &amp;&amp; touch src/styles/index.css
 }
 <span class="hljs-keyword">var</span> autoprefixer = <span class="hljs-keyword">require</span>(<span class="hljs-string">"gulp-autoprefixer"</span>)
 
-gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
   <span class="hljs-comment">// ici on prends toutes les CSS à la racine</span>
   <span class="hljs-comment">// on considère que celle dans des sous dossiers sont à importer</span>
   <span class="hljs-keyword">return</span> gulp.src(<span class="hljs-string">"./src/styles/*.css"</span>)
@@ -399,7 +399,7 @@ gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"
     .pipe(gulp.dest(<span class="hljs-string">"./dist/styles"</span>))
 })
 
-gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
   gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, [<span class="hljs-string">"styles"</span>])
 })
 </code></pre>
@@ -415,53 +415,53 @@ Il ne reste plus grand chose à faire si ce n’est ajouter livereload en plus p
 </code></pre>
 <p>Le watch est lancé, on peut remplir notre fichier CSS</p>
 <pre><code class="lang-css"><span class="hljs-pseudo">:root</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">--font-size</span>:<span class="hljs-value"> <span class="hljs-number">1</span>rem</span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">--line-height</span>:<span class="hljs-value"> <span class="hljs-number">1.5</span>rem</span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">--color-highlight</span>:<span class="hljs-value"> <span class="hljs-function">rgba(#f00, .<span class="hljs-number">8</span>)</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">--font-size</span>:<span class="hljs-value"> <span class="hljs-number">1rem</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">--line-height</span>:<span class="hljs-value"> <span class="hljs-number">1.5rem</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">--color-highlight</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-hexcolor">#f00</span>, .<span class="hljs-number">8</span>)</span></span>;
 <span class="hljs-rule">}</span></span>
 
 <span class="hljs-tag">html</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100</span>%</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
     <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> @width</span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">var(--font-size)</span>
+    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--font-size)
 </span></span></span>}
 
 <span class="hljs-tag">p</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-function">calc(<span class="hljs-function">var(--line-height)</span> / <span class="hljs-number">2</span>)</span> <span class="hljs-number">0</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--line-height) / <span class="hljs-number">2</span>) <span class="hljs-number">0</span></span></span>;
 <span class="hljs-rule">}</span></span>
 
 <span class="hljs-tag">a</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">var(--color-highlight)</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> all <span class="hljs-number">500</span>ms ease-out-back</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--color-highlight)</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> all <span class="hljs-number">500ms</span> ease-out-back</span></span>;
 <span class="hljs-rule">}</span></span>
 
 &amp;<span class="hljs-pseudo">:hover</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">color(<span class="hljs-function">var(--color-highlight)</span> <span class="hljs-function">lightness(-<span class="hljs-number">10</span>%)</span>)</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">trasnform</span>:<span class="hljs-value"> <span class="hljs-function">rotate(<span class="hljs-number">1</span>deg)</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-function">var</span>(--color-highlight) <span class="hljs-function">lightness</span>(-<span class="hljs-number">10%</span>))</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">trasnform</span>:<span class="hljs-value"> <span class="hljs-function">rotate</span>(<span class="hljs-number">1deg</span>)</span></span>;
 <span class="hljs-rule">}</span></span>
 </code></pre>
 <p>Et on obtiendra</p>
 <pre><code class="lang-css"><span class="hljs-tag">html</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100</span>%</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100</span>%</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">16</span>px</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1</span>rem</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">16px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1rem</span></span></span>;
 <span class="hljs-rule">}</span></span>
 
 <span class="hljs-tag">p</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">12</span>px <span class="hljs-number">0</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0.75</span>rem <span class="hljs-number">0</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">12px</span> <span class="hljs-number">0</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0.75rem</span> <span class="hljs-number">0</span></span></span>;
 <span class="hljs-rule">}</span></span>
 
 <span class="hljs-tag">a</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba(<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, .<span class="hljs-number">8</span>)</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">-webkit-transition</span>:<span class="hljs-value"> all <span class="hljs-number">500</span>ms <span class="hljs-function">cubic-bezier(<span class="hljs-number">0.175</span>, <span class="hljs-number">0.885</span>, <span class="hljs-number">0.320</span>, <span class="hljs-number">1.275</span>)</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> all <span class="hljs-number">500</span>ms <span class="hljs-function">cubic-bezier(<span class="hljs-number">0.175</span>, <span class="hljs-number">0.885</span>, <span class="hljs-number">0.320</span>, <span class="hljs-number">1.275</span>)</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, .<span class="hljs-number">8</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">-webkit-transition</span>:<span class="hljs-value"> all <span class="hljs-number">500ms</span> <span class="hljs-function">cubic-bezier</span>(<span class="hljs-number">0.175</span>, <span class="hljs-number">0.885</span>, <span class="hljs-number">0.320</span>, <span class="hljs-number">1.275</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> all <span class="hljs-number">500ms</span> <span class="hljs-function">cubic-bezier</span>(<span class="hljs-number">0.175</span>, <span class="hljs-number">0.885</span>, <span class="hljs-number">0.320</span>, <span class="hljs-number">1.275</span>)</span></span>;
 <span class="hljs-rule">}</span></span>
 
 <span class="hljs-tag">a</span><span class="hljs-pseudo">:hover</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba(<span class="hljs-number">204</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.8</span>)</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">rotate(<span class="hljs-number">1</span>deg)</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">204</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.8</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">rotate</span>(<span class="hljs-number">1deg</span>)</span></span>;
 <span class="hljs-rule">}</span></span>
 </code></pre>
 <p>Gardez bien en tête qu’avec le code CSS d’origine, vous avez (en majeur partie) un code futureproof.
@@ -531,7 +531,7 @@ ou <a href="http://atom.io">Atom</a> (apm install, editorconfig, docblockr, html
 <h2 id="gulp-iconfont"><a class="putainde-Title-anchor" href="#gulp-iconfont">#</a>gulp-iconfont</h2><p>Tout d’abord, installez <strong>gulp</strong> (évident…) et faites ce que vous avez à faire avec gulp.</p>
 <p>Maintenant, vous êtes prêt(e) ? Okay, go.</p>
 <h3 id="installez-les-em-packages-em-adequats"><a class="putainde-Title-anchor" href="#installez-les-em-packages-em-adequats">#</a>Installez les <em>packages</em> adéquats</h3><p>Oui, deux packages, <a href="https://github.com/nfroidure/gulp-iconfont">gulp-iconfont</a> et <a href="https://github.com/backflip/gulp-iconfont-css">gulp-iconfont-css</a>.</p>
-<pre><code class="lang-shell">$ npm install gulp<span class="hljs-attribute">-iconfont</span> gulp<span class="hljs-attribute">-iconfont</span><span class="hljs-attribute">-css</span> <span class="hljs-subst">--</span>save<span class="hljs-attribute">-dev</span>
+<pre><code class="lang-shell">$ npm <span class="hljs-operator"><span class="hljs-keyword">install</span> gulp-iconfont gulp-iconfont-css <span class="hljs-comment">--save-dev</span></span>
 </code></pre>
 <h3 id="importez-les"><a class="putainde-Title-anchor" href="#importez-les">#</a>Importez-les</h3><pre><code class="lang-js"><span class="hljs-comment">// import</span>
 <span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>)
@@ -541,7 +541,7 @@ ou <a href="http://atom.io">Atom</a> (apm install, editorconfig, docblockr, html
 </code></pre>
 <h3 id="creez-votre-propre-t-che-gulp"><a class="putainde-Title-anchor" href="#creez-votre-propre-t-che-gulp">#</a>Créez votre propre tâche gulp</h3><p>Je préconise d’appeler toute transformation d’une image vers une fonte “glyphicon”.</p>
 <pre><code class="lang-js"><span class="hljs-comment">// glyphicons</span>
-gulp.task(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+gulp.task(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
  <span class="hljs-keyword">return</span> gulp.src(<span class="hljs-string">'src/glyphicons/**/*'</span>) <span class="hljs-comment">// où sont vos svg</span>
     .pipe(iconfontCss({
       fontName: <span class="hljs-string">'icons'</span>, <span class="hljs-comment">// nom de la fonte, doit être identique au nom du plugin iconfont</span>
@@ -561,7 +561,7 @@ gulp.task(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-funct
 <span class="hljs-keyword">var</span> iconfont = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-iconfont'</span>)
 <span class="hljs-keyword">var</span> iconfontCss = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-iconfont-css'</span>)
 
-gulp.task(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+gulp.task(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
  <span class="hljs-keyword">return</span> gulp.src(<span class="hljs-string">'src/glyphicons/**/*'</span>)
     .pipe(iconfontCss({
       fontName: <span class="hljs-string">'icons'</span>, <span class="hljs-comment">// nom de la fonte, doit être identique au nom du plugin iconfont</span>
@@ -599,7 +599,7 @@ avec les paramètres suivants :</p>
 <li>l’index de l’élément courant.</li>
 <li>le tableau sur lequel on est entrain d’itérer</li>
 </ul>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> sum = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>].reduce( <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">( memo, val)</span>{</span>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> sum = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>].reduce( <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">( memo, val)</span></span>{
   <span class="hljs-keyword">return</span> memo + val;
 });
 </code></pre>
@@ -610,10 +610,10 @@ avec les paramètres suivants :</p>
 sur une chaine de caractère. Si vous avez une liste de motifs et leur valeur correspondante,
  reduce permet de faire cela assez simplement, genre en 3 lignes.</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> input = <span class="hljs-string">"I'm %USER% and I live in %COUNTRY%"</span>
-<span class="hljs-keyword">var</span> data = [{token:<span class="hljs-string">'%USER%'</span>, <span class="hljs-keyword">value</span>:<span class="hljs-string">'lionel'</span>}, {token:<span class="hljs-string">'%COUNTRY%'</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">'France'</span>}]
+<span class="hljs-keyword">var</span> data = [{token:<span class="hljs-string">'%USER%'</span>, value:<span class="hljs-string">'lionel'</span>}, {token:<span class="hljs-string">'%COUNTRY%'</span>, value: <span class="hljs-string">'France'</span>}]
 
-<span class="hljs-keyword">var</span> output = data.reduce( function(memo, item){
-  <span class="hljs-keyword">return</span> memo.replace(item.token, item.<span class="hljs-keyword">value</span>);
+<span class="hljs-keyword">var</span> output = data.reduce( <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(memo, item)</span></span>{
+  <span class="hljs-keyword">return</span> memo.replace(item.token, item.value);
 }, input);
 </code></pre>
 <h2 id="realiser-un-groupby"><a class="putainde-Title-anchor" href="#realiser-un-groupby">#</a>Réaliser un groupBy</h2><p>Reduce peut aussi nous permettre d’effectuer des manipulations comme des groupBy
@@ -630,13 +630,13 @@ site et par famille de navigateurs. Nous aimerions pouvoir grouper les résultat
   {<span class="hljs-string">"site"</span>:<span class="hljs-string">"microsoft.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"FireFox"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"20%"</span>},
 ];
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareSite</span><span class="hljs-params">(site, item)</span>{</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareSite</span><span class="hljs-params">(site, item)</span></span>{
   <span class="hljs-keyword">return</span> site === item.site
 }
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">containSite</span><span class="hljs-params">(site, items)</span> {</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">containSite</span><span class="hljs-params">(site, items)</span> </span>{
   <span class="hljs-keyword">return</span> items.some( compareSite.bind(<span class="hljs-literal">null</span>, site) )
 }
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span><span class="hljs-params">(memo, item)</span>{</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span><span class="hljs-params">(memo, item)</span></span>{
   <span class="hljs-keyword">var</span> site = memo.filter( containSite.bind(<span class="hljs-literal">null</span>, item.site) );
   <span class="hljs-keyword">if</span> (site.length &gt; <span class="hljs-number">0</span>) {
     site[<span class="hljs-number">0</span>].push(item)
@@ -652,7 +652,7 @@ site et par famille de navigateurs. Nous aimerions pouvoir grouper les résultat
  qui aurait le rôle d’accumulateur et un Array.forEach :</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> results = {};
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span><span class="hljs-params">( item)</span>{</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span><span class="hljs-params">( item)</span></span>{
   <span class="hljs-keyword">var</span> site = results.filter( containSite.bind(<span class="hljs-keyword">null</span>, item.site) );
   <span class="hljs-keyword">if</span> (site.length &gt; <span class="hljs-number">0</span>) {
     site[<span class="hljs-number">0</span>].push(item)
@@ -667,7 +667,7 @@ stats.<span class="hljs-keyword">forEach</span>( groupBySite );
 dépend directement de la variable results, déclarée au dessus.</p>
 <h3 id="a-noter"><a class="putainde-Title-anchor" href="#a-noter">#</a>À noter</h3><p>L’utilisation de  <code>Function.bind</code> nous permet de réutiliser les fonctions <code>compareSite</code>
 et <code>containSite</code> en fixant leur premier paramètre. Ainsi <code>compareSite.bind(null, &#39;mozilla.fr&#39;)</code> équivaut à :</p>
-<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareMozilla</span><span class="hljs-params">(item)</span>{</span>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareMozilla</span><span class="hljs-params">(item)</span></span>{
   <span class="hljs-keyword">return</span> <span class="hljs-string">"mozilla.fr"</span> === item.site;
 }
 </code></pre>
@@ -706,7 +706,7 @@ function groupByBrowser( site, memo, browser){
   <span class="hljs-keyword">return</span> data[site].reduce(groupByBrowser.bind(<span class="hljs-keyword">null</span>, site), memo)
 }, {});
 </code></pre>
-<p>J’espère que vous avez appréciez ces quelques exemples d’utilisation de <code>Array#reduce</code>.
+<p>J’espère que vous avez apprécié ces quelques exemples d’utilisation de <code>Array#reduce</code>.
 Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article ou via les commentaires !</p>
 
 ]]></description><pubDate>Tue, 13 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/array-reduce/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/array-reduce/</guid></item><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[
@@ -716,7 +716,7 @@ Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article
 <p>napa est un <em>helper for installing stuff without a package.json with npm</em>. Pardon, napa est un aideur pour installer des trucs sans un package.json avec npm. BON. napa vous aide à travers npm à installer des modules qui n’ont pas de package.json. C’est plus clair là ?</p>
 <p>napa est ce qui manque à npm où bower avait justement son utilité : télécharger n’importe quel <em>package</em> <em>front</em> n’importe où. Mais plutôt que d’installer un autre <em>packager</em>, napa s’insère directement dans npm afin de ne pas perturber le <em>workflow</em>, et ça, j’apprécie grandement.</p>
 <p>Simple, tout simple. Dans un premier temps, téléchargez-le :</p>
-<pre><code><span class="hljs-comment">$</span> <span class="hljs-comment">npm</span> <span class="hljs-comment">install</span> <span class="hljs-comment">napa</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">save</span><span class="hljs-literal">-</span><span class="hljs-comment">dev</span>
+<pre><code>$ npm <span class="hljs-operator"><span class="hljs-keyword">install</span> napa <span class="hljs-comment">--save-dev</span></span>
 </code></pre><p>Cela ajoutera napa au <code>package.json</code>.</p>
 <p>Puis dans <code>package.json</code>, ajoutez :</p>
 <pre><code>{
@@ -846,24 +846,24 @@ Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article
 <p>Et ça va en rester ainsi pour le moment, car au lieu de voir la théorie sur Ô combien <a href="http://www.slideshare.net/astrails/ruby-is-awesome-16466895">Ruby est génial</a>, nous allons tout de suite installer Ruby pour nous rapprocher rapidement de notre éditeur de texte.</p>
 <h2 id="installation-avec-em-rbenv-em-"><a class="putainde-Title-anchor" href="#installation-avec-em-rbenv-em-">#</a>Installation avec <em>rbenv</em></h2><p>Il existe de nombreuses façons d’installer Ruby, un petit peu comme Node.js en passant par Github, par les packages officiels, brew, etc. <em>rbenv</em> reste d’après moi la façon la plus simple, propre et légère. Beaucoup pourront préférer <em>RVM</em> disant qu’il fait la même chose en mieux, d’autres diront qu’au contraire il en fait trop en écrasant par exemple la méthode <code>cd</code>. J’ai utilisé les deux, il fallait faire un choix, ce sera <em>rbenv</em>.</p>
 <p>Pour utiliser <em>rbenv</em>, il faut avoir Git. Si vous ne l’avez pas, vous devriez. Et ça tombe bien, <a href="https://github.com/madx">madx</a> et <a href="https://github.com/Erwyn">Erwyn</a> ont fait deux super articles pour l’<a href="/posts/git/versionner-avec-git/">utiliser</a> et le <a href="/posts/git/boutez-les-bugs-domptez-votre-historique/">dompter</a>. On commence donc par installer <em>rbenv</em> :</p>
-<pre><code class="lang-sh">$ git <span class="hljs-keyword">clone</span> git:<span class="hljs-comment">//github.com/sstephenson/rbenv.git ~/.rbenv</span>
+<pre><code class="lang-sh">$ git clone gi<span class="hljs-variable">t:</span>//github.<span class="hljs-keyword">com</span>/sstephenson/rbenv.git ~/.rbenv
 $ <span class="hljs-keyword">echo</span> <span class="hljs-string">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> &gt;&gt; ~/.bashrc
 $ <span class="hljs-keyword">echo</span> <span class="hljs-string">'eval "$(rbenv init -)"'</span> &gt;&gt; ~/.bashrc
-$ source ~/.bashrc
+$ <span class="hljs-keyword">source</span> ~/.bashrc
 </code></pre>
 <p>Désormais <em>rbenv</em> est installé et ses commandes sont disponibles dans votre terminal. Il faut maintenant lui installer le plugin pour récupérer les différentes versions de Ruby :</p>
 <pre><code class="lang-sh"><span class="hljs-variable">$ </span>git clone git<span class="hljs-variable">@github</span>.<span class="hljs-symbol">com:</span>sstephenson/ruby-build.git ~<span class="hljs-regexp">/.rbenv/plugins</span><span class="hljs-regexp">/ruby-build</span>
 </code></pre>
 <p>C’est bon, vous pouvez installer Ruby. J’ai constaté sur Ubuntu qu’il était nécessaire d’installer au préalable <code>libssl-dev</code> et <code>g++</code>, simplement avec <code>sudo apt-get install libssl-dev g++</code>. Lançons-nous :</p>
-<pre><code class="lang-sh">rbenv install <span class="hljs-number">2.1</span><span class="hljs-number">.1</span>
-rbenv <span class="hljs-keyword">global</span> <span class="hljs-number">2.1</span><span class="hljs-number">.1</span>
+<pre><code class="lang-sh">rbenv <span class="hljs-operator"><span class="hljs-keyword">install</span> <span class="hljs-number">2.1</span><span class="hljs-number">.1</span>
+rbenv <span class="hljs-keyword">global</span> <span class="hljs-number">2.1</span><span class="hljs-number">.1</span></span>
 </code></pre>
 <p>Séquence émotion. Vous êtes désormais maître de l’Univers.</p>
 <p>Vous avez Ruby 2.1.1 d’installé. La ligne <code>rbenv global</code> permet comme son nom l’indique d’utiliser cette version de Ruby de façon globale à l’utilisateur, si jamais plusieurs versions coexistent.</p>
 <p>C’était facile n’est-ce pas ? Et bien c’est encore plus facile d’utiliser une bibliothèque (appelée “gem”) ou un framework Ruby. Comme nous allons utiliser Sinatra dans notre prochain article, autant l’installer tout de suite. Pour installer une gem qui sera exécutée dans la console comme Sass il est nécessaire de l’installer de cette façon : <code>gem install sass</code>. Seulement pour Sinatra, nous avons seulement besoin que le framework soit disponible dans nos scripts Ruby. Pour cela nous allons utiliser un gestionnaire de dépendance des gem Ruby, et nous verrons cela dans le prochain article pour nos premiers pas avec Sinatra.</p>
 <p>D’ici là vous pouvez commencer à jouer avec Ruby en tapant la commande <code>irb</code> dans votre terminal, qui lance l’interpretteur Ruby. Pourquoi pas essayer un <em>Hello World!</em> à la Ruby ?</p>
 <pre><code class="lang-ruby">puts <span class="hljs-string">'Hello World!'</span>
-puts (<span class="hljs-number">1</span>..<span class="hljs-number">3</span>).to_a.<span class="hljs-keyword">reverse</span>.<span class="hljs-keyword">join</span>(<span class="hljs-string">' ... '</span>) &lt;&lt; <span class="hljs-string">' ... The World is ours!!!'</span>
+puts (<span class="hljs-number">1</span>..<span class="hljs-number">3</span>).to_a.<span class="hljs-built_in">reverse</span>.<span class="hljs-built_in">join</span>(<span class="hljs-string">' ... '</span>) &lt;&lt; <span class="hljs-string">' ... The World is ours!!!'</span>
 </code></pre>
 <p>Enjoy!</p>
 
@@ -904,7 +904,7 @@ et à l’installer (<code>npm install putaindegrid --save</code>) dans vos diff
 où vous en aurez besoin. Votre fichier <code>grid.css</code> est accessible dans le dossier
 <code>node_modules/putaindegrid/grid.css</code>, vous pouvez donc l’inclure dans votre page
 HTML. (Ou l’<code>@import</code>er dans votre fichier Sass/Less principal.)</p>
-<pre><code class="lang-html">&lt;link href=<span class="hljs-string">"node_modules/putaindegrid/grid.css"</span> rel=<span class="hljs-string">"stylesheet"</span> <span class="hljs-keyword">type</span>=<span class="hljs-string">"text/css"</span>&gt;
+<pre><code class="lang-html">&lt;link <span class="hljs-variable">href=</span><span class="hljs-string">"node_modules/putaindegrid/grid.css"</span> <span class="hljs-variable">rel=</span><span class="hljs-string">"stylesheet"</span> <span class="hljs-variable">type=</span><span class="hljs-string">"text/css"</span>&gt;
 </code></pre>
 <h2 id="pourquoi-npm-plutot-qu-un-autre-package-manager-"><a class="putainde-Title-anchor" href="#pourquoi-npm-plutot-qu-un-autre-package-manager-">#</a>Pourquoi NPM plutôt qu’un autre package manager ?</h2><ul>
 <li>Il a déjà fait ses preuves comme package manager pour Node.js.</li>
@@ -1205,17 +1205,17 @@ et le sont encore trop.</p>
 compense largement celui que l’on passe à les écrire.</p>
 <h2 id="ecrire-du-js-testable"><a class="putainde-Title-anchor" href="#ecrire-du-js-testable">#</a>Écrire du js testable</h2><p>Prenons un exemple simple et moche :</p>
 <pre><code class="lang-javascript"><span class="hljs-comment">//app.js</span>
-;(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+;(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
 
   <span class="hljs-keyword">var</span> cart = $(<span class="hljs-string">"#cart"</span>)
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addToCart</span><span class="hljs-params">(id)</span>{</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addToCart</span><span class="hljs-params">(id)</span></span>{
     <span class="hljs-keyword">var</span> element = $(<span class="hljs-string">"&lt;li&gt;&lt;/li&gt;"</span>)
     element.html(catalog[id])
     cart.append(element)
   }
 
   $(<span class="hljs-string">".js-updateCart"</span>)
-    .on(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span>{</span>
+    .on(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span></span>{
       addToCart($(<span class="hljs-keyword">this</span>).data(<span class="hljs-string">"id"</span>))
     })
 
@@ -1229,9 +1229,9 @@ compense largement celui que l’on passe à les écrire.</p>
 <li>pour tester <code>addToCart</code> on doit aller regarder dans le DOM.</li>
 </ul>
 <h3 id="1-rendez-accessibles-vos-methodes-au-test-runner"><a class="putainde-Title-anchor" href="#1-rendez-accessibles-vos-methodes-au-test-runner">#</a>1. Rendez accessibles vos méthodes au test runner</h3><p>Vous pouvez utiliser un namespace adéquat.</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> app = window.app = {}
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> app = <span class="hljs-built_in">window</span>.app = {}
 app.cart = {}
-app.cart.addToCart = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span> <span class="hljs-comment">/* … */</span> }
+app.cart.addToCart = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{ <span class="hljs-comment">/* … */</span> }
 </code></pre>
 <p>Mais ne souhaitez probablement pas rendre vos méthodes accessibles à la console.</p>
 <p>Utilisez un module-system : <a href="http://browserify.org">browserify</a> ou
@@ -1242,9 +1242,9 @@ pourrez même <code>require</code> depuis un module npm
 <a href="/posts/js/browserify-all-the-things/">comme on vous l’explique dans un article dédié</a>).</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"jquery"</span>) <span class="hljs-comment">// oh, un module npm</span>
 
-module.exports = {
+<span class="hljs-built_in">module</span>.exports = {
   element : $(<span class="hljs-string">"#cart"</span>),
-  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     <span class="hljs-comment">/* … */</span>
   }
 }
@@ -1270,8 +1270,8 @@ déclanchera bien <code>updateCart</code> :</p>
 
 <span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"jquery"</span>)
 
-module.exports = view.extend({
-  element : document.body,
+<span class="hljs-built_in">module</span>.exports = view.extend({
+  element : <span class="hljs-built_in">document</span>.body,
   events : [
     {
       type : <span class="hljs-string">"click"</span>,
@@ -1279,7 +1279,7 @@ module.exports = view.extend({
       listener : <span class="hljs-string">"addToCart"</span>
     }
   ],
-  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span>{</span>
+  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span></span>{
     <span class="hljs-keyword">var</span> target = eventObject.currentTarget
     <span class="hljs-keyword">var</span> id = $(target).data(<span class="hljs-string">"id"</span>)
     eventbus.fire(<span class="hljs-string">"addToCart"</span>, {
@@ -1293,15 +1293,15 @@ module.exports = view.extend({
 <span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
 <span class="hljs-keyword">var</span> catalog = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../catalog"</span>)
 
-module.exports = {
-  initialize : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+<span class="hljs-built_in">module</span>.exports = {
+  initialize : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     <span class="hljs-keyword">this</span>._addToCart = <span class="hljs-keyword">this</span>.addToCart.bind(<span class="hljs-keyword">this</span>)
     eventbus.listen(<span class="hljs-string">"addToCart"</span>, <span class="hljs-keyword">this</span>._addToCart)
   },
-  release : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+  release : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     eventbus.stopListening(<span class="hljs-string">"addToCart"</span>, <span class="hljs-keyword">this</span>._addToCart)
   },
-  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span>{</span>
+  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span></span>{
     <span class="hljs-comment">// et on a eventObject.id</span>
     <span class="hljs-keyword">this</span>.products.push(catalog[eventObject.currentTarget.data(<span class="hljs-string">"id"</span>)])
   }
@@ -1316,12 +1316,12 @@ les deux modules.</p>
 <span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
 <span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"jquery"</span>)
 
-tape(<span class="hljs-string">"view"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span>{</span>
+tape(<span class="hljs-string">"view"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
   test.plan(<span class="hljs-number">1</span>)
   <span class="hljs-keyword">var</span> element = $(<span class="hljs-string">"&lt;div&gt;&lt;/div&gt;"</span>)
   element.data(<span class="hljs-string">"id"</span>, <span class="hljs-number">1</span>)
   <span class="hljs-comment">// on teste facilement l'envoi</span>
-  eventbus.listen(<span class="hljs-string">"addToCart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span>{</span>
+  eventbus.listen(<span class="hljs-string">"addToCart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span></span>{
     test.equal(eventObject.id, <span class="hljs-number">1</span>)
   })
   view.addToCart({
@@ -1336,7 +1336,7 @@ tape(<span class="hljs-string">"view"</span>, <span class="hljs-function"><span 
 <span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
 <span class="hljs-keyword">var</span> catalog = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../catalog"</span>)
 
-tape(<span class="hljs-string">"cart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span>{</span>
+tape(<span class="hljs-string">"cart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
   cart.initialize()
   eventbus.fireSync(<span class="hljs-string">"addToCart"</span>, {id:<span class="hljs-number">1</span>})
   test.deepEqual(
@@ -1358,21 +1358,21 @@ une <code>string</code>.</p>
 })
 </code></pre>
 <p>Or, si par mégarde ma méthode <code>isString</code> se révèle être :</p>
-<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> {</span>
+<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> value == <span class="hljs-string">"string"</span>
 }
 </code></pre>
 <p>on ne vérifie pas le cas <code>type.isString(new String(&quot;&quot;))</code>.</p>
 <p>Du coup, des tests complets :</p>
 <pre><code class="lang-javascript">tape(<span class="hljs-string">"type.isString on strings"</span>, <span class="hljs-keyword">function</span>(test){
-  test.equal(<span class="hljs-class"><span class="hljs-keyword">type</span>.<span class="hljs-title">isString</span>(</span><span class="hljs-string">""</span>), <span class="hljs-keyword">true</span>)
-  test.equal(<span class="hljs-class"><span class="hljs-keyword">type</span>.<span class="hljs-title">isString</span>(</span><span class="hljs-keyword">new</span> String(<span class="hljs-string">""</span>)), <span class="hljs-keyword">false</span>)
+  test.equal(<span class="hljs-class"><span class="hljs-keyword">type</span>.<span class="hljs-title">isString</span></span>(<span class="hljs-string">""</span>), <span class="hljs-keyword">true</span>)
+  test.equal(<span class="hljs-class"><span class="hljs-keyword">type</span>.<span class="hljs-title">isString</span></span>(<span class="hljs-keyword">new</span> String(<span class="hljs-string">""</span>)), <span class="hljs-keyword">false</span>)
   test.<span class="hljs-keyword">end</span>()
 })
 </code></pre>
 <p>permettent ici d’identifier qu’en réalité on a besoin de :</p>
-<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> {</span>
-  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(value) == <span class="hljs-string">"[object String]"</span>
+<pre><code class="lang-javascript"><span class="hljs-built_in">type</span>.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> {</span>
+  <span class="hljs-keyword">return</span> Object.prototype.toString.<span class="hljs-built_in">call</span>(value) == <span class="hljs-string">"[object String]"</span>
 }
 </code></pre>
 <p>Et c’est à la force des résultats de tests que vous identifierez rapidement
@@ -1508,15 +1508,15 @@ de fichiers</a>.</p>
 <pre><code class="lang-shell"><span class="hljs-variable">$ </span>npm i -g gulp
 </code></pre>
 <p>Ensuite dans votre projet :</p>
-<pre><code class="lang-shell">$ npm i <span class="hljs-attribute">-D</span> gulp gulp<span class="hljs-attribute">-util</span> gulp<span class="hljs-attribute">-plumber</span> gulp<span class="hljs-attribute">-WHATEVER</span>
+<pre><code class="lang-shell"><span class="hljs-variable">$ </span>npm i -<span class="hljs-constant">D</span> gulp gulp-util gulp-plumber gulp-<span class="hljs-constant">WHATEVER</span>
 </code></pre>
 <p><em>Note : <code>npm i -D</code> == <code>npm install --save-dev</code>, c’est cadeau.</em></p>
 <p>Bon dans mon exemple j’ai mis un peu n’importe quoi, donc on va faire un mini workflow de hipster hacker.</p>
 <h2 id="utilisation"><a class="putainde-Title-anchor" href="#utilisation">#</a>Utilisation</h2><p>On part avec une tâche très simple : pré-processeur CSS <a href="http://www.myth.io">Myth</a> et
 optimisation avec <a href="https://github.com/css/csso">CSSO</a>.</p>
-<pre><code class="lang-shell">$ mkdir putaindegulp <span class="hljs-subst">&amp;&amp;</span> cd putaindegulp
-$ npm init
-$ npm i <span class="hljs-attribute">-D</span> gulp gulp<span class="hljs-attribute">-util</span> gulp<span class="hljs-attribute">-plumber</span> gulp<span class="hljs-attribute">-myth</span> gulp<span class="hljs-attribute">-csso</span> minimist
+<pre><code class="lang-shell"><span class="hljs-variable">$ </span>mkdir putaindegulp &amp;&amp; cd putaindegulp
+<span class="hljs-variable">$ </span>npm init
+<span class="hljs-variable">$ </span>npm i -<span class="hljs-constant">D</span> gulp gulp-util gulp-plumber gulp-myth gulp-csso minimist
 </code></pre>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp"</span>)
 <span class="hljs-keyword">var</span> gutil = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-util"</span>)
@@ -1525,7 +1525,7 @@ $ npm i <span class="hljs-attribute">-D</span> gulp gulp<span class="hljs-attrib
 <span class="hljs-keyword">var</span> csso = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-csso"</span>)
 <span class="hljs-keyword">var</span> options = <span class="hljs-built_in">require</span>(<span class="hljs-string">"minimist"</span>)(process.argv.slice(<span class="hljs-number">2</span>))
 
-gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
   gulp.src(<span class="hljs-string">"./src/css/*.css"</span>)
     .pipe(options.production ? plumber() : gutil.noop())
     .pipe(myth({sourcemap: !options.production}))
@@ -1533,7 +1533,7 @@ gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"
     .pipe(gulp.dest(<span class="hljs-string">"./dist/css/"</span>))
 })
 
-gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
   gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, [<span class="hljs-string">"styles"</span>])
 })
 </code></pre>
@@ -1568,7 +1568,7 @@ gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string"
 <span class="hljs-comment">// y compris un console.log() ^^</span>
 <span class="hljs-comment">// un autre paramètre peut être ajouté avant la fonction, qui permet de préciser</span>
 <span class="hljs-comment">// les dépendances (cf task dev plus bas par exemple)</span>
-gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
 
   <span class="hljs-comment">// Ici on attrape les fichiers (glob classique)</span>
   <span class="hljs-comment">// à la racine (on va considérer que nos fichiers finaux ne seront pas dans</span>
@@ -1589,7 +1589,7 @@ gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"
 })
 
 <span class="hljs-comment">// Ici on a une tâche de dev qui lance un watch APRES avoir exécuté `styles` une fois</span>
-gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
 
   <span class="hljs-comment">// gulp.watch est natif (pas comme avec grunt)</span>
   <span class="hljs-comment">// vous noterez qu'ici par exemple on va surveiller tous les fichiers</span>
@@ -1718,12 +1718,12 @@ Exemple avec <a href="https://github.com/ctalkington/rework-rem-fallback">rework
 <span class="hljs-keyword">var</span> out14 = rework(css).<span class="hljs-keyword">use</span>(remFallback(<span class="hljs-number">14</span>)).toString()
 </code></pre>
 <p>Avec l’exemple d’avant, et ce bout de CSS:</p>
-<pre><code class="lang-css"><span class="hljs-class">.main-header</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">5</span>rem </span></span></span>}
+<pre><code class="lang-css"><span class="hljs-class">.main-header</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">5rem</span> </span></span></span>}
 </code></pre>
 <p>… On obtiendra le résultat suivant:</p>
 <pre><code class="lang-css"><span class="hljs-class">.main-header</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">80</span>px</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">5</span>rem</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">80px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">5rem</span></span></span>;
 <span class="hljs-rule">}</span></span>
 </code></pre>
 <p>Notre exemple n’est pas intégré dans un
@@ -1909,14 +1909,14 @@ peut-être pas vous plaire.</p>
 de pouvoir utiliser le nesting pour pouvoir rapidement produire les sélecteurs adéquats.
 Mais en terme de maintenance et surtout de réutilisation, c’est vraiment à chier.
 Faut dire ce qui est.</p>
-<pre><code class="lang-scss">.widget {
- <span class="hljs-comment"> // titre</span>
+<pre><code class="lang-scss"><span class="hljs-input"><span class="hljs-prompt">.widget {
+  // titre
   h3 { }
 
- <span class="hljs-comment"> // widget body</span>
-  &gt; <span class="hljs-operator">div</span> {
+  // widget body
+  &gt;</span> div {
 
-   <span class="hljs-comment"> // liste</span>
+    <span class="hljs-regexp">//</span> liste</span>
     ul {
 
     }
@@ -2000,10 +2000,10 @@ certains sont restés sur leur faim.
 Voici donc de rapides exemples de mise en place de cette solution.</p>
 <h2 id="installation-d-autoprefixer"><a class="putainde-Title-anchor" href="#installation-d-autoprefixer">#</a>Installation d’autoprefixer</h2><p>Il vous faudra <a href="http://nodejs.org/">Node.js</a> (qui embarque maintenant <a href="https://www.npmjs.org/">Npm</a>) afin de pouvoir
 installer ce nouveau joujou.</p>
-<pre><code class="lang-shell"><span class="hljs-comment"># on install autoprefixer via npm en global</span>
-$ <span class="hljs-built_in">npm</span> install --<span class="hljs-built_in">global</span> autoprefixer
-<span class="hljs-comment"># ou pour les fainéants</span>
-$ <span class="hljs-built_in">npm</span> i -g autoprefixer
+<pre><code class="lang-shell"># <span class="hljs-keyword">on</span> install autoprefixer via npm <span class="hljs-keyword">en</span> <span class="hljs-keyword">global</span>
+$ npm install --<span class="hljs-keyword">global</span> autoprefixer
+# <span class="hljs-keyword">ou</span> pour les fainéants
+$ npm <span class="hljs-keyword">i</span> -<span class="hljs-keyword">g</span> autoprefixer
 </code></pre>
 <p>Une fois ceci fait, vous devriez avoir la commande <code>autoprefixer</code> disponible.
 On vérifie de suite avec <code>autoprefixer -v</code>.</p>
@@ -2022,25 +2022,25 @@ comme beaucoup de commandes, vous allez avoir la sortie crachée en plein visage
 <pre><code class="lang-shell"><span class="hljs-variable">$ </span>autoprefixer -h
 </code></pre>
 <p>On y apprend l’existance des options suivantes :</p>
-<pre><code>Options:
-  -<span class="ruby">b, --browsers <span class="hljs-constant">BROWSERS</span>  add prefixes <span class="hljs-keyword">for</span> selected browsers
-</span>  -<span class="ruby">o, --output <span class="hljs-constant">FILE</span>        set output file
-</span>  -<span class="ruby">d, --dir <span class="hljs-constant">DIR</span>            set output dir
-</span>  -<span class="ruby">m, --map                generate source map
-</span>  -<span class="ruby">i, --info               show selected browsers <span class="hljs-keyword">and</span> properties
-</span>  -<span class="ruby">h, --help               show help text
-</span>  -<span class="ruby">v, --version            print program version</span>
+<pre><code>Option<span class="hljs-variable">s:</span>
+  -<span class="hljs-keyword">b</span>, --browsers BROWSERS  <span class="hljs-built_in">add</span> prefixes <span class="hljs-keyword">for</span> selected browsers
+  -<span class="hljs-keyword">o</span>, --output FILE        <span class="hljs-keyword">set</span> output <span class="hljs-keyword">file</span>
+  -<span class="hljs-keyword">d</span>, --dir DIR            <span class="hljs-keyword">set</span> output dir
+  -<span class="hljs-keyword">m</span>, --<span class="hljs-built_in">map</span>                generate <span class="hljs-keyword">source</span> <span class="hljs-built_in">map</span>
+  -<span class="hljs-keyword">i</span>, --info               show selected browsers <span class="hljs-built_in">and</span> properties
+  -<span class="hljs-keyword">h</span>, --<span class="hljs-keyword">help</span>               show <span class="hljs-keyword">help</span> text
+  -<span class="hljs-keyword">v</span>, --<span class="hljs-keyword">version</span>            <span class="hljs-keyword">print</span> program <span class="hljs-keyword">version</span>
 </code></pre><p>Du coup si on veut faire un coup de commande bien personnalisée on pourra faire :</p>
-<pre><code class="lang-shell">$ autoprefixer -b <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -o prefixed<span class="hljs-preprocessor">.css</span> index<span class="hljs-preprocessor">.css</span>
+<pre><code class="lang-shell">$ autoprefixer -<span class="hljs-keyword">b</span> <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -<span class="hljs-keyword">o</span> prefixed.css <span class="hljs-built_in">index</span>.css
 </code></pre>
 <p>Il va par contre nous falloir un fichier css pour tester :</p>
-<pre><code class="lang-shell"><span class="hljs-comment"># on met un peu de CSS dans index.css manière de tester le bouzin</span>
-$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"* { box-sizing:border-box}"</span> &gt; index.css
+<pre><code class="lang-shell"># <span class="hljs-keyword">on</span> met un peu de CSS dans <span class="hljs-built_in">index</span>.css manière de tester <span class="hljs-keyword">le</span> bouzin
+$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"* { box-sizing:border-box}"</span> &gt; <span class="hljs-built_in">index</span>.css
 </code></pre>
 <p>On peut donc essayer notre commande plus haut qui va remplir le fichier <code>prefixed.css</code></p>
 <p>Pour vérifier :</p>
-<pre><code class="lang-shell">$ cat prefixed<span class="hljs-built_in">.</span>css
-<span class="hljs-subst">*</span> { <span class="hljs-attribute">-webkit</span><span class="hljs-attribute">-box</span><span class="hljs-attribute">-sizing</span>:border<span class="hljs-attribute">-box</span>; <span class="hljs-attribute">-moz</span><span class="hljs-attribute">-box</span><span class="hljs-attribute">-sizing</span>:border<span class="hljs-attribute">-box</span>; box<span class="hljs-attribute">-sizing</span>:border<span class="hljs-attribute">-box</span>}
+<pre><code class="lang-shell">$ <span class="hljs-tag">cat</span> <span class="hljs-tag">prefixed</span><span class="hljs-class">.css</span>
+* <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">-webkit-box-sizing</span>:<span class="hljs-value">border-box</span></span>; <span class="hljs-rule"><span class="hljs-attribute">-moz-box-sizing</span>:<span class="hljs-value">border-box</span></span>; <span class="hljs-rule"><span class="hljs-attribute">box-sizing</span>:<span class="hljs-value">border-box</span></span></span>}
 </code></pre>
 <p>On a bien eu des préfixes ajoutés en fonction de notre demande (bon rien pour IE
 qui n’est pas passé par une version préfixé)</p>
@@ -2083,29 +2083,29 @@ implémentations.</p>
 <h3 id="make"><a class="putainde-Title-anchor" href="#make">#</a>Make</h3><p>Là c’est facile, tout bon développeur doit avoir <code>make</code> sur sa machine (sinon
 c’est que t’es pas développeur, je sais pas trop ce que tu fais ici du coup).</p>
 <p>On peut tout simplement créer un fichier <code>Makefile</code> avec la commande précédente:</p>
-<pre><code class="lang-shell"><span class="hljs-comment"># création d’un dossier pour notre popote (puis on va dedans...)</span>
-<span class="hljs-variable">$ </span>mkdir autoprefixer-test &amp;&amp; cd autoprefixer-test
+<pre><code class="lang-shell"># <span class="hljs-keyword">cr</span>éation <span class="hljs-keyword">d</span>’un dossier pour notre popote (puis <span class="hljs-keyword">on</span> va dedans...)
+$ <span class="hljs-built_in">mkdir</span> autoprefixer-test &amp;&amp; <span class="hljs-keyword">cd</span> autoprefixer-test
 
-<span class="hljs-comment"># On créer un makefile avec une tâche `css` (création/écrasement via &gt;)</span>
-<span class="hljs-variable">$ </span>echo <span class="hljs-string">"css:"</span> &gt; <span class="hljs-constant">Makefile</span>
+# On <span class="hljs-keyword">cr</span>éer un makefile avec une <span class="hljs-keyword">t</span>â<span class="hljs-keyword">che</span> `css` (<span class="hljs-keyword">cr</span>éation/écrasement via &gt;)
+$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"css:"</span> &gt; Makefile
 
-<span class="hljs-comment"># On vérifie qu’on a bien rempli le fichier</span>
-<span class="hljs-variable">$ </span>cat <span class="hljs-constant">Makefile</span>
+# On <span class="hljs-keyword">v</span>érifie qu’<span class="hljs-keyword">on</span> <span class="hljs-keyword">a</span> bien rempli <span class="hljs-keyword">le</span> fichier
+$ <span class="hljs-keyword">cat</span> Makefile
 
-<span class="hljs-comment">## On ajoute notre commande au fichier (ajout au fichier existant via &gt;&gt;)</span>
-<span class="hljs-variable">$ </span>echo <span class="hljs-string">"\tautoprefixer index.css -b \"last 2 versions, &gt; 1%, Explorer 7, Android 2\" -o prefixed.css"</span> &gt;&gt; <span class="hljs-constant">Makefile</span>
+## On ajoute notre commande <span class="hljs-keyword">au</span> fichier (ajout <span class="hljs-keyword">au</span> fichier existant via &gt;&gt;)
+$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"\tautoprefixer index.css -b \"last 2 versions, &gt; 1%, Explorer 7, Android 2\" -o prefixed.css"</span> &gt;&gt; Makefile
 
-<span class="hljs-comment"># On vérifie qu’on a bien rempli le fichier</span>
-<span class="hljs-variable">$ </span>cat <span class="hljs-constant">Makefile</span>
+# On <span class="hljs-keyword">v</span>érifie qu’<span class="hljs-keyword">on</span> <span class="hljs-keyword">a</span> bien rempli <span class="hljs-keyword">le</span> fichier
+$ <span class="hljs-keyword">cat</span> Makefile
 </code></pre>
 <p>Voilà votre Makefile doit être bien rempli. Pour tester la commande <code>css</code>:</p>
-<pre><code class="lang-shell"><span class="hljs-variable">$ </span>make css
+<pre><code class="lang-shell">$ <span class="hljs-keyword">make</span> css
 </code></pre>
 <p>Vous remarquerez que la commande <em>autoprefixer</em> s’affiche, si ça vous embête, rajoutez
 <code>@</code> devant. Vous pouvez modifier votre Makefile dans ce sens:</p>
-<pre><code><span class="hljs-label">css:</span>
-    echo <span class="hljs-string">"❯ Autoprefixage magique."</span>
-    @autoprefixer index<span class="hljs-preprocessor">.css</span> -b <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -o prefixed<span class="hljs-preprocessor">.css</span>
+<pre><code><span class="hljs-keyword">cs</span><span class="hljs-variable">s:</span>
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">"❯ Autoprefixage magique."</span>
+    @autoprefixer <span class="hljs-built_in">index</span>.css -<span class="hljs-keyword">b</span> <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -<span class="hljs-keyword">o</span> prefixed.css
 </code></pre><p><em>Attention : Les Makefiles utilisent des tabulations uniquement ! Sans quoi cela
 ne va pas marcher comme prévu.</em></p>
 <p>Vous avez donc maintenant un exemple assez simpliste qui peut être utilisé si
@@ -2129,7 +2129,7 @@ une seule écriture sur le système de fichier (contrairement à la solution Gru
 <span class="hljs-keyword">var</span> csso = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-csso"</span>)
 
 <span class="hljs-comment">// css task: sass, autoprefixer et csso si --production</span>
-gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
   gulp.src(<span class="hljs-string">"./src/css/*.scss"</span>)
     <span class="hljs-comment">// it’s me, Mario</span>
     .pipe(plumber())
@@ -2153,8 +2153,8 @@ gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"
     <span class="hljs-comment">//.pipe(livereload(livereloadServer))</span>
 })
 
-gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-  gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> {</span>
+gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> </span>{
     gulp.run(<span class="hljs-string">"styles"</span>)
   })
 })
@@ -2169,7 +2169,7 @@ gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"st
 <span class="hljs-comment">// $ gulp dev</span>
 </code></pre>
 <h3 id="autoprefixer-avec-grunt"><a class="putainde-Title-anchor" href="#autoprefixer-avec-grunt">#</a>Autoprefixer avec Grunt</h3><p>Voici un petit Gruntfile avec la même configuration que ci dessus</p>
-<pre><code class="lang-js">module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> {</span>
+<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
 <span class="hljs-pi">  "use strict"</span>;
 
   grunt.loadNpmTasks(<span class="hljs-string">"grunt-contrib-sass"</span>)
@@ -2247,8 +2247,8 @@ par un autre pré / post-processeur.</em></p>
 Mais voici complètement autre chose: <em>autoprefixer</em> peut s’utiliser en “plugin” Stylus.</p>
 <p>C’est assez simple il suffit d’utiliser l’option <code>use</code> (<code>-u</code> en cli).
 Voilà ce qu’on aurait en cli :</p>
-<pre><code class="lang-shell">$ npm install <span class="hljs-attribute">-g</span> stylus autoprefixer<span class="hljs-attribute">-stylus</span>
-$ stylus <span class="hljs-attribute">-u</span> autoprefixer<span class="hljs-attribute">-stylus</span> <span class="hljs-attribute">-o</span> index<span class="hljs-built_in">.</span>css index<span class="hljs-built_in">.</span>styl
+<pre><code class="lang-shell">$ npm <span class="hljs-operator"><span class="hljs-keyword">install</span> -g stylus autoprefixer-stylus
+$ stylus -u autoprefixer-stylus -o <span class="hljs-keyword">index</span>.css <span class="hljs-keyword">index</span>.styl</span>
 </code></pre>
 <h4 id="avec-grunt"><a class="putainde-Title-anchor" href="#avec-grunt">#</a>Avec Grunt</h4><p>Il suffira d’utiliser donc l’option <code>use</code> dans votre configuration.</p>
 <h4 id="-del-avec-gulp-del-"><a class="putainde-Title-anchor" href="#-del-avec-gulp-del-">#</a><del>Avec Gulp</del></h4><p>La façon de faire de gulp, via des streams pour éviter la lecture / écriture multiple fait que le plugin
@@ -2321,7 +2321,7 @@ comportant le bug, celui dont le changement a révélé le disfonctionnement.</p
 1082351d9157e98aed1bbee8b9ad6deedca1288f is the first bad <span class="hljs-operator"><span class="hljs-keyword">commit</span>
 <span class="hljs-keyword">commit</span> <span class="hljs-number">1082351</span>d9157e98aed1bbee8b9ad6deedca1288f
 Author: Maxime Thirouin &lt;m@***.io&gt;
-<span class="hljs-keyword">Date</span>:   Fri Jan <span class="hljs-number">17</span> <span class="hljs-number">08</span>:<span class="hljs-number">19</span>:<span class="hljs-number">46</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+<span class="hljs-built_in">Date</span>:   Fri Jan <span class="hljs-number">17</span> <span class="hljs-number">08</span>:<span class="hljs-number">19</span>:<span class="hljs-number">46</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
     ¯\_(ツ)_/¯ Fix shit bring <span class="hljs-keyword">in</span> <span class="hljs-number">34</span>a44c98048f2b74fc2dd20f0be807c1e23e8b58
 
@@ -2344,29 +2344,29 @@ recherche du premier commit défectueux se fera alors toute seule!</p>
 peu de commits poubelles, ces commits avec comme message “step” ou autre “stuff”. Chaque commit correspond à une fonctionnalité,
 un bug fix, une unité logique cohérente. Je ne sais pas pour vous, mais personnellement un <em>git log</em> ne ressemble pas à
 ça chez moi!</p>
-<pre><code>commit e739e7c0248b841b0250eb85d99a1b4ba149149d
-<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
-<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">50</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+<pre><code><span class="hljs-operator"><span class="hljs-keyword">commit</span> e739e7c0248b841b0250eb85d99a1b4ba149149d
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">50</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
-    Now my new functionality finally works
+    <span class="hljs-keyword">Now</span> my new functionality finally works
 
-commit <span class="hljs-number">551</span>b243525d826afcfece3e2c4c471ebd1e91779
-<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
-<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+<span class="hljs-keyword">commit</span> <span class="hljs-number">551</span>b243525d826afcfece3e2c4c471ebd1e91779
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
     misc
 
-commit <span class="hljs-number">9</span>db49a39fdb05a54adcfc2b46832818ef05b9c72
-<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
-<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">43</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+<span class="hljs-keyword">commit</span> <span class="hljs-number">9</span>db49a39fdb05a54adcfc2b46832818ef05b9c72
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">43</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
-    stuff
+    <span class="hljs-keyword">stuff</span>
 
-commit ca4ff952310d6246216e83f49309b32b2d2fa010
-<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
-<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">35</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+<span class="hljs-keyword">commit</span> ca4ff952310d6246216e83f49309b32b2d2fa010
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">35</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
-    first commit
+    <span class="hljs-keyword">first</span> <span class="hljs-keyword">commit</span></span>
 </code></pre><figure>
     <figcaption>best git log, ever</figcaption>
 </figure>
@@ -2476,11 +2476,11 @@ Git vous demande d’éditer le message du commit marqué en <em>reword</em>:</p
 </figure>
 
 <p>L’opération va continuer puis Git va vous rendre la main. Il vous suffit alors de faire un <code>git log</code> pour apprécier le résultat:</p>
-<pre><code>commit <span class="hljs-number">481</span>b4dccf4fedf4ed9d7f4e83ae5c19a07f7e12e
-<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
-<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+<pre><code><span class="hljs-operator"><span class="hljs-keyword">commit</span> <span class="hljs-number">481</span>b4dccf4fedf4ed9d7f4e83ae5c19a07f7e12e
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
-    Story <span class="hljs-preprocessor">#34 - Poker cards now have a real back picture</span>
+    Story #<span class="hljs-number">34</span> - Poker cards <span class="hljs-keyword">now</span> have a <span class="hljs-built_in">real</span> back picture</span>
 </code></pre><figure>
     <figcaption>Et c’est le succèèèèèèès</figcaption>
 </figure>
@@ -2524,29 +2524,29 @@ ca4ff95 HEAD@{<span class="hljs-number">16</span>}: commit (initial): <span clas
 fait quelques tests avant d’écrire cette partie de l’article). Chaque opération possède un SHA1 qui est en fait une référence vers le commit concerné, dans l’état
 dans lequel il était au moment de l’opération. Bien, imaginons que j’ai fait n’importe quoi avec le rebase et que je veuille retrouver mon état précédent, et bien
 il me suffira ici de faire un <code>git checkout e739e7c</code> (dans votre cas la ligne sera probablement plus simple à trouver). Et là si je refais un <code>git log</code>, miracle:</p>
-<pre><code>commit e739e7c0248b841b0250eb85d99a1b4ba149149d
-<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
-<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">50</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+<pre><code><span class="hljs-operator"><span class="hljs-keyword">commit</span> e739e7c0248b841b0250eb85d99a1b4ba149149d
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">50</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
-    Now my new functionality finally works
+    <span class="hljs-keyword">Now</span> my new functionality finally works
 
-commit <span class="hljs-number">551</span>b243525d826afcfece3e2c4c471ebd1e91779
-<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
-<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+<span class="hljs-keyword">commit</span> <span class="hljs-number">551</span>b243525d826afcfece3e2c4c471ebd1e91779
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
     misc
 
-commit <span class="hljs-number">9</span>db49a39fdb05a54adcfc2b46832818ef05b9c72
-<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
-<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">43</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+<span class="hljs-keyword">commit</span> <span class="hljs-number">9</span>db49a39fdb05a54adcfc2b46832818ef05b9c72
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">43</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
-    stuff
+    <span class="hljs-keyword">stuff</span>
 
-commit ca4ff952310d6246216e83f49309b32b2d2fa010
-<span class="hljs-label">Author:</span> Martin GOYOT (Erwyn/Martinus) &lt;martin@***<span class="hljs-preprocessor">.com</span>&gt;
-<span class="hljs-label">Date:</span>   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">35</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+<span class="hljs-keyword">commit</span> ca4ff952310d6246216e83f49309b32b2d2fa010
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
+<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">35</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
-    first commit
+    <span class="hljs-keyword">first</span> <span class="hljs-keyword">commit</span></span>
 </code></pre><p>Vous voilà retombés sur vos pieds! Vous n’avez plus qu’à reconnecter votre branche à ce commit si jamais vous en aviez une et vous êtes reparti pour de nouvelles
 aventures.</p>
 <p>Sachez tout de même que ce <em>references log</em> peut être effacé, et il est même conseillé de le faire régulièrement pour des problématiques de performance de Git sur
@@ -2684,22 +2684,22 @@ navigateur vous voulez utiliser.
 Vous pouvez au choix lui demander de supporter X versions en arrière, les versions
 qui ont un usage global &gt; à Y% de trafic, ou encore une version minimale donnée.</p>
 <p>Voici quelques exemples de configuration.</p>
-<pre><code class="lang-js"><span class="hljs-comment">// Je supporte une version en arrière et les navigateurs qui ont plus de 1% de trafic ainsi qu'Internet Explorer 7</span>
-<span class="hljs-function">autoprefixer(<span class="hljs-string">"last 1 version"</span>, <span class="hljs-string">"&gt; 1%"</span>, <span class="hljs-string">"Explorer 7"</span>)</span><span class="hljs-class">.process</span>(css)<span class="hljs-class">.css</span>;
+<pre><code class="lang-js">// Je supporte une version en arrière et les navigateurs qui ont plus de <span class="hljs-number">1</span>% de trafic ainsi qu<span class="hljs-attribute">'Internet</span> Explorer <span class="hljs-number">7</span>
+autoprefixer(<span class="hljs-string">"last 1 version"</span>, <span class="hljs-string">"&gt; 1%"</span>, <span class="hljs-string">"Explorer 7"</span>).<span class="hljs-keyword">process</span>(css).css;
 
-<span class="hljs-comment">// Je supporte 2 versions en arrière, et minimum BlackBerry 10 et Android 4</span>
-<span class="hljs-function">autoprefixer(<span class="hljs-string">"last 2 version"</span>, <span class="hljs-string">"BlackBerry 10"</span>, <span class="hljs-string">"Android 4"</span>)</span><span class="hljs-class">.process</span>(css)<span class="hljs-class">.css</span>;
+// Je supporte <span class="hljs-number">2</span> versions en arrière, et minimum BlackBerry <span class="hljs-number">10</span> et Android <span class="hljs-number">4</span>
+autoprefixer(<span class="hljs-string">"last 2 version"</span>, <span class="hljs-string">"BlackBerry 10"</span>, <span class="hljs-string">"Android 4"</span>).<span class="hljs-keyword">process</span>(css).css;
 </code></pre>
 <p>Dans ces lignes de code JavaScript… Quoi attendez c’est en JavaScript ? Oh le
 fourbe, il nous recale sa techno de front-end de mes deux.
 Bon faites pas les relous, que vous soyez front-end ou back-end, vous avez Node.js hein ?</p>
 <p>Donc aucune inquiétude, il existe une commande pour que vous puissiez faire ça rapidement :</p>
-<pre><code class="lang-shell"><span class="hljs-preprocessor"># on install autoprefixer via npm en global</span>
-npm install --global autoprefixer
-<span class="hljs-preprocessor"># ou pour les fainéants</span>
-npm i -g autoprefixer
+<pre><code class="lang-shell"># <span class="hljs-keyword">on</span> install autoprefixer via npm <span class="hljs-keyword">en</span> <span class="hljs-keyword">global</span>
+npm install --<span class="hljs-keyword">global</span> autoprefixer
+# <span class="hljs-keyword">ou</span> pour les fainéants
+npm <span class="hljs-keyword">i</span> -<span class="hljs-keyword">g</span> autoprefixer
 
-<span class="hljs-preprocessor"># on prefixe !</span>
+# <span class="hljs-keyword">on</span> prefixe !
 autoprefixer *.css
 </code></pre>
 <p>Là bon de suite, réflexe, vous me sautez dessus à la gorge en me criant:</p>

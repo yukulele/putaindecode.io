@@ -3,10 +3,10 @@ certains sont restés sur leur faim.
 Voici donc de rapides exemples de mise en place de cette solution.</p>
 <h2 id="installation-d-autoprefixer"><a class="putainde-Title-anchor" href="#installation-d-autoprefixer">#</a>Installation d’autoprefixer</h2><p>Il vous faudra <a href="http://nodejs.org/">Node.js</a> (qui embarque maintenant <a href="https://www.npmjs.org/">Npm</a>) afin de pouvoir
 installer ce nouveau joujou.</p>
-<pre><code class="lang-shell"><span class="hljs-comment"># on install autoprefixer via npm en global</span>
-$ <span class="hljs-built_in">npm</span> install --<span class="hljs-built_in">global</span> autoprefixer
-<span class="hljs-comment"># ou pour les fainéants</span>
-$ <span class="hljs-built_in">npm</span> i -g autoprefixer
+<pre><code class="lang-shell"># <span class="hljs-keyword">on</span> install autoprefixer via npm <span class="hljs-keyword">en</span> <span class="hljs-keyword">global</span>
+$ npm install --<span class="hljs-keyword">global</span> autoprefixer
+# <span class="hljs-keyword">ou</span> pour les fainéants
+$ npm <span class="hljs-keyword">i</span> -<span class="hljs-keyword">g</span> autoprefixer
 </code></pre>
 <p>Une fois ceci fait, vous devriez avoir la commande <code>autoprefixer</code> disponible.
 On vérifie de suite avec <code>autoprefixer -v</code>.</p>
@@ -25,25 +25,25 @@ comme beaucoup de commandes, vous allez avoir la sortie crachée en plein visage
 <pre><code class="lang-shell"><span class="hljs-variable">$ </span>autoprefixer -h
 </code></pre>
 <p>On y apprend l’existance des options suivantes :</p>
-<pre><code>Options:
-  -<span class="ruby">b, --browsers <span class="hljs-constant">BROWSERS</span>  add prefixes <span class="hljs-keyword">for</span> selected browsers
-</span>  -<span class="ruby">o, --output <span class="hljs-constant">FILE</span>        set output file
-</span>  -<span class="ruby">d, --dir <span class="hljs-constant">DIR</span>            set output dir
-</span>  -<span class="ruby">m, --map                generate source map
-</span>  -<span class="ruby">i, --info               show selected browsers <span class="hljs-keyword">and</span> properties
-</span>  -<span class="ruby">h, --help               show help text
-</span>  -<span class="ruby">v, --version            print program version</span>
+<pre><code>Option<span class="hljs-variable">s:</span>
+  -<span class="hljs-keyword">b</span>, --browsers BROWSERS  <span class="hljs-built_in">add</span> prefixes <span class="hljs-keyword">for</span> selected browsers
+  -<span class="hljs-keyword">o</span>, --output FILE        <span class="hljs-keyword">set</span> output <span class="hljs-keyword">file</span>
+  -<span class="hljs-keyword">d</span>, --dir DIR            <span class="hljs-keyword">set</span> output dir
+  -<span class="hljs-keyword">m</span>, --<span class="hljs-built_in">map</span>                generate <span class="hljs-keyword">source</span> <span class="hljs-built_in">map</span>
+  -<span class="hljs-keyword">i</span>, --info               show selected browsers <span class="hljs-built_in">and</span> properties
+  -<span class="hljs-keyword">h</span>, --<span class="hljs-keyword">help</span>               show <span class="hljs-keyword">help</span> text
+  -<span class="hljs-keyword">v</span>, --<span class="hljs-keyword">version</span>            <span class="hljs-keyword">print</span> program <span class="hljs-keyword">version</span>
 </code></pre><p>Du coup si on veut faire un coup de commande bien personnalisée on pourra faire :</p>
-<pre><code class="lang-shell">$ autoprefixer -b <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -o prefixed<span class="hljs-preprocessor">.css</span> index<span class="hljs-preprocessor">.css</span>
+<pre><code class="lang-shell">$ autoprefixer -<span class="hljs-keyword">b</span> <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -<span class="hljs-keyword">o</span> prefixed.css <span class="hljs-built_in">index</span>.css
 </code></pre>
 <p>Il va par contre nous falloir un fichier css pour tester :</p>
-<pre><code class="lang-shell"><span class="hljs-comment"># on met un peu de CSS dans index.css manière de tester le bouzin</span>
-$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"* { box-sizing:border-box}"</span> &gt; index.css
+<pre><code class="lang-shell"># <span class="hljs-keyword">on</span> met un peu de CSS dans <span class="hljs-built_in">index</span>.css manière de tester <span class="hljs-keyword">le</span> bouzin
+$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"* { box-sizing:border-box}"</span> &gt; <span class="hljs-built_in">index</span>.css
 </code></pre>
 <p>On peut donc essayer notre commande plus haut qui va remplir le fichier <code>prefixed.css</code></p>
 <p>Pour vérifier :</p>
-<pre><code class="lang-shell">$ cat prefixed<span class="hljs-built_in">.</span>css
-<span class="hljs-subst">*</span> { <span class="hljs-attribute">-webkit</span><span class="hljs-attribute">-box</span><span class="hljs-attribute">-sizing</span>:border<span class="hljs-attribute">-box</span>; <span class="hljs-attribute">-moz</span><span class="hljs-attribute">-box</span><span class="hljs-attribute">-sizing</span>:border<span class="hljs-attribute">-box</span>; box<span class="hljs-attribute">-sizing</span>:border<span class="hljs-attribute">-box</span>}
+<pre><code class="lang-shell">$ <span class="hljs-tag">cat</span> <span class="hljs-tag">prefixed</span><span class="hljs-class">.css</span>
+* <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">-webkit-box-sizing</span>:<span class="hljs-value">border-box</span></span>; <span class="hljs-rule"><span class="hljs-attribute">-moz-box-sizing</span>:<span class="hljs-value">border-box</span></span>; <span class="hljs-rule"><span class="hljs-attribute">box-sizing</span>:<span class="hljs-value">border-box</span></span></span>}
 </code></pre>
 <p>On a bien eu des préfixes ajoutés en fonction de notre demande (bon rien pour IE
 qui n’est pas passé par une version préfixé)</p>
@@ -86,29 +86,29 @@ implémentations.</p>
 <h3 id="make"><a class="putainde-Title-anchor" href="#make">#</a>Make</h3><p>Là c’est facile, tout bon développeur doit avoir <code>make</code> sur sa machine (sinon
 c’est que t’es pas développeur, je sais pas trop ce que tu fais ici du coup).</p>
 <p>On peut tout simplement créer un fichier <code>Makefile</code> avec la commande précédente:</p>
-<pre><code class="lang-shell"><span class="hljs-comment"># création d’un dossier pour notre popote (puis on va dedans...)</span>
-<span class="hljs-variable">$ </span>mkdir autoprefixer-test &amp;&amp; cd autoprefixer-test
+<pre><code class="lang-shell"># <span class="hljs-keyword">cr</span>éation <span class="hljs-keyword">d</span>’un dossier pour notre popote (puis <span class="hljs-keyword">on</span> va dedans...)
+$ <span class="hljs-built_in">mkdir</span> autoprefixer-test &amp;&amp; <span class="hljs-keyword">cd</span> autoprefixer-test
 
-<span class="hljs-comment"># On créer un makefile avec une tâche `css` (création/écrasement via &gt;)</span>
-<span class="hljs-variable">$ </span>echo <span class="hljs-string">"css:"</span> &gt; <span class="hljs-constant">Makefile</span>
+# On <span class="hljs-keyword">cr</span>éer un makefile avec une <span class="hljs-keyword">t</span>â<span class="hljs-keyword">che</span> `css` (<span class="hljs-keyword">cr</span>éation/écrasement via &gt;)
+$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"css:"</span> &gt; Makefile
 
-<span class="hljs-comment"># On vérifie qu’on a bien rempli le fichier</span>
-<span class="hljs-variable">$ </span>cat <span class="hljs-constant">Makefile</span>
+# On <span class="hljs-keyword">v</span>érifie qu’<span class="hljs-keyword">on</span> <span class="hljs-keyword">a</span> bien rempli <span class="hljs-keyword">le</span> fichier
+$ <span class="hljs-keyword">cat</span> Makefile
 
-<span class="hljs-comment">## On ajoute notre commande au fichier (ajout au fichier existant via &gt;&gt;)</span>
-<span class="hljs-variable">$ </span>echo <span class="hljs-string">"\tautoprefixer index.css -b \"last 2 versions, &gt; 1%, Explorer 7, Android 2\" -o prefixed.css"</span> &gt;&gt; <span class="hljs-constant">Makefile</span>
+## On ajoute notre commande <span class="hljs-keyword">au</span> fichier (ajout <span class="hljs-keyword">au</span> fichier existant via &gt;&gt;)
+$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"\tautoprefixer index.css -b \"last 2 versions, &gt; 1%, Explorer 7, Android 2\" -o prefixed.css"</span> &gt;&gt; Makefile
 
-<span class="hljs-comment"># On vérifie qu’on a bien rempli le fichier</span>
-<span class="hljs-variable">$ </span>cat <span class="hljs-constant">Makefile</span>
+# On <span class="hljs-keyword">v</span>érifie qu’<span class="hljs-keyword">on</span> <span class="hljs-keyword">a</span> bien rempli <span class="hljs-keyword">le</span> fichier
+$ <span class="hljs-keyword">cat</span> Makefile
 </code></pre>
 <p>Voilà votre Makefile doit être bien rempli. Pour tester la commande <code>css</code>:</p>
-<pre><code class="lang-shell"><span class="hljs-variable">$ </span>make css
+<pre><code class="lang-shell">$ <span class="hljs-keyword">make</span> css
 </code></pre>
 <p>Vous remarquerez que la commande <em>autoprefixer</em> s’affiche, si ça vous embête, rajoutez
 <code>@</code> devant. Vous pouvez modifier votre Makefile dans ce sens:</p>
-<pre><code><span class="hljs-label">css:</span>
-    echo <span class="hljs-string">"❯ Autoprefixage magique."</span>
-    @autoprefixer index<span class="hljs-preprocessor">.css</span> -b <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -o prefixed<span class="hljs-preprocessor">.css</span>
+<pre><code><span class="hljs-keyword">cs</span><span class="hljs-variable">s:</span>
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">"❯ Autoprefixage magique."</span>
+    @autoprefixer <span class="hljs-built_in">index</span>.css -<span class="hljs-keyword">b</span> <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -<span class="hljs-keyword">o</span> prefixed.css
 </code></pre><p><em>Attention : Les Makefiles utilisent des tabulations uniquement ! Sans quoi cela
 ne va pas marcher comme prévu.</em></p>
 <p>Vous avez donc maintenant un exemple assez simpliste qui peut être utilisé si
@@ -132,7 +132,7 @@ une seule écriture sur le système de fichier (contrairement à la solution Gru
 <span class="hljs-keyword">var</span> csso = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-csso"</span>)
 
 <span class="hljs-comment">// css task: sass, autoprefixer et csso si --production</span>
-gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
   gulp.src(<span class="hljs-string">"./src/css/*.scss"</span>)
     <span class="hljs-comment">// it’s me, Mario</span>
     .pipe(plumber())
@@ -156,8 +156,8 @@ gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"
     <span class="hljs-comment">//.pipe(livereload(livereloadServer))</span>
 })
 
-gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-  gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> {</span>
+gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> </span>{
     gulp.run(<span class="hljs-string">"styles"</span>)
   })
 })
@@ -172,7 +172,7 @@ gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"st
 <span class="hljs-comment">// $ gulp dev</span>
 </code></pre>
 <h3 id="autoprefixer-avec-grunt"><a class="putainde-Title-anchor" href="#autoprefixer-avec-grunt">#</a>Autoprefixer avec Grunt</h3><p>Voici un petit Gruntfile avec la même configuration que ci dessus</p>
-<pre><code class="lang-js">module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> {</span>
+<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
 <span class="hljs-pi">  "use strict"</span>;
 
   grunt.loadNpmTasks(<span class="hljs-string">"grunt-contrib-sass"</span>)
@@ -250,8 +250,8 @@ par un autre pré / post-processeur.</em></p>
 Mais voici complètement autre chose: <em>autoprefixer</em> peut s’utiliser en “plugin” Stylus.</p>
 <p>C’est assez simple il suffit d’utiliser l’option <code>use</code> (<code>-u</code> en cli).
 Voilà ce qu’on aurait en cli :</p>
-<pre><code class="lang-shell">$ npm install <span class="hljs-attribute">-g</span> stylus autoprefixer<span class="hljs-attribute">-stylus</span>
-$ stylus <span class="hljs-attribute">-u</span> autoprefixer<span class="hljs-attribute">-stylus</span> <span class="hljs-attribute">-o</span> index<span class="hljs-built_in">.</span>css index<span class="hljs-built_in">.</span>styl
+<pre><code class="lang-shell">$ npm <span class="hljs-operator"><span class="hljs-keyword">install</span> -g stylus autoprefixer-stylus
+$ stylus -u autoprefixer-stylus -o <span class="hljs-keyword">index</span>.css <span class="hljs-keyword">index</span>.styl</span>
 </code></pre>
 <h4 id="avec-grunt"><a class="putainde-Title-anchor" href="#avec-grunt">#</a>Avec Grunt</h4><p>Il suffira d’utiliser donc l’option <code>use</code> dans votre configuration.</p>
 <h4 id="-del-avec-gulp-del-"><a class="putainde-Title-anchor" href="#-del-avec-gulp-del-">#</a><del>Avec Gulp</del></h4><p>La façon de faire de gulp, via des streams pour éviter la lecture / écriture multiple fait que le plugin
@@ -259,7 +259,7 @@ $ stylus <span class="hljs-attribute">-u</span> autoprefixer<span class="hljs-at
 Vous pouvez donc utiliser <em>autoprefixer</em> normalement, après l’appel du pré-processeur.</p>
 <hr>
 <p>Voilà j’espère que cette fois-ci vous êtes rassasié(e) afin de ne plus avoir envie de manger des préfixes CSS !</p>
-</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/css/mise-en-place-autoprefixer/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/css/mise-en-place-autoprefixer/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/css/mise-en-place-autoprefixer/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> MoOx</h3><div class="putainde-Author-social"><a href="http://moox.io/"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/MoOx"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/MoOx"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.   <br> Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/css/mise-en-place-autoprefixer/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/css/mise-en-place-autoprefixer/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/css/mise-en-place-autoprefixer/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> MoOx</h3><div class="putainde-Author-social"><a href="http://moox.io/"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/MoOx"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/MoOx"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.   <br> Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">5 contributeurs</strong><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/kud" data-tip="kud" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/9713e529bef70eea8965e0dda2000334.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/lionelB" data-tip="lionelB" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/03edc8b4edc19d91202e69c65c5baeff.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/zemax" data-tip="zemax" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/fdf0b5a35dbbeecd7919551475318c13.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-tip="GitHub" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--github"></i></a><a href="https://twitter.com/putaindecode/" data-tip="Twitter" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--twitter"></i></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/";
 var disqus_url = "http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/";
 var disqus_script = "embed.js";;(function(d,s) {

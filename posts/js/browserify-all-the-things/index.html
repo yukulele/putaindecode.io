@@ -56,20 +56,20 @@ modules AMD, mais ça ce n’est qu’un détail.</p>
 <p>Comparons les différentes méthodes comme on nous les montre sur le site de
 <a href="http://requirejs.org/docs/whyamd.html">RequireJS</a> :</p>
 <p>Le web aujourd’hui:</p>
-<pre><code class="lang-js">(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<pre><code class="lang-js">(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">var</span> $ = <span class="hljs-keyword">this</span>.jQuery;
 
-    <span class="hljs-keyword">this</span>.myExample = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>};
+    <span class="hljs-keyword">this</span>.myExample = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{};
 }());
 </code></pre>
 <p>AMD:</p>
-<pre><code class="lang-js">define([<span class="hljs-string">'jquery'</span>] , <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> {</span>
-    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>};
+<pre><code class="lang-js">define([<span class="hljs-string">'jquery'</span>] , <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($)</span> </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{};
 });
 </code></pre>
 <p>CommonJS:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'jquery'</span>);
-exports.myExample = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>};
+exports.myExample = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{};
 </code></pre>
 <p>AMD et CommonJS utilisent tout les deux une identification par chaîne de caractères.
 Il faut bien que ces chaînes soient déclarées quelque part.</p>
@@ -85,7 +85,7 @@ devenir lourd :</p>
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(require,   $,        object,         fn,         rdapi,
           oauth,   jig,         url,         dispatch,   accounts,
           storage,   services,   AccountPanel,           TabButton,
-          AddAccount,           less,   osTheme)</span> {</span>
+          AddAccount,           less,   osTheme)</span> </span>{
   <span class="hljs-comment">// ici le corps de la fonction</span>
 });
 </code></pre>
@@ -107,9 +107,7 @@ plus léger, mais du coup, utiliser RequireJS pour optimiser avec Almond, je ne
 trouve pas ça cohérent.</p>
 <p>Si jusque là, Browserify vous intéresse (plus car les autres solutions ne vous
 intéressent pas), attaquons le corps du sujet.</p>
-<h2>Installation de Browserify</h2>
-
-<p>Si vous souhaitez accéder à la commande via le terminal, la chose la plus simple
+<h2 id="installation-de-browserify"><a class="putainde-Title-anchor" href="#installation-de-browserify">#</a>Installation de Browserify</h2><p>Si vous souhaitez accéder à la commande via le terminal, la chose la plus simple
 à faire est d’installer le paquet en global.</p>
 <pre><code class="lang-bash"><span class="hljs-variable">$ </span>npm install -g browserify
 </code></pre>
@@ -118,15 +116,13 @@ accessible dans <code>./node_modules/.bin/browserify</code>).
 Mais selon votre workflow, vous pouvez l’utiliser via une tâche
 <a href="https://www.npmjs.org/package/grunt-browserify">grunt-browserify</a>
 ou <a href="https://www.npmjs.org/package/gulp-browserify">gulp-browserify</a>.</p>
-<h2>Utilisation de Browserify</h2>
-
-<p>Partons d’un simple fichier <code>main.js</code>:</p>
-<pre><code class="lang-js"><span class="hljs-function">alert(<span class="hljs-string">'Hello world !'</span>)</span>;
+<h2 id="utilisation-de-browserify"><a class="putainde-Title-anchor" href="#utilisation-de-browserify">#</a>Utilisation de Browserify</h2><p>Partons d’un simple fichier <code>main.js</code>:</p>
+<pre><code class="lang-js">alert(<span class="hljs-string">'Hello world !'</span>);
 </code></pre>
 <p>Sans aucune dépendance, ça n’a que peu de sens, mais c’est plus pour montrer un
 dernier point intéressant.</p>
 <p>Je le compile avec la commande suivante:</p>
-<pre><code class="lang-bash">$ browserify main<span class="hljs-preprocessor">.js</span> -o bundle<span class="hljs-preprocessor">.js</span>
+<pre><code class="lang-bash"><span class="hljs-variable">$ </span>browserify main.js -o bundle.js
 </code></pre>
 <p>J’obtiens le fichier suivant.</p>
 <pre><code class="lang-js">(function e(t,n,r){function s(o,u){if(!n[<span class="hljs-link_label">o</span>]){if(!t[<span class="hljs-link_label">o</span>]){var a=typeof require=="function"&amp;&amp;require;if(!u&amp;&amp;a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[<span class="hljs-link_label">o</span>]={exports:{}};t[<span class="hljs-link_label">o</span>][<span class="hljs-link_reference">0</span>].call(f.exports,function(e){var n=t[<span class="hljs-link_label">o</span>][<span class="hljs-link_reference">1</span>][<span class="hljs-link_label">e</span>];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&amp;&amp;require;for(var o=0;o<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">r.length;o++)s(r[o]);return</span> <span class="hljs-attribute">s</span>})({<span class="hljs-attribute">1:</span>[<span class="hljs-attribute">function</span>(<span class="hljs-attribute">require</span>,<span class="hljs-attribute">module</span>,<span class="hljs-attribute">exports</span>){
@@ -140,15 +136,15 @@ beaucoup, mais c’est rien comparé à la
 <a href="http://requirejs.org/docs/release/2.1.10/minified/require.js">source de RequireJS</a></p>
 <p>Bon du coup partons avec un exemple peut être plus représentatif qu’on peut voir
 sur la homepage de Browserify.</p>
-<pre><code class="lang-js"><span class="hljs-reserved">var</span> foo = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./foo'</span>);
-<span class="hljs-reserved">var</span> gamma = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gamma'</span>);
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> foo = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./foo'</span>);
+<span class="hljs-keyword">var</span> gamma = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gamma'</span>);
 
-<span class="hljs-reserved">var</span> n = gamma(foo(<span class="hljs-number">5</span>) * <span class="hljs-number">3</span>);
-<span class="hljs-reserved">var</span> txt = <span class="hljs-built_in">document</span>.createTextNode(n);
+<span class="hljs-keyword">var</span> n = gamma(foo(<span class="hljs-number">5</span>) * <span class="hljs-number">3</span>);
+<span class="hljs-keyword">var</span> txt = <span class="hljs-built_in">document</span>.createTextNode(n);
 <span class="hljs-built_in">document</span>.body.appendChild(txt);
 </code></pre>
 <p>Ici on aura en plus <code>foo.js</code></p>
-<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(n)</span></span> { <span class="hljs-keyword">return</span> n * <span class="hljs-number">11</span> }
+<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(n)</span> </span>{ <span class="hljs-keyword">return</span> n * <span class="hljs-number">11</span> }
 </code></pre>
 <p>Et le module <code>gamma</code> qu’on a installé depuis NPM</p>
 <pre><code class="lang-bash">$ npm <span class="hljs-built_in">i</span> <span class="hljs-built_in">gamma</span>
@@ -161,15 +157,13 @@ mappées dans un object par leur identifiant. Lorsqu’une fonction appelle <cod
 le petit bout de script ajouté va se charger de retourner la dépendance.</p>
 <p>Notez qu’on peut aussi simplement utiliser une redirection de sortie de commande
 pour gérer le fichier final:</p>
-<pre><code class="lang-bash">$ browserify main<span class="hljs-preprocessor">.js</span> &gt; bundle<span class="hljs-preprocessor">.js</span>
+<pre><code class="lang-bash"><span class="hljs-input"><span class="hljs-prompt">$ browserify main.js &gt;</span> bundle.js</span>
 </code></pre>
 <p>Du coup on a plus qu’à utiliser une simple balise <code>&lt;script&gt;</code> pour incorporer ça
 dans nos pages web.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"bundle.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 </code></pre>
-<h2>Les transformations avec Browserify</h2>
-
-<p>Tant qu’à utiliser un outil, autant l’exploiter jusqu’au bout. Car pour l’instant
+<h2 id="les-transformations-avec-browserify"><a class="putainde-Title-anchor" href="#les-transformations-avec-browserify">#</a>Les transformations avec Browserify</h2><p>Tant qu’à utiliser un outil, autant l’exploiter jusqu’au bout. Car pour l’instant
 je n’ai parlé que de NPM.
 Que faire si mon module n’est pas sur NPM ?
 Bon déjà je double check, car maintenant la plupart des librairies y sont
@@ -193,38 +187,36 @@ Dans le même esprit, on va retrouver de nombreuses transformations telles que :
 <p>Il existe plein <a href="https://www.npmjs.org/browse/keyword/browserify">d’autres transformations</a>
 qui s’adapteront sûrement à vos besoins.</p>
 <p>Du coup la ligne ultime pour consommer a peu près n’importe quel module :</p>
-<pre><code class="lang-bash">browserify <span class="hljs-attribute">-t</span> debowerify <span class="hljs-attribute">-t</span> decomponentify <span class="hljs-attribute">-t</span> deamdify <span class="hljs-attribute">-t</span> deglobalify <span class="hljs-attribute">-t</span> es6ify main<span class="hljs-built_in">.</span>js <span class="hljs-subst">&gt;</span> bundle<span class="hljs-built_in">.</span>js
+<pre><code class="lang-bash"><span class="hljs-input"><span class="hljs-prompt">browserify -t debowerify -t decomponentify -t deamdify -t deglobalify -t es6ify main.js &gt;</span> bundle.js</span>
 </code></pre>
 <p>L’équivalent avec les tâches Grunt ou Gulp sera tout aussi simple via un tableau.
 Pensez bien à installer ces dépendances avant:</p>
-<pre><code class="lang-bash"><span class="hljs-comment">npm</span> <span class="hljs-comment">install</span> <span class="hljs-comment">debowerify</span> <span class="hljs-comment">decomponentify</span> <span class="hljs-comment">deamdify</span> <span class="hljs-comment">deglobalify</span> <span class="hljs-comment">es6ify</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">save</span>
+<pre><code class="lang-bash">npm <span class="hljs-operator"><span class="hljs-keyword">install</span> debowerify decomponentify deamdify deglobalify es6ify <span class="hljs-comment">--save</span></span>
 </code></pre>
-<h2>Ecrire un module pour Browserify (mais pas que)</h2>
-
-<p>Consommer c’est bien, mais faire c’est <del>mieux</del> bien aussi.</p>
+<h2 id="ecrire-un-module-pour-browserify-mais-pas-que-"><a class="putainde-Title-anchor" href="#ecrire-un-module-pour-browserify-mais-pas-que-">#</a>Ecrire un module pour Browserify (mais pas que)</h2><p>Consommer c’est bien, mais faire c’est <del>mieux</del> bien aussi.</p>
 <figure><img src="../../../images/posts/browserify-potter.png" alt=""></figure>
 
 <p>Tout droit sorti de <a href="https://github.com/umdjs/umd">UMD</a> (Universal Module Definition),
 voici un wrapper qui vous permettra de créer votre module compatible avec CommonJS,
 AMD et pour les projets old school !</p>
-<pre><code class="lang-js"><span class="hljs-list">(<span class="hljs-title">function</span> <span class="hljs-list">(<span class="hljs-title">root</span>, factory)</span> <span class="hljs-collection">{
-  if <span class="hljs-list">(<span class="hljs-title">typeof</span> exports === 'object')</span> <span class="hljs-collection">{
+<pre><code class="lang-js"><span class="hljs-list">(<span class="hljs-title">function</span> <span class="hljs-list">(<span class="hljs-title">root</span>, factory)</span> {
+  if <span class="hljs-list">(<span class="hljs-title">typeof</span> exports === <span class="hljs-quoted">'object</span>')</span> {
     // CommonJS
-    module.exports = factory<span class="hljs-list">(<span class="hljs-title">require</span><span class="hljs-list">(<span class="hljs-title">'b'</span>)</span>)</span><span class="hljs-comment">;</span>
-  }</span> else if <span class="hljs-list">(<span class="hljs-title">typeof</span> define === 'function' &amp;&amp; define.amd)</span> <span class="hljs-collection">{
+    module.exports = factory<span class="hljs-list">(<span class="hljs-title">require</span><span class="hljs-list">(<span class="hljs-quoted">'b</span>')</span>)</span><span class="hljs-comment">;</span>
+  } else if <span class="hljs-list">(<span class="hljs-title">typeof</span> define === <span class="hljs-quoted">'function</span>' <span class="hljs-keyword">&amp;&amp;</span> define.amd)</span> {
     // AMD
-    define<span class="hljs-list">(<span class="hljs-collection">['b']</span>, function <span class="hljs-list">(<span class="hljs-title">b</span>)</span> <span class="hljs-collection">{
-      return <span class="hljs-list">(<span class="hljs-title">root.returnExportsGlobal</span> = factory<span class="hljs-list">(<span class="hljs-title">b</span>)</span>)</span><span class="hljs-comment">;</span>
-    }</span>)</span><span class="hljs-comment">;</span>
-  }</span> else <span class="hljs-collection">{
+    define<span class="hljs-list">([<span class="hljs-quoted">'b</span>'], function <span class="hljs-list">(<span class="hljs-title">b</span>)</span> {
+      return <span class="hljs-list">(<span class="hljs-title">root</span>.returnExportsGlobal = factory<span class="hljs-list">(<span class="hljs-title">b</span>)</span>)</span><span class="hljs-comment">;</span>
+    })</span><span class="hljs-comment">;</span>
+  } else {
     // Global Variables
-    root.returnExportsGlobal = factory<span class="hljs-list">(<span class="hljs-title">root.b</span>)</span><span class="hljs-comment">;</span>
-  }</span>
-}</span><span class="hljs-list">(<span class="hljs-title">this</span>, function <span class="hljs-list">(<span class="hljs-title">b</span>)</span> <span class="hljs-collection">{
+    root.returnExportsGlobal = factory<span class="hljs-list">(<span class="hljs-title">root</span>.b)</span><span class="hljs-comment">;</span>
+  }
+}<span class="hljs-list">(<span class="hljs-title">this</span>, function <span class="hljs-list">(<span class="hljs-title">b</span>)</span> {
 
   // Ici votre module <span class="hljs-list">(<span class="hljs-title">fonction</span>, objet, whatever...)</span>
-  return <span class="hljs-collection">{}</span><span class="hljs-comment">;</span>
-}</span>)</span>)</span><span class="hljs-comment">;</span>
+  return {}<span class="hljs-comment">;</span>
+})</span>)</span><span class="hljs-comment">;</span>
 </code></pre>
 <p>Il existe bien sur <a href="https://github.com/umdjs/umd#variations">plusieurs façons de faire</a>
 selon vos critères. À vous de choisir.</p>
@@ -232,7 +224,7 @@ selon vos critères. À vous de choisir.</p>
 sans vous prendre la tête.</p>
 <p>Bisous.</p>
 <p><em>PS: pour tester browserify en live, c’est sur <a href="http://requirebin.com/">requirebin.com</a>.</em></p>
-</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/js/browserify-all-the-things/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/js/browserify-all-the-things/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/js/browserify-all-the-things/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> MoOx</h3><div class="putainde-Author-social"><a href="http://moox.io/"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/MoOx"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/MoOx"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.   <br> Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/js/browserify-all-the-things/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/js/browserify-all-the-things/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/js/browserify-all-the-things/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> MoOx</h3><div class="putainde-Author-social"><a href="http://moox.io/"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/MoOx"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/MoOx"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.   <br> Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">3 contributeurs</strong><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/justinmarsan" data-tip="justinmarsan" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/c1b2afa3f4c034170bd21991e9e81d60.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-tip="GitHub" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--github"></i></a><a href="https://twitter.com/putaindecode/" data-tip="Twitter" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--twitter"></i></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/js/browserify-all-the-things/";
 var disqus_url = "http://putaindecode.fr/posts/js/browserify-all-the-things/";
 var disqus_script = "embed.js";;(function(d,s) {

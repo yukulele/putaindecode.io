@@ -60,7 +60,7 @@ tes pauses cafés aux prétextes douteux.</p>
 <h2 id="let-s-go-nojoke-siriouz-bizness-"><a class="putainde-Title-anchor" href="#let-s-go-nojoke-siriouz-bizness-">#</a>Let’s Go (#nojoke, siriouz bizness)</h2><p>On va partir du principe que tu as Go et Revel prêts pour la baston. On attaque
 direct à sec par le classique “revel new” puisqu’on va partir de la structure de
 base.</p>
-<pre><code class="lang-shell">$ revel <span class="hljs-keyword">new</span> github.com/OwlyCode/PutainDeProjet
+<pre><code class="lang-shell">$ revel <span class="hljs-keyword">new</span> github.<span class="hljs-keyword">com</span>/OwlyCode/PutainDeProjet
 </code></pre>
 <p>Là théoriquement, tu te retrouves avec la structure par défaut du boilerplate
 revel, quelque chose comme ça:</p>
@@ -82,7 +82,7 @@ revel, quelque chose comme ça:</p>
  En fait ce n’est rien de plus qu’un binding entre Revel et Mgo. La technique
  utilisée pour brancher ce binding côté Revel est celle des
  <a href="http://robfig.github.io/revel/manual/interceptors.html">interceptors</a>.</p>
-<pre><code class="lang-go"><span class="hljs-keyword">package</span> mongo
+<pre><code class="lang-go">package mongo
 
 <span class="hljs-keyword">import</span> (
     <span class="hljs-string">"github.com/robfig/revel"</span>
@@ -91,30 +91,30 @@ revel, quelque chose comme ça:</p>
 )
 
 <span class="hljs-comment">// Extension du controlleur.</span>
-<span class="hljs-keyword">type</span> Mongo <span class="hljs-keyword">struct</span> {
-    *revel.Controller
-    MongoSession  *mgo.Session
-    MongoDatabase *mgo.Database
+type <span class="hljs-type">Mongo</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> </span>{
+    *revel.<span class="hljs-type">Controller</span>
+    <span class="hljs-type">MongoSession</span>  *mgo.<span class="hljs-type">Session</span>
+    <span class="hljs-type">MongoDatabase</span> *mgo.<span class="hljs-type">Database</span>
 }
 
 <span class="hljs-comment">// Stockage global de la session dont la visibilité est restreinte au package.</span>
-<span class="hljs-keyword">var</span> session *mgo.Session
+<span class="hljs-keyword">var</span> session *mgo.<span class="hljs-type">Session</span>
 
 <span class="hljs-comment">// Singleton</span>
-<span class="hljs-keyword">var</span> dial sync.Once
+<span class="hljs-keyword">var</span> dial sync.<span class="hljs-type">Once</span>
 
 <span class="hljs-comment">// Renvoie la session mgo en cours, si aucune n'existe, elle est créée.</span>
-<span class="hljs-keyword">func</span> GetSession() *mgo.Session {
+<span class="hljs-func"><span class="hljs-keyword">func</span></span> <span class="hljs-type">GetSession</span>() *mgo.<span class="hljs-type">Session</span> {
 
-    host, _ := revel.Config.String(<span class="hljs-string">"mongo.host"</span>)
+    host, <span class="hljs-number">_</span> := revel.<span class="hljs-type">Config</span>.<span class="hljs-type">String</span>(<span class="hljs-string">"mongo.host"</span>)
 
     <span class="hljs-comment">// Grâce au package sync cette fonction n'est appelée</span>
     <span class="hljs-comment">// qu'une seule fois et de manière synchrone.</span>
-    dial.Do(<span class="hljs-keyword">func</span>() {
+    dial.<span class="hljs-type">Do</span>(<span class="hljs-func"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
         <span class="hljs-keyword">var</span> err error
-        session, err = mgo.Dial(host)
-        <span class="hljs-keyword">if</span> err != <span class="hljs-constant">nil</span> {
-            <span class="hljs-built_in">panic</span>(err)
+        session, err = mgo.<span class="hljs-type">Dial</span>(host)
+        <span class="hljs-keyword">if</span> err != <span class="hljs-built_in">nil</span> {
+            panic(err)
         }
     })
 
@@ -122,52 +122,52 @@ revel, quelque chose comme ça:</p>
 }
 
 <span class="hljs-comment">// Alimente les propriétés affectées au controlleur en clonant la session mongo.</span>
-<span class="hljs-keyword">func</span> (c *Mongo) Bind() revel.Result {
+<span class="hljs-func"><span class="hljs-keyword">func</span></span> (<span class="hljs-built_in">c</span> *<span class="hljs-type">Mongo</span>) <span class="hljs-type">Bind</span>() revel.<span class="hljs-type">Result</span> {
     <span class="hljs-comment">// Oublie pas de mettre mongo.database dans le app.conf, genre "localhost"</span>
-    databaseName, _ := revel.Config.String(<span class="hljs-string">"mongo.database"</span>)
+    databaseName, <span class="hljs-number">_</span> := revel.<span class="hljs-type">Config</span>.<span class="hljs-type">String</span>(<span class="hljs-string">"mongo.database"</span>)
 
-    c.MongoSession = GetSession().Clone()
-    c.MongoDatabase = c.MongoSession.DB(databaseName)
+    <span class="hljs-built_in">c</span>.<span class="hljs-type">MongoSession</span> = <span class="hljs-type">GetSession</span>().<span class="hljs-type">Clone</span>()
+    <span class="hljs-built_in">c</span>.<span class="hljs-type">MongoDatabase</span> = <span class="hljs-built_in">c</span>.<span class="hljs-type">MongoSession</span>.<span class="hljs-type">DB</span>(databaseName)
 
-    <span class="hljs-keyword">return</span> <span class="hljs-constant">nil</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">nil</span>
 }
 
 <span class="hljs-comment">// Ferme un clone</span>
-<span class="hljs-keyword">func</span> (c *Mongo) Close() revel.Result {
+<span class="hljs-func"><span class="hljs-keyword">func</span></span> (<span class="hljs-built_in">c</span> *<span class="hljs-type">Mongo</span>) <span class="hljs-type">Close</span>() revel.<span class="hljs-type">Result</span> {
 
-    <span class="hljs-keyword">if</span> c.MongoSession != <span class="hljs-constant">nil</span> {
-        c.MongoSession.Close()
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">c</span>.<span class="hljs-type">MongoSession</span> != <span class="hljs-built_in">nil</span> {
+        <span class="hljs-built_in">c</span>.<span class="hljs-type">MongoSession</span>.<span class="hljs-type">Close</span>()
     }
 
-    <span class="hljs-keyword">return</span> <span class="hljs-constant">nil</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">nil</span>
 }
 
 <span class="hljs-comment">// Fonction appelée au chargement de l'application.</span>
 <span class="hljs-comment">// Elle effectue un appel a notre fonction Bind avant</span>
 <span class="hljs-comment">// chaque execution du controlleur.</span>
-<span class="hljs-keyword">func</span> init() {
-    revel.InterceptMethod((*Mongo).Bind, revel.BEFORE)
-    revel.InterceptMethod((*Mongo).Close, revel.AFTER)
+<span class="hljs-func"><span class="hljs-keyword">func</span></span> <span class="hljs-keyword">init</span>() {
+    revel.<span class="hljs-type">InterceptMethod</span>((*<span class="hljs-type">Mongo</span>).<span class="hljs-type">Bind</span>, revel.<span class="hljs-type">BEFORE</span>)
+    revel.<span class="hljs-type">InterceptMethod</span>((*<span class="hljs-type">Mongo</span>).<span class="hljs-type">Close</span>, revel.<span class="hljs-type">AFTER</span>)
     <span class="hljs-comment">// On veut aussi fermer le clone si le controlleur plante.</span>
-    revel.InterceptMethod((*Mongo).Close, revel.PANIC)
+    revel.<span class="hljs-type">InterceptMethod</span>((*<span class="hljs-type">Mongo</span>).<span class="hljs-type">Close</span>, revel.<span class="hljs-type">PANIC</span>)
 }
 </code></pre>
 <p>On a créé notre connexion à mongo, mais maintenant on va aussi l’utiliser. Dans
 le contrôleur, rien de plus simple :</p>
-<pre><code class="lang-go">import (
+<pre><code class="lang-go"><span class="hljs-keyword">import</span> (
     <span class="hljs-string">"github.com/robfig/revel"</span>
     <span class="hljs-string">"github.com/OwlyCode/PutainDeProjet/app/modules/mongo"</span>
 )
 
-type AppController struct {
-    *revel.Controller
-    mongo.Mongo // Le controlleur doit étendre notre type Mongo.
+type <span class="hljs-type">AppController</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> </span>{
+    *revel.<span class="hljs-type">Controller</span>
+    mongo.<span class="hljs-type">Mongo</span> <span class="hljs-comment">// Le controlleur doit étendre notre type Mongo.</span>
 }
 
-func (c *AppController) Index() revel.Result {
-    usersCollection := c.MongoDatabase.C(<span class="hljs-string">"users"</span>)
-    // tu peux maintenant manipuler ta mgo.Collection.
-    // [ <span class="hljs-keyword">...</span> ]
+<span class="hljs-func"><span class="hljs-keyword">func</span></span> (<span class="hljs-built_in">c</span> *<span class="hljs-type">AppController</span>) <span class="hljs-type">Index</span>() revel.<span class="hljs-type">Result</span> {
+    usersCollection := <span class="hljs-built_in">c</span>.<span class="hljs-type">MongoDatabase</span>.<span class="hljs-type">C</span>(<span class="hljs-string">"users"</span>)
+    <span class="hljs-comment">// tu peux maintenant manipuler ta mgo.Collection.</span>
+    <span class="hljs-comment">// [ ... ]</span>
 }
 </code></pre>
 <p>Mais tu peux aussi l’appeler ailleurs dans le projet, par exemple dans un autre
@@ -256,7 +256,7 @@ envisager de faire la même chose pour découpler tes modèles et la logique mé
 .</p>
 <p>En attendant il ne me reste qu’à te souhaiter une bonne coding night, tu as
 toutes les armes nécessaires pour gérer mongo dans ton projet revel. ;-)</p>
-</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/backend/golang-structurer-revel-et-mgo/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/backend/golang-structurer-revel-et-mgo/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/backend/golang-structurer-revel-et-mgo/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/OwlyCode" data-tip="OwlyCode" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/5cef4bfad2fde665d04d9fdb29d29d4a.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> OwlyCode</h3><div class="putainde-Author-social"><a href="http://tristan.maindron.io"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/OwlyCode"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/OwlyCode"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur Full Stack 100% Ubuntu, code en PHP le jour et en Go la nuit. <br> Entretient une liaison secrète avec AngularJS. <br> Amateur de science fiction, d'insectes et reste sur Windows pour Starcraft 2.</p></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/backend/golang-structurer-revel-et-mgo/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/backend/golang-structurer-revel-et-mgo/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/backend/golang-structurer-revel-et-mgo/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="https://github.com/OwlyCode" data-tip="OwlyCode" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/5cef4bfad2fde665d04d9fdb29d29d4a.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> OwlyCode</h3><div class="putainde-Author-social"><a href="http://tristan.maindron.io"><i class="putainde-Icon putainde-Icon--world"></i></a><a href="https://twitter.com/OwlyCode"><i class="putainde-Icon putainde-Icon--twitter"></i></a><a href="https://github.com/OwlyCode"><i class="putainde-Icon putainde-Icon--github"></i></a></div></div><p>Développeur Full Stack 100% Ubuntu, code en PHP le jour et en Go la nuit. <br> Entretient une liaison secrète avec AngularJS. <br> Amateur de science fiction, d'insectes et reste sur Windows pour Starcraft 2.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">4 contributeurs</strong><a href="https://github.com/OwlyCode" data-tip="OwlyCode" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/5cef4bfad2fde665d04d9fdb29d29d4a.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/MoOx" data-tip="MoOx" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/bloodyowl" data-tip="bloodyowl" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/37500337ba5d2aebc962959ed83928e5.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/kud" data-tip="kud" class="putainde-Contributor AttrTip AttrTip--bottom"><img src="http://www.gravatar.com/avatar/9713e529bef70eea8965e0dda2000334.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-tip="GitHub" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--github"></i></a><a href="https://twitter.com/putaindecode/" data-tip="Twitter" class="AttrTip AttrTip--top"><i class="putainde-Icon putainde-Icon--twitter"></i></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/backend/golang-structurer-revel-et-mgo/";
 var disqus_url = "http://putaindecode.fr/posts/backend/golang-structurer-revel-et-mgo/";
 var disqus_script = "embed.js";;(function(d,s) {
