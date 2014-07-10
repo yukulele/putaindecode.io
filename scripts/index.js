@@ -922,38 +922,20 @@ module.exports = function(object, source){
 
 },{}],35:[function(require,module,exports){
 var domReady=require("bloody-domready");require("./lib/classList"),domReady(function(){require("./views/images").create(),require("./views/column").create(),require("./views/post").create(),require("./views/posts").create(),require("./views/tagfilters").create(),require("./views/scroll").create()});
-//# sourceMappingURL=out.js.map
-
 },{"./lib/classList":36,"./views/column":38,"./views/images":39,"./views/post":40,"./views/posts":41,"./views/scroll":42,"./views/tagfilters":43,"bloody-domready":2}],36:[function(require,module,exports){
 !function(){function t(t){this.el=t;for(var n=t.className.replace(/^\s+|\s+$/g,"").split(/\s+/),i=0;i<n.length;i++)e.call(this,n[i])}function n(t,n,i){Object.defineProperty?Object.defineProperty(t,n,{get:i}):t.__defineGetter__(n,i)}if(!("undefined"==typeof window.Element||"classList"in document.documentElement)){var i=Array.prototype,e=i.push,s=i.splice,o=i.join;t.prototype={add:function(t){this.contains(t)||(e.call(this,t),this.el.className=this.toString())},contains:function(t){return-1!=this.el.className.indexOf(t)},item:function(t){return this[t]||null},remove:function(t){if(this.contains(t)){for(var n=0;n<this.length&&this[n]!=t;n++);s.call(this,n,1),this.el.className=this.toString()}},toString:function(){return o.call(this," ")},toggle:function(t){return this.contains(t)?this.remove(t):this.add(t),this.contains(t)}},window.DOMTokenList=t,n(Element.prototype,"classList",function(){return new t(this)})}}();
-//# sourceMappingURL=out.js.map
-
 },{}],37:[function(require,module,exports){
 var observable=require("bloody-observable");module.exports=observable.create();
-//# sourceMappingURL=out.js.map
-
 },{"bloody-observable":3}],38:[function(require,module,exports){
 var cornea=require("cornea"),tags=require("../models/tags");module.exports=cornea.extend({element:".js-Column",events:[{type:"change",selector:".js-ToggleTag",listener:"updateTags"}],updateTags:function(e,a){return a.checked?void tags.set(a.value,!0):void tags.remove(a.value)}});
-//# sourceMappingURL=out.js.map
-
 },{"../models/tags":37,"cornea":21}],39:[function(require,module,exports){
 var cornea=require("cornea"),curry=require("bloody-curry");module.exports=cornea.extend({element:document.documentElement,initialize:function(){var e=this.element.querySelectorAll(".js-AnimateLoad");[].forEach.call(e,curry(this.addLoadedClass)(null))},events:[{type:"load",selector:".js-AnimateLoad",capture:!0,listener:"addLoadedClass"}],addLoadedClass:function(e,a){var d=a.classList;a.complete&&(d.remove("js-AnimateLoad"),d.add("js-Loaded"))}});
-//# sourceMappingURL=out.js.map
-
 },{"bloody-curry":1,"cornea":21}],40:[function(require,module,exports){
 var cornea=require("cornea");module.exports=cornea.extend({element:".putainde-Post-readingTime-value",initialize:function(){this.parseWordsPerMinute(),this.setTooltipWording(),this.render(),this.show()},setTooltipWording:function(){var e=this.element.parentNode,t=e.getAttribute("data-tip");e.setAttribute("data-tip",t.replace("{{wpm}}",this.wordsPerMinute))},wordsPerMinute:250,parseWordsPerMinute:function(){var e="data-readingTime-wpm",t=this.element.parentNode;t.hasAttribute(e)&&(this.wordsPerMinute=parseInt(t.getAttribute(e),10))},getDuration:function(){var e=document.querySelector(".putainde-Post-md"),t=e.textContent||e.innerText;return Math.round(t.split(/\s+|\s*\.\s*/).length/this.wordsPerMinute)},template:function(){return document.createTextNode(this.getDuration())},show:function(){var e=this.element.parentNode;e.classList.remove("putainde-Post-readingTime--hidden")}});
-//# sourceMappingURL=out.js.map
-
 },{"cornea":21}],41:[function(require,module,exports){
 var cornea=require("cornea"),tags=require("../models/tags");module.exports=cornea.extend({element:".js-Posts",initialize:function(){var s=this;this.posts=[].slice.call(this.element.querySelectorAll(".js-Post")),this.noPosts=this.element.querySelector(".js-NoPosts"),this.parsePosts(),tags.listen("change",function(){s.updatePosts(tags.valueOf())})},map:{},hidden:[],parsePosts:function(){function s(s){var e,i=s.querySelectorAll(".js-Tag"),n=-1,a=i.length;for(++t,e=this.map[t]={},e.element=s;++n<a;)e[i[n].getAttribute("data-tag")]=!0}var t=-1;this.posts.forEach(s,this)},updatePosts:function(s){var t,e,i;this.showAll();for(t in s)for(e in this.map)this.map[e][t]||(i=this.map[e].element,-1==this.hidden.indexOf(i)&&(this.hidden.push(i),i.classList.add("putainde-List-item--hidden")));this.hidden.length==this.posts.length&&this.noPosts.classList.remove("putainde-Message--hidden")},showAll:function(){var s;for(this.noPosts.classList.add("putainde-Message--hidden");s=this.hidden.shift();)s.classList.remove("putainde-List-item--hidden")}});
-//# sourceMappingURL=out.js.map
-
 },{"../models/tags":37,"cornea":21}],42:[function(require,module,exports){
 var cornea=require("cornea"),smoothScroll=require("bloody-scroll");module.exports=cornea.extend({element:document.body,initialize:function(){this.scrollTo()},events:[{type:"click",selector:".js-ScrollTo",listener:"scrollTo"}],scrollTo:function(e,o){var t,l=window.location.hash;o&&(l=o.hash,e.preventDefault()),l&&"#"!=l&&(t=document.getElementById(l.slice(1)),t&&setTimeout(function(){var e=t.getBoundingClientRect();smoothScroll(e.top+window.pageYOffset,500)},300))}});
-//# sourceMappingURL=out.js.map
-
 },{"bloody-scroll":14,"cornea":21}],43:[function(require,module,exports){
 var cornea=require("cornea");module.exports=cornea.extend({element:document.body,events:[{type:"click",selector:".js-ToggleFilters",listener:"toggleFilters"},{type:"click",selector:".js-CloseFilters",listener:"closeFilters"}],toggleFilters:function(){this.element.classList.toggle("putainde-Body--tagFiltersOpened")},closeFilters:function(){this.element.classList.remove("putainde-Body--tagFiltersOpened")}});
-//# sourceMappingURL=out.js.map
-
 },{"cornea":21}]},{},[35])
