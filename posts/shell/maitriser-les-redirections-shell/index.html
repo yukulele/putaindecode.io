@@ -1,0 +1,188 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Maîtriser les redirections shell</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="Maîtriser les redirections shell"/><meta name="twitter:creator" content="@madx"/><meta name="twitter:image" content="http://www.gravatar.com/avatar/96006f57ca92ec95713532129b039d9c.png?s=200"/><meta property="og:title" content="Maîtriser les redirections shell"/><meta property="og:type" content="article"/><meta property="og:image" content="http://www.gravatar.com/avatar/96006f57ca92ec95713532129b039d9c.png?s=200"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"><link rel="alternate" href="../../../feed.xml" title="Putain de code !" type="application/atom+xml"></head><body><svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="putainde-Icon-bookmark" viewBox="0 0 512 512">
+      <title>bookmark icon</title>
+      <path d="M318.275 90v283.23l-62.275-55.07-62.275 55.07v-283.23h124.55m40-40h-204.55v412l102.275-90.443 102.275 90.443v-412z"/>
+    </symbol>
+
+    <symbol id="putainde-Icon-github" viewBox="0 0 512 512">
+      <title>github icon</title>
+      <path d="M461.633 250.645l.367-3.819c-22.896-2.221-45.667-2.419-67.79-.73 3.557-11.347 5.43-24.164 5.295-38.739-.292-30.965-10.616-55.081-26.843-75.096 3.116-18.852.769-37.702-5.111-56.561-23.187 1.898-44.053 9.493-62.634 22.686-34.725-7.044-69.447-7.493-104.172 0-21.673-14.627-42.956-21.802-63.909-22.686-6.21 20.765-7.169 41.233-1.917 61.357-18.28 19.397-25.268 42.944-24.925 69.019.196 14.927 2.496 28.209 6.738 39.952-21.796-1.599-44.201-1.386-66.732.798l.367 3.819c22.947-2.228 45.76-2.411 67.919-.678.814 1.974 1.633 3.939 2.567 5.815-24.009-.633-45.618 1.453-65.854 6.43l.914 3.723c20.538-5.048 42.54-7.081 67.107-6.254 16.246 28.864 47.52 45.824 93.063 51.205-10.581 8.594-16.269 18.731-17.735 30.201h-24.121c-32.394 0-41.226-41.304-74.779-37.229 32.552 16.142 26.052 67.741 78.139 67.741h21.881v47.296c.234 7.643-3.093 12.754-8.469 16.297 18.654 1.884 32.674-7.43 32.674-18.854v-62.518l5.833-6v72.992c.245 7.265-3.284 11.392-7.031 15.339 16.434.654 31.892-2.629 32.592-16.615v-69.857s5.756-3.599 5.756 0v66.58c.169 11.8 10.361 21.367 31.953 19.893-5.776-4.65-7.549-9.35-7.549-16.15v-72.181s5.95-.306 5.95 6v60.881c0 13.55 16.267 19.14 34.829 18.615-6.081-4.558-10.196-9.991-10.223-17.256v-73.217c-.629-10.762-5.003-20.906-13.582-30.358 41.63-6.392 71.637-23.011 86.578-52.796 24.647-.847 46.715 1.183 67.307 6.246l.914-3.723c-20.394-5.014-42.181-7.096-66.416-6.415.839-1.891 1.67-3.789 2.389-5.785 22.39-1.798 45.458-1.622 68.66.632zm-347.633 59.378c-1.023 0-1.853-.588-1.853-1.313 0-.728.83-1.315 1.853-1.315 1.024 0 1.854.588 1.854 1.315 0 .726-.83 1.313-1.854 1.313zm5.833 3.98c-1.137 0-2.06-.653-2.06-1.46s.923-1.462 2.06-1.462 2.059.655 2.059 1.462-.922 1.46-2.059 1.46zm5.917 5.169c-1.333 0-2.415-.766-2.415-1.712s1.082-1.714 2.415-1.714 2.416.768 2.416 1.714-1.083 1.712-2.416 1.712zm5.75 6.207c-1.56 0-2.825-.896-2.825-2.003s1.265-2.005 2.825-2.005 2.825.898 2.825 2.005-1.265 2.003-2.825 2.003zm6.333 7.015c-1.733 0-3.139-.996-3.139-2.226s1.406-2.228 3.139-2.228 3.139.998 3.139 2.228-1.406 2.226-3.139 2.226zm7.334 7.123c-1.926 0-3.488-1.107-3.488-2.474s1.562-2.476 3.488-2.476c1.925 0 3.487 1.109 3.487 2.476s-1.562 2.474-3.487 2.474zm9.916 6.774c-2.14 0-3.875-1.231-3.875-2.749 0-1.519 1.735-2.751 3.875-2.751s3.875 1.232 3.875 2.751c0 1.518-1.735 2.749-3.875 2.749zm12.292 3.625c-2.14 0-3.875-1.231-3.875-2.749 0-1.519 1.735-2.751 3.875-2.751s3.875 1.232 3.875 2.751c0 1.518-1.735 2.749-3.875 2.749zm12.958.417c-2.14 0-3.875-1.231-3.875-2.749 0-1.519 1.735-2.751 3.875-2.751s3.875 1.232 3.875 2.751c0 1.518-1.735 2.749-3.875 2.749zm12.792.25c-2.14 0-3.875-1.231-3.875-2.749 0-1.519 1.735-2.751 3.875-2.751s3.875 1.232 3.875 2.751c0 1.518-1.735 2.749-3.875 2.749z"/>
+    </symbol>
+
+    <symbol id="putainde-Icon-home" viewBox="0 0 512 512">
+      <title>home icon</title>
+      <path d="M394.072 174.805l-47.916-48.023v-38.31h47.916v86.333zm67.928 101.01h-42.508v166.213h-326.984v-166.213h-42.508l206-205.843 206 205.843zm-165.153-3.843c-15.811-3.316-29.021 4.086-38.792 19.387-9.771-15.301-22.98-22.703-38.789-19.387-36.746 10.876-36.336 69.543 38.582 113.047 75.06-43.258 75.742-102.171 38.999-113.047z"/>
+    </symbol>
+
+    <symbol id="putainde-Icon-pencil" viewBox="0 0 512 512">
+      <title>pencil icon</title>
+      <path d="M74.686 340.686l-24.686 120.263 122.365-22.584 207.155-207.154-97.68-97.68-207.154 207.155zm228.402-135.654l-181.891 181.89-21.213-21.213 181.891-181.89 21.213 21.213zm158.912-56.301l-52.662 52.662-97.682-97.68 52.662-52.663 97.682 97.681z"/>
+    </symbol>
+
+    <symbol id="putainde-Icon-text-file" viewBox="0 0 512 512">
+      <title>text-file icon</title>
+      <path d="M256 370.312h-84.495v-30h84.495v30zm83.495-55.416h-167.99v-30h167.99v30zm0-55.334h-167.99v-30h167.99v30zm-41.677-169.562v85.75h85.864v246.25h-255.365v-332h169.501m25-40h-234.501v412h335.365v-311.25l-100.864-100.75z"/>
+    </symbol>
+
+    <symbol id="putainde-Icon-twitter" viewBox="0 0 512 512">
+      <title>twitter icon</title>
+      <path d="M462 128.223c-15.158 6.724-31.449 11.269-48.547 13.31 17.449-10.461 30.854-27.025 37.164-46.764-16.333 9.687-34.422 16.721-53.676 20.511-15.418-16.428-37.386-26.691-61.698-26.691-54.56 0-94.668 50.916-82.337 103.787-70.25-3.524-132.534-37.177-174.223-88.314-22.142 37.983-11.485 87.691 26.158 112.85-13.854-.438-26.891-4.241-38.285-10.574-.917 39.162 27.146 75.781 67.795 83.949-11.896 3.237-24.926 3.978-38.17 1.447 10.754 33.58 41.972 58.018 78.96 58.699-35.537 27.849-80.295 40.288-125.141 35.003 37.406 23.982 81.837 37.977 129.571 37.977 156.932 0 245.595-132.551 240.251-251.435 16.517-11.917 30.846-26.804 42.178-43.755z"/>
+    </symbol>
+</svg><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size5of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size7of12"><nav class="putainde-Nav"><a href="../.." data-rcp-tooltip="" class="putainde-Nav-item  "><svg style="" class="putainde-Icon putainde-Icon-bookmark"><use xlink:href="#putainde-Icon-bookmark"></use></svg> Articles</a><a href="../../../c-est-quoi-putaindecode" data-rcp-tooltip="" class="putainde-Nav-item  "><svg style="" class="putainde-Icon putainde-Icon-text-file"><use xlink:href="#putainde-Icon-text-file"></use></svg> Readme</a><a href="../../comment-contribuer" data-rcp-tooltip="" class="putainde-Nav-item  "><svg style="" class="putainde-Icon putainde-Icon-pencil"><use xlink:href="#putainde-Icon-pencil"></use></svg> Participer</a><a href="https://github.com/putaindecode/" data-rcp-tooltip="GitHub" class="putainde-Nav-item  putainde-Nav-item--icon rcp-Tooltip rcp-Tooltip--bottom"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a><a href="https://twitter.com/putaindecode/" data-rcp-tooltip="Twitter" class="putainde-Nav-item  putainde-Nav-item--icon rcp-Tooltip rcp-Tooltip--bottom"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Maîtriser les redirections shell</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas">Écrit par <a href="http://madx.me/">madx</a>,<span class="putainde-Date"> le 16 juil. 2014</span>. <span data-rcp-tooltip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden rcp-Tooltip rcp-Tooltip--top rcp-Tooltip--nowrap">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">shell</li></ul></header><div class="putainde-Post-md"><p>Le shell (ou ligne de commande) est l’outil de prédilection pour bon nombre
+d’entre nous qui utilisons un OS de la famille UNIX. Nous sommes persuadés que
+bien utilisé, il remplace avantageusement un IDE complexe et gourmand.</p>
+<p>Chez Putain de Code, on a une certaine tendance à utiliser <a href="http://fr.wikipedia.org/wiki/Z_Shell">Zsh</a>, mais
+pour ma part, j’utilise encore et toujours le vénérable <a href="http://fr.wikipedia.org/wiki/Bourne-Again_shell">Bash</a>, non pas
+pour faire mon barbu mais simplement car il me suffit amplement.</p>
+<p>La suite de l’article est donc basée sur celui-ci mais tout devrait fonctionner
+à l’identique sur Zsh.</p>
+<p>Venons en au sujet même de cet article, l’un des éléments essentiels de
+l’utilisation du shell : l’utilisation des redirections d’entrée/sortie de
+base.</p>
+<p>Si ça vous paraît barbare, tenez vous bien, on attaque tout de suite !</p>
+<h2 id="une-entree-deux-sorties"><a class="putainde-Title-anchor" href="#une-entree-deux-sorties">#</a>Une entrée, deux sorties</h2><p>Un des principes de base sous UNIX est que tout est fichier et que l’activité du
+système est rendue par l’interaction de programmes (ou processus) à l’aide
+des dits fichiers.</p>
+<p>Pour pouvoir collaborer avec ses congénères, chaque processus peut accéder par
+défaut à trois fichiers bien particuliers : l’entrée, la sortie, et la sortie
+d’erreur standards.</p>
+<ul>
+<li>L’entrée standard (<code>stdin</code>)</li>
+<li>La sortie standard (<code>stdout</code>)</li>
+<li>La sortie d’erreur (<code>stderr</code>)</li>
+</ul>
+<p>Habituellement, l’entrée standard est liée au clavier de l’utilisateur <em>via</em> son
+émulateur de terminal, et les deux sorties sont liées à l’affichage dans ce même
+émulateur.</p>
+<p>L’idée pour pouvoir faire collaborer les processus est donc de <em>brancher</em> les
+entrées et sorties de différents programmes afin d’obtenir un résultat.</p>
+<h2 id="les-redirections-de-base"><a class="putainde-Title-anchor" href="#les-redirections-de-base">#</a>Les redirections de base</h2><p>Commençons par quelques redirections de base, celles qu’il faut connaître et qui
+sont employées systématiquement.</p>
+<p>Pour nous exercer, nous allons utiliser principalement deux commandes :</p>
+<ul>
+<li><code>echo</code> : permet d’écrire un message spécifié en tant qu’argument sur sa sortie
+standard.</li>
+<li><code>cat</code> : permet d’afficher le contenu d’un fichier passé en argument sur sa
+sortie standard ou de répéter son entrée standard sur sa sortie standard.</li>
+</ul>
+<p>Rappelez vous que par défaut, la sortie standard est affichée dans le terminal
+et l’entrée standard est le clavier de l’utilisateur.</p>
+<h3 id="redirection-de-sortie-code-gt-code-"><a class="putainde-Title-anchor" href="#redirection-de-sortie-code-gt-code-">#</a>Redirection de sortie : <code>&gt;</code></h3><p>Ce type de redirection permet d’indiquer à un processus que tout ce qui devrait
+aller sur la sortie standard (par défaut, le terminal), doit plutôt être stocké
+dans un fichier.</p>
+<p>Pour ça, on utilise la syntaxe <code>&gt; [fichier]</code> :</p>
+<pre><code class="lang-console"><span class="hljs-input"><span class="hljs-prompt">$ echo "Salut" &gt;</span> message</span>
+<span class="hljs-variable">$ </span>cat message
+<span class="hljs-constant">Salut</span>
+</code></pre>
+<h3 id="redirection-d-entree-code-lt-code-"><a class="putainde-Title-anchor" href="#redirection-d-entree-code-lt-code-">#</a>Redirection d’entrée : <code>&lt;</code></h3><p>À l’inverse, on peut aussi spécifier à un programme qu’il doit utiliser un
+fichier comme son entrée standard, à la place du clavier de l’utilisateur.</p>
+<p>En réutilisant notre fichier <code>message</code>, on peut par exemple faire :</p>
+<pre><code class="lang-console">$ <span class="hljs-keyword">cat</span> &lt; message
+Salut
+</code></pre>
+<p>Notez qu’on utilise bien <code>cat</code> <em>sans argument</em>, il utilise donc l’entrée
+standard.</p>
+<h3 id="connecter-deux-processus-code-code-"><a class="putainde-Title-anchor" href="#connecter-deux-processus-code-code-">#</a>Connecter deux processus : <code>|</code></h3><p>Dernier des connecteurs de base, l’opérateur <code>|</code>, aussi appelé <em>pipe</em> (et qui se
+prononce <em>paillepe</em>, avé l’accent).</p>
+<p>Il permet tout simplement d’utiliser la sortie d’un programme comme entrée d’un
+autre.</p>
+<p>Pour montrer ça, introduisons la commande <code>tr</code>, qui permet de remplacer des
+caractères dans l’entrée par d’autres.</p>
+<pre><code class="lang-console">$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"Salut!"</span> | <span class="hljs-built_in">tr</span> <span class="hljs-string">"[:lower:]"</span> <span class="hljs-string">"[:upper:]"</span>
+SALUT!
+</code></pre>
+<h2 id="descripteurs-de-fichiers-et-redirections-avancees"><a class="putainde-Title-anchor" href="#descripteurs-de-fichiers-et-redirections-avancees">#</a>Descripteurs de fichiers et redirections avancées</h2><p>Pour aller plus loin, on va maintenant voir que chaque descripteur de fichier
+possède son propre identifiant numérique.</p>
+<p>Pour <code>stdin</code>, <code>stdout</code> et <code>stderr</code> ce sera respectivement 0, 1 et 2.</p>
+<p>On peut se servir de ces identifiants pour faire des redirections plus
+poussées !</p>
+<h3 id="rediriger-les-autres-descripteur"><a class="putainde-Title-anchor" href="#rediriger-les-autres-descripteur">#</a>Rediriger les autres descripteur</h3><p>Par défaut, <code>&gt;</code> ne redirige que la sortie standard vers un fichier. Pour
+rediriger un autre descripteur vers un fichier on emploiera la notation <code>X&gt;</code> où
+<em>X</em> prendra la valeur de l’identifiant du descripteur.</p>
+<p>Si vous avez bien suivi, on redirigera donc la sortie d’erreur vers un fichier à
+l’aide de la syntaxe <code>2&gt;</code>.</p>
+<h3 id="rediriger-vers-un-autre-descripteur-code-gt-amp-code-"><a class="putainde-Title-anchor" href="#rediriger-vers-un-autre-descripteur-code-gt-amp-code-">#</a>Rediriger vers un autre descripteur : <code>&gt;&amp;</code></h3><p>On peut connecter les descripteurs d’un processus entre eux. C’est un mécanisme
+que l’on utilise très souvent quand on écrit des scripts Shell, notamment pour
+écrire sur la sortie d’erreur.</p>
+<p>Pour celà, on utilise la redirection <code>X&gt;&amp;Y</code> avec <em>X</em> étant l’identifiant
+descripteur source et <em>Y</em> l’identifiant du descripteur sur lequel on veut
+rediriger.</p>
+<p>L’exemple suivant montre comment rediriger la sortie standard sur la sortie
+d’erreur (c’est comme ça qu’on écrit sur la sortie d’erreur dans un script).</p>
+<pre><code class="lang-console">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Erreur"</span> <span class="hljs-number">1</span>&gt;&amp;<span class="hljs-number">2</span>
+</code></pre>
+<p>Plus généralement, on peut omettre la partie avant le <code>&gt;&amp;</code>, elle prendra la
+valeur 1 par défaut. On aura donc le script suivant :</p>
+<pre><code class="lang-console">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Erreur"</span> &gt;&amp;<span class="hljs-number">2</span>
+</code></pre>
+<h3 id="ajouter-en-fin-de-fichier-code-gt-gt-code-"><a class="putainde-Title-anchor" href="#ajouter-en-fin-de-fichier-code-gt-gt-code-">#</a>Ajouter en fin de fichier : <code>&gt;&gt;</code></h3><p>Par défaut, <code>&gt;</code> écrase le fichier dans lequel la redirection va s’effectuer.
+Pour éviter ce problème, on peut utiliser à la place <code>&gt;&gt;</code> qui va ajouter en fin
+de fichier.</p>
+<pre><code class="lang-console"><span class="hljs-comment"># Sans &gt;&gt;</span>
+<span class="hljs-input"><span class="hljs-prompt">$ echo "1" &gt;</span> fichier</span>
+<span class="hljs-input"><span class="hljs-prompt">$ echo "2" &gt;</span> fichier</span>
+<span class="hljs-variable">$ </span>cat fichier
+<span class="hljs-number">2</span>
+</code></pre>
+<pre><code class="lang-console"><span class="hljs-comment"># Avec &gt;&gt;</span>
+<span class="hljs-input"><span class="hljs-prompt">$ echo "1" &gt;</span> fichier</span>
+<span class="hljs-input"><span class="hljs-prompt">$ echo "2" &gt;&gt;</span> fichier</span>
+<span class="hljs-variable">$ </span>cat fichier
+<span class="hljs-number">1</span>
+<span class="hljs-number">2</span>
+</code></pre>
+<h3 id="-code-dev-null-code-le-trou-noir"><a class="putainde-Title-anchor" href="#-code-dev-null-code-le-trou-noir">#</a><code>/dev/null</code>, le trou noir</h3><p>Il existe un fichier un peu particulier sur tout bon UNIX qui se respecte :
+<code>/dev/null</code>.</p>
+<p>Ce dernier est en fait une sorte de trou noir : Si on affiche son contenu on
+n’obtient rien, et si on écrit quelque chose dedans elle disparait.</p>
+<p>On se sert souvent de ce fichier pour supprimer la sortie d’un programme :</p>
+<pre><code class="lang-console">$ echo <span class="hljs-string">"Salut"</span> &gt;<span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span>
+$ cat <span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span>
+$
+</code></pre>
+<h3 id="ordre-des-redirections"><a class="putainde-Title-anchor" href="#ordre-des-redirections">#</a>Ordre des redirections</h3><p>Un dernier mot avant la fin, l’ordre des redirections est très important !</p>
+<p>Imaginez la fonction suivante qui affiche un message sur la sortie standard et
+un sur la sortie d’erreur :</p>
+<pre><code class="lang-console"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">programme</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">echo</span> <span class="hljs-string">"Message"</span>
+  <span class="hljs-keyword">echo</span> <span class="hljs-string">"Erreur"</span> &gt;&amp;<span class="hljs-number">2</span>
+}
+</code></pre>
+<p>Si on veut rediriger toutes les sorties vers <code>/dev/null</code> on peut utiliser la
+syntaxe suivante :</p>
+<pre><code class="lang-console">$ programme <span class="hljs-number">2</span>&gt;<span class="hljs-regexp">/dev/</span><span class="hljs-literal">null</span> &gt;<span class="hljs-regexp">/dev/</span><span class="hljs-literal">null</span>
+</code></pre>
+<p>Vous remarquerez que c’est assez verbeux, et qu’on pourrait simplifier celà en
+utilisant <code>&gt;&amp;</code> comme vu précédemment.</p>
+<p>On essaie donc naïvement :</p>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>programme <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span> &gt;<span class="hljs-regexp">/dev/null</span>
+<span class="hljs-constant">Erreur</span>
+</code></pre>
+<p>Hmm, pourtant on a tout branché ensemble non ? En fait non, on a redirigé la
+sortie sur le fichier pointé par <code>1</code> au moment où on écrit la redirection, donc
+avant qu’il soit redirigé sur <code>/dev/null</code>.</p>
+<p>Pour bien faire, il faut écrire les redirections dans l’autre ordre :</p>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>programme &gt;<span class="hljs-regexp">/dev/null</span> <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span>
+<span class="hljs-constant">Erreur</span>
+</code></pre>
+<p>On lira ceci : Rediriger la sortie standard vers <code>/dev/null</code>, puis rediriger la
+sortie d’erreur vers la sortie standard.</p>
+<h3 id="pour-resumer"><a class="putainde-Title-anchor" href="#pour-resumer">#</a>Pour résumer</h3><p>On a en fait que deux redirections de sortie, <code>&gt;</code> et <code>&gt;&gt;</code>, les symboles qui les
+entourent sont souvent optionnels.</p>
+<p>Si on veut spécifier un fichier on donnera son nom, si on veut spécifier un
+descripteur on donnera son identifiant préfixé de <code>&amp;</code></p>
+<h2 id="pour-aller-plus-loin"><a class="putainde-Title-anchor" href="#pour-aller-plus-loin">#</a>Pour aller plus loin</h2><p>Le manuel de bash contient <a href="http://www.gnu.org/software/bash/manual/bashref.html#Redirections">une section complète sur les
+redirections</a>. Elle va beaucoup plus loin que cet article et je vous
+invite à la lire pour voir tout ce qu’il est possible de faire.</p>
+<p>Il y a aussi une section dédiée à ce sujet dans l’<a href="http://tldp.org/LDP/abs/html/io-redirection.html">Advanced Bash-Scripting Guide</a></p>
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/edit/master/pages/posts/shell/maitriser-les-redirections-shell/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/blame/master/pages/posts/shell/maitriser-les-redirections-shell/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="https://github.com/putaindecode/website/commits/master/pages/posts/shell/maitriser-les-redirections-shell/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author putainde-Author--author"><a href="http://madx.me/" data-rcp-tooltip="madx" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/96006f57ca92ec95713532129b039d9c.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> madx</h3><div class="putainde-Author-social"><a href="http://madx.me/"><svg style="" class="putainde-Icon putainde-Icon-home"><use xlink:href="#putainde-Icon-home"></use></svg></a><a href="https://twitter.com/madx"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a><a href="https://github.com/madx"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a></div></div><p>Développeur Ruby et JavaScript, avec un goût prononcé pour la simplicité, le soleil, le pastis. <br> Il n'aime pas OS X car, objectivement, c'est nul. <br> Quand il n'est pas devant son ordi, il y a de grandes chances qu'il compense avec son téléphone. <br> Spécialiste en développement d'applications inutiles.</p></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-rcp-tooltip="GitHub" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a><a href="https://twitter.com/putaindecode/" data-rcp-tooltip="Twitter" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/";
+var disqus_url = "http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/";
+var disqus_script = "embed.js";;(function(d,s) {
+s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+(d.getElementsByTagName('head')[0]).appendChild(s)
+})(document)</script><script src="../../../scripts/index.js"></script><script>var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
+(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+g.src='//www.google-analytics.com/ga.js';
+s.parentNode.insertBefore(g,s)}(document,'script'));</script></body></html>
