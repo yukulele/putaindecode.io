@@ -627,57 +627,52 @@ img {
   }
 }
 
-@font-face {
-  font-family: "icons";
-  src: url('../fonts/icons.eot');
-  src: url('../fonts/icons.eot?#iefix') format('eot'),
-    url('../fonts/icons.woff') format('woff'),
-    url('../fonts/icons.ttf') format('truetype'),
-    url('../fonts/icons.svg#icons') format('svg');
-}
-
 .putainde-Icon {
   display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
   vertical-align: middle;
-}
-
-.putainde-Icon:before {
-  font-family: "icons";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   font-style: normal;
   -webkit-font-feature-settings: normal;
   -moz-font-feature-settings: normal;
   font-feature-settings: normal;
   font-variant: normal;
-  line-height: 1;
   font-weight: normal;
   text-decoration: none;
   text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.putainde-Icon--bookmark:before {
-  content: "\E001";
+.putainde-Icon-bookmark {
+  width: 1em;
+  height: 1em;
 }
 
-.putainde-Icon--github:before {
-  content: "\E002";
+.putainde-Icon-github {
+  width: 1em;
+  height: 1em;
 }
 
-.putainde-Icon--pencil:before {
-  content: "\E003";
+.putainde-Icon-home {
+  width: 1em;
+  height: 1em;
 }
 
-.putainde-Icon--text-file:before {
-  content: "\E004";
+.putainde-Icon-pencil {
+  width: 1em;
+  height: 1em;
 }
 
-.putainde-Icon--twitter:before {
-  content: "\E005";
+.putainde-Icon-text-file {
+  width: 1em;
+  height: 1em;
 }
 
-.putainde-Icon--world:before {
-  content: "\E006";
+.putainde-Icon-twitter {
+  width: 1em;
+  height: 1em;
 }
 
 .hljs-string,
@@ -789,6 +784,7 @@ img {
   font-weight: 700;
   text-align: center;
   color: #fff;
+  fill: #fff;
   text-decoration: none;
   padding: 0 .4rem;
 }
@@ -835,6 +831,12 @@ img {
 }
 
 .putainde-Nav .putainde-Icon {
+  font-size: 1.6rem;
+}
+
+/* icons for item with label can be smaller */
+
+.putainde-Nav :not(.rcp-Tooltip) .putainde-Icon {
   font-size: 1.2rem;
 }
 
@@ -1050,6 +1052,7 @@ img {
 
 .putainde-Post-contents a {
   color: #c33;
+  fill: #c33;
   text-decoration: none;
 }
 
@@ -1343,8 +1346,13 @@ img {
 
 .putainde-Author-social a {
   color: #444;
+  fill: #444;
   display: inline-block;
   padding: .2em 1em;
+}
+
+.putainde-Author-social a .putainde-Icon {
+  font-size: 1.2em;
 }
 
 @media (max-width:28em) {
@@ -1559,12 +1567,17 @@ body {
 
 .putainde-Footer a {
   color: #c33;
+  fill: #c33;
   text-decoration: none;
 }
 
 .putainde-Footer a:hover,
 .putainde-Footer a:active {
   text-decoration: underline;
+}
+
+.putainde-Footer a .putainde-Icon {
+  font-size: 1.4em;
 }
 
 .putainde-Footer-text {
