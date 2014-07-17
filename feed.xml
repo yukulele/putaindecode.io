@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Thu, 17 Jul 2014 08:12:05 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Maîtriser les redirections shell</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Thu, 17 Jul 2014 08:22:28 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Maîtriser les redirections shell</title><description><![CDATA[
 <p>Le shell (ou ligne de commande) est l’outil de prédilection pour bon nombre
 d’entre nous qui utilisons un OS de la famille UNIX. Nous sommes persuadés que
 bien utilisé, il remplace avantageusement un IDE complexe et gourmand.</p>
@@ -10,7 +10,7 @@ pour faire mon barbu mais simplement car il me suffit amplement.</p>
 <p>Venons en au sujet même de cet article, l’un des éléments essentiels de
 l’utilisation du shell : l’utilisation des redirections d’entrée/sortie de
 base.</p>
-<p>Si ça vous paraît barbare, tenez vous bien, on attaque tout de suite !</p>
+<p>Si ça vous paraît barbare, tenez-vous bien, on attaque tout de suite !</p>
 <h2 id="une-entree-deux-sorties"><a class="putainde-Title-anchor" href="#une-entree-deux-sorties">#</a>Une entrée, deux sorties</h2><p>Un des principes de base sous UNIX est que tout est fichier et que l’activité du
 système est rendue par l’interaction de programmes (ou processus) à l’aide
 des dits fichiers.</p>
@@ -42,15 +42,15 @@ et l’entrée standard est le clavier de l’utilisateur.</p>
 aller sur la sortie standard (par défaut, le terminal), doit plutôt être stocké
 dans un fichier.</p>
 <p>Pour ça, on utilise la syntaxe <code>&gt; [fichier]</code> :</p>
-<pre><code class="lang-console"><span class="hljs-input"><span class="hljs-prompt">$ echo "Salut" &gt;</span> message</span>
+<pre><code class="lang-console"><span class="hljs-input"><span class="hljs-prompt">$ echo "Hello" &gt;</span> message</span>
 <span class="hljs-variable">$ </span>cat message
-<span class="hljs-constant">Salut</span>
+<span class="hljs-constant">Hello</span>
 </code></pre>
 <h3 id="redirection-d-entree-code-lt-code-"><a class="putainde-Title-anchor" href="#redirection-d-entree-code-lt-code-">#</a>Redirection d’entrée : <code>&lt;</code></h3><p>À l’inverse, on peut aussi spécifier à un programme qu’il doit utiliser un
 fichier comme son entrée standard, à la place du clavier de l’utilisateur.</p>
 <p>En réutilisant notre fichier <code>message</code>, on peut par exemple faire :</p>
 <pre><code class="lang-console">$ <span class="hljs-keyword">cat</span> &lt; message
-Salut
+Hello
 </code></pre>
 <p>Notez qu’on utilise bien <code>cat</code> <em>sans argument</em>, il utilise donc l’entrée
 standard.</p>
@@ -60,8 +60,8 @@ prononce <em>paillepe</em>, avé l’accent).</p>
 autre.</p>
 <p>Pour montrer ça, introduisons la commande <code>tr</code>, qui permet de remplacer des
 caractères dans l’entrée par d’autres.</p>
-<pre><code class="lang-console">$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"Salut!"</span> | <span class="hljs-built_in">tr</span> <span class="hljs-string">"[:lower:]"</span> <span class="hljs-string">"[:upper:]"</span>
-SALUT!
+<pre><code class="lang-console">$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"Hello!"</span> | <span class="hljs-built_in">tr</span> <span class="hljs-string">"[:lower:]"</span> <span class="hljs-string">"[:upper:]"</span>
+HELLO!
 </code></pre>
 <h2 id="descripteurs-de-fichiers-et-redirections-avancees"><a class="putainde-Title-anchor" href="#descripteurs-de-fichiers-et-redirections-avancees">#</a>Descripteurs de fichiers et redirections avancées</h2><p>Pour aller plus loin, on va maintenant voir que chaque descripteur de fichier
 possède son propre identifiant numérique.</p>
@@ -81,25 +81,25 @@ descripteur source et <em>Y</em> l’identifiant du descripteur sur lequel on ve
 rediriger.</p>
 <p>L’exemple suivant montre comment rediriger la sortie standard sur la sortie
 d’erreur (c’est comme ça qu’on écrit sur la sortie d’erreur dans un script).</p>
-<pre><code class="lang-console">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Erreur"</span> <span class="hljs-number">1</span>&gt;&amp;<span class="hljs-number">2</span>
+<pre><code class="lang-console">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Error"</span> <span class="hljs-number">1</span>&gt;&amp;<span class="hljs-number">2</span>
 </code></pre>
 <p>Plus généralement, on peut omettre la partie avant le <code>&gt;&amp;</code>, elle prendra la
 valeur 1 par défaut. On aura donc le script suivant :</p>
-<pre><code class="lang-console">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Erreur"</span> &gt;&amp;<span class="hljs-number">2</span>
+<pre><code class="lang-console">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Error"</span> &gt;&amp;<span class="hljs-number">2</span>
 </code></pre>
 <h3 id="ajouter-en-fin-de-fichier-code-gt-gt-code-"><a class="putainde-Title-anchor" href="#ajouter-en-fin-de-fichier-code-gt-gt-code-">#</a>Ajouter en fin de fichier : <code>&gt;&gt;</code></h3><p>Par défaut, <code>&gt;</code> écrase le fichier dans lequel la redirection va s’effectuer.
 Pour éviter ce problème, on peut utiliser à la place <code>&gt;&gt;</code> qui va ajouter en fin
 de fichier.</p>
-<pre><code class="lang-console"><span class="hljs-comment"># Sans &gt;&gt;</span>
-<span class="hljs-input"><span class="hljs-prompt">$ echo "1" &gt;</span> fichier</span>
-<span class="hljs-input"><span class="hljs-prompt">$ echo "2" &gt;</span> fichier</span>
-<span class="hljs-variable">$ </span>cat fichier
+<pre><code class="lang-console"># Sans &gt;&gt;
+$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"1"</span> &gt; <span class="hljs-keyword">file</span>
+$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"2"</span> &gt; <span class="hljs-keyword">file</span>
+$ <span class="hljs-keyword">cat</span> <span class="hljs-keyword">file</span>
 <span class="hljs-number">2</span>
 </code></pre>
-<pre><code class="lang-console"><span class="hljs-comment"># Avec &gt;&gt;</span>
-<span class="hljs-input"><span class="hljs-prompt">$ echo "1" &gt;</span> fichier</span>
-<span class="hljs-input"><span class="hljs-prompt">$ echo "2" &gt;&gt;</span> fichier</span>
-<span class="hljs-variable">$ </span>cat fichier
+<pre><code class="lang-console"># Avec &gt;&gt;
+$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"1"</span> &gt; <span class="hljs-keyword">file</span>
+$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"2"</span> &gt;&gt; <span class="hljs-keyword">file</span>
+$ <span class="hljs-keyword">cat</span> <span class="hljs-keyword">file</span>
 <span class="hljs-number">1</span>
 <span class="hljs-number">2</span>
 </code></pre>
@@ -108,7 +108,7 @@ de fichier.</p>
 <p>Ce dernier est en fait une sorte de trou noir : Si on affiche son contenu on
 n’obtient rien, et si on écrit quelque chose dedans elle disparait.</p>
 <p>On se sert souvent de ce fichier pour supprimer la sortie d’un programme :</p>
-<pre><code class="lang-console">$ echo <span class="hljs-string">"Salut"</span> &gt;<span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span>
+<pre><code class="lang-console">$ echo <span class="hljs-string">"Hello"</span> &gt;<span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span>
 $ cat <span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span>
 $
 </code></pre>
@@ -117,7 +117,7 @@ $
 un sur la sortie d’erreur :</p>
 <pre><code class="lang-console"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">programme</span><span class="hljs-params">()</span> </span>{
   <span class="hljs-keyword">echo</span> <span class="hljs-string">"Message"</span>
-  <span class="hljs-keyword">echo</span> <span class="hljs-string">"Erreur"</span> &gt;&amp;<span class="hljs-number">2</span>
+  <span class="hljs-keyword">echo</span> <span class="hljs-string">"Error"</span> &gt;&amp;<span class="hljs-number">2</span>
 }
 </code></pre>
 <p>Si on veut rediriger toutes les sorties vers <code>/dev/null</code> on peut utiliser la
@@ -127,15 +127,14 @@ syntaxe suivante :</p>
 <p>Vous remarquerez que c’est assez verbeux, et qu’on pourrait simplifier celà en
 utilisant <code>&gt;&amp;</code> comme vu précédemment.</p>
 <p>On essaie donc naïvement :</p>
-<pre><code class="lang-console"><span class="hljs-variable">$ </span>programme <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span> &gt;<span class="hljs-regexp">/dev/null</span>
-<span class="hljs-constant">Erreur</span>
+<pre><code class="lang-console">$ programme <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span> &gt;<span class="hljs-regexp">/dev/</span><span class="hljs-literal">null</span>
+<span class="hljs-built_in">Error</span>
 </code></pre>
 <p>Hmm, pourtant on a tout branché ensemble non ? En fait non, on a redirigé la
 sortie sur le fichier pointé par <code>1</code> au moment où on écrit la redirection, donc
 avant qu’il soit redirigé sur <code>/dev/null</code>.</p>
 <p>Pour bien faire, il faut écrire les redirections dans l’autre ordre :</p>
 <pre><code class="lang-console"><span class="hljs-variable">$ </span>programme &gt;<span class="hljs-regexp">/dev/null</span> <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span>
-<span class="hljs-constant">Erreur</span>
 </code></pre>
 <p>On lira ceci : Rediriger la sortie standard vers <code>/dev/null</code>, puis rediriger la
 sortie d’erreur vers la sortie standard.</p>
