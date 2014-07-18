@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Thu, 17 Jul 2014 08:27:24 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Maîtriser les redirections shell</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Fri, 18 Jul 2014 12:07:04 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Maîtriser les redirections shell</title><description><![CDATA[
 <p>Le shell (ou ligne de commande) est l’outil de prédilection pour bon nombre
 d’entre nous qui utilisons un OS de la famille UNIX. Nous sommes persuadés que
 bien utilisé, il remplace avantageusement un IDE complexe et gourmand.</p>
@@ -1084,7 +1084,127 @@ fonctionnalités que le téléchargement de modules.  </p>
 <p>Bye bye Bower!</p>
 <p>PS: vous avez besoin d’un module qui n’a pas de package.json ? Pas de problème, <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/">napa est là pour ça</a></p>
 
-]]></description><pubDate>Tue, 06 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</guid></item><item><title>Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML</title><description><![CDATA[
+]]></description><pubDate>Tue, 06 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</guid></item><item><title>Petite définition de BEM</title><description><![CDATA[
+<p><strong><a href="http://bem.info">BEM</a></strong> n’est ni une marque de voiture ni un groupe de musique, et encore moins une onomatopée (quoique). C’est plutôt une façon de nommer les classes en CSS, une convention en d’autres termes voire une méthodologie.</p>
+<p>Dans cet article, je ne vous expliquerai pas pourquoi il faut préférer BEM à une autre convention, je vous explique surtout comment l’utiliser.</p>
+<p><strong>BEM</strong> apporte une solution à un problème majeur en informatique : le nommage.</p>
+<p>Il n’y a rien de plus compliqué en informatique que de nommer un objet : besoin d’être explicite, ne doit pas être trop générique, ni trop compliqué, ni trop verbeux (ça, ça reste à voir avec BEM…).</p>
+<p>Lorsque l’on nomme un objet, une méthode, une fonction, une classe, on se doit d’être avant tout compréhensible. Une personne devant lire votre code doit directement comprendre de quoi vous parlez. Cette personne peut très bien être vous 6 mois, 1 an après. Je pense sincèrement qu’un code clair vaut toute la documentation du monde. Je ne dis pas qu’il ne faut pas documenter mais un code doit être facilement compréhensible, la documentation doit juste apporter un contexte, une situation particulière.</p>
+<p>Bref, <strong>BEM</strong> est le sigle pour <em>Block</em>, <em>Element</em>, <em>Modifier</em>. Qu’est-ce que cela veut dire.</p>
+<p>Prenons par exemple un site web. Nous avons un ensemble avec dedans deux onglets et en dessous le contenu de chaque onglet.</p>
+<p>Nous allons définir ce que sont le <em>block</em>, le ou les <em>elements</em> et les <em>modifiers</em>.</p>
+<p>Dans ce cas précis, le <em>block</em> est le conteneur, l’ensemble, ce qui entoure le tout. Appelons-le “Window”.</p>
+<p>Nous avons alors aussi les <em>elements</em> suivants : les onglets, que nous allons nommer “Tab”, et le contenu, là où il y a le texte de chaque onglet “Content”.</p>
+<p>Comment cela se traduit en <strong>BEM</strong> :</p>
+<ul>
+<li>Notre <em>block</em> s’appelant “Window” sera alors <code>.Window</code></li>
+<li>Nos <em>elements</em> “Tab” seront <code>.Window-tab</code></li>
+<li>Notre <em>element</em> “Content” sera <code>.Window-content</code></li>
+</ul>
+<p>Jusque là, cela devrait aller :</p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+
+<span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+
+  <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+
+  <span class="hljs-rule">}</span></span>
+</code></pre>
+<p>Ce qui revient de manère générique à :</p>
+<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
+
+}</span>
+
+  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
+
+  }</span>
+</code></pre>
+<p>Oui, je vous conseille d’indenter votre code afin de grouper vos classes.</p>
+<p>Maintenant, nous allons définir ce qu’est un <em>modifier</em>. Un <em>modifier</em> change l’état de l’élément, il peut s’appliquer aussi bien sur un <em>block</em>, qu’un <em>element</em>.</p>
+<p>Si par exemple je souhaite mettre en actif un onglet (le mettre en avant car séléctionné), je ferai alors <code>.Window-tab--active</code>, soit :</p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+
+<span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
+  <span class="hljs-rule">}</span></span>
+
+    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+    <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+
+  <span class="hljs-rule">}</span></span>
+</code></pre>
+<p>J’aimerais aussi afficher ou non le contenu. Pour cela, je vais lui rajouter un <em>modifier</em></p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+
+<span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
+  <span class="hljs-rule">}</span></span>
+
+    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+    <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+  <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content--hidden</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
+  <span class="hljs-rule">}</span></span>
+</code></pre>
+<p>J’aurais très bien pu inverser et dire que par défaut le contenu est caché et je lui rajoute la classe <code>.Window-tab--active</code> pour l’afficher (<code>display: block</code>) mais lorsqu’il s’agit de cacher ou de faire appaître des éléments, je vous conseille vivement de plutôt ajouter un <em>modifier</em> qui cache les éléments, car cela évite de se prendre la tête sur quel <code>display</code> mettre par défaut. Là, vous mettez un <code>display: none</code> et voilà, qu’importe si celui de base est un <code>inline</code>, <code>inline-block</code>, <code>table-cell</code> ou autre.</p>
+<p>Du coup, nous avons maintenant nos différents types de classes. Cela se résume de manière générique à :</p>
+<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
+
+}</span>
+
+  .<span class="hljs-keyword">Block</span>--modifier <span class="hljs-list">{
+
+  }</span>
+
+  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
+
+  }</span>
+
+    .<span class="hljs-keyword">Block</span>-element--modifier <span class="hljs-list">{
+
+    }</span>
+</code></pre>
+<p>Ce qui donne <code>.Block-element--modifier</code> (notre <strong>BEM</strong>).</p>
+<p>Parlons maintenant du cas des termes multiples dans chaque partie. Voici comment cela se traduit.</p>
+<p><code>.MyBlock-myElement--myModifier</code></p>
+<p>Les <em>blocks</em> sont en “PascalCase” (ou UpperCamelCase), les <em>elements</em> et <em>modifiers</em> sont en “camelCase” (ou lowerCamelCase). Nous séparons le <em>block</em> de l’élément par “-“ et le <em>block</em> ou l’ <em>element</em> d’un <em>modifier</em> par “—“.</p>
+<p>Maintenant, vous savez tout sur <strong>BEM</strong>. Sachez qu’il existe tout de même plusieurs conventions de <strong>BEM</strong>. Celle que je vous ai apprise là est la norme de <strong>montage.js</strong> mais il y en a d’autres par exemple qui n’utilisent pas les majuscules et font ce genre de choses : <code>.my-block__my-element--my-modifier</code>. Il s’avère que c’est la <a href="http://bem.info/method/definitions/#naming-for-independent-css-classes">convention pseudo-officielle</a>.</p>
+<p>L’inconvénient de ceci est que c’est moins lisible au premier abord qui est quoi, et de plus, les <code>_</code> ne permettent pas de sélectionner facilement un terme en <em>double-cliquant</em> dessus.</p>
+<p>Deux petites choses avant de partir.</p>
+<p>Dans le but d’éviter de vous faire écraser vos propriétés par quelqu’un d’autre (une bibliothèque, un <em>SDK</em>), je vous conseille de rajouter votre organisation.</p>
+<p>Typiquement, ça donne <code>.org-Block-element--modifier</code>. Tout en minuscule et si possible ne pas dépasser les 3 lettres car vous allez devoir le répéter à chaque fois et ça peut être lourd.</p>
+<p>La deuxième chose est la classe qui sert de sélecteur en JavaScript. Plutôt que <em>binder</em> un élément via sa classe “CSS” (à chaque classe sa responsabilité), il est nettement préférable de créer une classe spécifique au JavaScript. Cela donne : <code>.org-js-Block-element--modifier</code>. Il suffit simplement de rajouter <code>-js</code> entre l’organisation et le <em>block</em>.</p>
+<p>Nous arrivons à la convention suivante : <code>.org[-js]-Block[-element][--modifier]</code></p>
+<p>Certains vous diront qu’ils mettent <code>.js-org-</code> mais étant donné que je considère cela comme un <em>namespace</em> global (autant css que js), je préfère mettre l’ <code>org</code> au début.</p>
+<p>Voilà, voilà, c’est certes un peu déroutant au début, et ca parait très verbeux mais cela vous permettra d’éviter de nooooooombreux soucis de nommage de classes où vous vous emmèlerez les pinceaux à coup de :</p>
+<pre><code class="lang-css"><span class="hljs-class">.footer</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> underline</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.content</span> <span class="hljs-class">.footer</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> none</span></span>; <span class="hljs-comment">/* annule la propriété du précédent sélecteur */</span>
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p>Ciao les kids.</p>
+
+]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/petite-definition-bem/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/petite-definition-bem/</guid></item><item><title>Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML</title><description><![CDATA[
 <p>Mardi 29 avril s’est déroulée la troisième table ronde qui est finalement la première sous le nom de <strong>{p!}</strong>. Une petite explication s’impose étant donné que nous allons en faire de plus en plus et que je souhaite vraiment vous faire un compte rendu sur chacun de ces évènements.</p>
 <h2 id="preambule"><a class="putainde-Title-anchor" href="#preambule">#</a>Préambule</h2><p>Partant du constat qu’il est difficile d’apprendre et d’échanger en conférence du fait du manque du niveau assez élevé (trop de gens avec un niveau différent, il faut forcément s’aligner) et à sens unique (une personne parle, les autres écoutent), nous avons décidé de créer des tables rondes où un fil conducteur est suivi amenant à débattre, échanger, affirmer.</p>
 <p>Attention, je ne dis pas que les conférences ne servent à rien mais à mon sens elles sont trop magistrales et parfois trop marketing (coucou WebRTC Paris).</p>
@@ -1214,140 +1334,23 @@ Et surtout il n’est plus nécessaire d’utiliser les IDs. Les IDs doivent ser
 <h3 id="les-pieges-de-l-integration-e-g-display-inline-block-"><a class="putainde-Title-anchor" href="#les-pieges-de-l-integration-e-g-display-inline-block-">#</a>Les pièges de l’intégration (e.g. display: inline-block)</h3><p>Certains cas de l’intégration restent encore du domaine hack plutôt qu’une solution propre et faible. On ne dit pas que ces hacks sont difficiles ou laborieux mais qu’ils sont encore nécessaires sur des propriétés css très communes en 2014.</p>
 <p>L’inline-block par exemple, il n’y a malheureusement pas le choix de soit coller les balises, soit minifier le html (ou la partie ayant des inline-block), soit de mettre des commentaires.</p>
 <p>Les layouts seront toujours aussi pénibles tant que les flexbox ne sont pas supportés par la majorité des navigateurs du marché. Les 3 solutions principales pour le moment : float, inline-block, table(-cell).</p>
-<p>En ce qui concerne le box-sizing, il sauve beaucoup d’intégration. Il faut juste voir le support des navigateurs que vous supportez. 
+<p>En ce qui concerne le box-sizing, il sauve beaucoup d’intégration. Il faut juste voir le support des navigateurs que vous supportez.
 Oh et attention, tous les navigateurs ne font pas 16px de base. Je dis ça si vous utilisez les <code>(r)em</code> (qui sont expliqués juste après).</p>
 <p>Enfin, <code>&lt;input type=&quot;number&quot;&gt;</code> est tout buggé sous Firefox. Par exemple, mettre min=”1900” sur cet input et que vous cliquez sur le “+”, vous commencerez à “1” et non “1900”… Je sens que je vais devoir encore faire un ticket. :’)</p>
 <h3 id="unites-px-rem-em-pt-"><a class="putainde-Title-anchor" href="#unites-px-rem-em-pt-">#</a>Unités px, rem, em, pt, %</h3><p>Pour être clair, personne n’utilise des <code>pt</code>, les <code>px</code>, faut les oublier de plus en plus, et <code>rem</code> est sûrement le plus simple et le mieux mais dépend malheureusement de vos supports navigateurs où dans quels cas il faut souvent se rabattre sur les <code>em</code>. Le pourcentage est forcément préconisé.</p>
 <h3 id="css-frameworks-lesquels-pourquoi-quand-"><a class="putainde-Title-anchor" href="#css-frameworks-lesquels-pourquoi-quand-">#</a>CSS Frameworks ? lesquels ? pourquoi ? quand ?</h3><p><a href="http://foundation.zurb.com/">Foundation</a>, <a href="http://getbootstrap.com/">Bootstrap</a>, <a href="http://purecss.io/">pure</a> sont les plus connus (et peut-être les pires). Il ne vous serviront uniquement que dans le cas d’une <a href="http://fr.wikipedia.org/wiki/Preuve_de_concept">PoC</a> ou une administration de site (<em>back-office</em>).</p>
 <p>Par contre, <a href="http://topcoat.io/">topcoat</a> peut se révéler assez intéressant de par sa haute personnalisation et de son <em>BEM-way</em>. Eventuellement <a href="http://inuitcss.com/">inuit.css</a> sinon.</p>
 <h3 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h3><p>Lors de cas de contenus affichés via de l’ajax, pensez de plus en plus à faire du “prerender”, c’est à dire que pendant que le contenu se charge, au lieu de mettre des <em>spinners</em>, <em>loaders</em>, <em>toussa</em>, essayez de mettre des visuels qui ressembleront à l’élément final. C’est ce que fait par exemple facebook, et c’est pas mal du tout. Tenez :</p>
-<p><img src="data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAIBAQEBAQIBAQECAgICAgQDAgICAgUDBAMEBgUGBgYFBQUGBwkIBgcIBwUFCAsICAkKCgoKBgcLDAsKDAkKCgr/2wBDAQICAgICAgUDAwUKBgUGCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgr/wgARCAFPAfoDASIAAhEBAxEB/8QAHAABAAMBAQEBAQAAAAAAAAAAAAMGBwQFAgEJ/9oACAEBAAAAAP7U+5+gAAAAAAAAA4fPm04AAAAAAAAACt0+bTvO5B6XUAAAAAAAACt0+bTvL4x6nxzADv6QAAAAAAVunzad5fGPU7AAAAAAAAAVunzad5fGPUc4ffogAAAAAABW6fNp3l8Y9Tq+Q/fsAAAAAAAK3T5tO+fkff6AAAAAAAACt0+bTgAAAAAAAAAK3T5tOgiAAAAAAAASzgK3T5tOgiAAAAAAAASzgK3T5tOAAAAAAAAAArdPm07g5gAAAAAAAAd/SK3T5tOAAAAAAAAAArdPm07j5wAADo7AAAAAAK3T5tO+fkAAA+voAAAAACt0+bTgAAAAAAAAAK3T5tOAAAAAAAAAArdPm04AAAAAAAAACt0+bTgAAAAAAAAAK3T5tOAAAAAAAAAArdPm04AAAAAAAAACt0+bTgAAAAAAAAAK3T5tOAAAAAAAAAArdPm04AAAAAAAAACt0+bTgAAAAAAAAAK3T5tOAAAAAAAAAArdPm04AAAAAAAAACt0+bTgAAAAAAAAAK3T5tOAAAAAAAAAArdPm04AAAAAAAAACt0+bTgAAAAAAAAAK3T5tOAAAAAAAAAArdPm04AAAAAAAAACt0+bTgAAAAAAAAAK3T5tOAAAAAAAAAArdPm04AAAAAAAAACt0+bTgAAAAAAAAAK3T5tOAAAAAAAAAArdPm04AAAAAAAAACt0+XTwAAAAAAAAAK1UPz8AAAAAAAAAAfX/xAAXAQEBAQEAAAAAAAAAAAAAAAAAAgMB/9oACAECEAAAANZAAAABc87yejnAAADaTkjgAAAbTJIAAABtMAAAAODaYAAAAcG0x0AAABzjaY6AJAAA2nMAAAAG05gAAAA2nMAAAAG05gAAAA2nMAAAAG05gAAAA2nMAAAAG05gAAAA2nMAAAAG05gAAAA2nMAAAAG05gAAAA2SAAAAC//EABYBAQEBAAAAAAAAAAAAAAAAAAACAf/aAAgBAxAAAACdAAAABNTlaDQAACKnK00AAAEVjdAAAAIoAAAA0RQAAABoigAAAA1FAA0AACK0AAAAEVoAAAAIrQAAAARWgAAAAitAAAABFaAAAACK0AAAAEVoAAAAIrQAAAARWgAAAAitAAAABFaAAAACGgAAAAz/xAAjEAABBAIBBAMBAAAAAAAAAAAVBQcQFxRQAwACBCABBjAR/9oACAEBAAECAOPsrquq6rquq6rquq6rquq6rquq6rquq6rquq6rquq6rquq6rquq6rquq6rquq6rquq6rquq6rquq6rquq6rquq6rquq6rquq6rquq6rpb+s9J2+c6E6Fjny8vLy0jk2znQnQt+qJ0qfml6tzoToW/VE27nQnQt+qJ0oqJs2bNm+BX17nQnQt+qJ138GJiYmJifHi69zoTo7+DExMTE7OPbOdCdvnOhOjylE2bNmzZs2bNmzZs2bNmzZs2bNmzZs2bNmzZs2bNmzZs2bNmzZs2bNmzZs2b8VR/BzoTo8pOCBAgQIECBAgQIECBAgQIECBAgQIECBAgQIECBAgQIECBAgQIECBAgQIECBPFTvwc6E7fOdCdCp4QsWLFixYsWLFixYsWLFixYsWLFixYsWLFixYsWLFixYsWLFixYsWLFixYsWLFixaX4/o50J2+c6E6FFRNmzZs2bNmzZs2bNmzZs2bNmzaco6VzoTo7+DExMTExMTExMTExMTExMTExMTExMTs4NK50J2+c6E7fOdCdvnOhO3znQnb5zoTt850J2+c6E7fOdCdvnOhO3znQnb5zoTt850J2+c6E7fOdCdvnOhO3znQnb5zoTt850J2+c6E7fOdCdvnOhO3znQnb5zoTt850J2+c6OTs/m8+OPr/xAA8EAAAAwQFDAECBQQCAwAAAAAAAQQCA1PRBSV1kbMGEBFQVFaSk5Wi0tMSUWQiJEFzsRQgITETMGFxdP/aAAgBAQADPwBp69YcOy0tPHjLDBfVpoyIivMhlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwGUMdHzm/AZQx0fOb8BlDHR85vwFJ5Punb5e05aZevPgy05bNr8Wgz0HpIv0I7s1bIbQT4rOvqpR2gWE8zVshtBPis5n7pSyy7fNsl8C/wy0ZfqYV7S84zCvaXnGYV7S84zCvaXnGYePUzTTx400f8AyH/lo9P6FreqUdoFhPM1bIbQT4rOb82z+2X8n/b+Va/cP+CC3+oL+m/5fj8P8/DTo06T+gpX7juFK/cdwpX7juFK/cdwpX7juFK/cdwpX7juFK/cdwpX7juFK/cdwUf07X9T8/l8z0fPTp0aC+uq6pR2gWE8zVshtBPis5vzbP7Zfyf9v5Vr9w/4LW9Uo7QLCeZq2Q2gnxWc35tn9sv5P+38q1+4f8EH6R+Tt2yyZGzp/ER/Uwrhu7jmFcN3ccwrhu7jmFcN3ccwrhu7jmFL1+w7aYY0NNkR6CP6/wDvWFUo7QLCeZq2Q2gnxWc35tn9sv5P+38q1+4f8EHL0/k8cstH9WmSMJdmd8BBLszvgIJdmd8BBLszvgIJdmd8BBMyZNMp2CMj/wAGTBawqlHaBYTzNWyG0E+KzmcvT+Txyy0f1aZIwl2Z3wEEuzO+Agl2Z3wEEuzO+Ag7dF8XbBMlp/0yWjW9Uo7QLCeZq2Q2gnxWdfVSjtAsJ5mrZDaCfFZzOUjwnbxlszMtP4SIJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMJYby4phLDeXFMOVbw3btlsjItP4iL/pqlHaBYTzNWyG0E+Kzmcq3hPHjbZGRaPwmQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQSxHl5SCWI8vKQcpHhvHbbZmZaPxGX/TVKO0CwnmatkNoJ8VnX1Uo7QLCeZq2Q2gnxWcylSoJty7+RExo0/Ii/Uwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUwvgd5TC+B3lML4HeUw+Tp2mHzGgzbM9GnT+hf21SjtAsJ5mrZDaCfFZ19VKO0CwnmatkNoJ8VnM/SPydu2WTI2dP4iP6mFcN3ccwrhu7jmFcN3ccwrhu7jmFcN3ccwrhu7jmFcN3ccwrhu7jmFcN3ccwrhu7jmFcN3ccwrhu7jmFcN3ccwrhu7jmFcN3ccwrhu7jmFcN3ccwrhu7jmFcN3ccwrhu7jmFcN3ccw/VvzdvGWSImdP4SP6lqaqUdoFhPM1bIbQT4rOZy9P5PHLLR/VpkjCXZnfAQS7M74CCXZnfAQS7M74CCXZnfAQS7M74CCXZnfAQS7M74CCXZnfAQS7M74CCXZnfAQS7M74CCXZnfAQS7M74CCXZnfAQS7M74CCXZnfAQS7M74CCXZnfAQS7M74CCXZnfAQcuj+Ttyyyf1ZZItTVSjtAsJ5mrZDaCfFZ19VKO0CwnmatkNoJ8VnX1Uo7QLCeZq2Q2gnxWdfVSjtAsJ5mrZDaCfFZ19VKO0CwnmatkNoJ8VnX1Uo7QLCeZq2Q2gnxWdfVSjtAsJ5mrZDaCfFZ19VKO0CwnmatkNoJ8VnX1Uo7QLCeZq2Q2gnxWdfVSjtAsJ5mrZDaCfFZ19VKO0CwnmatkNoJ8VnX1Uo7QLCeZq2Q2gnxWdfVSjtAsJ5mrZDaCfFZ19VKO0CwnmatkNoJ8VnX1Uo7QLCeZq2Q2gnxWdfVSjtAsJ5mrZDaCfFZ19VKO0CwnmatkNoJ8VnX1Uo7QLCeZq2Q2gnxWdfVSjtAsJ5mrZDaCfFZ19VKO0CwnmatkNoJ8VnX1Uo7QLCeZq2Q2gnxWdfVSjtAsJ5mrZDaCfFZ19VKO0CwnmatkNoJ8VnX1Uo7QLCeZq2Q2gnxWdfVSjtAsJ5mrZEf37jFZ19VKP8A+8sJ5mYesG7eFpZaLQZfUgt/Sn6XL/wVMqfYF28FL9aU+wLt4KX60p9gXbwUv1pT7Au3gpfrSn2BdvBS/WlPsC7eCl+tKfYF28FL9aU+wLt4KX60p9gXbwUv1pT7Au3gpfrSn2BdvBS/WlPsC7eCl+tKfYF28FL9aU+wLt4KX60p9gXbwUv1pT7Au3gpfrSn2BdvBS/WlPsC7eCl+tKfYF28FL9aU+wLt4KX60p9gXbwUv1pT7Au3gpfrSn2BdvBS/WlPsC7eCl+tKfYF28FL9aU+wLt4KX60p9gXbwUv1pT7Au3gpfrSn2BdvBS/WlPsC7eCl+tKfYF28FL9aU+wLt4KX60p9gXbwUv1pT7Au3gpfrSn2BdvBS/WlPsC7eCl+tKfYF28FL9aU+wLt4KX60p9gXbwUv1pT7Au3gpfrSn2BdvBS/WlPsC7eCl+tKfYF28FL9aU+wLt4KX60p9gXbwUv1pT7Au3gpfrSn2BdvBS/WlPsC7eCl+tKfYF28FL9aU+wLt4KX60p9gXbwUv1pT7Au3gpfrSn2BdvBS/WlPsC7eCl+tKfYF28FL9aU+wLt4KX60p9gXbwUv1pT7Au3gpfrSn2BdvBS/WlPsC7eCl+tKfYHhvCev1yt+0RGTJqlrxR8SP/ej5tHo06C/19M3/8QAHhEAAgMAAwEBAQAAAAAAAAAAAAECERIDMTJAECD/2gAIAQIBAT8AlJo3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3I3Ii20cnYuvx9FFFFFDXzQ8nJ2Lr8fRTMsyxqvoh5OTs0aG7+yHk5OymUymUymUymUymUymUymUymUymUymUymUymUymU/5h5OTstlstlstlstlstlstlstlstlstlstlstlstlstlv+YeTk7NM0zTNM0zTNM0zTNM0zTNM0zTNM0zTNM0zTNM0zTNM0zTG2/wBh5OTstFotFotFotFotFotD+OHk5O/vh5OTv74eTk7++Hk5O/vh5OTv74eTk7++Hk5O/vh5OTv74eTk7++Hk5O/vh5OTv74eTk7++HklGzDMMwzDMMwzDMMwzDMMwzDMMwzDMMwzDMMwzDMMwzDMMwzDMMwyKpH//EAB0RAAMBAQEBAQEBAAAAAAAAAAABEhExAkAQICH/2gAIAQMBAT8AS0lEolEolEolEolEolEolEolEolEolEolEolEolEolEolEofTzwffzz000000T35n088H3889NRSKQnv0Pp54NayRLPsfTzw1Go1Go1Go1Go1Go1Go1Go1Go1Go1Go1Go1Go1Gr+X088MRiMRiMRiMRiMRiMRiMRiMRiMRiMRiMRiMRiMRi/l9PPBrSUSiUSiUSiUSiUSiUSiUSiUSiUSiUSiUSiUSiUShLP19PPDGYzGYzGYzGYzGYzGL43088+99PPPvfTzz73088+99PPPvfTzz73088+99PPPvfTzz73088+99PPPvfTzz730Twoooooooooooooooooooooooooooooof8ArP/Z
-"></p>
+<figure>
+  <img src="prerender.jpg" alt="facebook prerender">
+  <figcaption>Image d’aperçu des posts sur Facebook</figcaption>
+</figure>
+
 <p>Voilà pour cette table ronde, j’espère que le compte rendu vous a plu. Il est évident que c’est sûrement plus intéressant en direct, on essayera peut-être par la suite de faire du streaming (live) ou du podcast, à voir.</p>
 <p>N’hésitez pas à continuer le débat dans les commentaires.</p>
 <p>Pour ma part, j’ai déjà d’autres articles “dans le pipe” (comme disent certains marketeux). Je vous retrouve bientôt ici ou sur Twitter, kiss.</p>
 
-]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</link><guid isPermaLink="true">http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</guid></item><item><title>Petite définition de BEM</title><description><![CDATA[
-<p><strong><a href="http://bem.info">BEM</a></strong> n’est ni une marque de voiture ni un groupe de musique, et encore moins une onomatopée (quoique). C’est plutôt une façon de nommer les classes en CSS, une convention en d’autres termes voire une méthodologie.</p>
-<p>Dans cet article, je ne vous expliquerai pas pourquoi il faut préférer BEM à une autre convention, je vous explique surtout comment l’utiliser.</p>
-<p><strong>BEM</strong> apporte une solution à un problème majeur en informatique : le nommage.</p>
-<p>Il n’y a rien de plus compliqué en informatique que de nommer un objet : besoin d’être explicite, ne doit pas être trop générique, ni trop compliqué, ni trop verbeux (ça, ça reste à voir avec BEM…).</p>
-<p>Lorsque l’on nomme un objet, une méthode, une fonction, une classe, on se doit d’être avant tout compréhensible. Une personne devant lire votre code doit directement comprendre de quoi vous parlez. Cette personne peut très bien être vous 6 mois, 1 an après. Je pense sincèrement qu’un code clair vaut toute la documentation du monde. Je ne dis pas qu’il ne faut pas documenter mais un code doit être facilement compréhensible, la documentation doit juste apporter un contexte, une situation particulière.</p>
-<p>Bref, <strong>BEM</strong> est le sigle pour <em>Block</em>, <em>Element</em>, <em>Modifier</em>. Qu’est-ce que cela veut dire.</p>
-<p>Prenons par exemple un site web. Nous avons un ensemble avec dedans deux onglets et en dessous le contenu de chaque onglet.</p>
-<p>Nous allons définir ce que sont le <em>block</em>, le ou les <em>elements</em> et les <em>modifiers</em>.</p>
-<p>Dans ce cas précis, le <em>block</em> est le conteneur, l’ensemble, ce qui entoure le tout. Appelons-le “Window”.</p>
-<p>Nous avons alors aussi les <em>elements</em> suivants : les onglets, que nous allons nommer “Tab”, et le contenu, là où il y a le texte de chaque onglet “Content”.</p>
-<p>Comment cela se traduit en <strong>BEM</strong> :</p>
-<ul>
-<li>Notre <em>block</em> s’appelant “Window” sera alors <code>.Window</code></li>
-<li>Nos <em>elements</em> “Tab” seront <code>.Window-tab</code></li>
-<li>Notre <em>element</em> “Content” sera <code>.Window-content</code></li>
-</ul>
-<p>Jusque là, cela devrait aller :</p>
-<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
-
-<span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
-
-  <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
-
-  <span class="hljs-rule">}</span></span>
-</code></pre>
-<p>Ce qui revient de manère générique à :</p>
-<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
-
-}</span>
-
-  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
-
-  }</span>
-</code></pre>
-<p>Oui, je vous conseille d’indenter votre code afin de grouper vos classes.</p>
-<p>Maintenant, nous allons définir ce qu’est un <em>modifier</em>. Un <em>modifier</em> change l’état de l’élément, il peut s’appliquer aussi bien sur un <em>block</em>, qu’un <em>element</em>.</p>
-<p>Si par exemple je souhaite mettre en actif un onglet (le mettre en avant car séléctionné), je ferai alors <code>.Window-tab--active</code>, soit :</p>
-<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
-
-<span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
-  <span class="hljs-rule">}</span></span>
-
-    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
-      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-    <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
-
-  <span class="hljs-rule">}</span></span>
-</code></pre>
-<p>J’aimerais aussi afficher ou non le contenu. Pour cela, je vais lui rajouter un <em>modifier</em></p>
-<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
-
-<span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
-  <span class="hljs-rule">}</span></span>
-
-    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
-      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-    <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
-  <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content--hidden</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
-  <span class="hljs-rule">}</span></span>
-</code></pre>
-<p>J’aurais très bien pu inverser et dire que par défaut le contenu est caché et je lui rajoute la classe <code>.Window-tab--active</code> pour l’afficher (<code>display: block</code>) mais lorsqu’il s’agit de cacher ou de faire appaître des éléments, je vous conseille vivement de plutôt ajouter un <em>modifier</em> qui cache les éléments, car cela évite de se prendre la tête sur quel <code>display</code> mettre par défaut. Là, vous mettez un <code>display: none</code> et voilà, qu’importe si celui de base est un <code>inline</code>, <code>inline-block</code>, <code>table-cell</code> ou autre.</p>
-<p>Du coup, nous avons maintenant nos différents types de classes. Cela se résume de manière générique à :</p>
-<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
-
-}</span>
-
-  .<span class="hljs-keyword">Block</span>--modifier <span class="hljs-list">{
-
-  }</span>
-
-  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
-
-  }</span>
-
-    .<span class="hljs-keyword">Block</span>-element--modifier <span class="hljs-list">{
-
-    }</span>
-</code></pre>
-<p>Ce qui donne <code>.Block-element--modifier</code> (notre <strong>BEM</strong>).</p>
-<p>Parlons maintenant du cas des termes multiples dans chaque partie. Voici comment cela se traduit.</p>
-<p><code>.MyBlock-myElement--myModifier</code></p>
-<p>Les <em>blocks</em> sont en “PascalCase” (ou UpperCamelCase), les <em>elements</em> et <em>modifiers</em> sont en “camelCase” (ou lowerCamelCase). Nous séparons le <em>block</em> de l’élément par “-“ et le <em>block</em> ou l’ <em>element</em> d’un <em>modifier</em> par “—“.</p>
-<p>Maintenant, vous savez tout sur <strong>BEM</strong>. Sachez qu’il existe tout de même plusieurs conventions de <strong>BEM</strong>. Celle que je vous ai apprise là est la norme de <strong>montage.js</strong> mais il y en a d’autres par exemple qui n’utilisent pas les majuscules et font ce genre de choses : <code>.my-block__my-element--my-modifier</code>. Il s’avère que c’est la <a href="http://bem.info/method/definitions/#naming-for-independent-css-classes">convention pseudo-officielle</a>.</p>
-<p>L’inconvénient de ceci est que c’est moins lisible au premier abord qui est quoi, et de plus, les <code>_</code> ne permettent pas de sélectionner facilement un terme en <em>double-cliquant</em> dessus.</p>
-<p>Deux petites choses avant de partir.</p>
-<p>Dans le but d’éviter de vous faire écraser vos propriétés par quelqu’un d’autre (une bibliothèque, un <em>SDK</em>), je vous conseille de rajouter votre organisation.</p>
-<p>Typiquement, ça donne <code>.org-Block-element--modifier</code>. Tout en minuscule et si possible ne pas dépasser les 3 lettres car vous allez devoir le répéter à chaque fois et ça peut être lourd.</p>
-<p>La deuxième chose est la classe qui sert de sélecteur en JavaScript. Plutôt que <em>binder</em> un élément via sa classe “CSS” (à chaque classe sa responsabilité), il est nettement préférable de créer une classe spécifique au JavaScript. Cela donne : <code>.org-js-Block-element--modifier</code>. Il suffit simplement de rajouter <code>-js</code> entre l’organisation et le <em>block</em>.</p>
-<p>Nous arrivons à la convention suivante : <code>.org[-js]-Block[-element][--modifier]</code></p>
-<p>Certains vous diront qu’ils mettent <code>.js-org-</code> mais étant donné que je considère cela comme un <em>namespace</em> global (autant css que js), je préfère mettre l’ <code>org</code> au début.</p>
-<p>Voilà, voilà, c’est certes un peu déroutant au début, et ca parait très verbeux mais cela vous permettra d’éviter de nooooooombreux soucis de nommage de classes où vous vous emmèlerez les pinceaux à coup de :</p>
-<pre><code class="lang-css"><span class="hljs-class">.footer</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> underline</span></span>;
-<span class="hljs-rule">}</span></span>
-
-<span class="hljs-class">.content</span> <span class="hljs-class">.footer</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> none</span></span>; <span class="hljs-comment">/* annule la propriété du précédent sélecteur */</span>
-<span class="hljs-rule">}</span></span>
-</code></pre>
-<p>Ciao les kids.</p>
-
-]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/petite-definition-bem/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/petite-definition-bem/</guid></item><item><title>Introduction au testing js front</title><description><![CDATA[
+]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</link><guid isPermaLink="true">http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</guid></item><item><title>Introduction au testing js front</title><description><![CDATA[
 <p>Les tests automatisés en front-end ont longtemps été ignorés,
 et le sont encore trop.</p>
 <p>Écrire des tests peut paraître chiant, mais le temps qu’ils rapportent
@@ -2205,7 +2208,7 @@ Faites un tour sur la <a href="http://caniuse.com/usage_table.php">page dédié 
 <li><a href="https://github.com/mikaeljorhult/brackets-autoprefixer">plugin autoprefixer pour Brackets</a></li>
 </ul>
 <figure>
-  <img src="../../../images/posts/sublime-text/autoprefixer.gif" alt="sublime text autoprefixer preview">
+  <img src="autoprefixer.gif" alt="sublime text autoprefixer preview">
   <figcaption>Intégration dans Sublime Text</figcaption>
 </figure>
 
@@ -2429,7 +2432,7 @@ dépôt Git.</p>
 maintenant (dans un dépôt Git bien entendu banane). Pour l’exemple, je l’ai réalisé dans le dépôt
 de Putain De Code:</p>
 <figure>
-  <img src="../../../images/posts/git/boutez-les-bugs-domptez-votre-historique/omagad-history.png" alt="capture historique">
+  <img src="omagad-history.png" alt="capture historique">
   <figcaption>Le pouvoir de l’arc en ciel</figcaption>
 </figure>
 
@@ -2723,16 +2726,16 @@ Et  si j’ai besoin d’aller chercher une information précise, j’irai la tr
 </ul>
 <p>Vous vous sentez chaud(e) pour commencer ? Très bien, c’est parti !</p>
 <h2 id="creer-une-liste-twitter"><a class="putainde-Title-anchor" href="#creer-une-liste-twitter">#</a>Créer une liste Twitter</h2><p>Pour créer une liste, aucun problème, vous allez dans “Me” dans le <em>header</em> puis “List” dans la colonne de gauche pour vous retrouver ici :</p>
-<p><img src="../../../images/posts/twitter/twitter-list.jpg" alt=""></p>
+<p><img src="twitter-list.jpg" alt=""></p>
 <p>Puis vous cliquez sur <code>Create list</code> et vous rentrez les informations que vous souhaitez :</p>
-<p><img src="../../../images/posts/twitter/create-list.png" alt=""></p>
+<p><img src="create-list.png" alt=""></p>
 <p>Nous voilà avec notre belle liste. Il n’y a plus qu’à la remplir de jolis <em>following</em>.</p>
 <p>Prenons par exemple <code>@nodenpm</code>, un beau <em>bot</em> tweetant les nouveaux packages node.js ou/et les updates de ces packages.</p>
-<p><img src="../../../images/posts/twitter/nodenpm.jpg" alt=""></p>
+<p><img src="nodenpm.jpg" alt=""></p>
 <p>Ajoutons-le à notre liste.</p>
-<p><img src="../../../images/posts/twitter/add-in-list.png" alt=""></p>
+<p><img src="add-in-list.png" alt=""></p>
 <p>Nous voilà maintenant avec notre liste comprenant un <em>following</em>. Ce qui en ayant ajouté quelques comptes donnera quelque chose comme ceci :</p>
-<p><img src="../../../images/posts/twitter/twitter-list-read.jpg" alt=""></p>
+<p><img src="twitter-list-read.jpg" alt=""></p>
 <p>Vous pouvez maintenant apprécier votre lecteur de flux.</p>
 <p>Oh mais ! C’est là que vous constatez qu’un de vos sites préférés n’a pas de compte Twitter ! Que faire ? Haha, et si on utilisait la puissance de IFTTT pour se créer un bot twitter qui tweet chaque nouvel article d’un des sites que vous appréciez ?! Mais ouais !</p>
 <h2 id="ifttt-la-solution-pour-parfaire-notre-lecteur"><a class="putainde-Title-anchor" href="#ifttt-la-solution-pour-parfaire-notre-lecteur">#</a>IFTTT, la solution pour parfaire notre lecteur</h2><p>Mais avant tout, créons notre compte twitter “bot” qui va tweeter ce qu’on souhaite.</p>
@@ -2745,7 +2748,7 @@ Et  si j’ai besoin d’aller chercher une information précise, j’irai la tr
 <li>Ajoutez votre “bot” à la liste que vous venez de créer précédemment</li>
 </ul>
 <p>… et voilà !</p>
-<h3 id="ifttt"><a class="putainde-Title-anchor" href="#ifttt">#</a>IFTTT</h3><p><img src="../../../images/posts/ifttt.png" alt=""></p>
+<h3 id="ifttt"><a class="putainde-Title-anchor" href="#ifttt">#</a>IFTTT</h3><p><img src="ifttt.png" alt=""></p>
 <p>Maintenant, IFTTT.</p>
 <blockquote>
 <p>IFTTT (“If This Then That”) est un service qui permet aux utilisateurs de connecter différentes applications ensemble à travers de simples conditions nommées “recettes”.</p>
