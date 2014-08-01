@@ -321,6 +321,8 @@
 .rcp-Tooltip {
   position: relative;
   display: inline-block;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 
 .rcp-Tooltip::before,
@@ -332,8 +334,6 @@
   opacity: 0;
   -webkit-transition: .3s ease;
   transition: .3s ease;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
 }
 
 .rcp-Tooltip--visible::before,
@@ -346,18 +346,13 @@
   opacity: 1;
 }
 
-.rcp-Tooltip::before {
-  content: "";
-  z-index: 1001;
-  position: absolute;
-  border: 6px solid transparent;
-  background: transparent;
-}
+/* tooltip content */
 
-.rcp-Tooltip::after {
+.rcp-Tooltip::before {
   content: attr(data-rcp-tooltip);
   font-size: .83333rem;
   line-height: 1.5625rem;
+  margin: 0;
   padding: 0 .5rem;
   color: #fff;
   background: #383838;
@@ -367,8 +362,18 @@
   border-radius: 2px;
 }
 
-.rcp-Tooltip--nowrap::after {
+.rcp-Tooltip--nowrap::before {
   white-space: nowrap;
+}
+
+/* tooltip arrow */
+
+.rcp-Tooltip::after {
+  content: "";
+  z-index: 1001;
+  position: absolute;
+  border: .375rem solid transparent;
+  background: transparent;
 }
 
 /**
@@ -389,19 +394,20 @@
 }
 
 .rcp-Tooltip--visible.rcp-Tooltip--top::before,
-.rcp-Tooltip--visible.rcp-Tooltip--top::after,
-.rcp-Tooltip--top:hover::after,
 .rcp-Tooltip--top:hover::before,
-.rcp-Tooltip--top:focus::after,
 .rcp-Tooltip--top:focus::before {
-  -webkit-transform: translateX(-50%) translateY(-.5rem);
-  -ms-transform: translateX(-50%) translateY(-.5rem);
-  transform: translateX(-50%) translateY(-.5rem);
+  margin-bottom: 0.875rem;
 }
 
-.rcp-Tooltip--top::before {
+.rcp-Tooltip--top::after {
+  margin-bottom: -0.75rem;
   border-top-color: #383838;
-  margin-bottom: -12px;
+}
+
+.rcp-Tooltip--visible.rcp-Tooltip--top::after,
+.rcp-Tooltip--top:hover::after,
+.rcp-Tooltip--top:focus::after {
+  margin-bottom: 0.125rem;
 }
 
 /**
@@ -418,19 +424,20 @@
 }
 
 .rcp-Tooltip--visible.rcp-Tooltip--bottom::before,
-.rcp-Tooltip--visible.rcp-Tooltip--bottom::after,
-.rcp-Tooltip--bottom:hover::after,
 .rcp-Tooltip--bottom:hover::before,
-.rcp-Tooltip--bottom:focus::after,
 .rcp-Tooltip--bottom:focus::before {
-  -webkit-transform: translateX(-50%) translateY(.5rem);
-  -ms-transform: translateX(-50%) translateY(.5rem);
-  transform: translateX(-50%) translateY(.5rem);
+  margin-top: 0.875rem;
 }
 
-.rcp-Tooltip--bottom::before {
-  margin-top: -12px;
+.rcp-Tooltip--bottom::after {
+  margin-top: -0.75rem;
   border-bottom-color: #383838;
+}
+
+.rcp-Tooltip--visible.rcp-Tooltip--bottom::after,
+.rcp-Tooltip--bottom:hover::after,
+.rcp-Tooltip--bottom:focus::after {
+  margin-top: 0.125rem;
 }
 
 /**
@@ -447,19 +454,20 @@
 }
 
 .rcp-Tooltip--visible.rcp-Tooltip--left::before,
-.rcp-Tooltip--visible.rcp-Tooltip--left::after,
-.rcp-Tooltip--left:hover::after,
 .rcp-Tooltip--left:hover::before,
-.rcp-Tooltip--left:focus::after,
 .rcp-Tooltip--left:focus::before {
-  -webkit-transform: translateX(-.5rem) translateY(-50%);
-  -ms-transform: translateX(-.5rem) translateY(-50%);
-  transform: translateX(-.5rem) translateY(-50%);
+  margin-right: 0.875rem;
 }
 
-.rcp-Tooltip--left::before {
-  margin-right: -12px;
+.rcp-Tooltip--left::after {
+  margin-right: -0.75rem;
   border-left-color: #383838;
+}
+
+.rcp-Tooltip--visible.rcp-Tooltip--left::after,
+.rcp-Tooltip--left:hover::after,
+.rcp-Tooltip--left:focus::after {
+  margin-right: 0.125rem;
 }
 
 /**
@@ -476,19 +484,20 @@
 }
 
 .rcp-Tooltip--visible.rcp-Tooltip--right::before,
-.rcp-Tooltip--visible.rcp-Tooltip--right::after,
-.rcp-Tooltip--right:hover::after,
 .rcp-Tooltip--right:hover::before,
-.rcp-Tooltip--right:focus::after,
 .rcp-Tooltip--right:focus::before {
-  -webkit-transform: translateX(.5rem) translateY(-50%);
-  -ms-transform: translateX(.5rem) translateY(-50%);
-  transform: translateX(.5rem) translateY(-50%);
+  margin-left: 0.875rem;
 }
 
-.rcp-Tooltip--right::before {
-  margin-left: -12px;
+.rcp-Tooltip--right::after {
+  margin-left: -0.75rem;
   border-right-color: #383838;
+}
+
+.rcp-Tooltip--visible.rcp-Tooltip--right::after,
+.rcp-Tooltip--right:hover::after,
+.rcp-Tooltip--right:focus::after {
+  margin-left: 0.125rem;
 }
 
 html {
