@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Fri, 01 Aug 2014 05:05:20 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Maîtriser les redirections shell</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Thu, 21 Aug 2014 07:26:42 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Maîtriser les redirections shell</title><description><![CDATA[
 <p>Le shell (ou ligne de commande) est l’outil de prédilection pour bon nombre
 d’entre nous qui utilisons un OS de la famille UNIX. Nous sommes persuadés que
 bien utilisé, il remplace avantageusement un IDE complexe et gourmand.</p>
@@ -42,15 +42,15 @@ et l’entrée standard est le clavier de l’utilisateur.</p>
 aller sur la sortie standard (par défaut, le terminal), doit plutôt être stocké
 dans un fichier.</p>
 <p>Pour ça, on utilise la syntaxe <code>&gt; [fichier]</code> :</p>
-<pre><code class="lang-console"><span class="hljs-input"><span class="hljs-prompt">$ echo "Hello" &gt;</span> message</span>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>echo <span class="hljs-string">"Hello"</span> &gt; message
 <span class="hljs-variable">$ </span>cat message
 <span class="hljs-constant">Hello</span>
 </code></pre>
 <h3 id="redirection-d-entree-code-lt-code-"><a class="putainde-Title-anchor" href="#redirection-d-entree-code-lt-code-">#</a>Redirection d’entrée : <code>&lt;</code></h3><p>À l’inverse, on peut aussi spécifier à un programme qu’il doit utiliser un
 fichier comme son entrée standard, à la place du clavier de l’utilisateur.</p>
 <p>En réutilisant notre fichier <code>message</code>, on peut par exemple faire :</p>
-<pre><code class="lang-console">$ <span class="hljs-keyword">cat</span> &lt; message
-Hello
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>cat &lt; message
+<span class="hljs-constant">Hello</span>
 </code></pre>
 <p>Notez qu’on utilise bien <code>cat</code> <em>sans argument</em>, il utilise donc l’entrée
 standard.</p>
@@ -81,11 +81,11 @@ descripteur source et <em>Y</em> l’identifiant du descripteur sur lequel on ve
 rediriger.</p>
 <p>L’exemple suivant montre comment rediriger la sortie standard sur la sortie
 d’erreur (c’est comme ça qu’on écrit sur la sortie d’erreur dans un script).</p>
-<pre><code class="lang-console">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Error"</span> <span class="hljs-number">1</span>&gt;&amp;<span class="hljs-number">2</span>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>echo <span class="hljs-string">"Error"</span> <span class="hljs-number">1</span>&gt;&amp;<span class="hljs-number">2</span>
 </code></pre>
 <p>Plus généralement, on peut omettre la partie avant le <code>&gt;&amp;</code>, elle prendra la
 valeur 1 par défaut. On aura donc le script suivant :</p>
-<pre><code class="lang-console">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Error"</span> &gt;&amp;<span class="hljs-number">2</span>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>echo <span class="hljs-string">"Error"</span> &gt;&amp;<span class="hljs-number">2</span>
 </code></pre>
 <h3 id="ajouter-en-fin-de-fichier-code-gt-gt-code-"><a class="putainde-Title-anchor" href="#ajouter-en-fin-de-fichier-code-gt-gt-code-">#</a>Ajouter en fin de fichier : <code>&gt;&gt;</code></h3><p>Par défaut, <code>&gt;</code> écrase le fichier dans lequel la redirection va s’effectuer.
 Pour éviter ce problème, on peut utiliser à la place <code>&gt;&gt;</code> qui va ajouter en fin
@@ -497,16 +497,16 @@ on va plutôt partir comme <a href="http://myth.io/">Myth.io</a> ou <a href="htt
 qui se concentrent sur le rendu et non le workflow pour générer ce rendu.</p>
 <p>Nous allons donc faire simple et efficace avec une task <a href="/posts/js/introduction-gulp/">gulp</a>.
 Ceci pourrait bien entendu être aussi bien fait avec grunt ou même make et <a href="https://github.com/facebook/watchman">watchman</a>.</p>
-<pre><code class="lang-shell">$ mkdir monrework &amp;&amp; cd monrework
+<pre><code class="lang-shell">$ <span class="hljs-built_in">mkdir</span> monrework &amp;&amp; <span class="hljs-built_in">cd</span> monrework
 
-# <span class="hljs-keyword">on</span> crée un <span class="hljs-keyword">package</span>.json pour sauvegarder les références des paquets qu<span class="hljs-attribute">'on</span> va utiliser
+# on crée un package.json pour sauvegarder les références des paquets qu'on va utiliser
 $ npm init
 
-# <span class="hljs-keyword">on</span> install gulp, autoprefixer et rework &amp; co en les sauvegardants dans la partie <span class="hljs-string">"devDependencies"</span>
-$ npm i -D minimist gulp gulp-util gulp-plumber gulp-autoprefixer gulp-rework rework-npm rework-vars rework-calc rework-color-<span class="hljs-keyword">function</span> rework-<span class="hljs-keyword">rem</span>-fallback rework-parent rework-ie-limits
+# on install gulp, autoprefixer et rework &amp; co en les sauvegardants dans la partie "devDependencies"
+$ npm i -D minimist gulp gulp-util gulp-plumber gulp-autoprefixer gulp-rework rework-npm rework-vars rework-calc rework-<span class="hljs-built_in">color</span>-function rework-<span class="hljs-comment">rem-fallback rework-parent rework-ie-limits</span>
 
-# <span class="hljs-keyword">on</span> créé notre fichier vide
-$ mkdir src &amp;&amp; mkdir src/styles &amp;&amp; touch src/styles/index.css
+# on créé notre fichier vide
+$ <span class="hljs-built_in">mkdir</span> src &amp;&amp; <span class="hljs-built_in">mkdir</span> src/styles &amp;&amp; touch src/styles/index.css
 </code></pre>
 <p>Ensuite il nous reste à faire notre petit <code>Gulpfile.js</code></p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> options = <span class="hljs-keyword">require</span>(<span class="hljs-string">"minimist"</span>)(process.argv.slice(<span class="hljs-number">2</span>))
@@ -682,23 +682,23 @@ ou <a href="http://atom.io">Atom</a> (apm install, editorconfig, docblockr, html
 <h3 id="installez-les-em-packages-em-adequats"><a class="putainde-Title-anchor" href="#installez-les-em-packages-em-adequats">#</a>Installez les <em>packages</em> adéquats</h3><p>Oui, deux packages, <a href="https://github.com/nfroidure/gulp-iconfont">gulp-iconfont</a> et <a href="https://github.com/backflip/gulp-iconfont-css">gulp-iconfont-css</a>.</p>
 <pre><code class="lang-shell">$ npm <span class="hljs-operator"><span class="hljs-keyword">install</span> gulp-iconfont gulp-iconfont-css <span class="hljs-comment">--save-dev</span></span>
 </code></pre>
-<h3 id="importez-les"><a class="putainde-Title-anchor" href="#importez-les">#</a>Importez-les</h3><pre><code class="lang-js"><span class="hljs-comment">// import</span>
-<span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>)
+<h3 id="importez-les"><a class="putainde-Title-anchor" href="#importez-les">#</a>Importez-les</h3><pre><code class="lang-js"><span class="hljs-regexp">//</span> <span class="hljs-reserved">import</span>
+<span class="hljs-reserved">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>)
 
-<span class="hljs-keyword">var</span> iconfont = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-iconfont'</span>)
-<span class="hljs-keyword">var</span> iconfontCss = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-iconfont-css'</span>)
+<span class="hljs-reserved">var</span> iconfont = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-iconfont'</span>)
+<span class="hljs-reserved">var</span> iconfontCss = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-iconfont-css'</span>)
 </code></pre>
 <h3 id="creez-votre-propre-tache-gulp"><a class="putainde-Title-anchor" href="#creez-votre-propre-tache-gulp">#</a>Créez votre propre tâche gulp</h3><p>Je préconise d’appeler toute transformation d’une image vers une fonte “glyphicon”.</p>
 <pre><code class="lang-js"><span class="hljs-comment">// glyphicons</span>
-gulp.task(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+gulp.task(<span class="hljs-string">'glyphicons'</span>, function() {
  <span class="hljs-keyword">return</span> gulp.src(<span class="hljs-string">'src/glyphicons/**/*'</span>) <span class="hljs-comment">// où sont vos svg</span>
     .pipe(iconfontCss({
-      fontName: <span class="hljs-string">'icons'</span>, <span class="hljs-comment">// nom de la fonte, doit être identique au nom du plugin iconfont</span>
-      targetPath: <span class="hljs-string">'../../styles/shared/icons.css'</span>, <span class="hljs-comment">// emplacement de la css finale</span>
-      fontPath: <span class="hljs-string">'../fonts/'</span> <span class="hljs-comment">// emplacement des fontes finales</span>
+<span class="hljs-label">      fontName:</span> <span class="hljs-string">'icons'</span>, <span class="hljs-comment">// nom de la fonte, doit être identique au nom du plugin iconfont</span>
+<span class="hljs-label">      targetPath:</span> <span class="hljs-string">'../../styles/shared/icons.css'</span>, <span class="hljs-comment">// emplacement de la css finale</span>
+<span class="hljs-label">      fontPath:</span> <span class="hljs-string">'../fonts/'</span> <span class="hljs-comment">// emplacement des fontes finales</span>
     }))
     .pipe(iconfont({
-      fontName: <span class="hljs-string">'icons'</span> <span class="hljs-comment">// identique au nom de iconfontCss</span>
+<span class="hljs-label">      fontName:</span> <span class="hljs-string">'icons'</span> <span class="hljs-comment">// identique au nom de iconfontCss</span>
      }))
     .pipe( gulp.dest(<span class="hljs-string">'src/assets/fonts'</span>) )
 })
@@ -748,8 +748,8 @@ avec les paramètres suivants :</p>
 <li>l’index de l’élément courant.</li>
 <li>le tableau sur lequel on est entrain d’itérer</li>
 </ul>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> sum = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>].reduce( <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">( memo, val)</span></span>{
-  <span class="hljs-keyword">return</span> memo + val;
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> sum = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>].reduce( function( memo, <span class="hljs-function"><span class="hljs-keyword">val</span>){</span>
+  <span class="hljs-keyword">return</span> memo + <span class="hljs-function"><span class="hljs-keyword">val</span>;</span>
 });
 </code></pre>
 <p>En fait, <code>Array#reduce</code> accepte un deuxième argument après la fonction de callback.
@@ -825,21 +825,21 @@ et <code>containSite</code> en fixant leur premier paramètre. Ainsi <code>compa
 Par exemple, voici une liste de sites avec, pour chaque site, le pourcentage de visite par navigateur.
 Imaginons que nous souhaitons changer la structure de l’objet pour grouper ces
 résultats par type de navigateur plutôt que par site. Là encore <code>Array#reduce</code> s’avère plutôt pratique.</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> data = {
+<pre><code class="lang-javascript">var data = {
       <span class="hljs-string">"google.fr"</span> : [
-       {name: <span class="hljs-string">"Chrome"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"50%"</span>},
-        {name: <span class="hljs-string">"FireFox"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"30%"</span>},
-        {name: <span class="hljs-string">"Internet Explorer"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"20%"</span> }
+       {<span class="hljs-string">name:</span> <span class="hljs-string">"Chrome"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"50%"</span>},
+        {<span class="hljs-string">name:</span> <span class="hljs-string">"FireFox"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"30%"</span>},
+        {<span class="hljs-string">name:</span> <span class="hljs-string">"Internet Explorer"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"20%"</span> }
       ],
       <span class="hljs-string">"mozilla.fr"</span> : [
-        {name: <span class="hljs-string">"Chrome"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"20%"</span>},
-        {name: <span class="hljs-string">"FireFox"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"60%"</span>},
-        {name: <span class="hljs-string">"Internet Explorer"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"20%"</span>}
+        {<span class="hljs-string">name:</span> <span class="hljs-string">"Chrome"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"20%"</span>},
+        {<span class="hljs-string">name:</span> <span class="hljs-string">"FireFox"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"60%"</span>},
+        {<span class="hljs-string">name:</span> <span class="hljs-string">"Internet Explorer"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"20%"</span>}
       ] ,
       <span class="hljs-string">"microsoft.fr"</span> : [
-        {name: <span class="hljs-string">"Chrome"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"10%"</span>},
-        {name: <span class="hljs-string">"FireFox"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"20%"</span>},
-        {name: <span class="hljs-string">"Internet Explorer"</span>, <span class="hljs-keyword">value</span>: <span class="hljs-string">"70%"</span>}
+        {<span class="hljs-string">name:</span> <span class="hljs-string">"Chrome"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"10%"</span>},
+        {<span class="hljs-string">name:</span> <span class="hljs-string">"FireFox"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"20%"</span>},
+        {<span class="hljs-string">name:</span> <span class="hljs-string">"Internet Explorer"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"70%"</span>}
       ]
     };
 
@@ -847,12 +847,12 @@ function groupByBrowser( site, memo, browser){
   <span class="hljs-keyword">if</span> (!memo[browser.name]){
     memo[browser.name] = [];
   }
-  memo[browser.name].push({site:site, <span class="hljs-keyword">value</span>: browser.<span class="hljs-keyword">value</span>});
+  memo[browser.name].push({<span class="hljs-string">site:</span>site, <span class="hljs-string">value:</span> browser.value});
   <span class="hljs-keyword">return</span> memo
 }
 
-<span class="hljs-keyword">var</span> results = Object.keys(data).reduce( function (memo, site) {
-  <span class="hljs-keyword">return</span> data[site].reduce(groupByBrowser.bind(<span class="hljs-keyword">null</span>, site), memo)
+var results = Object.keys(data).reduce( function (memo, site) {
+  <span class="hljs-keyword">return</span> data[site].reduce(groupByBrowser.bind(<span class="hljs-literal">null</span>, site), memo)
 }, {});
 </code></pre>
 <p>J’espère que vous avez apprécié ces quelques exemples d’utilisation de <code>Array#reduce</code>.
@@ -1001,7 +1001,7 @@ $ <span class="hljs-keyword">echo</span> <span class="hljs-string">'eval "$(rben
 $ <span class="hljs-keyword">source</span> ~/.bashrc
 </code></pre>
 <p>Désormais <em>rbenv</em> est installé et ses commandes sont disponibles dans votre terminal. Il faut maintenant lui installer le plugin pour récupérer les différentes versions de Ruby :</p>
-<pre><code class="lang-sh"><span class="hljs-variable">$ </span>git clone git<span class="hljs-variable">@github</span>.<span class="hljs-symbol">com:</span>sstephenson/ruby-build.git ~<span class="hljs-regexp">/.rbenv/plugins</span><span class="hljs-regexp">/ruby-build</span>
+<pre><code class="lang-sh">$ git clone git<span class="hljs-annotation">@github</span>.<span class="hljs-string">com:</span>sstephenson<span class="hljs-regexp">/ruby-build.git ~/</span>.rbenv<span class="hljs-regexp">/plugins/</span>ruby-build
 </code></pre>
 <p>C’est bon, vous pouvez installer Ruby. J’ai constaté sur Ubuntu qu’il était nécessaire d’installer au préalable <code>libssl-dev</code> et <code>g++</code>, simplement avec <code>sudo apt-get install libssl-dev g++</code>. Lançons-nous :</p>
 <pre><code class="lang-sh">rbenv <span class="hljs-operator"><span class="hljs-keyword">install</span> <span class="hljs-number">2.1</span><span class="hljs-number">.1</span>
@@ -1012,7 +1012,7 @@ rbenv <span class="hljs-keyword">global</span> <span class="hljs-number">2.1</sp
 <p>C’était facile n’est-ce pas ? Et bien c’est encore plus facile d’utiliser une bibliothèque (appelée “gem”) ou un framework Ruby. Comme nous allons utiliser Sinatra dans notre prochain article, autant l’installer tout de suite. Pour installer une gem qui sera exécutée dans la console comme Sass il est nécessaire de l’installer de cette façon : <code>gem install sass</code>. Seulement pour Sinatra, nous avons seulement besoin que le framework soit disponible dans nos scripts Ruby. Pour cela nous allons utiliser un gestionnaire de dépendance des gem Ruby, et nous verrons cela dans le prochain article pour nos premiers pas avec Sinatra.</p>
 <p>D’ici là vous pouvez commencer à jouer avec Ruby en tapant la commande <code>irb</code> dans votre terminal, qui lance l’interpretteur Ruby. Pourquoi pas essayer un <em>Hello World!</em> à la Ruby ?</p>
 <pre><code class="lang-ruby">puts <span class="hljs-string">'Hello World!'</span>
-puts (<span class="hljs-number">1</span>..<span class="hljs-number">3</span>).to_a.<span class="hljs-built_in">reverse</span>.<span class="hljs-built_in">join</span>(<span class="hljs-string">' ... '</span>) &lt;&lt; <span class="hljs-string">' ... The World is ours!!!'</span>
+puts (<span class="hljs-number">1</span>..<span class="hljs-number">3</span>).to_a.<span class="hljs-keyword">reverse</span>.<span class="hljs-keyword">join</span>(<span class="hljs-string">' ... '</span>) &lt;&lt; <span class="hljs-string">' ... The World is ours!!!'</span>
 </code></pre>
 <p>Enjoy!</p>
 
@@ -1248,17 +1248,17 @@ Oh et attention, tous les navigateurs ne font pas 16px de base. Je dis ça si vo
 <li>Notre <em>element</em> “Content” sera <code>.Window-content</code></li>
 </ul>
 <p>Jusque là, cela devrait aller :</p>
-<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+<pre><code class="lang-css">.Window <span class="hljs-list">{
 
-<span class="hljs-rule">}</span></span>
+}</span>
 
-  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+  .Window-tab <span class="hljs-list">{
 
-  <span class="hljs-rule">}</span></span>
+  }</span>
 
-  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+  .Window-content <span class="hljs-list">{
 
-  <span class="hljs-rule">}</span></span>
+  }</span>
 </code></pre>
 <p>Ce qui revient de manère générique à :</p>
 <pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
@@ -1523,8 +1523,8 @@ une <code>string</code>.</p>
 })
 </code></pre>
 <p>permettent ici d’identifier qu’en réalité on a besoin de :</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">type</span>.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> {</span>
-  <span class="hljs-keyword">return</span> Object.prototype.toString.<span class="hljs-built_in">call</span>(value) == <span class="hljs-string">"[object String]"</span>
+<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(value) == <span class="hljs-string">"[object String]"</span>
 }
 </code></pre>
 <p>Et c’est à la force des résultats de tests que vous identifierez rapidement
@@ -1660,7 +1660,7 @@ de fichiers</a>.</p>
 <pre><code class="lang-shell"><span class="hljs-variable">$ </span>npm i -g gulp
 </code></pre>
 <p>Ensuite dans votre projet :</p>
-<pre><code class="lang-shell"><span class="hljs-variable">$ </span>npm i -<span class="hljs-constant">D</span> gulp gulp-util gulp-plumber gulp-<span class="hljs-constant">WHATEVER</span>
+<pre><code class="lang-shell"><span class="hljs-variable">$ </span>npm i -<span class="hljs-constant">D </span>gulp gulp-util gulp-plumber gulp-<span class="hljs-constant">WHATEVER</span>
 </code></pre>
 <p><em>Note : <code>npm i -D</code> == <code>npm install --save-dev</code>, c’est cadeau.</em></p>
 <p>Bon dans mon exemple j’ai mis un peu n’importe quoi, donc on va faire un mini workflow de hipster hacker.</p>
@@ -1668,7 +1668,7 @@ de fichiers</a>.</p>
 optimisation avec <a href="https://github.com/css/csso">CSSO</a>.</p>
 <pre><code class="lang-shell"><span class="hljs-variable">$ </span>mkdir putaindegulp &amp;&amp; cd putaindegulp
 <span class="hljs-variable">$ </span>npm init
-<span class="hljs-variable">$ </span>npm i -<span class="hljs-constant">D</span> gulp gulp-util gulp-plumber gulp-myth gulp-csso minimist
+<span class="hljs-variable">$ </span>npm i -<span class="hljs-constant">D </span>gulp gulp-util gulp-plumber gulp-myth gulp-csso minimist
 </code></pre>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp"</span>)
 <span class="hljs-keyword">var</span> gutil = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-util"</span>)
@@ -1870,7 +1870,7 @@ Exemple avec <a href="https://github.com/ctalkington/rework-rem-fallback">rework
 <span class="hljs-keyword">var</span> out14 = rework(css).<span class="hljs-keyword">use</span>(remFallback(<span class="hljs-number">14</span>)).toString()
 </code></pre>
 <p>Avec l’exemple d’avant, et ce bout de CSS:</p>
-<pre><code class="lang-css"><span class="hljs-class">.main-header</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">5rem</span> </span></span></span>}
+<pre><code class="lang-css">.main-header { width: <span class="hljs-number">5</span><span class="hljs-comment">rem }</span>
 </code></pre>
 <p>… On obtiendra le résultat suivant:</p>
 <pre><code class="lang-css"><span class="hljs-class">.main-header</span> <span class="hljs-rules">{
@@ -2061,14 +2061,14 @@ peut-être pas vous plaire.</p>
 de pouvoir utiliser le nesting pour pouvoir rapidement produire les sélecteurs adéquats.
 Mais en terme de maintenance et surtout de réutilisation, c’est vraiment à chier.
 Faut dire ce qui est.</p>
-<pre><code class="lang-scss"><span class="hljs-input"><span class="hljs-prompt">.widget {
-  // titre
+<pre><code class="lang-scss">.widget {
+ <span class="hljs-comment"> // titre</span>
   h3 { }
 
-  // widget body
-  &gt;</span> div {
+ <span class="hljs-comment"> // widget body</span>
+  &gt; <span class="hljs-operator">div</span> {
 
-    <span class="hljs-regexp">//</span> liste</span>
+   <span class="hljs-comment"> // liste</span>
     ul {
 
     }
@@ -2081,13 +2081,13 @@ Il faut alourdir la CSS. Pareillement, si notre fameuse liste dans le corps n’
 pas dans la même arborescence que celle décrite, il faut à nouveau alourdir notre CSS.
 Sans rentrer dans ces solutions solides (nous parlerons de BEM très bientôt),
 cette solution serait bien plus élégante pour la réutilisation :</p>
-<pre><code class="lang-css"><span class="hljs-class">.widget</span> <span class="hljs-rules">{<span class="hljs-rule">}</span></span>
+<pre><code class="lang-css">.widget <span class="hljs-list">{}</span>
 
-  <span class="hljs-class">.widget-title</span> <span class="hljs-rules">{ <span class="hljs-rule">}</span></span>
+  .widget-title <span class="hljs-list">{ }</span>
 
-  <span class="hljs-class">.widget-body</span> <span class="hljs-rules">{ <span class="hljs-rule">}</span></span>
+  .widget-body <span class="hljs-list">{ }</span>
 
-    <span class="hljs-class">.widget-body-list</span> <span class="hljs-rules">{ <span class="hljs-rule">}</span></span>
+    .widget-body-list <span class="hljs-list">{ }</span>
 </code></pre>
 <p>Vous remarquerez que j’ai un code ici beaucoup plus compréhensible par un nouveau,
 mais aussi bien mieux réutilisable et surtout, point très important, non couplé
@@ -2152,10 +2152,10 @@ certains sont restés sur leur faim.
 Voici donc de rapides exemples de mise en place de cette solution.</p>
 <h2 id="installation-d-autoprefixer"><a class="putainde-Title-anchor" href="#installation-d-autoprefixer">#</a>Installation d’autoprefixer</h2><p>Il vous faudra <a href="http://nodejs.org/">Node.js</a> (qui embarque maintenant <a href="https://www.npmjs.org/">Npm</a>) afin de pouvoir
 installer ce nouveau joujou.</p>
-<pre><code class="lang-shell"># <span class="hljs-keyword">on</span> install autoprefixer via npm <span class="hljs-keyword">en</span> <span class="hljs-keyword">global</span>
-$ npm install --<span class="hljs-keyword">global</span> autoprefixer
-# <span class="hljs-keyword">ou</span> pour les fainéants
-$ npm <span class="hljs-keyword">i</span> -<span class="hljs-keyword">g</span> autoprefixer
+<pre><code class="lang-shell"><span class="hljs-comment"># on install autoprefixer via npm en global</span>
+$ <span class="hljs-built_in">npm</span> install --<span class="hljs-built_in">global</span> autoprefixer
+<span class="hljs-comment"># ou pour les fainéants</span>
+$ <span class="hljs-built_in">npm</span> i -g autoprefixer
 </code></pre>
 <p>Une fois ceci fait, vous devriez avoir la commande <code>autoprefixer</code> disponible.
 On vérifie de suite avec <code>autoprefixer -v</code>.</p>
@@ -2183,7 +2183,7 @@ comme beaucoup de commandes, vous allez avoir la sortie crachée en plein visage
   -<span class="hljs-keyword">h</span>, --<span class="hljs-keyword">help</span>               show <span class="hljs-keyword">help</span> text
   -<span class="hljs-keyword">v</span>, --<span class="hljs-keyword">version</span>            <span class="hljs-keyword">print</span> program <span class="hljs-keyword">version</span>
 </code></pre><p>Du coup si on veut faire un coup de commande bien personnalisée on pourra faire :</p>
-<pre><code class="lang-shell">$ autoprefixer -<span class="hljs-keyword">b</span> <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -<span class="hljs-keyword">o</span> prefixed.css <span class="hljs-built_in">index</span>.css
+<pre><code class="lang-shell"><span class="hljs-variable">$ </span>autoprefixer -b <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -o prefixed.css index.css
 </code></pre>
 <p>Il va par contre nous falloir un fichier css pour tester :</p>
 <pre><code class="lang-shell"># <span class="hljs-keyword">on</span> met un peu de CSS dans <span class="hljs-built_in">index</span>.css manière de tester <span class="hljs-keyword">le</span> bouzin
@@ -2251,7 +2251,7 @@ $ <span class="hljs-keyword">echo</span> <span class="hljs-string">"\tautoprefix
 $ <span class="hljs-keyword">cat</span> Makefile
 </code></pre>
 <p>Voilà votre Makefile doit être bien rempli. Pour tester la commande <code>css</code>:</p>
-<pre><code class="lang-shell">$ <span class="hljs-keyword">make</span> css
+<pre><code class="lang-shell"><span class="hljs-variable">$ </span>make css
 </code></pre>
 <p>Vous remarquerez que la commande <em>autoprefixer</em> s’affiche, si ça vous embête, rajoutez
 <code>@</code> devant. Vous pouvez modifier votre Makefile dans ce sens:</p>
@@ -2321,8 +2321,8 @@ gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"st
 <span class="hljs-comment">// $ gulp dev</span>
 </code></pre>
 <h3 id="autoprefixer-avec-grunt"><a class="putainde-Title-anchor" href="#autoprefixer-avec-grunt">#</a>Autoprefixer avec Grunt</h3><p>Voici un petit Gruntfile avec la même configuration que ci dessus</p>
-<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
-<span class="hljs-pi">  "use strict"</span>;
+<pre><code class="lang-js">module.exports = function(grunt) {
+  <span class="hljs-string">"use strict"</span>;
 
   grunt.loadNpmTasks(<span class="hljs-string">"grunt-contrib-sass"</span>)
   grunt.loadNpmTasks(<span class="hljs-string">"grunt-autoprefixer"</span>)
@@ -2330,46 +2330,46 @@ gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"st
   grunt.loadNpmTasks(<span class="hljs-string">"grunt-contrib-watch"</span>)
 
   grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="hljs-string">"expanded"</span>
+<span class="hljs-label">    sass:</span> {
+<span class="hljs-label">      dist:</span> {
+<span class="hljs-label">        options:</span> {
+<span class="hljs-label">          style:</span> <span class="hljs-string">"expanded"</span>
         },
-        files: [{
-          expand: <span class="hljs-literal">true</span>,
-          flatten: <span class="hljs-literal">true</span>,
-          cwd: <span class="hljs-string">"./src/css"</span>,
-          src: [<span class="hljs-string">"*.scss"</span>],
-          dest: <span class="hljs-string">"./dist/css"</span>,
-          ext: <span class="hljs-string">".css"</span>
+<span class="hljs-label">        files:</span> [{
+<span class="hljs-label">          expand:</span> <span class="hljs-literal">true</span>,
+<span class="hljs-label">          flatten:</span> <span class="hljs-literal">true</span>,
+<span class="hljs-label">          cwd:</span> <span class="hljs-string">"./src/css"</span>,
+<span class="hljs-label">          src:</span> [<span class="hljs-string">"*.scss"</span>],
+<span class="hljs-label">          dest:</span> <span class="hljs-string">"./dist/css"</span>,
+<span class="hljs-label">          ext:</span> <span class="hljs-string">".css"</span>
         }]
       }
     },
-    autoprefixer: {
-      options: {
-        browsers: [<span class="hljs-string">"last 2 versions"</span>, <span class="hljs-string">"&gt; 1%"</span>, <span class="hljs-string">"Explorer 7"</span>, <span class="hljs-string">"Android 2"</span>]
+<span class="hljs-label">    autoprefixer:</span> {
+<span class="hljs-label">      options:</span> {
+<span class="hljs-label">        browsers:</span> [<span class="hljs-string">"last 2 versions"</span>, <span class="hljs-string">"&gt; 1%"</span>, <span class="hljs-string">"Explorer 7"</span>, <span class="hljs-string">"Android 2"</span>]
       },
-      dist: {
-        expand: <span class="hljs-literal">true</span>,
-        flatten: <span class="hljs-literal">true</span>,
-        cwd: <span class="hljs-string">"./dist/css"</span>,
-        src: [<span class="hljs-string">"*.css"</span>],
-        dest: <span class="hljs-string">"./dist/css/"</span>
+<span class="hljs-label">      dist:</span> {
+<span class="hljs-label">        expand:</span> <span class="hljs-literal">true</span>,
+<span class="hljs-label">        flatten:</span> <span class="hljs-literal">true</span>,
+<span class="hljs-label">        cwd:</span> <span class="hljs-string">"./dist/css"</span>,
+<span class="hljs-label">        src:</span> [<span class="hljs-string">"*.css"</span>],
+<span class="hljs-label">        dest:</span> <span class="hljs-string">"./dist/css/"</span>
       }
     },
-    csso: {
-      dist: {
-        expand: <span class="hljs-literal">true</span>,
-        flatten: <span class="hljs-literal">true</span>,
-        cwd: <span class="hljs-string">"./dist/css/"</span>,
-        src: [<span class="hljs-string">"*.css"</span>],
-        dest: <span class="hljs-string">"./dist/css/"</span>
+<span class="hljs-label">    csso:</span> {
+<span class="hljs-label">      dist:</span> {
+<span class="hljs-label">        expand:</span> <span class="hljs-literal">true</span>,
+<span class="hljs-label">        flatten:</span> <span class="hljs-literal">true</span>,
+<span class="hljs-label">        cwd:</span> <span class="hljs-string">"./dist/css/"</span>,
+<span class="hljs-label">        src:</span> [<span class="hljs-string">"*.css"</span>],
+<span class="hljs-label">        dest:</span> <span class="hljs-string">"./dist/css/"</span>
       }
     },
-    watch: {
-      styles: {
-        files: [<span class="hljs-string">"./src/css/**/*.scss"</span>],
-        tasks: [<span class="hljs-string">"styles"</span>]
+<span class="hljs-label">    watch:</span> {
+<span class="hljs-label">      styles:</span> {
+<span class="hljs-label">        files:</span> [<span class="hljs-string">"./src/css/**/*.scss"</span>],
+<span class="hljs-label">        tasks:</span> [<span class="hljs-string">"styles"</span>]
       }
     }
   })
@@ -2628,11 +2628,11 @@ Git vous demande d’éditer le message du commit marqué en <em>reword</em>:</p
 </figure>
 
 <p>L’opération va continuer puis Git va vous rendre la main. Il vous suffit alors de faire un <code>git log</code> pour apprécier le résultat:</p>
-<pre><code><span class="hljs-operator"><span class="hljs-keyword">commit</span> <span class="hljs-number">481</span>b4dccf4fedf4ed9d7f4e83ae5c19a07f7e12e
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+<pre><code><span class="hljs-title">commit</span> 481b4dccf4fedf4ed9d7f4e83ae5c19a07f7e12e
+Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@**<span class="hljs-regexp">*.com</span>&gt;
+Date:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
-    Story #<span class="hljs-number">34</span> - Poker cards <span class="hljs-keyword">now</span> have a <span class="hljs-built_in">real</span> back picture</span>
+    Story <span class="hljs-comment">#34 - Poker cards now have a real back picture</span>
 </code></pre><figure>
     <figcaption>Et c’est le succèèèèèèès</figcaption>
 </figure>
