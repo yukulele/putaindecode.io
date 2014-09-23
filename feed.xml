@@ -1,4 +1,288 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 15 Sep 2014 20:57:11 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Maîtriser les redirections shell</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Tue, 23 Sep 2014 12:04:58 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Le guide complet pour centrer en css</title><description><![CDATA[
+<p>Centrer en css, c’est la base, et parfois, ce n’est pas si simple. Ce guide vous servira donc pour vous lister les techniques les plus connues pour réaliser ce fameux effet centré.</p>
+<p>Les principales techniques de centrage en css seront expliquées pendant les premières déclarations, et réutilisées par la suite dans tout le guide, vous pouvez donc avoir un intérêt à lire le guide dans le sens normal de la lecture.</p>
+<p>Cependant, si vous souhaitez juste avoir le code correspondant à votre problème, vous pouvez utiliser le menu composé d’ancres ci-dessous.</p>
+<h2 id="sommaire"><a class="putainde-Title-anchor" href="#sommaire">#</a>Sommaire</h2><ul>
+<li><a href="#tl-dr-mes-techniques-preferees">tl;dr - mes techniques préférées</a></li>
+<li><a href="#techniques-traditionnelles">Techniques tradtionnelles</a><ul>
+<li><a href="#un-bloc-dans-un-bloc">Un bloc dans un bloc</a></li>
+<li><a href="#des-blocs-dans-un-bloc">Des blocs dans un bloc</a></li>
+<li><a href="#des-elements-inlines-dans-un-bloc">Des éléments inlines dans un bloc</a></li>
+</ul>
+</li>
+<li><a href="#techniques-avancees-flexbox-ie11-">Techniques avancées : flexbox (ie11+)</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+<h2 id="tl-dr-mes-techniques-preferees"><a class="putainde-Title-anchor" href="#tl-dr-mes-techniques-preferees">#</a>tl;dr - mes techniques préférées</h2><h3 id="un-bloc-dans-un-bloc"><a class="putainde-Title-anchor" href="#un-bloc-dans-un-bloc">#</a>Un bloc dans un bloc</h3><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">transform-style</span>:<span class="hljs-value"> preserve-<span class="hljs-number">3</span>d</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">translate</span>(-<span class="hljs-number">50%</span>, -<span class="hljs-number">50%</span>)</span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p><em>Note : le détail de la technique est expliqué plus loin dans le post</em></p>
+<h3 id="des-blocs-dans-un-bloc"><a class="putainde-Title-anchor" href="#des-blocs-dans-un-bloc">#</a>Des blocs dans un bloc</h3><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.parent</span><span class="hljs-pseudo">:before</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">content</span>:<span class="hljs-value"> <span class="hljs-string">''</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> -<span class="hljs-number">0.25em</span></span></span>; <span class="hljs-comment">/* space width */</span>
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p><em>Note : le détail de la technique est expliqué plus loin dans le post</em></p>
+<h3 id="des-elements-inline-dans-un-bloc"><a class="putainde-Title-anchor" href="#des-elements-inline-dans-un-bloc">#</a>Des éléments inline dans un bloc</h3><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p><em>Note : le détail de la technique est expliqué plus loin dans le post</em></p>
+<h2 id="techniques-traditionnelles"><a class="putainde-Title-anchor" href="#techniques-traditionnelles">#</a>Techniques traditionnelles</h2><h3 id="un-bloc-dans-un-bloc"><a class="putainde-Title-anchor" href="#un-bloc-dans-un-bloc">#</a>Un bloc dans un bloc</h3><h4 id="centrage-horizontal"><a class="putainde-Title-anchor" href="#centrage-horizontal">#</a>Centrage horizontal</h4><p>La technique du <code>margin: 0 auto;</code> consiste à dire au browser que les marges de gauche et droite seront identiques et que leur valeur sera <code>auto</code>. Le browser calcule donc des marges de même taille de chaque côté et centre le bloc naturellement.</p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span> auto</span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p>La technique du <code>left: 50%; + margin négative en unités</code> est à utiliser sur les blocs dont vous conaissez la taille à l’avance. Le principe consiste à expliquer au navigateur qu’on place un bloc en <code>position: absolute;</code>. Celui-ci va donc chercher à se placer par rapport à son élément parent le plus proche qui est en <code>position: relative;</code>. Il faut donc ne pas oublier d’attribuer cette propriété sur le <code>.parent</code>. Il suffit ensuite d’indiquer qu’on place le bloc à <code>left: 50%;</code>. Le bloc se place donc à 50% vers la gauche par rapport à la taille totale du bloc conteneur. Il ne nous reste plus qu’à décaler vers la droite le bloc <code>.child</code> en lui donnant une valeur de margin négative vers la gauche. Celle-ci doit être égale à la moitié de la <code>width</code>(en pixels, em, rems, pourcentages, …).</p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span> {
+  <span class="hljs-attribute">position</span><span class="hljs-value">: relative;</span>
+}
+
+<span class="hljs-class">.child</span> {
+  <span class="hljs-attribute">width</span><span class="hljs-value">: {X}em;</span> <span class="hljs-comment">/* remplacer {X} par votre valeur */</span>
+  <span class="hljs-attribute">position</span><span class="hljs-value">: absolute;</span>
+  <span class="hljs-attribute">left</span><span class="hljs-value">: <span class="hljs-number">50%</span>;</span>
+  <span class="hljs-attribute">margin-left</span><span class="hljs-value">: -{X/<span class="hljs-number">2</span>}em;</span> <span class="hljs-comment">/* remplacer {X/2} par la moitié de votre width */</span>
+}
+</code></pre>
+<p>En combinant la technique précédente et des propriétés css modernes, on arrive à la technique du <code>transform: translate; négatif</code>. Même principe que la technique précédente, sauf qu’à la fin, on indique au bloc enfant d’effectuer une translation sur lui-même, en suivant l’axe X (l’axe horizontal) de -50%, donc 50% vers la droite. Sauf que ce 50% s’applique sur le bloc enfant directement. Vous n’avez donc pas besoin de connaitre la <code>width</code>de l’élément enfant à l’avance. Le <code>transform-style: preserve-3d;</code> sur le bloc <code>.parent</code> est là pour régler des problèmes de flou sur certains navigateurs lors de transitions.</p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">transform-style</span>:<span class="hljs-value"> preserve-<span class="hljs-number">3</span>d</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">translateX</span>(-<span class="hljs-number">50%</span>)</span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<h4 id="centrage-vertical"><a class="putainde-Title-anchor" href="#centrage-vertical">#</a>Centrage vertical</h4><p>Même principe que la technique <code>left: 50%; + margin négative en unités</code>, sauf qu’on applique le principe aux propriétés css relatives à la hauteur. Vous avez donc besoin de connaitre à l’avance la hauteur de votre bloc.</p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span> {
+  <span class="hljs-attribute">position</span><span class="hljs-value">: relative;</span>
+}
+
+<span class="hljs-class">.child</span> {
+  <span class="hljs-attribute">height</span><span class="hljs-value">: {Y}em;</span> <span class="hljs-comment">/* remplacer {Y} par votre valeur */</span>
+  <span class="hljs-attribute">position</span><span class="hljs-value">: absolute;</span>
+  <span class="hljs-attribute">top</span><span class="hljs-value">: <span class="hljs-number">50%</span>;</span>
+  <span class="hljs-attribute">margin-top</span><span class="hljs-value">: -{Y/<span class="hljs-number">2</span>}em;</span> <span class="hljs-comment">/* remplacer {Y/2} par la moitié de votre height */</span>
+}
+</code></pre>
+<p>Ici on réutilise le principe expliqué dans la technique <code>transform: translate; négatif</code>, mais appliqué à la hauteur. Notez que le nom de la <a href="http://apps.workflower.fi/vocabs/css/fr">valeur de la propriété</a> css passe de <code>translateX</code> à <code>translateY</code>.</p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">transform-style</span>:<span class="hljs-value"> preserve-<span class="hljs-number">3</span>d</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">translateY</span>(-<span class="hljs-number">50%</span>)</span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<h4 id="les-deux"><a class="putainde-Title-anchor" href="#les-deux">#</a>Les deux</h4><p>En réutilisant toutes les techniques expliquées précédemment, on peut arriver à plusieurs solutions, à choisir selon votre contexte et vos préférences.</p>
+<p>Méthode à base de <code>display: inline-block</code></p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.parent</span><span class="hljs-pseudo">:before</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">content</span>:<span class="hljs-value"> <span class="hljs-string">''</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> -<span class="hljs-number">0.25em</span></span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p>Technique des <code>position: absolute; + marges négatives</code> avec tailles connues à l’avance</p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span> {
+  <span class="hljs-attribute">position</span><span class="hljs-value">: relative;</span>
+}
+
+<span class="hljs-class">.child</span> {
+  <span class="hljs-attribute">width</span><span class="hljs-value">: {X}em;</span> <span class="hljs-comment">/* remplacer {X} par votre valeur */</span>
+  <span class="hljs-attribute">height</span><span class="hljs-value">: {Y}em;</span> <span class="hljs-comment">/* remplacer {Y} par votre valeur */</span>
+  <span class="hljs-attribute">position</span><span class="hljs-value">: absolute;</span>
+  <span class="hljs-attribute">top</span><span class="hljs-value">: <span class="hljs-number">50%</span>;</span>
+  <span class="hljs-attribute">left</span><span class="hljs-value">: <span class="hljs-number">50%</span>;</span>
+  <span class="hljs-attribute">margin-left</span><span class="hljs-value">: -{X/<span class="hljs-number">2</span>}em;</span> <span class="hljs-comment">/* remplacer {X/2} par la moitié de votre height */</span>
+  <span class="hljs-attribute">margin-top</span><span class="hljs-value">: -{Y/<span class="hljs-number">2</span>}em;</span> <span class="hljs-comment">/* remplacer {Y/2} par la moitié de votre height */</span>
+}
+</code></pre>
+<p>Technique des <code>position: absolute; + marges négatives</code> avec tailles inconnues</p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">transform-style</span>:<span class="hljs-value"> preserve-<span class="hljs-number">3</span>d</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">translate</span>(-<span class="hljs-number">50%</span>, -<span class="hljs-number">50%</span>)</span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<h3 id="des-blocs-dans-un-bloc"><a class="putainde-Title-anchor" href="#des-blocs-dans-un-bloc">#</a>Des blocs dans un bloc</h3><h4 id="centrage-horizontal"><a class="putainde-Title-anchor" href="#centrage-horizontal">#</a>Centrage horizontal</h4><p>On utilise la propriété <code>display: inline-block;</code> qui permet d’avoir des propriétés d’affichage relatives aux éléments de type <code>block</code> et de type <code>inline</code>. Le côté <code>inline</code> nous permet d’utiliser tout simplement un <code>text-align: center;</code></p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;  
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<h4 id="centrage-vertical"><a class="putainde-Title-anchor" href="#centrage-vertical">#</a>Centrage vertical</h4><p>De la même façon que pour le centrage horizontal, on utilise le côté <code>inline</code> de la propriété <code>display: inline-block;</code> pour aligner verticalament les éléments enfants par rapport à leur conteneur parent.</p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>; 
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p>Une autre technique consiste à utiliser les propriétés css de <code>mise en tableaux</code>. On est obligé de créer un <a href="https://developer.mozilla.org/fr/docs/Web/CSS/Pseudo-%C3%A9l%C3%A9ments">pseudo-élément</a> pour gérer la mise en page par tableau. On créée tout simplement un tableau, puis une cellule de tableau, qu’on positionne grâce à un <code>vertical-align: middle;</code>. Les éléments <code>.child</code> s’alignent automatiquement dans leur conteneur.</p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span><span class="hljs-pseudo">:before</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> table</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> table-cell</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>; <span class="hljs-comment">/* à enlever si vous ne souhaitez pas avoir vos blocs enfants alignés sur la même ligne, mais juste centrés verticalement sur la hauteur */</span>
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<h4 id="les-deux"><a class="putainde-Title-anchor" href="#les-deux">#</a>Les deux</h4><p>On peut combiner les deux solutions basées sur le <code>display: inline-block;</code> pour avoir le résultat souhaité.</p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p>On peut aussir réutiliser la méthode à base de <code>display: table-cell</code> et l’adapter pour qu’elle centre horizontalement et verticalement.</p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span><span class="hljs-pseudo">:before</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> table</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> table-cell</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> left</span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p>On peut réutiliser la technique précédente en étant un peu imaginatif pour fonctionner avec des <code>display: inline-block;</code>. Pour détailler, on crée un pseudo-élément, qui aura un <code>content: &#39;&#39;;</code> pour faire qu’il existe et soit affiché, puis on annule son affichage via un <code>margin-right négatif</code> qui a pour valeur magique <code>-0.25em</code> ce qui correspond à la largeur d’un espace. On lui applique ensuite un <code>display: inline-block + height: 100% + vertical-align: middle</code> pour créer le conteneur à la taille souhaitée et on termine en calant l’élément enfant <code>.child</code> avec un centrage vertical.</p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.parent</span><span class="hljs-pseudo">:before</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">content</span>:<span class="hljs-value"> <span class="hljs-string">''</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> -<span class="hljs-number">0.25em</span></span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<h3 id="des-elements-inlines-dans-un-bloc"><a class="putainde-Title-anchor" href="#des-elements-inlines-dans-un-bloc">#</a>Des éléments inlines dans un bloc</h3><p>Ces éléments <code>inline</code> peuvent être par exemple des liens <code>&lt;a&gt;</code> ou des <code>&lt;span&gt;</code> tout simples. Ces techniques sont souvent très connues et ne devraient pas vous poser beaucoup de problèmes, elles ne seront pas commentées. Veuillez vous référer <a href="https://developer.mozilla.org/fr/docs/Web/CSS/text-align">text-align</a> et <a href="https://developer.mozilla.org/fr/docs/Web/CSS/vertical-align">vertical-align</a> si vous souhaitez plus d’informations.</p>
+<h4 id="centrage-horizontal"><a class="putainde-Title-anchor" href="#centrage-horizontal">#</a>Centrage horizontal</h4><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{<span class="hljs-rule">}</span></span>
+</code></pre>
+<h4 id="centrage-vertical"><a class="putainde-Title-anchor" href="#centrage-vertical">#</a>Centrage vertical</h4><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<h4 id="les-deux"><a class="putainde-Title-anchor" href="#les-deux">#</a>Les deux</h4><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<h2 id="techniques-avancees-flexbox-ie11-"><a class="putainde-Title-anchor" href="#techniques-avancees-flexbox-ie11-">#</a>Techniques avancées : flexbox (<a href="http://caniuse.com/#feat=flexbox">ie11+</a>)</h2><p>Flexbox est un outil très puissant quand il s’agit de gérer le position de blocs flex. Son seul défaut consiste en son faible support navigateur, mais il vous faudra maitriser ces techniques si vous comptez faire du développement web dans les années à venir, d’autant plus qu’elles sont très simples à rédiger et comprendre.</p>
+<h3 id="centrage-horizontal"><a class="putainde-Title-anchor" href="#centrage-horizontal">#</a>Centrage horizontal</h3><p>On déclare le conteneur en bloc flex, et on lui applique la propriété <a href="https://developer.mozilla.org/fr/docs/Web/CSS/justify-content">justify-content</a>.</p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> flex</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">justify-content</span>:<span class="hljs-value"> center</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{<span class="hljs-rule">}</span></span>
+</code></pre>
+<h3 id="centrage-vertical"><a class="putainde-Title-anchor" href="#centrage-vertical">#</a>Centrage vertical</h3><p>Idem, on déclare le conteneur en bloc flex, et cette fois, on lui applique la propriété <a href="https://developer.mozilla.org/fr/docs/Web/CSS/align-items">align-items</a>.</p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> flex</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">align-items</span>:<span class="hljs-value"> center</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{<span class="hljs-rule">}</span></span>
+</code></pre>
+<h3 id="les-deux"><a class="putainde-Title-anchor" href="#les-deux">#</a>Les deux</h3><p>On combine le tout pour un résultat génial et simpliste.</p>
+<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> flex</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">justify-content</span>:<span class="hljs-value"> center</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">align-items</span>:<span class="hljs-value"> center</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.child</span> <span class="hljs-rules">{<span class="hljs-rule">}</span></span>
+</code></pre>
+<h2 id="conclusion"><a class="putainde-Title-anchor" href="#conclusion">#</a>Conclusion</h2><p>Essayez de toujours utiliser la solution la plus avancée technique par rapport à votre scope navigateur : si vous devez ne supporter que les IE récents, utilisez flexbox ; si vous devez ne supporter que IE9+, utilisez les transform: translate() ; sinon utilisez des techniques de plus en plus <em>anciennes</em>.</p>
+<p>Ce guide n’a volontairement pas parlé des préfixes navigateurs, car ce genre de chose doit être pris en charge automatique dans votre workflow par un autoprefixer (<a href="https://www.npmjs.org/package/gulp-autoprefixer">gulp-autoprefixer</a>, <a href="https://www.npmjs.org/package/grunt-autoprefixer">grunt-autoprefixer</a>, <a href="http://www.myth.io/">inclus dans myth</a>, …). Pour apprendre à l’installer ou à en apprendre plus sur le sujet, je vous renvoie <a href="http://localhost:4242/posts/css/mise-en-place-autoprefixer/">à l’article de MoOx</a>. Si vous souhaitez quand même vous passez d’autoprefixer, vous pourrez vérifier la compatibilité des propriétés sur <a href="http://caniuse.com/">caniuse</a>.</p>
+
+]]></description><pubDate>Fri, 12 Sep 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/</guid></item><item><title>Maîtriser les redirections shell</title><description><![CDATA[
 <p>Le shell (ou ligne de commande) est l’outil de prédilection pour bon nombre
 d’entre nous qui utilisons un OS de la famille UNIX. Nous sommes persuadés que
 bien utilisé, il remplace avantageusement un IDE complexe et gourmand.</p>
@@ -858,59 +1142,7 @@ var results = Object.keys(data).reduce( function (memo, site) {
 <p>J’espère que vous avez apprécié ces quelques exemples d’utilisation de <code>Array#reduce</code>.
 Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article ou via les commentaires !</p>
 
-]]></description><pubDate>Tue, 13 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/array-reduce/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/array-reduce/</guid></item><item><title>npm: choisir la bonne version de ses dépendances</title><description><![CDATA[
-<p>Pas plus tard qu’hier, alors que je travaillais tranquillement, apparu soudainement un bug dans mon <em>workflow</em> de <em>build</em>. Il ne m’était plus possible avec <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> de supprimer des fichiers. Hmmm, ballot, car sans la suppression, mon <em>workflow</em> devenait tout bancal. Bien. Il me fallut remonter la rivière - comme souvent, en tant que développeur - afin de constater où était le bug. Je suis alors tombé sur <a href="https://github.com/isaacs/rimraf">rimraf</a> (bon c’était pas bien loin) qui s’était vu être mis à jour il y a à peine 12 heures, comprenant un bug.</p>
-<h2 id="contexte"><a class="putainde-Title-anchor" href="#contexte">#</a>Contexte</h2><p>Bon, vous voyez le topo ?</p>
-<pre><code>{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean"</span></span>,
-  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value"><span class="hljs-string">"~2.2.1"</span>
-  </span>}
-</span>}
-</code></pre><p><a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> qui contient en <em>dependencies</em> <a href="https://github.com/isaacs/rimraf">rimraf</a> avec une version bugguée. Oh la belle affaire. Oui car <code>~2.2.1</code> veut dire “<a href="https://github.com/isaacs/node-semver#ranges">Raisonnablement proche de 2.2.1</a>“, ce qui se traduit par télécharger la dernière version en <code>2.2.x</code>, soit la <code>2.2.7</code> (celle bugguée) lorsque je mis à jour le package <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a>.</p>
-<h2 id="le-hic"><a class="putainde-Title-anchor" href="#le-hic">#</a>Le hic</h2><p>Une question m’est venue : comment faire en sorte de figer la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> qui est une dépendance de dépendance ?</p>
-<p>Ha ! Pas évident comme ça.</p>
-<p>J’ai d’abord essayé sans trop d’espoir de télécharger <a href="https://github.com/isaacs/rimraf">rimraf</a> lui-même en <code>2.2.6</code> mais vu que chaque dépendance à ses propres dépendances et qu’elles ne se les partagent pas… c’était peine perdue.</p>
-<p>J’ai donc cherché, cherché, et je suis tombé sur <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a>: “Lock down dependency versions”. Bingo !</p>
-<h2 id="npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances"><a class="putainde-Title-anchor" href="#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>npm-shrinkwrap, la solution pour figer vos depéndances, toutes vos dépendances</h2><p><a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a> va vous permettre de définir avec précision chaque version de chaque dépendance.</p>
-<p>Pour cela, faites d’abord un <code>npm install</code> (si vous avez évidemment un <code>package.json</code>) afin d’installer vos <code>node_modules</code>. Une fois cela fait, lancez <code>npm shrinkwrap</code> qui créera le fichier <code>npm-shrinkwrap.json</code> qui comprendra toutes les définitions de chaque dépendance.</p>
-<h3 id="figer-une-dependance-de-dependance"><a class="putainde-Title-anchor" href="#figer-une-dependance-de-dependance">#</a>Figer une dépendance de dépendance</h3><p>Simple, regardez :</p>
-<pre><code>{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"my-project"</span></span>,
-  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"1.0.0"</span></span>,
-  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">grunt-contrib-clean</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.5.0"</span></span>,
-      "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean@~0.5.*"</span></span>,
-      "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-        "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"2.2.6"</span></span>,
-          "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"rimraf@~2.2.1"</span></span>,
-          "<span class="hljs-attribute">resolved</span>": <span class="hljs-value"><span class="hljs-string">"https://registry.npmjs.org/rimraf/-/rimraf-2.2.6.tgz"</span>
-        </span>}
-      </span>}
-    </span>}
-  </span>}
-</span>}
-</code></pre><p>J’ai défini la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> dans <code>dependencies.grunt-contrib-clean.dependencies.rimraf</code>.</p>
-<p>Bon, je ne connais pas tout par coeur non plus, npm-shrinkwrap vous écrira la totalité du fichier avec toutes les définitions mais j’ai volontairement tout supprimé et gardé uniquement la partie <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> car seule cette partie est à figer. Quand je dis supprimer, je parle réellement dans le fichier final, pas juste ici dans l’article.</p>
-<p>Vous aurez toute l’explication de npm-shrinkwrap sur la <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">documentation officielle [en]</a>.</p>
-<h2 id="choisir-la-bonne-strategie-de-version"><a class="putainde-Title-anchor" href="#choisir-la-bonne-strategie-de-version">#</a>Choisir la bonne stratégie de version</h2><p>Parce qu’il est important de savoir quelle version exacte nous souhaitons installer dans notre projet, il faut définir avec précisions ces versions dans <code>package.json</code>.</p>
-<p>Vous pouvez avoir <code>1.2.1</code> ou encore <code>~1.4.6</code> ou bien encore <code>^2.3.1</code>. Mais que veulent dire <code>^</code> ou <code>~</code> ?</p>
-<ul>
-<li><code>1.2.1</code> : cette version exacte</li>
-<li><code>~1.4.6</code> : raisonnablement proche de <code>1.4.6</code></li>
-<li><code>^2.3.1</code> : compatible avec <code>2.3.1</code></li>
-</ul>
-<p>Il est clair que lu comme ça, le plus intéressant est le <code>^</code> et c’est justement <a href="http://fredkschott.com/post/2014/02/npm-no-longer-defaults-to-tildes/">celui qui est choisi maintenant [en]</a> lorsque l’on fait un <code>npm install --save</code>. Cool non ?!</p>
-<p>Pour plus d’information sur la définition des versions, <a href="https://github.com/isaacs/node-semver#ranges">c’est par là</a> (Oh mon dieu, il a fait un lien avec un “cliquez ici”).</p>
-<p>Bon. C’est bon ? Vous avez tout compris ? Okay, vous pouvez passer à <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/"><strong>napa</strong></a> maintenant qui vous aidera grandement sur le téléchargement de projets n’ayant pas de <code>package.json</code>.</p>
-<p>En ce qui concerne npm, je m’arrête là, et vous propose une petite solution afin d’augmenter la vitesse de vos installations de node modules.</p>
-<h2 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h2><p>Envie d’accélérer vos installations npm ? Je vous conseille <a href="https://github.com/vvo/npm-pkgr">npm-pkgr</a>.</p>
-<p>Il hashera votre <code>package.json</code> pour savoir s’il a été modifié ou non, et en fonction de ça, il lancera <code>npm install</code> ou non. Sacré gain de temps (surtout si vous faites des <code>npm install</code> à chaque <em>deploy</em>).</p>
-<p>You are now a npm master. 👨</p>
-
-]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/npm-choisir-version/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/npm-choisir-version/</guid></item><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[
+]]></description><pubDate>Tue, 13 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/array-reduce/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/array-reduce/</guid></item><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[
 <p>(Grosse grosse blague ce titre…)</p>
 <p><a href="https://twitter.com/kewah">@kewah</a> nous a récemment parlé de <a href="/posts/frontend/npm-comme-package-manager-pour-le-front-end/"><strong>npm</strong> comme front-end packager manager</a>, je vais aller encore plus loin. Je vais vous dévoiler comment installer des projets qui n’ont pas de <code>package.json</code>. Oui, car c’est bien beau de virer Bower (oh que oui c’est beau) mais comme npm requiert constamment un <code>package.json</code>, on ne va pas pouvoir télécharger grand chose sauf si on fait des <em>PR</em> afin d’ajouter ce fichier sur les projets que l’on souhaite obtenir.</p>
 <p>C’est pourquoi je vais vous parler de <a href="https://github.com/shama/napa"><strong>napa</strong></a>.</p>
@@ -975,7 +1207,59 @@ Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article
 <p>Note : napa et npm-shrinkwrap, c’est pas encore ça, alors n’hésitez pas à supprimer la partie “napa” avant de lancer votre génération de npm-shrinkwrap.</p>
 <p>Bon download à vous.</p>
 
-]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</guid></item><item><title>Premiers pas avec Ruby</title><description><![CDATA[
+]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</guid></item><item><title>npm: choisir la bonne version de ses dépendances</title><description><![CDATA[
+<p>Pas plus tard qu’hier, alors que je travaillais tranquillement, apparu soudainement un bug dans mon <em>workflow</em> de <em>build</em>. Il ne m’était plus possible avec <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> de supprimer des fichiers. Hmmm, ballot, car sans la suppression, mon <em>workflow</em> devenait tout bancal. Bien. Il me fallut remonter la rivière - comme souvent, en tant que développeur - afin de constater où était le bug. Je suis alors tombé sur <a href="https://github.com/isaacs/rimraf">rimraf</a> (bon c’était pas bien loin) qui s’était vu être mis à jour il y a à peine 12 heures, comprenant un bug.</p>
+<h2 id="contexte"><a class="putainde-Title-anchor" href="#contexte">#</a>Contexte</h2><p>Bon, vous voyez le topo ?</p>
+<pre><code>{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean"</span></span>,
+  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value"><span class="hljs-string">"~2.2.1"</span>
+  </span>}
+</span>}
+</code></pre><p><a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> qui contient en <em>dependencies</em> <a href="https://github.com/isaacs/rimraf">rimraf</a> avec une version bugguée. Oh la belle affaire. Oui car <code>~2.2.1</code> veut dire “<a href="https://github.com/isaacs/node-semver#ranges">Raisonnablement proche de 2.2.1</a>“, ce qui se traduit par télécharger la dernière version en <code>2.2.x</code>, soit la <code>2.2.7</code> (celle bugguée) lorsque je mis à jour le package <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a>.</p>
+<h2 id="le-hic"><a class="putainde-Title-anchor" href="#le-hic">#</a>Le hic</h2><p>Une question m’est venue : comment faire en sorte de figer la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> qui est une dépendance de dépendance ?</p>
+<p>Ha ! Pas évident comme ça.</p>
+<p>J’ai d’abord essayé sans trop d’espoir de télécharger <a href="https://github.com/isaacs/rimraf">rimraf</a> lui-même en <code>2.2.6</code> mais vu que chaque dépendance à ses propres dépendances et qu’elles ne se les partagent pas… c’était peine perdue.</p>
+<p>J’ai donc cherché, cherché, et je suis tombé sur <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a>: “Lock down dependency versions”. Bingo !</p>
+<h2 id="npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances"><a class="putainde-Title-anchor" href="#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>npm-shrinkwrap, la solution pour figer vos depéndances, toutes vos dépendances</h2><p><a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a> va vous permettre de définir avec précision chaque version de chaque dépendance.</p>
+<p>Pour cela, faites d’abord un <code>npm install</code> (si vous avez évidemment un <code>package.json</code>) afin d’installer vos <code>node_modules</code>. Une fois cela fait, lancez <code>npm shrinkwrap</code> qui créera le fichier <code>npm-shrinkwrap.json</code> qui comprendra toutes les définitions de chaque dépendance.</p>
+<h3 id="figer-une-dependance-de-dependance"><a class="putainde-Title-anchor" href="#figer-une-dependance-de-dependance">#</a>Figer une dépendance de dépendance</h3><p>Simple, regardez :</p>
+<pre><code>{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"my-project"</span></span>,
+  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"1.0.0"</span></span>,
+  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">grunt-contrib-clean</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.5.0"</span></span>,
+      "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean@~0.5.*"</span></span>,
+      "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"2.2.6"</span></span>,
+          "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"rimraf@~2.2.1"</span></span>,
+          "<span class="hljs-attribute">resolved</span>": <span class="hljs-value"><span class="hljs-string">"https://registry.npmjs.org/rimraf/-/rimraf-2.2.6.tgz"</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}
+</span>}
+</code></pre><p>J’ai défini la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> dans <code>dependencies.grunt-contrib-clean.dependencies.rimraf</code>.</p>
+<p>Bon, je ne connais pas tout par coeur non plus, npm-shrinkwrap vous écrira la totalité du fichier avec toutes les définitions mais j’ai volontairement tout supprimé et gardé uniquement la partie <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> car seule cette partie est à figer. Quand je dis supprimer, je parle réellement dans le fichier final, pas juste ici dans l’article.</p>
+<p>Vous aurez toute l’explication de npm-shrinkwrap sur la <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">documentation officielle [en]</a>.</p>
+<h2 id="choisir-la-bonne-strategie-de-version"><a class="putainde-Title-anchor" href="#choisir-la-bonne-strategie-de-version">#</a>Choisir la bonne stratégie de version</h2><p>Parce qu’il est important de savoir quelle version exacte nous souhaitons installer dans notre projet, il faut définir avec précisions ces versions dans <code>package.json</code>.</p>
+<p>Vous pouvez avoir <code>1.2.1</code> ou encore <code>~1.4.6</code> ou bien encore <code>^2.3.1</code>. Mais que veulent dire <code>^</code> ou <code>~</code> ?</p>
+<ul>
+<li><code>1.2.1</code> : cette version exacte</li>
+<li><code>~1.4.6</code> : raisonnablement proche de <code>1.4.6</code></li>
+<li><code>^2.3.1</code> : compatible avec <code>2.3.1</code></li>
+</ul>
+<p>Il est clair que lu comme ça, le plus intéressant est le <code>^</code> et c’est justement <a href="http://fredkschott.com/post/2014/02/npm-no-longer-defaults-to-tildes/">celui qui est choisi maintenant [en]</a> lorsque l’on fait un <code>npm install --save</code>. Cool non ?!</p>
+<p>Pour plus d’information sur la définition des versions, <a href="https://github.com/isaacs/node-semver#ranges">c’est par là</a> (Oh mon dieu, il a fait un lien avec un “cliquez ici”).</p>
+<p>Bon. C’est bon ? Vous avez tout compris ? Okay, vous pouvez passer à <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/"><strong>napa</strong></a> maintenant qui vous aidera grandement sur le téléchargement de projets n’ayant pas de <code>package.json</code>.</p>
+<p>En ce qui concerne npm, je m’arrête là, et vous propose une petite solution afin d’augmenter la vitesse de vos installations de node modules.</p>
+<h2 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h2><p>Envie d’accélérer vos installations npm ? Je vous conseille <a href="https://github.com/vvo/npm-pkgr">npm-pkgr</a>.</p>
+<p>Il hashera votre <code>package.json</code> pour savoir s’il a été modifié ou non, et en fonction de ça, il lancera <code>npm install</code> ou non. Sacré gain de temps (surtout si vous faites des <code>npm install</code> à chaque <em>deploy</em>).</p>
+<p>You are now a npm master. 👨</p>
+
+]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/npm-choisir-version/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/npm-choisir-version/</guid></item><item><title>Premiers pas avec Ruby</title><description><![CDATA[
 <h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><pre><code class="lang-sh"><span class="hljs-char">$ </span>git clone <span class="hljs-method">git:</span>//github.com/sstephenson/rbenv.git ~/.rbenv
 <span class="hljs-char">$ </span>echo <span class="hljs-string">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> &gt;&gt; ~/.bashrc
 <span class="hljs-char">$ </span>echo <span class="hljs-string">'eval "$(rbenv init -)"'</span> &gt;&gt; ~/.bashrc
@@ -2707,72 +2991,4 @@ pour vous.</p>
 <p>Voilà, on arrive au bout de notre aventure, j’espère que vous avez appris quelque chose et que Git vous fait maintenant moins peur.</p>
 <p>Amike,</p>
 
-]]></description><pubDate>Thu, 27 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/git/boutez-les-bugs-domptez-votre-historique/</link><guid isPermaLink="true">http://putaindecode.fr/posts/git/boutez-les-bugs-domptez-votre-historique/</guid></item><item><title>Twitter comme lecteur de flux</title><description><![CDATA[
-<p><em>(Note : dans cet article, j’ai volontairement pris comme exemple la version Web afin que tout le monde puisse profiter de l’expérience mais il est évident que vous puissiez le faire avec votre application twitter favorite).</em></p>
-<p>Bien avant la fin de Google Reader, je me posais déjà la question de l’intérêt d’un lecteur de flux {rss|atom}. En effet, il m’était pénible d’organiser les flux que je souhaitais lire : les ranger par catégorie, supprimer les sites morts ou ceux qui ne m’intéressaient plus; de plus, je n’ai jamais réellement utilisé les fonctionnalités d’un lecteur de flux comme le système de marquage, savoir si le flux a été lu ou non, lire l’article dans le lecteur (je le lis toujours sur le site, jamais dans l’application). Et puis c’est parfois pénible de trouver un lecteur de flux simple, multi-OS et gratuit.</p>
-<p>J’ai été un grand fan à l’époque de Netvibes puis je l’ai délaissé pour Google Reader et nous voilà quelques temps après, sans réelle solution à mon sens pour lire agréablement des flux tel que je le concois.</p>
-<p>J’expérimente pourtant une solution depuis quelques mois qui me sied bien. J’utilise en effet Twitter en tant que lecteur de flux. Oui, car cela a plusieurs avantages :</p>
-<ul>
-<li><p>Il existe une application pour <a href="https://play.google.com/store/apps/details?id=com.twitter.android&amp;hl=fr">Android</a>, <a href="https://about.twitter.com/products/iphone">iOS</a> ainsi que <a href="https://itunes.apple.com/fr/app/twitter/id409789998?mt=12">Mac</a>; mais aussi la <a href="https://twitter.com/">version Web</a> et <a href="https://tweetdeck.twitter.com/">Tweetdeck</a> est disponible sur tous les environnements.</p>
-</li>
-<li><p>Je fais ma veille majoritairement via Twitter; j’écrème au fil de la journée ce qui m’intéresse ou non. Si c’est rapide à lire alors je le lis, sinon je <em>bookmark</em> l’article en “Read later” sur mon navigateur. Cela permet de trier rapidement l’information et de lire plus paisiblement cela au moment opportun.
-De plus, étant donné que l’information est donnée par mes <em>following</em> et que je suis les personnes qui m’intéressent vraiment, l’information est alors souvent pertinente. Encore faut-il avoir la bonne TL.
-Et  si j’ai besoin d’aller chercher une information précise, j’irai la trouver à travers un moteur de recherche… donc aucune problématique de “neutralité” de l’information.</p>
-</li>
-<li><p>De plus, étant donné que je fais justement cette veille via Twitter, cela me permet d’avoir qu’un seul outil. Cela m’ennuie au plus haut point de collectionner les outils. Je suis certes partisant d’utiliser le bon outil pour chaque tâche plutôt qu’un couteau-suisse, mais finalement Twitter et un lecteur de flux ne sont pas si éloignés.</p>
-</li>
-<li><p>Enfin, la majorité des blogs / sites que j’apprécie ont leur propre compte twitter qui postent l’url de leurs articles, il suffit alors de les suivre. Et si ce n’est pas le cas, je vous montrerai une petite astuce pour que ça le soit.</p>
-</li>
-</ul>
-<p>Vous vous sentez chaud(e) pour commencer ? Très bien, c’est parti !</p>
-<h2 id="creer-une-liste-twitter"><a class="putainde-Title-anchor" href="#creer-une-liste-twitter">#</a>Créer une liste Twitter</h2><p>Pour créer une liste, aucun problème, vous allez dans “Me” dans le <em>header</em> puis “List” dans la colonne de gauche pour vous retrouver ici :</p>
-<p><img src="twitter-list.jpg" alt=""></p>
-<p>Puis vous cliquez sur <code>Create list</code> et vous rentrez les informations que vous souhaitez :</p>
-<p><img src="create-list.png" alt=""></p>
-<p>Nous voilà avec notre belle liste. Il n’y a plus qu’à la remplir de jolis <em>following</em>.</p>
-<p>Prenons par exemple <code>@nodenpm</code>, un beau <em>bot</em> tweetant les nouveaux packages node.js ou/et les updates de ces packages.</p>
-<p><img src="nodenpm.jpg" alt=""></p>
-<p>Ajoutons-le à notre liste.</p>
-<p><img src="add-in-list.png" alt=""></p>
-<p>Nous voilà maintenant avec notre liste comprenant un <em>following</em>. Ce qui en ayant ajouté quelques comptes donnera quelque chose comme ceci :</p>
-<p><img src="twitter-list-read.jpg" alt=""></p>
-<p>Vous pouvez maintenant apprécier votre lecteur de flux.</p>
-<p>Oh mais ! C’est là que vous constatez qu’un de vos sites préférés n’a pas de compte Twitter ! Que faire ? Haha, et si on utilisait la puissance de IFTTT pour se créer un bot twitter qui tweet chaque nouvel article d’un des sites que vous appréciez ?! Mais ouais !</p>
-<h2 id="ifttt-la-solution-pour-parfaire-notre-lecteur"><a class="putainde-Title-anchor" href="#ifttt-la-solution-pour-parfaire-notre-lecteur">#</a>IFTTT, la solution pour parfaire notre lecteur</h2><p>Mais avant tout, créons notre compte twitter “bot” qui va tweeter ce qu’on souhaite.</p>
-<h3 id="compte-twitter-bot-"><a class="putainde-Title-anchor" href="#compte-twitter-bot-">#</a>Compte twitter “bot”</h3><ul>
-<li>Déconnectez-vous</li>
-<li>Inscrivez-vous à nouveau sur Twitter (le mien s’appelle <a href="https://twitter.com/kud_feeds">@kud_feeds</a> par exemple)</li>
-<li>Mettez-lui une belle bio, un bel avatar</li>
-<li>Déconnectez-vous à nouveau</li>
-<li>Connectez-vous avec votre vrai compte</li>
-<li>Ajoutez votre “bot” à la liste que vous venez de créer précédemment</li>
-</ul>
-<p>… et voilà !</p>
-<h3 id="ifttt"><a class="putainde-Title-anchor" href="#ifttt">#</a>IFTTT</h3><p><img src="ifttt.png" alt=""></p>
-<p>Maintenant, IFTTT.</p>
-<blockquote>
-<p>IFTTT (“If This Then That”) est un service qui permet aux utilisateurs de connecter différentes applications ensemble à travers de simples conditions nommées “recettes”.</p>
-</blockquote>
-<p>IFTTT va vous permettre d’aller pomper les flux {rss|atom} de vos sites préférés puis ayant accès à votre <em>bot</em> va permettre de tweeter le contenu des flux ! C’est pas beau ça hein ?! =)</p>
-<ul>
-<li>Allez sur <a href="https://ifttt.com">ifttt.com</a></li>
-<li>Créez-vous un compte (je vous conseille de créer un compte spécialement pour le <em>bot</em> car IFTTT ne propose de relier qu’un seul compte twitter. Du coup, si comme moi vous appréciez IFTTT et que vous souhaitez autant utiliser IFTTT pour votre compte twitter principal que votre compte <em>bot</em>, je vous conseille de vous créer deux comptes IFTTT)</li>
-<li>Créez une nouvelle recette en cliquant sur <code>Create</code></li>
-<li>Cliquez sur <code>this</code></li>
-<li>Puis <code>feed</code></li>
-<li>Choissisez le <em>trigger</em> (“déclencheur”) que vous souhaitez, moi je prends plutôt le premier <code>New feed item</code> (le plus simple)</li>
-<li>Indiquez l’url du flux de votre site, par exemple <code>http://dribbble.com/_kud/shots/following.rss</code></li>
-<li>Puis <code>then</code></li>
-<li>Twitter</li>
-<li><code>Post a tweet</code></li>
-<li>Laissez tel quel le <em>template</em> de base pour le moment (vous pourrez le changer quand vous serez à l’aise avec IFTTT)</li>
-<li>Mettez la description qui va bien</li>
-</ul>
-<p>Et on est bon.</p>
-<p>Vous avez maintenant une nouvelle recette qui dès qu’un article sortira, un tweet de votre <em>bot</em> apparaitra. Vous pouvez d’ailleurs vérifier que tout marche bien en cliquant sur la flèche <em>Check Recipe Now</em>.</p>
-<p>Vous n’aurez plus qu’à créer une nouvelle recette en dupliquant cette recette à chaque fois que vous voudrez suivre un nouveau flux. Certes éventuellement plus contraignant qu’un vrai lecteur de flux mais vous y gagnerez largement par la suite ;)</p>
-<p>Et voilà, nous avons maintenant une belle liste Twitter qui représentre votre lecteur de flux. Voici la mienne : <a href="https://twitter.com/_kud/lists/feeds">https://twitter.com/_kud/lists/feeds</a></p>
-<p>Vous pouvez même pousser le vice en créant plusieurs listes par catégorie mais ça sous-entend aussi de créer des <em>bots</em> et donc des comptes IFTTT par catégorie. Heureusement que j’en ai qu’une. ;)</p>
-<p>Enjoy!</p>
-
-]]></description><pubDate>Wed, 26 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/hack/twitter-comme-lecteur-de-flux/</link><guid isPermaLink="true">http://putaindecode.fr/posts/hack/twitter-comme-lecteur-de-flux/</guid></item></channel></rss>
+]]></description><pubDate>Thu, 27 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/git/boutez-les-bugs-domptez-votre-historique/</link><guid isPermaLink="true">http://putaindecode.fr/posts/git/boutez-les-bugs-domptez-votre-historique/</guid></item></channel></rss>
