@@ -78,7 +78,7 @@ de commande (sous Windows tu y vas avec l’invite de commande mais on te
 prévient qu’on va pas être copains longtemps, trouve un OS décent putain,
 sous Mac OS X tu utilises le terminal, et sous Linux je pense qu’on a pas à
 t’expliquer).</p>
-<pre><code class="lang-shell"><span class="hljs-variable">$ </span>git clone <span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/github.com/clinthorris</span><span class="hljs-regexp">/website.git putaindecode</span>
+<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git clone <span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/github.com/clinthorris</span><span class="hljs-regexp">/website.git putaindecode</span>
 </code></pre>
 </li>
 <li><p>Ensuite tu dois ajouter ce qu’on appelle une remote. Une remote c’est une
@@ -87,7 +87,7 @@ servir que si tu fais une modification ou une contribution sur notre site
 aujourd’hui, et que dans un mois tu veuilles encore en faire, tu pourras
 facilement rattraper tout ce qu’on aura fait entre temps. La remote en
 rapport avec le repo principal, on l’appelle souvent <em>upstream</em></p>
-<pre><code class="lang-shell">  $ <span class="hljs-keyword">cd</span> putaindecode
+<pre><code class="lang-bash">  $ <span class="hljs-keyword">cd</span> putaindecode
   $ git remote <span class="hljs-built_in">add</span> upstream http<span class="hljs-variable">s:</span>//github.<span class="hljs-keyword">com</span>/putaindecode/website.git
   $ git fetch upstream
 </code></pre>
@@ -104,7 +104,7 @@ te fait pas de mal de commencer à apprendre à bien bosser.</p>
 </li>
 <li><p>Note: Si tu avais déjà récupérer le repo, il te faudra juste récupérer les
 derniers changements sur une branche propre</p>
-<pre><code class="lang-shell"><span class="hljs-variable">$ </span>git checkout master
+<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git checkout master
 <span class="hljs-variable">$ </span>git fetch upstream
 <span class="hljs-variable">$ </span>git merge upstream/master
 </code></pre>
@@ -159,7 +159,7 @@ genre de tâches, c’est un bon moment pour l’apprendre.</p>
 de faire une branche, c’est une bonne pratique et ça nous permettra de voir
 exactement ce que t’auras modifié, c’est beaucoup plus simple. Du coup tu
 fais simplement un :</p>
-<pre><code class="lang-shell">$ git checkout -<span class="hljs-tag">b</span> fix.nom-du-post
+<pre><code class="lang-bash">$ git checkout -<span class="hljs-tag">b</span> fix.nom-du-post
 </code></pre>
 </li>
 <li><p>Fais les modifications que tu veux dans le fichier, là on peut pas t’aider,
@@ -194,7 +194,7 @@ lien</a>.</p>
 commencer à écrire dans le fichier. Tout d’abord tu vas devoir créer une
 nouvelle branche. C’est une pratique qu’on demande à tout le monde, même
 nous en interne on bosse sur des branches. Donc tout d’abord :</p>
-<pre><code class="lang-shell">$ git checkout -b <span class="hljs-built_in">post</span>.titre-court-du-<span class="hljs-built_in">post</span>
+<pre><code class="lang-bash">$ git checkout -b <span class="hljs-built_in">post</span>.titre-court-du-<span class="hljs-built_in">post</span>
 </code></pre>
 <p>Ensuite il va falloir que tu crées les fichiers nécessaires pour le brouillon
 du post.
@@ -228,19 +228,19 @@ proposition d’un nouveau)</p>
 <li><p>Il faut tout d’abord pousser tes modifications sur ton <code>fork</code>. Pour ça on va
 d’abord ajouter les fichier que tu as modifié à l’index de fichiers à
 commit. Tu peux faire ça tout simplement avec un :</p>
-<pre><code class="lang-shell">$ git <span class="hljs-built_in">add</span> -A pages/posts/nom-du-<span class="hljs-built_in">post</span>
+<pre><code class="lang-bash">$ git <span class="hljs-built_in">add</span> -A pages/posts/nom-du-<span class="hljs-built_in">post</span>
 </code></pre>
 <p>Cette commande ajoute tous les fichiers dans le dossier que tu as créé.
 Si tu as ajouter des fichiers à l’exterieur de ce dossier, tu devras les
 ajouter. Exemple:</p>
-<pre><code class="lang-shell">$ git <span class="hljs-keyword">add</span> images/memes/trollface.jpg
+<pre><code class="lang-bash">$ git <span class="hljs-keyword">add</span> images/memes/trollface.jpg
 </code></pre>
 <p>Ensuite on va dire à git de valider ces modifications de code :</p>
-<pre><code class="lang-shell"><span class="hljs-variable">$ </span>git commit -m <span class="hljs-string">"Un petit message sympa expliquant le correctif/post"</span>
+<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git commit -m <span class="hljs-string">"Un petit message sympa expliquant le correctif/post"</span>
 </code></pre>
 <p>Et on va finir en disant qu’on veut envoyer tout ça sur ton fork qui est
 situé sur GitHub :</p>
-<pre><code class="lang-shell">$ git <span class="hljs-keyword">push</span> -u
+<pre><code class="lang-bash">$ git <span class="hljs-keyword">push</span> -u
 </code></pre>
 </li>
 <li><p>Voila ! Si tu vas voir ton <code>fork</code> sur GitHub tu verras ton commit et les

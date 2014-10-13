@@ -33,26 +33,26 @@ certains sont restés sur leur faim.
 Voici donc de rapides exemples de mise en place de cette solution.</p>
 <h2 id="installation-d-autoprefixer"><a class="putainde-Title-anchor" href="#installation-d-autoprefixer">#</a>Installation d’autoprefixer</h2><p>Il vous faudra <a href="http://nodejs.org/">Node.js</a> (qui embarque maintenant <a href="https://www.npmjs.org/">Npm</a>) afin de pouvoir
 installer ce nouveau joujou.</p>
-<pre><code class="lang-shell"><span class="hljs-comment"># on install autoprefixer via npm en global</span>
+<pre><code class="lang-bash"><span class="hljs-comment"># on install autoprefixer via npm en global</span>
 $ <span class="hljs-built_in">npm</span> install --<span class="hljs-built_in">global</span> autoprefixer
 <span class="hljs-comment"># ou pour les fainéants</span>
 $ <span class="hljs-built_in">npm</span> i -g autoprefixer
 </code></pre>
 <p>Une fois ceci fait, vous devriez avoir la commande <code>autoprefixer</code> disponible.
 On vérifie de suite avec <code>autoprefixer -v</code>.</p>
-<pre><code class="lang-shell"><span class="hljs-variable">$ </span>autoprefixer -v
+<pre><code class="lang-bash"><span class="hljs-variable">$ </span>autoprefixer -v
 autoprefixer <span class="hljs-number">1.0</span>.<span class="hljs-number">20140203</span>
 </code></pre>
 <p>Vous remarquerez que le numéro de version est un peu spécial : il contient une
 date en place d’un numéro de patch. Cette date correspond à la dernière mise à
 jour de la base de données de <em>Can I Use</em>.</p>
-<h2 id="utilisation-d-autoprefixer"><a class="putainde-Title-anchor" href="#utilisation-d-autoprefixer">#</a>Utilisation d’autoprefixer</h2><pre><code class="lang-shell"><span class="hljs-variable">$ </span>autoprefixer *.css
+<h2 id="utilisation-d-autoprefixer"><a class="putainde-Title-anchor" href="#utilisation-d-autoprefixer">#</a>Utilisation d’autoprefixer</h2><pre><code class="lang-bash"><span class="hljs-variable">$ </span>autoprefixer *.css
 </code></pre>
 <p>C’est aussi simple que ça.</p>
 <p>En fait non je plaisante, c’est un tout petit peu plus long car par défaut,
 comme beaucoup de commandes, vous allez avoir la sortie crachée en plein visage.</p>
 <p>Pour voir les options, comme d’habitude <code>--help</code> ou <code>-h</code> :</p>
-<pre><code class="lang-shell"><span class="hljs-variable">$ </span>autoprefixer -h
+<pre><code class="lang-bash"><span class="hljs-variable">$ </span>autoprefixer -h
 </code></pre>
 <p>On y apprend l’existance des options suivantes :</p>
 <pre><code>Options:
@@ -64,15 +64,15 @@ comme beaucoup de commandes, vous allez avoir la sortie crachée en plein visage
 </span>  -<span class="ruby">h, --help               show help text
 </span>  -<span class="ruby">v, --version            print program version</span>
 </code></pre><p>Du coup si on veut faire un coup de commande bien personnalisée on pourra faire :</p>
-<pre><code class="lang-shell">$ autoprefixer -<span class="hljs-tag">b</span> <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -o prefixed<span class="hljs-class">.css</span> index.css
+<pre><code class="lang-bash">$ autoprefixer -<span class="hljs-tag">b</span> <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -o prefixed<span class="hljs-class">.css</span> index.css
 </code></pre>
 <p>Il va par contre nous falloir un fichier css pour tester :</p>
-<pre><code class="lang-shell"># <span class="hljs-keyword">on</span> met un peu de CSS dans <span class="hljs-built_in">index</span>.css manière de tester <span class="hljs-keyword">le</span> bouzin
+<pre><code class="lang-bash"># <span class="hljs-keyword">on</span> met un peu de CSS dans <span class="hljs-built_in">index</span>.css manière de tester <span class="hljs-keyword">le</span> bouzin
 $ <span class="hljs-keyword">echo</span> <span class="hljs-string">"* { box-sizing:border-box}"</span> &gt; <span class="hljs-built_in">index</span>.css
 </code></pre>
 <p>On peut donc essayer notre commande plus haut qui va remplir le fichier <code>prefixed.css</code></p>
 <p>Pour vérifier :</p>
-<pre><code class="lang-shell">$ <span class="hljs-tag">cat</span> <span class="hljs-tag">prefixed</span><span class="hljs-class">.css</span>
+<pre><code class="lang-bash">$ <span class="hljs-tag">cat</span> <span class="hljs-tag">prefixed</span><span class="hljs-class">.css</span>
 * <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">-webkit-box-sizing</span>:<span class="hljs-value">border-box</span></span>; <span class="hljs-rule"><span class="hljs-attribute">-moz-box-sizing</span>:<span class="hljs-value">border-box</span></span>; <span class="hljs-rule"><span class="hljs-attribute">box-sizing</span>:<span class="hljs-value">border-box</span></span></span>}
 </code></pre>
 <p>On a bien eu des préfixes ajoutés en fonction de notre demande (bon rien pour IE
@@ -116,7 +116,7 @@ implémentations.</p>
 <h3 id="make"><a class="putainde-Title-anchor" href="#make">#</a>Make</h3><p>Là c’est facile, tout bon développeur doit avoir <code>make</code> sur sa machine (sinon
 c’est que t’es pas développeur, je sais pas trop ce que tu fais ici du coup).</p>
 <p>On peut tout simplement créer un fichier <code>Makefile</code> avec la commande précédente:</p>
-<pre><code class="lang-shell"># <span class="hljs-keyword">cr</span>éation <span class="hljs-keyword">d</span>’un dossier pour notre popote (puis <span class="hljs-keyword">on</span> va dedans...)
+<pre><code class="lang-bash"># <span class="hljs-keyword">cr</span>éation <span class="hljs-keyword">d</span>’un dossier pour notre popote (puis <span class="hljs-keyword">on</span> va dedans...)
 $ <span class="hljs-built_in">mkdir</span> autoprefixer-test &amp;&amp; <span class="hljs-keyword">cd</span> autoprefixer-test
 
 # On <span class="hljs-keyword">cr</span>éer un makefile avec une <span class="hljs-keyword">t</span>â<span class="hljs-keyword">che</span> `css` (<span class="hljs-keyword">cr</span>éation/écrasement via &gt;)
@@ -132,7 +132,7 @@ $ <span class="hljs-keyword">echo</span> <span class="hljs-string">"\tautoprefix
 $ <span class="hljs-keyword">cat</span> Makefile
 </code></pre>
 <p>Voilà votre Makefile doit être bien rempli. Pour tester la commande <code>css</code>:</p>
-<pre><code class="lang-shell"><span class="hljs-variable">$ </span>make css
+<pre><code class="lang-bash"><span class="hljs-variable">$ </span>make css
 </code></pre>
 <p>Vous remarquerez que la commande <em>autoprefixer</em> s’affiche, si ça vous embête, rajoutez
 <code>@</code> devant. Vous pouvez modifier votre Makefile dans ce sens:</p>
@@ -280,7 +280,7 @@ par un autre pré / post-processeur.</em></p>
 Mais voici complètement autre chose: <em>autoprefixer</em> peut s’utiliser en “plugin” Stylus.</p>
 <p>C’est assez simple il suffit d’utiliser l’option <code>use</code> (<code>-u</code> en cli).
 Voilà ce qu’on aurait en cli :</p>
-<pre><code class="lang-shell">$ npm <span class="hljs-operator"><span class="hljs-keyword">install</span> -g stylus autoprefixer-stylus
+<pre><code class="lang-bash">$ npm <span class="hljs-operator"><span class="hljs-keyword">install</span> -g stylus autoprefixer-stylus
 $ stylus -u autoprefixer-stylus -o <span class="hljs-keyword">index</span>.css <span class="hljs-keyword">index</span>.styl</span>
 </code></pre>
 <h4 id="avec-grunt"><a class="putainde-Title-anchor" href="#avec-grunt">#</a>Avec Grunt</h4><p>Il suffira d’utiliser donc l’option <code>use</code> dans votre configuration.</p>
