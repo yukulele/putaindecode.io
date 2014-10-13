@@ -135,13 +135,13 @@ de pouvoir utiliser le nesting pour pouvoir rapidement produire les sélecteurs 
 Mais en terme de maintenance et surtout de réutilisation, c’est vraiment à chier.
 Faut dire ce qui est.</p>
 <pre><code class="lang-scss">.widget {
- <span class="hljs-comment"> // titre</span>
+  <span class="hljs-comment">// titre</span>
   h3 { }
 
- <span class="hljs-comment"> // widget body</span>
-  &gt; <span class="hljs-operator">div</span> {
+  <span class="hljs-comment">// widget body</span>
+  &gt; <span class="hljs-keyword">div</span> {
 
-   <span class="hljs-comment"> // liste</span>
+    <span class="hljs-comment">// liste</span>
     ul {
 
     }
@@ -154,13 +154,13 @@ Il faut alourdir la CSS. Pareillement, si notre fameuse liste dans le corps n’
 pas dans la même arborescence que celle décrite, il faut à nouveau alourdir notre CSS.
 Sans rentrer dans ces solutions solides (nous parlerons de BEM très bientôt),
 cette solution serait bien plus élégante pour la réutilisation :</p>
-<pre><code class="lang-css">.widget <span class="hljs-list">{}</span>
+<pre><code class="lang-css"><span class="hljs-class">.widget</span> <span class="hljs-rules">{<span class="hljs-rule">}</span></span>
 
-  .widget-title <span class="hljs-list">{ }</span>
+  <span class="hljs-class">.widget-title</span> <span class="hljs-rules">{ <span class="hljs-rule">}</span></span>
 
-  .widget-body <span class="hljs-list">{ }</span>
+  <span class="hljs-class">.widget-body</span> <span class="hljs-rules">{ <span class="hljs-rule">}</span></span>
 
-    .widget-body-list <span class="hljs-list">{ }</span>
+    <span class="hljs-class">.widget-body-list</span> <span class="hljs-rules">{ <span class="hljs-rule">}</span></span>
 </code></pre>
 <p>Vous remarquerez que j’ai un code ici beaucoup plus compréhensible par un nouveau,
 mais aussi bien mieux réutilisable et surtout, point très important, non couplé
@@ -218,7 +218,7 @@ vous pourrez continuer la lecture au prochain épisode qui sera consacré aux po
 <p><small>(Mamam, t’as vu ce cliffhanger digne des séries US !)</small></p>
 <p><del>Bon promis la prochaine fois je vous en parle des post-processeurs. Pour de vrai.</del>
 Chose promise, chose due : <a href="/posts/css/les-post-processeurs/">Les post-processeurs CSS</a></p>
-</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="undefined/edit/master/pages/posts/css/le-point-sur-les-preprocesseurs/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="undefined/blame/master/pages/posts/css/le-point-sur-les-preprocesseurs/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="undefined/commits/master/pages/posts/css/le-point-sur-les-preprocesseurs/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author"><a href="http://moox.io/" data-rcp-tooltip="MoOx" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> <a href="http://moox.io/" class="putainde-Link">MoOx</a></h3><div class="putainde-Author-social"><a href="http://moox.io/" data-rcp-tooltip="Website" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-home"><use xlink:href="#putainde-Icon-home"></use></svg></a><a href="https://twitter.com/MoOx" data-rcp-tooltip="Twitter" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a><a href="https://github.com/MoOx" data-rcp-tooltip="Github" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a></div></div><p class="putainde-Author-bio">Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.   <br> Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/website/edit/master/pages/posts/css/le-point-sur-les-preprocesseurs/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/website/blame/master/pages/posts/css/le-point-sur-les-preprocesseurs/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/website/commits/master/pages/posts/css/le-point-sur-les-preprocesseurs/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author"><a href="http://moox.io/" data-rcp-tooltip="MoOx" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> <a href="http://moox.io/" class="putainde-Link">MoOx</a></h3><div class="putainde-Author-social"><a href="http://moox.io/" data-rcp-tooltip="Website" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-home"><use xlink:href="#putainde-Icon-home"></use></svg></a><a href="https://twitter.com/MoOx" data-rcp-tooltip="Twitter" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a><a href="https://github.com/MoOx" data-rcp-tooltip="Github" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a></div></div><p class="putainde-Author-bio">Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.   <br> Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-rcp-tooltip="GitHub" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a><a href="https://twitter.com/putaindecode/" data-rcp-tooltip="Twitter" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/css/le-point-sur-les-preprocesseurs/";
 var disqus_url = "http://putaindecode.fr/posts/css/le-point-sur-les-preprocesseurs/";
 var disqus_script = "embed.js";;(function(d,s) {

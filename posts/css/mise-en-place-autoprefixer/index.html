@@ -55,16 +55,16 @@ comme beaucoup de commandes, vous allez avoir la sortie crachée en plein visage
 <pre><code class="lang-shell"><span class="hljs-variable">$ </span>autoprefixer -h
 </code></pre>
 <p>On y apprend l’existance des options suivantes :</p>
-<pre><code>Option<span class="hljs-variable">s:</span>
-  -<span class="hljs-keyword">b</span>, --browsers BROWSERS  <span class="hljs-built_in">add</span> prefixes <span class="hljs-keyword">for</span> selected browsers
-  -<span class="hljs-keyword">o</span>, --output FILE        <span class="hljs-keyword">set</span> output <span class="hljs-keyword">file</span>
-  -<span class="hljs-keyword">d</span>, --dir DIR            <span class="hljs-keyword">set</span> output dir
-  -<span class="hljs-keyword">m</span>, --<span class="hljs-built_in">map</span>                generate <span class="hljs-keyword">source</span> <span class="hljs-built_in">map</span>
-  -<span class="hljs-keyword">i</span>, --info               show selected browsers <span class="hljs-built_in">and</span> properties
-  -<span class="hljs-keyword">h</span>, --<span class="hljs-keyword">help</span>               show <span class="hljs-keyword">help</span> text
-  -<span class="hljs-keyword">v</span>, --<span class="hljs-keyword">version</span>            <span class="hljs-keyword">print</span> program <span class="hljs-keyword">version</span>
+<pre><code>Options:
+  -<span class="ruby">b, --browsers <span class="hljs-constant">BROWSERS</span>  add prefixes <span class="hljs-keyword">for</span> selected browsers
+</span>  -<span class="ruby">o, --output <span class="hljs-constant">FILE</span>        set output file
+</span>  -<span class="ruby">d, --dir <span class="hljs-constant">DIR</span>            set output dir
+</span>  -<span class="ruby">m, --map                generate source map
+</span>  -<span class="ruby">i, --info               show selected browsers <span class="hljs-keyword">and</span> properties
+</span>  -<span class="ruby">h, --help               show help text
+</span>  -<span class="ruby">v, --version            print program version</span>
 </code></pre><p>Du coup si on veut faire un coup de commande bien personnalisée on pourra faire :</p>
-<pre><code class="lang-shell"><span class="hljs-variable">$ </span>autoprefixer -b <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -o prefixed.css index.css
+<pre><code class="lang-shell">$ autoprefixer -<span class="hljs-tag">b</span> <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -o prefixed<span class="hljs-class">.css</span> index.css
 </code></pre>
 <p>Il va par contre nous falloir un fichier css pour tester :</p>
 <pre><code class="lang-shell"># <span class="hljs-keyword">on</span> met un peu de CSS dans <span class="hljs-built_in">index</span>.css manière de tester <span class="hljs-keyword">le</span> bouzin
@@ -136,9 +136,9 @@ $ <span class="hljs-keyword">cat</span> Makefile
 </code></pre>
 <p>Vous remarquerez que la commande <em>autoprefixer</em> s’affiche, si ça vous embête, rajoutez
 <code>@</code> devant. Vous pouvez modifier votre Makefile dans ce sens:</p>
-<pre><code><span class="hljs-keyword">cs</span><span class="hljs-variable">s:</span>
-    <span class="hljs-keyword">echo</span> <span class="hljs-string">"❯ Autoprefixage magique."</span>
-    @autoprefixer <span class="hljs-built_in">index</span>.css -<span class="hljs-keyword">b</span> <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -<span class="hljs-keyword">o</span> prefixed.css
+<pre><code><span class="hljs-attribute">css</span>:
+    echo <span class="hljs-string">"❯ Autoprefixage magique."</span>
+    <span class="hljs-variable">@autoprefixer</span> index.css -b <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -o prefixed.css
 </code></pre><p><em>Attention : Les Makefiles utilisent des tabulations uniquement ! Sans quoi cela
 ne va pas marcher comme prévu.</em></p>
 <p>Vous avez donc maintenant un exemple assez simpliste qui peut être utilisé si
@@ -202,8 +202,8 @@ gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"st
 <span class="hljs-comment">// $ gulp dev</span>
 </code></pre>
 <h3 id="autoprefixer-avec-grunt"><a class="putainde-Title-anchor" href="#autoprefixer-avec-grunt">#</a>Autoprefixer avec Grunt</h3><p>Voici un petit Gruntfile avec la même configuration que ci dessus</p>
-<pre><code class="lang-js">module.exports = function(grunt) {
-  <span class="hljs-string">"use strict"</span>;
+<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<span class="hljs-pi">  "use strict"</span>;
 
   grunt.loadNpmTasks(<span class="hljs-string">"grunt-contrib-sass"</span>)
   grunt.loadNpmTasks(<span class="hljs-string">"grunt-autoprefixer"</span>)
@@ -211,46 +211,46 @@ gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"st
   grunt.loadNpmTasks(<span class="hljs-string">"grunt-contrib-watch"</span>)
 
   grunt.initConfig({
-<span class="hljs-label">    sass:</span> {
-<span class="hljs-label">      dist:</span> {
-<span class="hljs-label">        options:</span> {
-<span class="hljs-label">          style:</span> <span class="hljs-string">"expanded"</span>
+    sass: {
+      dist: {
+        options: {
+          style: <span class="hljs-string">"expanded"</span>
         },
-<span class="hljs-label">        files:</span> [{
-<span class="hljs-label">          expand:</span> <span class="hljs-literal">true</span>,
-<span class="hljs-label">          flatten:</span> <span class="hljs-literal">true</span>,
-<span class="hljs-label">          cwd:</span> <span class="hljs-string">"./src/css"</span>,
-<span class="hljs-label">          src:</span> [<span class="hljs-string">"*.scss"</span>],
-<span class="hljs-label">          dest:</span> <span class="hljs-string">"./dist/css"</span>,
-<span class="hljs-label">          ext:</span> <span class="hljs-string">".css"</span>
+        files: [{
+          expand: <span class="hljs-literal">true</span>,
+          flatten: <span class="hljs-literal">true</span>,
+          cwd: <span class="hljs-string">"./src/css"</span>,
+          src: [<span class="hljs-string">"*.scss"</span>],
+          dest: <span class="hljs-string">"./dist/css"</span>,
+          ext: <span class="hljs-string">".css"</span>
         }]
       }
     },
-<span class="hljs-label">    autoprefixer:</span> {
-<span class="hljs-label">      options:</span> {
-<span class="hljs-label">        browsers:</span> [<span class="hljs-string">"last 2 versions"</span>, <span class="hljs-string">"&gt; 1%"</span>, <span class="hljs-string">"Explorer 7"</span>, <span class="hljs-string">"Android 2"</span>]
+    autoprefixer: {
+      options: {
+        browsers: [<span class="hljs-string">"last 2 versions"</span>, <span class="hljs-string">"&gt; 1%"</span>, <span class="hljs-string">"Explorer 7"</span>, <span class="hljs-string">"Android 2"</span>]
       },
-<span class="hljs-label">      dist:</span> {
-<span class="hljs-label">        expand:</span> <span class="hljs-literal">true</span>,
-<span class="hljs-label">        flatten:</span> <span class="hljs-literal">true</span>,
-<span class="hljs-label">        cwd:</span> <span class="hljs-string">"./dist/css"</span>,
-<span class="hljs-label">        src:</span> [<span class="hljs-string">"*.css"</span>],
-<span class="hljs-label">        dest:</span> <span class="hljs-string">"./dist/css/"</span>
+      dist: {
+        expand: <span class="hljs-literal">true</span>,
+        flatten: <span class="hljs-literal">true</span>,
+        cwd: <span class="hljs-string">"./dist/css"</span>,
+        src: [<span class="hljs-string">"*.css"</span>],
+        dest: <span class="hljs-string">"./dist/css/"</span>
       }
     },
-<span class="hljs-label">    csso:</span> {
-<span class="hljs-label">      dist:</span> {
-<span class="hljs-label">        expand:</span> <span class="hljs-literal">true</span>,
-<span class="hljs-label">        flatten:</span> <span class="hljs-literal">true</span>,
-<span class="hljs-label">        cwd:</span> <span class="hljs-string">"./dist/css/"</span>,
-<span class="hljs-label">        src:</span> [<span class="hljs-string">"*.css"</span>],
-<span class="hljs-label">        dest:</span> <span class="hljs-string">"./dist/css/"</span>
+    csso: {
+      dist: {
+        expand: <span class="hljs-literal">true</span>,
+        flatten: <span class="hljs-literal">true</span>,
+        cwd: <span class="hljs-string">"./dist/css/"</span>,
+        src: [<span class="hljs-string">"*.css"</span>],
+        dest: <span class="hljs-string">"./dist/css/"</span>
       }
     },
-<span class="hljs-label">    watch:</span> {
-<span class="hljs-label">      styles:</span> {
-<span class="hljs-label">        files:</span> [<span class="hljs-string">"./src/css/**/*.scss"</span>],
-<span class="hljs-label">        tasks:</span> [<span class="hljs-string">"styles"</span>]
+    watch: {
+      styles: {
+        files: [<span class="hljs-string">"./src/css/**/*.scss"</span>],
+        tasks: [<span class="hljs-string">"styles"</span>]
       }
     }
   })
@@ -289,7 +289,7 @@ $ stylus -u autoprefixer-stylus -o <span class="hljs-keyword">index</span>.css <
 Vous pouvez donc utiliser <em>autoprefixer</em> normalement, après l’appel du pré-processeur.</p>
 <hr>
 <p>Voilà j’espère que cette fois-ci vous êtes rassasié(e) afin de ne plus avoir envie de manger des préfixes CSS !</p>
-</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="undefined/edit/master/pages/posts/css/mise-en-place-autoprefixer/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="undefined/blame/master/pages/posts/css/mise-en-place-autoprefixer/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="undefined/commits/master/pages/posts/css/mise-en-place-autoprefixer/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author"><a href="http://moox.io/" data-rcp-tooltip="MoOx" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> <a href="http://moox.io/" class="putainde-Link">MoOx</a></h3><div class="putainde-Author-social"><a href="http://moox.io/" data-rcp-tooltip="Website" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-home"><use xlink:href="#putainde-Icon-home"></use></svg></a><a href="https://twitter.com/MoOx" data-rcp-tooltip="Twitter" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a><a href="https://github.com/MoOx" data-rcp-tooltip="Github" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a></div></div><p class="putainde-Author-bio">Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.   <br> Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/website/edit/master/pages/posts/css/mise-en-place-autoprefixer/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/website/blame/master/pages/posts/css/mise-en-place-autoprefixer/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/website/commits/master/pages/posts/css/mise-en-place-autoprefixer/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author"><a href="http://moox.io/" data-rcp-tooltip="MoOx" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> <a href="http://moox.io/" class="putainde-Link">MoOx</a></h3><div class="putainde-Author-social"><a href="http://moox.io/" data-rcp-tooltip="Website" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-home"><use xlink:href="#putainde-Icon-home"></use></svg></a><a href="https://twitter.com/MoOx" data-rcp-tooltip="Twitter" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a><a href="https://github.com/MoOx" data-rcp-tooltip="Github" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a></div></div><p class="putainde-Author-bio">Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.   <br> Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-rcp-tooltip="GitHub" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a><a href="https://twitter.com/putaindecode/" data-rcp-tooltip="Twitter" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/";
 var disqus_url = "http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/";
 var disqus_script = "embed.js";;(function(d,s) {

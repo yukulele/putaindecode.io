@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Fri, 03 Oct 2014 04:12:43 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Le guide complet pour centrer en css</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 13 Oct 2014 15:07:16 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Le guide complet pour centrer en css</title><description><![CDATA[
 <p>Centrer en css, c’est la base, et parfois, ce n’est pas si simple. Ce guide vous servira donc pour vous lister les techniques les plus connues pour réaliser ce fameux effet centré.</p>
 <p>Les principales techniques de centrage en css seront expliquées pendant les premières déclarations, et réutilisées par la suite dans tout le guide, vous pouvez donc avoir un intérêt à lire le guide dans le sens normal de la lecture.</p>
 <p>Cependant, si vous souhaitez juste avoir le code correspondant à votre problème, vous pouvez utiliser le menu composé d’ancres ci-dessous.</p>
@@ -64,14 +64,14 @@
 </code></pre>
 <p>La technique du <code>left: 50%; + margin négative en unités</code> est à utiliser sur les blocs dont vous conaissez la taille à l’avance. Le principe consiste à expliquer au navigateur qu’on place un bloc en <code>position: absolute;</code>. Celui-ci va donc chercher à se placer par rapport à son élément parent le plus proche qui est en <code>position: relative;</code>. Il faut donc ne pas oublier d’attribuer cette propriété sur le <code>.parent</code>. Il suffit ensuite d’indiquer qu’on place le bloc à <code>left: 50%;</code>. Le bloc se place donc à 50% vers la gauche par rapport à la taille totale du bloc conteneur. Il ne nous reste plus qu’à décaler vers la droite le bloc <code>.child</code> en lui donnant une valeur de margin négative vers la gauche. Celle-ci doit être égale à la moitié de la <code>width</code>(en pixels, em, rems, pourcentages, …).</p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> {
-  <span class="hljs-attribute">position</span><span class="hljs-value">: relative;</span>
+  <span class="hljs-attribute">position</span>: relative;
 }
 
 <span class="hljs-class">.child</span> {
-  <span class="hljs-attribute">width</span><span class="hljs-value">: {X}em;</span> <span class="hljs-comment">/* remplacer {X} par votre valeur */</span>
-  <span class="hljs-attribute">position</span><span class="hljs-value">: absolute;</span>
-  <span class="hljs-attribute">left</span><span class="hljs-value">: <span class="hljs-number">50%</span>;</span>
-  <span class="hljs-attribute">margin-left</span><span class="hljs-value">: -{X/<span class="hljs-number">2</span>}em;</span> <span class="hljs-comment">/* remplacer {X/2} par la moitié de votre width */</span>
+  <span class="hljs-tag">width</span>: {<span class="hljs-attribute">X</span>}<span class="hljs-attribute">em</span>; <span class="hljs-comment">/* remplacer {X} par votre valeur */</span>
+  <span class="hljs-attribute">position</span>: absolute;
+  <span class="hljs-attribute">left</span>: <span class="hljs-number">50%</span>;
+  <span class="hljs-tag">margin-left</span>: <span class="hljs-tag">-</span>{<span class="hljs-attribute">X</span>/<span class="hljs-number">2</span>}<span class="hljs-attribute">em</span>; <span class="hljs-comment">/* remplacer {X/2} par la moitié de votre width */</span>
 }
 </code></pre>
 <p>En combinant la technique précédente et des propriétés css modernes, on arrive à la technique du <code>transform: translate; négatif</code>. Même principe que la technique précédente, sauf qu’à la fin, on indique au bloc enfant d’effectuer une translation sur lui-même, en suivant l’axe X (l’axe horizontal) de -50%, donc 50% vers la droite. Sauf que ce 50% s’applique sur le bloc enfant directement. Vous n’avez donc pas besoin de connaitre la <code>width</code>de l’élément enfant à l’avance. Le <code>transform-style: preserve-3d;</code> sur le bloc <code>.parent</code> est là pour régler des problèmes de flou sur certains navigateurs lors de transitions.</p>
@@ -90,14 +90,14 @@
 </code></pre>
 <h4 id="centrage-vertical"><a class="putainde-Title-anchor" href="#centrage-vertical">#</a>Centrage vertical</h4><p>Même principe que la technique <code>left: 50%; + margin négative en unités</code>, sauf qu’on applique le principe aux propriétés css relatives à la hauteur. Vous avez donc besoin de connaitre à l’avance la hauteur de votre bloc.</p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> {
-  <span class="hljs-attribute">position</span><span class="hljs-value">: relative;</span>
+  <span class="hljs-attribute">position</span>: relative;
 }
 
 <span class="hljs-class">.child</span> {
-  <span class="hljs-attribute">height</span><span class="hljs-value">: {Y}em;</span> <span class="hljs-comment">/* remplacer {Y} par votre valeur */</span>
-  <span class="hljs-attribute">position</span><span class="hljs-value">: absolute;</span>
-  <span class="hljs-attribute">top</span><span class="hljs-value">: <span class="hljs-number">50%</span>;</span>
-  <span class="hljs-attribute">margin-top</span><span class="hljs-value">: -{Y/<span class="hljs-number">2</span>}em;</span> <span class="hljs-comment">/* remplacer {Y/2} par la moitié de votre height */</span>
+  <span class="hljs-tag">height</span>: {<span class="hljs-attribute">Y</span>}<span class="hljs-attribute">em</span>; <span class="hljs-comment">/* remplacer {Y} par votre valeur */</span>
+  <span class="hljs-attribute">position</span>: absolute;
+  <span class="hljs-attribute">top</span>: <span class="hljs-number">50%</span>;
+  <span class="hljs-tag">margin-top</span>: <span class="hljs-tag">-</span>{<span class="hljs-attribute">Y</span>/<span class="hljs-number">2</span>}<span class="hljs-attribute">em</span>; <span class="hljs-comment">/* remplacer {Y/2} par la moitié de votre height */</span>
 }
 </code></pre>
 <p>Ici on réutilise le principe expliqué dans la technique <code>transform: translate; négatif</code>, mais appliqué à la hauteur. Notez que le nom de la <a href="http://apps.workflower.fi/vocabs/css/fr">valeur de la propriété</a> css passe de <code>translateX</code> à <code>translateY</code>.</p>
@@ -135,17 +135,17 @@
 </code></pre>
 <p>Technique des <code>position: absolute; + marges négatives</code> avec tailles connues à l’avance</p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> {
-  <span class="hljs-attribute">position</span><span class="hljs-value">: relative;</span>
+  <span class="hljs-attribute">position</span>: relative;
 }
 
 <span class="hljs-class">.child</span> {
-  <span class="hljs-attribute">width</span><span class="hljs-value">: {X}em;</span> <span class="hljs-comment">/* remplacer {X} par votre valeur */</span>
-  <span class="hljs-attribute">height</span><span class="hljs-value">: {Y}em;</span> <span class="hljs-comment">/* remplacer {Y} par votre valeur */</span>
-  <span class="hljs-attribute">position</span><span class="hljs-value">: absolute;</span>
-  <span class="hljs-attribute">top</span><span class="hljs-value">: <span class="hljs-number">50%</span>;</span>
-  <span class="hljs-attribute">left</span><span class="hljs-value">: <span class="hljs-number">50%</span>;</span>
-  <span class="hljs-attribute">margin-left</span><span class="hljs-value">: -{X/<span class="hljs-number">2</span>}em;</span> <span class="hljs-comment">/* remplacer {X/2} par la moitié de votre height */</span>
-  <span class="hljs-attribute">margin-top</span><span class="hljs-value">: -{Y/<span class="hljs-number">2</span>}em;</span> <span class="hljs-comment">/* remplacer {Y/2} par la moitié de votre height */</span>
+  <span class="hljs-tag">width</span>: {<span class="hljs-attribute">X</span>}<span class="hljs-attribute">em</span>; <span class="hljs-comment">/* remplacer {X} par votre valeur */</span>
+  <span class="hljs-tag">height</span>: {<span class="hljs-attribute">Y</span>}<span class="hljs-attribute">em</span>; <span class="hljs-comment">/* remplacer {Y} par votre valeur */</span>
+  <span class="hljs-attribute">position</span>: absolute;
+  <span class="hljs-attribute">top</span>: <span class="hljs-number">50%</span>;
+  <span class="hljs-attribute">left</span>: <span class="hljs-number">50%</span>;
+  <span class="hljs-tag">margin-left</span>: <span class="hljs-tag">-</span>{<span class="hljs-attribute">X</span>/<span class="hljs-number">2</span>}<span class="hljs-attribute">em</span>; <span class="hljs-comment">/* remplacer {X/2} par la moitié de votre height */</span>
+  <span class="hljs-tag">margin-top</span>: <span class="hljs-tag">-</span>{<span class="hljs-attribute">Y</span>/<span class="hljs-number">2</span>}<span class="hljs-attribute">em</span>; <span class="hljs-comment">/* remplacer {Y/2} par la moitié de votre height */</span>
 }
 </code></pre>
 <p>Technique des <code>position: absolute; + marges négatives</code> avec tailles inconnues</p>
@@ -332,15 +332,15 @@ et l’entrée standard est le clavier de l’utilisateur.</p>
 aller sur la sortie standard (par défaut, le terminal), doit plutôt être stocké
 dans un fichier.</p>
 <p>Pour ça, on utilise la syntaxe <code>&gt; [fichier]</code> :</p>
-<pre><code class="lang-console"><span class="hljs-variable">$ </span>echo <span class="hljs-string">"Hello"</span> &gt; message
-<span class="hljs-variable">$ </span>cat message
-<span class="hljs-constant">Hello</span>
+<pre><code class="lang-console">$ echo <span class="hljs-string">"Hello"</span> &gt; <span class="hljs-keyword">message</span>
+$ cat <span class="hljs-keyword">message</span>
+Hello
 </code></pre>
 <h3 id="redirection-d-entree-code-lt-code-"><a class="putainde-Title-anchor" href="#redirection-d-entree-code-lt-code-">#</a>Redirection d’entrée : <code>&lt;</code></h3><p>À l’inverse, on peut aussi spécifier à un programme qu’il doit utiliser un
 fichier comme son entrée standard, à la place du clavier de l’utilisateur.</p>
 <p>En réutilisant notre fichier <code>message</code>, on peut par exemple faire :</p>
-<pre><code class="lang-console"><span class="hljs-variable">$ </span>cat &lt; message
-<span class="hljs-constant">Hello</span>
+<pre><code class="lang-console">$ cat &lt; <span class="hljs-keyword">message</span>
+Hello
 </code></pre>
 <p>Notez qu’on utilise bien <code>cat</code> <em>sans argument</em>, il utilise donc l’entrée
 standard.</p>
@@ -350,7 +350,7 @@ prononce <em>paillepe</em>, avé l’accent).</p>
 autre.</p>
 <p>Pour montrer ça, introduisons la commande <code>tr</code>, qui permet de remplacer des
 caractères dans l’entrée par d’autres.</p>
-<pre><code class="lang-console">$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"Hello!"</span> | <span class="hljs-built_in">tr</span> <span class="hljs-string">"[:lower:]"</span> <span class="hljs-string">"[:upper:]"</span>
+<pre><code class="lang-console">$ echo <span class="hljs-string">"Hello!"</span> | <span class="hljs-tag">tr</span> <span class="hljs-string">"[:lower:]"</span> <span class="hljs-string">"[:upper:]"</span>
 HELLO!
 </code></pre>
 <h2 id="descripteurs-de-fichiers-et-redirections-avancees"><a class="putainde-Title-anchor" href="#descripteurs-de-fichiers-et-redirections-avancees">#</a>Descripteurs de fichiers et redirections avancées</h2><p>Pour aller plus loin, on va maintenant voir que chaque descripteur de fichier
@@ -371,11 +371,11 @@ descripteur source et <em>Y</em> l’identifiant du descripteur sur lequel on ve
 rediriger.</p>
 <p>L’exemple suivant montre comment rediriger la sortie standard sur la sortie
 d’erreur (c’est comme ça qu’on écrit sur la sortie d’erreur dans un script).</p>
-<pre><code class="lang-console"><span class="hljs-variable">$ </span>echo <span class="hljs-string">"Error"</span> <span class="hljs-number">1</span>&gt;&amp;<span class="hljs-number">2</span>
+<pre><code class="lang-console">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Error"</span> <span class="hljs-number">1</span>&gt;&amp;<span class="hljs-number">2</span>
 </code></pre>
 <p>Plus généralement, on peut omettre la partie avant le <code>&gt;&amp;</code>, elle prendra la
 valeur 1 par défaut. On aura donc le script suivant :</p>
-<pre><code class="lang-console"><span class="hljs-variable">$ </span>echo <span class="hljs-string">"Error"</span> &gt;&amp;<span class="hljs-number">2</span>
+<pre><code class="lang-console">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Error"</span> &gt;&amp;<span class="hljs-number">2</span>
 </code></pre>
 <h3 id="ajouter-en-fin-de-fichier-code-gt-gt-code-"><a class="putainde-Title-anchor" href="#ajouter-en-fin-de-fichier-code-gt-gt-code-">#</a>Ajouter en fin de fichier : <code>&gt;&gt;</code></h3><p>Par défaut, <code>&gt;</code> écrase le fichier dans lequel la redirection va s’effectuer.
 Pour éviter ce problème, on peut utiliser à la place <code>&gt;&gt;</code> qui va ajouter en fin
@@ -412,13 +412,13 @@ un sur la sortie d’erreur :</p>
 </code></pre>
 <p>Si on veut rediriger toutes les sorties vers <code>/dev/null</code> on peut utiliser la
 syntaxe suivante :</p>
-<pre><code class="lang-console">$ programme <span class="hljs-number">2</span>&gt;<span class="hljs-regexp">/dev/</span><span class="hljs-literal">null</span> &gt;<span class="hljs-regexp">/dev/</span><span class="hljs-literal">null</span>
+<pre><code class="lang-console">$ programme <span class="hljs-number">2</span>&gt;<span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span> &gt;<span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span>
 </code></pre>
 <p>Vous remarquerez que c’est assez verbeux, et qu’on pourrait simplifier celà en
 utilisant <code>&gt;&amp;</code> comme vu précédemment.</p>
 <p>On essaie donc naïvement :</p>
-<pre><code class="lang-console">$ programme <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span> &gt;<span class="hljs-regexp">/dev/</span><span class="hljs-literal">null</span>
-<span class="hljs-built_in">Error</span>
+<pre><code class="lang-console"><span class="hljs-prompt">$ programme 2&gt;</span>&amp;<span class="hljs-number">1</span> &gt;<span class="hljs-regexp">/dev/null</span>
+<span class="hljs-constant">Error</span>
 </code></pre>
 <p>Hmm, pourtant on a tout branché ensemble non ? En fait non, on a redirigé la
 sortie sur le fichier pointé par <code>1</code> au moment où on écrit la redirection, donc
@@ -694,10 +694,10 @@ Il suffira de trouver un plugin équivalent (ex: rework-vars et postcss-vars fon
 <p>Pour des raisons d’écosystème, je partirai sur Rework histoire de ne pas réinventer la roue.</p>
 <h2 id="creer-un-preprocesseur-css-avec-rework"><a class="putainde-Title-anchor" href="#creer-un-preprocesseur-css-avec-rework">#</a>Créer un préprocesseur CSS avec Rework</h2><p>Rework prend une chaîne CSS en entrée, produit un AST (arbre de syntaxe abtrait)
 de notre CSS et nous fournis une API pour le manipuler.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> rework = <span class="hljs-keyword">require</span>(<span class="hljs-string">"rework"</span>)
-<span class="hljs-keyword">var</span> unPlugin = <span class="hljs-keyword">require</span>(<span class="hljs-string">"rework-BIDULE"</span>)
+<pre><code class="lang-js"><span class="hljs-tag">var</span> rework = <span class="hljs-function"><span class="hljs-title">require</span><span class="hljs-params">(<span class="hljs-string">"rework"</span>)</span></span>
+<span class="hljs-tag">var</span> unPlugin = <span class="hljs-function"><span class="hljs-title">require</span><span class="hljs-params">(<span class="hljs-string">"rework-BIDULE"</span>)</span></span>
 <span class="hljs-comment">// usage simple</span>
-<span class="hljs-keyword">var</span> css = rework(<span class="hljs-string">"html { font-size: 2rem}"</span>).<span class="hljs-keyword">use</span>(unPlugin).toString()
+<span class="hljs-tag">var</span> css = <span class="hljs-function"><span class="hljs-title">rework</span><span class="hljs-params">(<span class="hljs-string">"html { font-size: 2rem}"</span>)</span></span>.<span class="hljs-function"><span class="hljs-title">use</span><span class="hljs-params">(unPlugin)</span></span>.<span class="hljs-function"><span class="hljs-title">toString</span><span class="hljs-params">()</span></span>
 </code></pre>
 <h3 id="plugin-rework"><a class="putainde-Title-anchor" href="#plugin-rework">#</a>Plugin Rework</h3><p>Un plugin Rework n’est rien d’autre qu’une fonction JavaScript.
 L’exemple suivant remplacera toutes les couleurs de texte par du noir.</p>
@@ -970,27 +970,27 @@ ou <a href="http://atom.io">Atom</a> (apm install, editorconfig, docblockr, html
 <h2 id="gulp-iconfont"><a class="putainde-Title-anchor" href="#gulp-iconfont">#</a>gulp-iconfont</h2><p>Tout d’abord, installez <strong>gulp</strong> (évident…) et faites ce que vous avez à faire avec gulp.</p>
 <p>Maintenant, vous êtes prêt(e) ? Okay, go.</p>
 <h3 id="installez-les-em-packages-em-adequats"><a class="putainde-Title-anchor" href="#installez-les-em-packages-em-adequats">#</a>Installez les <em>packages</em> adéquats</h3><p>Oui, deux packages, <a href="https://github.com/nfroidure/gulp-iconfont">gulp-iconfont</a> et <a href="https://github.com/backflip/gulp-iconfont-css">gulp-iconfont-css</a>.</p>
-<pre><code class="lang-shell">$ npm <span class="hljs-operator"><span class="hljs-keyword">install</span> gulp-iconfont gulp-iconfont-css <span class="hljs-comment">--save-dev</span></span>
+<pre><code class="lang-shell">$ npm install gulp-iconfont gulp-iconfont-css --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span>
 </code></pre>
-<h3 id="importez-les"><a class="putainde-Title-anchor" href="#importez-les">#</a>Importez-les</h3><pre><code class="lang-js"><span class="hljs-regexp">//</span> <span class="hljs-reserved">import</span>
-<span class="hljs-reserved">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>)
+<h3 id="importez-les"><a class="putainde-Title-anchor" href="#importez-les">#</a>Importez-les</h3><pre><code class="lang-js"><span class="hljs-comment">// import</span>
+<span class="hljs-tag">var</span> gulp = <span class="hljs-function"><span class="hljs-title">require</span><span class="hljs-params">(<span class="hljs-string">'gulp'</span>)</span></span>
 
-<span class="hljs-reserved">var</span> iconfont = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-iconfont'</span>)
-<span class="hljs-reserved">var</span> iconfontCss = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-iconfont-css'</span>)
+<span class="hljs-tag">var</span> iconfont = <span class="hljs-function"><span class="hljs-title">require</span><span class="hljs-params">(<span class="hljs-string">'gulp-iconfont'</span>)</span></span>
+<span class="hljs-tag">var</span> iconfontCss = <span class="hljs-function"><span class="hljs-title">require</span><span class="hljs-params">(<span class="hljs-string">'gulp-iconfont-css'</span>)</span></span>
 </code></pre>
 <h3 id="creez-votre-propre-tache-gulp"><a class="putainde-Title-anchor" href="#creez-votre-propre-tache-gulp">#</a>Créez votre propre tâche gulp</h3><p>Je préconise d’appeler toute transformation d’une image vers une fonte “glyphicon”.</p>
 <pre><code class="lang-js"><span class="hljs-comment">// glyphicons</span>
-gulp.task(<span class="hljs-string">'glyphicons'</span>, function() {
- <span class="hljs-keyword">return</span> gulp.src(<span class="hljs-string">'src/glyphicons/**/*'</span>) <span class="hljs-comment">// où sont vos svg</span>
-    .pipe(iconfontCss({
-<span class="hljs-label">      fontName:</span> <span class="hljs-string">'icons'</span>, <span class="hljs-comment">// nom de la fonte, doit être identique au nom du plugin iconfont</span>
-<span class="hljs-label">      targetPath:</span> <span class="hljs-string">'../../styles/shared/icons.css'</span>, <span class="hljs-comment">// emplacement de la css finale</span>
-<span class="hljs-label">      fontPath:</span> <span class="hljs-string">'../fonts/'</span> <span class="hljs-comment">// emplacement des fontes finales</span>
+<span class="hljs-attribute">gulp</span>.<span class="hljs-function">task</span>(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-function">function</span>() {
+ return gulp.<span class="hljs-function">src</span>(<span class="hljs-string">'src/glyphicons/**/*'</span>) <span class="hljs-comment">// où sont vos svg</span>
+    .<span class="hljs-function">pipe</span>(<span class="hljs-function">iconfontCss</span>({
+      <span class="hljs-attribute">fontName</span>: <span class="hljs-string">'icons'</span>, <span class="hljs-comment">// nom de la fonte, doit être identique au nom du plugin iconfont</span>
+      <span class="hljs-attribute">targetPath</span>: <span class="hljs-string">'../../styles/shared/icons.css'</span>, <span class="hljs-comment">// emplacement de la css finale</span>
+      <span class="hljs-attribute">fontPath</span>: <span class="hljs-string">'../fonts/'</span> <span class="hljs-comment">// emplacement des fontes finales</span>
     }))
-    .pipe(iconfont({
-<span class="hljs-label">      fontName:</span> <span class="hljs-string">'icons'</span> <span class="hljs-comment">// identique au nom de iconfontCss</span>
+    <span class="hljs-class">.pipe</span>(<span class="hljs-function">iconfont</span>({
+      <span class="hljs-attribute">fontName</span>: <span class="hljs-string">'icons'</span> <span class="hljs-comment">// identique au nom de iconfontCss</span>
      }))
-    .pipe( gulp.dest(<span class="hljs-string">'src/assets/fonts'</span>) )
+    <span class="hljs-class">.pipe</span>( gulp.<span class="hljs-function">dest</span>(<span class="hljs-string">'src/assets/fonts'</span>) )
 })
 </code></pre>
 <h3 id="le-final"><a class="putainde-Title-anchor" href="#le-final">#</a>Le final</h3><p>Voilà l’écriture entière de la tâche :</p>
@@ -1155,7 +1155,7 @@ Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article
 <p>napa est un <em>helper for installing stuff without a package.json with npm</em>. Pardon, napa est un aideur pour installer des trucs sans un package.json avec npm. BON. napa vous aide à travers npm à installer des modules qui n’ont pas de package.json. C’est plus clair là ?</p>
 <p>napa est ce qui manque à npm où bower avait justement son utilité : télécharger n’importe quel <em>package</em> <em>front</em> n’importe où. Mais plutôt que d’installer un autre <em>packager</em>, napa s’insère directement dans npm afin de ne pas perturber le <em>workflow</em>, et ça, j’apprécie grandement.</p>
 <p>Simple, tout simple. Dans un premier temps, téléchargez-le :</p>
-<pre><code>$ npm <span class="hljs-operator"><span class="hljs-keyword">install</span> napa <span class="hljs-comment">--save-dev</span></span>
+<pre><code>$ npm install napa --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span>
 </code></pre><p>Cela ajoutera napa au <code>package.json</code>.</p>
 <p>Puis dans <code>package.json</code>, ajoutez :</p>
 <pre><code>{
@@ -1266,15 +1266,15 @@ Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article
 <p>You are now a npm master. 👨</p>
 
 ]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/npm-choisir-version/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/npm-choisir-version/</guid></item><item><title>Premiers pas avec Ruby</title><description><![CDATA[
-<h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><pre><code class="lang-sh"><span class="hljs-char">$ </span>git clone <span class="hljs-method">git:</span>//github.com/sstephenson/rbenv.git ~/.rbenv
-<span class="hljs-char">$ </span>echo <span class="hljs-string">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> &gt;&gt; ~/.bashrc
-<span class="hljs-char">$ </span>echo <span class="hljs-string">'eval "$(rbenv init -)"'</span> &gt;&gt; ~/.bashrc
-<span class="hljs-char">$ </span>source ~/.bashrc
-<span class="hljs-char">$ </span>git clone git@github.<span class="hljs-method">com:</span>sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-<span class="hljs-char">$ </span>rbenv install <span class="hljs-number">2.1</span><span class="hljs-number">.1</span>
-<span class="hljs-char">$ </span>rbenv global <span class="hljs-number">2.1</span><span class="hljs-number">.1</span>
-<span class="hljs-char">$ </span>gem install sinatra
-<span class="hljs-char">$ </span>rbenv rehash
+<h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><pre><code class="lang-sh">$ git clone git:<span class="hljs-comment">//github.com/sstephenson/rbenv.git ~/.rbenv</span>
+$ echo <span class="hljs-string">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> &gt;&gt; ~/<span class="hljs-class">.bashrc</span>
+$ echo <span class="hljs-string">'eval "$(rbenv init -)"'</span> &gt;&gt; ~/<span class="hljs-class">.bashrc</span>
+$ source ~/<span class="hljs-class">.bashrc</span>
+$ git clone git@github<span class="hljs-class">.com</span>:sstephenson/ruby-build<span class="hljs-class">.git</span> ~/.rbenv/plugins/ruby-build
+$ rbenv install <span class="hljs-number">2.1</span>.<span class="hljs-number">1</span>
+$ rbenv global <span class="hljs-number">2.1</span>.<span class="hljs-number">1</span>
+$ gem install sinatra
+$ rbenv rehash
 </code></pre>
 <p>Tous les ans, depuis des années, sort un article : <em>“<a href="http://www.reddit.com/comments/1oi8wd">Est-ce que Ruby est mort ?</a>“</em>. Et chaque année les résultats sont les mêmes, <em>“Ruby perd en intensité”</em>, <em>“Node.js prend le dessus”</em>. Et pourtant Ruby reste chaque année dans l’actualité avec autant d’importance. Il faut être honnête et admettre que <a href="http://blog.federicocarrone.com/2014/01/18/ruby-dying-or-ruby-hype-dead">Ruby souffre de certaines difficultés</a> comme tous les langages, mais <a href="http://jmoses.co/2013/12/21/is-ruby-dying.html">Ruby n’est pas mort</a> et il y a encore beaucoup à en tirer, du langage, de ses frameworks et de sa communauté. Sans oublier que de grands sites l’ont utilisé et l’utilisent toujours comme Twitter, Github, Shopify, ou encore Hulu.</p>
 <p>Nous commençons donc une série d’articles sur Ruby afin de le découvrir et commencer à développer et à devenir productif avec. Et pour ce premier article, nous allons voir comment l’installer. Dans les suivants nous installerons notre première gem, nous utiliserons Sinatra pour notre premier projet, puis nous n’arriverons plus à nous arrêter.</p>
@@ -1285,10 +1285,10 @@ Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article
 <p>Et ça va en rester ainsi pour le moment, car au lieu de voir la théorie sur Ô combien <a href="http://www.slideshare.net/astrails/ruby-is-awesome-16466895">Ruby est génial</a>, nous allons tout de suite installer Ruby pour nous rapprocher rapidement de notre éditeur de texte.</p>
 <h2 id="installation-avec-em-rbenv-em-"><a class="putainde-Title-anchor" href="#installation-avec-em-rbenv-em-">#</a>Installation avec <em>rbenv</em></h2><p>Il existe de nombreuses façons d’installer Ruby, un petit peu comme Node.js en passant par Github, par les packages officiels, brew, etc. <em>rbenv</em> reste d’après moi la façon la plus simple, propre et légère. Beaucoup pourront préférer <em>RVM</em> disant qu’il fait la même chose en mieux, d’autres diront qu’au contraire il en fait trop en écrasant par exemple la méthode <code>cd</code>. J’ai utilisé les deux, il fallait faire un choix, ce sera <em>rbenv</em>.</p>
 <p>Pour utiliser <em>rbenv</em>, il faut avoir Git. Si vous ne l’avez pas, vous devriez. Et ça tombe bien, <a href="https://github.com/madx">madx</a> et <a href="https://github.com/Erwyn">Erwyn</a> ont fait deux super articles pour l’<a href="/posts/git/versionner-avec-git/">utiliser</a> et le <a href="/posts/git/boutez-les-bugs-domptez-votre-historique/">dompter</a>. On commence donc par installer <em>rbenv</em> :</p>
-<pre><code class="lang-sh">$ git clone gi<span class="hljs-variable">t:</span>//github.<span class="hljs-keyword">com</span>/sstephenson/rbenv.git ~/.rbenv
-$ <span class="hljs-keyword">echo</span> <span class="hljs-string">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> &gt;&gt; ~/.bashrc
-$ <span class="hljs-keyword">echo</span> <span class="hljs-string">'eval "$(rbenv init -)"'</span> &gt;&gt; ~/.bashrc
-$ <span class="hljs-keyword">source</span> ~/.bashrc
+<pre><code class="lang-sh">$ git clone git:<span class="hljs-comment">//github.com/sstephenson/rbenv.git ~/.rbenv</span>
+$ echo <span class="hljs-string">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> &gt;&gt; ~/<span class="hljs-class">.bashrc</span>
+$ echo <span class="hljs-string">'eval "$(rbenv init -)"'</span> &gt;&gt; ~/<span class="hljs-class">.bashrc</span>
+$ source ~/.bashrc
 </code></pre>
 <p>Désormais <em>rbenv</em> est installé et ses commandes sont disponibles dans votre terminal. Il faut maintenant lui installer le plugin pour récupérer les différentes versions de Ruby :</p>
 <pre><code class="lang-sh">$ git clone git<span class="hljs-annotation">@github</span>.<span class="hljs-string">com:</span>sstephenson<span class="hljs-regexp">/ruby-build.git ~/</span>.rbenv<span class="hljs-regexp">/plugins/</span>ruby-build
@@ -1302,7 +1302,7 @@ rbenv <span class="hljs-keyword">global</span> <span class="hljs-number">2.1</sp
 <p>C’était facile n’est-ce pas ? Et bien c’est encore plus facile d’utiliser une bibliothèque (appelée “gem”) ou un framework Ruby. Comme nous allons utiliser Sinatra dans notre prochain article, autant l’installer tout de suite. Pour installer une gem qui sera exécutée dans la console comme Sass il est nécessaire de l’installer de cette façon : <code>gem install sass</code>. Seulement pour Sinatra, nous avons seulement besoin que le framework soit disponible dans nos scripts Ruby. Pour cela nous allons utiliser un gestionnaire de dépendance des gem Ruby, et nous verrons cela dans le prochain article pour nos premiers pas avec Sinatra.</p>
 <p>D’ici là vous pouvez commencer à jouer avec Ruby en tapant la commande <code>irb</code> dans votre terminal, qui lance l’interpretteur Ruby. Pourquoi pas essayer un <em>Hello World!</em> à la Ruby ?</p>
 <pre><code class="lang-ruby">puts <span class="hljs-string">'Hello World!'</span>
-puts (<span class="hljs-number">1</span>..<span class="hljs-number">3</span>).to_a.<span class="hljs-keyword">reverse</span>.<span class="hljs-keyword">join</span>(<span class="hljs-string">' ... '</span>) &lt;&lt; <span class="hljs-string">' ... The World is ours!!!'</span>
+puts (<span class="hljs-number">1</span>..<span class="hljs-number">3</span>)<span class="hljs-class">.to_a</span><span class="hljs-class">.reverse</span><span class="hljs-class">.join</span>(<span class="hljs-string">' ... '</span>) &lt;&lt; <span class="hljs-string">' ... The World is ours!!!'</span>
 </code></pre>
 <p>Enjoy!</p>
 
@@ -1374,7 +1374,153 @@ fonctionnalités que le téléchargement de modules.  </p>
 <p>Bye bye Bower!</p>
 <p>PS: vous avez besoin d’un module qui n’a pas de package.json ? Pas de problème, <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/">napa est là pour ça</a></p>
 
-]]></description><pubDate>Tue, 06 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</guid></item><item><title>Petite définition de BEM</title><description><![CDATA[
+]]></description><pubDate>Tue, 06 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</guid></item><item><title>Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML</title><description><![CDATA[
+<p>Mardi 29 avril s’est déroulée la troisième table ronde qui est finalement la première sous le nom de <strong>{p!}</strong>. Une petite explication s’impose étant donné que nous allons en faire de plus en plus et que je souhaite vraiment vous faire un compte rendu sur chacun de ces évènements.</p>
+<h2 id="preambule"><a class="putainde-Title-anchor" href="#preambule">#</a>Préambule</h2><p>Partant du constat qu’il est difficile d’apprendre et d’échanger en conférence du fait du manque du niveau assez élevé (trop de gens avec un niveau différent, il faut forcément s’aligner) et à sens unique (une personne parle, les autres écoutent), nous avons décidé de créer des tables rondes où un fil conducteur est suivi amenant à débattre, échanger, affirmer.</p>
+<p>Attention, je ne dis pas que les conférences ne servent à rien mais à mon sens elles sont trop magistrales et parfois trop marketing (coucou WebRTC Paris).</p>
+<p>Les premières tables rondes n’étaient pas sous le nom de <strong>p!</strong>, elles étaient plutôt de mon initiative (@_kud) dans le but de rassembler des gens que j’appréciais et dont je connaissais le niveau afin de progresser tous ensembles.</p>
+<p>Je tiens à vous mettre en garde ici que les propos tenus ne sont pas forcément toujours justifiés, c’est un compte rendu qui synthétise des choix que vous devriez sûrement explorer par vous-même ou au travers de d’autres articles <strong>p!</strong>.</p>
+<p>Bon allez, on y va.</p>
+<h2 id="ou-"><a class="putainde-Title-anchor" href="#ou-">#</a>Où ?</h2><p>C’est cette fois-ci Altima qui nous a gentillement accueilli dans ses locaux.</p>
+<p><a href="http://www.altima.fr">Altima</a> est une agence web composée de 6 bureaux dans le monde, proposant des expertises notamment dans les domaines du design, UX, SEO, in-store, hosting, et développement.</p>
+<p>On les remercie bien fort, tout était nickel.</p>
+<h2 id="themes"><a class="putainde-Title-anchor" href="#themes">#</a>Thèmes</h2><p>Voici le fil conducteur de la soirée.</p>
+<ul>
+<li>les resets / normalize, lesquels, pourquoi, quand ?</li>
+<li>stratégie de dossiers / fichiers (architecture)</li>
+<li>OOCSS, BEM, SMACSS, Atomique etc.</li>
+<li>sémantique</li>
+<li>accessibilité</li>
+<li>les pièges de l’intégration (e.g. display: inline-block)</li>
+<li>unités px, rem, em, pt</li>
+<li>CSS Frameworks ? lesquels ? pourquoi ? quand ?</li>
+</ul>
+<h2 id="qui-"><a class="putainde-Title-anchor" href="#qui-">#</a>Qui ?</h2><p>Voici les personnes présentes. Si vous avez d’ailleurs le moindre problème avec ce qui est dit dans cet article, c’est à eux que vous devriez vous adresser. 😊</p>
+<table>
+<thead>
+<tr>
+<th>Membres</th>
+<th style="text-align:center">Statut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://twitter.com/_kud">_kud</a></td>
+<td style="text-align:center">👮</td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/bloodyowl">bloodyowl</a></td>
+<td style="text-align:center">🏠</td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/yannickc">yannickc</a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/dhoko_">dhoko_</a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/philippebarbosa">philippebarbosa</a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/tchak13">tchak13</a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/remitbri">remitbri</a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td><a href="https://twitter.com/dizwix">dizwix</a></td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="c-est-parti"><a class="putainde-Title-anchor" href="#c-est-parti">#</a>C’est parti</h2><h3 id="reset-normalize"><a class="putainde-Title-anchor" href="#reset-normalize">#</a>Reset / Normalize</h3><p>Bon, alors, commençons. Ce sont évidemment les resets / normalizes qui débutent étant donné que c’est la base de toute intégration.</p>
+<p>Pour rappel, la différence entre un normalize et un reset est simple.</p>
+<ul>
+<li>Le <strong>normalize</strong> fait en sorte que les styles de base se ressemblent sur tous les navigateurs.</li>
+<li>Le <strong>reset</strong> va plus loin que ça puisqu’il s’occupe d’écraser totalement les styles par défaut pour finalement n’avoir aucun style sur votre page lorque vous débutez votre intégration.</li>
+</ul>
+<p>Bref, peu ou pas de gens dans cette salle utilisent finalement des resets. Les resets sont uniquement intéressants lors d’applications très poussées où le style par défaut des navigateurs n’est pas du tout pertinent. Mais attention, ceci peut être dangereux car il est plus compliqué de retrouver le style par défaut d’un navigateur que de le supprimer. D’où l’intérêt du normalize.</p>
+<p>Je vous indique tout de même les plus connus :</p>
+<ul>
+<li><a href="http://meyerweb.com/eric/tools/css/reset/">Le reset d’Eric Meyer</a></li>
+<li><a href="http://necolas.github.io/normalize.css/">Le normalize de Necolas</a></li>
+</ul>
+<h3 id="strategie-de-fichiers"><a class="putainde-Title-anchor" href="#strategie-de-fichiers">#</a>Stratégie de fichiers</h3><p>Allez, on continue, stratégie de fichiers, où est ce qu’on range tout ce beau monde, comment on s’y retrouve.</p>
+<p>On en a discuté un peu, certains préfèrent mettre leurs fichiers dans directement dans le <em>root</em> du projet, moi je préfère le mettre dans un dossier <code>/src</code> afin de bien différencier source, sortie, et fichiers de configuration du projet. Ce qui donne ceci :</p>
+<pre><code>.
+├── README<span class="hljs-class">.md</span>
+├── bin <span class="hljs-comment">// executables</span>
+├── dist <span class="hljs-comment">// fichiers finaux</span>
+├── src <span class="hljs-comment">// votre application</span>
+│   ├── assets <span class="hljs-comment">// fichiers statiques (pas de compilation)</span>
+│   ├── collections
+│   ├── events
+│   ├── glyphicons <span class="hljs-comment">// svg qui seront transformés en font</span>
+│   ├── images
+│   ├── lib
+│   ├── models
+│   ├── styles
+│   │   ├── base
+│   │   ├── shared
+│   │   ├── views
+│   │   ├── import<span class="hljs-class">.css</span>
+│   │   └── shame<span class="hljs-class">.css</span> <span class="hljs-comment">// hack css où il est obligatoire de commenter pourquoi</span>
+│   ├── routers
+│   ├── templates
+│   └── views
+│   ├── app<span class="hljs-class">.js</span>
+│   ├── bootstrap<span class="hljs-class">.js</span>
+|   └── import<span class="hljs-class">.json</span>
+├── gulpfile<span class="hljs-class">.js</span>
+├── Makefile
+├── package.json
+</code></pre><h3 id="oocss-bem-smacss-whatever-else"><a class="putainde-Title-anchor" href="#oocss-bem-smacss-whatever-else">#</a>OOCSS, BEM, SMACSS, whatever else</h3><p>Haaaaaaa, grand débat ici. Quelle est la meilleure façon, la meileure manière de maintenir du CSS, de nommer ses classes, d’avoir des conventions de nommage.</p>
+<p>Tout d’abord, on s’est tous accordés sur un point : OOCSS, SMACSS, le reste, ça ne marche pas. Ca marche pas parce que ça casse dans certains cas la sémantique, dans d’autres cas, ça revient à faire du style inline mais avec des noms de classes style <code>.left</code> pour un <code>float: left</code>. On a tous plus ou moins essayé et ça devient vite le bordel. On s’est aussi accordés, mais ça c’est évident, qu’avoir une convention de nommage est primordiale pour maintenir correctement du style (ou autre d’ailleurs).
+Et surtout il n’est plus nécessaire d’utiliser les IDs. Les IDs doivent servir uniquement dans le cas de la combinaison label/input, mais sinon ils empêchent toute généralisation d’un block.</p>
+<p>Il est clair qu’après des années d’intégration, le constat est là, la cascade, ce n’est vraiment pas l’idéal. Cela reste toujours aussi difficile de faire du css generique et/ou maintenable, et c’est justement en quoi BEM permet de résoudre à la fois les problématiques de cascade mais aussi de nommage.</p>
+<p>Il y a de nombreux articles sur BEM, sur ses conventions (oui il peut y avoir plusieurs conventions de nommage, BEM reste plus une méthologie).</p>
+<p>En quelques termes, BEM redéfinit la cascade en ne plus l’utilisant comme par exemple : <code>.header .title.is-active</code> mais <code>.header__title--is-active</code>, BEM venant de Block, Element, Modifier. C’est exactement ce que je viens de découper en une seule classe plutôt que 3.</p>
+<p>Pour ma part, j’utilise la convention de nommage qui se rapproche très fortément du framework JavaScript “Montage.js” : <code>.org-(js-)-MyBlock-myElement--myModifier</code>.</p>
+<p>Je ne souhaite volontairement pas m’étendre sur le sujet car je vous invite à lire <a href="/posts/css/petite-definition-bem/">mon article à ce sujet</a>.</p>
+<p>Je vous laisse tout de même deux articles à ce sujet qui présentent plutôt bien le principe (ils sont en anglais).</p>
+<ul>
+<li><a href="http://www.smashingmagazine.com/2012/04/16/a-new-front-end-methodology-bem/">A New Front-End Methodology: BEM</a></li>
+<li><a href="http://webdesign.tutsplus.com/articles/an-introduction-to-the-bem-methodology--cms-19403">An Introduction to the BEM Methodology</a></li>
+</ul>
+<h3 id="semantique"><a class="putainde-Title-anchor" href="#semantique">#</a>Sémantique</h3><p>On est tous d’accord, faire de la sémantique oui, quand cela ne va pas à l’encontre de la maintenabilité et de la réutilisation de code.</p>
+<p>Pour ma part, trop de fois je me suis pris la tête sur la sémantique au point de faire des classes uniques qui ont du sens mais qui <code>@extend</code> (voir pré-processeurs) une classe générique.</p>
+<h3 id="accessibilite"><a class="putainde-Title-anchor" href="#accessibilite">#</a>Accessibilité</h3><p>Pour être franc, l’accessibilité a un coût en terme de temps qui n’est jamais négligeable et rentre souvent en conflit avec l’UX d’une personne sans handicap.</p>
+<p>Typiquement, imaginons que nous avons un formulaire bancaire, comment faire un boucle uniquement sur ce formulaire (pratique dans le cas d’une personne sans handicap) tout en ne contraignant la navigation “classique” ?</p>
+<p>Le constat est là aussi, nous sommes tous ici sensibilisés par l’accessibilité, nous essayons d’en faire le plus possible (souvent sur notre temps libre ou entre deux tâches) mais personne n’administre du temps à cela.</p>
+<p>Une éventuelle solution a émmergé durant les discussions : pourquoi ne pourrait-on pas connaître d’emblée la situation de l’utilisateur lorsqu’il arrive sur le site ?</p>
+<p>Un navigateur dédié à certains handicaps devrait être détectable d’entée de jeu et que l’on puisse nous développeurs faire en conséquence dans ce cas là.</p>
+<p>C’est exactement comme l’histoire de résolution / bande passante. Le w3c nous propose à l’heure actuelle de détecter la résolution pour faire en conséquence sur notre site, or, ce n’est pas du tout le pivot intéressant, c’est surtout la bande passante qui nous permet d’ajuster notre site web.</p>
+<p>Bref, comme souvent, le W3C est à la rue, n’avance pas comme le web avance (vite, très vite) et les outils nous font défaut à l’heure actuelle pour répondre à certains besoins. (Note : je ne dis pas qu’ils ne font pas un bon boulot ou que ce n’est pas compliqué, je dis simplement qu’il y a un grand écart encore les besoins et les solutions à l’heure actuelle sur plusieurs domaines : l’accessibilité, la video, la capacité de fournir un site en fonction de la bande passante plutôt que la résolution, etc, etc).</p>
+<h3 id="les-pieges-de-l-integration-e-g-display-inline-block-"><a class="putainde-Title-anchor" href="#les-pieges-de-l-integration-e-g-display-inline-block-">#</a>Les pièges de l’intégration (e.g. display: inline-block)</h3><p>Certains cas de l’intégration restent encore du domaine hack plutôt qu’une solution propre et faible. On ne dit pas que ces hacks sont difficiles ou laborieux mais qu’ils sont encore nécessaires sur des propriétés css très communes en 2014.</p>
+<p>L’inline-block par exemple, il n’y a malheureusement pas le choix de soit coller les balises, soit minifier le html (ou la partie ayant des inline-block), soit de mettre des commentaires.</p>
+<p>Les layouts seront toujours aussi pénibles tant que les flexbox ne sont pas supportés par la majorité des navigateurs du marché. Les 3 solutions principales pour le moment : float, inline-block, table(-cell).</p>
+<p>En ce qui concerne le box-sizing, il sauve beaucoup d’intégration. Il faut juste voir le support des navigateurs que vous supportez.
+Oh et attention, tous les navigateurs ne font pas 16px de base. Je dis ça si vous utilisez les <code>(r)em</code> (qui sont expliqués juste après).</p>
+<p>Enfin, <code>&lt;input type=&quot;number&quot;&gt;</code> est tout buggé sous Firefox. Par exemple, mettre min=”1900” sur cet input et que vous cliquez sur le “+”, vous commencerez à “1” et non “1900”… Je sens que je vais devoir encore faire un ticket. :’)</p>
+<h3 id="unites-px-rem-em-pt-"><a class="putainde-Title-anchor" href="#unites-px-rem-em-pt-">#</a>Unités px, rem, em, pt, %</h3><p>Pour être clair, personne n’utilise des <code>pt</code>, les <code>px</code>, faut les oublier de plus en plus, et <code>rem</code> est sûrement le plus simple et le mieux mais dépend malheureusement de vos supports navigateurs où dans quels cas il faut souvent se rabattre sur les <code>em</code>. Le pourcentage est forcément préconisé.</p>
+<h3 id="css-frameworks-lesquels-pourquoi-quand-"><a class="putainde-Title-anchor" href="#css-frameworks-lesquels-pourquoi-quand-">#</a>CSS Frameworks ? lesquels ? pourquoi ? quand ?</h3><p><a href="http://foundation.zurb.com/">Foundation</a>, <a href="http://getbootstrap.com/">Bootstrap</a>, <a href="http://purecss.io/">pure</a> sont les plus connus (et peut-être les pires). Il ne vous serviront uniquement que dans le cas d’une <a href="http://fr.wikipedia.org/wiki/Preuve_de_concept">PoC</a> ou une administration de site (<em>back-office</em>).</p>
+<p>Par contre, <a href="http://topcoat.io/">topcoat</a> peut se révéler assez intéressant de par sa haute personnalisation et de son <em>BEM-way</em>. Eventuellement <a href="http://inuitcss.com/">inuit.css</a> sinon.</p>
+<h3 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h3><p>Lors de cas de contenus affichés via de l’ajax, pensez de plus en plus à faire du “prerender”, c’est à dire que pendant que le contenu se charge, au lieu de mettre des <em>spinners</em>, <em>loaders</em>, <em>toussa</em>, essayez de mettre des visuels qui ressembleront à l’élément final. C’est ce que fait par exemple facebook, et c’est pas mal du tout. Tenez :</p>
+<figure>
+  <img src="prerender.jpg" alt="facebook prerender">
+  <figcaption>Image d’aperçu des posts sur Facebook</figcaption>
+</figure>
+
+<p>Voilà pour cette table ronde, j’espère que le compte rendu vous a plu. Il est évident que c’est sûrement plus intéressant en direct, on essayera peut-être par la suite de faire du streaming (live) ou du podcast, à voir.</p>
+<p>N’hésitez pas à continuer le débat dans les commentaires.</p>
+<p>Pour ma part, j’ai déjà d’autres articles “dans le pipe” (comme disent certains marketeux). Je vous retrouve bientôt ici ou sur Twitter, kiss.</p>
+
+]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</link><guid isPermaLink="true">http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</guid></item><item><title>Petite définition de BEM</title><description><![CDATA[
 <p><strong><a href="http://bem.info">BEM</a></strong> n’est ni une marque de voiture ni un groupe de musique, et encore moins une onomatopée (quoique). C’est plutôt une façon de nommer les classes en CSS, une convention en d’autres termes voire une méthodologie.</p>
 <p>Dans cet article, je ne vous expliquerai pas pourquoi il faut préférer BEM à une autre convention, je vous explique surtout comment l’utiliser.</p>
 <p><strong>BEM</strong> apporte une solution à un problème majeur en informatique : le nommage.</p>
@@ -1392,17 +1538,17 @@ fonctionnalités que le téléchargement de modules.  </p>
 <li>Notre <em>element</em> “Content” sera <code>.Window-content</code></li>
 </ul>
 <p>Jusque là, cela devrait aller :</p>
-<pre><code class="lang-css">.Window <span class="hljs-list">{
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
 
-}</span>
+<span class="hljs-rule">}</span></span>
 
-  .Window-tab <span class="hljs-list">{
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
 
-  }</span>
+  <span class="hljs-rule">}</span></span>
 
-  .Window-content <span class="hljs-list">{
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
 
-  }</span>
+  <span class="hljs-rule">}</span></span>
 </code></pre>
 <p>Ce qui revient de manère générique à :</p>
 <pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
@@ -1494,153 +1640,7 @@ fonctionnalités que le téléchargement de modules.  </p>
 </code></pre>
 <p>Ciao les kids.</p>
 
-]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/petite-definition-bem/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/petite-definition-bem/</guid></item><item><title>Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML</title><description><![CDATA[
-<p>Mardi 29 avril s’est déroulée la troisième table ronde qui est finalement la première sous le nom de <strong>{p!}</strong>. Une petite explication s’impose étant donné que nous allons en faire de plus en plus et que je souhaite vraiment vous faire un compte rendu sur chacun de ces évènements.</p>
-<h2 id="preambule"><a class="putainde-Title-anchor" href="#preambule">#</a>Préambule</h2><p>Partant du constat qu’il est difficile d’apprendre et d’échanger en conférence du fait du manque du niveau assez élevé (trop de gens avec un niveau différent, il faut forcément s’aligner) et à sens unique (une personne parle, les autres écoutent), nous avons décidé de créer des tables rondes où un fil conducteur est suivi amenant à débattre, échanger, affirmer.</p>
-<p>Attention, je ne dis pas que les conférences ne servent à rien mais à mon sens elles sont trop magistrales et parfois trop marketing (coucou WebRTC Paris).</p>
-<p>Les premières tables rondes n’étaient pas sous le nom de <strong>p!</strong>, elles étaient plutôt de mon initiative (@_kud) dans le but de rassembler des gens que j’appréciais et dont je connaissais le niveau afin de progresser tous ensembles.</p>
-<p>Je tiens à vous mettre en garde ici que les propos tenus ne sont pas forcément toujours justifiés, c’est un compte rendu qui synthétise des choix que vous devriez sûrement explorer par vous-même ou au travers de d’autres articles <strong>p!</strong>.</p>
-<p>Bon allez, on y va.</p>
-<h2 id="ou-"><a class="putainde-Title-anchor" href="#ou-">#</a>Où ?</h2><p>C’est cette fois-ci Altima qui nous a gentillement accueilli dans ses locaux.</p>
-<p><a href="http://www.altima.fr">Altima</a> est une agence web composée de 6 bureaux dans le monde, proposant des expertises notamment dans les domaines du design, UX, SEO, in-store, hosting, et développement.</p>
-<p>On les remercie bien fort, tout était nickel.</p>
-<h2 id="themes"><a class="putainde-Title-anchor" href="#themes">#</a>Thèmes</h2><p>Voici le fil conducteur de la soirée.</p>
-<ul>
-<li>les resets / normalize, lesquels, pourquoi, quand ?</li>
-<li>stratégie de dossiers / fichiers (architecture)</li>
-<li>OOCSS, BEM, SMACSS, Atomique etc.</li>
-<li>sémantique</li>
-<li>accessibilité</li>
-<li>les pièges de l’intégration (e.g. display: inline-block)</li>
-<li>unités px, rem, em, pt</li>
-<li>CSS Frameworks ? lesquels ? pourquoi ? quand ?</li>
-</ul>
-<h2 id="qui-"><a class="putainde-Title-anchor" href="#qui-">#</a>Qui ?</h2><p>Voici les personnes présentes. Si vous avez d’ailleurs le moindre problème avec ce qui est dit dans cet article, c’est à eux que vous devriez vous adresser. 😊</p>
-<table>
-<thead>
-<tr>
-<th>Membres</th>
-<th style="text-align:center">Statut</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://twitter.com/_kud">_kud</a></td>
-<td style="text-align:center">👮</td>
-</tr>
-<tr>
-<td><a href="https://twitter.com/bloodyowl">bloodyowl</a></td>
-<td style="text-align:center">🏠</td>
-</tr>
-<tr>
-<td><a href="https://twitter.com/yannickc">yannickc</a></td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td><a href="https://twitter.com/dhoko_">dhoko_</a></td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td><a href="https://twitter.com/philippebarbosa">philippebarbosa</a></td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td><a href="https://twitter.com/tchak13">tchak13</a></td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td><a href="https://twitter.com/remitbri">remitbri</a></td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td><a href="https://twitter.com/dizwix">dizwix</a></td>
-<td style="text-align:center"></td>
-</tr>
-</tbody>
-</table>
-<h2 id="c-est-parti"><a class="putainde-Title-anchor" href="#c-est-parti">#</a>C’est parti</h2><h3 id="reset-normalize"><a class="putainde-Title-anchor" href="#reset-normalize">#</a>Reset / Normalize</h3><p>Bon, alors, commençons. Ce sont évidemment les resets / normalizes qui débutent étant donné que c’est la base de toute intégration.</p>
-<p>Pour rappel, la différence entre un normalize et un reset est simple.</p>
-<ul>
-<li>Le <strong>normalize</strong> fait en sorte que les styles de base se ressemblent sur tous les navigateurs.</li>
-<li>Le <strong>reset</strong> va plus loin que ça puisqu’il s’occupe d’écraser totalement les styles par défaut pour finalement n’avoir aucun style sur votre page lorque vous débutez votre intégration.</li>
-</ul>
-<p>Bref, peu ou pas de gens dans cette salle utilisent finalement des resets. Les resets sont uniquement intéressants lors d’applications très poussées où le style par défaut des navigateurs n’est pas du tout pertinent. Mais attention, ceci peut être dangereux car il est plus compliqué de retrouver le style par défaut d’un navigateur que de le supprimer. D’où l’intérêt du normalize.</p>
-<p>Je vous indique tout de même les plus connus :</p>
-<ul>
-<li><a href="http://meyerweb.com/eric/tools/css/reset/">Le reset d’Eric Meyer</a></li>
-<li><a href="http://necolas.github.io/normalize.css/">Le normalize de Necolas</a></li>
-</ul>
-<h3 id="strategie-de-fichiers"><a class="putainde-Title-anchor" href="#strategie-de-fichiers">#</a>Stratégie de fichiers</h3><p>Allez, on continue, stratégie de fichiers, où est ce qu’on range tout ce beau monde, comment on s’y retrouve.</p>
-<p>On en a discuté un peu, certains préfèrent mettre leurs fichiers dans directement dans le <em>root</em> du projet, moi je préfère le mettre dans un dossier <code>/src</code> afin de bien différencier source, sortie, et fichiers de configuration du projet. Ce qui donne ceci :</p>
-<pre><code>.
-├── README.md
-├── bin <span class="hljs-comment">// executables</span>
-├── dist <span class="hljs-comment">// fichiers finaux</span>
-├── src <span class="hljs-comment">// votre application</span>
-│   ├── assets <span class="hljs-comment">// fichiers statiques (pas de compilation)</span>
-│   ├── collections
-│   ├── events
-│   ├── glyphicons <span class="hljs-comment">// svg qui seront transformés en font</span>
-│   ├── images
-│   ├── lib
-│   ├── models
-│   ├── styles
-│   │   ├── base
-│   │   ├── <span class="hljs-keyword">shared</span>
-│   │   ├── views
-│   │   ├── <span class="hljs-keyword">import</span>.css
-│   │   └── shame.css <span class="hljs-comment">// hack css où il est obligatoire de commenter pourquoi</span>
-│   ├── routers
-│   ├── templates
-│   └── views
-│   ├── app.js
-│   ├── bootstrap.js
-|   └── <span class="hljs-keyword">import</span>.json
-├── gulpfile.js
-├── Makefile
-├── <span class="hljs-keyword">package</span>.json
-</code></pre><h3 id="oocss-bem-smacss-whatever-else"><a class="putainde-Title-anchor" href="#oocss-bem-smacss-whatever-else">#</a>OOCSS, BEM, SMACSS, whatever else</h3><p>Haaaaaaa, grand débat ici. Quelle est la meilleure façon, la meileure manière de maintenir du CSS, de nommer ses classes, d’avoir des conventions de nommage.</p>
-<p>Tout d’abord, on s’est tous accordés sur un point : OOCSS, SMACSS, le reste, ça ne marche pas. Ca marche pas parce que ça casse dans certains cas la sémantique, dans d’autres cas, ça revient à faire du style inline mais avec des noms de classes style <code>.left</code> pour un <code>float: left</code>. On a tous plus ou moins essayé et ça devient vite le bordel. On s’est aussi accordés, mais ça c’est évident, qu’avoir une convention de nommage est primordiale pour maintenir correctement du style (ou autre d’ailleurs).
-Et surtout il n’est plus nécessaire d’utiliser les IDs. Les IDs doivent servir uniquement dans le cas de la combinaison label/input, mais sinon ils empêchent toute généralisation d’un block.</p>
-<p>Il est clair qu’après des années d’intégration, le constat est là, la cascade, ce n’est vraiment pas l’idéal. Cela reste toujours aussi difficile de faire du css generique et/ou maintenable, et c’est justement en quoi BEM permet de résoudre à la fois les problématiques de cascade mais aussi de nommage.</p>
-<p>Il y a de nombreux articles sur BEM, sur ses conventions (oui il peut y avoir plusieurs conventions de nommage, BEM reste plus une méthologie).</p>
-<p>En quelques termes, BEM redéfinit la cascade en ne plus l’utilisant comme par exemple : <code>.header .title.is-active</code> mais <code>.header__title--is-active</code>, BEM venant de Block, Element, Modifier. C’est exactement ce que je viens de découper en une seule classe plutôt que 3.</p>
-<p>Pour ma part, j’utilise la convention de nommage qui se rapproche très fortément du framework JavaScript “Montage.js” : <code>.org-(js-)-MyBlock-myElement--myModifier</code>.</p>
-<p>Je ne souhaite volontairement pas m’étendre sur le sujet car je vous invite à lire <a href="/posts/css/petite-definition-bem/">mon article à ce sujet</a>.</p>
-<p>Je vous laisse tout de même deux articles à ce sujet qui présentent plutôt bien le principe (ils sont en anglais).</p>
-<ul>
-<li><a href="http://www.smashingmagazine.com/2012/04/16/a-new-front-end-methodology-bem/">A New Front-End Methodology: BEM</a></li>
-<li><a href="http://webdesign.tutsplus.com/articles/an-introduction-to-the-bem-methodology--cms-19403">An Introduction to the BEM Methodology</a></li>
-</ul>
-<h3 id="semantique"><a class="putainde-Title-anchor" href="#semantique">#</a>Sémantique</h3><p>On est tous d’accord, faire de la sémantique oui, quand cela ne va pas à l’encontre de la maintenabilité et de la réutilisation de code.</p>
-<p>Pour ma part, trop de fois je me suis pris la tête sur la sémantique au point de faire des classes uniques qui ont du sens mais qui <code>@extend</code> (voir pré-processeurs) une classe générique.</p>
-<h3 id="accessibilite"><a class="putainde-Title-anchor" href="#accessibilite">#</a>Accessibilité</h3><p>Pour être franc, l’accessibilité a un coût en terme de temps qui n’est jamais négligeable et rentre souvent en conflit avec l’UX d’une personne sans handicap.</p>
-<p>Typiquement, imaginons que nous avons un formulaire bancaire, comment faire un boucle uniquement sur ce formulaire (pratique dans le cas d’une personne sans handicap) tout en ne contraignant la navigation “classique” ?</p>
-<p>Le constat est là aussi, nous sommes tous ici sensibilisés par l’accessibilité, nous essayons d’en faire le plus possible (souvent sur notre temps libre ou entre deux tâches) mais personne n’administre du temps à cela.</p>
-<p>Une éventuelle solution a émmergé durant les discussions : pourquoi ne pourrait-on pas connaître d’emblée la situation de l’utilisateur lorsqu’il arrive sur le site ?</p>
-<p>Un navigateur dédié à certains handicaps devrait être détectable d’entée de jeu et que l’on puisse nous développeurs faire en conséquence dans ce cas là.</p>
-<p>C’est exactement comme l’histoire de résolution / bande passante. Le w3c nous propose à l’heure actuelle de détecter la résolution pour faire en conséquence sur notre site, or, ce n’est pas du tout le pivot intéressant, c’est surtout la bande passante qui nous permet d’ajuster notre site web.</p>
-<p>Bref, comme souvent, le W3C est à la rue, n’avance pas comme le web avance (vite, très vite) et les outils nous font défaut à l’heure actuelle pour répondre à certains besoins. (Note : je ne dis pas qu’ils ne font pas un bon boulot ou que ce n’est pas compliqué, je dis simplement qu’il y a un grand écart encore les besoins et les solutions à l’heure actuelle sur plusieurs domaines : l’accessibilité, la video, la capacité de fournir un site en fonction de la bande passante plutôt que la résolution, etc, etc).</p>
-<h3 id="les-pieges-de-l-integration-e-g-display-inline-block-"><a class="putainde-Title-anchor" href="#les-pieges-de-l-integration-e-g-display-inline-block-">#</a>Les pièges de l’intégration (e.g. display: inline-block)</h3><p>Certains cas de l’intégration restent encore du domaine hack plutôt qu’une solution propre et faible. On ne dit pas que ces hacks sont difficiles ou laborieux mais qu’ils sont encore nécessaires sur des propriétés css très communes en 2014.</p>
-<p>L’inline-block par exemple, il n’y a malheureusement pas le choix de soit coller les balises, soit minifier le html (ou la partie ayant des inline-block), soit de mettre des commentaires.</p>
-<p>Les layouts seront toujours aussi pénibles tant que les flexbox ne sont pas supportés par la majorité des navigateurs du marché. Les 3 solutions principales pour le moment : float, inline-block, table(-cell).</p>
-<p>En ce qui concerne le box-sizing, il sauve beaucoup d’intégration. Il faut juste voir le support des navigateurs que vous supportez.
-Oh et attention, tous les navigateurs ne font pas 16px de base. Je dis ça si vous utilisez les <code>(r)em</code> (qui sont expliqués juste après).</p>
-<p>Enfin, <code>&lt;input type=&quot;number&quot;&gt;</code> est tout buggé sous Firefox. Par exemple, mettre min=”1900” sur cet input et que vous cliquez sur le “+”, vous commencerez à “1” et non “1900”… Je sens que je vais devoir encore faire un ticket. :’)</p>
-<h3 id="unites-px-rem-em-pt-"><a class="putainde-Title-anchor" href="#unites-px-rem-em-pt-">#</a>Unités px, rem, em, pt, %</h3><p>Pour être clair, personne n’utilise des <code>pt</code>, les <code>px</code>, faut les oublier de plus en plus, et <code>rem</code> est sûrement le plus simple et le mieux mais dépend malheureusement de vos supports navigateurs où dans quels cas il faut souvent se rabattre sur les <code>em</code>. Le pourcentage est forcément préconisé.</p>
-<h3 id="css-frameworks-lesquels-pourquoi-quand-"><a class="putainde-Title-anchor" href="#css-frameworks-lesquels-pourquoi-quand-">#</a>CSS Frameworks ? lesquels ? pourquoi ? quand ?</h3><p><a href="http://foundation.zurb.com/">Foundation</a>, <a href="http://getbootstrap.com/">Bootstrap</a>, <a href="http://purecss.io/">pure</a> sont les plus connus (et peut-être les pires). Il ne vous serviront uniquement que dans le cas d’une <a href="http://fr.wikipedia.org/wiki/Preuve_de_concept">PoC</a> ou une administration de site (<em>back-office</em>).</p>
-<p>Par contre, <a href="http://topcoat.io/">topcoat</a> peut se révéler assez intéressant de par sa haute personnalisation et de son <em>BEM-way</em>. Eventuellement <a href="http://inuitcss.com/">inuit.css</a> sinon.</p>
-<h3 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h3><p>Lors de cas de contenus affichés via de l’ajax, pensez de plus en plus à faire du “prerender”, c’est à dire que pendant que le contenu se charge, au lieu de mettre des <em>spinners</em>, <em>loaders</em>, <em>toussa</em>, essayez de mettre des visuels qui ressembleront à l’élément final. C’est ce que fait par exemple facebook, et c’est pas mal du tout. Tenez :</p>
-<figure>
-  <img src="prerender.jpg" alt="facebook prerender">
-  <figcaption>Image d’aperçu des posts sur Facebook</figcaption>
-</figure>
-
-<p>Voilà pour cette table ronde, j’espère que le compte rendu vous a plu. Il est évident que c’est sûrement plus intéressant en direct, on essayera peut-être par la suite de faire du streaming (live) ou du podcast, à voir.</p>
-<p>N’hésitez pas à continuer le débat dans les commentaires.</p>
-<p>Pour ma part, j’ai déjà d’autres articles “dans le pipe” (comme disent certains marketeux). Je vous retrouve bientôt ici ou sur Twitter, kiss.</p>
-
-]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</link><guid isPermaLink="true">http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</guid></item><item><title>Introduction au testing js front</title><description><![CDATA[
+]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/petite-definition-bem/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/petite-definition-bem/</guid></item><item><title>Introduction au testing js front</title><description><![CDATA[
 <p>Les tests automatisés en front-end ont longtemps été ignorés,
 et le sont encore trop.</p>
 <p>Écrire des tests peut paraître chiant, mais le temps qu’ils rapportent
@@ -1813,9 +1813,9 @@ une <code>string</code>.</p>
 })
 </code></pre>
 <p>permettent ici d’identifier qu’en réalité on a besoin de :</p>
-<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
-  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(value) == <span class="hljs-string">"[object String]"</span>
-}
+<pre><code class="lang-javascript"><span class="hljs-typedef"><span class="hljs-keyword">type</span>.isString = function<span class="hljs-container">(<span class="hljs-title">value</span>)</span> <span class="hljs-container">{
+  <span class="hljs-title">return</span> <span class="hljs-type">Object</span>.<span class="hljs-title">prototype</span>.<span class="hljs-title">toString</span>.<span class="hljs-title">call</span>(<span class="hljs-title">value</span>) == "[<span class="hljs-title">object</span> <span class="hljs-type">String</span>]"
+}</span></span>
 </code></pre>
 <p>Et c’est à la force des résultats de tests que vous identifierez rapidement
 vous familiariserez à tous ces edge-cases.</p>
@@ -1825,17 +1825,17 @@ feature testing.
 Pour le tester complètement, on doit se servir de vrais navigateurs :
 un headless (certes, très pratique) comme <a href="http://phantomjs.org">phantomjs</a>
 ne permettra pas d’obtenir 100% de coverage.</p>
-<pre><code class="lang-javascript">var supportsAnimationFrame =
+<pre><code class="lang-javascript"><span class="hljs-tag">var</span> supportsAnimationFrame =
   !!(
-    win.requestAnimationFrame <span class="hljs-string">||</span>
-    win.webkitRequestAnimationFrame <span class="hljs-string">||</span>
-    win.mozRequestAnimationFrame <span class="hljs-string">||</span>
-    win.ORequestAnimationFrame <span class="hljs-string">||</span>
+    win<span class="hljs-class">.requestAnimationFrame</span> ||
+    win<span class="hljs-class">.webkitRequestAnimationFrame</span> ||
+    win<span class="hljs-class">.mozRequestAnimationFrame</span> ||
+    win<span class="hljs-class">.ORequestAnimationFrame</span> ||
     <span class="hljs-comment">// vous avez fait une faute de frappe,</span>
     <span class="hljs-comment">// et mis un `O` majuscule, seul un</span>
     <span class="hljs-comment">// test sur les version concernées d'Opera</span>
     <span class="hljs-comment">// vous permettront de l'identifier</span>
-    win.msRequestAnimationFrame
+    win<span class="hljs-class">.msRequestAnimationFrame</span>
   )
 </code></pre>
 <p>De plus, vous pouvez par habitude être tenté d’utiliser un
@@ -1947,10 +1947,10 @@ de fichiers</a>.</p>
 </figure>
 
 <h2 id="installation"><a class="putainde-Title-anchor" href="#installation">#</a>Installation</h2><p>Pour avoir la commande globale sur le système (comme grunt-cli) :</p>
-<pre><code class="lang-shell"><span class="hljs-variable">$ </span>npm i -g gulp
+<pre><code class="lang-shell">$ npm <span class="hljs-tag">i</span> -g gulp
 </code></pre>
 <p>Ensuite dans votre projet :</p>
-<pre><code class="lang-shell"><span class="hljs-variable">$ </span>npm i -<span class="hljs-constant">D </span>gulp gulp-util gulp-plumber gulp-<span class="hljs-constant">WHATEVER</span>
+<pre><code class="lang-shell">$ npm <span class="hljs-tag">i</span> -D gulp gulp-util gulp-plumber gulp-WHATEVER
 </code></pre>
 <p><em>Note : <code>npm i -D</code> == <code>npm install --save-dev</code>, c’est cadeau.</em></p>
 <p>Bon dans mon exemple j’ai mis un peu n’importe quoi, donc on va faire un mini workflow de hipster hacker.</p>
@@ -2147,17 +2147,17 @@ Exemple avec <a href="https://github.com/ctalkington/rework-rem-fallback">rework
 <pre><code class="lang-js"><span class="hljs-comment">// il faudrait installer les dépendances de la façon suivante</span>
 <span class="hljs-comment">// $ npm i rework rework-rem-fallback</span>
 
-<span class="hljs-keyword">var</span> rework = <span class="hljs-keyword">require</span>(<span class="hljs-string">'rework'</span>) <span class="hljs-comment">// le moteur rework, je reviens dessus après</span>
-<span class="hljs-keyword">var</span> remFallback = <span class="hljs-keyword">require</span>(<span class="hljs-string">'rework-rem-fallback'</span>) <span class="hljs-comment">// le plugin rework</span>
+<span class="hljs-tag">var</span> rework = <span class="hljs-function"><span class="hljs-title">require</span><span class="hljs-params">(<span class="hljs-string">'rework'</span>)</span></span> <span class="hljs-comment">// le moteur rework, je reviens dessus après</span>
+<span class="hljs-tag">var</span> remFallback = <span class="hljs-function"><span class="hljs-title">require</span><span class="hljs-params">(<span class="hljs-string">'rework-rem-fallback'</span>)</span></span> <span class="hljs-comment">// le plugin rework</span>
 
   <span class="hljs-comment">// lecture du fichier css</span>
-<span class="hljs-keyword">var</span> css = <span class="hljs-keyword">require</span>(<span class="hljs-string">'fs'</span>).readFileSync(<span class="hljs-string">'dist/index.css'</span>, <span class="hljs-string">'utf8'</span>).toString()
+<span class="hljs-tag">var</span> css = <span class="hljs-function"><span class="hljs-title">require</span><span class="hljs-params">(<span class="hljs-string">'fs'</span>)</span></span>.<span class="hljs-function"><span class="hljs-title">readFileSync</span><span class="hljs-params">(<span class="hljs-string">'dist/index.css'</span>, <span class="hljs-string">'utf8'</span>)</span></span>.<span class="hljs-function"><span class="hljs-title">toString</span><span class="hljs-params">()</span></span>
 
   <span class="hljs-comment">// on traite le CSS en indiquant à rework la source, et le plugin à utiliser</span>
-<span class="hljs-keyword">var</span> out = rework(css).<span class="hljs-keyword">use</span>(remFallback()).toString()
+<span class="hljs-tag">var</span> out = <span class="hljs-function"><span class="hljs-title">rework</span><span class="hljs-params">(css)</span></span>.<span class="hljs-function"><span class="hljs-title">use</span><span class="hljs-params">(remFallback()</span></span>).<span class="hljs-function"><span class="hljs-title">toString</span><span class="hljs-params">()</span></span>
 
   <span class="hljs-comment">// ici on fait la même chose, mais comme si la font de base était en 14px</span>
-<span class="hljs-keyword">var</span> out14 = rework(css).<span class="hljs-keyword">use</span>(remFallback(<span class="hljs-number">14</span>)).toString()
+<span class="hljs-tag">var</span> out14 = <span class="hljs-function"><span class="hljs-title">rework</span><span class="hljs-params">(css)</span></span>.<span class="hljs-function"><span class="hljs-title">use</span><span class="hljs-params">(remFallback(<span class="hljs-number">14</span>)</span></span>).<span class="hljs-function"><span class="hljs-title">toString</span><span class="hljs-params">()</span></span>
 </code></pre>
 <p>Avec l’exemple d’avant, et ce bout de CSS:</p>
 <pre><code class="lang-css">.main-header { width: <span class="hljs-number">5</span><span class="hljs-comment">rem }</span>
@@ -2352,13 +2352,13 @@ de pouvoir utiliser le nesting pour pouvoir rapidement produire les sélecteurs 
 Mais en terme de maintenance et surtout de réutilisation, c’est vraiment à chier.
 Faut dire ce qui est.</p>
 <pre><code class="lang-scss">.widget {
- <span class="hljs-comment"> // titre</span>
+  <span class="hljs-comment">// titre</span>
   h3 { }
 
- <span class="hljs-comment"> // widget body</span>
-  &gt; <span class="hljs-operator">div</span> {
+  <span class="hljs-comment">// widget body</span>
+  &gt; <span class="hljs-keyword">div</span> {
 
-   <span class="hljs-comment"> // liste</span>
+    <span class="hljs-comment">// liste</span>
     ul {
 
     }
@@ -2371,13 +2371,13 @@ Il faut alourdir la CSS. Pareillement, si notre fameuse liste dans le corps n’
 pas dans la même arborescence que celle décrite, il faut à nouveau alourdir notre CSS.
 Sans rentrer dans ces solutions solides (nous parlerons de BEM très bientôt),
 cette solution serait bien plus élégante pour la réutilisation :</p>
-<pre><code class="lang-css">.widget <span class="hljs-list">{}</span>
+<pre><code class="lang-css"><span class="hljs-class">.widget</span> <span class="hljs-rules">{<span class="hljs-rule">}</span></span>
 
-  .widget-title <span class="hljs-list">{ }</span>
+  <span class="hljs-class">.widget-title</span> <span class="hljs-rules">{ <span class="hljs-rule">}</span></span>
 
-  .widget-body <span class="hljs-list">{ }</span>
+  <span class="hljs-class">.widget-body</span> <span class="hljs-rules">{ <span class="hljs-rule">}</span></span>
 
-    .widget-body-list <span class="hljs-list">{ }</span>
+    <span class="hljs-class">.widget-body-list</span> <span class="hljs-rules">{ <span class="hljs-rule">}</span></span>
 </code></pre>
 <p>Vous remarquerez que j’ai un code ici beaucoup plus compréhensible par un nouveau,
 mais aussi bien mieux réutilisable et surtout, point très important, non couplé
@@ -2464,16 +2464,16 @@ comme beaucoup de commandes, vous allez avoir la sortie crachée en plein visage
 <pre><code class="lang-shell"><span class="hljs-variable">$ </span>autoprefixer -h
 </code></pre>
 <p>On y apprend l’existance des options suivantes :</p>
-<pre><code>Option<span class="hljs-variable">s:</span>
-  -<span class="hljs-keyword">b</span>, --browsers BROWSERS  <span class="hljs-built_in">add</span> prefixes <span class="hljs-keyword">for</span> selected browsers
-  -<span class="hljs-keyword">o</span>, --output FILE        <span class="hljs-keyword">set</span> output <span class="hljs-keyword">file</span>
-  -<span class="hljs-keyword">d</span>, --dir DIR            <span class="hljs-keyword">set</span> output dir
-  -<span class="hljs-keyword">m</span>, --<span class="hljs-built_in">map</span>                generate <span class="hljs-keyword">source</span> <span class="hljs-built_in">map</span>
-  -<span class="hljs-keyword">i</span>, --info               show selected browsers <span class="hljs-built_in">and</span> properties
-  -<span class="hljs-keyword">h</span>, --<span class="hljs-keyword">help</span>               show <span class="hljs-keyword">help</span> text
-  -<span class="hljs-keyword">v</span>, --<span class="hljs-keyword">version</span>            <span class="hljs-keyword">print</span> program <span class="hljs-keyword">version</span>
+<pre><code>Options:
+  -<span class="ruby">b, --browsers <span class="hljs-constant">BROWSERS</span>  add prefixes <span class="hljs-keyword">for</span> selected browsers
+</span>  -<span class="ruby">o, --output <span class="hljs-constant">FILE</span>        set output file
+</span>  -<span class="ruby">d, --dir <span class="hljs-constant">DIR</span>            set output dir
+</span>  -<span class="ruby">m, --map                generate source map
+</span>  -<span class="ruby">i, --info               show selected browsers <span class="hljs-keyword">and</span> properties
+</span>  -<span class="ruby">h, --help               show help text
+</span>  -<span class="ruby">v, --version            print program version</span>
 </code></pre><p>Du coup si on veut faire un coup de commande bien personnalisée on pourra faire :</p>
-<pre><code class="lang-shell"><span class="hljs-variable">$ </span>autoprefixer -b <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -o prefixed.css index.css
+<pre><code class="lang-shell">$ autoprefixer -<span class="hljs-tag">b</span> <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -o prefixed<span class="hljs-class">.css</span> index.css
 </code></pre>
 <p>Il va par contre nous falloir un fichier css pour tester :</p>
 <pre><code class="lang-shell"># <span class="hljs-keyword">on</span> met un peu de CSS dans <span class="hljs-built_in">index</span>.css manière de tester <span class="hljs-keyword">le</span> bouzin
@@ -2545,9 +2545,9 @@ $ <span class="hljs-keyword">cat</span> Makefile
 </code></pre>
 <p>Vous remarquerez que la commande <em>autoprefixer</em> s’affiche, si ça vous embête, rajoutez
 <code>@</code> devant. Vous pouvez modifier votre Makefile dans ce sens:</p>
-<pre><code><span class="hljs-keyword">cs</span><span class="hljs-variable">s:</span>
-    <span class="hljs-keyword">echo</span> <span class="hljs-string">"❯ Autoprefixage magique."</span>
-    @autoprefixer <span class="hljs-built_in">index</span>.css -<span class="hljs-keyword">b</span> <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -<span class="hljs-keyword">o</span> prefixed.css
+<pre><code><span class="hljs-attribute">css</span>:
+    echo <span class="hljs-string">"❯ Autoprefixage magique."</span>
+    <span class="hljs-variable">@autoprefixer</span> index.css -b <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -o prefixed.css
 </code></pre><p><em>Attention : Les Makefiles utilisent des tabulations uniquement ! Sans quoi cela
 ne va pas marcher comme prévu.</em></p>
 <p>Vous avez donc maintenant un exemple assez simpliste qui peut être utilisé si
@@ -2611,8 +2611,8 @@ gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"st
 <span class="hljs-comment">// $ gulp dev</span>
 </code></pre>
 <h3 id="autoprefixer-avec-grunt"><a class="putainde-Title-anchor" href="#autoprefixer-avec-grunt">#</a>Autoprefixer avec Grunt</h3><p>Voici un petit Gruntfile avec la même configuration que ci dessus</p>
-<pre><code class="lang-js">module.exports = function(grunt) {
-  <span class="hljs-string">"use strict"</span>;
+<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<span class="hljs-pi">  "use strict"</span>;
 
   grunt.loadNpmTasks(<span class="hljs-string">"grunt-contrib-sass"</span>)
   grunt.loadNpmTasks(<span class="hljs-string">"grunt-autoprefixer"</span>)
@@ -2620,46 +2620,46 @@ gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"st
   grunt.loadNpmTasks(<span class="hljs-string">"grunt-contrib-watch"</span>)
 
   grunt.initConfig({
-<span class="hljs-label">    sass:</span> {
-<span class="hljs-label">      dist:</span> {
-<span class="hljs-label">        options:</span> {
-<span class="hljs-label">          style:</span> <span class="hljs-string">"expanded"</span>
+    sass: {
+      dist: {
+        options: {
+          style: <span class="hljs-string">"expanded"</span>
         },
-<span class="hljs-label">        files:</span> [{
-<span class="hljs-label">          expand:</span> <span class="hljs-literal">true</span>,
-<span class="hljs-label">          flatten:</span> <span class="hljs-literal">true</span>,
-<span class="hljs-label">          cwd:</span> <span class="hljs-string">"./src/css"</span>,
-<span class="hljs-label">          src:</span> [<span class="hljs-string">"*.scss"</span>],
-<span class="hljs-label">          dest:</span> <span class="hljs-string">"./dist/css"</span>,
-<span class="hljs-label">          ext:</span> <span class="hljs-string">".css"</span>
+        files: [{
+          expand: <span class="hljs-literal">true</span>,
+          flatten: <span class="hljs-literal">true</span>,
+          cwd: <span class="hljs-string">"./src/css"</span>,
+          src: [<span class="hljs-string">"*.scss"</span>],
+          dest: <span class="hljs-string">"./dist/css"</span>,
+          ext: <span class="hljs-string">".css"</span>
         }]
       }
     },
-<span class="hljs-label">    autoprefixer:</span> {
-<span class="hljs-label">      options:</span> {
-<span class="hljs-label">        browsers:</span> [<span class="hljs-string">"last 2 versions"</span>, <span class="hljs-string">"&gt; 1%"</span>, <span class="hljs-string">"Explorer 7"</span>, <span class="hljs-string">"Android 2"</span>]
+    autoprefixer: {
+      options: {
+        browsers: [<span class="hljs-string">"last 2 versions"</span>, <span class="hljs-string">"&gt; 1%"</span>, <span class="hljs-string">"Explorer 7"</span>, <span class="hljs-string">"Android 2"</span>]
       },
-<span class="hljs-label">      dist:</span> {
-<span class="hljs-label">        expand:</span> <span class="hljs-literal">true</span>,
-<span class="hljs-label">        flatten:</span> <span class="hljs-literal">true</span>,
-<span class="hljs-label">        cwd:</span> <span class="hljs-string">"./dist/css"</span>,
-<span class="hljs-label">        src:</span> [<span class="hljs-string">"*.css"</span>],
-<span class="hljs-label">        dest:</span> <span class="hljs-string">"./dist/css/"</span>
+      dist: {
+        expand: <span class="hljs-literal">true</span>,
+        flatten: <span class="hljs-literal">true</span>,
+        cwd: <span class="hljs-string">"./dist/css"</span>,
+        src: [<span class="hljs-string">"*.css"</span>],
+        dest: <span class="hljs-string">"./dist/css/"</span>
       }
     },
-<span class="hljs-label">    csso:</span> {
-<span class="hljs-label">      dist:</span> {
-<span class="hljs-label">        expand:</span> <span class="hljs-literal">true</span>,
-<span class="hljs-label">        flatten:</span> <span class="hljs-literal">true</span>,
-<span class="hljs-label">        cwd:</span> <span class="hljs-string">"./dist/css/"</span>,
-<span class="hljs-label">        src:</span> [<span class="hljs-string">"*.css"</span>],
-<span class="hljs-label">        dest:</span> <span class="hljs-string">"./dist/css/"</span>
+    csso: {
+      dist: {
+        expand: <span class="hljs-literal">true</span>,
+        flatten: <span class="hljs-literal">true</span>,
+        cwd: <span class="hljs-string">"./dist/css/"</span>,
+        src: [<span class="hljs-string">"*.css"</span>],
+        dest: <span class="hljs-string">"./dist/css/"</span>
       }
     },
-<span class="hljs-label">    watch:</span> {
-<span class="hljs-label">      styles:</span> {
-<span class="hljs-label">        files:</span> [<span class="hljs-string">"./src/css/**/*.scss"</span>],
-<span class="hljs-label">        tasks:</span> [<span class="hljs-string">"styles"</span>]
+    watch: {
+      styles: {
+        files: [<span class="hljs-string">"./src/css/**/*.scss"</span>],
+        tasks: [<span class="hljs-string">"styles"</span>]
       }
     }
   })
@@ -2740,7 +2740,7 @@ train de baver devant votre écran, mais non, Git ne va pas corriger vos bugs bi
 à trouver le changement dans le code qui l’a fait apparaître et ceci grâce à la commande <code>git bisect</code>.</p>
 <p>Pour lancer une <em>bisection</em> par Git il suffit d’entrer <code>git bisect start</code> dans votre terminal préféré
 et le tour est joué!</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git bisect start
+<pre><code class="lang-bash">$ git bisect <span class="hljs-built_in">start</span>
 $
 </code></pre>
 <figure>
@@ -2759,15 +2759,15 @@ le signaler à son tour: <code>git bisect good</code>.</p>
 <p>Git va alors se mettre en route et vous déplacer automatiquement de commit en commit. Pour chacun d’eux vous n’aurez
 qu’à le déclarer bon ou mauvais comme expliqué au dessus, jusqu’à ce que Git vous fournisse le premier commit
 comportant le bug, celui dont le changement a révélé le disfonctionnement.</p>
-<pre><code class="lang-bash">$ git bisect bad
-1082351d9157e98aed1bbee8b9ad6deedca1288f is the first bad <span class="hljs-operator"><span class="hljs-keyword">commit</span>
-<span class="hljs-keyword">commit</span> <span class="hljs-number">1082351</span>d9157e98aed1bbee8b9ad6deedca1288f
-Author: Maxime Thirouin &lt;m@***.io&gt;
-<span class="hljs-built_in">Date</span>:   Fri Jan <span class="hljs-number">17</span> <span class="hljs-number">08</span>:<span class="hljs-number">19</span>:<span class="hljs-number">46</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git bisect bad
+<span class="hljs-number">1082351</span>d9157e98aed1bbee8b9ad6deedca1288f is the first bad commit
+commit <span class="hljs-number">1082351</span>d9157e98aed1bbee8b9ad6deedca1288f
+<span class="hljs-prompt">Author: Maxime Thirouin &lt;m@***.io&gt;</span>
+<span class="hljs-constant">Date</span><span class="hljs-symbol">:</span>   <span class="hljs-constant">Fri</span> <span class="hljs-constant">Jan</span> <span class="hljs-number">17</span> 08<span class="hljs-symbol">:</span><span class="hljs-number">19</span><span class="hljs-symbol">:</span><span class="hljs-number">46</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
-    ¯\_(ツ)_/¯ Fix shit bring <span class="hljs-keyword">in</span> <span class="hljs-number">34</span>a44c98048f2b74fc2dd20f0be807c1e23e8b58
+    ¯\<span class="hljs-number">_</span>(ツ)<span class="hljs-number">_</span>/¯ <span class="hljs-constant">Fix</span> shit bring <span class="hljs-keyword">in</span> <span class="hljs-number">34</span>a44c98048f2b74fc2dd20f0be807c1e23e8b58
 
-:<span class="hljs-number">040000</span> <span class="hljs-number">040000</span> <span class="hljs-number">7</span>a5d5010f0aaa052ffdc0747b182dc6178a346db d3562872efd1b9d662a89825a3070d64f860cc34 M  src</span>
+<span class="hljs-symbol">:</span><span class="hljs-number">040000</span> <span class="hljs-number">040000</span> <span class="hljs-number">7</span>a5d5010f0aaa052ffdc0747b182dc6178a346db d3562872efd1b9d662a89825a3070d64f860cc34 <span class="hljs-constant">M</span>  src
 </code></pre>
 <figure>
     <figcaption>1, 2, 3, Soleil!</figcaption>
