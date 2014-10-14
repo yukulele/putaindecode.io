@@ -1,4 +1,139 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 13 Oct 2014 15:43:26 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Le guide complet pour centrer en css</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Tue, 14 Oct 2014 05:07:38 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Dépendances et premier projet en Ruby</title><description><![CDATA[
+<p><a href="#tldr">tl;dr</a></p>
+<p>Dans l’<a href="/posts/backend/premiers-pas-avec-ruby">article précédent</a>
+nous avons installé Ruby. Désormais nous allons aborder les gems,
+les dépendances et commencer notre web service.</p>
+<p>Un gem en Ruby c’est une lib, comme un paquet NPM pour NodeJS. C’est
+d’ailleurs le système de rubygems qui a inspiré le système de NPM.
+Pour installer un gem, rien de plus simple que <code>gem install sass</code>,
+qui ici va installer la bibliothèque <code>sass</code>.</p>
+<p>Un projet Ruby nécessite la plupart du temps des bibliothèques afin
+de ne pas tout faire soi-même, il est donc nécessaire d’avoir une
+gestion des dépendances pour le projet.</p>
+<h2 id="bundler-le-gem-qui-gere-les-gems"><a class="putainde-Title-anchor" href="#bundler-le-gem-qui-gere-les-gems">#</a>Bundler, le gem qui gère les gems</h2><p><a href="http://bundler.io">Bundler</a> est un gem qui va vous permettre de créer un fichier Gemfile
+contenant vos dépendances, et qui vous installera les gems
+nécessaires avec la gestion des versions et de leurs propres
+dépendances. Un fichier Gemfile se présente comme ceci :</p>
+<pre><code class="lang-ruby"><span class="hljs-keyword">source</span> <span class="hljs-string">'https://rubygems.org'</span>
+<span class="hljs-keyword">ruby</span> <span class="hljs-string">'2.1.2'</span>
+gem <span class="hljs-string">'sinatra'</span>
+</code></pre>
+<p>L’instruction <code>source</code> permet de préciser l’url des dépôts de gems.
+La version de ruby n’est pas obligatoire mais j’aime la préciser pour
+ne pas me mélanger dans mes projets avec différentes versions de Ruby
+(voir le
+<a href="/posts/backend/premiers-pas-avec-ruby">précédent article pour les versions du Ruby</a>
+et <a href="https://github.com/sstephenson/rbenv">rbenv</a>). Et enfin, la
+déclaration de notre première bibliothèque de dépendance :
+<a href="http://www.sinatrarb.com">Sinatra</a>.</p>
+<p>Il est possible d’être bien plus précis dans le Gemfile, comme…</p>
+<p>Préciser dans quel environnement charger les gems :</p>
+<pre><code class="lang-ruby">gem <span class="hljs-string">'sqlite3'</span>, <span class="hljs-symbol">group:</span> [<span class="hljs-symbol">:development</span>, <span class="hljs-symbol">:test</span>]
+</code></pre>
+<p>Une numéro de version :</p>
+<pre><code class="lang-ruby"><span class="hljs-title">gem</span> <span class="hljs-string">'rails'</span>, <span class="hljs-string">'4.1.6'</span>         <span class="hljs-comment"># version 4.1.6</span>
+gem <span class="hljs-string">'sass-rails'</span>, <span class="hljs-string">'~&gt; 4.0.3'</span> <span class="hljs-comment"># &gt;= 4.0.3 mais &lt; 4.1.0</span>
+</code></pre>
+<p>Préciser la classe à charger :</p>
+<pre><code class="lang-ruby">gem <span class="hljs-string">'valid_email'</span>, <span class="hljs-string">require:</span> <span class="hljs-string">'valid_email/email_validator'</span>
+</code></pre>
+<p>Aller chercher directement sur Github :</p>
+<pre><code class="lang-ruby">gem <span class="hljs-string">'nokogiri'</span>, <span class="hljs-string">github:</span> <span class="hljs-string">'sparklemotion/nokogiri'</span>
+# <span class="hljs-string">https:</span><span class="hljs-comment">//github.com/sparklemotion/nokogiri.git</span>
+
+gem <span class="hljs-string">'rails'</span>, <span class="hljs-string">github:</span> <span class="hljs-string">'rails'</span>
+# <span class="hljs-string">https:</span><span class="hljs-comment">//github.com/rails/rails.git</span>
+
+gem <span class="hljs-string">'rails'</span>, <span class="hljs-string">github:</span> <span class="hljs-string">'rails'</span>, <span class="hljs-string">branch:</span> <span class="hljs-string">'4-1-stable'</span>
+# <span class="hljs-string">https:</span><span class="hljs-comment">//github.com/rails/rails.git sur la branche 4-1-stable</span>
+</code></pre>
+<p>Il existe encore d’autres instructions, de quoi rendre sa gestion des
+dépendances vraiment fine et précise.</p>
+<p>Une fois le Gemfile prêt, bundler a plusieurs commandes de
+disponibles pour pouvoir les télécharger et utiliser.</p>
+<ul>
+<li><code>$ bundle install</code> installera les gems requis</li>
+<li><code>$ bundle update</code> mettra à jour vers les versions les plus récentes si possible les gems requis</li>
+<li><code>$ bundle exec</code> permettra de précéder une commande ruby afin de l’exécuter dans le contexte du Gemfile, très utile lorsque l’on a différentes versions de Ruby qui se baladent dans le terminal</li>
+</ul>
+<p>Bundler va générer un fichier <code>Gemfile.lock</code> qui est la description
+exhaustive des dépendances de votre application, chaque gem avec le
+numéro de sa version installée, chaque dépendance pour chaque gem,
+une jolie arborescence plus que précise.</p>
+<h2 id="commencons-notre-web-service"><a class="putainde-Title-anchor" href="#commencons-notre-web-service">#</a>Commençons notre web service</h2><p>Assez parlé des outils qui existent, utilisons-les. Tout d’abord
+installons Bundler, sans oublier le <code>$ rbenv rehash</code> nécessaire si vous
+utilisez rbenv pour vos versions de Ruby afin de mettre à jour les
+commandes disponibles dans le terminal :</p>
+<pre><code><span class="hljs-variable">$ </span>gem install bundler
+<span class="hljs-variable">$ </span>rbenv rehash
+</code></pre><p>Pour notre première application, nous allons faire un web service
+avec Sinatra qui est un micro-framework web, ayant d’ailleurs
+clairement inspiré Express (“Sinatra inspired web development
+framework for node.js”). Notre Gemfile va donc être exactement
+comme notre premier exemple :</p>
+<pre><code class="lang-ruby"><span class="hljs-keyword">source</span> <span class="hljs-string">'https://rubygems.org'</span>
+<span class="hljs-keyword">ruby</span> <span class="hljs-string">'2.1.2'</span>
+gem <span class="hljs-string">'sinatra'</span>
+</code></pre>
+<p>Un petit <code>bundle install</code> et nous sommes prêts à démarrer !</p>
+<p>Pour ne pas brusquer les choses, nous allons faire la version la plus
+simple d’un web service avec Sinatra, ce qui nous permettra de
+constater la simplicité extrême de Ruby et du framework :</p>
+<pre><code class="lang-ruby"><span class="hljs-comment">########</span>
+<span class="hljs-comment"># app.rb</span>
+<span class="hljs-comment">#</span>
+
+<span class="hljs-built_in">require</span> <span class="hljs-string">'sinatra'</span>
+
+<span class="hljs-built_in">get</span> <span class="hljs-string">'/'</span> <span class="hljs-built_in">do</span>
+  <span class="hljs-string">'Hello World!'</span>
+<span class="hljs-function"><span class="hljs-keyword">end</span></span>
+</code></pre>
+<p>Qu’avons-nous fait là ? Pas grand chose, et en même temps tout juste
+ce qu’il faut. Nous avons inclus le gem à notre script et utilisé la
+méthode Sinatra <code>get</code> nous permettant de déclarer un point d’entrée
+en <code>GET</code> sur la route ‘/‘. Cette méthode prend également comme
+argument un <code>block</code> caractérisé par le <code>do</code> et le <code>end</code>. La dernière
+valeur du block étant la valeur de retour, nous renvoyons la seule
+chaîne de caractères “Hello World!”.</p>
+<p>Et maintenant : lancement ! <code>$ bundle exec ruby app.rb</code> va lancer
+l’application (mais <code>ruby app.rb</code> suffit), par défaut sur le port
+<code>4567</code>. Regardez vite <a href="http://localhost:4567">http://localhost:4567</a>
+et là magie, “Hello World!” sur une magnifique page blanche, notre
+tout premier web service est fonctionnel.</p>
+<p>Alors oui, ce n’est pas une révolution. Mais tout de même, en
+réduisant la syntaxe du block on se retrouve avec un script de deux
+lignes qui crée un vrai web service web. Et vous allez vite voir
+qu’en quelques lignes de plus on peut vite complexifier le bousin.</p>
+<h2 id="au-prochain-episode"><a class="putainde-Title-anchor" href="#au-prochain-episode">#</a>Au prochain épisode</h2><p>Dans l’article suivant nous allons ajouter des fonctionnalités à
+notre toute nouvelle application, de nouvelles routes, de la
+persistence et aussi des vues dans un format un peu plus utile.</p>
+<p>Stay tuned!</p>
+<h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><p>Voici la version abrégée de cet article :</p>
+<pre><code class="lang-ruby"><span class="hljs-comment"># Gemfile</span>
+<span class="hljs-built_in">source</span> <span class="hljs-string">'https://rubygems.org'</span>
+ruby <span class="hljs-string">'2.1.2'</span>
+gem <span class="hljs-string">'sinatra'</span>
+</code></pre>
+<pre><code class="lang-ruby"><span class="hljs-comment"># app.rb</span>
+<span class="hljs-built_in">require</span> <span class="hljs-string">'sinatra'</span>
+<span class="hljs-built_in">get</span> <span class="hljs-string">'/'</span> <span class="hljs-built_in">do</span>
+  <span class="hljs-string">'Hello World!'</span>
+<span class="hljs-function"><span class="hljs-keyword">end</span></span>
+</code></pre>
+<pre><code class="lang-bash"><span class="hljs-variable">$ </span>gem install bundler
+<span class="hljs-variable">$ </span>rbenv rehash
+<span class="hljs-variable">$ </span>bundle install
+<span class="hljs-variable">$ </span>ruby app.rb
+</code></pre>
+<h2 id="sources"><a class="putainde-Title-anchor" href="#sources">#</a>Sources</h2><ul>
+<li><a href="https://rubygems.org">RubyGems</a></li>
+<li><a href="http://bundler.io">Bundler</a></li>
+<li><a href="https://github.com/sstephenson/rbenv">rbenv</a></li>
+<li><a href="http://www.sinatrarb.com">Sinatra</a> et surtout son <a href="http://www.sinatrarb.com/intro.html">README</a></li>
+</ul>
+
+]]></description><pubDate>Tue, 14 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/</link><guid isPermaLink="true">http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/</guid></item><item><title>Le guide complet pour centrer en css</title><description><![CDATA[
 <p>Centrer en css, c’est la base, et parfois, ce n’est pas si simple. Ce guide vous servira donc pour vous lister les techniques les plus connues pour réaliser ce fameux effet centré.</p>
 <p>Les principales techniques de centrage en css seront expliquées pendant les premières déclarations, et réutilisées par la suite dans tout le guide, vous pouvez donc avoir un intérêt à lire le guide dans le sens normal de la lecture.</p>
 <p>Cependant, si vous souhaitez juste avoir le code correspondant à votre problème, vous pouvez utiliser le menu composé d’ancres ci-dessous.</p>
@@ -1148,7 +1283,59 @@ var results = Object.keys(data).reduce( function (memo, site) {
 <p>J’espère que vous avez apprécié ces quelques exemples d’utilisation de <code>Array#reduce</code>.
 Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article ou via les commentaires !</p>
 
-]]></description><pubDate>Tue, 13 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/array-reduce/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/array-reduce/</guid></item><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[
+]]></description><pubDate>Tue, 13 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/array-reduce/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/array-reduce/</guid></item><item><title>npm: choisir la bonne version de ses dépendances</title><description><![CDATA[
+<p>Pas plus tard qu’hier, alors que je travaillais tranquillement, apparu soudainement un bug dans mon <em>workflow</em> de <em>build</em>. Il ne m’était plus possible avec <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> de supprimer des fichiers. Hmmm, ballot, car sans la suppression, mon <em>workflow</em> devenait tout bancal. Bien. Il me fallut remonter la rivière - comme souvent, en tant que développeur - afin de constater où était le bug. Je suis alors tombé sur <a href="https://github.com/isaacs/rimraf">rimraf</a> (bon c’était pas bien loin) qui s’était vu être mis à jour il y a à peine 12 heures, comprenant un bug.</p>
+<h2 id="contexte"><a class="putainde-Title-anchor" href="#contexte">#</a>Contexte</h2><p>Bon, vous voyez le topo ?</p>
+<pre><code>{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean"</span></span>,
+  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value"><span class="hljs-string">"~2.2.1"</span>
+  </span>}
+</span>}
+</code></pre><p><a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> qui contient en <em>dependencies</em> <a href="https://github.com/isaacs/rimraf">rimraf</a> avec une version bugguée. Oh la belle affaire. Oui car <code>~2.2.1</code> veut dire “<a href="https://github.com/isaacs/node-semver#ranges">Raisonnablement proche de 2.2.1</a>“, ce qui se traduit par télécharger la dernière version en <code>2.2.x</code>, soit la <code>2.2.7</code> (celle bugguée) lorsque je mis à jour le package <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a>.</p>
+<h2 id="le-hic"><a class="putainde-Title-anchor" href="#le-hic">#</a>Le hic</h2><p>Une question m’est venue : comment faire en sorte de figer la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> qui est une dépendance de dépendance ?</p>
+<p>Ha ! Pas évident comme ça.</p>
+<p>J’ai d’abord essayé sans trop d’espoir de télécharger <a href="https://github.com/isaacs/rimraf">rimraf</a> lui-même en <code>2.2.6</code> mais vu que chaque dépendance à ses propres dépendances et qu’elles ne se les partagent pas… c’était peine perdue.</p>
+<p>J’ai donc cherché, cherché, et je suis tombé sur <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a>: “Lock down dependency versions”. Bingo !</p>
+<h2 id="npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances"><a class="putainde-Title-anchor" href="#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>npm-shrinkwrap, la solution pour figer vos depéndances, toutes vos dépendances</h2><p><a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a> va vous permettre de définir avec précision chaque version de chaque dépendance.</p>
+<p>Pour cela, faites d’abord un <code>npm install</code> (si vous avez évidemment un <code>package.json</code>) afin d’installer vos <code>node_modules</code>. Une fois cela fait, lancez <code>npm shrinkwrap</code> qui créera le fichier <code>npm-shrinkwrap.json</code> qui comprendra toutes les définitions de chaque dépendance.</p>
+<h3 id="figer-une-dependance-de-dependance"><a class="putainde-Title-anchor" href="#figer-une-dependance-de-dependance">#</a>Figer une dépendance de dépendance</h3><p>Simple, regardez :</p>
+<pre><code>{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"my-project"</span></span>,
+  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"1.0.0"</span></span>,
+  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">grunt-contrib-clean</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.5.0"</span></span>,
+      "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean@~0.5.*"</span></span>,
+      "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"2.2.6"</span></span>,
+          "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"rimraf@~2.2.1"</span></span>,
+          "<span class="hljs-attribute">resolved</span>": <span class="hljs-value"><span class="hljs-string">"https://registry.npmjs.org/rimraf/-/rimraf-2.2.6.tgz"</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}
+</span>}
+</code></pre><p>J’ai défini la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> dans <code>dependencies.grunt-contrib-clean.dependencies.rimraf</code>.</p>
+<p>Bon, je ne connais pas tout par coeur non plus, npm-shrinkwrap vous écrira la totalité du fichier avec toutes les définitions mais j’ai volontairement tout supprimé et gardé uniquement la partie <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> car seule cette partie est à figer. Quand je dis supprimer, je parle réellement dans le fichier final, pas juste ici dans l’article.</p>
+<p>Vous aurez toute l’explication de npm-shrinkwrap sur la <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">documentation officielle [en]</a>.</p>
+<h2 id="choisir-la-bonne-strategie-de-version"><a class="putainde-Title-anchor" href="#choisir-la-bonne-strategie-de-version">#</a>Choisir la bonne stratégie de version</h2><p>Parce qu’il est important de savoir quelle version exacte nous souhaitons installer dans notre projet, il faut définir avec précisions ces versions dans <code>package.json</code>.</p>
+<p>Vous pouvez avoir <code>1.2.1</code> ou encore <code>~1.4.6</code> ou bien encore <code>^2.3.1</code>. Mais que veulent dire <code>^</code> ou <code>~</code> ?</p>
+<ul>
+<li><code>1.2.1</code> : cette version exacte</li>
+<li><code>~1.4.6</code> : raisonnablement proche de <code>1.4.6</code></li>
+<li><code>^2.3.1</code> : compatible avec <code>2.3.1</code></li>
+</ul>
+<p>Il est clair que lu comme ça, le plus intéressant est le <code>^</code> et c’est justement <a href="http://fredkschott.com/post/2014/02/npm-no-longer-defaults-to-tildes/">celui qui est choisi maintenant [en]</a> lorsque l’on fait un <code>npm install --save</code>. Cool non ?!</p>
+<p>Pour plus d’information sur la définition des versions, <a href="https://github.com/isaacs/node-semver#ranges">c’est par là</a> (Oh mon dieu, il a fait un lien avec un “cliquez ici”).</p>
+<p>Bon. C’est bon ? Vous avez tout compris ? Okay, vous pouvez passer à <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/"><strong>napa</strong></a> maintenant qui vous aidera grandement sur le téléchargement de projets n’ayant pas de <code>package.json</code>.</p>
+<p>En ce qui concerne npm, je m’arrête là, et vous propose une petite solution afin d’augmenter la vitesse de vos installations de node modules.</p>
+<h2 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h2><p>Envie d’accélérer vos installations npm ? Je vous conseille <a href="https://github.com/vvo/npm-pkgr">npm-pkgr</a>.</p>
+<p>Il hashera votre <code>package.json</code> pour savoir s’il a été modifié ou non, et en fonction de ça, il lancera <code>npm install</code> ou non. Sacré gain de temps (surtout si vous faites des <code>npm install</code> à chaque <em>deploy</em>).</p>
+<p>You are now a npm master. 👨</p>
+
+]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/npm-choisir-version/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/npm-choisir-version/</guid></item><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[
 <p>(Grosse grosse blague ce titre…)</p>
 <p><a href="https://twitter.com/kewah">@kewah</a> nous a récemment parlé de <a href="/posts/frontend/npm-comme-package-manager-pour-le-front-end/"><strong>npm</strong> comme front-end packager manager</a>, je vais aller encore plus loin. Je vais vous dévoiler comment installer des projets qui n’ont pas de <code>package.json</code>. Oui, car c’est bien beau de virer Bower (oh que oui c’est beau) mais comme npm requiert constamment un <code>package.json</code>, on ne va pas pouvoir télécharger grand chose sauf si on fait des <em>PR</em> afin d’ajouter ce fichier sur les projets que l’on souhaite obtenir.</p>
 <p>C’est pourquoi je vais vous parler de <a href="https://github.com/shama/napa"><strong>napa</strong></a>.</p>
@@ -1213,59 +1400,7 @@ Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article
 <p>Note : napa et npm-shrinkwrap, c’est pas encore ça, alors n’hésitez pas à supprimer la partie “napa” avant de lancer votre génération de npm-shrinkwrap.</p>
 <p>Bon download à vous.</p>
 
-]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</guid></item><item><title>npm: choisir la bonne version de ses dépendances</title><description><![CDATA[
-<p>Pas plus tard qu’hier, alors que je travaillais tranquillement, apparu soudainement un bug dans mon <em>workflow</em> de <em>build</em>. Il ne m’était plus possible avec <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> de supprimer des fichiers. Hmmm, ballot, car sans la suppression, mon <em>workflow</em> devenait tout bancal. Bien. Il me fallut remonter la rivière - comme souvent, en tant que développeur - afin de constater où était le bug. Je suis alors tombé sur <a href="https://github.com/isaacs/rimraf">rimraf</a> (bon c’était pas bien loin) qui s’était vu être mis à jour il y a à peine 12 heures, comprenant un bug.</p>
-<h2 id="contexte"><a class="putainde-Title-anchor" href="#contexte">#</a>Contexte</h2><p>Bon, vous voyez le topo ?</p>
-<pre><code>{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean"</span></span>,
-  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value"><span class="hljs-string">"~2.2.1"</span>
-  </span>}
-</span>}
-</code></pre><p><a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> qui contient en <em>dependencies</em> <a href="https://github.com/isaacs/rimraf">rimraf</a> avec une version bugguée. Oh la belle affaire. Oui car <code>~2.2.1</code> veut dire “<a href="https://github.com/isaacs/node-semver#ranges">Raisonnablement proche de 2.2.1</a>“, ce qui se traduit par télécharger la dernière version en <code>2.2.x</code>, soit la <code>2.2.7</code> (celle bugguée) lorsque je mis à jour le package <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a>.</p>
-<h2 id="le-hic"><a class="putainde-Title-anchor" href="#le-hic">#</a>Le hic</h2><p>Une question m’est venue : comment faire en sorte de figer la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> qui est une dépendance de dépendance ?</p>
-<p>Ha ! Pas évident comme ça.</p>
-<p>J’ai d’abord essayé sans trop d’espoir de télécharger <a href="https://github.com/isaacs/rimraf">rimraf</a> lui-même en <code>2.2.6</code> mais vu que chaque dépendance à ses propres dépendances et qu’elles ne se les partagent pas… c’était peine perdue.</p>
-<p>J’ai donc cherché, cherché, et je suis tombé sur <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a>: “Lock down dependency versions”. Bingo !</p>
-<h2 id="npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances"><a class="putainde-Title-anchor" href="#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>npm-shrinkwrap, la solution pour figer vos depéndances, toutes vos dépendances</h2><p><a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a> va vous permettre de définir avec précision chaque version de chaque dépendance.</p>
-<p>Pour cela, faites d’abord un <code>npm install</code> (si vous avez évidemment un <code>package.json</code>) afin d’installer vos <code>node_modules</code>. Une fois cela fait, lancez <code>npm shrinkwrap</code> qui créera le fichier <code>npm-shrinkwrap.json</code> qui comprendra toutes les définitions de chaque dépendance.</p>
-<h3 id="figer-une-dependance-de-dependance"><a class="putainde-Title-anchor" href="#figer-une-dependance-de-dependance">#</a>Figer une dépendance de dépendance</h3><p>Simple, regardez :</p>
-<pre><code>{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"my-project"</span></span>,
-  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"1.0.0"</span></span>,
-  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">grunt-contrib-clean</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.5.0"</span></span>,
-      "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean@~0.5.*"</span></span>,
-      "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-        "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"2.2.6"</span></span>,
-          "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"rimraf@~2.2.1"</span></span>,
-          "<span class="hljs-attribute">resolved</span>": <span class="hljs-value"><span class="hljs-string">"https://registry.npmjs.org/rimraf/-/rimraf-2.2.6.tgz"</span>
-        </span>}
-      </span>}
-    </span>}
-  </span>}
-</span>}
-</code></pre><p>J’ai défini la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> dans <code>dependencies.grunt-contrib-clean.dependencies.rimraf</code>.</p>
-<p>Bon, je ne connais pas tout par coeur non plus, npm-shrinkwrap vous écrira la totalité du fichier avec toutes les définitions mais j’ai volontairement tout supprimé et gardé uniquement la partie <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> car seule cette partie est à figer. Quand je dis supprimer, je parle réellement dans le fichier final, pas juste ici dans l’article.</p>
-<p>Vous aurez toute l’explication de npm-shrinkwrap sur la <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">documentation officielle [en]</a>.</p>
-<h2 id="choisir-la-bonne-strategie-de-version"><a class="putainde-Title-anchor" href="#choisir-la-bonne-strategie-de-version">#</a>Choisir la bonne stratégie de version</h2><p>Parce qu’il est important de savoir quelle version exacte nous souhaitons installer dans notre projet, il faut définir avec précisions ces versions dans <code>package.json</code>.</p>
-<p>Vous pouvez avoir <code>1.2.1</code> ou encore <code>~1.4.6</code> ou bien encore <code>^2.3.1</code>. Mais que veulent dire <code>^</code> ou <code>~</code> ?</p>
-<ul>
-<li><code>1.2.1</code> : cette version exacte</li>
-<li><code>~1.4.6</code> : raisonnablement proche de <code>1.4.6</code></li>
-<li><code>^2.3.1</code> : compatible avec <code>2.3.1</code></li>
-</ul>
-<p>Il est clair que lu comme ça, le plus intéressant est le <code>^</code> et c’est justement <a href="http://fredkschott.com/post/2014/02/npm-no-longer-defaults-to-tildes/">celui qui est choisi maintenant [en]</a> lorsque l’on fait un <code>npm install --save</code>. Cool non ?!</p>
-<p>Pour plus d’information sur la définition des versions, <a href="https://github.com/isaacs/node-semver#ranges">c’est par là</a> (Oh mon dieu, il a fait un lien avec un “cliquez ici”).</p>
-<p>Bon. C’est bon ? Vous avez tout compris ? Okay, vous pouvez passer à <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/"><strong>napa</strong></a> maintenant qui vous aidera grandement sur le téléchargement de projets n’ayant pas de <code>package.json</code>.</p>
-<p>En ce qui concerne npm, je m’arrête là, et vous propose une petite solution afin d’augmenter la vitesse de vos installations de node modules.</p>
-<h2 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h2><p>Envie d’accélérer vos installations npm ? Je vous conseille <a href="https://github.com/vvo/npm-pkgr">npm-pkgr</a>.</p>
-<p>Il hashera votre <code>package.json</code> pour savoir s’il a été modifié ou non, et en fonction de ça, il lancera <code>npm install</code> ou non. Sacré gain de temps (surtout si vous faites des <code>npm install</code> à chaque <em>deploy</em>).</p>
-<p>You are now a npm master. 👨</p>
-
-]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/npm-choisir-version/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/npm-choisir-version/</guid></item><item><title>Premiers pas avec Ruby</title><description><![CDATA[
+]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</guid></item><item><title>Premiers pas avec Ruby</title><description><![CDATA[
 <h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><pre><code class="lang-sh">$ git clone git:<span class="hljs-comment">//github.com/sstephenson/rbenv.git ~/.rbenv</span>
 $ echo <span class="hljs-string">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> &gt;&gt; ~/<span class="hljs-class">.bashrc</span>
 $ echo <span class="hljs-string">'eval "$(rbenv init -)"'</span> &gt;&gt; ~/<span class="hljs-class">.bashrc</span>
@@ -1299,7 +1434,7 @@ rbenv <span class="hljs-keyword">global</span> <span class="hljs-number">2.1</sp
 </code></pre>
 <p>Séquence émotion. Vous êtes désormais maître de l’Univers.</p>
 <p>Vous avez Ruby 2.1.1 d’installé. La ligne <code>rbenv global</code> permet comme son nom l’indique d’utiliser cette version de Ruby de façon globale à l’utilisateur, si jamais plusieurs versions coexistent.</p>
-<p>C’était facile n’est-ce pas ? Et bien c’est encore plus facile d’utiliser une bibliothèque (appelée “gem”) ou un framework Ruby. Comme nous allons utiliser Sinatra dans notre prochain article, autant l’installer tout de suite. Pour installer une gem qui sera exécutée dans la console comme Sass il est nécessaire de l’installer de cette façon : <code>gem install sass</code>. Seulement pour Sinatra, nous avons seulement besoin que le framework soit disponible dans nos scripts Ruby. Pour cela nous allons utiliser un gestionnaire de dépendance des gem Ruby, et nous verrons cela dans le prochain article pour nos premiers pas avec Sinatra.</p>
+<p>C’était facile n’est-ce pas ? Et bien c’est encore plus facile d’utiliser une bibliothèque (appelée “gem”) ou un framework Ruby. Comme nous allons utiliser Sinatra dans notre prochain article, autant l’installer tout de suite. Pour installer une gem qui sera exécutée dans la console comme Sass il est nécessaire de l’installer de cette façon : <code>gem install sass</code>. Seulement pour Sinatra, nous avons seulement besoin que le framework soit disponible dans nos scripts Ruby. Pour cela nous allons utiliser un gestionnaire de dépendance des gem Ruby, et nous verrons cela dans <a href="/posts/backend/ruby-dependances-et-projet">le prochain article pour nos premiers pas avec Sinatra</a>.</p>
 <p>D’ici là vous pouvez commencer à jouer avec Ruby en tapant la commande <code>irb</code> dans votre terminal, qui lance l’interpretteur Ruby. Pourquoi pas essayer un <em>Hello World!</em> à la Ruby ?</p>
 <pre><code class="lang-ruby">puts <span class="hljs-string">'Hello World!'</span>
 puts (<span class="hljs-number">1</span>..<span class="hljs-number">3</span>)<span class="hljs-class">.to_a</span><span class="hljs-class">.reverse</span><span class="hljs-class">.join</span>(<span class="hljs-string">' ... '</span>) &lt;&lt; <span class="hljs-string">' ... The World is ours!!!'</span>
@@ -2699,302 +2834,4 @@ Vous pouvez donc utiliser <em>autoprefixer</em> normalement, après l’appel du
 <hr>
 <p>Voilà j’espère que cette fois-ci vous êtes rassasié(e) afin de ne plus avoir envie de manger des préfixes CSS !</p>
 
-]]></description><pubDate>Tue, 04 Mar 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/</guid></item><item><title>Git, boutez les bugs, domptez votre historique!</title><description><![CDATA[
-<p>Vous viendez de lire l’<a href="/posts/git/versionner-avec-git/">article de madx</a> sur le gestionnaire
-de version Git et vous vous dites que vous aimeriez en découvrir plus! Vous l’utilisez déjà mais êtes
-en quête de quelques nouvelles (ou pas) astuces à vous mettre sous la dent! Bienvenue!</p>
-<p>Si vous désirez vous servir de cet article comme d’un tutoriel il est recommandé d’avoir quelques
-bases concernant l’utilisation et le fonctionnement de Git (commits/branches/etc…).</p>
-<p>Allez, je ne vous fais pas plus attendre, voici ma liste des fonctionnalités Git dont je ne
-saurais plus me passer:</p>
-<h2 id="git-lg-l-alias-qui-vous-parle-d-histoire"><a class="putainde-Title-anchor" href="#git-lg-l-alias-qui-vous-parle-d-histoire">#</a>git lg, l’alias qui vous parle d’Histoire</h2><p>À l’aide, à l’aide je ne comprends plus rien à l’historique de mon dépôt Git!
-J’ai créé un monstre… Pas de panique! J’ai pour vous l’alias qu’il vous faut,
-honteusement pompé de <a href="https://coderwall.com/p/euwpig">ce site</a>, mais
-comme j’ai pas d’honneur… Pour le mettre en place il suffit d’entrer la commande
-suivante dans votre terminal préféré:</p>
-<pre><code class="lang-bash">$ git config --global alias.lg <span class="hljs-string">"log --color --graph --pretty=format:'<span class="hljs-variable">%Cred</span><span class="hljs-variable">%h</span><span class="hljs-variable">%Creset</span> -<span class="hljs-variable">%C</span>(yellow)<span class="hljs-variable">%d</span><span class="hljs-variable">%Creset</span> <span class="hljs-variable">%s</span> <span class="hljs-variable">%Cgreen</span>(<span class="hljs-variable">%cr</span>) <span class="hljs-variable">%C</span>(bold blue)&lt;<span class="hljs-variable">%an</span>&gt;<span class="hljs-variable">%Creset</span>' --abbrev-commit"</span>
-</code></pre>
-<p>Au cas où vous ne seriez pas à l’aise avec ce genre de choses, sachez simplement que la commande
-<code>git config --global alias.lg</code> permet d’inscrire à votre configuration générale un nouvel alias (
-ici lg). Le reste est ce que doit faire cet alias, à savoir afficher un historique reformaté de votre
-dépôt Git.</p>
-<p>Allez, je vous met au défi d’oser taper un coup de <code>git lg</code> dans votre terminal
-maintenant (dans un dépôt Git bien entendu banane). Pour l’exemple, je l’ai réalisé dans le dépôt
-de Putain De Code:</p>
-<figure>
-  <img src="omagad-history.png" alt="capture historique">
-  <figcaption>Le pouvoir de l’arc en ciel</figcaption>
-</figure>
-
-<p>Eh oui, sous vos yeux ébahis se dessine maintenant l’historique de votre dépôt!
-Tout y est: créations de branches, commits, merges, les miaouOnes… Voilà, vous ne pourrez plus
-dire que vous n’y comprenez rien, vous seriez un fieffé menteur.</p>
-<h2 id="git-bisect-trouver-et-punir"><a class="putainde-Title-anchor" href="#git-bisect-trouver-et-punir">#</a>git bisect, trouver et punir</h2><p>S’il y a bien quelque chose d’agaçant dans l’activité de développement, c’est que bien
-souvent on est amené à travailler en équipe, et évidemment, il y en a toujours
-un pour introduire des Putain De Bugs. Alors c’est parti on sort le débugger pour
-l’autre ingrat, on place les <code>console.log</code> et autres <code>var_dump()</code> pour trouver d’où
-peut bien venir ce fichu problème, et on se coule un café parce qu’entre nous, ça peut
-prendre du temps.</p>
-<p>Heureusement pour nous, là aussi Git est au rendez-vous avec sa fonctionnalité de <em>bisecting</em>. Je vous vois déjà en
-train de baver devant votre écran, mais non, Git ne va pas corriger vos bugs bien évidemment, il va vous aider
-à trouver le changement dans le code qui l’a fait apparaître et ceci grâce à la commande <code>git bisect</code>.</p>
-<p>Pour lancer une <em>bisection</em> par Git il suffit d’entrer <code>git bisect start</code> dans votre terminal préféré
-et le tour est joué!</p>
-<pre><code class="lang-bash">$ git bisect <span class="hljs-built_in">start</span>
-$
-</code></pre>
-<figure>
-    <figcaption> Capitaine, regardez il n’y a rien </figcaption>
-</figure>
-
-<p>Oui bon d’accord, il va falloir s’investir un peu plus pour parvenir à nos fins. Pour l’instant Git est
-passé en mode <em>bisection</em>, maintenant il a besoin d’informations pour s’exécuter:</p>
-<ul>
-<li>Un commit où le bug est présent</li>
-<li>Un commit où le bug est absent</li>
-</ul>
-<p>Imaginons que le commit sur lequel nous sommes comporte le bug, nous allons donc le signaler à Git avec
-<code>git bisect bad</code>. Nous allons ensuite nous déplacer sur un commit plus ancien qui ne comporte pas le bug et
-le signaler à son tour: <code>git bisect good</code>.</p>
-<p>Git va alors se mettre en route et vous déplacer automatiquement de commit en commit. Pour chacun d’eux vous n’aurez
-qu’à le déclarer bon ou mauvais comme expliqué au dessus, jusqu’à ce que Git vous fournisse le premier commit
-comportant le bug, celui dont le changement a révélé le disfonctionnement.</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git bisect bad
-<span class="hljs-number">1082351</span>d9157e98aed1bbee8b9ad6deedca1288f is the first bad commit
-commit <span class="hljs-number">1082351</span>d9157e98aed1bbee8b9ad6deedca1288f
-<span class="hljs-prompt">Author: Maxime Thirouin &lt;m@***.io&gt;</span>
-<span class="hljs-constant">Date</span><span class="hljs-symbol">:</span>   <span class="hljs-constant">Fri</span> <span class="hljs-constant">Jan</span> <span class="hljs-number">17</span> 08<span class="hljs-symbol">:</span><span class="hljs-number">19</span><span class="hljs-symbol">:</span><span class="hljs-number">46</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
-
-    ¯\<span class="hljs-number">_</span>(ツ)<span class="hljs-number">_</span>/¯ <span class="hljs-constant">Fix</span> shit bring <span class="hljs-keyword">in</span> <span class="hljs-number">34</span>a44c98048f2b74fc2dd20f0be807c1e23e8b58
-
-<span class="hljs-symbol">:</span><span class="hljs-number">040000</span> <span class="hljs-number">040000</span> <span class="hljs-number">7</span>a5d5010f0aaa052ffdc0747b182dc6178a346db d3562872efd1b9d662a89825a3070d64f860cc34 <span class="hljs-constant">M</span>  src
-</code></pre>
-<figure>
-    <figcaption>1, 2, 3, Soleil!</figcaption>
-</figure>
-
-<p>Et voilà, le tour est joué, en plus Git vous a positionné sur ce commit, il ne manque plus qu’un petit coup de
-<code>git show</code> et vous savez tout. Pour revenir à votre travail, un simple <code>git bisect reset</code> fera l’affaire!
-Il ne vous reste plus qu’à punir la personne fautive, mais pour ça je vous laisse avec votre imagination,
-je suis sûr que vous trouverez.</p>
-<p>Pour les fanatiques de l’efficacité et de l’automatisation, sachez que Git en a encore dans le ventre. Si vous
-connaissez déjà un bon et un mauvais commit, vous pouvez tout simplement lancer la <em>bissection</em> à grand coup de
-<code>git bisect start MAUVAIS_COMMIT BON_COMMIT</code> et si, cerise sur le gâteau, vous êtes en possession d’une suite de tests
-unitaires (oui non je sais faut pas déconner), <code>git bisect run &lt;votre_script&gt;</code> vous permettra de la lancer et la
-recherche du premier commit défectueux se fera alors toute seule!</p>
-<h2 id="git-rebase-du-pur-story-telling"><a class="putainde-Title-anchor" href="#git-rebase-du-pur-story-telling">#</a>git rebase, du pur story-telling</h2><p>Je ne sais pas s’il vous est déjà arrivé de naviguer dans les dépôts Git de projets libres, mais souvent on y trouve que très
-peu de commits poubelles, ces commits avec comme message “step” ou autre “stuff”. Chaque commit correspond à une fonctionnalité,
-un bug fix, une unité logique cohérente. Je ne sais pas pour vous, mais personnellement un <em>git log</em> ne ressemble pas à
-ça chez moi!</p>
-<pre><code><span class="hljs-operator"><span class="hljs-keyword">commit</span> e739e7c0248b841b0250eb85d99a1b4ba149149d
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">50</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
-
-    <span class="hljs-keyword">Now</span> my new functionality finally works
-
-<span class="hljs-keyword">commit</span> <span class="hljs-number">551</span>b243525d826afcfece3e2c4c471ebd1e91779
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
-
-    misc
-
-<span class="hljs-keyword">commit</span> <span class="hljs-number">9</span>db49a39fdb05a54adcfc2b46832818ef05b9c72
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">43</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
-
-    <span class="hljs-keyword">stuff</span>
-
-<span class="hljs-keyword">commit</span> ca4ff952310d6246216e83f49309b32b2d2fa010
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">35</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
-
-    <span class="hljs-keyword">first</span> <span class="hljs-keyword">commit</span></span>
-</code></pre><figure>
-    <figcaption>best git log, ever</figcaption>
-</figure>
-
-<p>Bien que l’on essaye de nous faire croire que les logiciels libres sont codés par des rockstars, ce qui permet de justifier le
-mythe du <em>1 commit = 1 fonctionnalité</em>, vous n’êtes pas dupes; l’historique Git de ces dépôts est bel et bien retravaillé, et ceci dans
-le but de maintenir sa cohérence et de permettre à tous les contributeurs de le comprendre. Si cela s’applique particulièrement
-dans le cadre des logiciels libres, il n’en est pas moins satisfaisant d’avoir également un historique clair sur ses propres dépôts.</p>
-<p>Pour cela, l’arme de choix s’appelle <code>git rebase</code>. Cette fonctionnalité permet de réécrire l’historique de vos dépôts, de
-réorganiser les commits, d’en supprimer, de changer leur message associé etc… La fonctionnalité est assez simple à utiliser, nous allons
-prendre exemple sur l’historique présenté ci-dessus: je voudrais supprimer le commit dont le message est ‘stuff’ parce que finalement il
-s’avère inutile. Je veux également fusionner le commit ‘misc’ avec le commit ‘Now my new functionality finally works’ et renommer ce dernier
-pour qu’il soit plus explicite et fasse référence à ma User Story correspondante dans mon outil de tracking préféré.</p>
-<p>Pour commencer, il faut dire jusqu’à quel commit on souhaite effectuer cette réécriture; pour cela, dans mon cas, deux solutions:</p>
-<ul>
-<li>Faire référence à partir de HEAD (l’étiquette courante), ici: HEAD~3 (je veux réécrire jusqu’au commit avant ‘stuff’)</li>
-<li>Fournir le SHA1 du commit avant ‘stuff’ (ici 2645b1cdbdd72bea6c392c011320556997327761)</li>
-</ul>
-<p>Je vais utiliser la première méthode (le choix n’influe en rien sur la suite), et donc lancer la réécriture en invoquant la commande: <code>git rebase -i HEAD~3</code>
-( -i voulant dire de lancer un <em>rebase</em> en mode intéractif). Voici ce qui m’est alors présenté:</p>
-<pre><code>pick <span class="hljs-number">9</span>db49a3 stuff
-pick <span class="hljs-number">551</span>b243 misc
-pick e739e7c Now my <span class="hljs-keyword">new</span> functionality finally works
-
-<span class="hljs-preprocessor"># Rebase ca4ff95..e739e7c onto ca4ff95</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor"># Commands:</span>
-<span class="hljs-preprocessor">#  p, pick = use commit</span>
-<span class="hljs-preprocessor">#  r, reword = use commit, but edit the commit message</span>
-<span class="hljs-preprocessor">#  e, edit = use commit, but stop for amending</span>
-<span class="hljs-preprocessor">#  s, squash = use commit, but meld into previous commit</span>
-<span class="hljs-preprocessor">#  f, fixup = like "squash", but discard this commit's log message</span>
-<span class="hljs-preprocessor">#  x, exec = run command (the rest of the line) using shell</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor"># These lines can be re-ordered; they are executed from top to bottom.</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor"># If you remove a line here THAT COMMIT WILL BE LOST.</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor"># However, if you remove everything, the rebase will be aborted.</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor"># Note that empty commits are commented out</span>
-</code></pre><p>Git m’affiche tous les commits concernés par l’opération (en ordre inverse), devant chacun d’eux, la mention <em>pick</em>, et une légende en bas.
-<em>pick</em>, comme l’indique la légende, signifie que ce commit sera conservé, mais je peux remplacer cette mention par les suivantes:</p>
-<ul>
-<li>reword : modifier le message de commit.</li>
-<li>edit : utiliser le commit mais me laisser le modifier avec un <code>git commit --amend</code> qui permet de commiter l’état courant de la copie de travail en
-l’incorporant au commit précédent.</li>
-<li>squash : utiliser le commit en le fusionnant avec le commit précédent.</li>
-<li>fixup : utiliser le commit en le fusionnant avec le commit précédent et ne pas utiliser son message associé.</li>
-<li>exec : exécuter une commande sur ce commit.</li>
-</ul>
-<p>En plus de ces différentes mentions, je peux également effectuer deux autres actions:</p>
-<ul>
-<li>déplacer un commit, ce qui aura pour effet final de le déplacer dans l’historique.</li>
-<li>supprimer un commit, ce qui aura comme résultat de le faire disparaître de l’historique.</li>
-</ul>
-<p>Pour ma part, je vais:</p>
-<ul>
-<li>supprimer la première ligne parce que j’ai décidé que le commit ‘stuff’ ne me servait à rien.</li>
-<li>mettre la mention reword devant le commit ‘misc’, car je vais fusionner le dernier commit avec celui-ci et mettre un nouveau message.</li>
-<li>mettre la mention fixup devant le commit ‘Now my new functionality finally works’ car je vais le fusionner au précédent et abandonner son message.</li>
-</ul>
-<p>Ce qui nous donne le résultat suivant:</p>
-<pre><code>reword <span class="hljs-number">551</span>b243 misc
-fixup e739e7c Now my <span class="hljs-keyword">new</span> functionality finally works
-
-<span class="hljs-preprocessor"># Rebase ca4ff95..e739e7c onto ca4ff95</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor"># Commands:</span>
-<span class="hljs-preprocessor">#  p, pick = use commit</span>
-<span class="hljs-preprocessor">#  r, reword = use commit, but edit the commit message</span>
-<span class="hljs-preprocessor">#  e, edit = use commit, but stop for amending</span>
-<span class="hljs-preprocessor">#  s, squash = use commit, but meld into previous commit</span>
-<span class="hljs-preprocessor">#  f, fixup = like "squash", but discard this commit's log message</span>
-<span class="hljs-preprocessor">#  x, exec = run command (the rest of the line) using shell</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor"># These lines can be re-ordered; they are executed from top to bottom.</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor"># If you remove a line here THAT COMMIT WILL BE LOST.</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor"># However, if you remove everything, the rebase will be aborted.</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor"># Note that empty commits are commented out</span>
-</code></pre><figure>
-    <figcaption>Attention chérie, ça va trancher</figcaption>
-</figure>
-
-<p>Il n’y a plus qu’à sauvegarder et quitter (:x dans vim) pour que la machine se mette en route. Si certaines actions que vous avez effectuées, notamment
-le déplacement de commits, provoquent des conflits, Git va vous demander de les résoudre au fur et à mesure; il suffit pour cela d’éditer vos fichiers, puis
-de les marquer comme résolus au moyen de la commande <code>git add &lt;lefichier&gt;</code> avant de reprendre avec la commande <code>git rebase --continue</code>. Comme convenu,
-Git vous demande d’éditer le message du commit marqué en <em>reword</em>:</p>
-<pre><code>Story #<span class="hljs-number">34</span> - Poker cards now have a real back picture
-
-<span class="hljs-preprocessor"># Please enter the commit message for your changes. Lines starting</span>
-<span class="hljs-preprocessor"># with '#' will be ignored, and an empty message aborts the commit.</span>
-<span class="hljs-preprocessor"># HEAD detached at ca4ff95</span>
-<span class="hljs-preprocessor"># You are currently rebasing branch 'master' on 'ca4ff95'.</span>
-<span class="hljs-preprocessor">#   (all conflicts fixed: run "git rebase --continue")</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor"># Changes to be committed:</span>
-<span class="hljs-preprocessor">#   (use "git reset HEAD &lt;file&gt;..." to unstage)</span>
-<span class="hljs-preprocessor">#</span>
-<span class="hljs-preprocessor"># modified:   README.txt</span>
-<span class="hljs-preprocessor">#</span>
-</code></pre><figure>
-    <figcaption>Un commit qu’il est mieux pour le relire</figcaption>
-</figure>
-
-<p>L’opération va continuer puis Git va vous rendre la main. Il vous suffit alors de faire un <code>git log</code> pour apprécier le résultat:</p>
-<pre><code><span class="hljs-title">commit</span> 481b4dccf4fedf4ed9d7f4e83ae5c19a07f7e12e
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@**<span class="hljs-regexp">*.com</span>&gt;
-Date:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
-
-    Story <span class="hljs-comment">#34 - Poker cards now have a real back picture</span>
-</code></pre><figure>
-    <figcaption>Et c’est le succèèèèèèès</figcaption>
-</figure>
-
-<p>Vous n’avez plus qu’un seul commit tout beau tout propre! Vous pouvez maintenant le pousser sur votre dépôt et vous vanter d’avoir un bel historique, parce
-que vous aussi, vous êtes une rockstar :).</p>
-<p>Pour ceux qui désirent aller encore plus loin dans l’automatisation de ce processus de rebase, je vous conseille d’aller jeter un œil à l’utilisation
-de l’option <a href="http://madx.me/articles/git_rebase_autosquash.html">—autosquash</a>.</p>
-<h2 id="git-reflog-la-commande-de-celui-qui-a-fait-n-importe-quoi"><a class="putainde-Title-anchor" href="#git-reflog-la-commande-de-celui-qui-a-fait-n-importe-quoi">#</a>git reflog, la commande de celui qui a fait n’importe quoi</h2><p>Voici venu le temps <del>des rires et des chants</del> de la denière commande que je souhaitais vous présenter, j’ai nommé <code>git reflog</code>. Cette commande
-c’est votre <em>joker</em>, elle assure votre survie, notamment si vous avez été assez zinzins pour suivre les exemples donnés dans cet article, parce
-que honnêtement…</p>
-<figure>
-    <img src="http://i1.kym-cdn.com/photos/images/newsfeed/000/305/224/3e1.jpg" alt="I have no idea what I&#39;m doing">
-</figure>
-
-<p>Vous ne le savez peut être pas, mais Git, dans sa grande bonté, garde une référence de toutes vos actions, de tous les endroits où vous vous êtes déplacez.
-Ce registre, c’est le <em>references log</em>, et en plus on peut y accéder simplement grâce à la commande <code>git reflog</code> (sans déconner). Faisons un petit tour
-dans le miens:</p>
-<pre><code><span class="hljs-number">481</span>b4dc HEAD@{<span class="hljs-number">0</span>}: rebase -i (finish): <span class="hljs-keyword">returning</span> <span class="hljs-keyword">to</span> refs/heads/master
-<span class="hljs-number">481</span>b4dc HEAD@{<span class="hljs-number">1</span>}: rebase -i (fixup): Story <span class="hljs-comment">#34 - Poker cards now have a real back picture</span>
-<span class="hljs-number">8</span>fd5835 HEAD@{<span class="hljs-number">2</span>}: rebase -i (<span class="hljs-keyword">continue</span>): Story <span class="hljs-comment">#34 - Poker cards now have a real back picture</span>
-ca4ff95 HEAD@{<span class="hljs-number">3</span>}: checkout: moving <span class="hljs-keyword">from</span> master <span class="hljs-keyword">to</span> ca4ff952310d6246216e83f49309b32b2d2fa010
-e739e7c HEAD@{<span class="hljs-number">4</span>}: rebase -i (finish): <span class="hljs-keyword">returning</span> <span class="hljs-keyword">to</span> refs/heads/master
-e739e7c HEAD@{<span class="hljs-number">5</span>}: checkout: moving <span class="hljs-keyword">from</span> master <span class="hljs-keyword">to</span> e739e7c
-e739e7c HEAD@{<span class="hljs-number">6</span>}: rebase -i (finish): <span class="hljs-keyword">returning</span> <span class="hljs-keyword">to</span> refs/heads/master
-e739e7c HEAD@{<span class="hljs-number">7</span>}: checkout: moving <span class="hljs-keyword">from</span> master <span class="hljs-keyword">to</span> e739e7c
-e739e7c HEAD@{<span class="hljs-number">8</span>}: rebase -i (finish): <span class="hljs-keyword">returning</span> <span class="hljs-keyword">to</span> refs/heads/master
-e739e7c HEAD@{<span class="hljs-number">9</span>}: checkout: moving <span class="hljs-keyword">from</span> master <span class="hljs-keyword">to</span> e739e7c
-e739e7c HEAD@{<span class="hljs-number">10</span>}: rebase -i (finish): <span class="hljs-keyword">returning</span> <span class="hljs-keyword">to</span> refs/heads/master
-e739e7c HEAD@{<span class="hljs-number">11</span>}: checkout: moving <span class="hljs-keyword">from</span> master <span class="hljs-keyword">to</span> e739e7c
-e739e7c HEAD@{<span class="hljs-number">12</span>}: commit: Now <span class="hljs-keyword">my</span> new functionality finally works
-<span class="hljs-number">551</span>b243 HEAD@{<span class="hljs-number">13</span>}: commit: misc
-<span class="hljs-number">9</span>db49a3 HEAD@{<span class="hljs-number">14</span>}: commit (amend): stuff
-af7fc36 HEAD@{<span class="hljs-number">15</span>}: commit: misc
-ca4ff95 HEAD@{<span class="hljs-number">16</span>}: commit (initial): <span class="hljs-keyword">first</span> commit
-</code></pre><figure>
-    <figcaption>Il est beau mon reflog, il est frais</figcaption>
-</figure>
-
-<p>On voit ici l’ensemble de mes opérations apparaître comme le <em>rebase</em> effectué précédemment (bon d’accord il apparaît plusieurs fois parce que j’ai
-fait quelques tests avant d’écrire cette partie de l’article). Chaque opération possède un SHA1 qui est en fait une référence vers le commit concerné, dans l’état
-dans lequel il était au moment de l’opération. Bien, imaginons que j’ai fait n’importe quoi avec le rebase et que je veuille retrouver mon état précédent, et bien
-il me suffira ici de faire un <code>git checkout e739e7c</code> (dans votre cas la ligne sera probablement plus simple à trouver). Et là si je refais un <code>git log</code>, miracle:</p>
-<pre><code><span class="hljs-operator"><span class="hljs-keyword">commit</span> e739e7c0248b841b0250eb85d99a1b4ba149149d
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">50</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
-
-    <span class="hljs-keyword">Now</span> my new functionality finally works
-
-<span class="hljs-keyword">commit</span> <span class="hljs-number">551</span>b243525d826afcfece3e2c4c471ebd1e91779
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
-
-    misc
-
-<span class="hljs-keyword">commit</span> <span class="hljs-number">9</span>db49a39fdb05a54adcfc2b46832818ef05b9c72
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">43</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
-
-    <span class="hljs-keyword">stuff</span>
-
-<span class="hljs-keyword">commit</span> ca4ff952310d6246216e83f49309b32b2d2fa010
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">35</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
-
-    <span class="hljs-keyword">first</span> <span class="hljs-keyword">commit</span></span>
-</code></pre><p>Vous voilà retombés sur vos pieds! Vous n’avez plus qu’à reconnecter votre branche à ce commit si jamais vous en aviez une et vous êtes reparti pour de nouvelles
-aventures.</p>
-<p>Sachez tout de même que ce <em>references log</em> peut être effacé, et il est même conseillé de le faire régulièrement pour des problématiques de performance de Git sur
-votre dépôt; conserver tous ces commits peut devenir coûteux à la longue. La commande <code>git gc</code> pour <em>garbage collector</em> s’occupera de faire le ménage
-pour vous.</p>
-<p>Voilà, on arrive au bout de notre aventure, j’espère que vous avez appris quelque chose et que Git vous fait maintenant moins peur.</p>
-<p>Amike,</p>
-
-]]></description><pubDate>Thu, 27 Feb 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/git/boutez-les-bugs-domptez-votre-historique/</link><guid isPermaLink="true">http://putaindecode.fr/posts/git/boutez-les-bugs-domptez-votre-historique/</guid></item></channel></rss>
+]]></description><pubDate>Tue, 04 Mar 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/</guid></item></channel></rss>

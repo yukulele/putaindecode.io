@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Dépendances et premier projet en Ruby</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="Dépendances et premier projet en Ruby"/><meta name="twitter:creator" content="@rhannequin"/><meta name="twitter:image" content="http://www.gravatar.com/avatar/a2b9398e4753f15d628c8d928600d90e.png?s=200"/><meta property="og:title" content="Dépendances et premier projet en Ruby"/><meta property="og:type" content="article"/><meta property="og:image" content="http://www.gravatar.com/avatar/a2b9398e4753f15d628c8d928600d90e.png?s=200"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"><link rel="alternate" href="../../../feed.xml" title="Putain de code !" type="application/atom+xml"></head><body><svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="putainde-Icon-bookmark" viewBox="0 0 512 512">
+      <title>bookmark icon</title>
+      <path d="M318.275 90v283.23L256 318.16l-62.275 55.07V90h124.55m40-40h-204.55v412L256 371.557 358.275 462V50z"/>
+    </symbol>
+
+    <symbol id="putainde-Icon-github" viewBox="0 0 512 512">
+      <title>github icon</title>
+      <path d="M461.633 250.645l.367-3.82c-22.896-2.22-45.667-2.418-67.79-.73 3.557-11.346 5.43-24.163 5.295-38.738-.292-30.965-10.616-55.08-26.843-75.096 3.116-18.85.77-37.7-5.11-56.56-23.188 1.898-44.054 9.493-62.635 22.686-34.725-7.044-69.447-7.493-104.172 0-21.673-14.627-42.956-21.802-63.91-22.686-6.21 20.765-7.168 41.233-1.916 61.357-18.28 19.397-25.27 42.944-24.926 69.02.196 14.926 2.496 28.208 6.738 39.95-21.796-1.598-44.2-1.385-66.732.8l.367 3.818c22.947-2.228 45.76-2.41 67.92-.678.813 1.974 1.632 3.94 2.566 5.815-24.01-.633-45.618 1.453-65.854 6.43l.913 3.723c20.538-5.048 42.54-7.08 67.107-6.254 16.246 28.865 47.52 45.825 93.063 51.206-10.58 8.594-16.27 18.73-17.735 30.2h-24.12c-32.395 0-41.227-41.303-74.78-37.228C132 320 125.5 371.598 177.588 371.598h21.88v47.297c.234 7.643-3.093 12.754-8.47 16.297 18.655 1.884 32.675-7.43 32.675-18.854V353.82l5.833-6v72.992c.245 7.265-3.284 11.392-7.03 15.34 16.433.653 31.89-2.63 32.59-16.616V349.68s5.757-3.6 5.757 0v66.58c.17 11.8 10.36 21.366 31.953 19.892-5.776-4.65-7.55-9.35-7.55-16.15v-72.18s5.95-.307 5.95 6v60.88c0 13.55 16.268 19.14 34.83 18.615-6.08-4.558-10.196-9.99-10.223-17.256v-73.216c-.63-10.762-5.003-20.906-13.582-30.358 41.63-6.392 71.638-23.01 86.58-52.796 24.646-.847 46.714 1.183 67.306 6.246l.914-3.723c-20.394-5.014-42.18-7.096-66.416-6.415.84-1.89 1.67-3.79 2.39-5.785 22.39-1.798 45.457-1.622 68.66.632zM114 310.023c-1.023 0-1.853-.588-1.853-1.313 0-.728.83-1.315 1.853-1.315 1.024 0 1.854.588 1.854 1.315 0 .726-.83 1.313-1.854 1.313zm5.833 3.98c-1.137 0-2.06-.653-2.06-1.46s.923-1.462 2.06-1.462 2.06.656 2.06 1.463-.923 1.46-2.06 1.46zm5.917 5.17c-1.333 0-2.415-.767-2.415-1.713s1.082-1.714 2.415-1.714 2.416.768 2.416 1.714-1.083 1.712-2.416 1.712zm5.75 6.206c-1.56 0-2.825-.897-2.825-2.004s1.265-2.005 2.825-2.005 2.825.9 2.825 2.006-1.265 2.003-2.825 2.003zm6.333 7.014c-1.733 0-3.14-.996-3.14-2.226s1.407-2.228 3.14-2.228 3.14.998 3.14 2.228-1.407 2.226-3.14 2.226zm7.334 7.123c-1.926 0-3.488-1.107-3.488-2.474s1.56-2.476 3.487-2.476c1.925 0 3.487 1.11 3.487 2.476s-1.562 2.474-3.487 2.474zm9.916 6.774c-2.14 0-3.875-1.23-3.875-2.748 0-1.52 1.735-2.75 3.875-2.75s3.875 1.23 3.875 2.75c0 1.518-1.735 2.75-3.875 2.75zm12.292 3.626c-2.14 0-3.875-1.23-3.875-2.75 0-1.518 1.735-2.75 3.875-2.75s3.875 1.232 3.875 2.75c0 1.52-1.735 2.75-3.875 2.75zm12.958.417c-2.14 0-3.875-1.23-3.875-2.75 0-1.518 1.735-2.75 3.875-2.75s3.875 1.232 3.875 2.75c0 1.52-1.735 2.75-3.875 2.75zm12.792.25c-2.14 0-3.875-1.23-3.875-2.75 0-1.518 1.735-2.75 3.875-2.75s3.875 1.232 3.875 2.75c0 1.52-1.735 2.75-3.875 2.75z"/>
+    </symbol>
+
+    <symbol id="putainde-Icon-home" viewBox="0 0 512 512">
+      <title>home icon</title>
+      <path d="M394.072 174.805l-47.916-48.023v-38.31h47.916v86.333zM462 275.815h-42.508v166.213H92.508V275.815H50L256 69.972l206 205.843zm-165.153-3.843c-15.81-3.316-29.02 4.086-38.792 19.387-9.77-15.302-22.98-22.704-38.79-19.388-36.745 10.876-36.335 69.543 38.583 113.047 75.06-43.26 75.742-102.172 39-113.048z"/>
+    </symbol>
+
+    <symbol id="putainde-Icon-pencil" viewBox="0 0 512 512">
+      <title>pencil icon</title>
+      <path d="M74.686 340.686L50 460.95l122.365-22.585L379.52 231.21l-97.68-97.68L74.686 340.687zm228.402-135.654l-181.89 181.89-21.214-21.213 181.89-181.89 21.214 21.212zM462 148.732l-52.662 52.66-97.682-97.68 52.662-52.662L462 148.73z"/>
+    </symbol>
+
+    <symbol id="putainde-Icon-text-file" viewBox="0 0 512 512">
+      <title>text-file icon</title>
+      <path d="M256 370.312h-84.495v-30H256v30zm83.495-55.416h-167.99v-30h167.99v30zm0-55.334h-167.99v-30h167.99v30zM297.818 90v85.75h85.864V422H128.317V90h169.5m25-40h-234.5v412h335.365V150.75L322.818 50z"/>
+    </symbol>
+
+    <symbol id="putainde-Icon-twitter" viewBox="0 0 512 512">
+      <title>twitter icon</title>
+      <path d="M462 128.223c-15.158 6.724-31.45 11.27-48.547 13.31 17.45-10.46 30.854-27.025 37.164-46.764-16.333 9.686-34.422 16.72-53.676 20.51-15.417-16.428-37.385-26.69-61.697-26.69-54.56 0-94.668 50.915-82.337 103.786-70.25-3.524-132.534-37.177-174.223-88.314-22.142 37.983-11.485 87.69 26.158 112.85-13.853-.438-26.89-4.24-38.284-10.574-.917 39.162 27.146 75.78 67.795 83.95-11.895 3.236-24.925 3.977-38.17 1.446 10.755 33.58 41.973 58.018 78.96 58.7C139.605 378.28 94.847 390.72 50 385.435c37.406 23.982 81.837 37.977 129.57 37.977 156.933 0 245.596-132.55 240.252-251.435 16.517-11.917 30.846-26.804 42.178-43.755z"/>
+    </symbol>
+</svg><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size5of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size7of12"><nav class="putainde-Nav"><a href="../.." data-rcp-tooltip="" class="putainde-Nav-item  "><svg style="" class="putainde-Icon putainde-Icon-bookmark"><use xlink:href="#putainde-Icon-bookmark"></use></svg> Articles</a><a href="../../../c-est-quoi-putaindecode" data-rcp-tooltip="" class="putainde-Nav-item  "><svg style="" class="putainde-Icon putainde-Icon-text-file"><use xlink:href="#putainde-Icon-text-file"></use></svg> Readme</a><a href="../../comment-contribuer" data-rcp-tooltip="" class="putainde-Nav-item  "><svg style="" class="putainde-Icon putainde-Icon-pencil"><use xlink:href="#putainde-Icon-pencil"></use></svg> Participer</a><a href="https://github.com/putaindecode/" data-rcp-tooltip="GitHub" class="putainde-Nav-item  putainde-Nav-item--icon rcp-Tooltip rcp-Tooltip--bottom"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a><a href="https://twitter.com/putaindecode/" data-rcp-tooltip="Twitter" class="putainde-Nav-item  putainde-Nav-item--icon rcp-Tooltip rcp-Tooltip--bottom"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Dépendances et premier projet en Ruby</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas">Écrit par <a href="http://rhannequ.in">rhannequin</a>,<span class="putainde-Date"> le 14 oct. 2014</span>. <span data-rcp-tooltip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden rcp-Tooltip rcp-Tooltip--top rcp-Tooltip--nowrap">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">backend</li><li class="putainde-Tag">ruby</li></ul></header><div class="putainde-Post-md"><p><a href="#tldr">tl;dr</a></p>
+<p>Dans l’<a href="/posts/backend/premiers-pas-avec-ruby">article précédent</a>
+nous avons installé Ruby. Désormais nous allons aborder les gems,
+les dépendances et commencer notre web service.</p>
+<p>Un gem en Ruby c’est une lib, comme un paquet NPM pour NodeJS. C’est
+d’ailleurs le système de rubygems qui a inspiré le système de NPM.
+Pour installer un gem, rien de plus simple que <code>gem install sass</code>,
+qui ici va installer la bibliothèque <code>sass</code>.</p>
+<p>Un projet Ruby nécessite la plupart du temps des bibliothèques afin
+de ne pas tout faire soi-même, il est donc nécessaire d’avoir une
+gestion des dépendances pour le projet.</p>
+<h2 id="bundler-le-gem-qui-gere-les-gems"><a class="putainde-Title-anchor" href="#bundler-le-gem-qui-gere-les-gems">#</a>Bundler, le gem qui gère les gems</h2><p><a href="http://bundler.io">Bundler</a> est un gem qui va vous permettre de créer un fichier Gemfile
+contenant vos dépendances, et qui vous installera les gems
+nécessaires avec la gestion des versions et de leurs propres
+dépendances. Un fichier Gemfile se présente comme ceci :</p>
+<pre><code class="lang-ruby"><span class="hljs-keyword">source</span> <span class="hljs-string">'https://rubygems.org'</span>
+<span class="hljs-keyword">ruby</span> <span class="hljs-string">'2.1.2'</span>
+gem <span class="hljs-string">'sinatra'</span>
+</code></pre>
+<p>L’instruction <code>source</code> permet de préciser l’url des dépôts de gems.
+La version de ruby n’est pas obligatoire mais j’aime la préciser pour
+ne pas me mélanger dans mes projets avec différentes versions de Ruby
+(voir le
+<a href="/posts/backend/premiers-pas-avec-ruby">précédent article pour les versions du Ruby</a>
+et <a href="https://github.com/sstephenson/rbenv">rbenv</a>). Et enfin, la
+déclaration de notre première bibliothèque de dépendance :
+<a href="http://www.sinatrarb.com">Sinatra</a>.</p>
+<p>Il est possible d’être bien plus précis dans le Gemfile, comme…</p>
+<p>Préciser dans quel environnement charger les gems :</p>
+<pre><code class="lang-ruby">gem <span class="hljs-string">'sqlite3'</span>, <span class="hljs-symbol">group:</span> [<span class="hljs-symbol">:development</span>, <span class="hljs-symbol">:test</span>]
+</code></pre>
+<p>Une numéro de version :</p>
+<pre><code class="lang-ruby"><span class="hljs-title">gem</span> <span class="hljs-string">'rails'</span>, <span class="hljs-string">'4.1.6'</span>         <span class="hljs-comment"># version 4.1.6</span>
+gem <span class="hljs-string">'sass-rails'</span>, <span class="hljs-string">'~&gt; 4.0.3'</span> <span class="hljs-comment"># &gt;= 4.0.3 mais &lt; 4.1.0</span>
+</code></pre>
+<p>Préciser la classe à charger :</p>
+<pre><code class="lang-ruby">gem <span class="hljs-string">'valid_email'</span>, <span class="hljs-string">require:</span> <span class="hljs-string">'valid_email/email_validator'</span>
+</code></pre>
+<p>Aller chercher directement sur Github :</p>
+<pre><code class="lang-ruby">gem <span class="hljs-string">'nokogiri'</span>, <span class="hljs-string">github:</span> <span class="hljs-string">'sparklemotion/nokogiri'</span>
+# <span class="hljs-string">https:</span><span class="hljs-comment">//github.com/sparklemotion/nokogiri.git</span>
+
+gem <span class="hljs-string">'rails'</span>, <span class="hljs-string">github:</span> <span class="hljs-string">'rails'</span>
+# <span class="hljs-string">https:</span><span class="hljs-comment">//github.com/rails/rails.git</span>
+
+gem <span class="hljs-string">'rails'</span>, <span class="hljs-string">github:</span> <span class="hljs-string">'rails'</span>, <span class="hljs-string">branch:</span> <span class="hljs-string">'4-1-stable'</span>
+# <span class="hljs-string">https:</span><span class="hljs-comment">//github.com/rails/rails.git sur la branche 4-1-stable</span>
+</code></pre>
+<p>Il existe encore d’autres instructions, de quoi rendre sa gestion des
+dépendances vraiment fine et précise.</p>
+<p>Une fois le Gemfile prêt, bundler a plusieurs commandes de
+disponibles pour pouvoir les télécharger et utiliser.</p>
+<ul>
+<li><code>$ bundle install</code> installera les gems requis</li>
+<li><code>$ bundle update</code> mettra à jour vers les versions les plus récentes si possible les gems requis</li>
+<li><code>$ bundle exec</code> permettra de précéder une commande ruby afin de l’exécuter dans le contexte du Gemfile, très utile lorsque l’on a différentes versions de Ruby qui se baladent dans le terminal</li>
+</ul>
+<p>Bundler va générer un fichier <code>Gemfile.lock</code> qui est la description
+exhaustive des dépendances de votre application, chaque gem avec le
+numéro de sa version installée, chaque dépendance pour chaque gem,
+une jolie arborescence plus que précise.</p>
+<h2 id="commencons-notre-web-service"><a class="putainde-Title-anchor" href="#commencons-notre-web-service">#</a>Commençons notre web service</h2><p>Assez parlé des outils qui existent, utilisons-les. Tout d’abord
+installons Bundler, sans oublier le <code>$ rbenv rehash</code> nécessaire si vous
+utilisez rbenv pour vos versions de Ruby afin de mettre à jour les
+commandes disponibles dans le terminal :</p>
+<pre><code><span class="hljs-variable">$ </span>gem install bundler
+<span class="hljs-variable">$ </span>rbenv rehash
+</code></pre><p>Pour notre première application, nous allons faire un web service
+avec Sinatra qui est un micro-framework web, ayant d’ailleurs
+clairement inspiré Express (“Sinatra inspired web development
+framework for node.js”). Notre Gemfile va donc être exactement
+comme notre premier exemple :</p>
+<pre><code class="lang-ruby"><span class="hljs-keyword">source</span> <span class="hljs-string">'https://rubygems.org'</span>
+<span class="hljs-keyword">ruby</span> <span class="hljs-string">'2.1.2'</span>
+gem <span class="hljs-string">'sinatra'</span>
+</code></pre>
+<p>Un petit <code>bundle install</code> et nous sommes prêts à démarrer !</p>
+<p>Pour ne pas brusquer les choses, nous allons faire la version la plus
+simple d’un web service avec Sinatra, ce qui nous permettra de
+constater la simplicité extrême de Ruby et du framework :</p>
+<pre><code class="lang-ruby"><span class="hljs-comment">########</span>
+<span class="hljs-comment"># app.rb</span>
+<span class="hljs-comment">#</span>
+
+<span class="hljs-built_in">require</span> <span class="hljs-string">'sinatra'</span>
+
+<span class="hljs-built_in">get</span> <span class="hljs-string">'/'</span> <span class="hljs-built_in">do</span>
+  <span class="hljs-string">'Hello World!'</span>
+<span class="hljs-function"><span class="hljs-keyword">end</span></span>
+</code></pre>
+<p>Qu’avons-nous fait là ? Pas grand chose, et en même temps tout juste
+ce qu’il faut. Nous avons inclus le gem à notre script et utilisé la
+méthode Sinatra <code>get</code> nous permettant de déclarer un point d’entrée
+en <code>GET</code> sur la route ‘/‘. Cette méthode prend également comme
+argument un <code>block</code> caractérisé par le <code>do</code> et le <code>end</code>. La dernière
+valeur du block étant la valeur de retour, nous renvoyons la seule
+chaîne de caractères “Hello World!”.</p>
+<p>Et maintenant : lancement ! <code>$ bundle exec ruby app.rb</code> va lancer
+l’application (mais <code>ruby app.rb</code> suffit), par défaut sur le port
+<code>4567</code>. Regardez vite <a href="http://localhost:4567">http://localhost:4567</a>
+et là magie, “Hello World!” sur une magnifique page blanche, notre
+tout premier web service est fonctionnel.</p>
+<p>Alors oui, ce n’est pas une révolution. Mais tout de même, en
+réduisant la syntaxe du block on se retrouve avec un script de deux
+lignes qui crée un vrai web service web. Et vous allez vite voir
+qu’en quelques lignes de plus on peut vite complexifier le bousin.</p>
+<h2 id="au-prochain-episode"><a class="putainde-Title-anchor" href="#au-prochain-episode">#</a>Au prochain épisode</h2><p>Dans l’article suivant nous allons ajouter des fonctionnalités à
+notre toute nouvelle application, de nouvelles routes, de la
+persistence et aussi des vues dans un format un peu plus utile.</p>
+<p>Stay tuned!</p>
+<h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><p>Voici la version abrégée de cet article :</p>
+<pre><code class="lang-ruby"><span class="hljs-comment"># Gemfile</span>
+<span class="hljs-built_in">source</span> <span class="hljs-string">'https://rubygems.org'</span>
+ruby <span class="hljs-string">'2.1.2'</span>
+gem <span class="hljs-string">'sinatra'</span>
+</code></pre>
+<pre><code class="lang-ruby"><span class="hljs-comment"># app.rb</span>
+<span class="hljs-built_in">require</span> <span class="hljs-string">'sinatra'</span>
+<span class="hljs-built_in">get</span> <span class="hljs-string">'/'</span> <span class="hljs-built_in">do</span>
+  <span class="hljs-string">'Hello World!'</span>
+<span class="hljs-function"><span class="hljs-keyword">end</span></span>
+</code></pre>
+<pre><code class="lang-bash"><span class="hljs-variable">$ </span>gem install bundler
+<span class="hljs-variable">$ </span>rbenv rehash
+<span class="hljs-variable">$ </span>bundle install
+<span class="hljs-variable">$ </span>ruby app.rb
+</code></pre>
+<h2 id="sources"><a class="putainde-Title-anchor" href="#sources">#</a>Sources</h2><ul>
+<li><a href="https://rubygems.org">RubyGems</a></li>
+<li><a href="http://bundler.io">Bundler</a></li>
+<li><a href="https://github.com/sstephenson/rbenv">rbenv</a></li>
+<li><a href="http://www.sinatrarb.com">Sinatra</a> et surtout son <a href="http://www.sinatrarb.com/intro.html">README</a></li>
+</ul>
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/website/edit/master/pages/posts/backend/ruby-dependances-et-projet/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/website/blame/master/pages/posts/backend/ruby-dependances-et-projet/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/website/commits/master/pages/posts/backend/ruby-dependances-et-projet/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author"><a href="http://rhannequ.in" data-rcp-tooltip="rhannequin" class="putainde-Author-picture "><img src="http://www.gravatar.com/avatar/a2b9398e4753f15d628c8d928600d90e.png" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> <a href="http://rhannequ.in" class="putainde-Link">rhannequin</a></h3><div class="putainde-Author-social"><a href="http://rhannequ.in" data-rcp-tooltip="Website" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-home"><use xlink:href="#putainde-Icon-home"></use></svg></a><a href="https://twitter.com/rhannequin" data-rcp-tooltip="Twitter" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a><a href="https://github.com/rhannequin" data-rcp-tooltip="Github" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a></div></div><p class="putainde-Author-bio">Développeur frontend/backend spécialement intéressé par JavaScript et Ruby. <br> Curieux des hacks sur les technologies web, conscient des standards de performance, de tests, et du web tout court. <br> Joueur de handball depuis l'enfance, amoureux de l'espace et de la science, matteur de séries. <br> Baigné dans de la musique et un mode de vie funkys.</p></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-rcp-tooltip="GitHub" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a><a href="https://twitter.com/putaindecode/" data-rcp-tooltip="Twitter" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/";
+var disqus_url = "http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/";
+var disqus_script = "embed.js";;(function(d,s) {
+s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+(d.getElementsByTagName('head')[0]).appendChild(s)
+})(document)</script><script src="../../../scripts/index.js"></script><script>var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
+(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+g.src='//www.google-analytics.com/ga.js';
+s.parentNode.insertBefore(g,s)}(document,'script'));</script></body></html>
