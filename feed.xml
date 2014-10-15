@@ -1,4 +1,106 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Wed, 15 Oct 2014 13:17:34 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Dépendances et premier projet en Ruby</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Wed, 15 Oct 2014 21:15:34 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Comment essayer de coder à peu près comme un chef (raté) sous Windows</title><description><![CDATA[
+<p><img src="background.jpg" alt="Keyboard"></p>
+<p>Oh oui, en voilà une belle question.</p>
+<p>Il n’est pas toujours évident d’avoir un Linux, Unix, BSD ou autre avec un petit shell bien sympa sous la main. Et parfois coder sous Windows est une nécessité voire un désir. (Ouais, je ne vous parlerai pas ici de changer de boulot si Windows vous est imposé(e) ni de vous expliquer votre déficience mentale d’apprécier cet OS, ce n’est pas le sujet).</p>
+<p>Étant un homme de challenge, j’aime me mettre dans des contextes limités et voir comment je me débrouille pour sortir d’une situation pénible à une situation acceptable voire agréable. Je me suis alors lancé pour vous dans cette aventure.</p>
+<p>Oh mais pourquoi j’ai dû faire ça à la base ?</p>
+<p>Après avoir créé <a href="https://github.com/kud/my">mon propre système de synchronisation de machines sous Mac OS X</a> (plus souvent communément appelé dotfiles mais faisant un peu plus), j’ai voulu faire de même sous Windows au cas où mon système crasherait et où je devrais tout réinstaller. On n’est jamais à l’abri.</p>
+<p>Pour cela, plusieurs outils vont vous être nécessaires. Un chef sans bons outils, c’est drôlement handicapant. (Déjà que l’OS en question n’aide pas).</p>
+<h2 id="chocolatey-la-base"><a class="putainde-Title-anchor" href="#chocolatey-la-base">#</a>Chocolatey : la base</h2><p><a href="http://chocolatey.org/">Chocolatey</a>. Ouais, chocolatey, ce petit script vous permettra de télécharger tout et n’importe quoi en cli (ligne de commandes). Pour ceux qui ont l’habitude de mac ou linux, c’est le brew / apt-get de Windows.</p>
+<p>Comment l’installer ?</p>
+<p>Lancez <code>cmd.exe</code> en mode administrateur (touche windows puis “cmd” puis shift+ctrl+enter) et exécutez ce code :</p>
+<pre><code class="lang-bash">$ <span class="hljs-variable">@powershell</span> -NoProfile -ExecutionPolicy unrestricted -Command <span class="hljs-string">"iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))"</span> &amp;&amp; SET PATH=<span class="hljs-variable">%PATH</span><span class="hljs-variable">%;</span><span class="hljs-variable">%ALLUSERSPROFILE</span><span class="hljs-variable">%\</span>chocolatey\bin
+</code></pre>
+<p>Ou <code>PowerShell</code> en mode administrateur (touche windows puis “powershell” puis shift+ctrl+enter) et éxecutez :</p>
+<pre><code class="lang-bash">$ iex ((new-<span class="hljs-tag">object</span> net.webclient).<span class="hljs-function"><span class="hljs-title">DownloadString</span><span class="hljs-params">(<span class="hljs-string">'https://chocolatey.org/install.ps1'</span>)</span></span>)
+</code></pre>
+<p>Une fois installé, vous pourrez installer n’importe quel logiciel listé sur <a href="http://chocolatey.org/packages">leur site</a>.</p>
+<p>Passons à la suite.</p>
+<h2 id="logiciels-de-developpement"><a class="putainde-Title-anchor" href="#logiciels-de-developpement">#</a>Logiciels de développement</h2><p>Yes, on a donc Chocolatey qui va nous simplifier grandement l’installation de logiciels. Passons maintenant aux outils pour bien développer.</p>
+<h3 id="git"><a class="putainde-Title-anchor" href="#git">#</a>Git</h3><p>Lorsque tu joues à un jeu vidéo, tu sauvegardes régulièrement ton avancement non ? Bah là, c’est pareil mais pour le code.</p>
+<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> git.<span class="hljs-keyword">install</span>
+</code></pre>
+<ul>
+<li><a href="http://git-scm.com/">site officiel</a></li>
+<li><a href="https://chocolatey.org/packages/git.install">lien du package</a></li>
+</ul>
+<h3 id="node-js"><a class="putainde-Title-anchor" href="#node-js">#</a>Node.js</h3><p>Faire du JavaScript côté serveur ou en shell, le pied. Surtout pour faire des scripts Windows, plutôt que de passer par Batch.</p>
+<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> nodejs.<span class="hljs-keyword">install</span>
+</code></pre>
+<ul>
+<li><a href="http://nodejs.org/">site officiel</a></li>
+<li><a href="https://chocolatey.org/packages/nodejs.install">lien du package</a></li>
+</ul>
+<h3 id="editeur-de-texte"><a class="putainde-Title-anchor" href="#editeur-de-texte">#</a>Éditeur de texte</h3><p>Sublime Text, l’éditeur préféré des Franç… je m’égare. Bref, un bon éditeur.</p>
+<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> sublimetext3
+</code></pre>
+<ul>
+<li><a href="http://www.sublimetext.com/">site officiel</a></li>
+<li><a href="https://chocolatey.org/packages/sublimetext3">lien du package</a></li>
+</ul>
+<p>Vous pouvez aussi installer <a href="https://atom.io/">Atom</a> si vous préférez.</p>
+<h3 id="un-meilleur-shell"><a class="putainde-Title-anchor" href="#un-meilleur-shell">#</a>Un meilleur shell</h3><p>Clink va vous permettre quelques fonctionnalités intéressantes que le shell de Windows n’a pas de base, comme taper <code>&lt;tab&gt;</code> pour l’autocomplétion par exemple.</p>
+<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> clink.<span class="hljs-keyword">install</span>
+</code></pre>
+<ul>
+<li><a href="http://mridgers.github.io/clink/">site officiel</a></li>
+<li><a href="https://chocolatey.org/packages/clink.install">lien du package</a></li>
+</ul>
+<h3 id="compresser-decompresser-comme-vous-le-voulez"><a class="putainde-Title-anchor" href="#compresser-decompresser-comme-vous-le-voulez">#</a>Compresser / décompresser comme vous le voulez</h3><p>7zip, le logiciel de référence pour ce genre de pratique.</p>
+<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> <span class="hljs-number">7</span>zip.<span class="hljs-keyword">install</span>
+</code></pre>
+<ul>
+<li><a href="http://www.7-zip.org/">site officiel</a></li>
+<li><a href="https://chocolatey.org/packages/7zip.install">lien du package</a></li>
+</ul>
+<h3 id="gerer-les-pdf"><a class="putainde-Title-anchor" href="#gerer-les-pdf">#</a>Gérer les pdf</h3><p>Sumatra pour les lire. PDFCreator pour faire une imprimante virtuelle sortant des PDFs.</p>
+<h4 id="sumatra"><a class="putainde-Title-anchor" href="#sumatra">#</a>Sumatra</h4><ul>
+<li><a href="http://blog.kowalczyk.info/software/sumatrapdf/free-pdf-reader.html">site officiel</a></li>
+<li><a href="https://chocolatey.org/packages/sumatrapdf.install">lien du package</a></li>
+</ul>
+<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> sumatrapdf.<span class="hljs-keyword">install</span>
+</code></pre>
+<h4 id="pdfcreator"><a class="putainde-Title-anchor" href="#pdfcreator">#</a>PDFCreator</h4><ul>
+<li><a href="http://www.pdfforge.org/pdfcreator">site officiel</a></li>
+<li><a href="https://chocolatey.org/packages/pdfcreator">lien du package</a></li>
+</ul>
+<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> pdfcreator
+</code></pre>
+<h3 id="spaaaaaaaces"><a class="putainde-Title-anchor" href="#spaaaaaaaces">#</a>Spaaaaaaaces</h3><p>Parce qu’avoir plusieurs bureaux / espaces, c’est plus pratique pour gérer ses fenêtres, je vous propose VirtuaWin. Cela vous permettra de garder en plein écran vos logiciels et de zapper d’un logiciel à un autre sans passer par alt+tab mais en allant d’un bureau à un autre.</p>
+<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> virtuawin
+</code></pre>
+<ul>
+<li><a href="http://virtuawin.sourceforge.net/">site officiel</a></li>
+<li><a href="https://chocolatey.org/packages/virtuawin">lien du package</a></li>
+</ul>
+<h3 id="launchy-le-alfred-like-sous-windows"><a class="putainde-Title-anchor" href="#launchy-le-alfred-like-sous-windows">#</a>Launchy, le Alfred-like sous Windows</h3><p>Je sais pas vous mais moi, les raccourcis qui me gâchent mon beau wallpaper choisi avec goût, ça m’énerve. Et puis le clickodrome, c’est lent et chiant. Du coup, lancer ses logiciels à partir d’un moteur de recherche, c’est quand même vachement bien. Ca permet aussi de faire des recherches de fichier, des calculs, et tout un tas d’autres choses. Voici alors Launchy.</p>
+<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> launchy-beta
+</code></pre>
+<ul>
+<li><a href="http://www.launchy.net/">site officiel</a></li>
+<li><a href="https://chocolatey.org/packages/launchy-beta">lien du package</a></li>
+</ul>
+<h3 id="et-enfin-comment-ne-pas-se-niquer-les-yeux-toute-la-journee"><a class="putainde-Title-anchor" href="#et-enfin-comment-ne-pas-se-niquer-les-yeux-toute-la-journee">#</a>Et enfin, comment ne pas se niquer les yeux toute la journée</h3><h4 id="f-lux"><a class="putainde-Title-anchor" href="#f-lux">#</a>f.lux</h4><p>On va commencer par f.lux. Ce petit logiciel permettant de gérer la colorimétrie de votre écran en fonction de l’heure. Typiquement, les écrans rendent un blanc digne d’un soleil à midi. Sauf que le soir, on allume la lumière et celle-ci n’a pas du coup une couleur blanche mais souvent plutôt rouge. f.lux permet alors d’ajuster votre écran afin que la couleur soit identique à la lumière ambiante pour réduire les différences de couleurs et éviter de vous abimer les yeux. En plus, ça permet au cerveau de se préparer à aller se coucher. :D</p>
+<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> f.lux
+</code></pre>
+<ul>
+<li><a href="https://justgetflux.com/">site officiel</a></li>
+<li><a href="https://chocolatey.org/packages/f.lux">lien du package</a></li>
+</ul>
+<h4 id="mactype"><a class="putainde-Title-anchor" href="#mactype">#</a>MacType</h4><p>Et surtout, MacType. Oh oui MacType. Je pense que seule une personne venant de MacOSX peut comprendre. Dieu sait que le font rendering sous Windows est vraiment pourri et que Steve Jobs depuis le départ de Mac a fait en sorte sur le rendering des fonts sous son OS soit de qualité.</p>
+<p>Pour réduire cette différence entre un Windows et un MacOSX, je vous propose MacType qui permet de remplacer le font rendering de Windows et d’apprécier lire à nouveau sur cet OS.</p>
+<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> mactype
+</code></pre>
+<p>Je vous conseille le profil <code>XMac.LCD.Default</code>.</p>
+<ul>
+<li><a href="https://code.google.com/p/mactype/">site officiel</a></li>
+<li><a href="https://chocolatey.org/packages/mactype">lien du package</a></li>
+</ul>
+<h2 id="vous-voila-pare-e-"><a class="putainde-Title-anchor" href="#vous-voila-pare-e-">#</a>Vous voilà paré(e) !</h2><p>On est bon, on a tous les outils nécessaires pour pouvoir coder correctement sur Windows.</p>
+<p>Si vous souhaitez en savoir plus et surtout vous tenir à jour d’éventuels logiciels que je pourrais installer, n’hésitez pas à vous rendre sur mon projet <a href="https://github.com/kud/my-unfortunately">my-unfortunately</a> qui est le <em>synchroniser</em> dont je vous ai parlé tout à l’heure.</p>
+<p>Bon code !</p>
+
+]]></description><pubDate>Wed, 15 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/windows/comment-coder-sous-windows/</link><guid isPermaLink="true">http://putaindecode.fr/posts/windows/comment-coder-sous-windows/</guid></item><item><title>Dépendances et premier projet en Ruby</title><description><![CDATA[
 <p><a href="#tl-dr">tl;dr</a></p>
 <p>Dans l’<a href="/posts/backend/premiers-pas-avec-ruby">article précédent</a>
 nous avons installé Ruby. Désormais nous allons aborder les gems,
@@ -2571,267 +2673,4 @@ vous pourrez continuer la lecture au prochain épisode qui sera consacré aux po
 <p><del>Bon promis la prochaine fois je vous en parle des post-processeurs. Pour de vrai.</del>
 Chose promise, chose due : <a href="/posts/css/les-post-processeurs/">Les post-processeurs CSS</a></p>
 
-]]></description><pubDate>Tue, 11 Mar 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/le-point-sur-les-preprocesseurs/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/le-point-sur-les-preprocesseurs/</guid></item><item><title>Mise en place d’autoprefixer</title><description><![CDATA[
-<p>Suite à mon précédent article <a href="/posts/css/comment-en-finir-avec-les-prefixes/">Comment en finir avec les préfixes CSS</a>,
-certains sont restés sur leur faim.
-Voici donc de rapides exemples de mise en place de cette solution.</p>
-<h2 id="installation-d-autoprefixer"><a class="putainde-Title-anchor" href="#installation-d-autoprefixer">#</a>Installation d’autoprefixer</h2><p>Il vous faudra <a href="http://nodejs.org/">Node.js</a> (qui embarque maintenant <a href="https://www.npmjs.org/">Npm</a>) afin de pouvoir
-installer ce nouveau joujou.</p>
-<pre><code class="lang-bash"><span class="hljs-comment"># on install autoprefixer via npm en global</span>
-$ <span class="hljs-built_in">npm</span> install --<span class="hljs-built_in">global</span> autoprefixer
-<span class="hljs-comment"># ou pour les fainéants</span>
-$ <span class="hljs-built_in">npm</span> i -g autoprefixer
-</code></pre>
-<p>Une fois ceci fait, vous devriez avoir la commande <code>autoprefixer</code> disponible.
-On vérifie de suite avec <code>autoprefixer -v</code>.</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>autoprefixer -v
-autoprefixer <span class="hljs-number">1.0</span>.<span class="hljs-number">20140203</span>
-</code></pre>
-<p>Vous remarquerez que le numéro de version est un peu spécial : il contient une
-date en place d’un numéro de patch. Cette date correspond à la dernière mise à
-jour de la base de données de <em>Can I Use</em>.</p>
-<h2 id="utilisation-d-autoprefixer"><a class="putainde-Title-anchor" href="#utilisation-d-autoprefixer">#</a>Utilisation d’autoprefixer</h2><pre><code class="lang-bash"><span class="hljs-variable">$ </span>autoprefixer *.css
-</code></pre>
-<p>C’est aussi simple que ça.</p>
-<p>En fait non je plaisante, c’est un tout petit peu plus long car par défaut,
-comme beaucoup de commandes, vous allez avoir la sortie crachée en plein visage.</p>
-<p>Pour voir les options, comme d’habitude <code>--help</code> ou <code>-h</code> :</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>autoprefixer -h
-</code></pre>
-<p>On y apprend l’existance des options suivantes :</p>
-<pre><code>Options:
-  -<span class="ruby">b, --browsers <span class="hljs-constant">BROWSERS</span>  add prefixes <span class="hljs-keyword">for</span> selected browsers
-</span>  -<span class="ruby">o, --output <span class="hljs-constant">FILE</span>        set output file
-</span>  -<span class="ruby">d, --dir <span class="hljs-constant">DIR</span>            set output dir
-</span>  -<span class="ruby">m, --map                generate source map
-</span>  -<span class="ruby">i, --info               show selected browsers <span class="hljs-keyword">and</span> properties
-</span>  -<span class="ruby">h, --help               show help text
-</span>  -<span class="ruby">v, --version            print program version</span>
-</code></pre><p>Du coup si on veut faire un coup de commande bien personnalisée on pourra faire :</p>
-<pre><code class="lang-bash">$ autoprefixer -<span class="hljs-tag">b</span> <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -o prefixed<span class="hljs-class">.css</span> index.css
-</code></pre>
-<p>Il va par contre nous falloir un fichier css pour tester :</p>
-<pre><code class="lang-bash"># <span class="hljs-keyword">on</span> met un peu de CSS dans <span class="hljs-built_in">index</span>.css manière de tester <span class="hljs-keyword">le</span> bouzin
-$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"* { box-sizing:border-box}"</span> &gt; <span class="hljs-built_in">index</span>.css
-</code></pre>
-<p>On peut donc essayer notre commande plus haut qui va remplir le fichier <code>prefixed.css</code></p>
-<p>Pour vérifier :</p>
-<pre><code class="lang-bash">$ <span class="hljs-tag">cat</span> <span class="hljs-tag">prefixed</span><span class="hljs-class">.css</span>
-* <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">-webkit-box-sizing</span>:<span class="hljs-value">border-box</span></span>; <span class="hljs-rule"><span class="hljs-attribute">-moz-box-sizing</span>:<span class="hljs-value">border-box</span></span>; <span class="hljs-rule"><span class="hljs-attribute">box-sizing</span>:<span class="hljs-value">border-box</span></span></span>}
-</code></pre>
-<p>On a bien eu des préfixes ajoutés en fonction de notre demande (bon rien pour IE
-qui n’est pas passé par une version préfixé)</p>
-<p>Par défaut, <em>autoprefixer</em> utilise <code>&gt; 1%, last 2 versions, Firefox ESR, Opera 12.1</code> pour les navigateurs.
-Je pense que pour la plupart d’entre vous voudront ajouter “Explorer 8” à la liste, mais ça
-n’est en théorie pas nécessaire vu le permier argument qui demande de préfixer tous les navigateurs
-dont l’usage global est supérieur à 1%. Peut-être Explorer 7 pour certains ?
-Faites un tour sur la <a href="http://caniuse.com/usage_table.php">page dédié aux statistiques globales sur CanIUse.com</a> pour avoir une idée.</p>
-<p>Sinon, pour du petit one shot, un plugin dans votre éditeur suffira:</p>
-<ul>
-<li><a href="https://github.com/sindresorhus/atom-autoprefixer">plugin autoprefixer pour Atom</a></li>
-<li><a href="https://github.com/sindresorhus/sublime-autoprefixer">plugin autoprefixer pour Sublime Text</a></li>
-<li><a href="https://github.com/mikaeljorhult/brackets-autoprefixer">plugin autoprefixer pour Brackets</a></li>
-</ul>
-<figure>
-  <img src="autoprefixer.gif" alt="sublime text autoprefixer preview">
-  <figcaption>Intégration dans Sublime Text</figcaption>
-</figure>
-
-<h2 id="automatisation-d-autoprefixer-autoception-"><a class="putainde-Title-anchor" href="#automatisation-d-autoprefixer-autoception-">#</a>Automatisation d’autoprefixer (autoception)</h2><p>Bien entendu on va pas se taper la commande à la main tout le temps hein…
-Il nous faut automatiser nos processus. Sans quoi on perd du temps, et
-<a href="http://deboutlesgens.com/blog/jai-pas-le-temps-la-pire-excuse-qui-soit/">le temps… C’est du temps !</a></p>
-<p>Donc, comme je l’ai dit précédemment, on peut utiliser <em>autoprefixer</em> avec les solutions
-suivantes:</p>
-<ul>
-<li>via <a href="https://github.com/ai/autoprefixer#nodejs">Node.js</a> directement,</li>
-<li>en plugin <a href="https://www.npmjs.org/package/gulp-autoprefixer">Gulp</a>,</li>
-<li>en plugin <a href="https://github.com/ai/autoprefixer#grunt">Grunt</a>,</li>
-<li>via <a href="https://github.com/ai/autoprefixer#compass">Compass</a>,</li>
-<li>en plugin <a href="https://github.com/ai/autoprefixer#stylus">Stylus</a>,</li>
-<li>avec <a href="https://github.com/ai/autoprefixer#ruby-on-rails">RoR</a> ou <a href="https://github.com/ai/autoprefixer#ruby">Ruby</a>,</li>
-<li>avec l’application <a href="https://github.com/ai/autoprefixer#prepros">Prepros</a></li>
-<li>via <a href="https://github.com/ai/autoprefixer#mincer">Mincer</a></li>
-<li>via <a href="https://github.com/ai/autoprefixer#middleman">Middleman</a></li>
-<li>avec <a href="https://github.com/ai/autoprefixer#php">PHP</a> (vous avez bien lu)</li>
-</ul>
-<p>Si vous avez besoin, je pense que vous trouverez sans trop de problème d’autres
-implémentations.</p>
-<p>Cela dit, je vais vous montrer quelques cas d’utilisations:</p>
-<h3 id="make"><a class="putainde-Title-anchor" href="#make">#</a>Make</h3><p>Là c’est facile, tout bon développeur doit avoir <code>make</code> sur sa machine (sinon
-c’est que t’es pas développeur, je sais pas trop ce que tu fais ici du coup).</p>
-<p>On peut tout simplement créer un fichier <code>Makefile</code> avec la commande précédente:</p>
-<pre><code class="lang-bash"># <span class="hljs-keyword">cr</span>éation <span class="hljs-keyword">d</span>’un dossier pour notre popote (puis <span class="hljs-keyword">on</span> va dedans...)
-$ <span class="hljs-built_in">mkdir</span> autoprefixer-test &amp;&amp; <span class="hljs-keyword">cd</span> autoprefixer-test
-
-# On <span class="hljs-keyword">cr</span>éer un makefile avec une <span class="hljs-keyword">t</span>â<span class="hljs-keyword">che</span> `css` (<span class="hljs-keyword">cr</span>éation/écrasement via &gt;)
-$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"css:"</span> &gt; Makefile
-
-# On <span class="hljs-keyword">v</span>érifie qu’<span class="hljs-keyword">on</span> <span class="hljs-keyword">a</span> bien rempli <span class="hljs-keyword">le</span> fichier
-$ <span class="hljs-keyword">cat</span> Makefile
-
-## On ajoute notre commande <span class="hljs-keyword">au</span> fichier (ajout <span class="hljs-keyword">au</span> fichier existant via &gt;&gt;)
-$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"\tautoprefixer index.css -b \"last 2 versions, &gt; 1%, Explorer 7, Android 2\" -o prefixed.css"</span> &gt;&gt; Makefile
-
-# On <span class="hljs-keyword">v</span>érifie qu’<span class="hljs-keyword">on</span> <span class="hljs-keyword">a</span> bien rempli <span class="hljs-keyword">le</span> fichier
-$ <span class="hljs-keyword">cat</span> Makefile
-</code></pre>
-<p>Voilà votre Makefile doit être bien rempli. Pour tester la commande <code>css</code>:</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>make css
-</code></pre>
-<p>Vous remarquerez que la commande <em>autoprefixer</em> s’affiche, si ça vous embête, rajoutez
-<code>@</code> devant. Vous pouvez modifier votre Makefile dans ce sens:</p>
-<pre><code><span class="hljs-attribute">css</span>:
-    echo <span class="hljs-string">"❯ Autoprefixage magique."</span>
-    <span class="hljs-variable">@autoprefixer</span> index.css -b <span class="hljs-string">"last 2 versions, &gt; 1%, Explorer 7, Android 2"</span> -o prefixed.css
-</code></pre><p><em>Attention : Les Makefiles utilisent des tabulations uniquement ! Sans quoi cela
-ne va pas marcher comme prévu.</em></p>
-<p>Vous avez donc maintenant un exemple assez simpliste qui peut être utilisé si
-vous n’avez pas encore <a href="http://www.24joursdeweb.fr/2013/automatisez-votre-workflow-front-end/">automatisé votre workflow</a>
-via des outils comme <a href="http://gulpjs.com/">Gulp</a> ou <a href="http://gruntjs.com/">Grunt</a>.</p>
-<p>Passons justement à ces solutions plus sérieuses.</p>
-<h3 id="autoprefixer-avec-gulp"><a class="putainde-Title-anchor" href="#autoprefixer-avec-gulp">#</a>Autoprefixer avec Gulp</h3><p>Je ne vais pas trop rentrer dans les détails de Gulp (ce n’est pas le sujet ici).
-Voici cependant une exemple assez bref et compréhensible pour commencer, avec
-une seule écriture sur le système de fichier (contrairement à la solution Grunt).</p>
-<pre><code class="lang-js"><span class="hljs-comment">// gulp stuff</span>
-<span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp"</span>)
-<span class="hljs-keyword">var</span> gutil = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-util"</span>)
-  <span class="hljs-comment">// le plombier ajuste les fuites des tuyaux (erreur de pipe)</span>
-  <span class="hljs-comment">// ceci est conseillé pour éviter que chaque erreur "casse" tout le process</span>
-  <span class="hljs-comment">// dès qu’une erreur est remonté par un plugin</span>
-<span class="hljs-keyword">var</span> plumber = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-plumber"</span>)
-
-<span class="hljs-comment">// css stuff</span>
-<span class="hljs-keyword">var</span> sass = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-ruby-sass"</span>)
-<span class="hljs-keyword">var</span> autoprefixer = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-autoprefixer"</span>)
-<span class="hljs-keyword">var</span> csso = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-csso"</span>)
-
-<span class="hljs-comment">// css task: sass, autoprefixer et csso si --production</span>
-gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  gulp.src(<span class="hljs-string">"./src/css/*.scss"</span>)
-    <span class="hljs-comment">// it’s me, Mario</span>
-    .pipe(plumber())
-
-    .pipe(sass({style: <span class="hljs-string">"expanded"</span>}))
-
-    <span class="hljs-comment">// Autoprefixer \\</span>
-    <span class="hljs-comment">// vous remarquerez que ici chaque option est un paramètre</span>
-    <span class="hljs-comment">// pas comme pour l’appel en ligne de commande.</span>
-    .pipe(autoprefixer(<span class="hljs-string">"last 2 versions"</span>, <span class="hljs-string">"&gt; 1%"</span>, <span class="hljs-string">"Explorer 7"</span>, <span class="hljs-string">"Android 2"</span>))
-
-    <span class="hljs-comment">// optimisation CSS pour la prod uniquement</span>
-    .pipe(gulp.env.production ? csso() : gutil.noop())
-
-    <span class="hljs-comment">// unique écriture sur disque</span>
-    .pipe(gulp.dest(<span class="hljs-string">"./dist/css/"</span>))
-    <span class="hljs-comment">// je passe sur cette partie à configurer, mais ici on peut imaginer un</span>
-    <span class="hljs-comment">// livereload en plus, il faudra définir livereload et livereloadServer</span>
-    <span class="hljs-comment">// cette partie dépend un peu de votre serveur durant le dév.</span>
-    <span class="hljs-comment">// ca fera l’objet d’un post tiens...</span>
-    <span class="hljs-comment">//.pipe(livereload(livereloadServer))</span>
-})
-
-gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> </span>{
-    gulp.run(<span class="hljs-string">"styles"</span>)
-  })
-})
-
-<span class="hljs-comment">// Tâches disponibles :</span>
-
-<span class="hljs-comment">// - pour générer les feuilles de styles</span>
-<span class="hljs-comment">//   (pour optimiser pour la prod, utiliser l’option)</span>
-<span class="hljs-comment">// $ gulp styles [--production]</span>
-
-<span class="hljs-comment">// - pour le dev, surveille et lance la tâche `styles` dès que nécessaire</span>
-<span class="hljs-comment">// $ gulp dev</span>
-</code></pre>
-<h3 id="autoprefixer-avec-grunt"><a class="putainde-Title-anchor" href="#autoprefixer-avec-grunt">#</a>Autoprefixer avec Grunt</h3><p>Voici un petit Gruntfile avec la même configuration que ci dessus</p>
-<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
-<span class="hljs-pi">  "use strict"</span>;
-
-  grunt.loadNpmTasks(<span class="hljs-string">"grunt-contrib-sass"</span>)
-  grunt.loadNpmTasks(<span class="hljs-string">"grunt-autoprefixer"</span>)
-  grunt.loadNpmTasks(<span class="hljs-string">"grunt-csso"</span>)
-  grunt.loadNpmTasks(<span class="hljs-string">"grunt-contrib-watch"</span>)
-
-  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: <span class="hljs-string">"expanded"</span>
-        },
-        files: [{
-          expand: <span class="hljs-literal">true</span>,
-          flatten: <span class="hljs-literal">true</span>,
-          cwd: <span class="hljs-string">"./src/css"</span>,
-          src: [<span class="hljs-string">"*.scss"</span>],
-          dest: <span class="hljs-string">"./dist/css"</span>,
-          ext: <span class="hljs-string">".css"</span>
-        }]
-      }
-    },
-    autoprefixer: {
-      options: {
-        browsers: [<span class="hljs-string">"last 2 versions"</span>, <span class="hljs-string">"&gt; 1%"</span>, <span class="hljs-string">"Explorer 7"</span>, <span class="hljs-string">"Android 2"</span>]
-      },
-      dist: {
-        expand: <span class="hljs-literal">true</span>,
-        flatten: <span class="hljs-literal">true</span>,
-        cwd: <span class="hljs-string">"./dist/css"</span>,
-        src: [<span class="hljs-string">"*.css"</span>],
-        dest: <span class="hljs-string">"./dist/css/"</span>
-      }
-    },
-    csso: {
-      dist: {
-        expand: <span class="hljs-literal">true</span>,
-        flatten: <span class="hljs-literal">true</span>,
-        cwd: <span class="hljs-string">"./dist/css/"</span>,
-        src: [<span class="hljs-string">"*.css"</span>],
-        dest: <span class="hljs-string">"./dist/css/"</span>
-      }
-    },
-    watch: {
-      styles: {
-        files: [<span class="hljs-string">"./src/css/**/*.scss"</span>],
-        tasks: [<span class="hljs-string">"styles"</span>]
-      }
-    }
-  })
-
-  grunt.registerTask(<span class="hljs-string">"styles"</span>, [<span class="hljs-string">"sass"</span>, <span class="hljs-string">"autoprefixer"</span>])
-  grunt.registerTask(<span class="hljs-string">"styles:production"</span>, [<span class="hljs-string">"sass"</span>, <span class="hljs-string">"autoprefixer"</span>, <span class="hljs-string">"csso"</span>])
-  grunt.registerTask(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"sass"</span>, <span class="hljs-string">"watch"</span>])
-}
-
-<span class="hljs-comment">// Tâches disponibles :</span>
-
-<span class="hljs-comment">// - pour générer les feuilles de styles</span>
-<span class="hljs-comment">// $ grunt styles</span>
-
-<span class="hljs-comment">// - pareil, mais optimiser pour la prod</span>
-<span class="hljs-comment">// $ grunt styles:production</span>
-
-<span class="hljs-comment">// - pour le dev, surveille et lance la tâche `styles` dès que nécessaire</span>
-<span class="hljs-comment">// $ grunt watch</span>
-</code></pre>
-<p>Comme vous pouvez le voir, la version Grunt est un peu plus volumineuse (bien qu’espacée).
-Personnellement j’aime la concision de gulp.
-De plus la version Grunt sera plus longue car nous aurons 3 lectures / écritures sur le disque.</p>
-<p><em>Notez que bien entendu dans notre exemple précédent, nous pouvons remplacer Sass
-par un autre pré / post-processeur.</em></p>
-<h3 id="autoprefixer-avec-stylus"><a class="putainde-Title-anchor" href="#autoprefixer-avec-stylus">#</a>Autoprefixer avec Stylus</h3><p>Dans les exemples précédents, j’ai montré une solution classique avec Sass.
-Mais voici complètement autre chose: <em>autoprefixer</em> peut s’utiliser en “plugin” Stylus.</p>
-<p>C’est assez simple il suffit d’utiliser l’option <code>use</code> (<code>-u</code> en cli).
-Voilà ce qu’on aurait en cli :</p>
-<pre><code class="lang-bash">$ npm <span class="hljs-operator"><span class="hljs-keyword">install</span> -g stylus autoprefixer-stylus
-$ stylus -u autoprefixer-stylus -o <span class="hljs-keyword">index</span>.css <span class="hljs-keyword">index</span>.styl</span>
-</code></pre>
-<h4 id="avec-grunt"><a class="putainde-Title-anchor" href="#avec-grunt">#</a>Avec Grunt</h4><p>Il suffira d’utiliser donc l’option <code>use</code> dans votre configuration.</p>
-<h4 id="-del-avec-gulp-del-"><a class="putainde-Title-anchor" href="#-del-avec-gulp-del-">#</a><del>Avec Gulp</del></h4><p>La façon de faire de gulp, via des streams pour éviter la lecture / écriture multiple fait que le plugin
-<em>autoprefixer-stylus</em> est vide de sens.
-Vous pouvez donc utiliser <em>autoprefixer</em> normalement, après l’appel du pré-processeur.</p>
-<hr>
-<p>Voilà j’espère que cette fois-ci vous êtes rassasié(e) afin de ne plus avoir envie de manger des préfixes CSS !</p>
-
-]]></description><pubDate>Tue, 04 Mar 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/</guid></item></channel></rss>
+]]></description><pubDate>Tue, 11 Mar 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/le-point-sur-les-preprocesseurs/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/le-point-sur-les-preprocesseurs/</guid></item></channel></rss>
