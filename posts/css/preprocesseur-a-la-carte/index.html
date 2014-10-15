@@ -72,10 +72,10 @@ faire un prérendu et mettre des roues de secours là où c’est possible.</p>
 <h2 id="creer-un-preprocesseur-css"><a class="putainde-Title-anchor" href="#creer-un-preprocesseur-css">#</a>Créer un préprocesseur CSS</h2><p>Allons à l’essentiel : pour créer votre préprocesseur on va utiliser une bibliothèque.
 À ce jour nous avons le choix entre <a href="https://github.com/reworkcss/rework">Rework</a>
  ou <a href="https://github.com/ai/postcss">PostCSS</a> qui permettent d’inspecter et de manipuler nos CSS.
-Tout deux sont des bibliothèques écritent en JavaScript (NodeJs).</p>
+Tout deux sont des bibliothèques écrites en JavaScript (NodeJs).</p>
 <p>Pour la petite histoire, Autoprefixer est à l’origine de PostCSS. En effet les
 premières versions utilisaient Rework, mais à cause de limitation dues à l’API de Rework,
-l’auteur d’Autoprefixer à décider de créer son propre moteur, qui a une API presque
+l’auteur d’Autoprefixer a décidé de créer son propre moteur, qui a une API presque
 plus sympa il faut le dire (il faudra voir comment évolue Rework).</p>
 <p>D’un autre côté Rework étant plus ancien, il possède un écosystème plus fourni et répondra
 donc mieux à nos besoins.</p>
@@ -142,7 +142,7 @@ Peut taper dans votre dossier de sources ou en plus dans <code>node_modules</cod
 <a href="/posts/frontend/npm-comme-package-manager-pour-le-front-end/">via npm</a> par exemple).
 Il existe aussi <a href="https://github.com/simme/rework-importer">rework-importer</a> qui amène quelques différences de syntaxe.</p>
 <h5 id="rework-rem-fallback"><a class="putainde-Title-anchor" href="#rework-rem-fallback">#</a><a href="https://github.com/ctalkington/rework-rem-fallback">rework-rem-fallback</a></h5><p><a href="https://github.com/ctalkington/rework-rem-fallback">rework-rem-fallback</a>
-ajout un fallback sur les unités REM. Pratique si vous voulez utiliser REM mais
+ajoute un fallback sur les unités REM. Pratique si vous voulez utiliser REM mais
 que vous devez supporter IE 8.</p>
 <h5 id="rework-color-function"><a class="putainde-Title-anchor" href="#rework-color-function">#</a>rework-color-function</h5><p><a href="https://github.com/ianstormtaylor/rework-color-function">rework-color-function</a> permet
 de manipuler les couleurs via
@@ -159,20 +159,20 @@ qui peuvent ajouter un peu de beurre dans les épinards :</p>
 <h5 id="rework-namespace-css"><a class="putainde-Title-anchor" href="#rework-namespace-css">#</a>rework-namespace-css</h5><p><a href="https://github.com/geordiemhall/rework-namespace-css">rework-namespace-css</a> permet de namespacer vos CSS par une classe sur <code>&lt;html&gt;</code>.</p>
 <h5 id="rework-namespace"><a class="putainde-Title-anchor" href="#rework-namespace">#</a>rework-namespace</h5><p><a href="https://github.com/kristoferjoseph/rework-namespace">rework-namespace</a> permet de namespacer vos CSS par un préfixe. Pratique avec <a href="/posts/css/petite-definition-bem/">BEM</a> lorsque vous préfixez par votre <code>.org-</code>.</p>
 <h5 id="rework-classmap"><a class="putainde-Title-anchor" href="#rework-classmap">#</a>rework-classmap</h5><p><a href="https://github.com/andreypopp/rework-classmap">rework-classmap</a> permet de renommer des classes via du mapping. Avec ça on pourrait presque avoir un code Bootstrap propre.</p>
-<h5 id="rework-palette"><a class="putainde-Title-anchor" href="#rework-palette">#</a>rework-palette</h5><p><a href="https://github.com/fgnass/rework-palette">rework-palette</a> permet d’ajouter une palette de couleur personnalisé (via des noms de couleurs).</p>
-<h5 id="rework-deduplicate"><a class="putainde-Title-anchor" href="#rework-deduplicate">#</a>rework-deduplicate</h5><p><a href="https://github.com/kristoferjoseph/rework-deduplicate">rework-deduplicate</a> permet de supprimer les règles dupliqués.</p>
-<h5 id="rework-split-media"><a class="putainde-Title-anchor" href="#rework-split-media">#</a>rework-split-media</h5><p><a href="https://github.com/reworkcss/split-media">rework-split-media</a> permet de couper les contenu des media queries dans d’autres fichiers</p>
-<h5 id="rework-move-media"><a class="putainde-Title-anchor" href="#rework-move-media">#</a>rework-move-media</h5><p><a href="https://github.com/reworkcss/rework-move-media">rework-move-media</a> permet de regrouper les contenu des media queries. Pas très utile car gzip fera aussi bien.</p>
-<h4 id="au-dela-du-preprocessing"><a class="putainde-Title-anchor" href="#au-dela-du-preprocessing">#</a>Au delà du préprocessing</h4><p>En utilisant le parser Rework, on peut faire plus que des ajustements ou du remplacement. On peut balancer des erreurs.</p>
+<h5 id="rework-palette"><a class="putainde-Title-anchor" href="#rework-palette">#</a>rework-palette</h5><p><a href="https://github.com/fgnass/rework-palette">rework-palette</a> permet d’ajouter une palette de couleur personnalisée (via des noms de couleurs).</p>
+<h5 id="rework-deduplicate"><a class="putainde-Title-anchor" href="#rework-deduplicate">#</a>rework-deduplicate</h5><p><a href="https://github.com/kristoferjoseph/rework-deduplicate">rework-deduplicate</a> permet de supprimer les règles dupliquées.</p>
+<h5 id="rework-split-media"><a class="putainde-Title-anchor" href="#rework-split-media">#</a>rework-split-media</h5><p><a href="https://github.com/reworkcss/split-media">rework-split-media</a> permet de couper les contenus des media queries dans d’autres fichiers.</p>
+<h5 id="rework-move-media"><a class="putainde-Title-anchor" href="#rework-move-media">#</a>rework-move-media</h5><p><a href="https://github.com/reworkcss/rework-move-media">rework-move-media</a> permet de regrouper les contenus des media queries. Pas très utile car gzip fera aussi bien.</p>
+<h4 id="au-dela-du-preprocessing"><a class="putainde-Title-anchor" href="#au-dela-du-preprocessing">#</a>Au delà du préprocessing</h4><p>En utilisant le parser Rework, on peut faire plus que des ajustements ou du remplacement: on peut balancer des erreurs.</p>
 <ul>
 <li><a href="https://github.com/reworkcss/rework-ie-limits">rework-ie-limits</a>: prévient si vos CSS dépassent la limite de 4095 selectors (limite pour IE &lt; 10).</li>
 <li><a href="https://github.com/suitcss/rework-suit-conformance">rework-suit-conformance</a>: permet de vérifier que votre code suit bien les <a href="https://github.com/suitcss/suit/tree/master/doc">conventions SUIT</a> (pour peu que vous les suiviez).</li>
 </ul>
 <p>En partant dans d’autres directions on pourrait réaliser des statistiques sur
-nos CSS (nombre de sélecteurs, de couleurs utilisés etc) comme le fait <a href="http://www.cssstats.com/">CSS Stats</a>.</p>
+nos CSS (nombre de sélecteurs, de couleurs utilisées etc) comme le fait <a href="http://www.cssstats.com/">CSS Stats</a>.</p>
 <p>Retrouvrez en plus de la recherche via npm (qui sera la plus à jour), <a href="https://github.com/reworkcss/rework/wiki/Plugins-and-Utilities">une liste des plugins et utilitaires sur le wiki de Rework</a>.</p>
 <h2 id="mise-en-place-de-rework-pour-faire-votre-preprocesseur-en-moins-de-5-min"><a class="putainde-Title-anchor" href="#mise-en-place-de-rework-pour-faire-votre-preprocesseur-en-moins-de-5-min">#</a>Mise en place de Rework pour faire votre préprocesseur en moins de 5 min</h2><p>Maintenant que nous avons vu comment utiliser Rework et quels sont les plugins
-les plus sympa, on se faire un petit fichier pour automatiser tout ce process.</p>
+les plus sympas, on se faire un petit fichier pour automatiser tout ce process.</p>
 <p>Plutôt que de réinventer la roue comme l’a fait <a href="http://pleeease.io/">Pleeease</a> (en gérant un watcher et tout le tralala),
 on va plutôt partir comme <a href="http://myth.io/">Myth.io</a> ou <a href="https://github.com/visionmedia/styl">Styl</a> (successeur spirituel de Stylus)
 qui se concentrent sur le rendu et non le workflow pour générer ce rendu.</p>
@@ -208,8 +208,8 @@ $ <span class="hljs-built_in">mkdir</span> src &amp;&amp; <span class="hljs-buil
 <span class="hljs-keyword">var</span> autoprefixer = <span class="hljs-keyword">require</span>(<span class="hljs-string">"gulp-autoprefixer"</span>)
 
 gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  <span class="hljs-comment">// ici on prends toutes les CSS à la racine</span>
-  <span class="hljs-comment">// on considère que celle dans des sous dossiers sont à importer</span>
+  <span class="hljs-comment">// ici on prend toutes les CSS à la racine</span>
+  <span class="hljs-comment">// on considère que celles dans des sous dossiers sont à importer</span>
   <span class="hljs-keyword">return</span> gulp.src(<span class="hljs-string">"./src/styles/*.css"</span>)
     .pipe(opts.production ? plumber() : util.noop())
     .pipe(rework(
@@ -219,7 +219,7 @@ gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"
       rework.ease(),
       rework.inline,
       reworkPlugins.<span class="hljs-keyword">parent</span>,
-      reworkPlugins.vars(), <span class="hljs-comment">// notez que certains plugins nécessite d'être éxecuté (retourant une fonction dynamique)</span>
+      reworkPlugins.vars(), <span class="hljs-comment">// notez que certains plugins nécessitent d'être éxecutés (retournant une fonction dynamique)</span>
       reworkPlugins.calc,
       reworkPlugins.colorFn,
       reworkPlugins.remFallback(),
@@ -233,9 +233,9 @@ gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string"
   gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, [<span class="hljs-string">"styles"</span>])
 })
 </code></pre>
-<p>Ensuite il reste plus qu’à lancer Gulp au besoin qui s’occupera d’éxecuter le preprocessing
+<p>Ensuite il ne reste plus qu’à lancer Gulp au besoin qui s’occupera d’éxecuter le preprocessing
 au démarrage et lors des changements de fichiers.
-Il ne reste plus grand chose à faire si ce n’est ajouter livereload en plus pour avoir le petit process au petit oignon.</p>
+Il ne reste plus grand chose à faire si ce n’est ajouter livereload en plus pour avoir le petit process aux petits oignons.</p>
 <pre><code class="lang-bash">$ gulp
 [gulp] Using gulpfile ~/Development/monrework/Gulpfile.js
 [gulp] Starting <span class="hljs-string">'styles'</span><span class="hljs-keyword">...</span>
