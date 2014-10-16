@@ -1,15 +1,416 @@
-/** @define Grid; use strict */
+/* base */
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+html {
+  font-family: sans-serif; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+/**
+ * Remove default margin.
+ */
+body {
+  margin: 0;
+}
+/* HTML5 display definitions
+   ========================================================================== */
+/**
+ * Correct `block` display not defined for any HTML5 element in IE 8/9.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11
+ * and Firefox.
+ * Correct `block` display not defined for `main` in IE 11.
+ */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+/**
+ * 1. Correct `inline-block` display not defined in IE 8/9.
+ * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+ */
+audio,
+canvas,
+progress,
+video {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+/**
+ * Address `[hidden]` styling not present in IE 8/9/10.
+ * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.
+ */
+[hidden],
+template {
+  display: none;
+}
+/* Links
+   ========================================================================== */
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+a {
+  background-color: transparent;
+}
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+a:active,
+a:hover {
+  outline: 0;
+}
+/* Text-level semantics
+   ========================================================================== */
+/**
+ * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
+ */
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
+ */
+b,
+strong {
+  font-weight: bold;
+}
+/**
+ * Address styling not present in Safari and Chrome.
+ */
+dfn {
+  font-style: italic;
+}
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari, and Chrome.
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+/**
+ * Address styling not present in IE 8/9.
+ */
+mark {
+  background: #ff0;
+  color: #000;
+}
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+small {
+  font-size: 80%;
+}
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+/* Embedded content
+   ========================================================================== */
+/**
+ * Remove border when inside `a` element in IE 8/9/10.
+ */
+img {
+  border: 0;
+}
+/**
+ * Correct overflow not hidden in IE 9/10/11.
+ */
+svg:not(:root) {
+  overflow: hidden;
+}
+/* Grouping content
+   ========================================================================== */
+/**
+ * Address margin not present in IE 8/9 and Safari.
+ */
+figure {
+  margin: 1em 40px;
+}
+/**
+ * Address differences between Firefox and other browsers.
+ */
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+/**
+ * Contain overflow in all browsers.
+ */
+pre {
+  overflow: auto;
+}
+/**
+ * Address odd `em`-unit font size rendering in all browsers.
+ */
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+/* Forms
+   ========================================================================== */
+/**
+ * Known limitation: by default, Chrome and Safari on OS X allow very limited
+ * styling of `select`, unless a `border` property is set.
+ */
+/**
+ * 1. Correct color not being inherited.
+ *    Known issue: affects color of disabled elements.
+ * 2. Correct font properties not being inherited.
+ * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+ */
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit; /* 1 */
+  font: inherit; /* 2 */
+  margin: 0; /* 3 */
+}
+/**
+ * Address `overflow` set to `hidden` in IE 8/9/10/11.
+ */
+button {
+  overflow: visible;
+}
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+ * Correct `select` style inheritance in Firefox.
+ */
+button,
+select {
+  text-transform: none;
+}
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+button,
+html input[type="button"], /* 1 */
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button; /* 2 */
+  cursor: pointer; /* 3 */
+}
+/**
+ * Re-set default cursor for disabled elements.
+ */
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+input {
+  line-height: normal;
+}
+/**
+ * It's recommended that you don't attempt to style these elements.
+ * Firefox's implementation doesn't respect box-sizing, padding, or width.
+ *
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  -moz-box-sizing: border-box;
+       box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+/**
+ * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+ * `font-size` values of the `input`, it causes the cursor style of the
+ * decrement button to change from `default` to `text`.
+ */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari and Chrome
+ *    (include `-moz` to future-proof).
+ */
+input[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  -moz-box-sizing: content-box; /* 2 */
+  box-sizing: content-box;
+}
+/**
+ * Remove inner padding and search cancel button in Safari and Chrome on OS X.
+ * Safari (but not Chrome) clips the cancel button when the search input has
+ * padding (and `textfield` appearance).
+ */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+/**
+ * Define consistent border, margin, and padding.
+ */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+/**
+ * 1. Correct `color` not being inherited in IE 8/9/10/11.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+legend {
+  border: 0; /* 1 */
+  padding: 0; /* 2 */
+}
+/**
+ * Remove default vertical scrollbar in IE 8/9/10/11.
+ */
+textarea {
+  overflow: auto;
+}
+/**
+ * Don't inherit the `font-weight` (applied by a rule above).
+ * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+ */
+optgroup {
+  font-weight: bold;
+}
+/* Tables
+   ========================================================================== */
+/**
+ * Remove most spacing between table cells.
+ */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td,
+th {
+  padding: 0;
+}
+/*
+ * Using html & * inherit make it simpler default behavior on a standalone part
+ */
+html {
+  /*
+   * box model like it should be
+   *
+   * http://www.paulirish.com/2012/box-sizing-border-box-ftw/
+   */
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
 
+  /*
+   * tables borders like they should be
+   * applied to * to also works for display: table;
+   */
+  border-collapse: collapse;
+}
+/*
+ * Why inherit ?
+ * If you have a component and his children not using border-box for example:
+ *
+ * Without inherit you might need
+ * .Component, .Component * { box-sizing: content-box }
+ *
+ * With inherit you can just write
+ * .Component { box-sizing: content-box }
+ *
+ * http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+ */
+*,
+*:before,
+*:after {
+  -moz-box-sizing: inherit;
+       box-sizing: inherit;
+}
+* { border-collapse: inherit; }
+/*
+ * Repeating the background mostly makes sense in the <body>. Otherwise, people
+ * usually want the image and preferably its center (not the top-right corner)
+ */
+*:not(body) {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: cover;
+}
+/*
+ * Makes the hidden attribute works even when an element is styled display: flex
+ * http://lists.whatwg.org/pipermail/whatwg-whatwg.org/2014-May/254198.html
+ */
+[hidden] { display: none !important; }
+/*
+ * kill document defaults margin & padding. We all do that all the times, right ?
+ */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* grid */
+/** @define Grid; use strict */
 /**
  * Core grid component
  *
  * DO NOT apply dimension or offset utilities to the `Grid` element. All cell
  * widths and offsets should be applied to child grid cells.
  */
-
 /* Grid container
    ========================================================================== */
-
 /**
  * All content must be contained within child `Grid-cell` elements.
  *
@@ -19,7 +420,6 @@
  *    elements.
  * 3. Ensure consistent default alignment.
  */
-
 .Grid {
   display: block; /* 1 */
   font-size: 0; /* 2 */
@@ -27,39 +427,30 @@
   padding: 0; /* 1 */
   text-align: left; /* 3 */
 }
-
 /**
  * Modifier: center align all grid cells
  */
-
 .Grid--alignCenter {
   text-align: center;
 }
-
 /**
  * Modifier: right align all grid cells
  */
-
 .Grid--alignRight {
   text-align: right;
 }
-
 /**
  * Modifier: middle-align grid cells
  */
-
 .Grid--alignMiddle > .Grid-cell {
   vertical-align: middle;
 }
-
 /**
  * Modifier: bottom-align grid cells
  */
-
 .Grid--alignBottom > .Grid-cell {
   vertical-align: bottom;
 }
-
 /**
  * Modifier: gutters
  *
@@ -67,18 +458,14 @@
  * the viewport. Use padding on a container, or `overflow-x:hidden` to protect
  * against it.
  */
-
 .Grid--withGutter {
   margin: 0 -0.78125rem;
 }
-
 .Grid--withGutter > .Grid-cell {
   padding: 0 0.78125rem;
 }
-
 /* Grid cell
    ========================================================================== */
-
 /**
  * No explicit width by default. Rely on combining `Grid-cell` with a dimension
  * utility or a component class that extends 'grid'.
@@ -89,7 +476,6 @@
  * 4. Controls vertical positioning of units.
  * 5. Make cells full-width by default.
  */
-
 .Grid-cell {
   -moz-box-sizing: border-box;
        box-sizing: border-box;
@@ -101,13 +487,11 @@
   vertical-align: top; /* 4 */
   width: 100%; /* 5 */
 }
-
 /**
  * Modifier: horizontally center one unit
  * Set a specific unit to be horizontally centered. Doesn't affect
  * any other units. Can still contain a child `Grid` object.
  */
-
 .Grid-cell--center {
   display: block;
   margin: 0 auto;
@@ -252,6 +636,220 @@
 .u-size11of12 {
   width: 91.66667% !important;
 }
+
+/**
+ * Vertical rhythm
+ *
+ * http://www.smashingmagazine.com/2012/12/17/css-baseline-the-good-the-bad-and-the-ugly/
+ * https://medium.com/typography/e258fce47a9b
+ * http://csswizardry.com/2012/06/single-direction-margin-declarations/
+ *
+ * What is font-size, line-height & cap-height ?
+ * https://d262ilb51hltx0.cloudfront.net/max/800/1*g7Lpl9hrmuSHxOCqMG9Tjg.png
+ *
+ *
+ * The_Mathematics_of_Music_and_Harmonics.pdf
+ n 2n/12
+ 0 1.000
+ 1 1.059
+ 2 1.122
+ 3 Minor Third 1.189 (1.200)
+ 4 Major Third 1.260 (1.250)
+ 5 Perfect Fourth 1.335 (1.333)
+ 6 1.414
+ 7 Perfect Fifth 1.498 (1.500)
+ 8 1.587
+ 9 1.682
+ 10 1.782
+ 11 1.888
+ 12 2.000
+ *
+ */
+
+/* choose your ratio, then import this file */
+
+/*eg: @import "./cssrecipes-vertical-rhthym/lib/ratio/minor-third.css";*/
+
+:root {
+  /* possible override */
+  /*--fontSizeRatio: 1;*/
+  /*--lineHeight: calc(--fontSize * 1.5);*/
+
+  /* recommanded override (depend on your font) */
+  /*--capHeight: X; */
+}
+
+.rcp-VerticalRhythm {
+  font-size: 1rem;
+  line-height: 1.5625rem;
+}
+
+.rcp-VerticalRhythm h1,
+.rcp-VerticalRhythm .h1,
+.rcp-VerticalRhythm h2,
+.rcp-VerticalRhythm .h2,
+.rcp-VerticalRhythm h3,
+.rcp-VerticalRhythm .h3,
+.rcp-VerticalRhythm h4,
+.rcp-VerticalRhythm .h4,
+.rcp-VerticalRhythm h5,
+.rcp-VerticalRhythm .h5,
+.rcp-VerticalRhythm h6,
+.rcp-VerticalRhythm .h6 {
+  margin: 0;
+  padding: 0;
+}
+
+/**
+ * Heading 1
+ *
+ * <h1>Heading 1</h1>
+ * <div class="h1">Heading 1</div>
+ */
+
+.rcp-VerticalRhythm h1,
+.rcp-VerticalRhythm .h1 {
+  font-size: 2.0736rem;
+  line-height: 3.125rem;
+  padding-top: 0.40625rem;
+  margin-bottom: 1.15625rem;
+}
+
+/**
+ * Heading 2
+ *
+ * <h2>Heading 2</h2>
+ * <div class="h2">Heading 2</div>
+ */
+
+.rcp-VerticalRhythm h2,
+.rcp-VerticalRhythm .h2 {
+  font-size: 1.728rem;
+  line-height: 1.5625rem;
+  padding-top: 0.40625rem;
+  margin-bottom: 1.15625rem;
+}
+
+/**
+ * Heading 3
+ *
+ * <h3>Heading 3</h3>
+ * <div class="h3">Heading 3</div>
+ */
+
+.rcp-VerticalRhythm h3,
+.rcp-VerticalRhythm .h3 {
+  font-size: 1.44rem;
+  line-height: 1.5625rem;
+  padding-top: 0.40625rem;
+  margin-bottom: 1.15625rem;
+}
+
+/**
+ * Heading 4
+ *
+ * <h4>Heading 4</h4>
+ * <div class="h4">Heading 4</div>
+ */
+
+.rcp-VerticalRhythm h4,
+.rcp-VerticalRhythm .h4 {
+  font-size: 1.2rem;
+  line-height: 1.5625rem;
+  padding-top: 0.40625rem;
+  margin-bottom: 1.15625rem;
+}
+
+/**
+ * Heading 5
+ *
+ * <h5>Heading 5</h5>
+ * <div class="h5">Heading 5</div>
+ */
+
+.rcp-VerticalRhythm h5,
+.rcp-VerticalRhythm .h5 {
+  font-size: 1rem;
+  line-height: 1.5625rem;
+  padding-top: 0.40625rem;
+  margin-bottom: 1.15625rem;
+}
+
+/**
+ * Heading 6
+ *
+ * <h6>Heading 6</h6>
+ * <div class="h6">Heading 6</div>
+ */
+
+.rcp-VerticalRhythm h6,
+.rcp-VerticalRhythm .h6 {
+  font-size: 0.8333333333333334rem;
+  line-height: 1.5625rem;
+  padding-top: 0.40625rem;
+  margin-bottom: 1.15625rem;
+}
+
+/* since h5 & h6 always small, it's interesting to have a difference with classic text */
+
+.rcp-VerticalRhythm h5,
+.rcp-VerticalRhythm .h5
+.rcp-VerticalRhythm h6,
+.rcp-VerticalRhythm .h6 { text-decoration: underline }
+
+/**
+ * Small
+ *
+ * <small>small</small>
+ * <small><small>smaller</small></small>
+ */
+
+.rcp-VerticalRhythm small { font-size: 0.8333333333333334em}
+
+/* misc, really */
+
+.rcp-VerticalRhythm ul,
+.rcp-VerticalRhythm ol,
+.rcp-VerticalRhythm dl,
+.rcp-VerticalRhythm p,
+.rcp-VerticalRhythm figure,
+.rcp-VerticalRhythm pre,
+.rcp-VerticalRhythm table,
+.rcp-VerticalRhythm fieldset,
+.rcp-VerticalRhythm hr {
+  margin: 0 0 1.5625rem;
+}
+
+/* vertical rhythm helper */
+
+.rcp-VerticalRhythm-helper {
+  position: relative;
+  overflow: auto;
+}
+
+.rcp-VerticalRhythm-helper:after {
+  content: "";
+  z-index: 100000; /* should be enough right ?*/
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background:
+    -webkit-linear-gradient(top, rgba(0, 0, 0, .25) 1px, transparent 1px) 0 0 / 100% 1.5625rem, -webkit-linear-gradient(top, rgba(0, 0, 0, 0.16749999999999998), transparent 1px) 0 0.78125rem / 100% 1.5625rem, -webkit-linear-gradient(top, rgba(0, 0, 0, 0.08499999999999999), transparent 1px) 0 0.390625rem / 100% 1.5625rem, -webkit-linear-gradient(top, rgba(0, 0, 0, 0.08499999999999999), transparent 1px) 0 1.171875rem / 100% 1.5625rem;
+
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, .25) 1px, transparent 1px) 0 0 / 100% 1.5625rem,
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.16749999999999998), transparent 1px) 0 0.78125rem / 100% 1.5625rem,
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.08499999999999999), transparent 1px) 0 0.390625rem / 100% 1.5625rem,
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.08499999999999999), transparent 1px) 0 1.171875rem / 100% 1.5625rem;
+}
+:root { /* minor third ratio */ /* depend on fontSize*/ /* depend on fontSize*/ /* depend on fontSize*/ /* depend on fontSize*/ /* depend on fontSize*/ /* depend on fontSize*/
+
+  /* not rem so you can use .small in .small */
+}
+
 /**
  * @name rcp-Tooltip
  * @description Tooltip based on an html attribute (data-rcp-tooltip)
@@ -268,12 +866,14 @@
  * <div class="rcp-Tooltip rcp-Tooltip--top rcp-Tooltip--visible" data-rcp-tooltip="Lot's of content in the tooltip (auto wrap)">auto wrap</div>
  * <div class="rcp-Tooltip rcp-Tooltip--top rcp-Tooltip--nowrap rcp-Tooltip--visible" data-rcp-tooltip="Lot's of content in the tooltip (nowrap)">nowrap</div>
  */
+
 .rcp-Tooltip {
   position: relative;
   display: inline-block;
   -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
 }
+
 .rcp-Tooltip::before,
 .rcp-Tooltip::after {
   z-index: 1000;
@@ -284,6 +884,7 @@
   -webkit-transition: .3s ease;
           transition: .3s ease;
 }
+
 .rcp-Tooltip--visible::before,
   .rcp-Tooltip--visible::after,
   .rcp-Tooltip:hover::before,
@@ -293,7 +894,9 @@
     visibility: visible;
     opacity: 1;
   }
+
 /* tooltip content */
+
 .rcp-Tooltip::before {
     content: attr(data-rcp-tooltip);
 
@@ -309,10 +912,13 @@
 
     border-radius: 2px;
   }
+
 .rcp-Tooltip--nowrap::before {
       white-space: nowrap;
     }
+
 /* tooltip arrow */
+
 .rcp-Tooltip::after {
     content: "";
     z-index: 1001;
@@ -320,12 +926,15 @@
     border: .375rem solid transparent;
     background: transparent;
   }
+
 /**
    * Positions
    */
+
 /**
      * Top
      */
+
 .rcp-Tooltip--top::before,
     .rcp-Tooltip--top::after {
       bottom: 100%;
@@ -334,24 +943,30 @@
           -ms-transform: translateX(-50%);
               transform: translateX(-50%);
     }
+
 .rcp-Tooltip--top::before {}
+
 .rcp-Tooltip--visible.rcp-Tooltip--top::before,
       .rcp-Tooltip--top:hover::before,
       .rcp-Tooltip--top:focus::before {
         margin-bottom: 0.875rem;
       }
+
 .rcp-Tooltip--top::after {
       margin-bottom: -0.75rem;
       border-top-color: #383838;
     }
+
 .rcp-Tooltip--visible.rcp-Tooltip--top::after,
       .rcp-Tooltip--top:hover::after,
       .rcp-Tooltip--top:focus::after {
         margin-bottom: 0.125rem;
       }
+
 /**
      * Bottom
      */
+
 .rcp-Tooltip--bottom::before,
     .rcp-Tooltip--bottom::after {
       top: 100%;
@@ -360,24 +975,30 @@
           -ms-transform: translateX(-50%);
               transform: translateX(-50%);
     }
+
 .rcp-Tooltip--bottom::before {}
+
 .rcp-Tooltip--visible.rcp-Tooltip--bottom::before,
       .rcp-Tooltip--bottom:hover::before,
       .rcp-Tooltip--bottom:focus::before {
         margin-top: 0.875rem;
       }
+
 .rcp-Tooltip--bottom::after {
       margin-top: -0.75rem;
       border-bottom-color: #383838;
     }
+
 .rcp-Tooltip--visible.rcp-Tooltip--bottom::after,
       .rcp-Tooltip--bottom:hover::after,
       .rcp-Tooltip--bottom:focus::after {
         margin-top: 0.125rem
       }
+
 /**
      * Left
      */
+
 .rcp-Tooltip--left::before,
     .rcp-Tooltip--left::after {
       right: 100%;
@@ -386,24 +1007,30 @@
           -ms-transform: translateY(-50%);
               transform: translateY(-50%);
     }
+
 .rcp-Tooltip--left::before {}
+
 .rcp-Tooltip--visible.rcp-Tooltip--left::before,
       .rcp-Tooltip--left:hover::before,
       .rcp-Tooltip--left:focus::before {
         margin-right: 0.875rem;
       }
+
 .rcp-Tooltip--left::after {
       margin-right: -0.75rem;
       border-left-color: #383838;
     }
+
 .rcp-Tooltip--visible.rcp-Tooltip--left::after,
       .rcp-Tooltip--left:hover::after,
       .rcp-Tooltip--left:focus::after {
         margin-right: 0.125rem
       }
+
 /**
      * Right
      */
+
 .rcp-Tooltip--right::before,
     .rcp-Tooltip--right::after {
       left: 100%;
@@ -412,16 +1039,20 @@
           -ms-transform: translateY(-50%);
               transform: translateY(-50%);
     }
+
 .rcp-Tooltip--right::before {}
+
 .rcp-Tooltip--visible.rcp-Tooltip--right::before,
       .rcp-Tooltip--right:hover::before,
       .rcp-Tooltip--right:focus::before {
         margin-left: 0.875rem;
       }
+
 .rcp-Tooltip--right::after {
       margin-left: -0.75rem;
       border-right-color: #383838;
     }
+
 .rcp-Tooltip--visible.rcp-Tooltip--right::after,
       .rcp-Tooltip--right:hover::after,
       .rcp-Tooltip--right:focus::after {
@@ -440,84 +1071,6 @@ h5 {
   font-family: Avenir, "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 400;
 }
-
-/**
- * Vertical rhythm
- *
- * http://type-scale.com/?size=20&scale=1.200&text=A%20Visual%20Type%20Scale&webfont=&font-family=sans-serif&font-weight=400&font-family-headers=&font-weight-headers=inherit&background-color=white&font-color=#333
- */
-
-/*old css var spec syntax (waiting for SUIT to upgrade to --)*/
-
-:root { /* not rem so you can use .small in .small */
-}
-
-body {
-  font-size: 1rem;
-  line-height: 1.5625rem;
-}
-
-p, ul {
-  margin: 1.5625rem 0;
-}
-
-/*h1,h2,h3,h4,h5,h6,hgroup,
-ul,ol,dd,
-p,figure,
-pre,table,fieldset,hr*/
-
-h1,
-h2,
-h3,
-h4 {
-  margin: 0 0 1.5625rem;
-}
-
-h1,
-h2 {
-  line-height: 3.125rem;
-}
-
-h3,
-h4 {
-  padding-top: 0.625rem;
-  padding-bottom: 0.9375rem;
-  line-height: 1.5625rem;
-}
-
-/* scale: 1.200 (minor third) */
-
-h1 {
-  font-size: 2.074rem;
-}
-
-h2 {
-  font-size: 1.728rem;
-}
-
-h3 {
-  font-size: 1.44rem;
-}
-
-h4 {
-  font-size: 1.2rem;
-}
-
-h5 {
-  font-size: 1rem;
-  text-decoration: underline;
-}
-
-h6 {
-  font-size: 0.833em;
-  text-decoration: underline;
-}
-
-small {
-  font-size: 0.833em;
-}
-
-/* ... and now just use var(--line-height) when you need some vertical spacing ! */
 ::-moz-selection {
   background: #444;
   color: #fff;
@@ -536,15 +1089,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-img {
-  border: 0;
-}
 .Grid {
   max-width: 60rem;
   margin-left: auto;
   margin-right: auto;
 }
-@media (max-width:54em) {
+@media (max-width: 54em) {
   .Grid {
     width: auto;
   }
@@ -691,7 +1241,7 @@ img {
   }
 @media (max-width:54em) {
     .putainde-SiteTitle {
-    font-size: 0.833em;
+    font-size: 0.8333333333333334em;
     }
   }
 .putainde-SiteTitle span {
@@ -732,7 +1282,7 @@ img {
   display: inline-block;
   vertical-align: middle;
   position: relative;
-  font-size: 0.833em;
+  font-size: 0.8333333333333334em;
   font-weight: 700;
   text-align: center;
   color: #fff;
@@ -809,7 +1359,7 @@ img {
   width: 3.125rem;
 }
 .putainde-Message {
-  font-size: 2.074rem;
+  font-size: 2.0736rem;
   line-height: 10rem;
   color: #ccc;
   text-align: center;
@@ -832,8 +1382,7 @@ img {
 }
 .putainde-Tags {
   list-style-type: none;
-  margin: 0;
-  padding: 0 0 1.5625rem;
+  padding: 0;
 }
 .putainde-Tag {
   display: inline-block;
@@ -841,14 +1390,14 @@ img {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
   padding: 0 1em;
   margin-right: .2rem;
-  font-size: 0.833em;
+  font-size: 0.8333333333333334em;
   line-height: 1.6;
   border-radius: 1em;
 }
 .putainde-List-author {
   position: absolute;
   color: #888;
-  font-size: 0.833em;
+  font-size: 0.8333333333333334em;
   line-height: 1rem;
   bottom: 1.2rem;
   right: 0;
@@ -867,15 +1416,19 @@ img {
     color: #666;
   }
 .putainde-List-author time {
-    font-size: 0.833em;
+    font-size: 0.8333333333333334em;
   }
 .putainde-Post {
   text-align: center;
   padding: 0 1.5625rem;
 }
 .putainde-Title {
-  color: #222;
   z-index: 3;
+
+  margin: 0.78125rem 0;
+  overflow: auto;
+
+  color: #222;
   background: #fff;
   background: -webkit-linear-gradient(top, #fff 60%, rgba(255, 255, 255, 0));
   background: linear-gradient(to bottom, #fff 60%, rgba(255, 255, 255, 0));
@@ -888,7 +1441,7 @@ img {
 }
 .putainde-Post-metas  {
   display: inline-block;
-  font-size: 0.833em;
+  font-size: 0.8333333333333334em;
   color: #999;
 }
 .putainde-Post-readingTime {
@@ -949,7 +1502,7 @@ img {
     border: 1px solid #ddd;
     margin: -1px 0;
     padding: .25em;
-    font-size: 0.833em;
+    font-size: 0.8333333333333334em;
     font-weight: 400;
     background: #fafafa;
     border-radius: .25em;
@@ -962,7 +1515,7 @@ img {
     margin: 1.5625rem 0;
     padding: 0.78125rem;
     line-height: 1.171875rem;
-    font-size: 0.833em;
+    font-size: 0.8333333333333334em;
     color: #444;
     font-weight: 400;
     border: 1px solid #ddd;
@@ -1098,7 +1651,7 @@ img {
 }
 .putainde-Post-footer-title,
 .putainde-Post-footer-action {
-  font-size: 0.833em;
+  font-size: 0.8333333333333334em;
 }
 @media (min-width: 54em) {
   .putainde-Post-footer .u-size1of3 + .u-size1of3  {
@@ -1178,7 +1731,7 @@ img {
 .putainde-Author-social a:hover,
       .putainde-Author-social a:focus { background: #eee }
 .putainde-Author-description {
-    font-size: 0.833em;
+    font-size: 0.8333333333333334em;
     color: #444;
   }
 .putainde-Author-bio {
@@ -1190,7 +1743,7 @@ img {
   line-height: 3.125rem;
 }
 .putainde-Contributors-label {
-  font-size: 0.833em;
+  font-size: 0.8333333333333334em;
   display: inline-block;
 }
 .putainde-Contributor {
@@ -1333,7 +1886,7 @@ body {
   border-bottom: 0.8em solid #c33;
 }
 .putainde-Footer > .Grid {
-    padding: 1.5625rem 0;
+    padding: 1.5625rem 0 0;
     border-top: 1px solid #ddd;
     margin-top: -1px;
   }
@@ -1359,7 +1912,7 @@ body {
   margin: 0;
 }
 .putainde-Footer-text--small {
-  font-size: 0.833em;
+  font-size: 0.8333333333333334em;
 }
 @media (min-width:54em) {
   .putainde-Footer-text--right {

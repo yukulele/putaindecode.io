@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Faire son préprocesseur CSS à la carte</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="Faire son préprocesseur CSS à la carte"/><meta name="twitter:creator" content="@MoOx"/><meta name="twitter:image" content="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png?s=200"/><meta property="og:title" content="Faire son préprocesseur CSS à la carte"/><meta property="og:type" content="article"/><meta property="og:image" content="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png?s=200"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"><link rel="alternate" href="../../../feed.xml" title="Putain de code !" type="application/atom+xml"></head><body><svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+<!DOCTYPE html><html lang="fr" class="rcp-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Faire son préprocesseur CSS à la carte</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="Faire son préprocesseur CSS à la carte"/><meta name="twitter:creator" content="@MoOx"/><meta name="twitter:image" content="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png?s=200"/><meta property="og:title" content="Faire son préprocesseur CSS à la carte"/><meta property="og:type" content="article"/><meta property="og:image" content="http://www.gravatar.com/avatar/2f6c2dcd4ba8fc44f1e7f0b2ed3d587d.png?s=200"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"><link rel="alternate" href="../../../feed.xml" title="Putain de code !" type="application/atom+xml"></head><body><svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="putainde-Icon-bookmark" viewBox="0 0 512 512">
       <title>bookmark icon</title>
       <path d="M318.275 90v283.23L256 318.16l-62.275 55.07V90h124.55m40-40h-204.55v412L256 371.557 358.275 462V50z"/>
@@ -245,19 +245,19 @@ Il ne reste plus grand chose à faire si ce n’est ajouter livereload en plus p
 </code></pre>
 <p>Le watch est lancé, on peut remplir notre fichier CSS</p>
 <pre><code class="lang-css"><span class="hljs-pseudo">:root</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">--font-size</span>:<span class="hljs-value"> <span class="hljs-number">1rem</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">--line-height</span>:<span class="hljs-value"> <span class="hljs-number">1.5rem</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">--fontSize</span>:<span class="hljs-value"> <span class="hljs-number">1rem</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">--lineHeight</span>:<span class="hljs-value"> <span class="hljs-number">1.5rem</span></span></span>;
     <span class="hljs-rule"><span class="hljs-attribute">--color-highlight</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-hexcolor">#f00</span>, .<span class="hljs-number">8</span>)</span></span>;
 <span class="hljs-rule">}</span></span>
 
 <span class="hljs-tag">html</span> <span class="hljs-rules">{
     <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
     <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> @width</span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--font-size)
+    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--fontSize)
 </span></span></span>}
 
 <span class="hljs-tag">p</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--line-height) / <span class="hljs-number">2</span>) <span class="hljs-number">0</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--lineHeight) / <span class="hljs-number">2</span>) <span class="hljs-number">0</span></span></span>;
 <span class="hljs-rule">}</span></span>
 
 <span class="hljs-tag">a</span> <span class="hljs-rules">{
