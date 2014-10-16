@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Thu, 16 Oct 2014 09:50:30 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Comment essayer de coder à peu près comme un chef (raté) sous Windows</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Thu, 16 Oct 2014 09:56:36 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Comment essayer de coder à peu près comme un chef (raté) sous Windows</title><description><![CDATA[
 <p><img src="background.jpg" alt="Keyboard"></p>
 <p>Oh oui, en voilà une belle question.</p>
 <p>Il n’est pas toujours évident d’avoir un Linux, Unix, BSD ou autre avec un petit shell bien sympa sous la main. Et parfois coder sous Windows est une nécessité voire un désir. (Ouais, je ne vous parlerai pas ici de changer de boulot si Windows vous est imposé(e) ni de vous expliquer votre déficience mentale d’apprécier cet OS pour développer, ce n’est pas le sujet).</p>
@@ -1428,59 +1428,7 @@ var results = Object.keys(data).reduce( function (memo, site) {
 <p>J’espère que vous avez apprécié ces quelques exemples d’utilisation de <code>Array#reduce</code>.
 Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article ou via les commentaires !</p>
 
-]]></description><pubDate>Tue, 13 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/array-reduce/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/array-reduce/</guid></item><item><title>npm: choisir la bonne version de ses dépendances</title><description><![CDATA[
-<p>Pas plus tard qu’hier, alors que je travaillais tranquillement, apparu soudainement un bug dans mon <em>workflow</em> de <em>build</em>. Il ne m’était plus possible avec <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> de supprimer des fichiers. Hmmm, ballot, car sans la suppression, mon <em>workflow</em> devenait tout bancal. Bien. Il me fallut remonter la rivière - comme souvent, en tant que développeur - afin de constater où était le bug. Je suis alors tombé sur <a href="https://github.com/isaacs/rimraf">rimraf</a> (bon c’était pas bien loin) qui s’était vu être mis à jour il y a à peine 12 heures, comprenant un bug.</p>
-<h2 id="contexte"><a class="putainde-Title-anchor" href="#contexte">#</a>Contexte</h2><p>Bon, vous voyez le topo ?</p>
-<pre><code>{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean"</span></span>,
-  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value"><span class="hljs-string">"~2.2.1"</span>
-  </span>}
-</span>}
-</code></pre><p><a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> qui contient en <em>dependencies</em> <a href="https://github.com/isaacs/rimraf">rimraf</a> avec une version bugguée. Oh la belle affaire. Oui car <code>~2.2.1</code> veut dire “<a href="https://github.com/isaacs/node-semver#ranges">Raisonnablement proche de 2.2.1</a>“, ce qui se traduit par télécharger la dernière version en <code>2.2.x</code>, soit la <code>2.2.7</code> (celle bugguée) lorsque je mis à jour le package <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a>.</p>
-<h2 id="le-hic"><a class="putainde-Title-anchor" href="#le-hic">#</a>Le hic</h2><p>Une question m’est venue : comment faire en sorte de figer la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> qui est une dépendance de dépendance ?</p>
-<p>Ha ! Pas évident comme ça.</p>
-<p>J’ai d’abord essayé sans trop d’espoir de télécharger <a href="https://github.com/isaacs/rimraf">rimraf</a> lui-même en <code>2.2.6</code> mais vu que chaque dépendance à ses propres dépendances et qu’elles ne se les partagent pas… c’était peine perdue.</p>
-<p>J’ai donc cherché, cherché, et je suis tombé sur <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a>: “Lock down dependency versions”. Bingo !</p>
-<h2 id="npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances"><a class="putainde-Title-anchor" href="#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>npm-shrinkwrap, la solution pour figer vos depéndances, toutes vos dépendances</h2><p><a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a> va vous permettre de définir avec précision chaque version de chaque dépendance.</p>
-<p>Pour cela, faites d’abord un <code>npm install</code> (si vous avez évidemment un <code>package.json</code>) afin d’installer vos <code>node_modules</code>. Une fois cela fait, lancez <code>npm shrinkwrap</code> qui créera le fichier <code>npm-shrinkwrap.json</code> qui comprendra toutes les définitions de chaque dépendance.</p>
-<h3 id="figer-une-dependance-de-dependance"><a class="putainde-Title-anchor" href="#figer-une-dependance-de-dependance">#</a>Figer une dépendance de dépendance</h3><p>Simple, regardez :</p>
-<pre><code>{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"my-project"</span></span>,
-  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"1.0.0"</span></span>,
-  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">grunt-contrib-clean</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.5.0"</span></span>,
-      "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean@~0.5.*"</span></span>,
-      "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-        "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"2.2.6"</span></span>,
-          "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"rimraf@~2.2.1"</span></span>,
-          "<span class="hljs-attribute">resolved</span>": <span class="hljs-value"><span class="hljs-string">"https://registry.npmjs.org/rimraf/-/rimraf-2.2.6.tgz"</span>
-        </span>}
-      </span>}
-    </span>}
-  </span>}
-</span>}
-</code></pre><p>J’ai défini la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> dans <code>dependencies.grunt-contrib-clean.dependencies.rimraf</code>.</p>
-<p>Bon, je ne connais pas tout par coeur non plus, npm-shrinkwrap vous écrira la totalité du fichier avec toutes les définitions mais j’ai volontairement tout supprimé et gardé uniquement la partie <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> car seule cette partie est à figer. Quand je dis supprimer, je parle réellement dans le fichier final, pas juste ici dans l’article.</p>
-<p>Vous aurez toute l’explication de npm-shrinkwrap sur la <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">documentation officielle [en]</a>.</p>
-<h2 id="choisir-la-bonne-strategie-de-version"><a class="putainde-Title-anchor" href="#choisir-la-bonne-strategie-de-version">#</a>Choisir la bonne stratégie de version</h2><p>Parce qu’il est important de savoir quelle version exacte nous souhaitons installer dans notre projet, il faut définir avec précisions ces versions dans <code>package.json</code>.</p>
-<p>Vous pouvez avoir <code>1.2.1</code> ou encore <code>~1.4.6</code> ou bien encore <code>^2.3.1</code>. Mais que veulent dire <code>^</code> ou <code>~</code> ?</p>
-<ul>
-<li><code>1.2.1</code> : cette version exacte</li>
-<li><code>~1.4.6</code> : raisonnablement proche de <code>1.4.6</code></li>
-<li><code>^2.3.1</code> : compatible avec <code>2.3.1</code></li>
-</ul>
-<p>Il est clair que lu comme ça, le plus intéressant est le <code>^</code> et c’est justement <a href="http://fredkschott.com/post/2014/02/npm-no-longer-defaults-to-tildes/">celui qui est choisi maintenant [en]</a> lorsque l’on fait un <code>npm install --save</code>. Cool non ?!</p>
-<p>Pour plus d’information sur la définition des versions, <a href="https://github.com/isaacs/node-semver#ranges">c’est par là</a> (Oh mon dieu, il a fait un lien avec un “cliquez ici”).</p>
-<p>Bon. C’est bon ? Vous avez tout compris ? Okay, vous pouvez passer à <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/"><strong>napa</strong></a> maintenant qui vous aidera grandement sur le téléchargement de projets n’ayant pas de <code>package.json</code>.</p>
-<p>En ce qui concerne npm, je m’arrête là, et vous propose une petite solution afin d’augmenter la vitesse de vos installations de node modules.</p>
-<h2 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h2><p>Envie d’accélérer vos installations npm ? Je vous conseille <a href="https://github.com/vvo/npm-pkgr">npm-pkgr</a>.</p>
-<p>Il hashera votre <code>package.json</code> pour savoir s’il a été modifié ou non, et en fonction de ça, il lancera <code>npm install</code> ou non. Sacré gain de temps (surtout si vous faites des <code>npm install</code> à chaque <em>deploy</em>).</p>
-<p>You are now a npm master. 👨</p>
-
-]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/npm-choisir-version/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/npm-choisir-version/</guid></item><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[
+]]></description><pubDate>Tue, 13 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/array-reduce/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/array-reduce/</guid></item><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[
 <p>(Grosse grosse blague ce titre…)</p>
 <p><a href="https://twitter.com/kewah">@kewah</a> nous a récemment parlé de <a href="/posts/frontend/npm-comme-package-manager-pour-le-front-end/"><strong>npm</strong> comme front-end packager manager</a>, je vais aller encore plus loin. Je vais vous dévoiler comment installer des projets qui n’ont pas de <code>package.json</code>. Oui, car c’est bien beau de virer Bower (oh que oui c’est beau) mais comme npm requiert constamment un <code>package.json</code>, on ne va pas pouvoir télécharger grand chose sauf si on fait des <em>PR</em> afin d’ajouter ce fichier sur les projets que l’on souhaite obtenir.</p>
 <p>C’est pourquoi je vais vous parler de <a href="https://github.com/shama/napa"><strong>napa</strong></a>.</p>
@@ -1545,7 +1493,59 @@ Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article
 <p>Note : napa et npm-shrinkwrap, c’est pas encore ça, alors n’hésitez pas à supprimer la partie “napa” avant de lancer votre génération de npm-shrinkwrap.</p>
 <p>Bon download à vous.</p>
 
-]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</guid></item><item><title>Premiers pas avec Ruby</title><description><![CDATA[
+]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</guid></item><item><title>npm: choisir la bonne version de ses dépendances</title><description><![CDATA[
+<p>Pas plus tard qu’hier, alors que je travaillais tranquillement, apparu soudainement un bug dans mon <em>workflow</em> de <em>build</em>. Il ne m’était plus possible avec <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> de supprimer des fichiers. Hmmm, ballot, car sans la suppression, mon <em>workflow</em> devenait tout bancal. Bien. Il me fallut remonter la rivière - comme souvent, en tant que développeur - afin de constater où était le bug. Je suis alors tombé sur <a href="https://github.com/isaacs/rimraf">rimraf</a> (bon c’était pas bien loin) qui s’était vu être mis à jour il y a à peine 12 heures, comprenant un bug.</p>
+<h2 id="contexte"><a class="putainde-Title-anchor" href="#contexte">#</a>Contexte</h2><p>Bon, vous voyez le topo ?</p>
+<pre><code>{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean"</span></span>,
+  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value"><span class="hljs-string">"~2.2.1"</span>
+  </span>}
+</span>}
+</code></pre><p><a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> qui contient en <em>dependencies</em> <a href="https://github.com/isaacs/rimraf">rimraf</a> avec une version bugguée. Oh la belle affaire. Oui car <code>~2.2.1</code> veut dire “<a href="https://github.com/isaacs/node-semver#ranges">Raisonnablement proche de 2.2.1</a>“, ce qui se traduit par télécharger la dernière version en <code>2.2.x</code>, soit la <code>2.2.7</code> (celle bugguée) lorsque je mis à jour le package <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a>.</p>
+<h2 id="le-hic"><a class="putainde-Title-anchor" href="#le-hic">#</a>Le hic</h2><p>Une question m’est venue : comment faire en sorte de figer la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> qui est une dépendance de dépendance ?</p>
+<p>Ha ! Pas évident comme ça.</p>
+<p>J’ai d’abord essayé sans trop d’espoir de télécharger <a href="https://github.com/isaacs/rimraf">rimraf</a> lui-même en <code>2.2.6</code> mais vu que chaque dépendance à ses propres dépendances et qu’elles ne se les partagent pas… c’était peine perdue.</p>
+<p>J’ai donc cherché, cherché, et je suis tombé sur <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a>: “Lock down dependency versions”. Bingo !</p>
+<h2 id="npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances"><a class="putainde-Title-anchor" href="#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>npm-shrinkwrap, la solution pour figer vos depéndances, toutes vos dépendances</h2><p><a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a> va vous permettre de définir avec précision chaque version de chaque dépendance.</p>
+<p>Pour cela, faites d’abord un <code>npm install</code> (si vous avez évidemment un <code>package.json</code>) afin d’installer vos <code>node_modules</code>. Une fois cela fait, lancez <code>npm shrinkwrap</code> qui créera le fichier <code>npm-shrinkwrap.json</code> qui comprendra toutes les définitions de chaque dépendance.</p>
+<h3 id="figer-une-dependance-de-dependance"><a class="putainde-Title-anchor" href="#figer-une-dependance-de-dependance">#</a>Figer une dépendance de dépendance</h3><p>Simple, regardez :</p>
+<pre><code>{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"my-project"</span></span>,
+  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"1.0.0"</span></span>,
+  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">grunt-contrib-clean</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.5.0"</span></span>,
+      "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean@~0.5.*"</span></span>,
+      "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"2.2.6"</span></span>,
+          "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"rimraf@~2.2.1"</span></span>,
+          "<span class="hljs-attribute">resolved</span>": <span class="hljs-value"><span class="hljs-string">"https://registry.npmjs.org/rimraf/-/rimraf-2.2.6.tgz"</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}
+</span>}
+</code></pre><p>J’ai défini la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> dans <code>dependencies.grunt-contrib-clean.dependencies.rimraf</code>.</p>
+<p>Bon, je ne connais pas tout par coeur non plus, npm-shrinkwrap vous écrira la totalité du fichier avec toutes les définitions mais j’ai volontairement tout supprimé et gardé uniquement la partie <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> car seule cette partie est à figer. Quand je dis supprimer, je parle réellement dans le fichier final, pas juste ici dans l’article.</p>
+<p>Vous aurez toute l’explication de npm-shrinkwrap sur la <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">documentation officielle [en]</a>.</p>
+<h2 id="choisir-la-bonne-strategie-de-version"><a class="putainde-Title-anchor" href="#choisir-la-bonne-strategie-de-version">#</a>Choisir la bonne stratégie de version</h2><p>Parce qu’il est important de savoir quelle version exacte nous souhaitons installer dans notre projet, il faut définir avec précisions ces versions dans <code>package.json</code>.</p>
+<p>Vous pouvez avoir <code>1.2.1</code> ou encore <code>~1.4.6</code> ou bien encore <code>^2.3.1</code>. Mais que veulent dire <code>^</code> ou <code>~</code> ?</p>
+<ul>
+<li><code>1.2.1</code> : cette version exacte</li>
+<li><code>~1.4.6</code> : raisonnablement proche de <code>1.4.6</code></li>
+<li><code>^2.3.1</code> : compatible avec <code>2.3.1</code></li>
+</ul>
+<p>Il est clair que lu comme ça, le plus intéressant est le <code>^</code> et c’est justement <a href="http://fredkschott.com/post/2014/02/npm-no-longer-defaults-to-tildes/">celui qui est choisi maintenant [en]</a> lorsque l’on fait un <code>npm install --save</code>. Cool non ?!</p>
+<p>Pour plus d’information sur la définition des versions, <a href="https://github.com/isaacs/node-semver#ranges">c’est par là</a> (Oh mon dieu, il a fait un lien avec un “cliquez ici”).</p>
+<p>Bon. C’est bon ? Vous avez tout compris ? Okay, vous pouvez passer à <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/"><strong>napa</strong></a> maintenant qui vous aidera grandement sur le téléchargement de projets n’ayant pas de <code>package.json</code>.</p>
+<p>En ce qui concerne npm, je m’arrête là, et vous propose une petite solution afin d’augmenter la vitesse de vos installations de node modules.</p>
+<h2 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h2><p>Envie d’accélérer vos installations npm ? Je vous conseille <a href="https://github.com/vvo/npm-pkgr">npm-pkgr</a>.</p>
+<p>Il hashera votre <code>package.json</code> pour savoir s’il a été modifié ou non, et en fonction de ça, il lancera <code>npm install</code> ou non. Sacré gain de temps (surtout si vous faites des <code>npm install</code> à chaque <em>deploy</em>).</p>
+<p>You are now a npm master. 👨</p>
+
+]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/npm-choisir-version/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/npm-choisir-version/</guid></item><item><title>Premiers pas avec Ruby</title><description><![CDATA[
 <h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><pre><code class="lang-sh">$ git clone git:<span class="hljs-comment">//github.com/sstephenson/rbenv.git ~/.rbenv</span>
 $ echo <span class="hljs-string">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> &gt;&gt; ~/<span class="hljs-class">.bashrc</span>
 $ echo <span class="hljs-string">'eval "$(rbenv init -)"'</span> &gt;&gt; ~/<span class="hljs-class">.bashrc</span>
@@ -1658,7 +1658,7 @@ fonctionnalités que le téléchargement de modules.  </p>
 <p>Mardi 29 avril s’est déroulée la troisième table ronde qui est finalement la première sous le nom de <strong>{p!}</strong>. Une petite explication s’impose étant donné que nous allons en faire de plus en plus et que je souhaite vraiment vous faire un compte rendu sur chacun de ces évènements.</p>
 <h2 id="preambule"><a class="putainde-Title-anchor" href="#preambule">#</a>Préambule</h2><p>Partant du constat qu’il est difficile d’apprendre et d’échanger en conférence du fait du manque du niveau assez élevé (trop de gens avec un niveau différent, il faut forcément s’aligner) et à sens unique (une personne parle, les autres écoutent), nous avons décidé de créer des tables rondes où un fil conducteur est suivi amenant à débattre, échanger, affirmer.</p>
 <p>Attention, je ne dis pas que les conférences ne servent à rien mais à mon sens elles sont trop magistrales et parfois trop marketing (coucou WebRTC Paris).</p>
-<p>Les premières tables rondes n’étaient pas sous le nom de <strong>p!</strong>, elles étaient plutôt de mon initiative (@_kud) dans le but de rassembler des gens que j’appréciais et dont je connaissais le niveau afin de progresser tous ensembles.</p>
+<p>Les premières tables rondes n’étaient pas sous le nom de <strong>p!</strong>, elles étaient plutôt de mon initiative (@_kud) dans le but de rassembler des gens que j’appréciais et dont je connaissais le niveau afin de progresser tous ensemble.</p>
 <p>Je tiens à vous mettre en garde ici que les propos tenus ne sont pas forcément toujours justifiés, c’est un compte rendu qui synthétise des choix que vous devriez sûrement explorer par vous-même ou au travers de d’autres articles <strong>p!</strong>.</p>
 <p>Bon allez, on y va.</p>
 <h2 id="ou-"><a class="putainde-Title-anchor" href="#ou-">#</a>Où ?</h2><p>C’est cette fois-ci Altima qui nous a gentillement accueilli dans ses locaux.</p>
@@ -1763,7 +1763,7 @@ fonctionnalités que le téléchargement de modules.  </p>
 <p>Tout d’abord, on s’est tous accordés sur un point : OOCSS, SMACSS, le reste, ça ne marche pas. Ca marche pas parce que ça casse dans certains cas la sémantique, dans d’autres cas, ça revient à faire du style inline mais avec des noms de classes style <code>.left</code> pour un <code>float: left</code>. On a tous plus ou moins essayé et ça devient vite le bordel. On s’est aussi accordés, mais ça c’est évident, qu’avoir une convention de nommage est primordiale pour maintenir correctement du style (ou autre d’ailleurs).
 Et surtout il n’est plus nécessaire d’utiliser les IDs. Les IDs doivent servir uniquement dans le cas de la combinaison label/input, mais sinon ils empêchent toute généralisation d’un block.</p>
 <p>Il est clair qu’après des années d’intégration, le constat est là, la cascade, ce n’est vraiment pas l’idéal. Cela reste toujours aussi difficile de faire du css generique et/ou maintenable, et c’est justement en quoi BEM permet de résoudre à la fois les problématiques de cascade mais aussi de nommage.</p>
-<p>Il y a de nombreux articles sur BEM, sur ses conventions (oui il peut y avoir plusieurs conventions de nommage, BEM reste plus une méthologie).</p>
+<p>Il y a de nombreux articles sur BEM, sur ses conventions (oui, il peut y avoir plusieurs conventions de nommage, BEM reste plus une méthologie).</p>
 <p>En quelques termes, BEM redéfinit la cascade en ne plus l’utilisant comme par exemple : <code>.header .title.is-active</code> mais <code>.header__title--is-active</code>, BEM venant de Block, Element, Modifier. C’est exactement ce que je viens de découper en une seule classe plutôt que 3.</p>
 <p>Pour ma part, j’utilise la convention de nommage qui se rapproche très fortément du framework JavaScript “Montage.js” : <code>.org-(js-)-MyBlock-myElement--myModifier</code>.</p>
 <p>Je ne souhaite volontairement pas m’étendre sur le sujet car je vous invite à lire <a href="/posts/css/petite-definition-bem/">mon article à ce sujet</a>.</p>
@@ -1775,21 +1775,21 @@ Et surtout il n’est plus nécessaire d’utiliser les IDs. Les IDs doivent ser
 <h3 id="semantique"><a class="putainde-Title-anchor" href="#semantique">#</a>Sémantique</h3><p>On est tous d’accord, faire de la sémantique oui, quand cela ne va pas à l’encontre de la maintenabilité et de la réutilisation de code.</p>
 <p>Pour ma part, trop de fois je me suis pris la tête sur la sémantique au point de faire des classes uniques qui ont du sens mais qui <code>@extend</code> (voir pré-processeurs) une classe générique.</p>
 <h3 id="accessibilite"><a class="putainde-Title-anchor" href="#accessibilite">#</a>Accessibilité</h3><p>Pour être franc, l’accessibilité a un coût en terme de temps qui n’est jamais négligeable et rentre souvent en conflit avec l’UX d’une personne sans handicap.</p>
-<p>Typiquement, imaginons que nous avons un formulaire bancaire, comment faire un boucle uniquement sur ce formulaire (pratique dans le cas d’une personne sans handicap) tout en ne contraignant la navigation “classique” ?</p>
+<p>Typiquement, imaginons que nous avons un formulaire bancaire, comment faire un boucle uniquement sur ce formulaire (pratique dans le cas d’une personne sans handicap) tout en ne contraignant pas la navigation “classique” ?</p>
 <p>Le constat est là aussi, nous sommes tous ici sensibilisés par l’accessibilité, nous essayons d’en faire le plus possible (souvent sur notre temps libre ou entre deux tâches) mais personne n’administre du temps à cela.</p>
 <p>Une éventuelle solution a émmergé durant les discussions : pourquoi ne pourrait-on pas connaître d’emblée la situation de l’utilisateur lorsqu’il arrive sur le site ?</p>
-<p>Un navigateur dédié à certains handicaps devrait être détectable d’entée de jeu et que l’on puisse nous développeurs faire en conséquence dans ce cas là.</p>
-<p>C’est exactement comme l’histoire de résolution / bande passante. Le w3c nous propose à l’heure actuelle de détecter la résolution pour faire en conséquence sur notre site, or, ce n’est pas du tout le pivot intéressant, c’est surtout la bande passante qui nous permet d’ajuster notre site web.</p>
-<p>Bref, comme souvent, le W3C est à la rue, n’avance pas comme le web avance (vite, très vite) et les outils nous font défaut à l’heure actuelle pour répondre à certains besoins. (Note : je ne dis pas qu’ils ne font pas un bon boulot ou que ce n’est pas compliqué, je dis simplement qu’il y a un grand écart encore les besoins et les solutions à l’heure actuelle sur plusieurs domaines : l’accessibilité, la video, la capacité de fournir un site en fonction de la bande passante plutôt que la résolution, etc, etc).</p>
-<h3 id="les-pieges-de-l-integration-e-g-display-inline-block-"><a class="putainde-Title-anchor" href="#les-pieges-de-l-integration-e-g-display-inline-block-">#</a>Les pièges de l’intégration (e.g. display: inline-block)</h3><p>Certains cas de l’intégration restent encore du domaine hack plutôt qu’une solution propre et faible. On ne dit pas que ces hacks sont difficiles ou laborieux mais qu’ils sont encore nécessaires sur des propriétés css très communes en 2014.</p>
+<p>Un navigateur dédié à certains handicaps devrait être détectable d’entée de jeu et que l’on puisse nous développeurs faire en conséquence dans ce cas-là.</p>
+<p>C’est exactement comme l’histoire de résolution / bande passante. Le W3C nous propose à l’heure actuelle de détecter la résolution pour faire en conséquence sur notre site, or, ce n’est pas du tout le pivot intéressant, c’est surtout la bande passante qui nous permet d’ajuster notre site web.</p>
+<p>Bref, comme souvent, le W3C est à la rue, n’avance pas comme le web avance (vite, très vite) et les outils nous font défaut à l’heure actuelle pour répondre à certains besoins. (Note : je ne dis pas qu’ils ne font pas un bon boulot ou que ce n’est pas compliqué, je dis simplement qu’il y a un grand écart entre les besoins et les solutions à l’heure actuelle sur plusieurs domaines : l’accessibilité, la video, la capacité de fournir un site en fonction de la bande passante plutôt que la résolution, etc, etc).</p>
+<h3 id="les-pieges-de-l-integration-e-g-display-inline-block-"><a class="putainde-Title-anchor" href="#les-pieges-de-l-integration-e-g-display-inline-block-">#</a>Les pièges de l’intégration (e.g. display: inline-block)</h3><p>Certains cas de l’intégration restent encore du domaine hack plutôt qu’une solution propre et fiable. On ne dit pas que ces hacks sont difficiles ou laborieux mais qu’ils sont encore nécessaires sur des propriétés CSS très communes en 2014.</p>
 <p>L’inline-block par exemple, il n’y a malheureusement pas le choix de soit coller les balises, soit minifier le html (ou la partie ayant des inline-block), soit de mettre des commentaires.</p>
 <p>Les layouts seront toujours aussi pénibles tant que les flexbox ne sont pas supportés par la majorité des navigateurs du marché. Les 3 solutions principales pour le moment : float, inline-block, table(-cell).</p>
 <p>En ce qui concerne le box-sizing, il sauve beaucoup d’intégration. Il faut juste voir le support des navigateurs que vous supportez.
 Oh et attention, tous les navigateurs ne font pas 16px de base. Je dis ça si vous utilisez les <code>(r)em</code> (qui sont expliqués juste après).</p>
 <p>Enfin, <code>&lt;input type=&quot;number&quot;&gt;</code> est tout buggé sous Firefox. Par exemple, mettre min=”1900” sur cet input et que vous cliquez sur le “+”, vous commencerez à “1” et non “1900”… Je sens que je vais devoir encore faire un ticket. :’)</p>
 <h3 id="unites-px-rem-em-pt-"><a class="putainde-Title-anchor" href="#unites-px-rem-em-pt-">#</a>Unités px, rem, em, pt, %</h3><p>Pour être clair, personne n’utilise des <code>pt</code>, les <code>px</code>, faut les oublier de plus en plus, et <code>rem</code> est sûrement le plus simple et le mieux mais dépend malheureusement de vos supports navigateurs où dans quels cas il faut souvent se rabattre sur les <code>em</code>. Le pourcentage est forcément préconisé.</p>
-<h3 id="css-frameworks-lesquels-pourquoi-quand-"><a class="putainde-Title-anchor" href="#css-frameworks-lesquels-pourquoi-quand-">#</a>CSS Frameworks ? lesquels ? pourquoi ? quand ?</h3><p><a href="http://foundation.zurb.com/">Foundation</a>, <a href="http://getbootstrap.com/">Bootstrap</a>, <a href="http://purecss.io/">pure</a> sont les plus connus (et peut-être les pires). Il ne vous serviront uniquement que dans le cas d’une <a href="http://fr.wikipedia.org/wiki/Preuve_de_concept">PoC</a> ou une administration de site (<em>back-office</em>).</p>
-<p>Par contre, <a href="http://topcoat.io/">topcoat</a> peut se révéler assez intéressant de par sa haute personnalisation et de son <em>BEM-way</em>. Eventuellement <a href="http://inuitcss.com/">inuit.css</a> sinon.</p>
+<h3 id="css-frameworks-lesquels-pourquoi-quand-"><a class="putainde-Title-anchor" href="#css-frameworks-lesquels-pourquoi-quand-">#</a>CSS Frameworks ? Lesquels ? Pourquoi ? Quand ?</h3><p><a href="http://foundation.zurb.com/">Foundation</a>, <a href="http://getbootstrap.com/">Bootstrap</a>, <a href="http://purecss.io/">pure</a> sont les plus connus (et peut-être les pires). Il ne vous serviront uniquement que dans le cas d’une <a href="http://fr.wikipedia.org/wiki/Preuve_de_concept">PoC</a> ou une administration de site (<em>back-office</em>).</p>
+<p>Par contre, <a href="http://topcoat.io/">topcoat</a> peut se révéler assez intéressant de par sa haute personnalisation et de son <em>BEM-way</em>. Éventuellement <a href="http://inuitcss.com/">inuit.css</a> sinon.</p>
 <h3 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h3><p>Lors de cas de contenus affichés via de l’ajax, pensez de plus en plus à faire du “prerender”, c’est à dire que pendant que le contenu se charge, au lieu de mettre des <em>spinners</em>, <em>loaders</em>, <em>toussa</em>, essayez de mettre des visuels qui ressembleront à l’élément final. C’est ce que fait par exemple facebook, et c’est pas mal du tout. Tenez :</p>
 <figure>
   <img src="prerender.jpg" alt="facebook prerender">
