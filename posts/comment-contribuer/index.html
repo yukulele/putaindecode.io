@@ -41,12 +41,12 @@ des expressions aussi), ou ta PR au repo comme on dit dans le monde des
 développeurs des internets.</p>
 <h2 id="github"><a class="putainde-Title-anchor" href="#github">#</a>GitHub</h2><ul>
 <li><p>Déjà, si t’en as pas, crée toi un compte GitHub (avant qu’on te caillasse),
-et vu que tu commences à lire des ressources sur notre site, crois moi que
+et vu que tu commences à lire des ressources sur notre site, crois-moi que
 tu vas commencer à le faire chauffer plus vite que prévu.</p>
 </li>
-<li><p>Ensuite il faut que tu installes tout le nécessaire pour bosser sur un
+<li><p>Ensuite, il faut que tu installes tout le nécessaire pour bosser sur un
 <em>repo</em> GitHub (oui on va commencer à utiliser des anglicismes dès maintenant
-donc habitues toi y, <em>repo</em> = dépôt de code, comme tu peux le constater, la
+donc habitue-toi y, <em>repo</em> = dépôt de code, comme tu peux le constater, la
 francisation, c’est moche), on va te faire un post qui va regrouper tout ce
 qu’il te faut pour installer et configurer Git pour bosser sur GitHub.</p>
 </li>
@@ -67,16 +67,16 @@ travailler tranquillement.</p>
 </li>
 <li><p>Maintenant que t’as enfin notre magnifique repo dans ton compte, tu devrais
 te sentir honoré. Une fois que t’as appelé toute ta famille et les 3
-pèquenauds qui te servent d’amis, tu dois pouvoir y coder dessus sur ton PC.
+péquenauds qui te servent d’amis, tu dois pouvoir y coder dessus sur ton PC.
 On va partir du principe que tu t’appelles Clint. Et que ton nom c’est
-Horris. T’as donc choisi comme pseudo GitHub <code>clinthorris</code> (oui t’aurais du
+Horris. T’as donc choisi comme pseudo GitHub <code>clinthorris</code> (oui t’aurais dû
 réfléchir toi aussi). Donc tu te débrouilles pour aller dans un dossier vide
 et tu vas cloner notre repo. Cloner = faire une copie d’un repo distant (sur
 les serveurs de GitHub par exemple) en local (ton vieux Pentium II sous XP
 dans notre cas). Ensuite il faut que tu te rendes dans ce dossier en ligne
 de commande (sous Windows tu y vas avec l’invite de commande mais on te
 prévient qu’on va pas être copains longtemps, trouve un OS décent putain,
-sous Mac OS X tu utilises le terminal, et sous Linux je pense qu’on a pas à
+sous Mac OS X tu utilises le terminal, et sous Linux je pense qu’on n’a pas à
 t’expliquer).</p>
 <pre><code class="lang-bash"><span class="hljs-variable">$ </span>git clone <span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/github.com/clinthorris</span><span class="hljs-regexp">/putaindecode.fr.git putaindecode</span>
 </code></pre>
@@ -86,7 +86,7 @@ référence du repo principal, le beau, le grand, le nôtre. En gros, ça va te
 servir que si tu fais une modification ou une contribution sur notre site
 aujourd’hui, et que dans un mois tu veuilles encore en faire, tu pourras
 facilement rattraper tout ce qu’on aura fait entre temps. La remote en
-rapport avec le repo principal, on l’appelle souvent <em>upstream</em></p>
+rapport avec le repo principal, on l’appelle souvent <em>upstream</em>.</p>
 <pre><code class="lang-bash">  $ <span class="hljs-keyword">cd</span> putaindecode
   $ git remote <span class="hljs-built_in">add</span> upstream http<span class="hljs-variable">s:</span>//github.<span class="hljs-keyword">com</span>/putaindecode/putaindecode.fr.git
   $ git fetch upstream
@@ -109,12 +109,12 @@ derniers changements sur une branche propre</p>
 <span class="hljs-variable">$ </span>git merge upstream/master
 </code></pre>
 <p>Regarde quand même le README et fait la manip’ de mise à jour au cas où on aurait
-changé quelques trucs par ci, par là.</p>
+changé quelques trucs par-ci, par-là.</p>
 </li>
 <li><p>Une fois ton site tout installé, t’as plus qu’à aller dans ton dossier grâce
 à la ligne de commande, et à taper <code>$ npm start</code>, tu verras quelques
-trucs s’exécuter, ne t’inquiètes pas. À la fin du processus, ça
-devrait te lancer le site en local dans le browser. Là j’espère que tu te
+trucs s’exécuter, ne t’inquiète pas. À la fin du processus, ça
+devrait te lancer le site en local dans le browser. Là, j’espère que tu te
 rends compte qu’avec une seule ligne de commande on t’a fait tourner un site
 complet. Et là on te voit déjà en train de baver et te rappeler tes longues
 soirées en train d’installer PHP, MySQL, un WordPress, la bonne version des
@@ -131,7 +131,7 @@ magnifique post sur ton tout dernier projet, tu préfères juste nous aider à
 améliorer notre contenu. Bah on te remercie quand même tu vois, parce qu’on
 est des types sympas.</p>
 <ul>
-<li><p>Alors déjà, on aime pas juste donner une liste d’ordres sans expliquer pour
+<li><p>Alors déjà, on n’aime pas juste donner une liste d’ordres sans expliquer pour
 que tu puisses comprendre ce que tu fais. Donc notre site, il a été fait
 à la main (on a pondu un générateur de site statique bien pimpé, parce que oui,
 y’a pas que Wordpress pour faire un site) en se basant sur gulp
@@ -162,15 +162,15 @@ fais simplement un :</p>
 <pre><code class="lang-bash">$ git checkout -<span class="hljs-tag">b</span> fix.nom-du-post
 </code></pre>
 </li>
-<li><p>Fais les modifications que tu veux dans le fichier, là on peut pas t’aider,
+<li><p>Fais les modifications que tu veux dans le fichier, là on ne peut pas t’aider,
 c’est à toi de jouer.</p>
 </li>
 <li><p>Normalement si t’avais bien lancé le <code>npm start</code> tout à l’heure, y’a un
-processus <em>watch</em> (en gros un truc qui surveilles ton projet) qui est lancé
+processus <em>watch</em> (en gros un truc qui surveille ton projet) qui est lancé
 et qui détecte que t’as changé un fichier, du coup, grâce au watch couplé à
-un processus appelé <em>livereload</em> ton navigateur va rafraichir les fichiers
-nécessaires en direct. T’as rien à faire c’est magique. Enfin si, tu dois juste
-retourner dans ton browser ça devrait déjà être à jour.</p>
+un processus appelé <em>livereload</em> ton navigateur va rafraîchir les fichiers
+nécessaires en direct. T’as rien à faire, c’est magique. Enfin si, tu dois juste
+retourner dans ton browser, ça devrait déjà être à jour.</p>
 </li>
 <li><p>Une fois que tout est bon, tu peux passer à l’étape de validation de tes
 modifications (étape commune pour la modification d’un post existant ou la
@@ -203,17 +203,17 @@ C’est plutôt simple. Tu créés un dossier avec le nom qui va bien avec un fi
 <code>.jade</code> pour les metas de l’article, et un <code>.md</code> pour le contenu.</p>
 </li>
 <li><p>Tu peux maintenant éditer ton fichier (en MarkDown) dans le fichier .md,
-Amuse toi, créé ton contenu, rédige bien tout comme tu veux.</p>
+Amuse-toi, créé ton contenu, rédige bien tout comme tu veux.</p>
 </li>
 <li><p>Tu devrais pouvoir te balader sur le site et trouver ton article sur la page
 des posts: <a href="http://localhost:4242/posts/">http://localhost:4242/posts/</a> .
-Avec la tâche <code>$ npm start</code> lancée normalement tout (ou presque) se rafraichira
+Avec la tâche <code>$ npm start</code> lancée normalement tout (ou presque) se rafraîchira
 automatiquement.
 Si ce n’est pas le cas, relance la tâche <code>$ npm start</code>.
 Si là tu as une erreur qui t’échappes, on t’invite à
 <a href="https://github.com/putaindecode/putaindecode.fr/issues/new">ouvrir une issue</a>.</p>
 </li>
-<li><p>En l’état tu devrais pouvoir consulter sur le site lancé localement ton post,
+<li><p>En l’état, tu devrais pouvoir consulter sur le site lancé localement ton post,
 voir s’il sort correctement et s’il est présentable à ton goût.
 Tu pourras le consulter sur une URL du type
 <code>http://localhost:4242/post/nom-du-post/</code>. Mais tu le sais déjà puisque t’as
@@ -231,8 +231,8 @@ commit. Tu peux faire ça tout simplement avec un :</p>
 <pre><code class="lang-bash">$ git <span class="hljs-built_in">add</span> -A pages/posts/nom-du-<span class="hljs-built_in">post</span>
 </code></pre>
 <p>Cette commande ajoute tous les fichiers dans le dossier que tu as créé.
-Si tu as ajouter des fichiers à l’exterieur de ce dossier, tu devras les
-ajouter. Exemple:</p>
+Si tu as ajouté des fichiers à l’extérieur de ce dossier, tu devras les
+ajouter. Exemple :</p>
 <pre><code class="lang-bash">$ git <span class="hljs-keyword">add</span> images/memes/trollface.jpg
 </code></pre>
 <p>Ensuite on va dire à git de valider ces modifications de code :</p>
@@ -256,11 +256,11 @@ branches / etc.</p>
   <figcaption>C’est bon tu le vois là le bouton ?</figcaption>
 </figure>
 </li>
-<li><p>Sélectionnes les bonnes branches et ajoute nous un beau titre et une belle
+<li><p>Sélectionne les bonnes branches et ajoute-nous un beau titre et une belle
 description de Pull Request en essayant au moins de commencer par <code>Post: Nom du post</code>
 ou <code>Fix: Nom du post</code></p>
 </li>
-<li><p>Et voila ! Tu n’as qu’à attendre de nos nouvelles maintenant. D’ailleurs au
+<li><p>Et voilà ! Tu n’as qu’à attendre de nos nouvelles maintenant. D’ailleurs au
 passage, si tu veux, tu peux en profiter pour nous suivre <a href="https://twitter.com/putaindecode">sur
 twitter</a>, et tu pourras nous lâcher un
 message avec ta PR ou ton issue en lien, histoire de nous mettre la pression.</p>
@@ -268,7 +268,7 @@ message avec ta PR ou ton issue en lien, histoire de nous mettre la pression.</p
 </ul>
 <h2 id="hey-tu-veux-mieux-comprendre-git-"><a class="putainde-Title-anchor" href="#hey-tu-veux-mieux-comprendre-git-">#</a>Hey ! Tu veux mieux comprendre Git ?</h2><p>Pour découvrir Git plus en détails, on t’invite à lire notre article
 <a href="/posts/git/versionner-avec-git/">Versionner avec Git</a></p>
-</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/putaindecode.fr/edit/master/src/pages/posts/comment-contribuer/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/putaindecode.fr/blame/master/src/pages/posts/comment-contribuer/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/putaindecode.fr/commits/master/src/pages/posts/comment-contribuer/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author"><a href="https://github.com/Nyalab" data-rcp-tooltip="Nyalab" class="putainde-Author-picture "><img src="https://avatars.githubusercontent.com/u/721993?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> <a href="https://github.com/Nyalab" class="putainde-Link">Nyalab</a></h3><div class="putainde-Author-social"><a href="https://twitter.com/Nyalab" data-rcp-tooltip="Twitter" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a><a href="https://github.com/Nyalab" data-rcp-tooltip="Github" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a></div></div><p class="putainde-Author-bio">Développeur front-end @Overblog après avoir bossé 7 ans comme full-stack. <br> Il passe ses journées à essayer d'écrire du putain de bon code, à flame, blame et troll sur les messages de commit, à regarder Doctor Who, à a-click sur Starcraft2, et parfois il est sobre. <br> Et oui, il porte toujours un k-way rouge et sexy.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">7 contributeurs</strong><a href="http://moox.io/" data-rcp-tooltip="MoOx" class="putainde-Contributor rcp-Tooltip rcp-Tooltip--bottom"><img src="https://avatars.githubusercontent.com/u/157534?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/Nyalab" data-rcp-tooltip="Nyalab" class="putainde-Contributor rcp-Tooltip rcp-Tooltip--bottom"><img src="https://avatars.githubusercontent.com/u/721993?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="http://madx.me/" data-rcp-tooltip="madx" class="putainde-Contributor rcp-Tooltip rcp-Tooltip--bottom"><img src="https://avatars.githubusercontent.com/u/5723?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="http://bloodyowl.io" data-rcp-tooltip="bloodyowl" class="putainde-Contributor rcp-Tooltip rcp-Tooltip--bottom"><img src="https://avatars.githubusercontent.com/u/1688645?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="http://kud.io" data-rcp-tooltip="kud" class="putainde-Contributor rcp-Tooltip rcp-Tooltip--bottom"><img src="https://avatars.githubusercontent.com/u/655838?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="http://www.justinmarsan.com" data-rcp-tooltip="justinmarsan" class="putainde-Contributor rcp-Tooltip rcp-Tooltip--bottom"><img src="https://avatars.githubusercontent.com/u/639365?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="http://lumographe.fr/" data-rcp-tooltip="lionelB" class="putainde-Contributor rcp-Tooltip rcp-Tooltip--bottom"><img src="https://avatars.githubusercontent.com/u/160320?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/putaindecode.fr/edit/master/src/pages/posts/comment-contribuer/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/putaindecode.fr/blame/master/src/pages/posts/comment-contribuer/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/putaindecode.fr/commits/master/src/pages/posts/comment-contribuer/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author"><a href="https://github.com/Nyalab" data-rcp-tooltip="Nyalab" class="putainde-Author-picture "><img src="https://avatars.githubusercontent.com/u/721993?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> <a href="https://github.com/Nyalab" class="putainde-Link">Nyalab</a></h3><div class="putainde-Author-social"><a href="https://twitter.com/Nyalab" data-rcp-tooltip="Twitter" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a><a href="https://github.com/Nyalab" data-rcp-tooltip="Github" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a></div></div><p class="putainde-Author-bio">Développeur front-end @Overblog après avoir bossé 7 ans comme full-stack. <br> Il passe ses journées à essayer d'écrire du putain de bon code, à flame, blame et troll sur les messages de commit, à regarder Doctor Who, à a-click sur Starcraft2, et parfois il est sobre. <br> Et oui, il porte toujours un k-way rouge et sexy.</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">8 contributeurs</strong><a href="http://moox.io/" data-rcp-tooltip="MoOx" class="putainde-Contributor rcp-Tooltip rcp-Tooltip--bottom"><img src="https://avatars.githubusercontent.com/u/157534?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/Nyalab" data-rcp-tooltip="Nyalab" class="putainde-Contributor rcp-Tooltip rcp-Tooltip--bottom"><img src="https://avatars.githubusercontent.com/u/721993?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="http://madx.me/" data-rcp-tooltip="madx" class="putainde-Contributor rcp-Tooltip rcp-Tooltip--bottom"><img src="https://avatars.githubusercontent.com/u/5723?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="http://bloodyowl.io" data-rcp-tooltip="bloodyowl" class="putainde-Contributor rcp-Tooltip rcp-Tooltip--bottom"><img src="https://avatars.githubusercontent.com/u/1688645?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="http://kud.io" data-rcp-tooltip="kud" class="putainde-Contributor rcp-Tooltip rcp-Tooltip--bottom"><img src="https://avatars.githubusercontent.com/u/655838?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="http://www.justinmarsan.com" data-rcp-tooltip="justinmarsan" class="putainde-Contributor rcp-Tooltip rcp-Tooltip--bottom"><img src="https://avatars.githubusercontent.com/u/639365?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="http://lumographe.fr/" data-rcp-tooltip="lionelB" class="putainde-Contributor rcp-Tooltip rcp-Tooltip--bottom"><img src="https://avatars.githubusercontent.com/u/160320?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a><a href="https://github.com/Macxim" data-rcp-tooltip="Macxim" class="putainde-Contributor rcp-Tooltip rcp-Tooltip--bottom"><img src="https://avatars.githubusercontent.com/u/1909957?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
 a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../feed.xml">Flux RSS</a></li><li><a href="../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-rcp-tooltip="GitHub" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a><a href="https://twitter.com/putaindecode/" data-rcp-tooltip="Twitter" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/comment-contribuer/";
 var disqus_url = "http://putaindecode.fr/posts/comment-contribuer/";
 var disqus_script = "embed.js";;(function(d,s) {
