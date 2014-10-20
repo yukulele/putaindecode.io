@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 20 Oct 2014 09:18:09 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Débuter avec Ember</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 20 Oct 2014 09:25:03 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Débuter avec Ember</title><description><![CDATA[
 <p>Démarrer une <a href="http://en.wikipedia.org/wiki/Single-page_application">Single Page Application</a> aujourd’hui ça commence souvent par : “mais quel putain de framework il 
 faut que je prenne ?” Et, vu que c’est pas ça qui manque, ça se complique !</p>
 <p>Parmi les multiples <a href="/posts/js/introduction-a-reactjs">technos disponibles</a> il y a <a href="http://emberjs.com">Ember</a>. Pour que le choix 
-ne se résume pas à prendre celui qui a le plus joli logo ou qui génère le plus de spam sur votre twitter, on vous propose de découvrir 
-<a href="http://emberjs.com">Ember</a>. Dans des posts à venir on verra comment construire concrètement une application avec ce framework.</p>
-<h2 id="les-fondamentaux"><a class="putainde-Title-anchor" href="#les-fondamentaux">#</a>Les fondamentaux</h2><p>Parce que l’approche “tête la première” c’est bien mais que comprendre un minimum ce qu’on fait c’est encore mieux, il me parait sage de commencer
+ne se résume pas à prendre celui qui a le plus joli logo ou qui génère le plus de spam sur votre Twitter, on vous propose de découvrir 
+<a href="http://emberjs.com">Ember</a>. Dans les posts à venir on verra comment construire concrètement une application avec ce framework.</p>
+<h2 id="les-fondamentaux"><a class="putainde-Title-anchor" href="#les-fondamentaux">#</a>Les fondamentaux</h2><p>Parce que l’approche “tête la première” c’est bien mais que comprendre un minimum ce qu’on fait c’est encore mieux, il me paraît sage de commencer
 par expliquer la philosophie et les principaux éléments du framework, sous peine de se prendre un bon vieux <a href="http://en.wikipedia.org/wiki/RTFM">doc officielle</a> 
 sur le coin du pif, comme ça, en passant.</p>
 <p><a href="http://emberjs.com">Ember</a> se définit comme : “A framework for creating <strong>ambitious</strong> web applications” et ça, ça claque !
-Mais je vois bien que ça suffit pas à vous convaincre alors je vais détailler un peu. Bon alors, bien que ce soit le mot “ambitious”
+Mais je vois bien que ça ne suffit pas à vous convaincre alors je vais détailler un peu. Bon alors, bien que ce soit le mot “ambitious”
 qui soit mis en gras, deux autres trucs me paraissent encore plus importants :</p>
 <ul>
-<li><p><strong>web</strong> : L’une des caractéristiques majeures d’<a href="http://emberjs.com">Ember</a> est son attachement au web et aux URLs en particulier. <strong>Les URLs
-et donc le routeur sont au coeur d’Ember</strong> là ou bien d’autres frameworks les considèrent au mieux comme un addon important. </p>
+<li><p><strong>web</strong> : l’une des caractéristiques majeures d’<a href="http://emberjs.com">Ember</a> est son attachement au web et aux URL en particulier. <strong>Les URL
+et donc le routeur sont au cœur d’Ember</strong> là ou bien d’autres frameworks les considèrent au mieux comme un addon important. </p>
 </li>
 <li><p><strong>framework</strong> : <a href="http://emberjs.com">Ember</a> est réellement un framework. Pas une lib, pas une colonne vertébrale, pas une boîte à outils : 
 un framework ! <a href="http://emberjs.com">Ember</a> propose un véritable modèle de développement que vous allez tout de suite adopter … ou rejeter
@@ -20,13 +20,13 @@ un framework ! <a href="http://emberjs.com">Ember</a> propose un véritable mod�
 </li>
 </ul>
 <h3 id="conventions-de-nommage"><a class="putainde-Title-anchor" href="#conventions-de-nommage">#</a>Conventions de nommage</h3><p>Ce modèle de développement commence par les conventions de nommage. <a href="http://emberjs.com">Ember</a>
-applique en effet le principe de “conventions over configuration” et repose sur un nommage cohérent des différents composants 
+applique en effet le principe de “<em>conventions over configuration</em>“ et repose sur un nommage cohérent des différents composants 
 de votre application. Et finalement, quand on y réflechit bien, la cohérence, ça n’a pas que des mauvais côtés. </p>
 <p>Typiquement pour une URL <code>test</code>, <a href="http://emberjs.com">Ember</a> s’attend à trouver une <code>TestRoute</code>, un <code>TestController</code>, un gabarit <code>test</code>.
 Jusqu’ici, tout va bien.</p>
 <p>Curieux ? -&gt; <a href="http://emberjs.com/guides/concepts/naming-conventions/">doc officielle</a>.</p>
 <h3 id="modeles"><a class="putainde-Title-anchor" href="#modeles">#</a>Modèles</h3><p>Un modèle est un objet avec des propriétés contenant des données métier. Le modèle est ensuite passé au gabarit pour être rendu par lui
-en HTML. Typiquement, les modèles peuvent être récupérés d’un backend via une API REST JSON via <a href="https://github.com/emberjs/data">Ember Data</a>
+en HTML. Typiquement, les modèles peuvent être récupérés d’un back end via une API REST JSON via <a href="https://github.com/emberjs/data">Ember Data</a>
 mais pas que.</p>
 <pre><code class="lang-js">var Book = DS.Model.extend({
     <span class="hljs-string">title               :</span> DS.attr(<span class="hljs-string">'string'</span>),
@@ -55,7 +55,7 @@ chacun de ces gabarits.</p>
   });
 });
 </code></pre>
-<h3 id="routes"><a class="putainde-Title-anchor" href="#routes">#</a>Routes</h3><p>Les routes associent un modèle à un gabarit et sont également impliquées dans les transitions entre les différentes URLs (et donc les différents
+<h3 id="routes"><a class="putainde-Title-anchor" href="#routes">#</a>Routes</h3><p>Les routes associent un modèle à un gabarit et sont également impliquées dans les transitions entre les différentes URL (et donc les différents
 états) de l’application. Elles gèrent notamment un certain nombre d’opérations sur un modèle lors de ces transitions.</p>
 <pre><code class="lang-js">App.BooksRoute = Ember.Route.extend({
     model: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
@@ -64,8 +64,8 @@ chacun de ces gabarits.</p>
 });
 </code></pre>
 <p>Intrigué ? -&gt; <a href="http://emberjs.com/guides/routing/">doc officielle</a>.</p>
-<h3 id="controleurs"><a class="putainde-Title-anchor" href="#controleurs">#</a>contrôleurs</h3><p>Le contrôleur gère l’état de l’application. Il est situé entre la route dont il récupère le modèle et le gabarit dont il répond aux appels.
-Les données du contrôleur sont accessible au gabarit au même titre que le modèle.</p>
+<h3 id="controleurs"><a class="putainde-Title-anchor" href="#controleurs">#</a>Contrôleurs</h3><p>Le contrôleur gère l’état de l’application. Il est situé entre la route dont il récupère le modèle et le gabarit dont il répond aux appels.
+Les données du contrôleur sont accessibles au gabarit au même titre que le modèle.</p>
 <p>Le contrôleur est par exemple responsable du traitement des actions effectuées par l’utilisateur sur l’interface rendue par le gabarit : </p>
 <pre><code class="lang-html"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">button</span> </span></span><span class="hljs-expression">{{<span class="hljs-variable"><span class="hljs-keyword">action</span></span> <span class="hljs-string">"sort"</span>}}</span><span class="xml"><span class="hljs-tag">&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span></span>
 </code></pre>
@@ -82,7 +82,7 @@ Les données du contrôleur sont accessible au gabarit au même titre que le mod
 <h3 id="vues"><a class="putainde-Title-anchor" href="#vues">#</a>Vues</h3><p>Il est très rare d’avoir à définir des vues en <a href="http://emberjs.com">Ember</a> parce que les gabarits <a href="http://handlebarsjs.com/">Handlebars</a>
 sont surpuissants et que les contrôleurs se chargent de la gestion de l’état de l’application.</p>
 <p>Vous en voulez quand même ? -&gt; <a href="http://emberjs.com/guides/views/">doc officielle</a>.</p>
-<h3 id="gabarits"><a class="putainde-Title-anchor" href="#gabarits">#</a>gabarits</h3><p>Un gabarit est un fragment de code HTML permettant, via des expressions, d’afficher les données du modèle associé. Les gabarits d’<a href="http://emberjs.com">Ember</a>
+<h3 id="gabarits"><a class="putainde-Title-anchor" href="#gabarits">#</a>Gabarits</h3><p>Un gabarit est un fragment de code HTML permettant, via des expressions, d’afficher les données du modèle associé. Les gabarits d’<a href="http://emberjs.com">Ember</a>
 sont des gabarits <a href="http://handlebarsjs.com/">Handlebars</a>. Les expressions Handlebars sont délimitées par <code>{{</code> et <code>}}</code>.</p>
 <p>L’exemple suivant permet d’afficher le titre d’une app composé d’un prénom et d’un nom pour peu que l’on ait passé au gabarit un
 modèle contenant les deux propriétés <code>firstname</code> et <code>lastname</code>.</p>
@@ -99,18 +99,18 @@ pour un autre gabarit permettant ainsi de multiples imbrications à mesure que l
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span></span>
 </code></pre>
 <p>Tout élément de modèle injecté dans un gabarit sera <strong>automatiquement mis à jour</strong> (binding) par <a href="http://emberjs.com">Ember</a> lorsque le modèle
-associé au gabarit sera modifié. Evidemment, seul cet élément sera rafraichit et non le gabarit entier sinon c’est tricher.</p>
+associé au gabarit sera modifié. Évidemment, seul cet élément sera rafraîchit et non le gabarit entier sinon c’est tricher.</p>
 <p>Envie de tester ? -&gt; <a href="http://emberjs.com/guides/templates/the-application-template/">doc officielle</a>.</p>
 <h3 id="composants"><a class="putainde-Title-anchor" href="#composants">#</a>Composants</h3><p>Un composant <a href="http://emberjs.com">Ember</a> permet de définir une balise HTML personnalisée, permettant ainsi de partager de puissants 
 éléments réutilisables au sein de votre application.</p>
-<p>Vous en avez toujours révé ? -&gt; <a href="http://emberjs.com/guides/components/">doc officielle</a>.</p>
+<p>Vous en avez toujours rêvé ? -&gt; <a href="http://emberjs.com/guides/components/">doc officielle</a>.</p>
 <h3 id="generation-d-objets"><a class="putainde-Title-anchor" href="#generation-d-objets">#</a>Géneration d’objets</h3><p>Pour qu’un gabarit soit rendu lorsqu’une URL est demandée, il faut donc que le routeur définisse cette URL, qu’elle soit implémentée par 
 une route qui récupèrera un modèle qu’elle mettra à disposition du contrôleur et du gabarit. Le contrôleur écoutera les 
-évènements en provenance du gabarit et y apportera la réponse adaptée. A noter que l’évènement peut également remonter jusqu’à la route.
+évènements en provenance du gabarit et y apportera la réponse adaptée. À noter que l’évènement peut également remonter jusqu’à la route.
 Le gabarit est quant à lui encapsulé dans une vue gérée par Ember tout seul comme un grand.</p>
-<p>Il n’est cependant <strong>pas nécessaire de créer systématiquement tout ces objets</strong> si aucune logique spécifique n’a besoin d’y être définie.
+<p>Il n’est cependant <strong>pas nécessaire de créer systématiquement tous ces objets</strong> si aucune logique spécifique n’a besoin d’y être définie.
 En effet, <a href="http://emberjs.com">Ember</a> s’appuie sur les <a href="#conventions-de-nommage">conventions de nommage</a> pour retrouver successivement,
-à partir d’une URL, la route, le contrôleur, la vue et le gabarit associé. Si l’un de ces objet n’est pas trouvé, <a href="http://emberjs.com">Ember</a>
+à partir d’une URL, la route, le contrôleur, la vue et le gabarit associés. Si l’un de ces objet n’est pas trouvé, <a href="http://emberjs.com">Ember</a>
 va en générer un par défaut. </p>
 <p>Donc si l’on crée dans le routeur la route suivante sans créer aucun autre objet : </p>
 <pre><code class="lang-js">App.Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
@@ -123,17 +123,17 @@ va en générer un par défaut. </p>
 <li><strong>contrôleur</strong> : <code>AboutController</code></li>
 <li><strong>gabarit</strong> : <code>about</code></li>
 </ul>
-<p>Dans une application <a href="http://emberjs.com">Ember</a>, <strong>il n’est donc nécessaire de ne définir que ce dont on a besoin !</strong>. Et c’est bien connu, 
+<p>Dans une application <a href="http://emberjs.com">Ember</a>, <strong>il est donc nécessaire de ne définir que ce dont on a besoin !</strong>. Et c’est bien connu, 
 moins il y a de boilerplate, plus il y a de plaisir !</p>
 <p>Envie d’en savoir plus ? -&gt; <a href="http://emberjs.com/guides/routing/generated-objects/">doc officielle</a>.</p>
-<p>Un bon moyen de se rendre compte de ça consiste à installer le debugger Ember sur votre navigateur (donc pas IE) préféré. Vous aurez, entre
+<p>Un bon moyen de se rendre compte de ça consiste à installer le debugger Ember sur votre navigateur préféré (donc pas IE). Vous aurez, entre
 autres, la liste de l’ensemble des objets impliqués dans le rendu d’une URL donnée. Cette liste distingue de manière claire les objets
 créés par vous et ceux générés par Ember. </p>
 <p>Ce module s’appelle <strong>Ember Inspector</strong> et est disponible pour <a href="https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi?hl=en">Chrome</a> 
 et <a href="https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/">Firefox</a>. C’est absolument indispensable lorsqu’on développe en Ember.</p>
 <h2 id="conclusion-et-next-steps"><a class="putainde-Title-anchor" href="#conclusion-et-next-steps">#</a>Conclusion et next steps</h2><p><a href="http://emberjs.com">Ember</a> est donc un framework très riche et extrêmement plaisant à pratiquer. 
 <strong>Un vrai framework avec un vrai parti pris et des vrais choix structurants.</strong>
-Il est résolument tourné vers le web et les URLs. Ses créateurs sont également ceux de son moteur de gabarit <a href="http://handlebarsjs.com/">Handlebars</a>
+Il est résolument tourné vers le web et les URL. Ses créateurs sont également ceux de son moteur de gabarit <a href="http://handlebarsjs.com/">Handlebars</a>
 et sont très impliqués dans diverses initiatives autour de la standardisation et de l’évolution du web. Pour n’en citer que deux :
 <a href="http://jsonapi.org/">JSON API</a> et <a href="https://gist.github.com/wycats/9144666b0c606d1838be">Web Components</a>, notamment au travers du moteur
 de gabarits <a href="https://github.com/tildeio/htmlbars">HTMLBars</a>. 
