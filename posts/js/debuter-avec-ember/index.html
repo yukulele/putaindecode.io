@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="fr" class="rcp-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, init-scale=1.0, minimal-ui"><title>Débuter avec Ember</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="Débuter avec Ember"/><meta name="twitter:creator" content="@bmeurant"/><meta property="og:title" content="Débuter avec Ember"/><meta property="og:type" content="article"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"><link rel="alternate" href="../../../feed.xml" title="Putain de code !" type="application/atom+xml"></head><body><svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="putainde-Icon-bookmark" viewBox="0 0 512 512">
+      <title>bookmark icon</title>
+      <path d="M318.275 90v283.23L256 318.16l-62.275 55.07V90h124.55m40-40h-204.55v412L256 371.557 358.275 462V50z"/>
+    </symbol>
+
+    <symbol id="putainde-Icon-github" viewBox="0 0 512 512">
+      <title>github icon</title>
+      <path d="M461.633 250.645l.367-3.82c-22.896-2.22-45.667-2.418-67.79-.73 3.557-11.346 5.43-24.163 5.295-38.738-.292-30.965-10.616-55.08-26.843-75.096 3.116-18.85.77-37.7-5.11-56.56-23.188 1.898-44.054 9.493-62.635 22.686-34.725-7.044-69.447-7.493-104.172 0-21.673-14.627-42.956-21.802-63.91-22.686-6.21 20.765-7.168 41.233-1.916 61.357-18.28 19.397-25.27 42.944-24.926 69.02.196 14.926 2.496 28.208 6.738 39.95-21.796-1.598-44.2-1.385-66.732.8l.367 3.818c22.947-2.228 45.76-2.41 67.92-.678.813 1.974 1.632 3.94 2.566 5.815-24.01-.633-45.618 1.453-65.854 6.43l.913 3.723c20.538-5.048 42.54-7.08 67.107-6.254 16.246 28.865 47.52 45.825 93.063 51.206-10.58 8.594-16.27 18.73-17.735 30.2h-24.12c-32.395 0-41.227-41.303-74.78-37.228C132 320 125.5 371.598 177.588 371.598h21.88v47.297c.234 7.643-3.093 12.754-8.47 16.297 18.655 1.884 32.675-7.43 32.675-18.854V353.82l5.833-6v72.992c.245 7.265-3.284 11.392-7.03 15.34 16.433.653 31.89-2.63 32.59-16.616V349.68s5.757-3.6 5.757 0v66.58c.17 11.8 10.36 21.366 31.953 19.892-5.776-4.65-7.55-9.35-7.55-16.15v-72.18s5.95-.307 5.95 6v60.88c0 13.55 16.268 19.14 34.83 18.615-6.08-4.558-10.196-9.99-10.223-17.256v-73.216c-.63-10.762-5.003-20.906-13.582-30.358 41.63-6.392 71.638-23.01 86.58-52.796 24.646-.847 46.714 1.183 67.306 6.246l.914-3.723c-20.394-5.014-42.18-7.096-66.416-6.415.84-1.89 1.67-3.79 2.39-5.785 22.39-1.798 45.457-1.622 68.66.632zM114 310.023c-1.023 0-1.853-.588-1.853-1.313 0-.728.83-1.315 1.853-1.315 1.024 0 1.854.588 1.854 1.315 0 .726-.83 1.313-1.854 1.313zm5.833 3.98c-1.137 0-2.06-.653-2.06-1.46s.923-1.462 2.06-1.462 2.06.656 2.06 1.463-.923 1.46-2.06 1.46zm5.917 5.17c-1.333 0-2.415-.767-2.415-1.713s1.082-1.714 2.415-1.714 2.416.768 2.416 1.714-1.083 1.712-2.416 1.712zm5.75 6.206c-1.56 0-2.825-.897-2.825-2.004s1.265-2.005 2.825-2.005 2.825.9 2.825 2.006-1.265 2.003-2.825 2.003zm6.333 7.014c-1.733 0-3.14-.996-3.14-2.226s1.407-2.228 3.14-2.228 3.14.998 3.14 2.228-1.407 2.226-3.14 2.226zm7.334 7.123c-1.926 0-3.488-1.107-3.488-2.474s1.56-2.476 3.487-2.476c1.925 0 3.487 1.11 3.487 2.476s-1.562 2.474-3.487 2.474zm9.916 6.774c-2.14 0-3.875-1.23-3.875-2.748 0-1.52 1.735-2.75 3.875-2.75s3.875 1.23 3.875 2.75c0 1.518-1.735 2.75-3.875 2.75zm12.292 3.626c-2.14 0-3.875-1.23-3.875-2.75 0-1.518 1.735-2.75 3.875-2.75s3.875 1.232 3.875 2.75c0 1.52-1.735 2.75-3.875 2.75zm12.958.417c-2.14 0-3.875-1.23-3.875-2.75 0-1.518 1.735-2.75 3.875-2.75s3.875 1.232 3.875 2.75c0 1.52-1.735 2.75-3.875 2.75zm12.792.25c-2.14 0-3.875-1.23-3.875-2.75 0-1.518 1.735-2.75 3.875-2.75s3.875 1.232 3.875 2.75c0 1.52-1.735 2.75-3.875 2.75z"/>
+    </symbol>
+
+    <symbol id="putainde-Icon-home" viewBox="0 0 512 512">
+      <title>home icon</title>
+      <path d="M394.072 174.805l-47.916-48.023v-38.31h47.916v86.333zM462 275.815h-42.508v166.213H92.508V275.815H50L256 69.972l206 205.843zm-165.153-3.843c-15.81-3.316-29.02 4.086-38.792 19.387-9.77-15.302-22.98-22.704-38.79-19.388-36.745 10.876-36.335 69.543 38.583 113.047 75.06-43.26 75.742-102.172 39-113.048z"/>
+    </symbol>
+
+    <symbol id="putainde-Icon-pencil" viewBox="0 0 512 512">
+      <title>pencil icon</title>
+      <path d="M74.686 340.686L50 460.95l122.365-22.585L379.52 231.21l-97.68-97.68L74.686 340.687zm228.402-135.654l-181.89 181.89-21.214-21.213 181.89-181.89 21.214 21.212zM462 148.732l-52.662 52.66-97.682-97.68 52.662-52.662L462 148.73z"/>
+    </symbol>
+
+    <symbol id="putainde-Icon-text-file" viewBox="0 0 512 512">
+      <title>text-file icon</title>
+      <path d="M256 370.312h-84.495v-30H256v30zm83.495-55.416h-167.99v-30h167.99v30zm0-55.334h-167.99v-30h167.99v30zM297.818 90v85.75h85.864V422H128.317V90h169.5m25-40h-234.5v412h335.365V150.75L322.818 50z"/>
+    </symbol>
+
+    <symbol id="putainde-Icon-twitter" viewBox="0 0 512 512">
+      <title>twitter icon</title>
+      <path d="M462 128.223c-15.158 6.724-31.45 11.27-48.547 13.31 17.45-10.46 30.854-27.025 37.164-46.764-16.333 9.686-34.422 16.72-53.676 20.51-15.417-16.428-37.385-26.69-61.697-26.69-54.56 0-94.668 50.915-82.337 103.786-70.25-3.524-132.534-37.177-174.223-88.314-22.142 37.983-11.485 87.69 26.158 112.85-13.853-.438-26.89-4.24-38.284-10.574-.917 39.162 27.146 75.78 67.795 83.95-11.895 3.236-24.925 3.977-38.17 1.446 10.755 33.58 41.973 58.018 78.96 58.7C139.605 378.28 94.847 390.72 50 385.435c37.406 23.982 81.837 37.977 129.57 37.977 156.933 0 245.596-132.55 240.252-251.435 16.517-11.917 30.846-26.804 42.178-43.755z"/>
+    </symbol>
+</svg><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size5of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size7of12"><nav class="putainde-Nav"><a href="../.." data-rcp-tooltip="" class="putainde-Nav-item  "><svg style="" class="putainde-Icon putainde-Icon-bookmark"><use xlink:href="#putainde-Icon-bookmark"></use></svg> Articles</a><a href="../../../c-est-quoi-putaindecode" data-rcp-tooltip="" class="putainde-Nav-item  "><svg style="" class="putainde-Icon putainde-Icon-text-file"><use xlink:href="#putainde-Icon-text-file"></use></svg> Readme</a><a href="../../comment-contribuer" data-rcp-tooltip="" class="putainde-Nav-item  "><svg style="" class="putainde-Icon putainde-Icon-pencil"><use xlink:href="#putainde-Icon-pencil"></use></svg> Participer</a><a href="https://github.com/putaindecode/" data-rcp-tooltip="GitHub" class="putainde-Nav-item  putainde-Nav-item--icon rcp-Tooltip rcp-Tooltip--bottom"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a><a href="https://twitter.com/putaindecode/" data-rcp-tooltip="Twitter" class="putainde-Nav-item  putainde-Nav-item--icon rcp-Tooltip rcp-Tooltip--bottom"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Débuter avec Ember</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas">Écrit par <a href="https://twitter.com/bmeurant">bmeurant</a>,<span class="putainde-Date"> le 20 oct. 2014</span>. <span data-rcp-tooltip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden rcp-Tooltip rcp-Tooltip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">ember</li><li class="putainde-Tag">javascript</li><li class="putainde-Tag">frameworks</li></ul></header><div class="putainde-Post-md"><p>Démarrer une <a href="http://en.wikipedia.org/wiki/Single-page_application">Single Page Application</a> aujourd’hui ça commence souvent par : “mais quel putain de framework il 
+faut que je prenne ?” Et, vu que c’est pas ça qui manque, ça se complique !</p>
+<p>Parmi les multiples <a href="/posts/js/introduction-a-reactjs">technos disponibles</a> il y a <a href="http://emberjs.com">Ember</a>. Pour que le choix 
+ne se résume pas à prendre celui qui a le plus joli logo ou qui génère le plus de spam sur votre twitter, on vous propose de découvrir 
+<a href="http://emberjs.com">Ember</a>. Dans des posts à venir on verra comment construire concrètement une application avec ce framework.</p>
+<h2 id="les-fondamentaux"><a class="putainde-Title-anchor" href="#les-fondamentaux">#</a>Les fondamentaux</h2><p>Parce que l’approche “tête la première” c’est bien mais que comprendre un minimum ce qu’on fait c’est encore mieux, il me parait sage de commencer
+par expliquer la philosophie et les principaux éléments du framework, sous peine de se prendre un bon vieux <a href="http://en.wikipedia.org/wiki/RTFM">doc officielle</a> 
+sur le coin du pif, comme ça, en passant.</p>
+<p><a href="http://emberjs.com">Ember</a> se définit comme : “A framework for creating <strong>ambitious</strong> web applications” et ça, ça claque !
+Mais je vois bien que ça suffit pas à vous convaincre alors je vais détailler un peu. Bon alors, bien que ce soit le mot “ambitious”
+qui soit mis en gras, deux autres trucs me paraissent encore plus importants :</p>
+<ul>
+<li><p><strong>web</strong> : L’une des caractéristiques majeures d’<a href="http://emberjs.com">Ember</a> est son attachement au web et aux URLs en particulier. <strong>Les URLs
+et donc le routeur sont au coeur d’Ember</strong> là ou bien d’autres frameworks les considèrent au mieux comme un addon important. </p>
+</li>
+<li><p><strong>framework</strong> : <a href="http://emberjs.com">Ember</a> est réellement un framework. Pas une lib, pas une colonne vertébrale, pas une boîte à outils : 
+un framework ! <a href="http://emberjs.com">Ember</a> propose un véritable modèle de développement que vous allez tout de suite adopter … ou rejeter
+(au moins ça aura le mérite d’être clair).</p>
+</li>
+</ul>
+<h3 id="conventions-de-nommage"><a class="putainde-Title-anchor" href="#conventions-de-nommage">#</a>Conventions de nommage</h3><p>Ce modèle de développement commence par les conventions de nommage. <a href="http://emberjs.com">Ember</a>
+applique en effet le principe de “conventions over configuration” et repose sur un nommage cohérent des différents composants 
+de votre application. Et finalement, quand on y réflechit bien, la cohérence, ça n’a pas que des mauvais côtés. </p>
+<p>Typiquement pour une URL <code>test</code>, <a href="http://emberjs.com">Ember</a> s’attend à trouver une <code>TestRoute</code>, un <code>TestController</code>, un gabarit <code>test</code>.
+Jusqu’ici, tout va bien.</p>
+<p>Curieux ? -&gt; <a href="http://emberjs.com/guides/concepts/naming-conventions/">doc officielle</a>.</p>
+<h3 id="modeles"><a class="putainde-Title-anchor" href="#modeles">#</a>Modèles</h3><p>Un modèle est un objet avec des propriétés contant des données métier. Le modèle est ensuite passé au gabarit pour être rendu par lui
+en HTML. Typiquement, les modèles peuvent être récupérés d’un backend via une API REST JSON via <a href="https://github.com/emberjs/data">Ember Data</a>
+mais pas que.</p>
+<pre><code class="lang-js">var Book = DS.Model.extend({
+    <span class="hljs-string">title               :</span> DS.attr(<span class="hljs-string">'string'</span>),
+    <span class="hljs-string">publicationDate     :</span> DS.attr(<span class="hljs-string">'date'</span>),
+    <span class="hljs-string">author              :</span> DS.attr(<span class="hljs-string">'string'</span>),
+    <span class="hljs-string">publisher           :</span> DS.attr(<span class="hljs-string">'string'</span>),
+    <span class="hljs-string">summary             :</span> DS.attr(<span class="hljs-string">'string'</span>)
+});
+</code></pre>
+<p>Assoifé de connaissances ? -&gt; <a href="http://emberjs.com/guides/models/">doc officielle</a>.</p>
+<h3 id="routeur"><a class="putainde-Title-anchor" href="#routeur">#</a>Routeur</h3><p>Le routeur permet de faire correspondre à une URL un ensemble de gabarits imbriqués permettant le rendu des modèles associés à 
+chacun de ces gabarits.</p>
+<p>L’exemple suivant permet le rendu des URLs : </p>
+<ul>
+<li><code>/books</code></li>
+<li><code>/books/:book_id</code></li>
+<li><code>/books/:book_id/edit</code></li>
+<li><code>/books/create</code></li>
+</ul>
+<pre><code class="lang-js">App.Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'books'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'book'</span>, { path: <span class="hljs-string">'/:book_id'</span> }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+          <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'edit'</span>);
+      });
+      <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'create'</span>);
+  });
+});
+</code></pre>
+<h3 id="routes"><a class="putainde-Title-anchor" href="#routes">#</a>Routes</h3><p>Les routes associent un modèle à un gabarit et sont également impliquées dans les transitions entre les différentes URLs (et donc les différents
+états) de l’application. Elles gèrent notamment un certain nombre d’opérations sur un modèle lors de ces transitions.</p>
+<pre><code class="lang-js">App.BooksRoute = Ember.Route.extend({
+    model: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.store.find(<span class="hljs-string">'book'</span>);
+    }
+});
+</code></pre>
+<p>Intrigué ? -&gt; <a href="http://emberjs.com/guides/routing/">doc officielle</a>.</p>
+<h3 id="controleurs"><a class="putainde-Title-anchor" href="#controleurs">#</a>contrôleurs</h3><p>Le contrôleur gère l’état de l’application. Il est situé entre la route dont il récupère le modèle et le gabarit dont il répond aux appels.
+Les données du contrôleur sont accessible au gabarit au même titre que le modèle.</p>
+<p>Le contrôleur est par exemple responsable du traitement des actions effectuées par l’utilisateur sur l’interface rendue par le gabarit : </p>
+<pre><code class="lang-html"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">button</span> </span></span><span class="hljs-expression">{{<span class="hljs-variable"><span class="hljs-keyword">action</span></span> <span class="hljs-string">"sort"</span>}}</span><span class="xml"><span class="hljs-tag">&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span></span>
+</code></pre>
+<pre><code class="lang-js">App.BooksController = Ember.ArrayController.extend({
+  actions: {
+    // appelé lors du clic sur le bouton
+    sort: <span class="hljs-keyword">function</span> () {
+        <span class="hljs-keyword">...</span>
+    }
+  }
+});
+</code></pre>
+<p>Perdu ? -&gt; <a href="http://emberjs.com/guides/controllers/">doc officielle</a>.</p>
+<h3 id="vues"><a class="putainde-Title-anchor" href="#vues">#</a>Vues</h3><p>Il est très rare d’avoir à définir des vues en <a href="http://emberjs.com">Ember</a> parce que les gabarits <a href="http://handlebarsjs.com/">Handlebars</a>
+sont surpuissants et que les contrôleurs se chargent de la gestion de l’état de l’application.</p>
+<p>Vous en voulez quand même ? -&gt; <a href="http://emberjs.com/guides/views/">doc officielle</a>.</p>
+<h3 id="gabarits"><a class="putainde-Title-anchor" href="#gabarits">#</a>gabarits</h3><p>Un gabarit est un fragment de code HTML permettant, via des expressions, d’afficher les données du modèle associé. Les gabarits d’<a href="http://emberjs.com">Ember</a>
+sont des gabarits <a href="http://handlebarsjs.com/">Handlebars</a>. Les expressions Handlebars sont délimitées par <code>{{</code> et <code>}}</code>.</p>
+<p>L’exemple suivant permet d’afficher le titre d’une app composé d’un prénom et d’un nom pour peu que l’on ait passé au gabarit un
+modèle contenant les deux propriétés <code>firstname</code> et <code>lastname</code>.</p>
+<pre><code class="lang-html"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span></span><span class="hljs-expression">{{<span class="hljs-variable">firstname</span>}}</span><span class="xml"> </span><span class="hljs-expression">{{<span class="hljs-variable">lastname</span>}}</span><span class="xml"> Library<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span></span>
+</code></pre>
+<p><a href="http://handlebarsjs.com/">Handlebars</a> vient avec de nombreux outils (helpers) permettant de dynamiser nos gabarits : <code>{{#if isActive}} ... {{/if}}</code>,
+<code>{{#each users}} ... {{/each}}</code>, etc.</p>
+<p>Dans <a href="http://emberjs.com">Ember</a>, les gabarits peuvent contenir un élément très important : <code>{{outlet}}</code>. Cet outlet définit un emplacement
+pour un autre gabarit permettant ainsi de multiples imbrications à mesure que les routes de l’application sont activées.</p>
+<pre><code class="lang-html"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span></span><span class="hljs-expression">{{<span class="hljs-variable">firstname</span>}}</span><span class="xml"> </span><span class="hljs-expression">{{<span class="hljs-variable">lastname</span>}}</span><span class="xml"> Library<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+  </span><span class="hljs-expression">{{<span class="hljs-variable"><span class="hljs-keyword">outlet</span></span>}}</span><span class="xml">
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span></span>
+</code></pre>
+<p>Tout élément de modèle injecté dans un gabarit sera <strong>automatiquement mis à jour</strong> (binding) par <a href="http://emberjs.com">Ember</a> lorsque le modèle
+associé au gabarit sera modifié. Evidemment, seul cet élément sera rafraichit et non le gabarit entier sinon c’est tricher.</p>
+<p>Envie de tester ? -&gt; <a href="http://emberjs.com/guides/templates/the-application-template/">doc officielle</a>.</p>
+<h3 id="composants"><a class="putainde-Title-anchor" href="#composants">#</a>Composants</h3><p>Un composant <a href="http://emberjs.com">Ember</a> permet de définir une balise HTML personnalisée, permettant ainsi de partager de puissants 
+éléments réutilisables au sein de votre application.</p>
+<p>Vous en avez toujours révé ? -&gt; <a href="http://emberjs.com/guides/components/">doc officielle</a>.</p>
+<h3 id="generation-d-objets"><a class="putainde-Title-anchor" href="#generation-d-objets">#</a>Géneration d’objets</h3><p>Pour qu’un gabarit soit rendu lorsqu’une URL est demandée, il faut donc que le routeur définisse cette URL, qu’elle soit implémentée par 
+une route qui récupèrera un modèle qu’elle mettra à disposition du contrôleur et du gabarit. Le contrôleur écoutera les 
+évènements en provenance du gabarit et y apportera la réponse adaptée. A noter que l’évènement peut également remonter jusqu’à la route.
+Le gabarit est quant à lui encapsulé dans une vue gérée par Ember tout seul comme un grand.</p>
+<p>Il n’est cependant <strong>pas nécessaire de créer systématiquement tout ces objets</strong> si aucune logique spécifique n’a besoin d’y être définie.
+En effet, <a href="http://emberjs.com">Ember</a> s’appuie sur les <a href="#conventions-de-nommage">conventions de nommage</a> pour retrouver successivement,
+à partir d’une URL, la route, le contrôleur, la vue et le gabarit associé. Si l’un de ces objet n’est pas trouvé, <a href="http://emberjs.com">Ember</a>
+va en générer un par défaut. </p>
+<p>Donc si l’on crée dans le routeur la route suivante sans créer aucun autre objet : </p>
+<pre><code class="lang-js">App.Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">this</span>.route(<span class="hljs-string">"about"</span>, { path: <span class="hljs-string">"/about"</span> });
+});
+</code></pre>
+<p><a href="http://emberjs.com">Ember</a> va générer les objets suivants :</p>
+<ul>
+<li><strong>route</strong> : <code>AboutRoute</code></li>
+<li><strong>contrôleur</strong> : <code>AboutController</code></li>
+<li><strong>gabarit</strong> : <code>about</code></li>
+</ul>
+<p>Dans une application <a href="http://emberjs.com">Ember</a>, <strong>il n’est donc nécessaire de ne définir que ce dont on a besoin !</strong>. Et c’est bien connu, 
+moins il y a de boilerplate, plus il y a de plaisir !</p>
+<p>Envie d’en savoir plus ? -&gt; <a href="http://emberjs.com/guides/routing/generated-objects/">doc officielle</a>.</p>
+<p>Un bon moyen de se rendre compte de ça consiste à installer le debugger Ember sur votre navigateur (donc pas IE) préféré. Vous aurez, entre
+autres, la liste de l’ensemble des objets impliqués dans le rendu d’une URL donnée. Cette liste distingue de manière claire les objets
+créés par vous et ceux générés par Ember. </p>
+<p>Ce module s’appelle <strong>Ember Inspector</strong> et est disponible pour <a href="https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi?hl=en">Chrome</a> 
+et <a href="https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/">Firefox</a>. C’est absolument indispensable lorsqu’on développe en Ember.</p>
+<h2 id="conclusion-et-next-steps"><a class="putainde-Title-anchor" href="#conclusion-et-next-steps">#</a>Conclusion et next steps</h2><p><a href="http://emberjs.com">Ember</a> est donc un framework très riche et extrêmement plaisant à pratiquer. 
+<strong>Un vrai framework avec un vrai parti pris et des vrais choix structurants.</strong>
+Il est résolument tourné vers le web et les URLs. Ses créateurs sont également ceux de son moteur de gabarit <a href="http://handlebarsjs.com/">Handlebars</a>
+et sont très impliqués dans diverses initiatives autour de la standardisation et de l’évolution du web. Pour n’en citer que deux :
+<a href="http://jsonapi.org/">JSON API</a> et <a href="https://gist.github.com/wycats/9144666b0c606d1838be">Web Components</a>, notamment au travers du moteur
+de gabarits <a href="https://github.com/tildeio/htmlbars">HTMLBars</a>. 
+Ils embrassent très rapidement les nouveaux standards tels que <a href="https://people.mozilla.org/~jorendorff/es6-draft.html">ES6 Harmony</a> à l’image des travaux
+effectués autour d’<a href="http://www.ember-cli.com/">ember-cli</a> qui sera abordé dans un prochain article.</p>
+<p>Enfin, contrairement aux <em>a priori</em>, la courbe d’apprentissage d’<a href="http://emberjs.com">Ember</a>
+est progressive et il est très simple à prendre en main une fois les concepts de base appréhendés - c’est justement le but de cet
+article. Au prochain épisode, nous verrons justement - par la pratique cette fois, <strong>comment démarrer et construire progressivement une
+application <a href="http://emberjs.com">Ember</a></strong>.</p>
+</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/putaindecode.fr/edit/master/src/pages/posts/js/debuter-avec-ember/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/putaindecode.fr/blame/master/src/pages/posts/js/debuter-avec-ember/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/putaindecode.fr/commits/master/src/pages/posts/js/debuter-avec-ember/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author"><a href="https://twitter.com/bmeurant" data-rcp-tooltip="bmeurant" class="putainde-Author-picture "><img src="https://avatars.githubusercontent.com/u/141720?v=2&amp;s=128" alt="" class="putainde-Avatar js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> <a href="https://twitter.com/bmeurant" class="putainde-Link">bmeurant</a></h3><div class="putainde-Author-social"><a href="https://twitter.com/bmeurant" data-rcp-tooltip="Website" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-home"><use xlink:href="#putainde-Icon-home"></use></svg></a><a href="https://twitter.com/bmeurant" data-rcp-tooltip="Twitter" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a><a href="https://github.com/bmeurant" data-rcp-tooltip="Github" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a></div></div><p class="putainde-Author-bio">Développeur full stack. Spécialités en Java & Javascript mais j'essaie de rester polyglotte.</p></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
+a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2014 Putain de Code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-rcp-tooltip="GitHub" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a><a href="https://twitter.com/putaindecode/" data-rcp-tooltip="Twitter" class="rcp-Tooltip rcp-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎ by <a href="../../../#crew">le crew</a></p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/js/debuter-avec-ember/";
+var disqus_url = "http://putaindecode.fr/posts/js/debuter-avec-ember/";
+var disqus_script = "embed.js";;(function(d,s) {
+s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+(d.getElementsByTagName('head')[0]).appendChild(s)
+})(document)</script><script src="../../../scripts/index.js"></script><script>var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
+(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+g.src='//www.google-analytics.com/ga.js';
+s.parentNode.insertBefore(g,s)}(document,'script'));</script></body></html>
