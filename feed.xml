@@ -1,4 +1,184 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 27 Oct 2014 14:40:52 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Première application Ember</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 27 Oct 2014 20:40:18 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Flux, qu'est-ce que c'est ?</title><description><![CDATA[
+<p>Allez, tant pis, on saute l’intro et on entre directement dans le vif du sujet (on n’a pas que ça à foutre, après tout).</p>
+<h2 id="la-petite-histoire"><a class="putainde-Title-anchor" href="#la-petite-histoire">#</a>La petite histoire</h2><p>Il était une fois un gros site web <em>que s’apelorio</em> Facebook. Qui dit Facebook, dit webapp plus grosse que la plus grosse de tes copines (<em>no offense</em>) ; et du coup, propension à se retrouver submergé de bugs plus élevée.</p>
+<p>Les ingénieurs front-end de Facebook, confrontés à une codebase de plus en plus bordélique (personne ne voulant toucher certaines parties de celle-ci) ont dû repenser la structure des composants les plus cruciaux.</p>
+<p>Face à ce besoin, ces développeurs sont donc parvenus à deux solutions :</p>
+<ul>
+<li><a href="http://putaindecode.fr/posts/js/introduction-a-reactjs/">ReactJS</a></li>
+<li>Flux</li>
+</ul>
+<p>Flux n’est pas un framework, mais simplement une architecture, une sorte de <em>guideline</em> qui résout pas mal de problèmes ayant pu apparaître avec les divers bibliothèques et frameworks MV* apparus lors des dernières années.</p>
+<h2 id="flux-l-explication-claire"><a class="putainde-Title-anchor" href="#flux-l-explication-claire">#</a>Flux, l’explication claire</h2><p>Flux comporte 4 concepts :</p>
+<ul>
+<li>les <strong>actions</strong>, qu’elles proviennent du serveur ou d’une interaction utilisateur ;</li>
+<li>le <strong>dispatcher</strong> dans lequel sont envoyées les actions que ce dernier transmet <em>à qui veut</em>, un peu comme un <code>EventEmitter</code> global ;</li>
+<li>les <strong>stores</strong>, qui sont l’équivalent du <code>model</code> de l’architecture MVC, ils contiennent les données, et réagissent aux actions que le dispatcher leur transmet ;</li>
+<li>les <strong>views</strong>, qui s’occupent du rendu des données dans le DOM, et de lancer des actions lorsque l’utilisateur effectue certaines actions.</li>
+</ul>
+<p>Jusque-là, rien de bien fou. C’est dans leur manière d’interagir que la particularité se dessine :</p>
+<figure>
+  <img src="http://cl.ly/YENt/flux.png" alt="">
+  <figcaption>Oh bah dis donc, ça va toujours dans le même sens</figcaption>
+</figure>
+
+<p>En effet, le <em>flux</em> en question est unidirectionnel. Pour faire simple, on procède ainsi :</p>
+<p>On définit une action via un <strong>action creator</strong> (on passera toujours par ces action-creators pour signaler une action) :</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// actions/BasketActions.js</span>
+<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispacher"</span>)
+<span class="hljs-comment">/*
+  On garde un dictionnaire des types d'actions
+  afin d'avoir un fichier donnant une vision
+  globale de toutes les interactions de l'app.
+ */</span>
+<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
+
+<span class="hljs-built_in">module</span>.exports = {
+  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(productId)</span></span>{
+    AppDispatcher.handleViewAction({
+      type : ActionTypes.ADD_TO_BASKET,
+      productId : productId
+    })
+  }
+}
+</code></pre>
+<p>On lancera par la suite cette action lorsque l’utilisateur aura cliqué sur un certain bouton, dans la vue concernée.</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// components/Product.jsx</span>
+<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">"react/addons"</span>)
+<span class="hljs-keyword">var</span> BasketActions = require(<span class="hljs-string">"../actions/BasketActions"</span>)
+
+<span class="hljs-keyword">var</span> Button = require(<span class="hljs-string">"./common/Button.jsx"</span>)
+
+<span class="hljs-keyword">var</span> Product = React.createClass({
+  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(productId)</span></span>{
+    BasketActions.addToBasket(productId)
+  },
+  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">return</span> (
+      &lt;div className=<span class="hljs-string">"Product"</span>&gt;
+        {<span class="hljs-comment">/* rest of the component*/</span>}
+        &lt;Button
+          onClick={<span class="hljs-keyword">this</span>.addToBasket.bind(<span class="hljs-keyword">this</span>.props.productId)}
+          label=<span class="hljs-string">"Add to basket"</span>
+        /&gt;
+      &lt;/div&gt;
+    )
+  }
+})
+
+module.exports = Product
+</code></pre>
+<p>Dès lors, à chaque clic sur le bouton en question, l’action <code>ADD_TO_BASKET</code> sera passée au dispatcher, qui le signalera aux stores.</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// stores/BasketStore.js</span>
+<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispatcher"</span>)
+<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
+<span class="hljs-keyword">var</span> API = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../api"</span>)
+
+<span class="hljs-keyword">var</span> merge = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/merge"</span>)
+<span class="hljs-keyword">var</span> Store = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/store"</span>)
+
+<span class="hljs-keyword">var</span> _store = {
+  products : []
+}
+
+<span class="hljs-keyword">var</span> BasketStore = merge(Store, {
+  <span class="hljs-comment">/*
+    Ici, on `register` un callback sur l'AppDispatcher,
+    ce qui signifie qu'on verra passer toutes les actions
+    de l'app.
+   */</span>
+  dispatchToken : AppDispatcher.register(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(payload)</span></span>{
+    <span class="hljs-keyword">var</span> action = payload.action
+    <span class="hljs-keyword">switch</span>(action.type) {
+      <span class="hljs-keyword">case</span> ActionTypes.ADD_TO_BASKET:
+          <span class="hljs-comment">/*
+             L'API va ajouter le produit et lancer une
+             action `BASKET_UPDATED` dès que le serveur a répondu.
+          */</span>
+        API.addToBasket(action.productId)
+        <span class="hljs-keyword">break</span>
+      <span class="hljs-keyword">case</span> ActionTypes.BASKET_UPDATED:
+          <span class="hljs-comment">/*
+            L'API a répondu, on peut stocker la réponse
+            et signaler le changement
+            aux vues récupérant ces données.
+          */</span>
+          _store = action.reponse
+          BasketStore.emitChange()
+        <span class="hljs-keyword">break</span>
+      <span class="hljs-keyword">default</span>:
+        <span class="hljs-keyword">break</span>
+    }
+  })
+})
+
+<span class="hljs-built_in">module</span>.exports = BasketStore
+</code></pre>
+<p>La vue, quant à elle, sera notifiée du changement, et effectuera un <code>render()</code> :</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// components/Basket.jsx</span>
+<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">"react/addons"</span>)
+<span class="hljs-keyword">var</span> BasketActions = require(<span class="hljs-string">"../actions/BasketActions"</span>)
+<span class="hljs-keyword">var</span> BasketStore = require(<span class="hljs-string">"../stores/BasketStore"</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getState</span><span class="hljs-params">()</span></span>{
+  <span class="hljs-keyword">return</span> BasketStore.getStore()
+}
+
+<span class="hljs-keyword">var</span> Product = React.createClass({
+  getInitialState : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">return</span> getState()
+  },
+  _onStoreChange : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-comment">/*
+      À chaque changement du store, on update naïvement
+      le component et on laisse le virtual DOM faire son job.
+    */</span>
+    <span class="hljs-keyword">this</span>.setState(getState())
+  },
+  componentDidMount : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-comment">/*
+      On écoute le store uniquement lorsque le
+      component est monté.
+     */</span>
+    BasketStore.addChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
+  },
+  componentWillUnmount : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-comment">/*
+      Et on arrête d'écouter quand il ne l'est plus.
+     */</span>
+    BasketStore.removeChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
+  },
+  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">return</span> (
+      &lt;div className=<span class="hljs-string">"Basket"</span>&gt;
+        &lt;div className=<span class="hljs-string">"Basket-count"</span>&gt;
+          {<span class="hljs-keyword">this</span>.state.products.length + <span class="hljs-string">" products"</span>}
+        &lt;/div&gt;
+        {<span class="hljs-comment">/* rest of the component */</span>}
+      &lt;/div&gt;
+    )
+  }
+})
+
+module.exports = Product
+</code></pre>
+<p>Tout cela peut sembler relativement verbeux, mais il faut préciser deux choses :</p>
+<ul>
+<li>les exemples ici le sont volontairement pour la démonstration, et il est aisément faisable d’utiliser un <code>StoreMixin</code> simplifier la déclaration des <code>class</code> React ;</li>
+<li>pour ce qui est du reste, notamment stocker les noms d’actions dans un objet partagé dans l’app, c’est pour rendre plus idiomatique et cohérente la façon dont on code l’app, et pour simplifier ses <em>refactoring</em>.</li>
+</ul>
+<h2 id="ce-qu-il-faut-savoir-sur-l-alliance-flux-react"><a class="putainde-Title-anchor" href="#ce-qu-il-faut-savoir-sur-l-alliance-flux-react">#</a>Ce qu’il faut savoir sur l’alliance Flux + React</h2><p>Si React et Flux vont si bien ensemble, c’est que l’approche de rendu “naïf” de React (comprendre “React s’en fout de ce qui change, il appelle <code>render</code> à chaque changement”) permet de réduire la logique à écrire dans les Stores, et donc de simplifier très fortement la codebase de l’app.</p>
+<p>Lorsque qu’un ou plusieurs stores composent l’état d’un state React, alors à chaque changement de l’un de ces stores, tous les composants React concernés et leurs enfants vont appeler leur méthode <code>render()</code>. Afin d’éviter des appels superflus à ces méthodes, React donne la possibilité de tester soi-même s’il est nécessaire de mettre à jour le component en déclarant une méthode <code>shouldComponentUpdate</code> retournant un <code>boolean</code> qui stipulera si oui ou non il est nécessaire d’appeler <code>render()</code>.</p>
+<h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><ul>
+<li>Flux, c’est comme du MVC en plus simple, et avec moins de bugs</li>
+<li>L’architecture est unidirectionnelle</li>
+<li>On raisonne en actions, qui sont déclenchées par la vue ou le serveur</li>
+<li>Toutes les actions passent par le dispatcher</li>
+<li>Seuls les stores signalent aux vues qu’il faut se mettre à jour</li>
+</ul>
+<p>Bisous bisous.</p>
+<p><img src="http://media.giphy.com/media/lxd2cZ2BkM4IE/giphy.gif" alt="angulol"></p>
+
+]]></description><pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</guid></item><item><title>Première application Ember</title><description><![CDATA[
 <p>Après l’<a href="/posts/js/debuter-avec-ember">article précédent</a> qui a détaillé les principaux concepts d’<a href="http://emberjs.com">Ember</a>, il est grand temps de
 se dégourdir les doigts. Comme on a peur de rien, on va même construire progressivement ensemble une application
 avec <a href="http://emberjs.com">Ember</a>.</p>
@@ -2275,127 +2455,7 @@ fonctionnalités que le téléchargement de modules.  </p>
 <p>Bye bye Bower!</p>
 <p>PS: vous avez besoin d’un module qui n’a pas de package.json ? Pas de problème, <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/">napa est là pour ça</a></p>
 
-]]></description><pubDate>Tue, 06 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</guid></item><item><title>Petite définition de BEM</title><description><![CDATA[
-<p><strong><a href="http://bem.info">BEM</a></strong> n’est ni une marque de voiture ni un groupe de musique, et encore moins une onomatopée (quoique). C’est plutôt une façon de nommer les classes en CSS, une convention en d’autres termes voire une méthodologie.</p>
-<p>Dans cet article, je ne vous expliquerai pas pourquoi il faut préférer BEM à une autre convention, je vous explique surtout comment l’utiliser.</p>
-<p><strong>BEM</strong> apporte une solution à un problème majeur en informatique : le nommage.</p>
-<p>Il n’y a rien de plus compliqué en informatique que de nommer un objet : besoin d’être explicite, ne doit pas être trop générique, ni trop compliqué, ni trop verbeux (ça, ça reste à voir avec BEM…).</p>
-<p>Lorsque l’on nomme un objet, une méthode, une fonction, une classe, on se doit d’être avant tout compréhensible. Une personne devant lire votre code doit directement comprendre de quoi vous parlez. Cette personne peut très bien être vous 6 mois, 1 an après. Je pense sincèrement qu’un code clair vaut toute la documentation du monde. Je ne dis pas qu’il ne faut pas documenter mais un code doit être facilement compréhensible, la documentation doit juste apporter un contexte, une situation particulière.</p>
-<p>Bref, <strong>BEM</strong> est le sigle pour <em>Block</em>, <em>Element</em>, <em>Modifier</em>. Qu’est-ce que cela veut dire.</p>
-<p>Prenons par exemple un site web. Nous avons un ensemble avec dedans deux onglets et en dessous le contenu de chaque onglet.</p>
-<p>Nous allons définir ce que sont le <em>block</em>, le ou les <em>elements</em> et les <em>modifiers</em>.</p>
-<p>Dans ce cas précis, le <em>block</em> est le conteneur, l’ensemble, ce qui entoure le tout. Appelons-le “Window”.</p>
-<p>Nous avons alors aussi les <em>elements</em> suivants : les onglets, que nous allons nommer “Tab”, et le contenu, là où il y a le texte de chaque onglet “Content”.</p>
-<p>Comment cela se traduit en <strong>BEM</strong> :</p>
-<ul>
-<li>Notre <em>block</em> s’appelant “Window” sera alors <code>.Window</code></li>
-<li>Nos <em>elements</em> “Tab” seront <code>.Window-tab</code></li>
-<li>Notre <em>element</em> “Content” sera <code>.Window-content</code></li>
-</ul>
-<p>Jusque là, cela devrait aller :</p>
-<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
-
-<span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
-
-  <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
-
-  <span class="hljs-rule">}</span></span>
-</code></pre>
-<p>Ce qui revient de manère générique à :</p>
-<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
-
-}</span>
-
-  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
-
-  }</span>
-</code></pre>
-<p>Oui, je vous conseille d’indenter votre code afin de grouper vos classes.</p>
-<p>Maintenant, nous allons définir ce qu’est un <em>modifier</em>. Un <em>modifier</em> change l’état de l’élément, il peut s’appliquer aussi bien sur un <em>block</em>, qu’un <em>element</em>.</p>
-<p>Si par exemple je souhaite mettre en actif un onglet (le mettre en avant car séléctionné), je ferai alors <code>.Window-tab--active</code>, soit :</p>
-<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
-
-<span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
-  <span class="hljs-rule">}</span></span>
-
-    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
-      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-    <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
-
-  <span class="hljs-rule">}</span></span>
-</code></pre>
-<p>J’aimerais aussi afficher ou non le contenu. Pour cela, je vais lui rajouter un <em>modifier</em></p>
-<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
-
-<span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
-  <span class="hljs-rule">}</span></span>
-
-    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
-      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-    <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
-  <span class="hljs-rule">}</span></span>
-
-  <span class="hljs-class">.Window-content--hidden</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
-  <span class="hljs-rule">}</span></span>
-</code></pre>
-<p>J’aurais très bien pu inverser et dire que par défaut le contenu est caché et je lui rajoute la classe <code>.Window-tab--active</code> pour l’afficher (<code>display: block</code>) mais lorsqu’il s’agit de cacher ou de faire appaître des éléments, je vous conseille vivement de plutôt ajouter un <em>modifier</em> qui cache les éléments, car cela évite de se prendre la tête sur quel <code>display</code> mettre par défaut. Là, vous mettez un <code>display: none</code> et voilà, qu’importe si celui de base est un <code>inline</code>, <code>inline-block</code>, <code>table-cell</code> ou autre.</p>
-<p>Du coup, nous avons maintenant nos différents types de classes. Cela se résume de manière générique à :</p>
-<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
-
-}</span>
-
-  .<span class="hljs-keyword">Block</span>--modifier <span class="hljs-list">{
-
-  }</span>
-
-  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
-
-  }</span>
-
-    .<span class="hljs-keyword">Block</span>-element--modifier <span class="hljs-list">{
-
-    }</span>
-</code></pre>
-<p>Ce qui donne <code>.Block-element--modifier</code> (notre <strong>BEM</strong>).</p>
-<p>Parlons maintenant du cas des termes multiples dans chaque partie. Voici comment cela se traduit.</p>
-<p><code>.MyBlock-myElement--myModifier</code></p>
-<p>Les <em>blocks</em> sont en “PascalCase” (ou UpperCamelCase), les <em>elements</em> et <em>modifiers</em> sont en “camelCase” (ou lowerCamelCase). Nous séparons le <em>block</em> de l’élément par “-“ et le <em>block</em> ou l’ <em>element</em> d’un <em>modifier</em> par “—“.</p>
-<p>Maintenant, vous savez tout sur <strong>BEM</strong>. Sachez qu’il existe tout de même plusieurs conventions de <strong>BEM</strong>. Celle que je vous ai apprise là est la norme de <strong>montage.js</strong> mais il y en a d’autres par exemple qui n’utilisent pas les majuscules et font ce genre de choses : <code>.my-block__my-element--my-modifier</code>. Il s’avère que c’est la <a href="http://bem.info/method/definitions/#naming-for-independent-css-classes">convention pseudo-officielle</a>.</p>
-<p>L’inconvénient de ceci est que c’est moins lisible au premier abord qui est quoi, et de plus, les <code>_</code> ne permettent pas de sélectionner facilement un terme en <em>double-cliquant</em> dessus.</p>
-<p>Deux petites choses avant de partir.</p>
-<p>Dans le but d’éviter de vous faire écraser vos propriétés par quelqu’un d’autre (une bibliothèque, un <em>SDK</em>), je vous conseille de rajouter votre organisation.</p>
-<p>Typiquement, ça donne <code>.org-Block-element--modifier</code>. Tout en minuscule et si possible ne pas dépasser les 3 lettres car vous allez devoir le répéter à chaque fois et ça peut être lourd.</p>
-<p>La deuxième chose est la classe qui sert de sélecteur en JavaScript. Plutôt que <em>binder</em> un élément via sa classe “CSS” (à chaque classe sa responsabilité), il est nettement préférable de créer une classe spécifique au JavaScript. Cela donne : <code>.org-js-Block-element--modifier</code>. Il suffit simplement de rajouter <code>-js</code> entre l’organisation et le <em>block</em>.</p>
-<p>Nous arrivons à la convention suivante : <code>.org[-js]-Block[-element][--modifier]</code></p>
-<p>Certains vous diront qu’ils mettent <code>.js-org-</code> mais étant donné que je considère cela comme un <em>namespace</em> global (autant css que js), je préfère mettre l’ <code>org</code> au début.</p>
-<p>Voilà, voilà, c’est certes un peu déroutant au début, et ca parait très verbeux mais cela vous permettra d’éviter de nooooooombreux soucis de nommage de classes où vous vous emmèlerez les pinceaux à coup de :</p>
-<pre><code class="lang-css"><span class="hljs-class">.footer</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> underline</span></span>;
-<span class="hljs-rule">}</span></span>
-
-<span class="hljs-class">.content</span> <span class="hljs-class">.footer</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> none</span></span>; <span class="hljs-comment">/* annule la propriété du précédent sélecteur */</span>
-<span class="hljs-rule">}</span></span>
-</code></pre>
-<p>Ciao les kids.</p>
-
-]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/petite-definition-bem/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/petite-definition-bem/</guid></item><item><title>Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML</title><description><![CDATA[
+]]></description><pubDate>Tue, 06 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</guid></item><item><title>Table ronde #3 - Les bonnes pratiques et organisation CSS/HTML</title><description><![CDATA[
 <p>Mardi 29 avril s’est déroulée la troisième table ronde qui est finalement la première sous le nom de <strong>{p!}</strong>. Une petite explication s’impose étant donné que nous allons en faire de plus en plus et que je souhaite vraiment vous faire un compte rendu sur chacun de ces évènements.</p>
 <h2 id="preambule"><a class="putainde-Title-anchor" href="#preambule">#</a>Préambule</h2><p>Partant du constat qu’il est difficile d’apprendre et d’échanger en conférence du fait du manque du niveau assez élevé (trop de gens avec un niveau différent, il faut forcément s’aligner) et à sens unique (une personne parle, les autres écoutent), nous avons décidé de créer des tables rondes où un fil conducteur est suivi amenant à débattre, échanger, affirmer.</p>
 <p>Attention, je ne dis pas que les conférences ne servent à rien mais à mon sens elles sont trop magistrales et parfois trop marketing (coucou WebRTC Paris).</p>
@@ -2541,257 +2601,124 @@ Oh et attention, tous les navigateurs ne font pas 16px de base. Je dis ça si vo
 <p>N’hésitez pas à continuer le débat dans les commentaires.</p>
 <p>Pour ma part, j’ai déjà d’autres articles “dans le pipe” (comme disent certains marketeux). Je vous retrouve bientôt ici ou sur Twitter, kiss.</p>
 
-]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</link><guid isPermaLink="true">http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</guid></item><item><title>Introduction au testing js front</title><description><![CDATA[
-<p>Les tests automatisés en front-end ont longtemps été ignorés,
-et le sont encore trop.</p>
-<p>Écrire des tests peut paraître chiant, mais le temps qu’ils rapportent
-compense largement celui que l’on passe à les écrire.</p>
-<h2 id="ecrire-du-js-testable"><a class="putainde-Title-anchor" href="#ecrire-du-js-testable">#</a>Écrire du js testable</h2><p>Prenons un exemple simple et moche :</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">//app.js</span>
-;(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-
-  <span class="hljs-keyword">var</span> cart = $(<span class="hljs-string">"#cart"</span>)
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addToCart</span><span class="hljs-params">(id)</span></span>{
-    <span class="hljs-keyword">var</span> element = $(<span class="hljs-string">"&lt;li&gt;&lt;/li&gt;"</span>)
-    element.html(catalog[id])
-    cart.append(element)
-  }
-
-  $(<span class="hljs-string">".js-updateCart"</span>)
-    .on(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span></span>{
-      addToCart($(<span class="hljs-keyword">this</span>).data(<span class="hljs-string">"id"</span>))
-    })
-
-})()
-</code></pre>
-<p>Tester ce code est particulièrement lourd, pour plusieurs raisons :</p>
+]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</link><guid isPermaLink="true">http://putaindecode.fr/posts/table-ronde/bonnes-pratiques-et-organisation-css-html/</guid></item><item><title>Petite définition de BEM</title><description><![CDATA[
+<p><strong><a href="http://bem.info">BEM</a></strong> n’est ni une marque de voiture ni un groupe de musique, et encore moins une onomatopée (quoique). C’est plutôt une façon de nommer les classes en CSS, une convention en d’autres termes voire une méthodologie.</p>
+<p>Dans cet article, je ne vous expliquerai pas pourquoi il faut préférer BEM à une autre convention, je vous explique surtout comment l’utiliser.</p>
+<p><strong>BEM</strong> apporte une solution à un problème majeur en informatique : le nommage.</p>
+<p>Il n’y a rien de plus compliqué en informatique que de nommer un objet : besoin d’être explicite, ne doit pas être trop générique, ni trop compliqué, ni trop verbeux (ça, ça reste à voir avec BEM…).</p>
+<p>Lorsque l’on nomme un objet, une méthode, une fonction, une classe, on se doit d’être avant tout compréhensible. Une personne devant lire votre code doit directement comprendre de quoi vous parlez. Cette personne peut très bien être vous 6 mois, 1 an après. Je pense sincèrement qu’un code clair vaut toute la documentation du monde. Je ne dis pas qu’il ne faut pas documenter mais un code doit être facilement compréhensible, la documentation doit juste apporter un contexte, une situation particulière.</p>
+<p>Bref, <strong>BEM</strong> est le sigle pour <em>Block</em>, <em>Element</em>, <em>Modifier</em>. Qu’est-ce que cela veut dire.</p>
+<p>Prenons par exemple un site web. Nous avons un ensemble avec dedans deux onglets et en dessous le contenu de chaque onglet.</p>
+<p>Nous allons définir ce que sont le <em>block</em>, le ou les <em>elements</em> et les <em>modifiers</em>.</p>
+<p>Dans ce cas précis, le <em>block</em> est le conteneur, l’ensemble, ce qui entoure le tout. Appelons-le “Window”.</p>
+<p>Nous avons alors aussi les <em>elements</em> suivants : les onglets, que nous allons nommer “Tab”, et le contenu, là où il y a le texte de chaque onglet “Content”.</p>
+<p>Comment cela se traduit en <strong>BEM</strong> :</p>
 <ul>
-<li>les functions à tester ne sont pas accessibles</li>
-<li>on doit simuler un <code>click</code> pour tester un comportement logique.</li>
-<li>on doit créer un element et modifier sont <code>data-id</code> à chaque cas souhaité.</li>
-<li>pour tester <code>addToCart</code> on doit aller regarder dans le DOM.</li>
+<li>Notre <em>block</em> s’appelant “Window” sera alors <code>.Window</code></li>
+<li>Nos <em>elements</em> “Tab” seront <code>.Window-tab</code></li>
+<li>Notre <em>element</em> “Content” sera <code>.Window-content</code></li>
 </ul>
-<h3 id="1-rendez-accessibles-vos-methodes-au-test-runner"><a class="putainde-Title-anchor" href="#1-rendez-accessibles-vos-methodes-au-test-runner">#</a>1. Rendez accessibles vos méthodes au test runner</h3><p>Vous pouvez utiliser un namespace adéquat.</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> app = <span class="hljs-built_in">window</span>.app = {}
-app.cart = {}
-app.cart.addToCart = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{ <span class="hljs-comment">/* … */</span> }
-</code></pre>
-<p>Mais ne souhaitez probablement pas rendre vos méthodes accessibles à la console.</p>
-<p>Utilisez un module-system : <a href="http://browserify.org">browserify</a> ou
-<a href="http://requirejs.org">requirejs</a> (si vous n’avez pas besoin de chargement
-conditionnel et souhaitez créer un bundle par build, utilisez browserify qui
-possède une syntaxe beaucoup plus sympathique et une codebase réduite, vous
-pourrez même <code>require</code> depuis un module npm
-<a href="/posts/js/browserify-all-the-things/">comme on vous l’explique dans un article dédié</a>).</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"jquery"</span>) <span class="hljs-comment">// oh, un module npm</span>
+<p>Jusque là, cela devrait aller :</p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
 
-<span class="hljs-built_in">module</span>.exports = {
-  element : $(<span class="hljs-string">"#cart"</span>),
-  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-comment">/* … */</span>
-  }
-}
-</code></pre>
-<p>Vous pourrez ainsi séparer proprement votre application en modules et les tester individuellement.</p>
-<h3 id="2-oui-mais-les-modules-interdependants-alors-"><a class="putainde-Title-anchor" href="#2-oui-mais-les-modules-interdependants-alors-">#</a>2. Oui, mais les modules interdépendants alors ?</h3><p>Là, ça devient un peu plus tricky.
-Ce que je conseille à titre personnel c’est d’utiliser des events
-pour faire communiquer les différentes parties de l’application.</p>
-<p>Cela permet d’éviter d’utiliser des mocks d’autres parties de l’application partout.</p>
-<p>Par exemple, si je souhaite tester le fait qu’un click sur <code>.js-updateCart</code>
-déclanchera bien <code>updateCart</code> :</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">//view.js</span>
+<span class="hljs-rule">}</span></span>
 
-<span class="hljs-comment">// view est une petite class qui route les events</span>
-<span class="hljs-comment">// en rendant les listeners accessibles aux tests</span>
-<span class="hljs-comment">// vous pouvez très facilement en concevoir une</span>
-<span class="hljs-comment">// à votre goût en quelques lignes de code</span>
-<span class="hljs-keyword">var</span> view = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../lib/view"</span>)
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
 
-<span class="hljs-comment">// eventbus est l'event bus de l'application, il orchestre</span>
-<span class="hljs-comment">// la communication entre les différents modules</span>
-<span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
+  <span class="hljs-rule">}</span></span>
 
-<span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"jquery"</span>)
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
 
-<span class="hljs-built_in">module</span>.exports = view.extend({
-  element : <span class="hljs-built_in">document</span>.body,
-  events : [
-    {
-      type : <span class="hljs-string">"click"</span>,
-      selector : <span class="hljs-string">".js-addToCart"</span>,
-      listener : <span class="hljs-string">"addToCart"</span>
-    }
-  ],
-  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span></span>{
-    <span class="hljs-keyword">var</span> target = eventObject.currentTarget
-    <span class="hljs-keyword">var</span> id = $(target).data(<span class="hljs-string">"id"</span>)
-    eventbus.fire(<span class="hljs-string">"addToCart"</span>, {
-      id : id
-    })
-  }
-})
+  <span class="hljs-rule">}</span></span>
 </code></pre>
-<p>et je n’aurais qu’à écouter cet event depuis <code>cart</code> :</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// cart.js</span>
-<span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
-<span class="hljs-keyword">var</span> catalog = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../catalog"</span>)
+<p>Ce qui revient de manère générique à :</p>
+<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
 
-<span class="hljs-built_in">module</span>.exports = {
-  initialize : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">this</span>._addToCart = <span class="hljs-keyword">this</span>.addToCart.bind(<span class="hljs-keyword">this</span>)
-    eventbus.listen(<span class="hljs-string">"addToCart"</span>, <span class="hljs-keyword">this</span>._addToCart)
-  },
-  release : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    eventbus.stopListening(<span class="hljs-string">"addToCart"</span>, <span class="hljs-keyword">this</span>._addToCart)
-  },
-  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span></span>{
-    <span class="hljs-comment">// et on a eventObject.id</span>
-    <span class="hljs-keyword">this</span>.products.push(catalog[eventObject.currentTarget.data(<span class="hljs-string">"id"</span>)])
-  }
-}
-</code></pre>
-<p>Grâce à cette architecture, je vais pouvoir tester individuellement
-les deux modules.</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// view.test.js</span>
+}</span>
 
-<span class="hljs-keyword">var</span> tape = <span class="hljs-built_in">require</span>(<span class="hljs-string">"tape"</span>)
-<span class="hljs-keyword">var</span> view = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../app/view"</span>)
-<span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
-<span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"jquery"</span>)
+  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
 
-tape(<span class="hljs-string">"view"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
-  test.plan(<span class="hljs-number">1</span>)
-  <span class="hljs-keyword">var</span> element = $(<span class="hljs-string">"&lt;div&gt;&lt;/div&gt;"</span>)
-  element.data(<span class="hljs-string">"id"</span>, <span class="hljs-number">1</span>)
-  <span class="hljs-comment">// on teste facilement l'envoi</span>
-  eventbus.listen(<span class="hljs-string">"addToCart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span></span>{
-    test.equal(eventObject.id, <span class="hljs-number">1</span>)
-  })
-  view.addToCart({
-    currentTarget : element
-  })
-})
+  }</span>
 </code></pre>
-<pre><code class="lang-javascript"><span class="hljs-comment">// cart.test.js</span>
+<p>Oui, je vous conseille d’indenter votre code afin de grouper vos classes.</p>
+<p>Maintenant, nous allons définir ce qu’est un <em>modifier</em>. Un <em>modifier</em> change l’état de l’élément, il peut s’appliquer aussi bien sur un <em>block</em>, qu’un <em>element</em>.</p>
+<p>Si par exemple je souhaite mettre en actif un onglet (le mettre en avant car séléctionné), je ferai alors <code>.Window-tab--active</code>, soit :</p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
 
-<span class="hljs-keyword">var</span> tape = <span class="hljs-built_in">require</span>(<span class="hljs-string">"tape"</span>)
-<span class="hljs-keyword">var</span> cart = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../app/cart"</span>)
-<span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
-<span class="hljs-keyword">var</span> catalog = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../catalog"</span>)
+<span class="hljs-rule">}</span></span>
 
-tape(<span class="hljs-string">"cart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
-  cart.initialize()
-  eventbus.fireSync(<span class="hljs-string">"addToCart"</span>, {id:<span class="hljs-number">1</span>})
-  test.deepEqual(
-    cart[<span class="hljs-number">0</span>],
-    catalog[<span class="hljs-number">1</span>],
-    <span class="hljs-string">"receives addToCart event"</span>
-  )
-  test.end()
-})
-</code></pre>
-<h2 id="tester-tous-les-cas-possibles"><a class="putainde-Title-anchor" href="#tester-tous-les-cas-possibles">#</a>Tester tous les cas possibles</h2><p>Ce sont souvent les edge-cases qui nous font nous arracher les cheveux.
-Pour pallier ces soucis, tester en profondeur est essentiel.</p>
-<p>Prenons un exemple, une méthode qui teste si la valeur qu’on lui passe est
-une <code>string</code>.</p>
-<p>On serait tenté de simplement tester les résultats positifs de cette façon :</p>
-<pre><code class="lang-javascript">tape(<span class="hljs-string">"type.isString on strings"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
-  test.equal(<span class="hljs-built_in">type</span>.isString(<span class="hljs-string">""</span>), <span class="hljs-keyword">true</span>)
-  test.<span class="hljs-keyword">end</span>()
-})
-</code></pre>
-<p>Or, si par mégarde ma méthode <code>isString</code> se révèle être :</p>
-<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
-  <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> value == <span class="hljs-string">"string"</span>
-}
-</code></pre>
-<p>on ne vérifie pas le cas <code>type.isString(new String(&quot;&quot;))</code>.</p>
-<p>Du coup, des tests complets :</p>
-<pre><code class="lang-javascript">tape(<span class="hljs-string">"type.isString on strings"</span>, <span class="hljs-keyword">function</span>(test){
-  test.equal(<span class="hljs-class"><span class="hljs-keyword">type</span>.<span class="hljs-title">isString</span></span>(<span class="hljs-string">""</span>), <span class="hljs-keyword">true</span>)
-  test.equal(<span class="hljs-class"><span class="hljs-keyword">type</span>.<span class="hljs-title">isString</span></span>(<span class="hljs-keyword">new</span> String(<span class="hljs-string">""</span>)), <span class="hljs-keyword">false</span>)
-  test.<span class="hljs-keyword">end</span>()
-})
-</code></pre>
-<p>permettent ici d’identifier qu’en réalité on a besoin de :</p>
-<pre><code class="lang-javascript"><span class="hljs-typedef"><span class="hljs-keyword">type</span>.isString = function<span class="hljs-container">(<span class="hljs-title">value</span>)</span> <span class="hljs-container">{
-  <span class="hljs-title">return</span> <span class="hljs-type">Object</span>.<span class="hljs-title">prototype</span>.<span class="hljs-title">toString</span>.<span class="hljs-title">call</span>(<span class="hljs-title">value</span>) == "[<span class="hljs-title">object</span> <span class="hljs-type">String</span>]"
-}</span></span>
-</code></pre>
-<p>Et c’est à la force des résultats de tests que vous identifierez rapidement
-vous familiariserez à tous ces edge-cases.</p>
-<p>À chaque correctif de bug, ajoutez des tests (mais ça, vous le saviez déjà).</p>
-<h2 id="cross-browser-testing"><a class="putainde-Title-anchor" href="#cross-browser-testing">#</a>Cross-browser testing</h2><p>À l’heure actuelle, où l’on se trouve notamment très souvent avec du
-feature testing.
-Pour le tester complètement, on doit se servir de vrais navigateurs :
-un headless (certes, très pratique) comme <a href="http://phantomjs.org">phantomjs</a>
-ne permettra pas d’obtenir 100% de coverage.</p>
-<pre><code class="lang-javascript"><span class="hljs-tag">var</span> supportsAnimationFrame =
-  !!(
-    win<span class="hljs-class">.requestAnimationFrame</span> ||
-    win<span class="hljs-class">.webkitRequestAnimationFrame</span> ||
-    win<span class="hljs-class">.mozRequestAnimationFrame</span> ||
-    win<span class="hljs-class">.ORequestAnimationFrame</span> ||
-    <span class="hljs-comment">// vous avez fait une faute de frappe,</span>
-    <span class="hljs-comment">// et mis un `O` majuscule, seul un</span>
-    <span class="hljs-comment">// test sur les version concernées d'Opera</span>
-    <span class="hljs-comment">// vous permettront de l'identifier</span>
-    win<span class="hljs-class">.msRequestAnimationFrame</span>
-  )
-</code></pre>
-<p>De plus, vous pouvez par habitude être tenté d’utiliser un
-<code>Array.prototype.forEach</code> alors que votre scope navigateur inclut
-IE8; seuls des tests sur un vrai browser vous permettront d’identifier le souci.</p>
-<p>Je vous conseille fortement testling, très simple à intégrer dans vos
-modules, et gratuit pour tout projet open-source.</p>
-<p>Dans le <code>package.json</code> :</p>
-<pre><code class="lang-json">{
-  "<span class="hljs-attribute">testling</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">files</span>": <span class="hljs-value"><span class="hljs-string">"test/**/*.js"</span></span>,
-    "<span class="hljs-attribute">browsers</span>": <span class="hljs-value">[
-      <span class="hljs-string">"ie/9..latest"</span>,
-      <span class="hljs-string">"chrome/22..latest"</span>,
-      <span class="hljs-string">"firefox/16..latest"</span>,
-      <span class="hljs-string">"safari/6..latest"</span>,
-      <span class="hljs-string">"opera/11.0..latest"</span>,
-      <span class="hljs-string">"iphone/6..latest"</span>,
-      <span class="hljs-string">"ipad/6..latest"</span>,
-      <span class="hljs-string">"android-browser/latest"</span>
-    ]
-  </span>}
-</span>}
-</code></pre>
-<p>Et ajouter un webhook dans l’admin de votre repository GitHub pointant vers</p>
-<blockquote>
-<p><a href="http://git.testling.com">http://git.testling.com</a></p>
-</blockquote>
-<p>Vous pouvez l’utiliser avec tape (son test harness par défaut)
-Mocha, QUnit et n’importe quelle bibliothèque
-de test supportant <code>TAP</code> comme indiqué sur
-<a href="https://ci.testling.com/guide/custom_libraries">le site de testling</a>.</p>
-<p>Vous trouverez aussi des alternatives populaires
-<a href="http://www.browserstack.com">similaires</a>,
-ou ayant <a href="http://karma-runner.github.io">une approche différente</a>.</p>
-<p>Par ailleurs, si dans votre code il existe des variations entre les navigateurs,
-vous pouvez utiliser du test conditionnel :</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">if</span>(typeof {}.__proto__ == <span class="hljs-string">"object"</span>){
-  test.equal(<span class="hljs-keyword">list</span>.__proto__ === <span class="hljs-keyword">Array</span>.prototype, <span class="hljs-keyword">false</span>, <span class="hljs-string">"__proto__ isn't Array.prototype"</span>)
-} <span class="hljs-keyword">else</span> {
-  test.equal(<span class="hljs-keyword">list</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-keyword">Array</span>, <span class="hljs-keyword">false</span>, <span class="hljs-string">"Isn't a window Array"</span>)
-}
-</code></pre>
-<p>Happy testing!</p>
-<pre><code class="lang-bash">$ testling
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
+  <span class="hljs-rule">}</span></span>
 
-TAP version <span class="hljs-number">13</span>
-<span class="hljs-preprocessor"># tests</span>
-ok <span class="hljs-number">1</span> bisous
+    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+    <span class="hljs-rule">}</span></span>
 
-<span class="hljs-number">1.</span><span class="hljs-number">.1</span>
-<span class="hljs-preprocessor"># tests 1</span>
-<span class="hljs-preprocessor"># pass  1</span>
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
 
-<span class="hljs-preprocessor"># ok</span>
+  <span class="hljs-rule">}</span></span>
 </code></pre>
+<p>J’aimerais aussi afficher ou non le contenu. Pour cela, je vais lui rajouter un <em>modifier</em></p>
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
 
-]]></description><pubDate>Thu, 01 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/introduction-au-testing-js-front/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/introduction-au-testing-js-front/</guid></item></channel></rss>
+<span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
+  <span class="hljs-rule">}</span></span>
+
+    <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+    <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
+  <span class="hljs-rule">}</span></span>
+
+  <span class="hljs-class">.Window-content--hidden</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
+  <span class="hljs-rule">}</span></span>
+</code></pre>
+<p>J’aurais très bien pu inverser et dire que par défaut le contenu est caché et je lui rajoute la classe <code>.Window-tab--active</code> pour l’afficher (<code>display: block</code>) mais lorsqu’il s’agit de cacher ou de faire appaître des éléments, je vous conseille vivement de plutôt ajouter un <em>modifier</em> qui cache les éléments, car cela évite de se prendre la tête sur quel <code>display</code> mettre par défaut. Là, vous mettez un <code>display: none</code> et voilà, qu’importe si celui de base est un <code>inline</code>, <code>inline-block</code>, <code>table-cell</code> ou autre.</p>
+<p>Du coup, nous avons maintenant nos différents types de classes. Cela se résume de manière générique à :</p>
+<pre><code class="lang-css">.<span class="hljs-keyword">Block</span> <span class="hljs-list">{
+
+}</span>
+
+  .<span class="hljs-keyword">Block</span>--modifier <span class="hljs-list">{
+
+  }</span>
+
+  .<span class="hljs-keyword">Block</span>-element <span class="hljs-list">{
+
+  }</span>
+
+    .<span class="hljs-keyword">Block</span>-element--modifier <span class="hljs-list">{
+
+    }</span>
+</code></pre>
+<p>Ce qui donne <code>.Block-element--modifier</code> (notre <strong>BEM</strong>).</p>
+<p>Parlons maintenant du cas des termes multiples dans chaque partie. Voici comment cela se traduit.</p>
+<p><code>.MyBlock-myElement--myModifier</code></p>
+<p>Les <em>blocks</em> sont en “PascalCase” (ou UpperCamelCase), les <em>elements</em> et <em>modifiers</em> sont en “camelCase” (ou lowerCamelCase). Nous séparons le <em>block</em> de l’élément par “-“ et le <em>block</em> ou l’ <em>element</em> d’un <em>modifier</em> par “—“.</p>
+<p>Maintenant, vous savez tout sur <strong>BEM</strong>. Sachez qu’il existe tout de même plusieurs conventions de <strong>BEM</strong>. Celle que je vous ai apprise là est la norme de <strong>montage.js</strong> mais il y en a d’autres par exemple qui n’utilisent pas les majuscules et font ce genre de choses : <code>.my-block__my-element--my-modifier</code>. Il s’avère que c’est la <a href="http://bem.info/method/definitions/#naming-for-independent-css-classes">convention pseudo-officielle</a>.</p>
+<p>L’inconvénient de ceci est que c’est moins lisible au premier abord qui est quoi, et de plus, les <code>_</code> ne permettent pas de sélectionner facilement un terme en <em>double-cliquant</em> dessus.</p>
+<p>Deux petites choses avant de partir.</p>
+<p>Dans le but d’éviter de vous faire écraser vos propriétés par quelqu’un d’autre (une bibliothèque, un <em>SDK</em>), je vous conseille de rajouter votre organisation.</p>
+<p>Typiquement, ça donne <code>.org-Block-element--modifier</code>. Tout en minuscule et si possible ne pas dépasser les 3 lettres car vous allez devoir le répéter à chaque fois et ça peut être lourd.</p>
+<p>La deuxième chose est la classe qui sert de sélecteur en JavaScript. Plutôt que <em>binder</em> un élément via sa classe “CSS” (à chaque classe sa responsabilité), il est nettement préférable de créer une classe spécifique au JavaScript. Cela donne : <code>.org-js-Block-element--modifier</code>. Il suffit simplement de rajouter <code>-js</code> entre l’organisation et le <em>block</em>.</p>
+<p>Nous arrivons à la convention suivante : <code>.org[-js]-Block[-element][--modifier]</code></p>
+<p>Certains vous diront qu’ils mettent <code>.js-org-</code> mais étant donné que je considère cela comme un <em>namespace</em> global (autant css que js), je préfère mettre l’ <code>org</code> au début.</p>
+<p>Voilà, voilà, c’est certes un peu déroutant au début, et ca parait très verbeux mais cela vous permettra d’éviter de nooooooombreux soucis de nommage de classes où vous vous emmèlerez les pinceaux à coup de :</p>
+<pre><code class="lang-css"><span class="hljs-class">.footer</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> underline</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-class">.content</span> <span class="hljs-class">.footer</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> none</span></span>; <span class="hljs-comment">/* annule la propriété du précédent sélecteur */</span>
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p>Ciao les kids.</p>
+
+]]></description><pubDate>Mon, 05 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/css/petite-definition-bem/</link><guid isPermaLink="true">http://putaindecode.fr/posts/css/petite-definition-bem/</guid></item></channel></rss>
