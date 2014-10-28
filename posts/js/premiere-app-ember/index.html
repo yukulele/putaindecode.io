@@ -371,8 +371,10 @@ Baptiste Meurant
 c’est ce qui permet à <a href="http://emberjs.com">Ember</a> de mettre à jour non pas un gabarit mais uniquement ces zones dynamiques de manière performante - j’ai fini par voir ça comme un mal nécessaire.
 Mais surtout, j’ai compris que ces <code>metamorph</code> étaient voués à disparaître assez rapidement avec l’utilisation du moteur <a href="https://github.com/tildeio/htmlbars">HTMLBars</a>. Vous pouvez
 jeter un œil à ce sujet à la <a href="http://talks.erikbryn.com/htmlbars/">présentation d’Eric Bryn</a> (notamment slide 10). Ouf ! Le support d’<a href="https://github.com/tildeio/htmlbars">HTMLBars</a> est prévu pour 
-<a href="http://emberjs.com">Ember</a> 1.9 ou 1.10 (la release actuelle est 1.7)… On est impatients !</p>
+<a href="http://emberjs.com">Ember</a> 1.9 ou 1.10 (la release actuelle est 1.7) … On est impatients !</p>
 <p><em>Bonus: l’élément est un élément <code>script</code> et pas un autre car c’est à priori le seul élément qui peut être inséré partout sans rien casser.</em></p>
+<p><em><strong>Edit</strong>: Aujourd’hui (28/10/2014) est sortie la <a href="http://emberjs.com/blog/2014/10/26/ember-1-8-0-released.html">version 1.8.0 d’Ember</a>. Cette release ne contient pas encore
+le support complet d’<a href="https://github.com/tildeio/htmlbars">HTMLBars</a> mais signe déjà la fin des <code>metamorph</code> au profit de l’utilisation d’élements <code>Text</code> vides, non intrusifs ! Ça méritait d’être signalé.</em> </p>
 <h3 id="-em-runloop-em-"><a class="putainde-Title-anchor" href="#-em-runloop-em-">#</a><em>RunLoop</em></h3><p>Un autre mécanisme important est impliqué tant dans le rendu des gabarits que dans le calcul et la synchronisation des propriétés entre elles : la <em>RunLoop</em>. Ce mécanisme est
 absolument central dans le fonctionnement d’<a href="http://emberjs.com">Ember</a> et s’appuie sur la lib <a href="https://github.com/ebryn/backburner.js/">Backburner</a>. Dans la plupart des cas, vous n’avez pas
 à vous en préoccuper et vous pouvez parfaitement mettre en place une application <a href="http://emberjs.com">Ember</a> complète sans interagir directement avec la <em>RunLoop</em>, sauf lorsque
