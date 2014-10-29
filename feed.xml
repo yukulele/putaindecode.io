@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Tue, 28 Oct 2014 19:57:04 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Flux, qu'est-ce que c'est ?</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Wed, 29 Oct 2014 22:49:55 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Flux, qu'est-ce que c'est ?</title><description><![CDATA[
 <p>Allez, tant pis, on saute l’intro et on entre directement dans le vif du sujet (on n’a pas que ça à foutre, après tout).</p>
 <h2 id="la-petite-histoire"><a class="putainde-Title-anchor" href="#la-petite-histoire">#</a>La petite histoire</h2><p>Il était une fois un gros site web <em>que s’apelorio</em> Facebook. Qui dit Facebook, dit webapp plus grosse que la plus grosse de tes copines (<em>no offense</em> <sup><a href="#foonote-1">1</a></sup>) ; et du coup, propension à se retrouver submergé de bugs plus élevée.</p>
 <p>Les ingénieurs front-end de Facebook, confrontés à une codebase de plus en plus bordélique (personne ne voulant toucher certaines parties de celle-ci) ont dû repenser la structure des composants les plus cruciaux.</p>
@@ -252,23 +252,23 @@ npm <span class="hljs-keyword">install</span> -g bower
 </code></pre>
 <p>Ça y est, on peut maintenant demander gentiment à <a href="http://www.ember-cli.com/">Ember CLI</a> de nous créer notre application grâce à la 
 commande <code>ember</code> et voir ensuite une magnifique page de bienvenue sur <a href="http://localhost:4200/">http://localhost:4200/</a> :</p>
-<pre><code class="lang-bash">ember new ember-<span class="hljs-tag">article</span>
+<pre><code class="lang-bash">ember <span class="hljs-keyword">new</span> ember-articles
 
-cd ember-<span class="hljs-tag">article</span>
+cd ember-articles
 
-ember server
+ember <span class="hljs-keyword">server</span>
 </code></pre>
 <p>Je ne vous fais pas l’affront de détailler ici la structure de l’application, tout est décrit dans la 
 <a href="http://www.ember-cli.com/#folder-layout">documentation</a>.</p>
 <h3 id="styles-amp-fonts"><a class="putainde-Title-anchor" href="#styles-amp-fonts">#</a>Styles &amp; Fonts</h3><p>Pour que cela ne soit pas trop moche dans le cadre de cet exemple ou va ajouter un peu de CSS et des fonts mais comme c’est pas l’objet de l’article,
 on ne va pas passer de temps là-dessus. Ceci dit, comme il y a  quand même un peu de conf <a href="http://www.ember-cli.com/">Ember CLI</a> qui peut vous intéresser, vous avez les styles 
-et la conf sur <a href="https://github.com/bmeurant/ember-article">GitHub</a> et l’explication dans ce <a href="https://gist.github.com/bmeurant/1bba49d8a12bf69a4cf0">gist</a>.</p>
-<h2 id="et-maintenant-on-code-"><a class="putainde-Title-anchor" href="#et-maintenant-on-code-">#</a>Et maintenant, on code !</h2><p><em>Note: le code de l’exemple est dispo sur <a href="https://github.com/bmeurant/ember-article">github</a>.</em></p>
+et la conf sur <a href="https://github.com/bmeurant/ember-articles">GitHub</a> et l’explication dans ce <a href="https://gist.github.com/bmeurant/1bba49d8a12bf69a4cf0">gist</a>.</p>
+<h2 id="et-maintenant-on-code-"><a class="putainde-Title-anchor" href="#et-maintenant-on-code-">#</a>Et maintenant, on code !</h2><p><em>Note: le code de l’exemple est dispo sur <a href="https://github.com/bmeurant/ember-articles">github</a>.</em></p>
 <ul>
 <li>Modification du gabarit général de l’application <code>/app/templates/application.hbs</code> : </li>
 </ul>
 <pre><code class="lang-html"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"app"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"sources"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"https://github.com/bmeurant/ember-article"</span>&gt;</span>View source on GitHub<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"sources"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"https://github.com/bmeurant/ember-articles"</span>&gt;</span>View source on GitHub<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Comic books library<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"main"</span>&gt;</span>
       </span><span class="hljs-expression">{{<span class="hljs-variable"><span class="hljs-keyword">outlet</span></span>}}</span><span class="xml">
