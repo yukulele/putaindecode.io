@@ -82,7 +82,7 @@ nom local pour le dépôt. Il va récupérer le dépôt à l’adresse spécifi�
 bien foutu hein ?) puis le mettre soit dans un dossier du même nom soit dans un
 dossier du nom spécifié en dernier argument.</p>
 <p>Par exemple, si je veux cloner le dépôt du site :</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git clone <span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/github.com/putaindecode</span><span class="hljs-regexp">/putaindecode.fr.git</span>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>git clone <span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/github.com/putaindecode</span><span class="hljs-regexp">/putaindecode.fr.git</span>
 </code></pre>
 <p>Ça va créer un dossier <code>putaindecode.fr</code> avec le contenu du dépôt.</p>
 <p><code>clone</code> accepte plusieurs types d’adresses : HTTP(S), SSH, protocole Git dédié et
@@ -92,7 +92,7 @@ fichiers.</p>
 bien pour lancer les vraies commandes intéressantes de Git.</p>
 <h2 id="premiers-commits"><a class="putainde-Title-anchor" href="#premiers-commits">#</a>Premiers commits</h2><p>Pour commencer à s’amuser, écrivez un bout de code dans un fichier et
 sauvegardez le :</p>
-<pre><code class="lang-bash"><span class="hljs-prompt">$ cat &gt;</span> putain_de_hello_world.rb
+<pre><code class="lang-console"><span class="hljs-prompt">$ cat &gt;</span> putain_de_hello_world.rb
 puts <span class="hljs-string">"Hello, putain de codeur !"</span>
 ^<span class="hljs-constant">D</span>
 </code></pre>
@@ -117,7 +117,7 @@ difficile.</p>
 <p>Dans notre cas, notre fichier n’est même pas encore suivi par Git ! Vous pouvez
 vérifier ça en utilisant <code>git status</code>, dont vous ne pourrez bientôt plus vous
 passer :</p>
-<pre><code class="lang-bash">$ git status
+<pre><code class="lang-console">$ git status
 <span class="hljs-preprocessor"># Sur la branche master</span>
 <span class="hljs-preprocessor">#</span>
 <span class="hljs-preprocessor"># Validation initiale.</span>
@@ -133,7 +133,7 @@ Aucune modification indexée mais des fichiers non suivis sont présents (utilis
 <p>On peut utiliser <code>git add</code> pour ajouter des dossiers entiers, des motifs, … Mais
 soyez vigilants, c’est une bonne source d’erreurs souvent chiantes.</p>
 <p>Vous pouvez vérifier que <code>git add</code> a bien marché avec la commande <code>git status</code>,</p>
-<pre><code class="lang-bash">$ git status
+<pre><code class="lang-console">$ git status
 <span class="hljs-preprocessor"># Sur la branche master</span>
 <span class="hljs-preprocessor">#</span>
 <span class="hljs-preprocessor"># Validation initiale.</span>
@@ -151,7 +151,7 @@ de décrire votre changement sur la première ligne succintement et, si vous ave
 besoin de détails, sautez une ligne et détaillez les modifications.</p>
 <p>Un petit <code>git status</code> nous confirme qu’on s’est pas foiré (la preuve, tout est
 propre) :</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git status
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>git status
 <span class="hljs-comment"># Sur la branche master</span>
 rien à valider, la copie de travail est propre
 </code></pre>
@@ -163,7 +163,7 @@ Windows) ou retrousser vos poils de barbe et sortir le bon vieux <code>git log</
 de votre dépôt, avec des options en veux-tu en voilà pour personnaliser
 l’affichage.</p>
 <p>Un <code>git log</code> basique ça ressemble à ça :</p>
-<pre><code class="lang-bash">$ git log
+<pre><code class="lang-console">$ git log
 commit <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
 <span class="hljs-label">Author:</span> madx &lt;madx+github@yapok<span class="hljs-preprocessor">.org</span>&gt;
 <span class="hljs-label">Date:</span>   Mon Nov <span class="hljs-number">4</span> <span class="hljs-number">23</span>:<span class="hljs-number">28</span>:<span class="hljs-number">11</span> <span class="hljs-number">2013</span> +<span class="hljs-number">0100</span>
@@ -174,7 +174,7 @@ commit <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
 j’en suis sûr ? Car je peux utiliser <code>git show</code> pour afficher les détails d’un
 objet Git (il n’y a pas que des commits, mais on verra ça une prochaine fois).</p>
 <p><code>git show</code> prend en argument le fameux <code>SHA1</code> du commit :</p>
-<pre><code class="lang-bash">$ git <span class="hljs-operator"><span class="hljs-keyword">show</span> <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
+<pre><code class="lang-console">$ git <span class="hljs-operator"><span class="hljs-keyword">show</span> <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
 <span class="hljs-keyword">commit</span> <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
 Author: madx &lt;madx+github@yapok.org&gt;
 <span class="hljs-built_in">Date</span>:   Mon Nov <span class="hljs-number">4</span> <span class="hljs-number">23</span>:<span class="hljs-number">28</span>:<span class="hljs-number">11</span> <span class="hljs-number">2013</span> +<span class="hljs-number">0100</span>
@@ -221,7 +221,7 @@ cette branche.</p>
 <p>On peut utiliser <code>git branch</code> sans argument pour lister les branches, celle avec
 un petit asterisque devant c’est la branche courante.</p>
 <p>Essayons ça avec notre petit dépôt :</p>
-<pre><code class="lang-bash">$ git branch
+<pre><code class="lang-console">$ git branch
 * master
 $ git checkout -b add-shebang
 Basculement sur la nouvelle branche 'add-shebang'
@@ -252,7 +252,7 @@ base fournie par Git, <code>master</code>, reste au commit précédent.</p>
 la branche dans laquelle on va fusionner et en passant en argument la branche à
 fusionner.</p>
 <p>Si vous avez bien suivi, on va donc faire les choses suivantes :</p>
-<pre><code class="lang-bash">$ git checkout master
+<pre><code class="lang-console">$ git checkout master
 Basculement sur la branche <span class="hljs-string">'master'</span>
 $ git merge add-shebang
 Updating <span class="hljs-number">8120</span>de7..<span class="hljs-number">5</span>d48735

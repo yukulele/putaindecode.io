@@ -139,7 +139,7 @@ trouve pas ça cohérent.</p>
 intéressent pas), attaquons le corps du sujet.</p>
 <h2 id="installation-de-browserify"><a class="putainde-Title-anchor" href="#installation-de-browserify">#</a>Installation de Browserify</h2><p>Si vous souhaitez accéder à la commande via le terminal, la chose la plus simple
 à faire est d’installer le paquet en global.</p>
-<pre><code class="lang-bash">$ npm <span class="hljs-keyword">install</span> -g browserify
+<pre><code class="lang-console">$ npm <span class="hljs-keyword">install</span> -g browserify
 </code></pre>
 <p>Si vous ne l’installez pas en global (sans l’option <code>-g</code>, vous aurez la commande
 accessible dans <code>./node_modules/.bin/browserify</code>).
@@ -152,7 +152,7 @@ ou <a href="https://www.npmjs.org/package/gulp-browserify">gulp-browserify</a>.<
 <p>Sans aucune dépendance, ça n’a que peu de sens, mais c’est plus pour montrer un
 dernier point intéressant.</p>
 <p>Je le compile avec la commande suivante:</p>
-<pre><code class="lang-bash">$ browserify main<span class="hljs-class">.js</span> -o bundle.js
+<pre><code class="lang-console">$ browserify main<span class="hljs-class">.js</span> -o bundle.js
 </code></pre>
 <p>J’obtiens le fichier suivant.</p>
 <pre><code class="lang-js">(function e(t,n,r){function s(o,u){if(!n[<span class="hljs-link_label">o</span>]){if(!t[<span class="hljs-link_label">o</span>]){var a=typeof require=="function"&amp;&amp;require;if(!u&amp;&amp;a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[<span class="hljs-link_label">o</span>]={exports:{}};t[<span class="hljs-link_label">o</span>][<span class="hljs-link_reference">0</span>].call(f.exports,function(e){var n=t[<span class="hljs-link_label">o</span>][<span class="hljs-link_reference">1</span>][<span class="hljs-link_label">e</span>];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&amp;&amp;require;for(var o=0;o<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">r.length;o++)s(r[o]);return</span> <span class="hljs-attribute">s</span>})({<span class="hljs-attribute">1:</span>[<span class="hljs-attribute">function</span>(<span class="hljs-attribute">require</span>,<span class="hljs-attribute">module</span>,<span class="hljs-attribute">exports</span>){
@@ -177,7 +177,7 @@ sur la homepage de Browserify.</p>
 <pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(n)</span> </span>{ <span class="hljs-keyword">return</span> n * <span class="hljs-number">11</span> }
 </code></pre>
 <p>Et le module <code>gamma</code> qu’on a installé depuis NPM</p>
-<pre><code class="lang-bash">$ npm <span class="hljs-built_in">i</span> <span class="hljs-built_in">gamma</span>
+<pre><code class="lang-console">$ npm <span class="hljs-built_in">i</span> <span class="hljs-built_in">gamma</span>
 </code></pre>
 <p><small><i><code>i</code> est l’alias de <code>install</code>.</i></small></p>
 <p>Avec la même commande que précédement (et donc le même ajout), Browserify va parser
@@ -187,7 +187,7 @@ mappées dans un object par leur identifiant. Lorsqu’une fonction appelle <cod
 le petit bout de script ajouté va se charger de retourner la dépendance.</p>
 <p>Notez qu’on peut aussi simplement utiliser une redirection de sortie de commande
 pour gérer le fichier final:</p>
-<pre><code class="lang-bash"><span class="hljs-prompt">$ browserify main.js &gt;</span> bundle.js
+<pre><code class="lang-console"><span class="hljs-prompt">$ browserify main.js &gt;</span> bundle.js
 </code></pre>
 <p>Du coup on a plus qu’à utiliser une simple balise <code>&lt;script&gt;</code> pour incorporer ça
 dans nos pages web.</p>
@@ -217,11 +217,11 @@ Dans le même esprit, on va retrouver de nombreuses transformations telles que :
 <p>Il existe plein <a href="https://www.npmjs.org/browse/keyword/browserify">d’autres transformations</a>
 qui s’adapteront sûrement à vos besoins.</p>
 <p>Du coup la ligne ultime pour consommer a peu près n’importe quel module :</p>
-<pre><code class="lang-bash"><span class="hljs-prompt">browserify -t debowerify -t decomponentify -t deamdify -t deglobalify -t es6ify main.js &gt;</span> bundle.js
+<pre><code class="lang-console"><span class="hljs-prompt">browserify -t debowerify -t decomponentify -t deamdify -t deglobalify -t es6ify main.js &gt;</span> bundle.js
 </code></pre>
 <p>L’équivalent avec les tâches Grunt ou Gulp sera tout aussi simple via un tableau.
 Pensez bien à installer ces dépendances avant:</p>
-<pre><code class="lang-bash">npm <span class="hljs-operator"><span class="hljs-keyword">install</span> debowerify decomponentify deamdify deglobalify es6ify <span class="hljs-comment">--save</span></span>
+<pre><code class="lang-console">npm <span class="hljs-operator"><span class="hljs-keyword">install</span> debowerify decomponentify deamdify deglobalify es6ify <span class="hljs-comment">--save</span></span>
 </code></pre>
 <h2 id="ecrire-un-module-pour-browserify-mais-pas-que-"><a class="putainde-Title-anchor" href="#ecrire-un-module-pour-browserify-mais-pas-que-">#</a>Ecrire un module pour Browserify (mais pas que)</h2><p>Consommer c’est bien, mais faire c’est <del>mieux</del> bien aussi.</p>
 <figure><img src="browserify-potter.png" alt=""></figure>

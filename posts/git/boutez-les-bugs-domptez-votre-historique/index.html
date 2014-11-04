@@ -40,7 +40,7 @@ J’ai créé un monstre… Pas de panique! J’ai pour vous l’alias qu’il v
 honteusement pompé de <a href="https://coderwall.com/p/euwpig">ce site</a>, mais
 comme j’ai pas d’honneur… Pour le mettre en place il suffit d’entrer la commande
 suivante dans votre terminal préféré:</p>
-<pre><code class="lang-bash">$ git config --global alias.lg <span class="hljs-string">"log --color --graph --pretty=format:'<span class="hljs-variable">%Cred</span><span class="hljs-variable">%h</span><span class="hljs-variable">%Creset</span> -<span class="hljs-variable">%C</span>(yellow)<span class="hljs-variable">%d</span><span class="hljs-variable">%Creset</span> <span class="hljs-variable">%s</span> <span class="hljs-variable">%Cgreen</span>(<span class="hljs-variable">%cr</span>) <span class="hljs-variable">%C</span>(bold blue)&lt;<span class="hljs-variable">%an</span>&gt;<span class="hljs-variable">%Creset</span>' --abbrev-commit"</span>
+<pre><code class="lang-console">$ git config --global alias.lg <span class="hljs-string">"log --color --graph --pretty=format:'<span class="hljs-variable">%Cred</span><span class="hljs-variable">%h</span><span class="hljs-variable">%Creset</span> -<span class="hljs-variable">%C</span>(yellow)<span class="hljs-variable">%d</span><span class="hljs-variable">%Creset</span> <span class="hljs-variable">%s</span> <span class="hljs-variable">%Cgreen</span>(<span class="hljs-variable">%cr</span>) <span class="hljs-variable">%C</span>(bold blue)&lt;<span class="hljs-variable">%an</span>&gt;<span class="hljs-variable">%Creset</span>' --abbrev-commit"</span>
 </code></pre>
 <p>Au cas où vous ne seriez pas à l’aise avec ce genre de choses, sachez simplement que la commande
 <code>git config --global alias.lg</code> permet d’inscrire à votre configuration générale un nouvel alias (
@@ -68,7 +68,7 @@ train de baver devant votre écran, mais non, Git ne va pas corriger vos bugs bi
 à trouver le changement dans le code qui l’a fait apparaître et ceci grâce à la commande <code>git bisect</code>.</p>
 <p>Pour lancer une <em>bisection</em> par Git il suffit d’entrer <code>git bisect start</code> dans votre terminal préféré
 et le tour est joué!</p>
-<pre><code class="lang-bash">$ git bisect <span class="hljs-built_in">start</span>
+<pre><code class="lang-console">$ git bisect <span class="hljs-built_in">start</span>
 $
 </code></pre>
 <figure>
@@ -87,7 +87,7 @@ le signaler à son tour: <code>git bisect good</code>.</p>
 <p>Git va alors se mettre en route et vous déplacer automatiquement de commit en commit. Pour chacun d’eux vous n’aurez
 qu’à le déclarer bon ou mauvais comme expliqué au dessus, jusqu’à ce que Git vous fournisse le premier commit
 comportant le bug, celui dont le changement a révélé le disfonctionnement.</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>git bisect bad
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>git bisect bad
 <span class="hljs-number">1082351</span>d9157e98aed1bbee8b9ad6deedca1288f is the first bad commit
 commit <span class="hljs-number">1082351</span>d9157e98aed1bbee8b9ad6deedca1288f
 <span class="hljs-prompt">Author: Maxime Thirouin &lt;m@***.io&gt;</span>

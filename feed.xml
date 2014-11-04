@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 03 Nov 2014 15:48:59 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Laissez vous pousser la barbe, apprenez à écrire des Makefiles</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Tue, 04 Nov 2014 04:36:37 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Laissez vous pousser la barbe, apprenez à écrire des Makefiles</title><description><![CDATA[
 <p>À l’heure où tout le monde se rue sur des outils comme <a href="/posts/js/introduction-gulp/">Gulp</a>,
 <a href="/posts/js/premiers-pas-avec-grunt/">Grunt</a> ou autres <a href="https://rubygems.org/gems/rake">Rake</a>, certains irréductibles (dont je
 fais partie) ont fait le choix d’employer un des outils les plus standards et
@@ -539,17 +539,14 @@ largement débattue. Si ça vous intéresse, je vous laisse découvrir un
 Ici encore, question de goût, question de contexte, question de besoins.</em></p>
 <p>Trèves de bavardages, on s’y met sérieusement :</p>
 <p>On installe <a href="http://nodejs.org/">Node</a>, <a href="http://www.ember-cli.com/">Ember CLI</a>, <a href="http://bower.io/">Bower</a> :</p>
-<pre><code class="lang-bash">npm <span class="hljs-keyword">install</span> -g ember-cli
-
-npm <span class="hljs-keyword">install</span> -g bower
+<pre><code class="lang-console">$ npm <span class="hljs-keyword">install</span> -g ember-cli
+$ npm <span class="hljs-keyword">install</span> -g bower
 </code></pre>
 <p>Ça y est, on peut maintenant demander gentiment à <a href="http://www.ember-cli.com/">Ember CLI</a> de nous créer notre application grâce à la 
 commande <code>ember</code> et voir ensuite une magnifique page de bienvenue sur <a href="http://localhost:4200/">http://localhost:4200/</a> :</p>
-<pre><code class="lang-bash">ember <span class="hljs-keyword">new</span> ember-articles
-
-cd ember-articles
-
-ember <span class="hljs-keyword">server</span>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>ember new ember-articles
+<span class="hljs-variable">$ </span>cd ember-articles
+<span class="hljs-variable">$ </span>ember server
 </code></pre>
 <p>Je ne vous fais pas l’affront de détailler ici la structure de l’application, tout est décrit dans la 
 <a href="http://www.ember-cli.com/#folder-layout">documentation</a>.</p>
@@ -572,7 +569,7 @@ et la conf sur <a href="https://github.com/bmeurant/ember-articles">GitHub</a> e
 <ul>
 <li>Création de la première route <code>/series</code> via <code>ember</code> :</li>
 </ul>
-<pre><code class="lang-bash"><span class="hljs-title">ember</span> generate route series
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>ember generate route series
 </code></pre>
 <p><a href="http://www.ember-cli.com/">Ember CLI</a> met à jour le routeur : </p>
 <pre><code class="lang-js"><span class="hljs-comment">// routeur app/router.js</span>
@@ -1096,30 +1093,30 @@ application <a href="http://emberjs.com">Ember</a></strong>.</p>
 <h2 id="chocolatey-la-base"><a class="putainde-Title-anchor" href="#chocolatey-la-base">#</a>Chocolatey : la base</h2><p><a href="http://chocolatey.org/">Chocolatey</a>. Ouais, chocolatey, ce petit script vous permettra de télécharger tout et n’importe quoi en CLI (ligne de commandes). Pour ceux qui ont l’habitude de Mac ou Linux, c’est le brew / apt-get de Windows.</p>
 <p>Comment l’installer ?</p>
 <p>Lancez <code>cmd.exe</code> en mode administrateur (touche windows puis “cmd” puis shift+ctrl+enter) et exécutez ce code :</p>
-<pre><code class="lang-bash">$ <span class="hljs-variable">@powershell</span> -NoProfile -ExecutionPolicy unrestricted -Command <span class="hljs-string">"iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))"</span> &amp;&amp; SET PATH=<span class="hljs-variable">%PATH</span><span class="hljs-variable">%;</span><span class="hljs-variable">%ALLUSERSPROFILE</span><span class="hljs-variable">%\</span>chocolatey\bin
+<pre><code class="lang-console">$ <span class="hljs-variable">@powershell</span> -NoProfile -ExecutionPolicy unrestricted -Command <span class="hljs-string">"iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))"</span> &amp;&amp; SET PATH=<span class="hljs-variable">%PATH</span><span class="hljs-variable">%;</span><span class="hljs-variable">%ALLUSERSPROFILE</span><span class="hljs-variable">%\</span>chocolatey\bin
 </code></pre>
 <p>Ou <code>PowerShell</code> en mode administrateur (touche windows puis “powershell” puis shift+ctrl+enter) et éxecutez :</p>
-<pre><code class="lang-bash">$ iex ((new-<span class="hljs-tag">object</span> net.webclient).<span class="hljs-function"><span class="hljs-title">DownloadString</span><span class="hljs-params">(<span class="hljs-string">'https://chocolatey.org/install.ps1'</span>)</span></span>)
+<pre><code class="lang-console">$ iex ((new-<span class="hljs-tag">object</span> net.webclient).<span class="hljs-function"><span class="hljs-title">DownloadString</span><span class="hljs-params">(<span class="hljs-string">'https://chocolatey.org/install.ps1'</span>)</span></span>)
 </code></pre>
 <p>Une fois installé, vous pourrez installer n’importe quel logiciel listé sur <a href="http://chocolatey.org/packages">leur site</a>.</p>
 <p>Passons à la suite.</p>
 <h2 id="logiciels-de-developpement"><a class="putainde-Title-anchor" href="#logiciels-de-developpement">#</a>Logiciels de développement</h2><p>Yes, on a donc Chocolatey qui va nous simplifier grandement l’installation de logiciels. Passons maintenant aux outils pour bien développer.</p>
 <h3 id="git"><a class="putainde-Title-anchor" href="#git">#</a>Git</h3><p>Lorsque tu joues à un jeu vidéo, tu sauvegardes régulièrement ton avancement non ? Bah là, c’est pareil mais pour le code.</p>
-<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> git.<span class="hljs-keyword">install</span>
+<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> git.<span class="hljs-keyword">install</span>
 </code></pre>
 <ul>
 <li><a href="http://git-scm.com/">site officiel</a></li>
 <li><a href="https://chocolatey.org/packages/git.install">lien du package</a></li>
 </ul>
 <h3 id="node-js"><a class="putainde-Title-anchor" href="#node-js">#</a>Node.js</h3><p>Faire du JavaScript côté serveur ou en shell, le pied. Surtout pour faire des scripts Windows, plutôt que de passer par Batch.</p>
-<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> nodejs.<span class="hljs-keyword">install</span>
+<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> nodejs.<span class="hljs-keyword">install</span>
 </code></pre>
 <ul>
 <li><a href="http://nodejs.org/">site officiel</a></li>
 <li><a href="https://chocolatey.org/packages/nodejs.install">lien du package</a></li>
 </ul>
 <h3 id="editeur-de-texte"><a class="putainde-Title-anchor" href="#editeur-de-texte">#</a>Éditeur de texte</h3><p>Sublime Text, l’éditeur préféré des Franç… je m’égare. Bref, un bon éditeur.</p>
-<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> sublimetext3
+<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> sublimetext3
 </code></pre>
 <ul>
 <li><a href="http://www.sublimetext.com/">site officiel</a></li>
@@ -1127,7 +1124,7 @@ application <a href="http://emberjs.com">Ember</a></strong>.</p>
 </ul>
 <p>Vous pouvez aussi installer <a href="https://atom.io/">Atom</a> si vous préférez.</p>
 <h3 id="gestion-d-une-base-de-donnees"><a class="putainde-Title-anchor" href="#gestion-d-une-base-de-donnees">#</a>Gestion d’une base de données</h3><p>HeidiSQL, un logiciel avec une interface qui se rapproche de phpMyAdmin.</p>
-<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> HeidiSQL
+<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> HeidiSQL
 </code></pre>
 <ul>
 <li><a href="http://www.heidisql.com/">site officiel</a></li>
@@ -1140,21 +1137,21 @@ application <a href="http://emberjs.com">Ember</a></strong>.</p>
 <li>Migration
 Par contre, il est un peu plus complexe à utiliser.</li>
 </ul>
-<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> mysql.workbench
+<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> mysql.workbench
 </code></pre>
 <ul>
 <li><a href="http://dev.mysql.com/downloads/workbench/">site officiel</a></li>
 <li><a href="http://chocolatey.org/packages/mysql.workbench">lien du package</a></li>
 </ul>
 <h3 id="un-meilleur-shell"><a class="putainde-Title-anchor" href="#un-meilleur-shell">#</a>Un meilleur shell</h3><p>Cmder va vous permettre quelques fonctionnalités intéressantes que le shell de Windows n’a pas de base, comme taper <code>&lt;tab&gt;</code> pour l’autocomplétion, avoir un historique persistant entre 2 sessions, des onglets, le split de console, l’intégration de PuTTY et d’autres choses venu de la banquise. (le lieu de vie des pinguins)</p>
-<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> Cmder
+<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> Cmder
 </code></pre>
 <ul>
 <li><a href="https://bliker.github.io/cmder/">site officiel</a></li>
 <li><a href="http://chocolatey.org/packages/Cmder">lien du package</a></li>
 </ul>
 <h3 id="si-vous-avez-besoin-de-ssh"><a class="putainde-Title-anchor" href="#si-vous-avez-besoin-de-ssh">#</a>Si vous avez besoin de SSH</h3><p>Pour le SSH sous Windows c’est assez complexe, il faut quelques outils dont le principal, putty (un terminal et +).</p>
-<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> putty
+<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> putty
 </code></pre>
 <ul>
 <li><a href="http://chocolatey.org/packages/putty">site officiel</a></li>
@@ -1170,7 +1167,7 @@ Par contre, il est un peu plus complexe à utiliser.</li>
 <p>Pour que le ssh soit agréable, je vous recommande pageant et ensuite un terminal comme <em>Clink</em> ou encore <em>git bash</em> qui s’installe via <em>git</em>.</p>
 </blockquote>
 <h3 id="une-machine-virtuelle-pour-tester-ie-ou-meme-gnu-linux"><a class="putainde-Title-anchor" href="#une-machine-virtuelle-pour-tester-ie-ou-meme-gnu-linux">#</a>Une machine virtuelle pour tester IE ou même GNU/Linux</h3><p>On a toujours une intégration à tester sous IE pour ça Microsoft nous donne accès à des machines virtuelles gratuitement sur <a href="https://www.modern.ie/fr-fr">ModernIE</a>. Il nous faut donc Virtualbox pour les lancer.</p>
-<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> virtualbox
+<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> virtualbox
 $ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
 </code></pre>
 <blockquote>
@@ -1181,7 +1178,7 @@ $ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
 <li><a href="http://chocolatey.org/packages/virtualbox">lien du package</a></li>
 </ul>
 <h3 id="compresser-decompresser-comme-vous-le-voulez"><a class="putainde-Title-anchor" href="#compresser-decompresser-comme-vous-le-voulez">#</a>Compresser / décompresser comme vous le voulez</h3><p>7zip, le logiciel de référence pour ce genre de pratique.</p>
-<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> <span class="hljs-number">7</span>zip.<span class="hljs-keyword">install</span>
+<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> <span class="hljs-number">7</span>zip.<span class="hljs-keyword">install</span>
 </code></pre>
 <ul>
 <li><a href="http://www.7-zip.org/">site officiel</a></li>
@@ -1192,30 +1189,30 @@ $ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
 <li><a href="http://blog.kowalczyk.info/software/sumatrapdf/free-pdf-reader.html">site officiel</a></li>
 <li><a href="https://chocolatey.org/packages/sumatrapdf.install">lien du package</a></li>
 </ul>
-<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> sumatrapdf.<span class="hljs-keyword">install</span>
+<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> sumatrapdf.<span class="hljs-keyword">install</span>
 </code></pre>
 <h4 id="pdfcreator"><a class="putainde-Title-anchor" href="#pdfcreator">#</a>PDFCreator</h4><ul>
 <li><a href="http://www.pdfforge.org/pdfcreator">site officiel</a></li>
 <li><a href="https://chocolatey.org/packages/pdfcreator">lien du package</a></li>
 </ul>
-<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> pdfcreator
+<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> pdfcreator
 </code></pre>
 <h3 id="mettre-des-onglets-dans-l-explorateur-de-fichiers"><a class="putainde-Title-anchor" href="#mettre-des-onglets-dans-l-explorateur-de-fichiers">#</a>Mettre des onglets dans l’explorateur de fichiers</h3><p>Nous sommes en 2014 ça fait des années que Microsoft sait mais, ce n’est toujours pas disponible. C’est là que Clover rentre en jeu.</p>
-<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> Clover
+<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> Clover
 </code></pre>
 <ul>
 <li><a href="http://ejie.me/">site officiel</a></li>
 <li><a href="http://chocolatey.org/packages/Clover">lien du package</a></li>
 </ul>
 <h3 id="spaaaaaaaces"><a class="putainde-Title-anchor" href="#spaaaaaaaces">#</a>Spaaaaaaaces</h3><p>Parce qu’avoir plusieurs bureaux / espaces, c’est plus pratique pour gérer ses fenêtres, je vous propose VirtuaWin. Cela vous permettra de garder en plein écran vos logiciels et de zapper d’un logiciel à un autre sans passer par <code>alt+tab</code> mais en allant d’un bureau à un autre.</p>
-<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> virtuawin
+<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> virtuawin
 </code></pre>
 <ul>
 <li><a href="http://virtuawin.sourceforge.net/">site officiel</a></li>
 <li><a href="https://chocolatey.org/packages/virtuawin">lien du package</a></li>
 </ul>
 <h3 id="launchy-le-alfred-like-sous-windows"><a class="putainde-Title-anchor" href="#launchy-le-alfred-like-sous-windows">#</a>Launchy, le Alfred-like sous Windows</h3><p>Je sais pas vous mais moi, les raccourcis qui me gâchent mon beau wallpaper choisi avec goût, ça m’énerve. Et puis le clickodrome, c’est lent et chiant. Du coup, lancer ses logiciels à partir d’un moteur de recherche, c’est quand même vachement bien. Ca permet aussi de faire des recherches de fichier, des calculs, et tout un tas d’autres choses. Voici alors Launchy.</p>
-<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> launchy-beta
+<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> launchy-beta
 </code></pre>
 <ul>
 <li><a href="http://www.launchy.net/">site officiel</a></li>
@@ -1229,7 +1226,7 @@ $ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
 </ul>
 <p>Et surtout, il est ultra léger et démarre en moins d’une seconde.</p>
 <h3 id="et-enfin-comment-ne-pas-se-niquer-les-yeux-toute-la-journee"><a class="putainde-Title-anchor" href="#et-enfin-comment-ne-pas-se-niquer-les-yeux-toute-la-journee">#</a>Et enfin, comment ne pas se niquer les yeux toute la journée</h3><h4 id="f-lux"><a class="putainde-Title-anchor" href="#f-lux">#</a>f.lux</h4><p>On va commencer par f.lux. Ce petit logiciel permettant de gérer la colorimétrie de votre écran en fonction de l’heure. Typiquement, les écrans rendent un blanc digne d’un soleil à midi. Sauf que le soir, on allume la lumière et celle-ci n’a pas du coup une couleur blanche mais souvent plutôt rouge. f.lux permet alors d’ajuster votre écran afin que la couleur soit identique à la lumière ambiante pour réduire les différences de couleurs et éviter de vous abimer les yeux. En plus, ça permet au cerveau de se préparer à aller se coucher. :D</p>
-<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> f.lux
+<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> f.lux
 </code></pre>
 <ul>
 <li><a href="https://justgetflux.com/">site officiel</a></li>
@@ -1237,7 +1234,7 @@ $ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
 </ul>
 <h4 id="mactype"><a class="putainde-Title-anchor" href="#mactype">#</a>MacType</h4><p>Et surtout, MacType. Oh oui MacType. Je pense que seule une personne venant de Mac OS X peut comprendre. Dieu sait que le font rendering sous Windows est vraiment pourri et que Steve Jobs depuis le départ de Mac a fait en sorte sur le rendering des fonts sous son OS soit de qualité.</p>
 <p>Pour réduire cette différence entre un Windows et un Mac OS X, je vous propose MacType qui permet de remplacer le font rendering de Windows et d’apprécier lire à nouveau sur cet OS.</p>
-<pre><code class="lang-bash">$ choco <span class="hljs-keyword">install</span> mactype
+<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> mactype
 </code></pre>
 <p>Je vous conseille le profil <code>XMac.LCD.Default</code>.</p>
 <ul>
@@ -1371,7 +1368,7 @@ gem <span class="hljs-string">'sinatra'</span>
   <span class="hljs-string">'Hello World!'</span>
 <span class="hljs-function"><span class="hljs-keyword">end</span></span>
 </code></pre>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>gem install bundler
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>gem install bundler
 <span class="hljs-variable">$ </span>rbenv rehash
 <span class="hljs-variable">$ </span>bundle install
 <span class="hljs-variable">$ </span>ruby app.rb
@@ -2172,7 +2169,7 @@ on va plutôt partir comme <a href="http://myth.io/">Myth.io</a> ou <a href="htt
 qui se concentrent sur le rendu et non le workflow pour générer ce rendu.</p>
 <p>Nous allons donc faire simple et efficace avec une task <a href="/posts/js/introduction-gulp/">gulp</a>.
 Ceci pourrait bien entendu être aussi bien fait avec grunt ou même make et <a href="https://github.com/facebook/watchman">watchman</a>.</p>
-<pre><code class="lang-bash">$ <span class="hljs-built_in">mkdir</span> monrework &amp;&amp; <span class="hljs-built_in">cd</span> monrework
+<pre><code class="lang-console">$ <span class="hljs-built_in">mkdir</span> monrework &amp;&amp; <span class="hljs-built_in">cd</span> monrework
 
 # on crée un package.json pour sauvegarder les références des paquets qu'on va utiliser
 $ npm init
@@ -2230,7 +2227,7 @@ gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string"
 <p>Ensuite il ne reste plus qu’à lancer Gulp au besoin qui s’occupera d’éxecuter le preprocessing
 au démarrage et lors des changements de fichiers.
 Il ne reste plus grand chose à faire si ce n’est ajouter livereload en plus pour avoir le petit process aux petits oignons.</p>
-<pre><code class="lang-bash">$ gulp
+<pre><code class="lang-console">$ gulp
 [gulp] Using gulpfile ~/Development/monrework/Gulpfile.js
 [gulp] Starting <span class="hljs-string">'styles'</span><span class="hljs-keyword">...</span>
 [gulp] Finished <span class="hljs-string">'styles'</span> after <span class="hljs-number">49</span> ms
@@ -2355,7 +2352,7 @@ ou <a href="http://atom.io">Atom</a> (apm install, editorconfig, docblockr, html
 <h2 id="gulp-iconfont"><a class="putainde-Title-anchor" href="#gulp-iconfont">#</a>gulp-iconfont</h2><p>Tout d’abord, installez <strong>gulp</strong> (évident…) et faites ce que vous avez à faire avec gulp.</p>
 <p>Maintenant, vous êtes prêt(e) ? Okay, go.</p>
 <h3 id="installez-les-em-packages-em-adequats"><a class="putainde-Title-anchor" href="#installez-les-em-packages-em-adequats">#</a>Installez les <em>packages</em> adéquats</h3><p>Oui, deux packages, <a href="https://github.com/nfroidure/gulp-iconfont">gulp-iconfont</a> et <a href="https://github.com/backflip/gulp-iconfont-css">gulp-iconfont-css</a>.</p>
-<pre><code class="lang-bash">$ npm install gulp-iconfont gulp-iconfont-css --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span>
+<pre><code class="lang-console">$ npm install gulp-iconfont gulp-iconfont-css --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span>
 </code></pre>
 <h3 id="importez-les"><a class="putainde-Title-anchor" href="#importez-les">#</a>Importez-les</h3><pre><code class="lang-js"><span class="hljs-comment">// import</span>
 <span class="hljs-tag">var</span> gulp = <span class="hljs-function"><span class="hljs-title">require</span><span class="hljs-params">(<span class="hljs-string">'gulp'</span>)</span></span>
@@ -2651,7 +2648,7 @@ Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article
 <p>You are now a npm master. 👨</p>
 
 ]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/npm-choisir-version/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/npm-choisir-version/</guid></item><item><title>Premiers pas avec Ruby</title><description><![CDATA[
-<h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><pre><code class="lang-sh">$ git clone git:<span class="hljs-comment">//github.com/sstephenson/rbenv.git ~/.rbenv</span>
+<h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><pre><code class="lang-console">$ git clone git:<span class="hljs-comment">//github.com/sstephenson/rbenv.git ~/.rbenv</span>
 $ echo <span class="hljs-string">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> &gt;&gt; ~/<span class="hljs-class">.bashrc</span>
 $ echo <span class="hljs-string">'eval "$(rbenv init -)"'</span> &gt;&gt; ~/<span class="hljs-class">.bashrc</span>
 $ source ~/<span class="hljs-class">.bashrc</span>
@@ -2670,17 +2667,17 @@ $ rbenv rehash
 <p>Et ça va en rester ainsi pour le moment, car au lieu de voir la théorie sur Ô combien <a href="http://www.slideshare.net/astrails/ruby-is-awesome-16466895">Ruby est génial</a>, nous allons tout de suite installer Ruby pour nous rapprocher rapidement de notre éditeur de texte.</p>
 <h2 id="installation-avec-em-rbenv-em-"><a class="putainde-Title-anchor" href="#installation-avec-em-rbenv-em-">#</a>Installation avec <em>rbenv</em></h2><p>Il existe de nombreuses façons d’installer Ruby, un petit peu comme Node.js en passant par Github, par les packages officiels, brew, etc. <em>rbenv</em> reste d’après moi la façon la plus simple, propre et légère. Beaucoup pourront préférer <em>RVM</em> disant qu’il fait la même chose en mieux, d’autres diront qu’au contraire il en fait trop en écrasant par exemple la méthode <code>cd</code>. J’ai utilisé les deux, il fallait faire un choix, ce sera <em>rbenv</em>.</p>
 <p>Pour utiliser <em>rbenv</em>, il faut avoir Git. Si vous ne l’avez pas, vous devriez. Et ça tombe bien, <a href="https://github.com/madx">madx</a> et <a href="https://github.com/Erwyn">Erwyn</a> ont fait deux super articles pour l’<a href="/posts/git/versionner-avec-git/">utiliser</a> et le <a href="/posts/git/boutez-les-bugs-domptez-votre-historique/">dompter</a>. On commence donc par installer <em>rbenv</em> :</p>
-<pre><code class="lang-sh">$ git clone git:<span class="hljs-comment">//github.com/sstephenson/rbenv.git ~/.rbenv</span>
+<pre><code class="lang-console">$ git clone git:<span class="hljs-comment">//github.com/sstephenson/rbenv.git ~/.rbenv</span>
 $ echo <span class="hljs-string">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> &gt;&gt; ~/<span class="hljs-class">.bashrc</span>
 $ echo <span class="hljs-string">'eval "$(rbenv init -)"'</span> &gt;&gt; ~/<span class="hljs-class">.bashrc</span>
 $ source ~/.bashrc
 </code></pre>
 <p>Désormais <em>rbenv</em> est installé et ses commandes sont disponibles dans votre terminal. Il faut maintenant lui installer le plugin pour récupérer les différentes versions de Ruby :</p>
-<pre><code class="lang-sh">$ git clone git<span class="hljs-annotation">@github</span>.<span class="hljs-string">com:</span>sstephenson<span class="hljs-regexp">/ruby-build.git ~/</span>.rbenv<span class="hljs-regexp">/plugins/</span>ruby-build
+<pre><code class="lang-console">$ git clone git<span class="hljs-annotation">@github</span>.<span class="hljs-string">com:</span>sstephenson<span class="hljs-regexp">/ruby-build.git ~/</span>.rbenv<span class="hljs-regexp">/plugins/</span>ruby-build
 </code></pre>
 <p>C’est bon, vous pouvez installer Ruby. J’ai constaté sur Ubuntu qu’il était nécessaire d’installer au préalable <code>libssl-dev</code> et <code>g++</code>, simplement avec <code>sudo apt-get install libssl-dev g++</code>. Lançons-nous :</p>
-<pre><code class="lang-sh">rbenv <span class="hljs-operator"><span class="hljs-keyword">install</span> <span class="hljs-number">2.1</span><span class="hljs-number">.1</span>
-rbenv <span class="hljs-keyword">global</span> <span class="hljs-number">2.1</span><span class="hljs-number">.1</span></span>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>rbenv install <span class="hljs-number">2.1</span>.<span class="hljs-number">1</span>
+<span class="hljs-variable">$ </span>rbenv global <span class="hljs-number">2.1</span>.<span class="hljs-number">1</span>
 </code></pre>
 <p>Séquence émotion. Vous êtes désormais maître de l’Univers.</p>
 <p>Vous avez Ruby 2.1.1 d’installé. La ligne <code>rbenv global</code> permet comme son nom l’indique d’utiliser cette version de Ruby de façon globale à l’utilisateur, si jamais plusieurs versions coexistent.</p>

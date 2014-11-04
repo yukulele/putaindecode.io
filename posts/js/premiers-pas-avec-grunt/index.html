@@ -40,17 +40,17 @@
 </ul>
 <p>Voyons maintenant comment l’on peut mettre en place ceci via <strong>Grunt</strong>.</p>
 <h2 id="installation"><a class="putainde-Title-anchor" href="#installation">#</a>Installation</h2><p>Tout d’abord, installons <strong>Grunt</strong>. Notez que <strong>Grunt</strong> est en <em>nodejs</em> et que je considère que vous avez déjà <em>nodejs</em> d’installé. D’autre part, nous allons créer un nouveau projet <strong>npm</strong> afin d’enregistrer tous les packages que vous allez installer. Je vous explique par la suite pourquoi nous faisons ça.</p>
-<pre><code class="lang-bash">$ npm <span class="hljs-keyword">init</span> <span class="hljs-comment">// puis plusieurs fois entrée</span>
+<pre><code class="lang-console">$ npm <span class="hljs-keyword">init</span> <span class="hljs-comment">// puis plusieurs fois entrée</span>
 </code></pre>
 <p>En premier lieu, il faut installer le <em>package</em> qui permet de gérer <strong>Grunt</strong> en ligne de commande. C’est le <em>commander</em> de <strong>Grunt</strong> en gros.</p>
-<pre><code class="lang-bash">$ npm install -g grunt-<span class="hljs-keyword">cli</span>
+<pre><code class="lang-console">$ npm install -g grunt-<span class="hljs-keyword">cli</span>
 </code></pre>
 <p>Une fois cela fait, installez <strong>Grunt</strong> en local dans votre projet.</p>
-<pre><code class="lang-bash">$ npm install grunt --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span>
+<pre><code class="lang-console">$ npm install grunt --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span>
 </code></pre>
 <p>Ni plus ni moins, <strong>Grunt</strong> est enfin installé dans votre projet.</p>
 <h2 id="initialisation"><a class="putainde-Title-anchor" href="#initialisation">#</a>Initialisation</h2><p>Maintenant, il est nécessaire de créer un fichier de configuration <strong>Grunt</strong>. Pour cela, nous allons créer un fichier nommé <code>Gruntfile.js</code> à la racine de votre projet.</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>touch <span class="hljs-constant">Gruntfile.</span>js
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>touch <span class="hljs-constant">Gruntfile.</span>js
 </code></pre>
 <p>Fait ? Voici maintenant à quoi doit ressembler la base d’une configuration <strong>Grunt</strong>.</p>
 <pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
@@ -67,7 +67,7 @@
 <h2 id="creer-sa-premiere-tache"><a class="putainde-Title-anchor" href="#creer-sa-premiere-tache">#</a>Créer sa première tâche</h2><p>Une petite recherche sur votre moteur de recherche préféré en tapant <code>grunt sass</code> et vous trouverez le projet <a href="https://github.com/gruntjs/grunt-contrib-sass"><code>grunt-contrib-sass</code></a>.</p>
 <p>Toute documentation pour installer une tâche <strong>Grunt</strong> est indiquée sur chaque <code>README.md</code> du projet mais pour un souci de clarté et de compréhension, je vais tout de même vous expliquer ici comment faire.</p>
 <p>D’abord, installons le package pour <em>Sass</em>.</p>
-<pre><code class="lang-bash">$ npm install grunt-contrib-sass --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span>
+<pre><code class="lang-console">$ npm install grunt-contrib-sass --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span>
 </code></pre>
 <p>Ceci va installer le <em>package</em> <code>grunt-contrib-sass</code> dans votre dossier <code>node_modules</code> où vous pourrez l’utiliser en l’important dans votre <code>Gruntfile.js</code>.</p>
 <p>Un exemple d’utilisation :</p>
