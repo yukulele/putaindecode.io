@@ -39,6 +39,36 @@ en proposant un post. Du coup, on s’attend vraiment à ce que tu aides à fair
 avancer le bouzin, que t’apportes ta pierre à l’édifice quoi (oui on t’apprend
 des expressions aussi), ou ta PR au repo comme on dit dans le monde des
 développeurs des internets.</p>
+<h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><h3 id="corriger-du-contenu-rapidement"><a class="putainde-Title-anchor" href="#corriger-du-contenu-rapidement">#</a>Corriger du contenu rapidement</h3><p>Pour corriger un post de manière simple nous te conseillons l’interface GitHub (via le lien “Modifier” en bas des articles).</p>
+<h3 id="faire-des-modifications-avec-apercu-sur-ta-machine"><a class="putainde-Title-anchor" href="#faire-des-modifications-avec-apercu-sur-ta-machine">#</a>Faire des modifications avec aperçu sur ta machine</h3><p>Forke le projet sur GitHub, puis :</p>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>git clone <span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/github.com/</span><span class="hljs-constant">TON_PSEUDO_GITHUB/</span>putaindecode.fr.git
+<span class="hljs-variable">$ </span>cd putaindecode.fr
+<span class="hljs-variable">$ </span>npm run init
+<span class="hljs-variable">$ </span>npm install
+<span class="hljs-variable">$ </span>npm start
+</code></pre>
+<p>Si tu as un fork en retard sur notre master, tu peux mettre ta master à jour:</p>
+<pre><code class="lang-console"><span class="hljs-char">$ </span>git remote add upstream <span class="hljs-method">https:</span>//github.com/putaindecode/putaindecode.fr.git
+<span class="hljs-char">$ </span>git fetch upstream
+<span class="hljs-char">$ </span>git checkout master
+<span class="hljs-char">$ </span>git merge upstream/master
+</code></pre>
+<p>Ensuite il te faut créer une branche. En préfixe, on recommande les suivants:</p>
+<ul>
+<li><code>fix.</code> pour des patchs</li>
+<li><code>post.</code> pour proposer un post</li>
+<li><code>feature.</code> pour proposer une fonctionnalité</li>
+</ul>
+<p>Exemple :</p>
+<pre><code class="lang-console">$ git checkout -<span class="hljs-tag">b</span> fix.nom-pertinent
+</code></pre>
+<p>Ensuite fait ta popote sur les fichiers nécessaires, puis si tu es flemmard:</p>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>git add -<span class="hljs-constant">A </span>.
+<span class="hljs-variable">$ </span>git commit -m <span class="hljs-string">"Correction de XXX dans le post sur YYY"</span>
+<span class="hljs-variable">$ </span>git push -u
+</code></pre>
+<p>Maintenant tu n’as plus qu’à te rendre sur l’interface de GitHub puis à proposer ta PR.</p>
+<p>Cela dit, ci-dessous, nous te conseillons de lire la version beaucoup plus ludique des explications ci-dessus.</p>
 <h2 id="github"><a class="putainde-Title-anchor" href="#github">#</a>GitHub</h2><ul>
 <li><p>Déjà, si t’en as pas, crée toi un compte GitHub (avant qu’on te caillasse),
 et vu que tu commences à lire des ressources sur notre site, crois-moi que
@@ -87,9 +117,9 @@ servir que si tu fais une modification ou une contribution sur notre site
 aujourd’hui, et que dans un mois tu veuilles encore en faire, tu pourras
 facilement rattraper tout ce qu’on aura fait entre temps. La remote en
 rapport avec le repo principal, on l’appelle souvent <em>upstream</em>.</p>
-<pre><code class="lang-console">  $ <span class="hljs-keyword">cd</span> putaindecode
-  $ git remote <span class="hljs-built_in">add</span> upstream http<span class="hljs-variable">s:</span>//github.<span class="hljs-keyword">com</span>/putaindecode/putaindecode.fr.git
-  $ git fetch upstream
+<pre><code class="lang-console">$ <span class="hljs-keyword">cd</span> putaindecode.fr
+$ git remote <span class="hljs-built_in">add</span> upstream http<span class="hljs-variable">s:</span>//github.<span class="hljs-keyword">com</span>/putaindecode/putaindecode.fr.git
+$ git fetch upstream
 </code></pre>
 </li>
 <li><p>Alors là, normalement, t’as le dossier propre et frais, pêché du matin. Vu
