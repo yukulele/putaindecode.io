@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Wed, 05 Nov 2014 04:53:42 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Laissez-vous pousser la barbe, apprenez à écrire des Makefiles</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Wed, 05 Nov 2014 04:55:07 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Laissez-vous pousser la barbe, apprenez à écrire des Makefiles</title><description><![CDATA[
 <p>À l’heure où tout le monde se rue sur des outils comme <a href="/posts/js/introduction-gulp/">Gulp</a>,
 <a href="/posts/js/premiers-pas-avec-grunt/">Grunt</a> ou autres <a href="https://rubygems.org/gems/rake">Rake</a>, certains irréductibles (dont je
 fais partie) ont fait le choix d’employer un des outils les plus standards et
@@ -217,7 +217,195 @@ source d’idées.</p>
 que vous êtes fin prêts à affronter tous ces bouseux avec leur système de build
 à base de streams, de brocolis et autres râteaux.</p>
 
-]]></description><pubDate>Mon, 03 Nov 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/shell/apprendre-les-makefiles/</link><guid isPermaLink="true">http://putaindecode.fr/posts/shell/apprendre-les-makefiles/</guid></item><item><title>L'auto-entrepreneuriat : retour d'expériences</title><description><![CDATA[
+]]></description><pubDate>Mon, 03 Nov 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/shell/apprendre-les-makefiles/</link><guid isPermaLink="true">http://putaindecode.fr/posts/shell/apprendre-les-makefiles/</guid></item><item><title>L'injection de dépendance en PHP</title><description><![CDATA[
+<p>Salutations ! Aujourd’hui, je suis venu te parler de PHP (sisi), et notamment du mécanisme d’injection de dépendance avec lequel tu n’es peut-être pas familier. Au menu, des objets, des usines et des conteneurs, alors enfile ton bonnet et tes gants, on va bouger du bordel !</p>
+<h2 id="l-injection-de-dependance-c-est-quoi-ce-truc-"><a class="putainde-Title-anchor" href="#l-injection-de-dependance-c-est-quoi-ce-truc-">#</a>L’injection de dépendance ? C’est quoi ce truc ?</h2><p>Si tu fais de la programmation orientée objet, il est fort probable que ce terme ne te soit pas totalement inconnu. En PHP, on a principalement commencé à nous en rebattre les oreilles avec l’avènement de Symfony, qui est aujourd’hui le framework web majeur pour ce langage. Fabien Potencier, créateur et <em>lead developer</em> de Symfony, cite en exemple sur <a href="http://fabien.potencier.org/article/11/what-is-dependency-injection">son blog</a> cette définition :</p>
+<blockquote>
+<p><em>Dependency Injection is where components are given their dependencies through their constructors, methods, or directly into fields.</em></p>
+<p>Quelqu’un</p>
+</blockquote>
+<p>C’est clair, non ? Non ? Bon. Imaginons un bout d’appli PHP, où l’on désire gérer des personnes qui ont chacune une adresse postale. Si tu n’as pas trop dormi à la fac le vendredi matin après ta cuite du jeudi soir, tu devrais pouvoir déterminer tout seul qu’on va avoir besoin d’une classe <code>Person</code> et d’une classe <code>Address</code> :</p>
+<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Address</span>
+</span>{
+    <span class="hljs-keyword">private</span> <span class="hljs-variable">$number</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-variable">$street</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-variable">$zipcode</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-variable">$city</span>;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(<span class="hljs-variable">$number</span>, <span class="hljs-variable">$street</span>, <span class="hljs-variable">$zipcode</span>, <span class="hljs-variable">$city</span>)</span>
+    </span>{
+        <span class="hljs-variable">$this</span>-&gt;number = <span class="hljs-variable">$number</span>;
+        <span class="hljs-variable">$this</span>-&gt;street = <span class="hljs-variable">$street</span>;
+        <span class="hljs-variable">$this</span>-&gt;zipcode = <span class="hljs-variable">$zipcode</span>;
+        <span class="hljs-variable">$this</span>-&gt;city = <span class="hljs-variable">$city</span>;
+    }
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>
+</span>{
+    <span class="hljs-keyword">private</span> <span class="hljs-variable">$address</span>;
+}
+</code></pre>
+<p>Tu noteras que je n’ai pas encore écrit le constructeur de la classe <code>Person</code>. Justement. Le développeur naïf procédera de la façon suivante :</p>
+<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>
+</span>{
+    <span class="hljs-keyword">private</span> <span class="hljs-variable">$address</span>;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(<span class="hljs-variable">$number</span>, <span class="hljs-variable">$street</span>, <span class="hljs-variable">$zipcode</span>, <span class="hljs-variable">$city</span>)</span>
+    </span>{
+        <span class="hljs-variable">$this</span>-&gt;address = <span class="hljs-keyword">new</span> Address(<span class="hljs-variable">$number</span>, <span class="hljs-variable">$street</span>, <span class="hljs-variable">$zipcode</span>, <span class="hljs-variable">$city</span>);
+    }
+}
+
+<span class="hljs-variable">$person</span> = <span class="hljs-keyword">new</span> Person(<span class="hljs-number">5</span>, <span class="hljs-string">'Allée des Rosiers'</span>, <span class="hljs-number">78670</span>, <span class="hljs-string">'Villennes-sur-Seine'</span>);
+</code></pre>
+<p>Alors oui, hein, ça marche, et on peut instancier une personne et son adresse en une ligne de code. Le problème est qu’en procédant ainsi, les classes <code>Person</code> et <code>Address</code> deviennent <strong>étroitement couplées</strong> : la classe <code>Person</code> est inutilisable sans la classe <code>Address</code>, et pire, le code interne de la première serait impacté par un changement sur la seconde.</p>
+<p>Pas convaincu ? Qu’est-ce qui se passera le jour où on lèvera 10 millions de dollars pour internationaliser l’appli ?</p>
+<pre><code class="lang-php">class Address
+{
+    // <span class="hljs-keyword">...</span>
+    private $country;
+
+    public <span class="hljs-keyword">function</span> __construct($number, $street, $zipcode, $city, $country)
+    {
+        // <span class="hljs-keyword">...</span>
+        $this-&gt;country = $country;
+    }
+}
+</code></pre>
+<p>Ah bah mince, il faut aussi modifier le constructeur de la classe <code>Person</code> pour y ajouter le nouveau paramètre <code>$country</code> de manière symétrique. C’est ballot.</p>
+<p>Dans l’idéal, la classe <code>Person</code> devrait se foutre royalement de la façon dont la classe <code>Address</code> fonctionne. Une personne a toujours besoin d’une adresse, mais ça n’implique certainement pas que ce soit le rôle de cette classe de la forger. Alors, on fait comment ? C’est très simple :</p>
+<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>
+</span>{
+    <span class="hljs-keyword">private</span> <span class="hljs-variable">$address</span>;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(Address <span class="hljs-variable">$address</span>)</span>
+    </span>{
+        <span class="hljs-variable">$this</span>-&gt;address = <span class="hljs-variable">$address</span>;
+    }
+}
+</code></pre>
+<p>L’injection de dépendance, c’est précisément ça. Si une classe a besoin d’une instance d’une autre classe, que ce soit dans son constructeur ou dans une autre méthode (un <em>setter</em> par exemple), alors elle prend cette instance directement en paramètre et ne s’occupe certainement pas de l’instancier elle-même. Procéder ainsi permet d’écrire du code <strong>découplé</strong>, évitant toute interdépendance entre ses différents composants, ce qui les rend <strong>réutilisables</strong> sans devoir embarquer toute la smala au passage, mais également beaucoup plus <strong>maintenables</strong> puisque chaque classe s’occupe de ses fesses et pas de celles des autres. En PHP, on tire également parti du <em>type hinting</em> d’objets, qui permet de s’assurer d’emblée que notre paramètre est une instance de la classe voulue et non pas n’importe quoi.</p>
+<p>Alors oui, je t’entends déjà grommeler :</p>
+<blockquote>
+<p>Ouais mais du coup je dois instancier une adresse moi-même à chaque fois que je crée une personne, c’est relou ton truc</p>
+</blockquote>
+<p>Si telle est ton opinion, <del>tu ne mérites pas de vivre</del> je t’invite à poursuivre la lecture de cet article avec l’entrain qui te caractérise.</p>
+<h2 id="l-usine-a-la-rescousse"><a class="putainde-Title-anchor" href="#l-usine-a-la-rescousse">#</a>L’usine à la rescousse</h2><p>Je ne sais pas si tu sais, mais il existe un <em>design pattern</em> assez répandu en programmation orientée objet que l’on nomme <strong>factory</strong> (usine en français, d’où le titre pourrave de cette partie).</p>
+<p>En gros, le principe est de créer une classe dont le rôle est d’instancier d’autres classes, précisément dans le cas où une telle tâche demande plusieurs lignes de code, afin justement d’éviter de répéter celles-ci. Pour reprendre notre exemple :</p>
+<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PersonFactory</span>
+</span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPerson</span><span class="hljs-params">(<span class="hljs-variable">$number</span>, <span class="hljs-variable">$street</span>, <span class="hljs-variable">$zipcode</span>, <span class="hljs-variable">$city</span>, <span class="hljs-variable">$country</span>)</span>
+    </span>{
+        <span class="hljs-variable">$address</span> = <span class="hljs-keyword">new</span> Address(<span class="hljs-variable">$number</span>, <span class="hljs-variable">$street</span>, <span class="hljs-variable">$zipcode</span>, <span class="hljs-variable">$city</span>, <span class="hljs-variable">$country</span>);
+
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Person(<span class="hljs-variable">$address</span>);
+    }
+}
+</code></pre>
+<p>Pour le coup, tu te dis peut-être que je te prends allègrement pour un idiot : pourquoi se prendre le chou à créer une classe qui fait exactement ce qu’on faisait directement dans <code>Person</code> au départ ? Parce que tu n’as pas bien écouté, <del>petit c</del> jeune padawan. L’objectif en utilisant l’injection de dépendance, c’est que nos classes ne soient pas dépendantes (justement) les unes des autres si ce n’est pas justifié. Une personne a beau avoir besoin d’une adresse, on pourrait fort bien imaginer les utiliser l’une sans l’autre (tu comprendras à la partie suivante). Dans le cas de <code>PersonFactory</code>, notre objectif est justement de créer une personne à partir des différents composants d’une adresse en une ligne de code, pour conserver la simplicité du code métier qui te tient tant à coeur (et tu as bien raison, au fond). Seulement, <code>Person</code> et <code>Address</code> restent utilisables avec ou sans <code>PersonFactory</code> : l’objectif est atteint, petit navire.</p>
+<p>Tant qu’on en est à se simplifier la vie :</p>
+<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PersonFactory</span>
+</span>{
+    <span class="hljs-comment">// ...</span>
+
+    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getZipcodeFromDistrict</span><span class="hljs-params">(<span class="hljs-variable">$district</span>)</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-number">75000</span> + <span class="hljs-variable">$district</span>;
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createParigot</span><span class="hljs-params">(<span class="hljs-variable">$number</span>, <span class="hljs-variable">$street</span>, <span class="hljs-variable">$district</span>)</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-variable">$this</span>-&gt;createPerson(<span class="hljs-variable">$number</span>, <span class="hljs-variable">$street</span>, <span class="hljs-variable">$this</span>-&gt;getZipcodeFromDistrict(<span class="hljs-variable">$district</span>), <span class="hljs-string">'Paris'</span>, <span class="hljs-string">'France'</span>);
+    }
+}
+</code></pre>
+<p>Tu t’imagines faire ce genre de chose dans la classe <code>Person</code> ou la classe <code>Address</code> ? J’espère bien que non.</p>
+<h2 id="oui-ca-sert-a-quelque-chose-une-interface"><a class="putainde-Title-anchor" href="#oui-ca-sert-a-quelque-chose-une-interface">#</a>Oui, ça sert à quelque chose une interface</h2><p>Dans tes souvenirs brumeux de vendredis matins étudiants (<em>cf. supra</em>), tu retrouveras peut-être des bribes de cours portant sur les <strong>interfaces</strong>. Si tout ce que tu as retenu, c’est qu’”une classe toute vide ça sert à rien”, lis donc ce qui va suivre.</p>
+<p>Une interface, c’est avant tout un contrat. Une classe qui <strong>implémente</strong> une interface s’engage à implémenter toutes les méthodes que celle-ci déclare. Sans même lire le code de ladite classe, on sait donc d’emblée comment on peut jouer avec et comment elle est censée fonctionner.</p>
+<p>Poursuivons encore sur notre exemple et imaginons qu’on doive gérer des adresses ne respectant pas le format utilisé jusqu’ici, par exemple une adresse plus basique constituée d’une unique chaîne de caractères :</p>
+<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BasicAddress</span></span>
+{
+    <span class="hljs-keyword">private</span> <span class="hljs-number">$add</span>ress;
+}
+</code></pre>
+<p>Dans l’état actuel des choses, on ne peut pas utiliser une instance de cette classe avec <code>Person</code>, puisque le constructeur de cette dernière attend une instance d’<code>Address</code>. Qu’à cela ne tienne !</p>
+<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">AddressInterface</span>
+</span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFullAddress</span><span class="hljs-params">()</span></span>;
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BasicAddress</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">AddressInterface</span>
+</span>{
+    <span class="hljs-keyword">private</span> <span class="hljs-variable">$address</span>;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFullAddress</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-variable">$this</span>-&gt;address;
+    }
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Address</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">AddressInterface</span>
+</span>{
+    <span class="hljs-comment">// ...</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFullAddress</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-variable">$this</span>-&gt;number.<span class="hljs-string">', '</span>.<span class="hljs-variable">$this</span>-&gt;street.<span class="hljs-string">', '</span>.<span class="hljs-variable">$this</span>-&gt;zipcode.<span class="hljs-string">' '</span>.<span class="hljs-variable">$this</span>-&gt;city.<span class="hljs-string">', '</span>.<span class="hljs-variable">$this</span>-&gt;country;
+    }
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>
+</span>{
+    <span class="hljs-comment">// ...</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(AddressInterface <span class="hljs-variable">$address</span>)</span>
+    </span>{
+        <span class="hljs-variable">$this</span>-&gt;address = <span class="hljs-variable">$address</span>;
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getAddress</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-variable">$this</span>-&gt;address;
+    }
+}
+
+<span class="hljs-variable">$address</span> = <span class="hljs-keyword">new</span> BasicAddress(<span class="hljs-string">'test test un deux un deux'</span>);
+<span class="hljs-variable">$person</span> = <span class="hljs-keyword">new</span> Person(<span class="hljs-variable">$address</span>);
+
+<span class="hljs-variable">$factory</span> = <span class="hljs-keyword">new</span> PersonFactory();
+<span class="hljs-variable">$robert</span> = <span class="hljs-variable">$factory</span>-&gt;createParigot(<span class="hljs-number">1</span>, <span class="hljs-string">'Rue de la Paix'</span>, <span class="hljs-number">2</span>);
+
+<span class="hljs-keyword">echo</span>(<span class="hljs-variable">$person</span>-&gt;getAddress()-&gt;getFullAddress()); <span class="hljs-comment">// 'test test un deux un deux'</span>
+<span class="hljs-keyword">echo</span>(<span class="hljs-variable">$robert</span>-&gt;getAddress()-&gt;getFullAddress()); <span class="hljs-comment">// '1, rue de la Paix, 75002 Paris, France'</span>
+</code></pre>
+<p>Tu vois l’idée ? En demandant une instance de n’importe quelle classe implémentant <code>AddressInterface</code> au lieu d’une instance d’<code>Address</code> spécifiquement, on se donne plus de mou et on réduit encore davantage le couplage entre nos classes. Qu’on crée une personne avec une instance d’<code>Address</code> ou de <code>BasicAddress</code>, on pourra dans tous les cas obtenir l’adresse postale de ladite personne de la même façon.</p>
+<h2 id="elle-contient-ta-fiancee-hein-mitch-"><a class="putainde-Title-anchor" href="#elle-contient-ta-fiancee-hein-mitch-">#</a>Elle contient ta fiancée, hein Mitch ?</h2><p>Tu auras peut-être tiqué sur un détail du dernier exemple : le fait de ne pas faire de <code>PersonFactory</code> une classe statique (beurk) nous oblige à l’instancier pour pouvoir l’utiliser ; ce qui, à n’en pas douter, t’aura mené à te dire “arf, ça va m’en faire des <code>new MachinFactory()</code> pour instancier mes objets”. Là encore, l’injection de dépendance peut nous aider, quoique de manière indirecte : en utilisant un conteneur d’injection de dépendance.</p>
+<p>Un conteneur (ça sera plus court) peut <em>grosso modo</em> être comparé à une grosse <em>factory</em> capable d’instancier plusieurs classes. En pratique, afin d’éviter d’écrire et de devoir maintenir une classe monolithique, on en fera plutôt quelque chose qui fait appel aux différentes <em>factories</em>. Poursuivons sur notre exemple :</p>
+<pre><code class="lang-php"><span class="hljs-keyword">class</span> <span class="hljs-title">DependencyInjectionContainer</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> function <span class="hljs-title">getPersonFactory</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-function"><span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">PersonFactory</span><span class="hljs-params">()</span></span>;
+    }
+}
+</code></pre>
+<p>Mais ça ne s’arrête évidemment pas là. De par le fait d’utiliser l’injection de dépendance à grande échelle, on a souvent besoin d’instancier nous-même les objets dont on a besoin. Dans certains cas, ce seront toujours les mêmes, ce qui vaut pour les <em>factories</em> mais pas que : pense aux différentes librairies qui composent un projet web, par exemple. Ce ne serait pas génial que les différentes instances de ces classes soient accessibles via le conteneur pour pouvoir y accéder à l’envi ?</p>
+<pre><code class="lang-php"><span class="hljs-variable">$container</span> <span class="hljs-subst">=</span> <span class="hljs-literal">new</span> DependencyInjectionContainer();
+
+<span class="hljs-variable">$container</span><span class="hljs-subst">-&gt;</span>getOrm()<span class="hljs-subst">-&gt;</span>performSomeNaughtyQuery();
+<span class="hljs-variable">$container</span><span class="hljs-subst">-&gt;</span>getTwig()<span class="hljs-subst">-&gt;</span>renderUglyTemplate();
+<span class="hljs-variable">$container</span><span class="hljs-subst">-&gt;</span>getTranslator()<span class="hljs-subst">-&gt;</span>translate(<span class="hljs-string">'Putain de code !'</span>);
+</code></pre>
+<p>Les objets ainsi gérés par un tel conteneur deviennent dès lors des <strong>services</strong> dans ton application.</p>
+<blockquote>
+<p>Mais ça signifie instancier un service à chaque appel ?</p>
+</blockquote>
+<p>Pas nécessairement ! Il existe des mécanismes permettant de conserver une même instance pour la servir lors des appels suivants. Cela sort un peu du cadre de cet article, mais je t’invite vivement à jeter un oeil à <a href="http://php-di.org/">PHP-DI</a>, qui est un conteneur d’injection de dépendance très bien fichu que tu peux utiliser dans ton projet si tu le souhaites.</p>
+<h2 id="epilogue"><a class="putainde-Title-anchor" href="#epilogue">#</a>Épilogue</h2><p>Si tu développes en PHP, j’espère t’avoir montré qu’il est possible d’écrire du code plus maintenable et plus élégant en utilisant l’injection de dépendance. Dans le cas contraire, sache que ce concept est très répandu dans les langages orientés objet d’une manière générale - après tout, <a href="https://docs.angularjs.org/guide/di">on en retrouve même dans Angular</a>.</p>
+<p>Bon code, et n’oublie pas, on ne met pas en prod le vendredi, c’est mal. Allez, file !</p>
+
+]]></description><pubDate>Fri, 31 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/backend/php-injection-dependance/</link><guid isPermaLink="true">http://putaindecode.fr/posts/backend/php-injection-dependance/</guid></item><item><title>L'auto-entrepreneuriat : retour d'expériences</title><description><![CDATA[
 <figure>
   <img src="index.jpg" alt="Desktop">
   <small><a href="http://freebiesxpress.com/gallery/macbook-air-table-direct-stock-photo/">Credit photo</a></small>
@@ -2688,72 +2876,4 @@ puts (<span class="hljs-number">1</span>..<span class="hljs-number">3</span>)<sp
 </code></pre>
 <p>Enjoy!</p>
 
-]]></description><pubDate>Wed, 07 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/backend/premiers-pas-avec-ruby/</link><guid isPermaLink="true">http://putaindecode.fr/posts/backend/premiers-pas-avec-ruby/</guid></item><item><title>NPM comme package manager pour le front-end</title><description><![CDATA[
-<p>NPM, le package manager de Node.js, a grandement participé au succès de ce dernier.
-Il facilite la création, le partage et l’installation de modules.
-Il permet aux développeurs de suivre la <a href="http://www.faqs.org/docs/artu/ch01s06.html">philosophie Unix</a>
-où chaque module fait une seule tâche (évite la complexité, facilite la réutilisation et les tests).</p>
-<p>Cependant NPM ne se limite pas aux modules JavaScript. Il est en effet possible
-de publier tout type de fichier et c’est là que ça devient intéressant pour nos
-modules front-end, qui peuvent aussi être CSS, HTML, fonts, etc.</p>
-<h2 id="module-javascript"><a class="putainde-Title-anchor" href="#module-javascript">#</a>Module JavaScript</h2><p>Si vous n’êtes pas familier(e) avec la création d’un module JavaScript, je vous
-conseille d’exécuter la commande <code>npm init</code> qui va vous aider à générer votre
-<code>package.json</code> (fichier de configuration utilisé par NPM). Le champ
-“<a href="https://www.npmjs.org/doc/json.html#main">main</a>“ définit le point d’entrée de
-votre module.</p>
-<pre><code class="lang-json">{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"putaindemodule"</span></span>,
-  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.0.1"</span></span>,
-  "<span class="hljs-attribute">main</span>": <span class="hljs-value"><span class="hljs-string">"index.js"</span>
-</span>}
-</code></pre>
-<p>Dans un article précédent, il vous a été présenté le développement d’une application
-autour de <a href="/posts/js/browserify-all-the-things/">modules JavaScript avec Browserify</a>.</p>
-<h2 id="module-pour-tout-type-de-fichier"><a class="putainde-Title-anchor" href="#module-pour-tout-type-de-fichier">#</a>Module pour tout type de fichier</h2><p>C’est grâce au champ “<a href="https://www.npmjs.org/doc/json.html#files">files</a>“ que
-l’on peut définir la liste des fichiers que l’on va publier (autre que les fichiers JavaScript).
-Voici un exemple de <code>package.json</code> d’un module pour un système de grille CSS.</p>
-<pre><code class="lang-json">{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"putaindegrid"</span></span>,
-  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.0.1"</span></span>,
-  "<span class="hljs-attribute">files</span>": <span class="hljs-value">[
-    <span class="hljs-string">"grid.css"</span>
-  ]
-</span>}
-</code></pre>
-<p>Il ne reste de plus qu’à le <a href="https://gist.github.com/coolaj86/1318304">publier</a>
-et à l’installer (<code>npm install putaindegrid --save</code>) dans vos différents projets
-où vous en aurez besoin. Votre fichier <code>grid.css</code> est accessible dans le dossier
-<code>node_modules/putaindegrid/grid.css</code>, vous pouvez donc l’inclure dans votre page
-HTML. (Ou l’<code>@import</code>er dans votre fichier Sass/Less principal.)</p>
-<pre><code class="lang-html">&lt;link <span class="hljs-variable">href=</span><span class="hljs-string">"node_modules/putaindegrid/grid.css"</span> <span class="hljs-variable">rel=</span><span class="hljs-string">"stylesheet"</span> <span class="hljs-variable">type=</span><span class="hljs-string">"text/css"</span>&gt;
-</code></pre>
-<h2 id="pourquoi-npm-plutot-qu-un-autre-package-manager-"><a class="putainde-Title-anchor" href="#pourquoi-npm-plutot-qu-un-autre-package-manager-">#</a>Pourquoi NPM plutôt qu’un autre package manager ?</h2><ul>
-<li>Il a déjà fait ses preuves comme package manager pour Node.js.</li>
-<li>Pas besoin d’installer un nouvel outil, NPM étant installé avec Node.js, ce qui
-évite un lot de bugs et de fichiers de configuration supplémentaires (un simple <code>package.json</code> suffit).</li>
-<li>Et surtout, toutes les dépendances de votre projet peuvent être gérées via NPM:
-votre tasks runner et ses plugins (<a href="/posts/js/introduction-gulp/">Gulp</a>, <a href="/posts/js/premiers-pas-avec-grunt/">Grunt</a> &amp; co), vos <a href="/posts/js/browserify-all-the-things/">modules JavaScript</a>, vos <a href="/posts/js/introduction-au-testing-js-front/">tests</a>
-et comme on vient de le voir, vos fichiers de style.</li>
-</ul>
-<p>Dans le cas où vous n’auriez pas envie de passer par l’étape de publication
-(<code>npm publish</code>) pour diverses raisons, sachez qu’il est possible
-d’<a href="https://www.npmjs.org/doc/cli/npm-install.html">installer</a> des packages qui ne
-sont pas publiés. Mon alternative favorite étant l’utilisation du namespace Github
-<code>npm install user/repo --save</code>.<br>Cependant, même si vous ne publiez pas votre module, lorsque vous en modifiez le
-code n’oubliez jamais de mettre à jour sa version suivant la convention
-<a href="http://semver.org/">semver</a>. Sinon vous serez susceptible d’inclure des bugs dans
-les projets qui l’utilisent. Ce qui implique :</p>
-<ul>
-<li>Mettre à jour le champ “version” de votre <code>package.json</code> (vous pouvez vous
-aider des commandes <code>npm version patch</code>, <code>npm version minor</code> et <code>npm version major</code>).</li>
-<li>Ajouter un tag git (<code>git tag -a 0.1.0 -m &quot;Initial release&quot;</code>).</li>
-</ul>
-<p>NPM est une excellente solution pour gérer les dépendences de votre projet, aussi
-bien pour vos outils de build, que pour vos assets front-end. Je pense qu’il est
-important de garder les choses simples, en commençant par utiliser un seul
-gestionnaire de dépendances, dans le cas où celui-ci n’intègre pas d’autres
-fonctionnalités que le téléchargement de modules.  </p>
-<p>Bye bye Bower!</p>
-<p>PS: vous avez besoin d’un module qui n’a pas de package.json ? Pas de problème, <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/">napa est là pour ça</a></p>
-
-]]></description><pubDate>Tue, 06 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/</guid></item></channel></rss>
+]]></description><pubDate>Wed, 07 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/backend/premiers-pas-avec-ruby/</link><guid isPermaLink="true">http://putaindecode.fr/posts/backend/premiers-pas-avec-ruby/</guid></item></channel></rss>
