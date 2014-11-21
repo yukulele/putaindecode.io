@@ -147,7 +147,7 @@ Mais selon votre workflow, vous pouvez l’utiliser via une tâche
 <a href="https://www.npmjs.org/package/grunt-browserify">grunt-browserify</a>
 ou <a href="https://www.npmjs.org/package/gulp-browserify">gulp-browserify</a>.</p>
 <h2 id="utilisation-de-browserify"><a class="putainde-Title-anchor" href="#utilisation-de-browserify">#</a>Utilisation de Browserify</h2><p>Partons d’un simple fichier <code>main.js</code>:</p>
-<pre><code class="lang-js"><span class="hljs-attribute">alert</span>(<span class="hljs-string">'Hello world !'</span>);
+<pre><code class="lang-js">alert(<span class="hljs-string">'Hello world !'</span>);
 </code></pre>
 <p>Sans aucune dépendance, ça n’a que peu de sens, mais c’est plus pour montrer un
 dernier point intéressant.</p>
@@ -187,7 +187,7 @@ mappées dans un object par leur identifiant. Lorsqu’une fonction appelle <cod
 le petit bout de script ajouté va se charger de retourner la dépendance.</p>
 <p>Notez qu’on peut aussi simplement utiliser une redirection de sortie de commande
 pour gérer le fichier final:</p>
-<pre><code class="lang-console"><span class="hljs-prompt">$ browserify main.js &gt;</span> bundle.js
+<pre><code class="lang-console">$ browserify main<span class="hljs-class">.js</span> &gt; bundle.js
 </code></pre>
 <p>Du coup on a plus qu’à utiliser une simple balise <code>&lt;script&gt;</code> pour incorporer ça
 dans nos pages web.</p>
@@ -217,7 +217,7 @@ Dans le même esprit, on va retrouver de nombreuses transformations telles que :
 <p>Il existe plein <a href="https://www.npmjs.org/browse/keyword/browserify">d’autres transformations</a>
 qui s’adapteront sûrement à vos besoins.</p>
 <p>Du coup la ligne ultime pour consommer a peu près n’importe quel module :</p>
-<pre><code class="lang-console"><span class="hljs-prompt">browserify -t debowerify -t decomponentify -t deamdify -t deglobalify -t es6ify main.js &gt;</span> bundle.js
+<pre><code class="lang-console">browserify -t debowerify -t decomponentify -t deamdify -t deglobalify -t es6ify main<span class="hljs-class">.js</span> &gt; bundle.js
 </code></pre>
 <p>L’équivalent avec les tâches Grunt ou Gulp sera tout aussi simple via un tableau.
 Pensez bien à installer ces dépendances avant:</p>

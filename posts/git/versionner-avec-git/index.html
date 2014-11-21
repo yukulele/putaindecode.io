@@ -92,9 +92,9 @@ fichiers.</p>
 bien pour lancer les vraies commandes intéressantes de Git.</p>
 <h2 id="premiers-commits"><a class="putainde-Title-anchor" href="#premiers-commits">#</a>Premiers commits</h2><p>Pour commencer à s’amuser, écrivez un bout de code dans un fichier et
 sauvegardez le :</p>
-<pre><code class="lang-console"><span class="hljs-prompt">$ cat &gt;</span> putain_de_hello_world.rb
+<pre><code class="lang-console">$ <span class="hljs-keyword">cat</span> &gt; putain_de_hello_world.rb
 puts <span class="hljs-string">"Hello, putain de codeur !"</span>
-^<span class="hljs-constant">D</span>
+^<span class="hljs-literal">D</span>
 </code></pre>
 <p>On va tout se suite introduire l’un des concepts déroutants de Git, <em>l’Index</em>.
 Git utilise trois zones distinctes pour les fichiers : le dossier de travail
@@ -151,9 +151,9 @@ de décrire votre changement sur la première ligne succintement et, si vous ave
 besoin de détails, sautez une ligne et détaillez les modifications.</p>
 <p>Un petit <code>git status</code> nous confirme qu’on s’est pas foiré (la preuve, tout est
 propre) :</p>
-<pre><code class="lang-console"><span class="hljs-variable">$ </span>git status
-<span class="hljs-comment"># Sur la branche master</span>
-rien à valider, la copie de travail est propre
+<pre><code class="lang-console">$ git status
+# Sur <span class="hljs-keyword">la</span> branche master
+rien à valider, <span class="hljs-keyword">la</span> copie <span class="hljs-keyword">de</span> travail <span class="hljs-keyword">est</span> propre
 </code></pre>
 <h2 id="inspecter"><a class="putainde-Title-anchor" href="#inspecter">#</a>Inspecter</h2><p>Bon, c’est bien beau de commiter, mais à un moment on arrive sur un projet en
 cours et on aimerait bien savoir où on en est. Pour ça, vous pouvez utiliser un
@@ -222,26 +222,26 @@ cette branche.</p>
 un petit asterisque devant c’est la branche courante.</p>
 <p>Essayons ça avec notre petit dépôt :</p>
 <pre><code class="lang-console">$ git branch
-* master
+<span class="hljs-comment">* master</span>
 $ git checkout -b add-shebang
-Basculement sur la nouvelle branche 'add-shebang'
+Basculement sur <span class="hljs-keyword">la</span> nouvelle branche 'add-shebang'
 $ vim putain_de_hello_world.rb
 $ git status
-<span class="hljs-comment"># Sur la branche add-shebang</span>
-<span class="hljs-comment"># Modifications qui ne seront pas validées :</span>
-<span class="hljs-comment">#   (utilisez "git add &lt;fichier&gt;..." pour mettre à jour ce qui sera validé)</span>
-<span class="hljs-comment">#   (utilisez "git checkout -- &lt;fichier&gt;..." pour annuler les modifications dans la copie de travail)</span>
-<span class="hljs-comment">#</span>
-<span class="hljs-comment">#    modifié : putain_de_hello_world.rb</span>
-<span class="hljs-comment">#</span>
-aucune modification n'a été ajoutée au commit (utilisez <span class="hljs-string">"git add"</span> ou <span class="hljs-string">"git commit -a"</span>)
+# Sur <span class="hljs-keyword">la</span> branche add-shebang
+# Modifications <span class="hljs-keyword">qui</span> ne seront pas validées :
+#   (utilisez <span class="hljs-string">"git add &lt;fichier&gt;..."</span> pour mettre à jour ce <span class="hljs-keyword">qui</span> sera validé)
+#   (utilisez <span class="hljs-string">"git checkout -- &lt;fichier&gt;..."</span> pour annuler les modifications dans <span class="hljs-keyword">la</span> copie <span class="hljs-keyword">de</span> travail)
+#
+#    modifié : putain_de_hello_world.rb
+#
+aucune modification <span class="hljs-keyword">n</span>'a été ajouté<span class="hljs-keyword">e</span> au commit (utilisez <span class="hljs-string">"git add" ou "git commit -a"</span>)
 $ git add putain_de_hello_world.rb
 $ git commit
-[add-shebang <span class="hljs-number">5</span>d48735] Add shebang
- <span class="hljs-number">1</span> <span class="hljs-type">file</span> changed, <span class="hljs-number">1</span> insertion(+)
-$ git <span class="hljs-command">log</span> <span class="hljs-comment">--pretty=oneline --decorate</span>
-<span class="hljs-number">5</span>d48735fcc805d51e2e294df5d9d22d481250789 (HEAD, add-shebang) Add shebang
-<span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e (master) Premier commit
+[add-shebang 5d48735] Add shebang
+ 1 <span class="hljs-keyword">file</span> changed, 1 insertion(+)
+$ git <span class="hljs-keyword">log</span> --pretty=oneline --decorate
+5d48735fcc805d51e2e294df5d9d22d481250789 (HEAD, add-shebang) Add shebang
+8120de7b7139e46b9cbc1c3ee89a02962dbc198e (master) Premier commit
 </code></pre>
 <p>Comme vous le voyez grâce à l’option <code>--decorate--</code> de <code>git log</code>, on a bien
 notre branche qui pointe sur le dernier commit fait, alors que la branche de
@@ -253,12 +253,12 @@ la branche dans laquelle on va fusionner et en passant en argument la branche à
 fusionner.</p>
 <p>Si vous avez bien suivi, on va donc faire les choses suivantes :</p>
 <pre><code class="lang-console">$ git checkout master
-Basculement sur la branche <span class="hljs-string">'master'</span>
-$ git merge add-shebang
-Updating <span class="hljs-number">8120</span>de7..<span class="hljs-number">5</span>d48735
+Basculement sur la branche 'master'
+$ git merge<span class="hljs-instruction"> add-shebang
+</span>Updating 8120de7..5d48735
 Fast-forward
- putain_de_hello_world<span class="hljs-class">.rb</span> | <span class="hljs-number">1</span> +
- <span class="hljs-number">1</span> file changed, <span class="hljs-number">1</span> <span class="hljs-function"><span class="hljs-title">insertion</span><span class="hljs-params">(+)</span></span>
+ putain_de_hello_world.rb | 1 +
+ 1 file changed, 1<span class="hljs-function"> insertion(</span>+<span class="hljs-function">)</span>
 </code></pre>
 <p>Vous remarquez que Git signale <em>Fast-forward</em>. Comme le commit pointé par
 <code>add-shebang</code> est un fils direct de celui de <code>master</code>, Git se contente de faire

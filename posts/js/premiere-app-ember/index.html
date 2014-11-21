@@ -86,8 +86,8 @@ largement débattue. Si ça vous intéresse, je vous laisse découvrir un
 Ici encore, question de goût, question de contexte, question de besoins.</em></p>
 <p>Trèves de bavardages, on s’y met sérieusement :</p>
 <p>On installe <a href="http://nodejs.org/">Node</a>, <a href="http://www.ember-cli.com/">Ember CLI</a>, <a href="http://bower.io/">Bower</a> :</p>
-<pre><code class="lang-console">$ npm <span class="hljs-keyword">install</span> -g ember-cli
-$ npm <span class="hljs-keyword">install</span> -g bower
+<pre><code class="lang-console">$ npm install -<span class="hljs-keyword">g</span> ember-<span class="hljs-keyword">cli</span>
+$ npm install -<span class="hljs-keyword">g</span> bower
 </code></pre>
 <p>Ça y est, on peut maintenant demander gentiment à <a href="http://www.ember-cli.com/">Ember CLI</a> de nous créer notre application grâce à la 
 commande <code>ember</code> et voir ensuite une magnifique page de bienvenue sur <a href="http://localhost:4200/">http://localhost:4200/</a> :</p>
@@ -392,8 +392,8 @@ Je vous laisse découvrir par vous-même dans la <a href="http://emberjs.com/gui
 });
 </code></pre>
 <p>Et le gabarit :</p>
-<pre><code class="lang-html"><span class="xml"></span><span class="hljs-expression">{{<span class="hljs-variable">firstName</span>}}</span><span class="xml">
-</span><span class="hljs-expression">{{<span class="hljs-variable">fullName</span>}}</span><span class="xml"></span>
+<pre><code class="lang-html"><span class="hljs-collection">{<span class="hljs-collection">{firstName}</span>}</span>
+<span class="hljs-collection">{<span class="hljs-collection">{fullName}</span>}</span>
 </code></pre>
 <p>Tout ça, sans la <em>RunLoop</em>, ferait qu’on exécuterait le rendu deux fois si l’on modifie successivement <code>firstname</code> puis <code>lastname</code>. La <em>RunLoop</em> met tout ça (et plein d’autres
 choses) en queue et n’effectue le rendu qu’une seule et unique fois, lorsque nécessaire.</p>

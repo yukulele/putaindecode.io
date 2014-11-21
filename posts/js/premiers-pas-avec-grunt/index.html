@@ -43,7 +43,7 @@
 <pre><code class="lang-console">$ npm <span class="hljs-keyword">init</span> <span class="hljs-comment">// puis plusieurs fois entrée</span>
 </code></pre>
 <p>En premier lieu, il faut installer le <em>package</em> qui permet de gérer <strong>Grunt</strong> en ligne de commande. C’est le <em>commander</em> de <strong>Grunt</strong> en gros.</p>
-<pre><code class="lang-console">$ npm install -g grunt-<span class="hljs-keyword">cli</span>
+<pre><code class="lang-console">$ npm install -<span class="hljs-keyword">g</span> grunt-<span class="hljs-keyword">cli</span>
 </code></pre>
 <p>Une fois cela fait, installez <strong>Grunt</strong> en local dans votre projet.</p>
 <pre><code class="lang-console">$ npm install grunt --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span>
@@ -223,13 +223,13 @@
 </code></pre>
 <h2 id="compressons-le-tout-"><a class="putainde-Title-anchor" href="#compressons-le-tout-">#</a>Compressons le tout !</h2><p>Pour finir, compressons nos fichiers JavaScript ! Pour cela : <a href="https://github.com/gruntjs/grunt-contrib-uglify"><code>grunt-contrib-uglify</code></a> fera l’affaire.</p>
 <p>Je vous passe les détails pour l’installer, si vous avez bien suivi cet article, vous ne devriez avoir aucun problème pour l’installer.</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-keyword">module</span>.exports = <span class="hljs-keyword">function</span>(grunt) {
 
   grunt.initConfig({
     sass: {
       dist: {
         options: {
-          style: <span class="hljs-string">'expanded'</span>
+          style: <span class="hljs-symbol">'expanded'</span>
         },
         files: [{
           <span class="hljs-string">"expand"</span>: <span class="hljs-literal">true</span>,
@@ -242,39 +242,39 @@
     },
     concat: {
       options: {
-        separator: <span class="hljs-string">';'</span>
+        separator: <span class="hljs-char">';'</span>
       },
       dist: {
-        src: [<span class="hljs-string">'src/intro.js'</span>, <span class="hljs-string">'src/project.js'</span>, <span class="hljs-string">'src/outro.js'</span>],
-        dest: <span class="hljs-string">'dist/built.js'</span>
+        src: [<span class="hljs-symbol">'src</span>/intro.js', <span class="hljs-symbol">'src</span>/project.js', <span class="hljs-symbol">'src</span>/outro.js'],
+        dest: <span class="hljs-symbol">'dist</span>/built.js'
       }
     },
     uglify: {
       options: {
-        separator: <span class="hljs-string">';'</span>
+        separator: <span class="hljs-char">';'</span>
       },
       dist: {
-        src: [<span class="hljs-string">'src/intro.js'</span>, <span class="hljs-string">'src/project.js'</span>, <span class="hljs-string">'src/outro.js'</span>],
-        dest: <span class="hljs-string">'dist/built.js'</span>
+        src: [<span class="hljs-symbol">'src</span>/intro.js', <span class="hljs-symbol">'src</span>/project.js', <span class="hljs-symbol">'src</span>/outro.js'],
+        dest: <span class="hljs-symbol">'dist</span>/built.js'
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-sass'</span>)
-  grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-concat'</span>)
+  grunt.loadNpmTasks(<span class="hljs-symbol">'grunt</span>-contrib-sass')
+  grunt.loadNpmTasks(<span class="hljs-symbol">'grunt</span>-contrib-concat')
 
-  grunt.registerTask(<span class="hljs-string">'default'</span>, [<span class="hljs-string">'sass:dist'</span>, <span class="hljs-string">'concat:dist'</span>])
+  grunt.registerTask(<span class="hljs-symbol">'default'</span>, [<span class="hljs-symbol">'sass</span>:dist', <span class="hljs-symbol">'concat</span>:dist'])
 }
 </code></pre>
 <p>Ne constatez vous pas un souci ici ? Oui, nous ne voulons sûrement pas à la fois concaténer nos fichiers et les compresser. Alors comment faire ? Pas d’inquiètude, il suffit de créer des tâches d’environnement ou de contexte. On pourrait par exemple créer une tâche développement et une tâche de production, qu’en pensez-vous ? Pas mal non ? :)</p>
 <h2 id="optimisons-"><a class="putainde-Title-anchor" href="#optimisons-">#</a>Optimisons !</h2><p>Supprimons alors dans un premier temps notre tâche par défaut et créons deux tâches : <code>dev</code> et <code>dist</code>.</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-keyword">module</span>.exports = <span class="hljs-keyword">function</span>(grunt) {
 
   grunt.initConfig({
     sass: {
       dist: {
         options: {
-          style: <span class="hljs-string">'expanded'</span>
+          style: <span class="hljs-symbol">'expanded'</span>
         },
         files: [{
           <span class="hljs-string">"expand"</span>: <span class="hljs-literal">true</span>,
@@ -287,29 +287,29 @@
     },
     concat: {
       options: {
-        separator: <span class="hljs-string">';'</span>
+        separator: <span class="hljs-char">';'</span>
       },
       dist: {
-        src: [<span class="hljs-string">'src/intro.js'</span>, <span class="hljs-string">'src/project.js'</span>, <span class="hljs-string">'src/outro.js'</span>],
-        dest: <span class="hljs-string">'dist/built.js'</span>
+        src: [<span class="hljs-symbol">'src</span>/intro.js', <span class="hljs-symbol">'src</span>/project.js', <span class="hljs-symbol">'src</span>/outro.js'],
+        dest: <span class="hljs-symbol">'dist</span>/built.js'
       }
     },
     uglify: {
       options: {
-        separator: <span class="hljs-string">';'</span>
+        separator: <span class="hljs-char">';'</span>
       },
       dist: {
-        src: [<span class="hljs-string">'src/intro.js'</span>, <span class="hljs-string">'src/project.js'</span>, <span class="hljs-string">'src/outro.js'</span>],
-        dest: <span class="hljs-string">'dist/built.js'</span>
+        src: [<span class="hljs-symbol">'src</span>/intro.js', <span class="hljs-symbol">'src</span>/project.js', <span class="hljs-symbol">'src</span>/outro.js'],
+        dest: <span class="hljs-symbol">'dist</span>/built.js'
       }
     }
   })
 
-  grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-sass'</span>)
-  grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-concat'</span>)
+  grunt.loadNpmTasks(<span class="hljs-symbol">'grunt</span>-contrib-sass')
+  grunt.loadNpmTasks(<span class="hljs-symbol">'grunt</span>-contrib-concat')
 
-  grunt.registerTask(<span class="hljs-string">'dev'</span>, [])
-  grunt.registerTask(<span class="hljs-string">'dist'</span>, [])
+  grunt.registerTask(<span class="hljs-symbol">'dev'</span>, <span class="hljs-literal">[]</span>)
+  grunt.registerTask(<span class="hljs-symbol">'dist'</span>, <span class="hljs-literal">[]</span>)
 }
 </code></pre>
 <p>Sauf que comme ça, vous le voyez, cela ne va pas faire grand chose, voire rien du tout. Agrémentons alors nos deux tâches par ce qu’on souhaite faire.</p>

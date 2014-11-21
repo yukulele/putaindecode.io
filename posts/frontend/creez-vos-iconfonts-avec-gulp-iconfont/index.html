@@ -46,17 +46,17 @@
 </code></pre>
 <h3 id="creez-votre-propre-tache-gulp"><a class="putainde-Title-anchor" href="#creez-votre-propre-tache-gulp">#</a>Créez votre propre tâche gulp</h3><p>Je préconise d’appeler toute transformation d’une image vers une fonte “glyphicon”.</p>
 <pre><code class="lang-js"><span class="hljs-comment">// glyphicons</span>
-<span class="hljs-attribute">gulp</span>.<span class="hljs-function">task</span>(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-function">function</span>() {
- return gulp.<span class="hljs-function">src</span>(<span class="hljs-string">'src/glyphicons/**/*'</span>) <span class="hljs-comment">// où sont vos svg</span>
-    .<span class="hljs-function">pipe</span>(<span class="hljs-function">iconfontCss</span>({
-      <span class="hljs-attribute">fontName</span>: <span class="hljs-string">'icons'</span>, <span class="hljs-comment">// nom de la fonte, doit être identique au nom du plugin iconfont</span>
-      <span class="hljs-attribute">targetPath</span>: <span class="hljs-string">'../../styles/shared/icons.css'</span>, <span class="hljs-comment">// emplacement de la css finale</span>
-      <span class="hljs-attribute">fontPath</span>: <span class="hljs-string">'../fonts/'</span> <span class="hljs-comment">// emplacement des fontes finales</span>
+gulp.task(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+ <span class="hljs-keyword">return</span> gulp.src(<span class="hljs-string">'src/glyphicons/**/*'</span>) <span class="hljs-comment">// où sont vos svg</span>
+    .pipe(iconfontCss({
+      fontName: <span class="hljs-string">'icons'</span>, <span class="hljs-comment">// nom de la fonte, doit être identique au nom du plugin iconfont</span>
+      targetPath: <span class="hljs-string">'../../styles/shared/icons.css'</span>, <span class="hljs-comment">// emplacement de la css finale</span>
+      fontPath: <span class="hljs-string">'../fonts/'</span> <span class="hljs-comment">// emplacement des fontes finales</span>
     }))
-    <span class="hljs-class">.pipe</span>(<span class="hljs-function">iconfont</span>({
-      <span class="hljs-attribute">fontName</span>: <span class="hljs-string">'icons'</span> <span class="hljs-comment">// identique au nom de iconfontCss</span>
+    .pipe(iconfont({
+      fontName: <span class="hljs-string">'icons'</span> <span class="hljs-comment">// identique au nom de iconfontCss</span>
      }))
-    <span class="hljs-class">.pipe</span>( gulp.<span class="hljs-function">dest</span>(<span class="hljs-string">'src/assets/fonts'</span>) )
+    .pipe( gulp.dest(<span class="hljs-string">'src/assets/fonts'</span>) )
 })
 </code></pre>
 <h3 id="le-final"><a class="putainde-Title-anchor" href="#le-final">#</a>Le final</h3><p>Voilà l’écriture entière de la tâche :</p>

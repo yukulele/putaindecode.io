@@ -85,8 +85,8 @@ no-hosts</span>
 </code></pre><p>Nous précisons dans un premier temps la résolution du nom de domaine <code>monsite.dev</code> (notez que c’est du wildcard, donc pas besoin de préciser les sous-domaines), puis nous indiquons que le serveur DNS marche sur toutes les IPs de la machine hôte et enfin nous indiquons que nous ne voulons pas prendre en compte le fichier <code>/etc/hosts</code> vu qu’on spécifie les résolutions via <code>address</code>.</p>
 <p>Cela permettra à terme de ne plus gérer le fichier <code>/etc/hosts</code> et de tout spécifier dans <code>dnsmasq.conf</code>.</p>
 <h4 id="lancer-dnsmasq-au-demarrage-de-la-machine"><a class="putainde-Title-anchor" href="#lancer-dnsmasq-au-demarrage-de-la-machine">#</a>lancer dnsmasq au démarrage de la machine</h4><p>On copie le fichier de démon dans le dossier qui va bien puis on lance le démon.</p>
-<pre><code>$ <span class="hljs-built_in">sudo</span> cp -fv /usr/local/opt/dnsmasq/*.plist /Library/LaunchDaemons
-$ <span class="hljs-built_in">sudo</span> launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
+<pre><code><span class="hljs-variable">$ </span>sudo cp -fv /usr/local/opt/dnsmasq/*.plist /<span class="hljs-constant">Library/LaunchDaemons</span>
+<span class="hljs-variable">$ </span>sudo launchctl load /<span class="hljs-constant">Library/LaunchDaemons/</span>homebrew.mxcl.dnsmasq.plist
 </code></pre><h4 id="utiliser-le-serveur-dnsmasq"><a class="putainde-Title-anchor" href="#utiliser-le-serveur-dnsmasq">#</a>utiliser le serveur dnsmasq</h4><p>Etant donné que vous partagez votre connexion et que votre poste fait hôte, le serveur dns utilisé sera celui installé sur votre poste, donc rien à faire.</p>
 <p>Sinon :</p>
 <ul>
@@ -103,7 +103,7 @@ $ <span class="hljs-built_in">sudo</span> launchctl load /Library/LaunchDaemons/
 <ul>
 <li>vous pouvez aussi éditer le fichier <code>/etc/bootpd.plist</code> qui définit toute votre configuration de partage de connexion :</li>
 </ul>
-<pre><code>$ <span class="hljs-built_in">sudo</span> <span class="hljs-variable">$EDITOR</span> /etc/bootpd.plist
+<pre><code><span class="hljs-variable">$ </span>sudo <span class="hljs-variable">$EDITOR</span> /etc/bootpd.plist
 </code></pre><pre><code class="lang-xml"><span class="hljs-pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="hljs-doctype">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">plist</span> <span class="hljs-attribute">version</span>=<span class="hljs-value">"1.0"</span>&gt;</span>

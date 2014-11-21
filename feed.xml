@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Tue, 11 Nov 2014 19:55:04 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>L'injection de dépendances en PHP</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Fri, 21 Nov 2014 15:28:33 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>L'injection de dépendances en PHP</title><description><![CDATA[
 <p>Salutations ! Aujourd’hui, je suis venu te parler de PHP (sisi), et notamment du mécanisme d’injection de dépendances avec lequel tu n’es peut-être pas familier. Au menu, des objets, des usines et des conteneurs, alors enfile ton bonnet et tes gants, on va bouger du bordel !</p>
 <h2 id="l-injection-de-dependances-c-est-quoi-ce-truc-"><a class="putainde-Title-anchor" href="#l-injection-de-dependances-c-est-quoi-ce-truc-">#</a>L’injection de dépendances ? C’est quoi ce truc ?</h2><p>Si tu fais de la programmation orientée objet, il est fort probable que ce terme ne te soit pas totalement inconnu. En PHP, on a principalement commencé à nous en rebattre les oreilles avec l’avènement de Symfony, qui est aujourd’hui le framework web majeur pour ce langage. Fabien Potencier, créateur et <em>lead developer</em> de Symfony, cite en exemple sur <a href="http://fabien.potencier.org/article/11/what-is-dependency-injection">son blog</a> cette définition :</p>
 <blockquote>
@@ -105,9 +105,9 @@
 <h2 id="oui-ca-sert-a-quelque-chose-une-interface"><a class="putainde-Title-anchor" href="#oui-ca-sert-a-quelque-chose-une-interface">#</a>Oui, ça sert à quelque chose une interface</h2><p>Dans tes souvenirs brumeux de vendredis matins étudiants (<em>cf. supra</em>), tu retrouveras peut-être des bribes de cours portant sur les <strong>interfaces</strong>. Si tout ce que tu as retenu, c’est qu’”une classe toute vide ça sert à rien”, lis donc ce qui va suivre.</p>
 <p>Une interface, c’est avant tout un contrat. Une classe qui <strong>implémente</strong> une interface s’engage à implémenter toutes les méthodes que celle-ci déclare. Sans même lire le code de ladite classe, on sait donc d’emblée comment on peut jouer avec et comment elle est censée fonctionner.</p>
 <p>Poursuivons encore sur notre exemple et imaginons qu’on doive gérer des adresses ne respectant pas le format utilisé jusqu’ici, par exemple une adresse plus basique constituée d’une unique chaîne de caractères :</p>
-<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BasicAddress</span></span>
-{
-    <span class="hljs-keyword">private</span> <span class="hljs-number">$add</span>ress;
+<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BasicAddress</span>
+</span>{
+    <span class="hljs-keyword">private</span> <span class="hljs-variable">$address</span>;
 }
 </code></pre>
 <p>Dans l’état actuel des choses, on ne peut pas utiliser une instance de cette classe avec <code>Person</code>, puisque le constructeur de cette dernière attend une instance d’<code>Address</code>. Qu’à cela ne tienne !</p>
@@ -163,20 +163,20 @@
 <p>Tu vois l’idée ? En demandant une instance de n’importe quelle classe implémentant <code>AddressInterface</code> au lieu d’une instance d’<code>Address</code> spécifiquement, on se donne plus de mou et on réduit encore davantage le couplage entre nos classes. Qu’on crée une personne avec une instance d’<code>Address</code> ou de <code>BasicAddress</code>, on pourra dans tous les cas obtenir l’adresse postale de ladite personne de la même façon.</p>
 <h2 id="elle-contient-ta-fiancee-hein-mitch-"><a class="putainde-Title-anchor" href="#elle-contient-ta-fiancee-hein-mitch-">#</a>Elle contient ta fiancée, hein Mitch ?</h2><p>Tu auras peut-être tiqué sur un détail du dernier exemple : le fait de ne pas faire de <code>PersonFactory</code> une classe statique (beurk) nous oblige à l’instancier pour pouvoir l’utiliser ; ce qui, à n’en pas douter, t’aura mené à te dire “arf, ça va m’en faire des <code>new MachinFactory()</code> pour instancier mes objets”. Là encore, l’injection de dépendances peut nous aider, quoique de manière indirecte : en utilisant un conteneur d’injection de dépendances.</p>
 <p>Un conteneur (ça sera plus court) peut <em>grosso modo</em> être comparé à une grosse <em>factory</em> capable d’instancier plusieurs classes. En pratique, afin d’éviter d’écrire et de devoir maintenir une classe monolithique, on en fera plutôt quelque chose qui fait appel aux différentes <em>factories</em>. Poursuivons sur notre exemple :</p>
-<pre><code class="lang-php"><span class="hljs-keyword">class</span> <span class="hljs-title">DependencyInjectionContainer</span>
-{
-    <span class="hljs-function"><span class="hljs-keyword">public</span> function <span class="hljs-title">getPersonFactory</span><span class="hljs-params">()</span>
+<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DependencyInjectionContainer</span>
+</span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getPersonFactory</span><span class="hljs-params">()</span>
     </span>{
-        <span class="hljs-function"><span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">PersonFactory</span><span class="hljs-params">()</span></span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> PersonFactory();
     }
 }
 </code></pre>
 <p>Mais ça ne s’arrête évidemment pas là. De par le fait d’utiliser l’injection de dépendances à grande échelle, on a souvent besoin d’instancier nous-même les objets dont on a besoin. Dans certains cas, ce seront toujours les mêmes, ce qui vaut pour les <em>factories</em> mais pas que : pense aux différentes librairies qui composent un projet web, par exemple. Ce ne serait pas génial que les différentes instances de ces classes soient accessibles via le conteneur pour pouvoir y accéder à l’envi ?</p>
-<pre><code class="lang-php"><span class="hljs-variable">$container</span> <span class="hljs-subst">=</span> <span class="hljs-literal">new</span> DependencyInjectionContainer();
+<pre><code class="lang-php">$container = <span class="hljs-keyword">new</span> <span class="hljs-type">DependencyInjectionContainer</span><span class="hljs-literal">()</span>;
 
-<span class="hljs-variable">$container</span><span class="hljs-subst">-&gt;</span>getOrm()<span class="hljs-subst">-&gt;</span>performSomeNaughtyQuery();
-<span class="hljs-variable">$container</span><span class="hljs-subst">-&gt;</span>getTwig()<span class="hljs-subst">-&gt;</span>renderUglyTemplate();
-<span class="hljs-variable">$container</span><span class="hljs-subst">-&gt;</span>getTranslator()<span class="hljs-subst">-&gt;</span>translate(<span class="hljs-string">'Putain de code !'</span>);
+$container-&gt;getOrm<span class="hljs-literal">()</span>-&gt;performSomeNaughtyQuery<span class="hljs-literal">()</span>;
+$container-&gt;getTwig<span class="hljs-literal">()</span>-&gt;renderUglyTemplate<span class="hljs-literal">()</span>;
+$container-&gt;getTranslator<span class="hljs-literal">()</span>-&gt;translate(<span class="hljs-symbol">'Putain</span> de code !<span class="hljs-char">');</span>
 </code></pre>
 <p>Les objets ainsi gérés par un tel conteneur deviennent dès lors des <strong>services</strong> dans ton application.</p>
 <blockquote>
@@ -727,8 +727,8 @@ largement débattue. Si ça vous intéresse, je vous laisse découvrir un
 Ici encore, question de goût, question de contexte, question de besoins.</em></p>
 <p>Trèves de bavardages, on s’y met sérieusement :</p>
 <p>On installe <a href="http://nodejs.org/">Node</a>, <a href="http://www.ember-cli.com/">Ember CLI</a>, <a href="http://bower.io/">Bower</a> :</p>
-<pre><code class="lang-console">$ npm <span class="hljs-keyword">install</span> -g ember-cli
-$ npm <span class="hljs-keyword">install</span> -g bower
+<pre><code class="lang-console">$ npm install -<span class="hljs-keyword">g</span> ember-<span class="hljs-keyword">cli</span>
+$ npm install -<span class="hljs-keyword">g</span> bower
 </code></pre>
 <p>Ça y est, on peut maintenant demander gentiment à <a href="http://www.ember-cli.com/">Ember CLI</a> de nous créer notre application grâce à la 
 commande <code>ember</code> et voir ensuite une magnifique page de bienvenue sur <a href="http://localhost:4200/">http://localhost:4200/</a> :</p>
@@ -1033,8 +1033,8 @@ Je vous laisse découvrir par vous-même dans la <a href="http://emberjs.com/gui
 });
 </code></pre>
 <p>Et le gabarit :</p>
-<pre><code class="lang-html"><span class="xml"></span><span class="hljs-expression">{{<span class="hljs-variable">firstName</span>}}</span><span class="xml">
-</span><span class="hljs-expression">{{<span class="hljs-variable">fullName</span>}}</span><span class="xml"></span>
+<pre><code class="lang-html"><span class="hljs-collection">{<span class="hljs-collection">{firstName}</span>}</span>
+<span class="hljs-collection">{<span class="hljs-collection">{fullName}</span>}</span>
 </code></pre>
 <p>Tout ça, sans la <em>RunLoop</em>, ferait qu’on exécuterait le rendu deux fois si l’on modifie successivement <code>firstname</code> puis <code>lastname</code>. La <em>RunLoop</em> met tout ça (et plein d’autres
 choses) en queue et n’effectue le rendu qu’une seule et unique fois, lorsque nécessaire.</p>
@@ -1235,8 +1235,8 @@ En effet, <a href="http://emberjs.com">Ember</a> s’appuie sur les <a href="#co
 à partir d’une URL, la route, le contrôleur, la vue et le gabarit associés. Si l’un de ces objet n’est pas trouvé, <a href="http://emberjs.com">Ember</a>
 va en générer un par défaut. </p>
 <p>Donc si l’on crée dans le routeur la route suivante sans créer aucun autre objet : </p>
-<pre><code class="lang-js">App.Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  <span class="hljs-keyword">this</span>.route(<span class="hljs-string">"about"</span>, { path: <span class="hljs-string">"/about"</span> });
+<pre><code class="lang-js"><span class="hljs-tag">App</span><span class="hljs-class">.Router</span><span class="hljs-class">.map</span>(<span class="hljs-function">function</span>() {
+  <span class="hljs-tag">this</span><span class="hljs-class">.route</span>(<span class="hljs-string">"about"</span>, { <span class="hljs-attribute">path</span>: <span class="hljs-string">"/about"</span> });
 });
 </code></pre>
 <p><a href="http://emberjs.com">Ember</a> va générer les objets suivants :</p>
@@ -1634,14 +1634,14 @@ gem <span class="hljs-string">'sinatra'</span>
 </code></pre>
 <p>La technique du <code>left: 50%; + margin négative en unités</code> est à utiliser sur les blocs dont vous conaissez la taille à l’avance. Le principe consiste à expliquer au navigateur qu’on place un bloc en <code>position: absolute;</code>. Celui-ci va donc chercher à se placer par rapport à son élément parent le plus proche qui est en <code>position: relative;</code>. Il faut donc ne pas oublier d’attribuer cette propriété sur le <code>.parent</code>. Il suffit ensuite d’indiquer qu’on place le bloc à <code>left: 50%;</code>. Le bloc se place donc à 50% vers la gauche par rapport à la taille totale du bloc conteneur. Il ne nous reste plus qu’à décaler vers la droite le bloc <code>.child</code> en lui donnant une valeur de margin négative vers la gauche. Celle-ci doit être égale à la moitié de la <code>width</code>(en pixels, em, rems, pourcentages, …).</p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> {
-  <span class="hljs-attribute">position</span>: relative;
+  <span class="hljs-attribute">position</span><span class="hljs-value">: relative;</span>
 }
 
 <span class="hljs-class">.child</span> {
-  <span class="hljs-tag">width</span>: {<span class="hljs-attribute">X</span>}<span class="hljs-attribute">em</span>; <span class="hljs-comment">/* remplacer {X} par votre valeur */</span>
-  <span class="hljs-attribute">position</span>: absolute;
-  <span class="hljs-attribute">left</span>: <span class="hljs-number">50%</span>;
-  <span class="hljs-tag">margin-left</span>: <span class="hljs-tag">-</span>{<span class="hljs-attribute">X</span>/<span class="hljs-number">2</span>}<span class="hljs-attribute">em</span>; <span class="hljs-comment">/* remplacer {X/2} par la moitié de votre width */</span>
+  <span class="hljs-attribute">width</span><span class="hljs-value">: {X}em;</span> <span class="hljs-comment">/* remplacer {X} par votre valeur */</span>
+  <span class="hljs-attribute">position</span><span class="hljs-value">: absolute;</span>
+  <span class="hljs-attribute">left</span><span class="hljs-value">: <span class="hljs-number">50%</span>;</span>
+  <span class="hljs-attribute">margin-left</span><span class="hljs-value">: -{X/<span class="hljs-number">2</span>}em;</span> <span class="hljs-comment">/* remplacer {X/2} par la moitié de votre width */</span>
 }
 </code></pre>
 <p>En combinant la technique précédente et des propriétés css modernes, on arrive à la technique du <code>transform: translate; négatif</code>. Même principe que la technique précédente, sauf qu’à la fin, on indique au bloc enfant d’effectuer une translation sur lui-même, en suivant l’axe X (l’axe horizontal) de -50%, donc 50% vers la droite. Sauf que ce 50% s’applique sur le bloc enfant directement. Vous n’avez donc pas besoin de connaitre la <code>width</code>de l’élément enfant à l’avance. Le <code>transform-style: preserve-3d;</code> sur le bloc <code>.parent</code> est là pour régler des problèmes de flou sur certains navigateurs lors de transitions.</p>
@@ -1660,14 +1660,14 @@ gem <span class="hljs-string">'sinatra'</span>
 </code></pre>
 <h4 id="centrage-vertical"><a class="putainde-Title-anchor" href="#centrage-vertical">#</a>Centrage vertical</h4><p>Même principe que la technique <code>left: 50%; + margin négative en unités</code>, sauf qu’on applique le principe aux propriétés css relatives à la hauteur. Vous avez donc besoin de connaitre à l’avance la hauteur de votre bloc.</p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> {
-  <span class="hljs-attribute">position</span>: relative;
+  <span class="hljs-attribute">position</span><span class="hljs-value">: relative;</span>
 }
 
 <span class="hljs-class">.child</span> {
-  <span class="hljs-tag">height</span>: {<span class="hljs-attribute">Y</span>}<span class="hljs-attribute">em</span>; <span class="hljs-comment">/* remplacer {Y} par votre valeur */</span>
-  <span class="hljs-attribute">position</span>: absolute;
-  <span class="hljs-attribute">top</span>: <span class="hljs-number">50%</span>;
-  <span class="hljs-tag">margin-top</span>: <span class="hljs-tag">-</span>{<span class="hljs-attribute">Y</span>/<span class="hljs-number">2</span>}<span class="hljs-attribute">em</span>; <span class="hljs-comment">/* remplacer {Y/2} par la moitié de votre height */</span>
+  <span class="hljs-attribute">height</span><span class="hljs-value">: {Y}em;</span> <span class="hljs-comment">/* remplacer {Y} par votre valeur */</span>
+  <span class="hljs-attribute">position</span><span class="hljs-value">: absolute;</span>
+  <span class="hljs-attribute">top</span><span class="hljs-value">: <span class="hljs-number">50%</span>;</span>
+  <span class="hljs-attribute">margin-top</span><span class="hljs-value">: -{Y/<span class="hljs-number">2</span>}em;</span> <span class="hljs-comment">/* remplacer {Y/2} par la moitié de votre height */</span>
 }
 </code></pre>
 <p>Ici on réutilise le principe expliqué dans la technique <code>transform: translate; négatif</code>, mais appliqué à la hauteur. Notez que le nom de la <a href="http://apps.workflower.fi/vocabs/css/fr">valeur de la propriété</a> css passe de <code>translateX</code> à <code>translateY</code>.</p>
@@ -1705,17 +1705,17 @@ gem <span class="hljs-string">'sinatra'</span>
 </code></pre>
 <p>Technique des <code>position: absolute; + marges négatives</code> avec tailles connues à l’avance</p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> {
-  <span class="hljs-attribute">position</span>: relative;
+  <span class="hljs-attribute">position</span><span class="hljs-value">: relative;</span>
 }
 
 <span class="hljs-class">.child</span> {
-  <span class="hljs-tag">width</span>: {<span class="hljs-attribute">X</span>}<span class="hljs-attribute">em</span>; <span class="hljs-comment">/* remplacer {X} par votre valeur */</span>
-  <span class="hljs-tag">height</span>: {<span class="hljs-attribute">Y</span>}<span class="hljs-attribute">em</span>; <span class="hljs-comment">/* remplacer {Y} par votre valeur */</span>
-  <span class="hljs-attribute">position</span>: absolute;
-  <span class="hljs-attribute">top</span>: <span class="hljs-number">50%</span>;
-  <span class="hljs-attribute">left</span>: <span class="hljs-number">50%</span>;
-  <span class="hljs-tag">margin-left</span>: <span class="hljs-tag">-</span>{<span class="hljs-attribute">X</span>/<span class="hljs-number">2</span>}<span class="hljs-attribute">em</span>; <span class="hljs-comment">/* remplacer {X/2} par la moitié de votre height */</span>
-  <span class="hljs-tag">margin-top</span>: <span class="hljs-tag">-</span>{<span class="hljs-attribute">Y</span>/<span class="hljs-number">2</span>}<span class="hljs-attribute">em</span>; <span class="hljs-comment">/* remplacer {Y/2} par la moitié de votre height */</span>
+  <span class="hljs-attribute">width</span><span class="hljs-value">: {X}em;</span> <span class="hljs-comment">/* remplacer {X} par votre valeur */</span>
+  <span class="hljs-attribute">height</span><span class="hljs-value">: {Y}em;</span> <span class="hljs-comment">/* remplacer {Y} par votre valeur */</span>
+  <span class="hljs-attribute">position</span><span class="hljs-value">: absolute;</span>
+  <span class="hljs-attribute">top</span><span class="hljs-value">: <span class="hljs-number">50%</span>;</span>
+  <span class="hljs-attribute">left</span><span class="hljs-value">: <span class="hljs-number">50%</span>;</span>
+  <span class="hljs-attribute">margin-left</span><span class="hljs-value">: -{X/<span class="hljs-number">2</span>}em;</span> <span class="hljs-comment">/* remplacer {X/2} par la moitié de votre height */</span>
+  <span class="hljs-attribute">margin-top</span><span class="hljs-value">: -{Y/<span class="hljs-number">2</span>}em;</span> <span class="hljs-comment">/* remplacer {Y/2} par la moitié de votre height */</span>
 }
 </code></pre>
 <p>Technique des <code>position: absolute; + marges négatives</code> avec tailles inconnues</p>
@@ -1920,7 +1920,7 @@ prononce <em>paillepe</em>, avé l’accent).</p>
 autre.</p>
 <p>Pour montrer ça, introduisons la commande <code>tr</code>, qui permet de remplacer des
 caractères dans l’entrée par d’autres.</p>
-<pre><code class="lang-console">$ echo <span class="hljs-string">"Hello!"</span> | <span class="hljs-tag">tr</span> <span class="hljs-string">"[:lower:]"</span> <span class="hljs-string">"[:upper:]"</span>
+<pre><code class="lang-console">$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"Hello!"</span> | <span class="hljs-built_in">tr</span> <span class="hljs-string">"[:lower:]"</span> <span class="hljs-string">"[:upper:]"</span>
 HELLO!
 </code></pre>
 <h2 id="descripteurs-de-fichiers-et-redirections-avancees"><a class="putainde-Title-anchor" href="#descripteurs-de-fichiers-et-redirections-avancees">#</a>Descripteurs de fichiers et redirections avancées</h2><p>Pour aller plus loin, on va maintenant voir que chaque descripteur de fichier
@@ -1956,10 +1956,10 @@ $ <span class="hljs-keyword">echo</span> <span class="hljs-string">"2"</span> &g
 $ <span class="hljs-keyword">cat</span> <span class="hljs-keyword">file</span>
 <span class="hljs-number">2</span>
 </code></pre>
-<pre><code class="lang-console"># Avec &gt;&gt;
-$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"1"</span> &gt; <span class="hljs-keyword">file</span>
-$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"2"</span> &gt;&gt; <span class="hljs-keyword">file</span>
-$ <span class="hljs-keyword">cat</span> <span class="hljs-keyword">file</span>
+<pre><code class="lang-console"><span class="hljs-comment"># Avec &gt;&gt;</span>
+<span class="hljs-variable">$ </span>echo <span class="hljs-string">"1"</span> &gt; file
+<span class="hljs-variable">$ </span>echo <span class="hljs-string">"2"</span> <span class="hljs-prompt">&gt;&gt; </span>file
+<span class="hljs-variable">$ </span>cat file
 <span class="hljs-number">1</span>
 <span class="hljs-number">2</span>
 </code></pre>
@@ -1987,8 +1987,8 @@ syntaxe suivante :</p>
 <p>Vous remarquerez que c’est assez verbeux, et qu’on pourrait simplifier celà en
 utilisant <code>&gt;&amp;</code> comme vu précédemment.</p>
 <p>On essaie donc naïvement :</p>
-<pre><code class="lang-console"><span class="hljs-prompt">$ programme 2&gt;</span>&amp;<span class="hljs-number">1</span> &gt;<span class="hljs-regexp">/dev/null</span>
-<span class="hljs-constant">Error</span>
+<pre><code class="lang-console">$ programme <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span> &gt;<span class="hljs-regexp">/dev/</span><span class="hljs-literal">null</span>
+<span class="hljs-built_in">Error</span>
 </code></pre>
 <p>Hmm, pourtant on a tout branché ensemble non ? En fait non, on a redirigé la
 sortie sur le fichier pointé par <code>1</code> au moment où on écrit la redirection, donc
@@ -2550,17 +2550,17 @@ ou <a href="http://atom.io">Atom</a> (apm install, editorconfig, docblockr, html
 </code></pre>
 <h3 id="creez-votre-propre-tache-gulp"><a class="putainde-Title-anchor" href="#creez-votre-propre-tache-gulp">#</a>Créez votre propre tâche gulp</h3><p>Je préconise d’appeler toute transformation d’une image vers une fonte “glyphicon”.</p>
 <pre><code class="lang-js"><span class="hljs-comment">// glyphicons</span>
-<span class="hljs-attribute">gulp</span>.<span class="hljs-function">task</span>(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-function">function</span>() {
- return gulp.<span class="hljs-function">src</span>(<span class="hljs-string">'src/glyphicons/**/*'</span>) <span class="hljs-comment">// où sont vos svg</span>
-    .<span class="hljs-function">pipe</span>(<span class="hljs-function">iconfontCss</span>({
-      <span class="hljs-attribute">fontName</span>: <span class="hljs-string">'icons'</span>, <span class="hljs-comment">// nom de la fonte, doit être identique au nom du plugin iconfont</span>
-      <span class="hljs-attribute">targetPath</span>: <span class="hljs-string">'../../styles/shared/icons.css'</span>, <span class="hljs-comment">// emplacement de la css finale</span>
-      <span class="hljs-attribute">fontPath</span>: <span class="hljs-string">'../fonts/'</span> <span class="hljs-comment">// emplacement des fontes finales</span>
+gulp.task(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+ <span class="hljs-keyword">return</span> gulp.src(<span class="hljs-string">'src/glyphicons/**/*'</span>) <span class="hljs-comment">// où sont vos svg</span>
+    .pipe(iconfontCss({
+      fontName: <span class="hljs-string">'icons'</span>, <span class="hljs-comment">// nom de la fonte, doit être identique au nom du plugin iconfont</span>
+      targetPath: <span class="hljs-string">'../../styles/shared/icons.css'</span>, <span class="hljs-comment">// emplacement de la css finale</span>
+      fontPath: <span class="hljs-string">'../fonts/'</span> <span class="hljs-comment">// emplacement des fontes finales</span>
     }))
-    <span class="hljs-class">.pipe</span>(<span class="hljs-function">iconfont</span>({
-      <span class="hljs-attribute">fontName</span>: <span class="hljs-string">'icons'</span> <span class="hljs-comment">// identique au nom de iconfontCss</span>
+    .pipe(iconfont({
+      fontName: <span class="hljs-string">'icons'</span> <span class="hljs-comment">// identique au nom de iconfontCss</span>
      }))
-    <span class="hljs-class">.pipe</span>( gulp.<span class="hljs-function">dest</span>(<span class="hljs-string">'src/assets/fonts'</span>) )
+    .pipe( gulp.dest(<span class="hljs-string">'src/assets/fonts'</span>) )
 })
 </code></pre>
 <h3 id="le-final"><a class="putainde-Title-anchor" href="#le-final">#</a>Le final</h3><p>Voilà l’écriture entière de la tâche :</p>
@@ -2718,7 +2718,59 @@ var results = Object.keys(data).reduce( function (memo, site) {
 <p>J’espère que vous avez apprécié ces quelques exemples d’utilisation de <code>Array#reduce</code>.
 Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article ou via les commentaires !</p>
 
-]]></description><pubDate>Tue, 13 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/array-reduce/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/array-reduce/</guid></item><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[
+]]></description><pubDate>Tue, 13 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/array-reduce/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/array-reduce/</guid></item><item><title>npm: choisir la bonne version de ses dépendances</title><description><![CDATA[
+<p>Pas plus tard qu’hier, alors que je travaillais tranquillement, apparu soudainement un bug dans mon <em>workflow</em> de <em>build</em>. Il ne m’était plus possible avec <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> de supprimer des fichiers. Hmmm, ballot, car sans la suppression, mon <em>workflow</em> devenait tout bancal. Bien. Il me fallut remonter la rivière - comme souvent, en tant que développeur - afin de constater où était le bug. Je suis alors tombé sur <a href="https://github.com/isaacs/rimraf">rimraf</a> (bon c’était pas bien loin) qui s’était vu être mis à jour il y a à peine 12 heures, comprenant un bug.</p>
+<h2 id="contexte"><a class="putainde-Title-anchor" href="#contexte">#</a>Contexte</h2><p>Bon, vous voyez le topo ?</p>
+<pre><code>{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean"</span></span>,
+  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value"><span class="hljs-string">"~2.2.1"</span>
+  </span>}
+</span>}
+</code></pre><p><a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> qui contient en <em>dependencies</em> <a href="https://github.com/isaacs/rimraf">rimraf</a> avec une version bugguée. Oh la belle affaire. Oui car <code>~2.2.1</code> veut dire “<a href="https://github.com/isaacs/node-semver#ranges">Raisonnablement proche de 2.2.1</a>“, ce qui se traduit par télécharger la dernière version en <code>2.2.x</code>, soit la <code>2.2.7</code> (celle bugguée) lorsque je mis à jour le package <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a>.</p>
+<h2 id="le-hic"><a class="putainde-Title-anchor" href="#le-hic">#</a>Le hic</h2><p>Une question m’est venue : comment faire en sorte de figer la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> qui est une dépendance de dépendance ?</p>
+<p>Ha ! Pas évident comme ça.</p>
+<p>J’ai d’abord essayé sans trop d’espoir de télécharger <a href="https://github.com/isaacs/rimraf">rimraf</a> lui-même en <code>2.2.6</code> mais vu que chaque dépendance à ses propres dépendances et qu’elles ne se les partagent pas… c’était peine perdue.</p>
+<p>J’ai donc cherché, cherché, et je suis tombé sur <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a>: “Lock down dependency versions”. Bingo !</p>
+<h2 id="npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances"><a class="putainde-Title-anchor" href="#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>npm-shrinkwrap, la solution pour figer vos depéndances, toutes vos dépendances</h2><p><a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a> va vous permettre de définir avec précision chaque version de chaque dépendance.</p>
+<p>Pour cela, faites d’abord un <code>npm install</code> (si vous avez évidemment un <code>package.json</code>) afin d’installer vos <code>node_modules</code>. Une fois cela fait, lancez <code>npm shrinkwrap</code> qui créera le fichier <code>npm-shrinkwrap.json</code> qui comprendra toutes les définitions de chaque dépendance.</p>
+<h3 id="figer-une-dependance-de-dependance"><a class="putainde-Title-anchor" href="#figer-une-dependance-de-dependance">#</a>Figer une dépendance de dépendance</h3><p>Simple, regardez :</p>
+<pre><code>{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"my-project"</span></span>,
+  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"1.0.0"</span></span>,
+  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">grunt-contrib-clean</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.5.0"</span></span>,
+      "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean@~0.5.*"</span></span>,
+      "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"2.2.6"</span></span>,
+          "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"rimraf@~2.2.1"</span></span>,
+          "<span class="hljs-attribute">resolved</span>": <span class="hljs-value"><span class="hljs-string">"https://registry.npmjs.org/rimraf/-/rimraf-2.2.6.tgz"</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}
+</span>}
+</code></pre><p>J’ai défini la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> dans <code>dependencies.grunt-contrib-clean.dependencies.rimraf</code>.</p>
+<p>Bon, je ne connais pas tout par coeur non plus, npm-shrinkwrap vous écrira la totalité du fichier avec toutes les définitions mais j’ai volontairement tout supprimé et gardé uniquement la partie <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> car seule cette partie est à figer. Quand je dis supprimer, je parle réellement dans le fichier final, pas juste ici dans l’article.</p>
+<p>Vous aurez toute l’explication de npm-shrinkwrap sur la <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">documentation officielle [en]</a>.</p>
+<h2 id="choisir-la-bonne-strategie-de-version"><a class="putainde-Title-anchor" href="#choisir-la-bonne-strategie-de-version">#</a>Choisir la bonne stratégie de version</h2><p>Parce qu’il est important de savoir quelle version exacte nous souhaitons installer dans notre projet, il faut définir avec précisions ces versions dans <code>package.json</code>.</p>
+<p>Vous pouvez avoir <code>1.2.1</code> ou encore <code>~1.4.6</code> ou bien encore <code>^2.3.1</code>. Mais que veulent dire <code>^</code> ou <code>~</code> ?</p>
+<ul>
+<li><code>1.2.1</code> : cette version exacte</li>
+<li><code>~1.4.6</code> : raisonnablement proche de <code>1.4.6</code></li>
+<li><code>^2.3.1</code> : compatible avec <code>2.3.1</code></li>
+</ul>
+<p>Il est clair que lu comme ça, le plus intéressant est le <code>^</code> et c’est justement <a href="http://fredkschott.com/post/2014/02/npm-no-longer-defaults-to-tildes/">celui qui est choisi maintenant [en]</a> lorsque l’on fait un <code>npm install --save</code>. Cool non ?!</p>
+<p>Pour plus d’information sur la définition des versions, <a href="https://github.com/isaacs/node-semver#ranges">c’est par là</a> (Oh mon dieu, il a fait un lien avec un “cliquez ici”).</p>
+<p>Bon. C’est bon ? Vous avez tout compris ? Okay, vous pouvez passer à <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/"><strong>napa</strong></a> maintenant qui vous aidera grandement sur le téléchargement de projets n’ayant pas de <code>package.json</code>.</p>
+<p>En ce qui concerne npm, je m’arrête là, et vous propose une petite solution afin d’augmenter la vitesse de vos installations de node modules.</p>
+<h2 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h2><p>Envie d’accélérer vos installations npm ? Je vous conseille <a href="https://github.com/vvo/npm-pkgr">npm-pkgr</a>.</p>
+<p>Il hashera votre <code>package.json</code> pour savoir s’il a été modifié ou non, et en fonction de ça, il lancera <code>npm install</code> ou non. Sacré gain de temps (surtout si vous faites des <code>npm install</code> à chaque <em>deploy</em>).</p>
+<p>You are now a npm master. 👨</p>
+
+]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/npm-choisir-version/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/npm-choisir-version/</guid></item><item><title>napa ou comment télécharger un package qui napa de package.json</title><description><![CDATA[
 <p>(Grosse grosse blague ce titre…)</p>
 <p><a href="https://twitter.com/kewah">@kewah</a> nous a récemment parlé de <a href="/posts/frontend/npm-comme-package-manager-pour-le-front-end/"><strong>npm</strong> comme front-end packager manager</a>, je vais aller encore plus loin. Je vais vous dévoiler comment installer des projets qui n’ont pas de <code>package.json</code>. Oui, car c’est bien beau de virer Bower (oh que oui c’est beau) mais comme npm requiert constamment un <code>package.json</code>, on ne va pas pouvoir télécharger grand chose sauf si on fait des <em>PR</em> afin d’ajouter ce fichier sur les projets que l’on souhaite obtenir.</p>
 <p>C’est pourquoi je vais vous parler de <a href="https://github.com/shama/napa"><strong>napa</strong></a>.</p>
@@ -2783,59 +2835,7 @@ Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article
 <p>Note : napa et npm-shrinkwrap, c’est pas encore ça, alors n’hésitez pas à supprimer la partie “napa” avant de lancer votre génération de npm-shrinkwrap.</p>
 <p>Bon download à vous.</p>
 
-]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</guid></item><item><title>npm: choisir la bonne version de ses dépendances</title><description><![CDATA[
-<p>Pas plus tard qu’hier, alors que je travaillais tranquillement, apparu soudainement un bug dans mon <em>workflow</em> de <em>build</em>. Il ne m’était plus possible avec <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> de supprimer des fichiers. Hmmm, ballot, car sans la suppression, mon <em>workflow</em> devenait tout bancal. Bien. Il me fallut remonter la rivière - comme souvent, en tant que développeur - afin de constater où était le bug. Je suis alors tombé sur <a href="https://github.com/isaacs/rimraf">rimraf</a> (bon c’était pas bien loin) qui s’était vu être mis à jour il y a à peine 12 heures, comprenant un bug.</p>
-<h2 id="contexte"><a class="putainde-Title-anchor" href="#contexte">#</a>Contexte</h2><p>Bon, vous voyez le topo ?</p>
-<pre><code>{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean"</span></span>,
-  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value"><span class="hljs-string">"~2.2.1"</span>
-  </span>}
-</span>}
-</code></pre><p><a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> qui contient en <em>dependencies</em> <a href="https://github.com/isaacs/rimraf">rimraf</a> avec une version bugguée. Oh la belle affaire. Oui car <code>~2.2.1</code> veut dire “<a href="https://github.com/isaacs/node-semver#ranges">Raisonnablement proche de 2.2.1</a>“, ce qui se traduit par télécharger la dernière version en <code>2.2.x</code>, soit la <code>2.2.7</code> (celle bugguée) lorsque je mis à jour le package <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a>.</p>
-<h2 id="le-hic"><a class="putainde-Title-anchor" href="#le-hic">#</a>Le hic</h2><p>Une question m’est venue : comment faire en sorte de figer la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> qui est une dépendance de dépendance ?</p>
-<p>Ha ! Pas évident comme ça.</p>
-<p>J’ai d’abord essayé sans trop d’espoir de télécharger <a href="https://github.com/isaacs/rimraf">rimraf</a> lui-même en <code>2.2.6</code> mais vu que chaque dépendance à ses propres dépendances et qu’elles ne se les partagent pas… c’était peine perdue.</p>
-<p>J’ai donc cherché, cherché, et je suis tombé sur <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a>: “Lock down dependency versions”. Bingo !</p>
-<h2 id="npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances"><a class="putainde-Title-anchor" href="#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>npm-shrinkwrap, la solution pour figer vos depéndances, toutes vos dépendances</h2><p><a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a> va vous permettre de définir avec précision chaque version de chaque dépendance.</p>
-<p>Pour cela, faites d’abord un <code>npm install</code> (si vous avez évidemment un <code>package.json</code>) afin d’installer vos <code>node_modules</code>. Une fois cela fait, lancez <code>npm shrinkwrap</code> qui créera le fichier <code>npm-shrinkwrap.json</code> qui comprendra toutes les définitions de chaque dépendance.</p>
-<h3 id="figer-une-dependance-de-dependance"><a class="putainde-Title-anchor" href="#figer-une-dependance-de-dependance">#</a>Figer une dépendance de dépendance</h3><p>Simple, regardez :</p>
-<pre><code>{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"my-project"</span></span>,
-  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"1.0.0"</span></span>,
-  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">grunt-contrib-clean</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.5.0"</span></span>,
-      "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean@~0.5.*"</span></span>,
-      "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-        "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"2.2.6"</span></span>,
-          "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"rimraf@~2.2.1"</span></span>,
-          "<span class="hljs-attribute">resolved</span>": <span class="hljs-value"><span class="hljs-string">"https://registry.npmjs.org/rimraf/-/rimraf-2.2.6.tgz"</span>
-        </span>}
-      </span>}
-    </span>}
-  </span>}
-</span>}
-</code></pre><p>J’ai défini la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> dans <code>dependencies.grunt-contrib-clean.dependencies.rimraf</code>.</p>
-<p>Bon, je ne connais pas tout par coeur non plus, npm-shrinkwrap vous écrira la totalité du fichier avec toutes les définitions mais j’ai volontairement tout supprimé et gardé uniquement la partie <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> car seule cette partie est à figer. Quand je dis supprimer, je parle réellement dans le fichier final, pas juste ici dans l’article.</p>
-<p>Vous aurez toute l’explication de npm-shrinkwrap sur la <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">documentation officielle [en]</a>.</p>
-<h2 id="choisir-la-bonne-strategie-de-version"><a class="putainde-Title-anchor" href="#choisir-la-bonne-strategie-de-version">#</a>Choisir la bonne stratégie de version</h2><p>Parce qu’il est important de savoir quelle version exacte nous souhaitons installer dans notre projet, il faut définir avec précisions ces versions dans <code>package.json</code>.</p>
-<p>Vous pouvez avoir <code>1.2.1</code> ou encore <code>~1.4.6</code> ou bien encore <code>^2.3.1</code>. Mais que veulent dire <code>^</code> ou <code>~</code> ?</p>
-<ul>
-<li><code>1.2.1</code> : cette version exacte</li>
-<li><code>~1.4.6</code> : raisonnablement proche de <code>1.4.6</code></li>
-<li><code>^2.3.1</code> : compatible avec <code>2.3.1</code></li>
-</ul>
-<p>Il est clair que lu comme ça, le plus intéressant est le <code>^</code> et c’est justement <a href="http://fredkschott.com/post/2014/02/npm-no-longer-defaults-to-tildes/">celui qui est choisi maintenant [en]</a> lorsque l’on fait un <code>npm install --save</code>. Cool non ?!</p>
-<p>Pour plus d’information sur la définition des versions, <a href="https://github.com/isaacs/node-semver#ranges">c’est par là</a> (Oh mon dieu, il a fait un lien avec un “cliquez ici”).</p>
-<p>Bon. C’est bon ? Vous avez tout compris ? Okay, vous pouvez passer à <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/"><strong>napa</strong></a> maintenant qui vous aidera grandement sur le téléchargement de projets n’ayant pas de <code>package.json</code>.</p>
-<p>En ce qui concerne npm, je m’arrête là, et vous propose une petite solution afin d’augmenter la vitesse de vos installations de node modules.</p>
-<h2 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h2><p>Envie d’accélérer vos installations npm ? Je vous conseille <a href="https://github.com/vvo/npm-pkgr">npm-pkgr</a>.</p>
-<p>Il hashera votre <code>package.json</code> pour savoir s’il a été modifié ou non, et en fonction de ça, il lancera <code>npm install</code> ou non. Sacré gain de temps (surtout si vous faites des <code>npm install</code> à chaque <em>deploy</em>).</p>
-<p>You are now a npm master. 👨</p>
-
-]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/npm-choisir-version/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/npm-choisir-version/</guid></item><item><title>Premiers pas avec Ruby</title><description><![CDATA[
+]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</guid></item><item><title>Premiers pas avec Ruby</title><description><![CDATA[
 <h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><pre><code class="lang-console">$ git clone git:<span class="hljs-comment">//github.com/sstephenson/rbenv.git ~/.rbenv</span>
 $ echo <span class="hljs-string">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> &gt;&gt; ~/<span class="hljs-class">.bashrc</span>
 $ echo <span class="hljs-string">'eval "$(rbenv init -)"'</span> &gt;&gt; ~/<span class="hljs-class">.bashrc</span>
@@ -2848,7 +2848,7 @@ $ rbenv rehash
 </code></pre>
 <p>Tous les ans, depuis des années, sort un article : <em>“<a href="http://www.reddit.com/comments/1oi8wd">Est-ce que Ruby est mort ?</a>“</em>. Et chaque année les résultats sont les mêmes, <em>“Ruby perd en intensité”</em>, <em>“Node.js prend le dessus”</em>. Et pourtant Ruby reste chaque année dans l’actualité avec autant d’importance. Il faut être honnête et admettre que <a href="http://blog.federicocarrone.com/2014/01/18/ruby-dying-or-ruby-hype-dead">Ruby souffre de certaines difficultés</a> comme tous les langages, mais <a href="http://jmoses.co/2013/12/21/is-ruby-dying.html">Ruby n’est pas mort</a> et il y a encore beaucoup à en tirer, du langage, de ses frameworks et de sa communauté. Sans oublier que de grands sites l’ont utilisé et l’utilisent toujours comme Twitter, Github, Shopify, ou encore Hulu.</p>
 <p>Nous commençons donc une série d’articles sur Ruby afin de le découvrir et commencer à développer et à devenir productif avec. Et pour ce premier article, nous allons voir comment l’installer. Dans les suivants nous installerons notre première gem, nous utiliserons Sinatra pour notre premier projet, puis nous n’arriverons plus à nous arrêter.</p>
-<h2 id="un-langage-des-implementations"><a class="putainde-Title-anchor" href="#un-langage-des-implementations">#</a>Un langage, des implémentations</h2><p>Tout d’abord il faut savoir qu’il existe plusieurs implémentations de Ruby, c’est à dire différents interpréteurs du langage. L’implémentation principale et originale est <em>MRI</em>, pour Matz’s Ruby Interpreter, Yukihiro “Matz” Matsumoto étant le créateur de Ruby. On trouve également JRuby, un interpretteur Ruby en Java, permattant de bénéficier de toutes les fonctionnalités de la JVM. Parmis les plus connues également MacRuby qui est une implémentation spécifique à OS X et dont <a href="http://www.rubymotion.com">RubyMotion</a> dépend. Pour nos articles nous devrions utiliser MRI à moins qu’une envie sur une différente implémentation se fasse ressentir.</p>
+<h2 id="un-langage-des-implementations"><a class="putainde-Title-anchor" href="#un-langage-des-implementations">#</a>Un langage, des implémentations</h2><p>Tout d’abord, il faut savoir qu’il existe plusieurs implémentations de Ruby, c’est-à-dire différents interpréteurs du langage. L’implémentation principale et originale est <em>MRI</em>, pour Matz’s Ruby Interpreter, Yukihiro “Matz” Matsumoto étant le créateur de Ruby. On trouve également JRuby, un interpretteur Ruby en Java, permettant de bénéficier de toutes les fonctionnalités de la JVM. Parmi les plus connues également MacRuby qui est une implémentation spécifique à OS X et dont <a href="http://www.rubymotion.com">RubyMotion</a> dépend. Pour nos articles nous devrions utiliser MRI à moins qu’une envie sur une différente implémentation se fasse ressentir.</p>
 <blockquote>
 <p>C’est bien tout ça mais au final j’en sais pas plus sur Ruby.</p>
 </blockquote>

@@ -75,30 +75,30 @@ elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function
 
 <span class="hljs-comment">// le polyfill utilise querySelectorAll</span>
 <span class="hljs-comment">// et cherche dans le parent de l'élement</span>
-<span class="hljs-function">function <span class="hljs-title">matchesPolyfill</span><span class="hljs-params">(selector)</span></span>{
-  <span class="hljs-keyword">var</span> node = <span class="hljs-keyword">this</span>
-  <span class="hljs-keyword">var</span> parent = node.parentNode
-  <span class="hljs-keyword">var</span> query, index, <span class="hljs-function">length
-  <span class="hljs-title">if</span><span class="hljs-params">(!parent || parent.nodeType != <span class="hljs-number">1</span>)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">matchesPolyfill</span><span class="hljs-params">(selector)</span></span>{
+  <span class="hljs-keyword">var</span> node = this
+  <span class="hljs-keyword">var</span> <span class="hljs-keyword">parent</span> = node.parentNode
+  <span class="hljs-keyword">var</span> query, index, length
+  <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">parent</span> || <span class="hljs-keyword">parent</span>.nodeType != <span class="hljs-number">1</span>) {
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>
   }
-  query = parent.querySelectorAll(selector)
+  query = <span class="hljs-keyword">parent</span>.querySelectorAll(selector)
   index = -<span class="hljs-number">1</span>
-  length = query.<span class="hljs-function">length
-  <span class="hljs-title">while</span><span class="hljs-params">(++index &lt; length)</span> </span>{
+  length = query.length
+  <span class="hljs-keyword">while</span>(++index &lt; length) {
     <span class="hljs-keyword">if</span>(query[index] == node) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>
   }
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>
 }
 
-<span class="hljs-function">function <span class="hljs-title">getCurrentTarget</span><span class="hljs-params">(node, selector)</span></span>{
-  <span class="hljs-keyword">if</span>(matchesSelector.call(node, selector)) <span class="hljs-function"><span class="hljs-keyword">return</span> node
-  <span class="hljs-title">while</span><span class="hljs-params">(node = node.parentNode)</span> </span>{
-    <span class="hljs-keyword">if</span>(node.nodeType != <span class="hljs-number">1</span>) <span class="hljs-function"><span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>
-    <span class="hljs-title">if</span><span class="hljs-params">(matchesSelector.call(node, selector)</span>) <span class="hljs-keyword">return</span> node
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCurrentTarget</span><span class="hljs-params">(node, selector)</span></span>{
+  <span class="hljs-keyword">if</span>(matchesSelector.call(node, selector)) <span class="hljs-keyword">return</span> node
+  <span class="hljs-keyword">while</span>(node = node.parentNode) {
+    <span class="hljs-keyword">if</span>(node.nodeType != <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>
+    <span class="hljs-keyword">if</span>(matchesSelector.call(node, selector)) <span class="hljs-keyword">return</span> node
   }
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>
-}</span>
+}
 </code></pre>
 <p>Dès lors, dans nos listeners, on pourra directement procéder ainsi :</p>
 <pre><code class="lang-javascript">element.addEventListener(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(evt)</span></span>{
@@ -109,23 +109,23 @@ elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function
 </code></pre>
 <h3 id="pour-l-ajax"><a class="putainde-Title-anchor" href="#pour-l-ajax">#</a>Pour l’Ajax</h3><p>Pourquoi est-ce que l’on appelle ça encore Ajax, d’ailleurs ? Bref.</p>
 <p>Simple comme bonjour :</p>
-<pre><code class="lang-javascript"><span class="hljs-function">function <span class="hljs-title">isSuccessStatus</span><span class="hljs-params">(status)</span></span>{
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isSuccessStatus</span><span class="hljs-params">(status)</span></span>{
   <span class="hljs-keyword">return</span> status &gt;= <span class="hljs-number">200</span> &amp;&amp; status &lt; <span class="hljs-number">300</span> || status == <span class="hljs-number">304</span>
 }
 
-<span class="hljs-function">function <span class="hljs-title">ajax</span><span class="hljs-params">(options)</span></span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ajax</span><span class="hljs-params">(options)</span></span>{
   <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest()
-  <span class="hljs-keyword">var</span> done = <span class="hljs-keyword">false</span>
-  <span class="hljs-keyword">var</span> <span class="hljs-keyword">async</span> = options.hasOwnProperty(<span class="hljs-string">"async"</span>) ? options.<span class="hljs-keyword">async</span> : <span class="hljs-keyword">true</span>
+  <span class="hljs-keyword">var</span> done = <span class="hljs-literal">false</span>
+  <span class="hljs-keyword">var</span> async = options.hasOwnProperty(<span class="hljs-string">"async"</span>) ? options.async : <span class="hljs-literal">true</span>
 
-  xhr.open(options.method || <span class="hljs-string">"GET"</span>, options.url, <span class="hljs-keyword">async</span>)
+  xhr.open(options.method || <span class="hljs-string">"GET"</span>, options.url, async)
 
-  xhr.onreadystatechange = function(){
-    <span class="hljs-keyword">if</span>(done) <span class="hljs-function"><span class="hljs-keyword">return</span>
-    <span class="hljs-title">if</span><span class="hljs-params">(<span class="hljs-keyword">this</span>.readyState != <span class="hljs-number">4</span>)</span> <span class="hljs-keyword">return</span>
-    done </span>= <span class="hljs-function"><span class="hljs-keyword">true</span>
+  xhr.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">if</span>(done) <span class="hljs-keyword">return</span>
+    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.readyState != <span class="hljs-number">4</span>) <span class="hljs-keyword">return</span>
+    done = <span class="hljs-literal">true</span>
 
-    <span class="hljs-title">if</span><span class="hljs-params">(isSuccessStatus(<span class="hljs-keyword">this</span>.status)</span>) </span>{
+    <span class="hljs-keyword">if</span>(isSuccessStatus(<span class="hljs-keyword">this</span>.status)) {
       <span class="hljs-keyword">if</span>(options.success) {
         options.success.call(<span class="hljs-keyword">this</span>)
       }
@@ -136,11 +136,11 @@ elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function
       options.error.call(<span class="hljs-keyword">this</span>)
     }
   }
-  Object.keys(options.headers || {})
-    .forEach(function(key){
+  <span class="hljs-built_in">Object</span>.keys(options.headers || {})
+    .forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span></span>{
       xhr.setRequestHeader(key, options.headers[key])
     })
-  xhr.send(options.data || <span class="hljs-keyword">null</span>)
+  xhr.send(options.data || <span class="hljs-literal">null</span>)
   <span class="hljs-keyword">return</span> xhr
 }
 </code></pre>
@@ -157,10 +157,10 @@ elements.forEach(<span class="hljs-function"><span class="hljs-keyword">function
 </code></pre>
 <h3 id="es5-magic"><a class="putainde-Title-anchor" href="#es5-magic">#</a>ES5 magic</h3><p>EcmaScript 5 délivre des petites méthodes très intéressantes pour se simplifier la vie, fortement inspirées par ce qu’on a l’habitude de trouver dans les bibliothèques ayant connu l’âge d’or, comme <a href="http://prototypejs.org">PrototypeJS</a> ou <a href="http://mootools.net">MooTools</a>.</p>
 <p>Dès lors, plutôt qu’un ennuyeux :</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> key, <span class="hljs-function">item
-<span class="hljs-title">for</span><span class="hljs-params">(key <span class="hljs-keyword">in</span> myObject)</span> </span>{
-  <span class="hljs-keyword">if</span>(myObject.hasOwnProperty(key)) {
-    item = myObject[key]
+<pre><code class="lang-javascript">var <span class="hljs-variable">key</span>, item
+<span class="hljs-keyword">for</span>(<span class="hljs-variable">key</span> in myObject) {
+  <span class="hljs-keyword">if</span>(myObject.hasOwnProperty(<span class="hljs-variable">key</span>)) {
+    item = myObject[<span class="hljs-variable">key</span>]
     <span class="hljs-comment">// do something</span>
   }
 }

@@ -58,9 +58,9 @@ compense largement celui que l’on passe à les écrire.</p>
 <li>pour tester <code>addToCart</code> on doit aller regarder dans le DOM.</li>
 </ul>
 <h3 id="1-rendez-accessibles-vos-methodes-au-test-runner"><a class="putainde-Title-anchor" href="#1-rendez-accessibles-vos-methodes-au-test-runner">#</a>1. Rendez accessibles vos méthodes au test runner</h3><p>Vous pouvez utiliser un namespace adéquat.</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> app = <span class="hljs-built_in">window</span>.app = {}
-app.cart = {}
-app.cart.addToCart = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{ <span class="hljs-comment">/* … */</span> }
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> <span class="hljs-keyword">app</span> = <span class="hljs-keyword">window</span>.<span class="hljs-keyword">app</span> = {}
+<span class="hljs-keyword">app</span>.cart = {}
+<span class="hljs-keyword">app</span>.cart.addToCart = function(){ <span class="hljs-comment">/* … */</span> }
 </code></pre>
 <p>Mais ne souhaitez probablement pas rendre vos méthodes accessibles à la console.</p>
 <p>Utilisez un module-system : <a href="http://browserify.org">browserify</a> ou
@@ -212,17 +212,17 @@ feature testing.
 Pour le tester complètement, on doit se servir de vrais navigateurs :
 un headless (certes, très pratique) comme <a href="http://phantomjs.org">phantomjs</a>
 ne permettra pas d’obtenir 100% de coverage.</p>
-<pre><code class="lang-javascript"><span class="hljs-tag">var</span> supportsAnimationFrame =
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> supportsAnimationFrame =
   !!(
-    win<span class="hljs-class">.requestAnimationFrame</span> ||
-    win<span class="hljs-class">.webkitRequestAnimationFrame</span> ||
-    win<span class="hljs-class">.mozRequestAnimationFrame</span> ||
-    win<span class="hljs-class">.ORequestAnimationFrame</span> ||
+    <span class="hljs-keyword">win</span>.requestAnimationFrame ||
+    <span class="hljs-keyword">win</span>.webkitRequestAnimationFrame ||
+    <span class="hljs-keyword">win</span>.mozRequestAnimationFrame ||
+    <span class="hljs-keyword">win</span>.ORequestAnimationFrame ||
     <span class="hljs-comment">// vous avez fait une faute de frappe,</span>
     <span class="hljs-comment">// et mis un `O` majuscule, seul un</span>
     <span class="hljs-comment">// test sur les version concernées d'Opera</span>
     <span class="hljs-comment">// vous permettront de l'identifier</span>
-    win<span class="hljs-class">.msRequestAnimationFrame</span>
+    <span class="hljs-keyword">win</span>.msRequestAnimationFrame
   )
 </code></pre>
 <p>De plus, vous pouvez par habitude être tenté d’utiliser un

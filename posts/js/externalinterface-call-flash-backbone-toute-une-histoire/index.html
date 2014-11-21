@@ -35,10 +35,10 @@
 <p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu’il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d’un autre article. (Je dis ça à chaque fois, haha).</p>
 <h2 id="le-pitch"><a class="putainde-Title-anchor" href="#le-pitch">#</a>Le pitch</h2><p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu’il le souhaite afin de communiquer avec l’application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l’avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d’évènement mais vous en avez d’<a href="http://microjs.com/#event">autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
 <pre><code class="lang-javascript"> <span class="hljs-comment">// on crée un objet vide</span>
-<span class="hljs-constant">App.FlashManager.Events</span> = {}
+<span class="hljs-keyword">App</span>.FlashManager.Events = {}
 
 <span class="hljs-comment">// on lui ajoute les fonctionnalités des events Backbone</span>
-<span class="hljs-constant">_.extend(App.FlashManager.Events, Backbone.Events)</span>
+_.extend(<span class="hljs-keyword">App</span>.FlashManager.Events, Backbone.Events)
 </code></pre>
 <p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events">objet d’évènement façon Backbone</a>. Il pourra alors s’écouter lui-même, écouter un autre objet, mais aussi déclencher des évènements.</p>
 <h2 id="cote-flash"><a class="putainde-Title-anchor" href="#cote-flash">#</a>Côté Flash</h2><p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l’objet <code>ExternalInterface</code> :</p>
@@ -54,21 +54,21 @@
 <li>Utiliser <strong>Backbone.js</strong> dans les méthodes de cet objet <em>Proxy</em></li>
 </ul>
 <p>Exemple :</p>
-<pre><code class="lang-javascript">// Bridge between flash <span class="hljs-keyword">and</span> js
-App.FlashManager = {}
-App.FlashManager.Events = {}
+<pre><code class="lang-javascript"><span class="hljs-comment">// Bridge between flash and js</span>
+<span class="hljs-keyword">App</span>.FlashManager = {}
+<span class="hljs-keyword">App</span>.FlashManager.Events = {}
 
-// Backbone events used <span class="hljs-keyword">for</span> Flash
-App.InternalFlashManager = {}
-App.InternalFlashManager.Events = {}
+<span class="hljs-comment">// Backbone events used for Flash</span>
+<span class="hljs-keyword">App</span>.InternalFlashManager = {}
+<span class="hljs-keyword">App</span>.InternalFlashManager.Events = {}
 
-_.extend(App.InternalFlashManager.Events, Backbone.Events)
+_.extend(<span class="hljs-keyword">App</span>.InternalFlashManager.Events, Backbone.Events)
 
-App.FlashManager.Events.trigger = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, opts)</span></span> {
-    App.InternalFlashManager.Events.trigger(name, opts)
+<span class="hljs-keyword">App</span>.FlashManager.Events.trigger = function(name, opts) {
+    <span class="hljs-keyword">App</span>.InternalFlashManager.Events.trigger(name, opts)
 
-    // Must <span class="hljs-keyword">return</span> nothing <span class="hljs-keyword">not</span> to loop JavaScript engine, important!
-    <span class="hljs-keyword">return</span>
+    <span class="hljs-comment">// Must return nothing not to loop JavaScript engine, important!</span>
+    <span class="hljs-literal">return</span>
 }
 </code></pre>
 <h2 id="oh-et-"><a class="putainde-Title-anchor" href="#oh-et-">#</a>Oh et…</h2><p>…il existe une version ayant plus ou moins le même souci que moi disponible là : <a href="https://coderwall.com/p/e-8niw">ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
