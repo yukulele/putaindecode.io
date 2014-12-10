@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Tue, 09 Dec 2014 18:15:11 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Première application Ember. Suite et fin.</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Wed, 10 Dec 2014 16:30:29 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Première application Ember. Suite et fin.</title><description><![CDATA[
 <p>L’<a href="/posts/js/premiere-app-ember">article précédent</a> vous a accompagné pour la création d’une première application <a href="http://emberjs.com">Ember</a>. 
 Mais il faut bien reconnaître que l’exemple était très simple et que, du coup, le mérite est faible. 
 Pour se  rattraper, on va complexifier un peu les choses.</p>
 <p>Tout comme dans l’article précédent, nous détaillerons régulièrement les concepts mis en œuvre. Parce que vous le valez bien.</p>
 <h2 id="sommaire"><a class="putainde-Title-anchor" href="#sommaire">#</a>Sommaire</h2><ul>
-<li><a href="#edition-d-une-serie">Edition d’une série</a><ul>
+<li><a href="#edition-d-une-serie">Édition d’une série</a><ul>
 <li><a href="#routes-imbriquees">Routes imbriquées</a></li>
 <li><a href="#-code-outlets-code-">Outlets</a></li>
 <li><a href="#liens-entre-routes">Liens entre routes</a></li>
@@ -17,7 +17,7 @@ Pour se  rattraper, on va complexifier un peu les choses.</p>
 <li><a href="#creation-d-une-nouvelle-serie">Création d’une nouvelle série</a></li>
 <li><a href="#conclusion">Conclusion</a></li>
 </ul>
-<h2 id="edition-d-une-serie"><a class="putainde-Title-anchor" href="#edition-d-une-serie">#</a>Edition d’une série</h2><p>On veut pouvoir basculer depuis la fiche d’une série vers son édition en mode <em>in place</em>. C’est-à-dire
+<h2 id="edition-d-une-serie"><a class="putainde-Title-anchor" href="#edition-d-une-serie">#</a>Édition d’une série</h2><p>On veut pouvoir basculer depuis la fiche d’une série vers son édition en mode <em>in place</em>. C’est-à-dire
 en <strong>remplaçant</strong> la zone de visualisation de cette fiche par sa zone d’édition.</p>
 <p>On accède à la fiche en mode visualisation à l’URL <code>/series/{id}/</code> et en mode édition à l’URL <code>/series/{id}/edit</code>. Évidemment, 
 on reconstruit uniquement la zone de la fiche et non l’application entière (et donc ni l’en-tête ni la liste des séries).</p>
@@ -59,10 +59,10 @@ répertoire <code>/app/templates/series/series-item/</code> :</p>
     <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"summary"</span>&gt;</span></span><span class="hljs-expression">{{<span class="hljs-variable">textarea</span> <span class="hljs-variable">value</span>=<span class="hljs-variable">summary</span> <span class="hljs-variable">rows</span>=<span class="hljs-string">"10"</span>}}</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span></span>
 </code></pre>
-<p>A ce stade, naviguer sur <code>/series/{@id}/edit</code> ne lève pas d’erreur mais n’a aucun effet. En effet, on a
+<p>À ce stade, naviguer sur <code>/series/{@id}/edit</code> ne lève pas d’erreur mais n’a aucun effet. En effet, on a
 défini une route imbriquée mais conservé le gabarit <code>/app/templates/series/series-item.hbs</code> inchangé. L’activation de la route <code>series.seriesItem</code> 
 affiche donc toujours ce gabarit, même dans le cas d’une sous-route telle que <code>series.seriesItem.edit</code>. </p>
-<h3 id="-code-outlets-code-"><a class="putainde-Title-anchor" href="#-code-outlets-code-">#</a><code>outlets</code></h3><p>La solution est à aller chercher du côté du concept d’<code>{{outlet}}</code> définit dans l’<a href="/posts/js/premiere-app-ember/#-code-outlet-code-et-routes-imbriquees">article précédent</a>.
+<h3 id="-code-outlets-code-"><a class="putainde-Title-anchor" href="#-code-outlets-code-">#</a><code>outlets</code></h3><p>La solution est à aller chercher du côté du concept d’<code>{{outlet}}</code> défini dans l’<a href="/posts/js/premiere-app-ember/#-code-outlet-code-et-routes-imbriquees">article précédent</a>.
 Un <code>{{outlet}}</code> est nécessaire <strong>à chaque fois qu’on définit un niveau d’imbrication.</strong> Mais comme on veut quand même continuer à afficher la série à 
 l’URL <code>/series/{@id}/</code>, on va utiliser la <strong>route implicite</strong> <code>series.seriesItem.index</code> (cf. <a href="/posts/js/premiere-app-ember/#routes-et-controleurs-implicites">article précédent</a>) 
 et son gabarit, dans lequel on va copier l’ancien contenu de <code>series-item.hbs</code>.</p>
@@ -148,7 +148,7 @@ exécuté avant la fin du traitement et ne permettrait pas de proposer un retour
 <li>Les transitions entre routes sont possibles via <code>this.transitionTo(&#39;nomRoute&#39;)</code>.</li>
 </ul>
 <h3 id="actions-sur-les-transitions"><a class="putainde-Title-anchor" href="#actions-sur-les-transitions">#</a>Actions sur les transitions</h3><p>Mais je voudrais encore ajouter une dernière petite cerise sur ce gâteau : annuler automatiquement toutes les modifications effectuées
-sur la série dès que l’on quitte la route. <a href="http://emberjs.com">Ember</a> pévoit en effet des mécanismes avancés pour travailler sur les transitions entre 
+sur la série dès que l’on quitte la route. <a href="http://emberjs.com">Ember</a> prévoit en effet des mécanismes avancés pour travailler sur les transitions entre 
 routes (cf. <a href="http://emberjs.com/guides/routing/preventing-and-retrying-transitions/">doc officielle</a>). En particulier <code>willTransition</code> : </p>
 <pre><code class="lang-js">// app/routes/series/series-item/edit.js
   actions: {
@@ -323,7 +323,7 @@ tel ou laissé de côté pour une solution plus légère selon vos besoins.</p>
 <p>Mais j’ai également essayé d’aller plus en profondeur sur certains aspects et de montrer des cas d’utilisation concrets. 
 Ce dernier article montre qu’il est également possible de fournir à <a href="http://emberjs.com">Ember</a> 
 des configurations explicites afin d’aller plus loin que les conventions par défaut.</p>
-<p>Maintenant, vous n’avez plus d’excuse … vous ne pourrez pas dire que vous ne connaissiez pas. </p>
+<p>Maintenant, vous n’avez plus d’excuses… Vous ne pourrez pas dire que vous ne connaissiez pas. </p>
 <p><em>Note: les sources de l’application exemple sont <a href="https://github.com/bmeurant/ember-articles/tree/premiere-app-ember-suite">disponibles sur github</a>.</em></p>
 
 ]]></description><pubDate>Tue, 09 Dec 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/premiere-app-ember-suite/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/premiere-app-ember-suite/</guid></item><item><title>L'injection de dépendances en PHP</title><description><![CDATA[
