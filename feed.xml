@@ -1,4 +1,198 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Fri, 12 Dec 2014 11:20:55 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Première application Ember. Suite et fin.</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 15 Dec 2014 16:20:41 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>JS modulaire pour le front : les bases</title><description><![CDATA[
+<p>Quand on réalise des applications en JS pour les navigateurs web, on ne peut plus se contenter de mettre des tags <code>script</code> dans le bon ordre pour charger les librairies tierces que l’on utilise comme pour un site web. C’est pourquoi il existe des outils pour permettre d’écrire du JavaScript modulaire et réutiliser plus facilement les innombrables librairies publiées par la communauté JS.</p>
+<p>Cependant, ce principe d’écriture modulaire et de publication de code n’étant pas intégré dans le langage lui-même, de très nombreuses solutions existent plus ou moins compatibles les unes avec les autres et aboutissant à une forte fragmentation de la communauté.
+Donc quand on décide de se mettre au JavaScript modulaire, on trouve tout un tas d’articles (en anglais) parfois trop vieux (“une étape de build n’est pas adaptée au navigateur”), parfois trop subjectifs (“J’aime pas la syntaxe AMD”), parfois confus (“utiliser les modules pour de l’injection de dépendances”), parfois simplistes (“AMD vs CommonJS”).</p>
+<p>C’est pourquoi j’ai voulu partager mon expérience, en essayant d’abord de reposer les bases du problème, puis en vous faisant part de ce que j’estime être la solution la plus satisfaisante actuellement.</p>
+<p>D’abord, il faut faire la distinction entre 3 aspects du problème :</p>
+<ul>
+<li>le format d’écriture des modules (“module authoring format”)</li>
+<li>le système de gestion des packages (“package management”)</li>
+<li>la convention de résolution des dépendances de module</li>
+</ul>
+<h1 id="format-d-ecriture-des-modules"><a class="putainde-Title-anchor" href="#format-d-ecriture-des-modules">#</a>Format d’écriture des modules</h1><p>Le module est la brique de base pour décomposer un gros fichier JS en plusieurs fichiers plus petits et focalisés sur une fonctionnalité précise. La plupart du temps un module est un fichier JS qui fournit une fonction, un constructeur ou un objet de valeur. Et comme, pour fournir cette fonctionnalité, un module peut avoir besoin d’autres modules, il existe un mécanisme pour déclarer ses dépendances.</p>
+<p>Actuellement, 2 standards principaux existent pour écrire ces modules : <strong>AMD</strong> et <strong>CommonJS</strong>.
+Il est également possible d’utiliser la <a href="http://www.2ality.com/2014/09/es6-modules-final.html">syntaxe retenue par ES6</a> (qui j’espère va enfin devenir le standard unique) mais pour l’instant, ça demande encore une étape de “transpilation” en AMD ou CJS.</p>
+<p>Le format AMD (dans sa forme la plus courante) est :</p>
+<pre><code class="lang-js">define([<span class="hljs-string">'moduleA'</span>, <span class="hljs-string">'moduleB'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a, b)</span> </span>{
+    <span class="hljs-comment">// j'utilise a et b</span>
+    <span class="hljs-keyword">return</span> maFonctionTresUtile;
+});
+</code></pre>
+<p>Le format CommonJS (dans sa forme la plus courante) est :</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> a = <span class="hljs-built_in">require</span>(<span class="hljs-string">'moduleA'</span>);
+<span class="hljs-keyword">var</span> b = <span class="hljs-built_in">require</span>(<span class="hljs-string">'moduleB'</span>);
+<span class="hljs-comment">// j'utilise a et b</span>
+<span class="hljs-built_in">module</span>.exports = maFonctionTresUtile;
+</code></pre>
+<p>Ca n’est pas très différent dans l’esprit : tous les 2 permettent de décrire des dépendances et d’exporter une valeur.
+La différence principale réside dans le fait que :</p>
+<ul>
+<li>CommonJS prévoit une évaluation en une passe dans laquelle il faut résoudre les dépendances au fur et à mesure</li>
+<li>alors que AMD prévoit une évaluation en 2 passes :<ul>
+<li>une première pour récupérer uniquement la liste des dépendances</li>
+<li>et une seconde où on exécute le callback (le corps du module) avec les dépendances résolues.
+C’est pourquoi on parle de format “synchrone” dans le premier cas et “asynchrone” dans le second car on peut résoudre les dépendances de façon asynchrone en AMD.</li>
+</ul>
+</li>
+</ul>
+<p>Dans les 2 cas, par contre, il y a besoin d’une <em>résolution des dépendances</em>, c’est à dire qu’un module ne peut pas être exécuté tel quel dans un navigateur en le chargeant via un tag <code>script</code>. Non, il faut un <em>loader</em>, c’est à dire un outil qui va charger le module qu’on lui demande et va résoudre les dépendances en cascade. Mais contrairement à ce que l’on pourrait croire, les règles de résolution des dépendances n’ont rien à voir avec le format du module (on verra ça plus tard).</p>
+<h1 id="package-management"><a class="putainde-Title-anchor" href="#package-management">#</a>Package management</h1><p>Parlons maintenant des packages. En effet, pouvoir découper du code en modules, c’est bien ; mais ce qui est encore mieux c’est de pouvoir le partager avec d’autres pour qu’il soit facilement réutilisable et arrêter le syndrôme de :</p>
+<blockquote>
+<p>“je recode un event emitter dans ma librairie comme ça je n’ai pas de
+dépendance et c’est plus facile à consommer par mes utilisateurs”</p>
+</blockquote>
+<p> C’est le problème n°1 des librairies front qui présentent souvent comme un argument de ne pas avoir de dépendances. Sauf que, si on y réfléchit, ça veut dire que : soit c’est une librairie très bas niveau, soit le mec a recodé des trucs qui existent déjà au lieu de s’occuper de son sujet principal.</p>
+<p>C’est là qu’entre en jeu la notion de <em>package</em> (que je ne traduirai pas en français, car ça ne servirait qu’à apporter de la confusion). Un package est un ensemble de fichiers (pas forcément des fichiers JS d’ailleurs) avec des métadonnées associées pour décrire principalement :</p>
+<ul>
+<li>où est stocké le package,</li>
+<li>qui est l’auteur,</li>
+<li>quelle est la licence,</li>
+<li>quelle est la version,</li>
+<li>et … quelles sont les dépendances et leurs versions !</li>
+</ul>
+<p>Ici les dépendances sont des dépendances entre packages, <a href="http://fr.slideshare.net/domenicdenicola/client-side-packages">ce qui n’a rien à voir avec les dépendances entre modules</a>.</p>
+<p>Pour faciliter l’utilisation des packages, on utilise un <em>package manager</em>, dont le rôle principal est, à partir d’un id de module (et éventuellement d’un numéro de version), de trouver l’adresse où se trouve les fichiers, les télécharger et les installer localement… et ceci de façon récursive pour les dépendances, ce qui est le gros avantage par rapport à le faire à la mano. Mais sinon, ça n’est pas plus compliqué que ça dans le principe, et ça reste valable pour des fichiers JS ou non, front-end ou non.</p>
+<p>Les principaux package managers pour le front-end sont <a href="https://www.npmjs.com/">npm</a> et <a href="http://bower.io">bower</a>.
+La grande différence entre les deux est que <strong>npm installe les dépendances de façon relative</strong> : pour chaque package, les dépendances sont installées dans un sous-dossier (node_modules).</p>
+<ul>
+<li>mon-projet-avec-nmp<ul>
+<li>app.js</li>
+<li>node_modules<ul>
+<li>une-dependance<ul>
+<li>main.js</li>
+<li>nodes_modules<ul>
+<li>une-dependance-indirecte<ul>
+<li>main.js</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>une-autre-dependance<ul>
+<li>main.js</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Alors que <strong>bower prend le parti d’installer les dépendances à plat</strong> : le package et ses dépendances et les dépendances des dépendances sont toutes installées au même niveau dans le même dossier.</p>
+<ul>
+<li>mon-projet-avec-bower<ul>
+<li>app.js</li>
+<li>bower_components<ul>
+<li>une-dependance<ul>
+<li>main.js</li>
+</ul>
+</li>
+<li>une-autre-dependance<ul>
+<li>main.js</li>
+</ul>
+</li>
+<li>une-dependance-indirecte<ul>
+<li>main.js</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>L’approche bower semble être une bonne idée car si 2 packages ont la même dépendance (ou des dépendances compatibles semver), une seule est installée. Alors qu’avec npm chaque package installe sa propre dépendance.</p>
+<p>Cependant, s’il y a une incompatibilité de versions :</p>
+<blockquote>
+<p>le package A déclare une dépendance sur X en version 1
+le package B déclare une dépendance sur X mais en version 2</p>
+</blockquote>
+<p>Avec bower, on est coincé : on ne peut installer qu’une seule version. Lors du <code>bower install</code>, il faudra choisir quelle version on garde : soit A devra utiliser X2, soit B devra utiliser X1.</p>
+<ul>
+<li>mon-app-avec-bower<ul>
+<li>bower_components<ul>
+<li>package-A</li>
+<li>package-B</li>
+<li>package-X<ul>
+<li>main.js // v1 ou v2 mais pas les 2</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Bower appelle cela de la <em>résolution de conflits</em>. Mais concrêtement, cela veut dire qu’on force une dépendance qui n’est pas supportée officiellement par le package en question. Donc on se retrouve responsable de vérifier que le package B fonctionne correctement avec X1. Pas cool :-(</p>
+<p>Alors qu’avec npm les versions des dépendances sont respectées, il n’y a pas de question à se poser.</p>
+<ul>
+<li>mon-app-avec-npm<ul>
+<li>node_modules<ul>
+<li>package-A<ul>
+<li>node_modules<ul>
+<li>package-X<ul>
+<li>main.js // v1</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>package-B<ul>
+<li>node_modules<ul>
+<li>package-X<ul>
+<li>main.js // v2</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="resolution-des-dependances-de-module"><a class="putainde-Title-anchor" href="#resolution-des-dependances-de-module">#</a>Résolution des dépendances de module</h1><p>La question est alors :</p>
+<blockquote>
+<p>“Pourquoi existe-t-il des package managers spécifiquement pour le web front-end ?”</p>
+</blockquote>
+<p>Réponse :</p>
+<blockquote>
+<p> “Pour faciliter l’utilisation de modules publiés dans des packages dans le contexte du front-end”</p>
+</blockquote>
+<p>Super ! Mais concrêtement ?</p>
+<p>Et bien, venons en au coeur du problème : <em>la résolution des module-id en fichier</em>. Comme on l’a vu, pour charger un module dans le navigateur, il faut utiliser un loader. Et une de ses tâches est de <em>résoudre</em> les <code>module_id</code> en adresse de fichier.</p>
+<p>Au pire il faudrait explicitement dire au loader pour chaque <code>module_id</code> où est le fichier correspondant. Heureusement, ce n’est pas le cas, ni avec requireJS, ni avec les loaders compatibles npm.</p>
+<h2 id="amd"><a class="putainde-Title-anchor" href="#amd">#</a>AMD</h2><p>RequireJS et les autres loaders AMD vont assez loin en  matière de <a href="http://requirejs.org/docs/api.html#config">configuration</a> mais souvent , ça revient à décrire des règles du style <em>tous les modules id qui commencent par <code>mon-package</code> sont à chercher dans le dossier <code>./mon-package</code></em>.</p>
+<p>En fait, ça n’est pas tout à fait vrai qu’il faille systématiquement configurer les règles de résolution avec RequireJS : il y a une règle par défaut qui stipule que les module_id sont résolus par rapport à une “baseURL” (qui par défaut est celle du fichier html). Donc si on installe tous les packages au même niveau, ça marche par défaut.
+C’est pour cela que bower est souvent utilisé pour les packages front-end en AMD car il installe les fichiers à plat et de cette façon on limite le besoin de configuration.</p>
+<h2 id="npm"><a class="putainde-Title-anchor" href="#npm">#</a>NPM</h2><p>A l’opposé de cette approche très flexible, il y a nodeJS avec une <a href="https://github.com/substack/browserify-handbook#how-node_modules-works">convention simple et statique</a>, qui dit en gros :</p>
+<ul>
+<li>si c’est une référence relative, il suffit de suivre le chemin</li>
+<li>si c’est une référence absolue, il faut chercher dans le dossier <code>node_modules</code> et ceci de façon récursive jusqu’à arriver à la racine</li>
+</ul>
+<p>Et donc zéro config, puisque ça n’est pas configurable. Ca peut paraître être une limitation mais c’est une force.</p>
+<h1 id="conclusion"><a class="putainde-Title-anchor" href="#conclusion">#</a>Conclusion</h1><p>Si tous les packages en AMD utilisaient la règle de résolution par défaut et que l’on utilisait bower pour les installer, on n’aurait rien à configurer. Mais dans la pratique, ça n’est pas le cas et on se retrouve à devoir configurer les règles de résolution non seulement pour ses propres dépendances (<em>pourquoi pas</em>) mais également pour les dépendances de ses dépendances (<em>et là ça ne va plus</em>).
+Et il reste toujours le problème des conflits de version liés à l’approche de mettre les dépendances à plat.</p>
+<p>D’un autre côté, il y a la convention nodeJS qui impose des règles simples, non modifiables et qui n’a pas de problème de conflit de versions. C’est à dire qu’il suffit de faire <code>npm install mon-package</code> et ça marche. Une convention qui fait l’unanimité pour le backend JS.</p>
+<p>Côté front, on lui reproche de charger les dépendances sans les dédoublonner et de le faire en synchrone, ce qui n’est pas adapté quand le chargement des fichiers se fait via un réseau en http et pas directement depuis un disque local comme sur un serveur.</p>
+<p>C’est pourquoi a été inventé <a href="http://http://browserify.org/">browserify</a> qui apporte actuellement <a href="http://putaindecode.fr/posts/js/browserify-all-the-things/">le meilleur des 2 mondes</a> : toujours zéro config selon la convention nodeJS et un système de bundle/build (via une analyse syntaxique du code JS pour détecter les dépendances) afin d’assembler tous les modules en un seul fichier adapté au navigateur.
+On peut lui reprocher la nécessité d’une étape de build et le fait que le code source en débug est en un seul fichier mais :</p>
+<ol>
+<li>de toute façon pour la prod, il y aura une étape de build et en dév, avec un outillage adapté (par exemple <code>watchify</code> qui rebuild en incrémental) ça n’est pas la mer à boire</li>
+<li>avec le support des sources-map dans les navigateurs, on peut maintenant retrouver en debug les mêmes noms de fichiers et les mêmes numéro de ligne que dans les fichiers d’origine et les points d’arrêt fonctionnent.</li>
+</ol>
+<p>Au final, ça en devient même un avantage, car le code que l’on exécute en dev dans le navigateur est très proche de ce que l’on aura en prod, en tout cas plus proche qu’avec requireJS pour lequel on développe sans build et pour lequel il faut écrire à nouveau une config de build pour la mise en prod.</p>
+<h1 id="conclusion-de-la-conclusion"><a class="putainde-Title-anchor" href="#conclusion-de-la-conclusion">#</a>Conclusion de la conclusion</h1><p>Ma conclusion est que le point crucial pour faciliter la réutilisation de modules, c’est de <strong>minimiser les contraintes sur les utilisateurs</strong> et donc de se rapprocher d’un usage <em>plug and play</em>. Pour cela il faut une convention forte entre le package manager et le loader/builder de modules, afin d’éviter à l’utilisateur de devoir écrire des configs … la plupart du temps.
+Bien sûr, la recherche du “zéro config” n’est pas une fin et c’est particulièrement vrai côté front où les contraintes de chargement de fichiers sont fortes. Et si vous voulez diviser votre bundle en plusieurs fichiers ou si vous voulez des règles d’optimisation complexes pour votre build, il est normal de devoir mettre les mains dans le cambouis.
+Mais si au moins le cas d’usage le plus fréquent (compiler son appli en un seul fichier qui sera chargé via un tag <code>script</code>) est simplifié au maximum, alors on pourra sûrement voir côté front, le même état d’esprit que côté back. Et je suis plutôt optimiste, <a href="https://medium.com/@trek/last-week-i-had-a-small-meltdown-on-twitter-about-npms-future-plans-around-front-end-packaging-b424dd8d367a">contrairement à certains</a>.</p>
+<p>Utilisateur de la première heure d’<code>AMD</code> et de <code>Dojo loader</code>, puis de <code>bower</code>, je me suis rendu compte de leurs limites et surtout j’ai été régulièrement gêné par la complexité de la configuration… surtout lorsqu’il fallait passer au build. Cela freine la réutilisation de modules tiers et c’est dommage.
+Ce n’est pas un problème intrinsèque au format de module et toutes les discussions sur “moi j’aime / j’aime pas la syntaxe AMD” sont secondaires (d’ailleurs <a href="https://www.npmjs.com/package/deamdify">browserify peut fonctionner avec des librairies en AMD</a>).
+Mais dans la pratique, nous migrons vers la solution <code>npm + browserify</code> et c’est vraiment moins compliqué.</p>
+<p>J’espère que cet article vous permettra d’y voir plus clair, de dépasser les querelles sur les préférences personnelles de chacun, et de vous aider à faire votre choix.
+Je n’estime pas être un expert du sujet, il y a sûrement beaucoup de choses à compléter ou préciser, donc n’hésitez pas à réagir.</p>
+<p>Pour aller plus loin et regarder vers le futur que nous amène ES6, il y a cet <a href="https://medium.com/@brianleroux/es6-modules-amd-and-commonjs-c1acefbe6fc0">excellent article</a>.</p>
+
+]]></description><pubDate>Mon, 15 Dec 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/</guid></item><item><title>Première application Ember. Suite et fin.</title><description><![CDATA[
 <p>L’<a href="/posts/js/premiere-app-ember">article précédent</a> vous a accompagné pour la création d’une première application <a href="http://emberjs.com">Ember</a>. 
 Mais il faut bien reconnaître que l’exemple était très simple et que, du coup, le mérite est faible. 
 Pour se  rattraper, on va complexifier un peu les choses.</p>
@@ -3111,56 +3305,4 @@ Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article
 <p>Note : napa et npm-shrinkwrap, c’est pas encore ça, alors n’hésitez pas à supprimer la partie “napa” avant de lancer votre génération de npm-shrinkwrap.</p>
 <p>Bon download à vous.</p>
 
-]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</guid></item><item><title>npm: choisir la bonne version de ses dépendances</title><description><![CDATA[
-<p>Pas plus tard qu’hier, alors que je travaillais tranquillement, apparu soudainement un bug dans mon <em>workflow</em> de <em>build</em>. Il ne m’était plus possible avec <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> de supprimer des fichiers. Hmmm, ballot, car sans la suppression, mon <em>workflow</em> devenait tout bancal. Bien. Il me fallut remonter la rivière - comme souvent, en tant que développeur - afin de constater où était le bug. Je suis alors tombé sur <a href="https://github.com/isaacs/rimraf">rimraf</a> (bon c’était pas bien loin) qui s’était vu être mis à jour il y a à peine 12 heures, comprenant un bug.</p>
-<h2 id="contexte"><a class="putainde-Title-anchor" href="#contexte">#</a>Contexte</h2><p>Bon, vous voyez le topo ?</p>
-<pre><code>{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean"</span></span>,
-  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value"><span class="hljs-string">"~2.2.1"</span>
-  </span>}
-</span>}
-</code></pre><p><a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> qui contient en <em>dependencies</em> <a href="https://github.com/isaacs/rimraf">rimraf</a> avec une version bugguée. Oh la belle affaire. Oui car <code>~2.2.1</code> veut dire “<a href="https://github.com/isaacs/node-semver#ranges">Raisonnablement proche de 2.2.1</a>“, ce qui se traduit par télécharger la dernière version en <code>2.2.x</code>, soit la <code>2.2.7</code> (celle bugguée) lorsque je mis à jour le package <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a>.</p>
-<h2 id="le-hic"><a class="putainde-Title-anchor" href="#le-hic">#</a>Le hic</h2><p>Une question m’est venue : comment faire en sorte de figer la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> qui est une dépendance de dépendance ?</p>
-<p>Ha ! Pas évident comme ça.</p>
-<p>J’ai d’abord essayé sans trop d’espoir de télécharger <a href="https://github.com/isaacs/rimraf">rimraf</a> lui-même en <code>2.2.6</code> mais vu que chaque dépendance à ses propres dépendances et qu’elles ne se les partagent pas… c’était peine perdue.</p>
-<p>J’ai donc cherché, cherché, et je suis tombé sur <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a>: “Lock down dependency versions”. Bingo !</p>
-<h2 id="npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances"><a class="putainde-Title-anchor" href="#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>npm-shrinkwrap, la solution pour figer vos depéndances, toutes vos dépendances</h2><p><a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">npm-shrinkwrap</a> va vous permettre de définir avec précision chaque version de chaque dépendance.</p>
-<p>Pour cela, faites d’abord un <code>npm install</code> (si vous avez évidemment un <code>package.json</code>) afin d’installer vos <code>node_modules</code>. Une fois cela fait, lancez <code>npm shrinkwrap</code> qui créera le fichier <code>npm-shrinkwrap.json</code> qui comprendra toutes les définitions de chaque dépendance.</p>
-<h3 id="figer-une-dependance-de-dependance"><a class="putainde-Title-anchor" href="#figer-une-dependance-de-dependance">#</a>Figer une dépendance de dépendance</h3><p>Simple, regardez :</p>
-<pre><code>{
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"my-project"</span></span>,
-  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"1.0.0"</span></span>,
-  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">grunt-contrib-clean</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.5.0"</span></span>,
-      "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"grunt-contrib-clean@~0.5.*"</span></span>,
-      "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
-        "<span class="hljs-attribute">rimraf</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"2.2.6"</span></span>,
-          "<span class="hljs-attribute">from</span>": <span class="hljs-value"><span class="hljs-string">"rimraf@~2.2.1"</span></span>,
-          "<span class="hljs-attribute">resolved</span>": <span class="hljs-value"><span class="hljs-string">"https://registry.npmjs.org/rimraf/-/rimraf-2.2.6.tgz"</span>
-        </span>}
-      </span>}
-    </span>}
-  </span>}
-</span>}
-</code></pre><p>J’ai défini la version de <a href="https://github.com/isaacs/rimraf">rimraf</a> dans <code>dependencies.grunt-contrib-clean.dependencies.rimraf</code>.</p>
-<p>Bon, je ne connais pas tout par coeur non plus, npm-shrinkwrap vous écrira la totalité du fichier avec toutes les définitions mais j’ai volontairement tout supprimé et gardé uniquement la partie <a href="https://github.com/gruntjs/grunt-contrib-clean">grunt-contrib-clean</a> car seule cette partie est à figer. Quand je dis supprimer, je parle réellement dans le fichier final, pas juste ici dans l’article.</p>
-<p>Vous aurez toute l’explication de npm-shrinkwrap sur la <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html">documentation officielle [en]</a>.</p>
-<h2 id="choisir-la-bonne-strategie-de-version"><a class="putainde-Title-anchor" href="#choisir-la-bonne-strategie-de-version">#</a>Choisir la bonne stratégie de version</h2><p>Parce qu’il est important de savoir quelle version exacte nous souhaitons installer dans notre projet, il faut définir avec précisions ces versions dans <code>package.json</code>.</p>
-<p>Vous pouvez avoir <code>1.2.1</code> ou encore <code>~1.4.6</code> ou bien encore <code>^2.3.1</code>. Mais que veulent dire <code>^</code> ou <code>~</code> ?</p>
-<ul>
-<li><code>1.2.1</code> : cette version exacte</li>
-<li><code>~1.4.6</code> : raisonnablement proche de <code>1.4.6</code></li>
-<li><code>^2.3.1</code> : compatible avec <code>2.3.1</code></li>
-</ul>
-<p>Il est clair que lu comme ça, le plus intéressant est le <code>^</code> et c’est justement <a href="http://fredkschott.com/post/2014/02/npm-no-longer-defaults-to-tildes/">celui qui est choisi maintenant [en]</a> lorsque l’on fait un <code>npm install --save</code>. Cool non ?!</p>
-<p>Pour plus d’information sur la définition des versions, <a href="https://github.com/isaacs/node-semver#ranges">c’est par là</a> (Oh mon dieu, il a fait un lien avec un “cliquez ici”).</p>
-<p>Bon. C’est bon ? Vous avez tout compris ? Okay, vous pouvez passer à <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/"><strong>napa</strong></a> maintenant qui vous aidera grandement sur le téléchargement de projets n’ayant pas de <code>package.json</code>.</p>
-<p>En ce qui concerne npm, je m’arrête là, et vous propose une petite solution afin d’augmenter la vitesse de vos installations de node modules.</p>
-<h2 id="bonus"><a class="putainde-Title-anchor" href="#bonus">#</a>Bonus</h2><p>Envie d’accélérer vos installations npm ? Je vous conseille <a href="https://github.com/vvo/npm-pkgr">npm-pkgr</a>.</p>
-<p>Il hashera votre <code>package.json</code> pour savoir s’il a été modifié ou non, et en fonction de ça, il lancera <code>npm install</code> ou non. Sacré gain de temps (surtout si vous faites des <code>npm install</code> à chaque <em>deploy</em>).</p>
-<p>You are now a npm master. 👨</p>
-
-]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/npm-choisir-version/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/npm-choisir-version/</guid></item></channel></rss>
+]]></description><pubDate>Mon, 12 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</link><guid isPermaLink="true">http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/</guid></item></channel></rss>
