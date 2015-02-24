@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 23 Feb 2015 16:43:31 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Quelques retours sur React et le rendu serveur</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Tue, 24 Feb 2015 17:10:29 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Quelques retours sur React et le rendu serveur</title><description><![CDATA[
 <p>On entend souvent parler d’applications JavaScript isomorphiques, et même si le 
 nom ne <a href="https://news.ycombinator.com/item?id=8237449">fait</a> <a href="https://twitter.com/wycats/status/566857009836724224">pas</a> 
 <a href="https://medium.com/the-thinkmill/making-the-case-for-progressive-javascript-a98dfa82b9d7">l’unanimité</a>, 
@@ -1206,196 +1206,7 @@ Mais c’était sans compter que l’Internet, c’est un réseau mondial. Avec 
 <p>N’hésitez pas à vous en servir pour sortir de votre zone de confort !</p>
 <p>Dans tous les cas, si vous souhaitez en savoir plus, n’hésitez pas à aller sur <a href="http://www.economie.gouv.fr/cedef/auto-entrepreneur">le site du gouvernement</a>.</p>
 
-]]></description><pubDate>Thu, 30 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</link><guid isPermaLink="true">http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</guid></item><item><title>Flux, qu'est-ce que c'est ?</title><description><![CDATA[
-<p>Allez, tant pis, on saute l’intro et on entre directement dans le vif du sujet (on n’a pas que ça à foutre, après tout).</p>
-<h2 id="la-petite-histoire"><a class="putainde-Title-anchor" href="#la-petite-histoire">#</a>La petite histoire</h2><p>Il était une fois un gros site web <em>que s’apelorio</em> Facebook. Qui dit Facebook, dit webapp plus grosse que la plus grosse de tes copines (<em>no offense</em> <sup><a href="#foonote-1">1</a></sup>) ; et du coup, propension à se retrouver submergé de bugs plus élevée.</p>
-<p>Les ingénieurs front-end de Facebook, confrontés à une codebase de plus en plus bordélique (personne ne voulant toucher certaines parties de celle-ci) ont dû repenser la structure des composants les plus cruciaux.</p>
-<p>Face à ce besoin, ces développeurs sont donc parvenus à deux solutions :</p>
-<ul>
-<li><a href="http://putaindecode.fr/posts/js/introduction-a-reactjs/">ReactJS</a></li>
-<li>Flux</li>
-</ul>
-<p>Flux n’est pas un framework, mais simplement une architecture, une sorte de <em>guideline</em> qui résout pas mal de problèmes ayant pu apparaître avec les divers bibliothèques et frameworks MV* apparus lors des dernières années.</p>
-<h2 id="flux-l-explication-claire"><a class="putainde-Title-anchor" href="#flux-l-explication-claire">#</a>Flux, l’explication claire</h2><p>Flux comporte 4 concepts :</p>
-<ul>
-<li>les <strong>actions</strong>, qu’elles proviennent du serveur ou d’une interaction utilisateur ;</li>
-<li>le <strong>dispatcher</strong> dans lequel sont envoyées les actions que ce dernier transmet <em>à qui veut</em>, un peu comme un <code>EventEmitter</code> global ;</li>
-<li>les <strong>stores</strong>, qui sont l’équivalent du <code>model</code> de l’architecture MVC, ils contiennent les données, et réagissent aux actions que le dispatcher leur transmet ;</li>
-<li>les <strong>views</strong>, qui s’occupent du rendu des données dans le DOM, et de lancer des actions lorsque l’utilisateur effectue certaines actions.</li>
-</ul>
-<p>Jusque-là, rien de bien fou. C’est dans leur manière d’interagir que la particularité se dessine :</p>
-<figure>
-  <img src="http://cl.ly/YENt/flux.png" alt="">
-  <figcaption>Oh bah dis donc, ça va toujours dans le même sens</figcaption>
-</figure>
-
-<p>En effet, le <em>flux</em> en question est unidirectionnel. Pour faire simple, on procède ainsi :</p>
-<p>On définit une action via un <strong>action creator</strong> (on passera toujours par ces action-creators pour signaler une action) :</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// actions/BasketActions.js</span>
-<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispacher"</span>)
-<span class="hljs-comment">/*
-  On garde un dictionnaire des types d'actions
-  afin d'avoir un fichier donnant une vision
-  globale de toutes les interactions de l'app.
- */</span>
-<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
-
-<span class="hljs-built_in">module</span>.exports = {
-  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(productId)</span></span>{
-    AppDispatcher.handleViewAction({
-      type : ActionTypes.ADD_TO_BASKET,
-      productId : productId
-    })
-  }
-}
-</code></pre>
-<p>On lancera par la suite cette action lorsque l’utilisateur aura cliqué sur un certain bouton, dans la vue concernée.</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// components/Product.jsx</span>
-<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">"react/addons"</span>)
-<span class="hljs-keyword">var</span> BasketActions = require(<span class="hljs-string">"../actions/BasketActions"</span>)
-
-<span class="hljs-keyword">var</span> Button = require(<span class="hljs-string">"./common/Button.jsx"</span>)
-
-<span class="hljs-keyword">var</span> Product = React.createClass({
-  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(productId)</span></span>{
-    BasketActions.addToBasket(productId)
-  },
-  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">return</span> (
-      &lt;div className=<span class="hljs-string">"Product"</span>&gt;
-        {<span class="hljs-comment">/* rest of the component*/</span>}
-        &lt;Button
-          onClick={<span class="hljs-keyword">this</span>.addToBasket.bind(<span class="hljs-keyword">this</span>.props.productId)}
-          label=<span class="hljs-string">"Add to basket"</span>
-        /&gt;
-      &lt;/div&gt;
-    )
-  }
-})
-
-module.exports = Product
-</code></pre>
-<p>Dès lors, à chaque clic sur le bouton en question, l’action <code>ADD_TO_BASKET</code> sera passée au dispatcher, qui le signalera aux stores.</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// stores/BasketStore.js</span>
-<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispatcher"</span>)
-<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
-<span class="hljs-keyword">var</span> API = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../api"</span>)
-
-<span class="hljs-keyword">var</span> merge = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/merge"</span>)
-<span class="hljs-keyword">var</span> Store = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/store"</span>)
-
-<span class="hljs-keyword">var</span> _store = {
-  products : []
-}
-
-<span class="hljs-keyword">var</span> BasketStore = merge(Store, {
-  <span class="hljs-comment">/*
-    Ici, on `register` un callback sur l'AppDispatcher,
-    ce qui signifie qu'on verra passer toutes les actions
-    de l'app.
-   */</span>
-  dispatchToken : AppDispatcher.register(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(payload)</span></span>{
-    <span class="hljs-keyword">var</span> action = payload.action
-    <span class="hljs-keyword">switch</span>(action.type) {
-      <span class="hljs-keyword">case</span> ActionTypes.ADD_TO_BASKET:
-          <span class="hljs-comment">/*
-             L'API va ajouter le produit et lancer une
-             action `BASKET_UPDATED` dès que le serveur a répondu.
-          */</span>
-        API.addToBasket(action.productId)
-        <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">case</span> ActionTypes.BASKET_UPDATED:
-          <span class="hljs-comment">/*
-            L'API a répondu, on peut stocker la réponse
-            et signaler le changement
-            aux vues récupérant ces données.
-          */</span>
-          _store = action.reponse
-          BasketStore.emitChange()
-        <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">default</span>:
-        <span class="hljs-keyword">break</span>
-    }
-  })
-})
-
-<span class="hljs-built_in">module</span>.exports = BasketStore
-</code></pre>
-<p>La vue, quant à elle, sera notifiée du changement, et effectuera un <code>render()</code> :</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// components/Basket.jsx</span>
-<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">"react/addons"</span>)
-<span class="hljs-keyword">var</span> BasketActions = require(<span class="hljs-string">"../actions/BasketActions"</span>)
-<span class="hljs-keyword">var</span> BasketStore = require(<span class="hljs-string">"../stores/BasketStore"</span>)
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getState</span><span class="hljs-params">()</span></span>{
-  <span class="hljs-keyword">return</span> BasketStore.getStore()
-}
-
-<span class="hljs-keyword">var</span> Product = React.createClass({
-  getInitialState : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">return</span> getState()
-  },
-  _onStoreChange : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-comment">/*
-      À chaque changement du store, on update naïvement
-      le component et on laisse le virtual DOM faire son job.
-    */</span>
-    <span class="hljs-keyword">this</span>.setState(getState())
-  },
-  componentDidMount : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-comment">/*
-      On écoute le store uniquement lorsque le
-      component est monté.
-     */</span>
-    BasketStore.addChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
-  },
-  componentWillUnmount : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-comment">/*
-      Et on arrête d'écouter quand il ne l'est plus.
-     */</span>
-    BasketStore.removeChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
-  },
-  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">return</span> (
-      &lt;div className=<span class="hljs-string">"Basket"</span>&gt;
-        &lt;div className=<span class="hljs-string">"Basket-count"</span>&gt;
-          {<span class="hljs-keyword">this</span>.state.products.length + <span class="hljs-string">" products"</span>}
-        &lt;/div&gt;
-        {<span class="hljs-comment">/* rest of the component */</span>}
-      &lt;/div&gt;
-    )
-  }
-})
-
-module.exports = Product
-</code></pre>
-<p>Tout cela peut sembler relativement verbeux, mais il faut préciser deux choses :</p>
-<ul>
-<li>les exemples ici le sont volontairement pour la démonstration, et il est aisément faisable d’utiliser un <code>StoreMixin</code> simplifier la déclaration des <code>class</code> React ;</li>
-<li>pour ce qui est du reste, notamment stocker les noms d’actions dans un objet partagé dans l’app, c’est pour rendre plus idiomatique et cohérente la façon dont on code l’app, et pour simplifier ses <em>refactoring</em>.</li>
-</ul>
-<h2 id="ce-qu-il-faut-savoir-sur-l-alliance-flux-react"><a class="putainde-Title-anchor" href="#ce-qu-il-faut-savoir-sur-l-alliance-flux-react">#</a>Ce qu’il faut savoir sur l’alliance Flux + React</h2><p>Si React et Flux vont si bien ensemble, c’est que l’approche de rendu “naïf” de React (comprendre “React s’en fout de ce qui change, il appelle <code>render</code> à chaque changement”) permet de réduire la logique à écrire dans les Stores, et donc de simplifier très fortement la codebase de l’app.</p>
-<p>Lorsque qu’un ou plusieurs stores composent l’état d’un state React, alors à chaque changement de l’un de ces stores, tous les composants React concernés et leurs enfants vont appeler leur méthode <code>render()</code>. Afin d’éviter des appels superflus à ces méthodes, React donne la possibilité de tester soi-même s’il est nécessaire de mettre à jour le component en déclarant une méthode <code>shouldComponentUpdate</code> retournant un <code>boolean</code> qui stipulera si oui ou non il est nécessaire d’appeler <code>render()</code>.</p>
-<h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><ul>
-<li>Flux, c’est comme du MVC en plus simple, et avec moins de bugs</li>
-<li>L’architecture est unidirectionnelle</li>
-<li>On raisonne en actions, qui sont déclenchées par la vue ou le serveur</li>
-<li>Toutes les actions passent par le dispatcher</li>
-<li>Seuls les stores signalent aux vues qu’il faut se mettre à jour</li>
-</ul>
-<p>Bisous bisous.</p>
-<p><img src="http://media.giphy.com/media/lxd2cZ2BkM4IE/giphy.gif" alt="angulol"></p>
-<p>Pour aller un peu plus loin :</p>
-<ul>
-<li><a href="https://gist.github.com/bloodyowl/b41532cf3627c560b57e">Les sources des exemples</a> contenant le dispatcher et les constants ;</li>
-<li><a href="http://facebook.github.io/flux/docs/overview.html#content">La doc de Flux</a> ;</li>
-<li><a href="https://github.com/facebook/flux">Le repository Flux</a> et ses différents exemples.</li>
-</ul>
-<p><small>
-  <a id="foonote-1"></a>1: <a href="https://www.youtube.com/watch?v=jRzv9gep5Ng&amp;t=4m">Référence utile (<code>ntm install reference</code>)</a>
-</small></p>
-
-]]></description><pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</guid></item><item><title>Première application Ember</title><description><![CDATA[
+]]></description><pubDate>Thu, 30 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</link><guid isPermaLink="true">http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</guid></item><item><title>Première application Ember</title><description><![CDATA[
 <p>Après l’<a href="/posts/js/debuter-avec-ember">article précédent</a> qui a détaillé les principaux concepts d’<a href="http://emberjs.com">Ember</a>, il est grand temps de
 se dégourdir les doigts. Comme on a peur de rien, on va même construire progressivement ensemble une application
 avec <a href="http://emberjs.com">Ember</a>.</p>
@@ -1827,7 +1638,196 @@ du scaffolding en général mais, au démarrage, ça peut donner une idée de la
 vous piquer les yeux. Désolé :-)</p>
 <p><em>Note: les sources de l’application exemple sont <a href="https://github.com/bmeurant/ember-articles/tree/premiere-app-ember">disponibles sur github</a>.</em></p>
 
-]]></description><pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/premiere-app-ember/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/premiere-app-ember/</guid></item><item><title>À la conquête des bugs</title><description><![CDATA[
+]]></description><pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/premiere-app-ember/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/premiere-app-ember/</guid></item><item><title>Flux, qu'est-ce que c'est ?</title><description><![CDATA[
+<p>Allez, tant pis, on saute l’intro et on entre directement dans le vif du sujet (on n’a pas que ça à foutre, après tout).</p>
+<h2 id="la-petite-histoire"><a class="putainde-Title-anchor" href="#la-petite-histoire">#</a>La petite histoire</h2><p>Il était une fois un gros site web <em>que s’apelorio</em> Facebook. Qui dit Facebook, dit webapp plus grosse que la plus grosse de tes copines (<em>no offense</em> <sup><a href="#foonote-1">1</a></sup>) ; et du coup, propension à se retrouver submergé de bugs plus élevée.</p>
+<p>Les ingénieurs front-end de Facebook, confrontés à une codebase de plus en plus bordélique (personne ne voulant toucher certaines parties de celle-ci) ont dû repenser la structure des composants les plus cruciaux.</p>
+<p>Face à ce besoin, ces développeurs sont donc parvenus à deux solutions :</p>
+<ul>
+<li><a href="http://putaindecode.fr/posts/js/introduction-a-reactjs/">ReactJS</a></li>
+<li>Flux</li>
+</ul>
+<p>Flux n’est pas un framework, mais simplement une architecture, une sorte de <em>guideline</em> qui résout pas mal de problèmes ayant pu apparaître avec les divers bibliothèques et frameworks MV* apparus lors des dernières années.</p>
+<h2 id="flux-l-explication-claire"><a class="putainde-Title-anchor" href="#flux-l-explication-claire">#</a>Flux, l’explication claire</h2><p>Flux comporte 4 concepts :</p>
+<ul>
+<li>les <strong>actions</strong>, qu’elles proviennent du serveur ou d’une interaction utilisateur ;</li>
+<li>le <strong>dispatcher</strong> dans lequel sont envoyées les actions que ce dernier transmet <em>à qui veut</em>, un peu comme un <code>EventEmitter</code> global ;</li>
+<li>les <strong>stores</strong>, qui sont l’équivalent du <code>model</code> de l’architecture MVC, ils contiennent les données, et réagissent aux actions que le dispatcher leur transmet ;</li>
+<li>les <strong>views</strong>, qui s’occupent du rendu des données dans le DOM, et de lancer des actions lorsque l’utilisateur effectue certaines actions.</li>
+</ul>
+<p>Jusque-là, rien de bien fou. C’est dans leur manière d’interagir que la particularité se dessine :</p>
+<figure>
+  <img src="http://cl.ly/YENt/flux.png" alt="">
+  <figcaption>Oh bah dis donc, ça va toujours dans le même sens</figcaption>
+</figure>
+
+<p>En effet, le <em>flux</em> en question est unidirectionnel. Pour faire simple, on procède ainsi :</p>
+<p>On définit une action via un <strong>action creator</strong> (on passera toujours par ces action-creators pour signaler une action) :</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// actions/BasketActions.js</span>
+<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispacher"</span>)
+<span class="hljs-comment">/*
+  On garde un dictionnaire des types d'actions
+  afin d'avoir un fichier donnant une vision
+  globale de toutes les interactions de l'app.
+ */</span>
+<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
+
+<span class="hljs-built_in">module</span>.exports = {
+  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(productId)</span></span>{
+    AppDispatcher.handleViewAction({
+      type : ActionTypes.ADD_TO_BASKET,
+      productId : productId
+    })
+  }
+}
+</code></pre>
+<p>On lancera par la suite cette action lorsque l’utilisateur aura cliqué sur un certain bouton, dans la vue concernée.</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// components/Product.jsx</span>
+<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">"react/addons"</span>)
+<span class="hljs-keyword">var</span> BasketActions = require(<span class="hljs-string">"../actions/BasketActions"</span>)
+
+<span class="hljs-keyword">var</span> Button = require(<span class="hljs-string">"./common/Button.jsx"</span>)
+
+<span class="hljs-keyword">var</span> Product = React.createClass({
+  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(productId)</span></span>{
+    BasketActions.addToBasket(productId)
+  },
+  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">return</span> (
+      &lt;div className=<span class="hljs-string">"Product"</span>&gt;
+        {<span class="hljs-comment">/* rest of the component*/</span>}
+        &lt;Button
+          onClick={<span class="hljs-keyword">this</span>.addToBasket.bind(<span class="hljs-keyword">this</span>.props.productId)}
+          label=<span class="hljs-string">"Add to basket"</span>
+        /&gt;
+      &lt;/div&gt;
+    )
+  }
+})
+
+module.exports = Product
+</code></pre>
+<p>Dès lors, à chaque clic sur le bouton en question, l’action <code>ADD_TO_BASKET</code> sera passée au dispatcher, qui le signalera aux stores.</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// stores/BasketStore.js</span>
+<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispatcher"</span>)
+<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
+<span class="hljs-keyword">var</span> API = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../api"</span>)
+
+<span class="hljs-keyword">var</span> merge = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/merge"</span>)
+<span class="hljs-keyword">var</span> Store = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/store"</span>)
+
+<span class="hljs-keyword">var</span> _store = {
+  products : []
+}
+
+<span class="hljs-keyword">var</span> BasketStore = merge(Store, {
+  <span class="hljs-comment">/*
+    Ici, on `register` un callback sur l'AppDispatcher,
+    ce qui signifie qu'on verra passer toutes les actions
+    de l'app.
+   */</span>
+  dispatchToken : AppDispatcher.register(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(payload)</span></span>{
+    <span class="hljs-keyword">var</span> action = payload.action
+    <span class="hljs-keyword">switch</span>(action.type) {
+      <span class="hljs-keyword">case</span> ActionTypes.ADD_TO_BASKET:
+          <span class="hljs-comment">/*
+             L'API va ajouter le produit et lancer une
+             action `BASKET_UPDATED` dès que le serveur a répondu.
+          */</span>
+        API.addToBasket(action.productId)
+        <span class="hljs-keyword">break</span>
+      <span class="hljs-keyword">case</span> ActionTypes.BASKET_UPDATED:
+          <span class="hljs-comment">/*
+            L'API a répondu, on peut stocker la réponse
+            et signaler le changement
+            aux vues récupérant ces données.
+          */</span>
+          _store = action.reponse
+          BasketStore.emitChange()
+        <span class="hljs-keyword">break</span>
+      <span class="hljs-keyword">default</span>:
+        <span class="hljs-keyword">break</span>
+    }
+  })
+})
+
+<span class="hljs-built_in">module</span>.exports = BasketStore
+</code></pre>
+<p>La vue, quant à elle, sera notifiée du changement, et effectuera un <code>render()</code> :</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// components/Basket.jsx</span>
+<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">"react/addons"</span>)
+<span class="hljs-keyword">var</span> BasketActions = require(<span class="hljs-string">"../actions/BasketActions"</span>)
+<span class="hljs-keyword">var</span> BasketStore = require(<span class="hljs-string">"../stores/BasketStore"</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getState</span><span class="hljs-params">()</span></span>{
+  <span class="hljs-keyword">return</span> BasketStore.getStore()
+}
+
+<span class="hljs-keyword">var</span> Product = React.createClass({
+  getInitialState : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">return</span> getState()
+  },
+  _onStoreChange : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-comment">/*
+      À chaque changement du store, on update naïvement
+      le component et on laisse le virtual DOM faire son job.
+    */</span>
+    <span class="hljs-keyword">this</span>.setState(getState())
+  },
+  componentDidMount : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-comment">/*
+      On écoute le store uniquement lorsque le
+      component est monté.
+     */</span>
+    BasketStore.addChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
+  },
+  componentWillUnmount : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-comment">/*
+      Et on arrête d'écouter quand il ne l'est plus.
+     */</span>
+    BasketStore.removeChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
+  },
+  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">return</span> (
+      &lt;div className=<span class="hljs-string">"Basket"</span>&gt;
+        &lt;div className=<span class="hljs-string">"Basket-count"</span>&gt;
+          {<span class="hljs-keyword">this</span>.state.products.length + <span class="hljs-string">" products"</span>}
+        &lt;/div&gt;
+        {<span class="hljs-comment">/* rest of the component */</span>}
+      &lt;/div&gt;
+    )
+  }
+})
+
+module.exports = Product
+</code></pre>
+<p>Tout cela peut sembler relativement verbeux, mais il faut préciser deux choses :</p>
+<ul>
+<li>les exemples ici le sont volontairement pour la démonstration, et il est aisément faisable d’utiliser un <code>StoreMixin</code> simplifier la déclaration des <code>class</code> React ;</li>
+<li>pour ce qui est du reste, notamment stocker les noms d’actions dans un objet partagé dans l’app, c’est pour rendre plus idiomatique et cohérente la façon dont on code l’app, et pour simplifier ses <em>refactoring</em>.</li>
+</ul>
+<h2 id="ce-qu-il-faut-savoir-sur-l-alliance-flux-react"><a class="putainde-Title-anchor" href="#ce-qu-il-faut-savoir-sur-l-alliance-flux-react">#</a>Ce qu’il faut savoir sur l’alliance Flux + React</h2><p>Si React et Flux vont si bien ensemble, c’est que l’approche de rendu “naïf” de React (comprendre “React s’en fout de ce qui change, il appelle <code>render</code> à chaque changement”) permet de réduire la logique à écrire dans les Stores, et donc de simplifier très fortement la codebase de l’app.</p>
+<p>Lorsque qu’un ou plusieurs stores composent l’état d’un state React, alors à chaque changement de l’un de ces stores, tous les composants React concernés et leurs enfants vont appeler leur méthode <code>render()</code>. Afin d’éviter des appels superflus à ces méthodes, React donne la possibilité de tester soi-même s’il est nécessaire de mettre à jour le component en déclarant une méthode <code>shouldComponentUpdate</code> retournant un <code>boolean</code> qui stipulera si oui ou non il est nécessaire d’appeler <code>render()</code>.</p>
+<h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><ul>
+<li>Flux, c’est comme du MVC en plus simple, et avec moins de bugs</li>
+<li>L’architecture est unidirectionnelle</li>
+<li>On raisonne en actions, qui sont déclenchées par la vue ou le serveur</li>
+<li>Toutes les actions passent par le dispatcher</li>
+<li>Seuls les stores signalent aux vues qu’il faut se mettre à jour</li>
+</ul>
+<p>Bisous bisous.</p>
+<p><img src="http://media.giphy.com/media/lxd2cZ2BkM4IE/giphy.gif" alt="angulol"></p>
+<p>Pour aller un peu plus loin :</p>
+<ul>
+<li><a href="https://gist.github.com/bloodyowl/b41532cf3627c560b57e">Les sources des exemples</a> contenant le dispatcher et les constants ;</li>
+<li><a href="http://facebook.github.io/flux/docs/overview.html#content">La doc de Flux</a> ;</li>
+<li><a href="https://github.com/facebook/flux">Le repository Flux</a> et ses différents exemples.</li>
+</ul>
+<p><small>
+  <a id="foonote-1"></a>1: <a href="https://www.youtube.com/watch?v=jRzv9gep5Ng&amp;t=4m">Référence utile (<code>ntm install reference</code>)</a>
+</small></p>
+
+]]></description><pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</guid></item><item><title>À la conquête des bugs</title><description><![CDATA[
 <p>Le Web, depuis sa création est un vaste champ de bataille. Que ce soit les problèmes de compatibilités, les formats ou les langages propriétaires, la volonté de faire du Web un monde ouvert ne date pas d’hier.</p>
 <h2 id="au-depart"><a class="putainde-Title-anchor" href="#au-depart">#</a>Au départ</h2><p>Les débuts du Web furent compliqués. On assista à une guerre entre Netscape et Microsoft. Chacun voulant dominer le marché, en tentant d’imposer ses propres technologies. En 1996, Netscape propose au W3C JSSS (JavaScript-Based Style Sheets). Ce n’est d’ailleurs que depuis novembre 2000 que Netscape, basé sur le moteur Gecko (moteur de Mozilla Firefox), prend véritablement en charge le CSS. Microsoft pour sa part ne supportait par JavaScript à ses débuts et avait développé son propre langage JScript.</p>
 <p>Ces problèmes de compatibilités, de technologies et de respect des normes vont considérablement ralentir l’évolution du Web.</p>
