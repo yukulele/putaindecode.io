@@ -1,4 +1,83 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Mon, 02 Mar 2015 16:15:00 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Quelques retours sur React et le rendu serveur</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Tue, 03 Mar 2015 07:33:59 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Il démarre Vim par erreur, ce qui se passe ensuite est tout simplement bluffant</title><description><![CDATA[
+<blockquote>
+<p>À première vue, vous allez éprouver de la tristesse, mais ce qui se passe ensuite est tout simplement incroyable…</p>
+<p>Alors qu’il était en train d’effectuer une mise en production,
+ce développeur s’est confronté à une situation qui aurait pu complètement déraper.
+Une intervention directement sur le serveur de production était obligatoire afin d’éditer la base de données au format .txt.</p>
+<p>Après avoir passé plusieurs heures pour se connecter à distance via une connexion sécurisée,
+Maxime est tombé nez à nez avec une console d’administration en ligne de commande !
+Il était complètement désemparé par l’absence de fenêtre.</p>
+<p>Ce qui s’est passé ensuite est tout simplement incroyable :
+fort de sa persévérance, Maxime décide tout de même de se rapprocher du clavier !
+Après une rapide recherche sur les Internets,
+il tape la première commande qu’il trouve :</p>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>vim
+</code></pre>
+<p>Alors qu’on pourrait imaginer un drame, comme il arrive souvent quand <a href="https://duckduckgo.com/?q=I+am+stuck+in+VIM">une personne tombe dans ce piège</a>,
+Maxime ne s’est pas laissé abattre et a persisté dans sa démarche…</p>
+</blockquote>
+<p>Bon, assez plaisanté.</p>
+<h2 id="-em-pourquoi-j-essayerais-vim-em-"><a class="putainde-Title-anchor" href="#-em-pourquoi-j-essayerais-vim-em-">#</a><em>Pourquoi j’essayerais Vim ?</em></h2><p>J’ai commencé par Eclipse. Qu’il fallait réinstaller assez souvent sans quoi on perdait 10 minutes de sa vie à chaque ouverture d’autocomplete.
+Je suis passé par NetBeans, WebStorm… Sans être convaincu. Plus récemment, j’étais assez content sous Sublime Text avant d’essayer Atom
+(car en gros Atom est quasiment la même chose, en technologie web, open source et fait par GitHub).
+Mais j’ai toujours eu envie de me la péter devant 2 écrans tout noir,
+en ligne de commande, comme dans les super productions américaines.</p>
+<p>Plus sérieusement, je passe de plus en plus de temps devant ma console…
+Enfin vous savez, le terminal, pas l’autre truc un peu plus fun (et encore que).</p>
+<p>J’ai toujours eu envie de comprendre pourquoi autant de gens (car mine de rien il y en a un paquet) utilisaient Vim,
+et se moquaient un bon coup à chaque sortie d’un nouvel éditeur.
+Car bon faut avouer, se moquer c’est facile.
+Du coup un jour, j’ai démarré Vim.</p>
+<h2 id="-em-pourquoi-j-ai-rien-compris-quand-je-me-suis-retrouve-dans-vim-em-"><a class="putainde-Title-anchor" href="#-em-pourquoi-j-ai-rien-compris-quand-je-me-suis-retrouve-dans-vim-em-">#</a><em>Pourquoi j’ai rien compris quand je me suis retrouvé dans Vim ?</em></h2><p>Le truc le plus déroutant dans Vim, c’est les modes.
+Et quand on ouvre Vim, on ne se retrouve pas dans le mode le plus logique (à première vue).</p>
+<p>En fait, ce qu’on dit pas trop, c’est que Vim est toujours utilisé aujourd’hui car on peut l’utiliser uniquement au clavier.
+Vous allez me répondre qu’on peut en faire de même avec tous les éditeurs de texte.</p>
+<p>Mais <strong>Vim a clairement été développé pour minimiser les déplacements des mains</strong>.</p>
+<p>C’est pour moi la chose la plus importante à retenir. Et la chose la plus attractive.
+Les bons développeurs ont tous une bonne flemme au fond d’eux, c’est bien connu.</p>
+<p>Pour un peu plus sur l’histoire de Vim, direction <a href="https://fr.wikipedia.org/wiki/Vim">wikipedia.org/wiki/Vim</a>.</p>
+<h2 id="commencer-avec-vim"><a class="putainde-Title-anchor" href="#commencer-avec-vim">#</a>Commencer avec Vim</h2><p>Du coup, quand je suis dans Vim, comment ça se passe ?</p>
+<p>Je passerai plus tard assez rapidement sur les différents points, vu que d’autres ressources,
+dont notamment le livre <a href="https://vimebook.com/">Vim pour les humains</a>, le font très bien en douceur.</p>
+<p>C’est d’ailleur grâce à ce livre que je me suis lancé.
+Je tiens donc à remercier <a href="http://viserlalune.com/">Vincent Jousse</a> pour avoir pris le temps d’écrire cet ouvrage.</p>
+<p>Profitez de cet ouvrage, en plus <a href="http://ploum.net/le-prix-libre-une-impossible-utopie/">le prix est libre</a>.</p>
+<p>Ce livre est fait pour n’importe qui, débutant ou pas.
+Vraiment, mangez-en si vous souhaitez essayer Vim (oui je sais, manger un e-book comme ça, ça paraît pas évident).</p>
+<p>J’ai essayé plusieurs fois sans trop savoir où commencer, sans succès.
+Ce livre m’a aidé et se dévore en quelques dizaines de minutes (deux ou trois heures grand max),
+clavier sous les mains (bah oui rien de mieux pour se lancer).</p>
+<p>J’ai essayé et me voilà conquis, une fois que j’ai compris sa valeur ajoutée.</p>
+<p>Pour bien s’y prendre, forcez-vous à travailler avec Vim au moins une journée en suivant les conseils que vous trouverez dans cet ouvrage.
+Cela a fonctionné pour moi : je gagne déjà du temps au bout de quelques semaines d’utilisation.</p>
+<p>Pourquoi pas vous ?</p>
+<h2 id="pour-apprendre-vim"><a class="putainde-Title-anchor" href="#pour-apprendre-vim">#</a>Pour apprendre Vim</h2><p>Vous pouvez donc :</p>
+<ul>
+<li>lire l’e-book <a href="http://vimebook.com">Vim pour les humains</a></li>
+<li>lancer la commande <code>:vimtutor</code> (dans Vim)</li>
+<li>jouer à <a href="http://vim-adventures.com/">Vim Adventures</a></li>
+<li>vous entraîner sur des exemples concrets avec <a href="http://vimgolf.com/">VimGolf</a></li>
+</ul>
+<p>Voici aussi un cheatsheet indispensable qui permet de bien mémoriser le pourquoi des touches
+(b = begin, w = word, e = end, r = replace, i = insert, a = append, o = open, ctrl f = forward, ctrl b = backward, etc).</p>
+<p><img src="../vim-cheatsheet.gif" alt="cheatsheet VIM"></p>
+<p>Vous remarquerez que souvent les commandes en majuscules font la même chose mais dans le sens inverse (f/F, o/O), ou de manière plus catégorique (d/D, y/Y).</p>
+<h2 id="passer-a-vim-est-un-investissement"><a class="putainde-Title-anchor" href="#passer-a-vim-est-un-investissement">#</a>Passer à Vim est un investissement</h2><p>Point important : il faut avoir envie.
+Il ne s’agit pas de changer simplement d’éditeur, car on doit complètement changer ses habitudes.
+Plus aucun raccourci clavier que vous avez l’habitude d’utiliser ne va fonctionner.
+Je me répète mais il faut se forcer un minimum avant d’imaginer les possibilités de cet éditeur.</p>
+<p>Cela dit, on peut rapidement voir la puissance de Vim après quelques heures d’utilisation
+(même si on peut aussi un peu rager en cherchant des commandes simples qu’on arrive pas à faire).</p>
+<p>Sachez aussi que beaucoup d’éditeurs ont des modes Vim (Sublime Text, Atom et d’autres). Il doit bien y avoir une raison, non ?
+Notez aussi que Vim est installé par défaut sur beaucoup d’environnement de type Unix.</p>
+<p>Vim est configurable à souhait (via le fichier <code>.vimrc</code>) et possède même son propre language de scripts (Vim Script ou viml)
+ce qui permet de créer de nouvelles fonctionnalités simplement. Et même du coup d’en faire des “plugins”.</p>
+<p>Je vous prépare un prochain post pour vous faire un petit mémo condensé de ce qu’on peut faire avec, et surtout comment.</p>
+<blockquote>
+<p>:q^C:wq</p>
+</blockquote>
+
+]]></description><pubDate>Tue, 03 Mar 2015 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/vim/il-demarre-vim-par-erreur-ce-qui-se-passe-ensuite-est-tout-simplement-bluffant/</link><guid isPermaLink="true">http://putaindecode.fr/posts/vim/il-demarre-vim-par-erreur-ce-qui-se-passe-ensuite-est-tout-simplement-bluffant/</guid></item><item><title>Quelques retours sur React et le rendu serveur</title><description><![CDATA[
 <p>On entend souvent parler d’applications JavaScript isomorphiques, et même si le 
 nom ne <a href="https://news.ycombinator.com/item?id=8237449">fait</a> <a href="https://twitter.com/wycats/status/566857009836724224">pas</a> 
 <a href="https://medium.com/the-thinkmill/making-the-case-for-progressive-javascript-a98dfa82b9d7">l’unanimité</a>, 
@@ -1206,196 +1285,7 @@ Mais c’était sans compter que l’Internet, c’est un réseau mondial. Avec 
 <p>N’hésitez pas à vous en servir pour sortir de votre zone de confort !</p>
 <p>Dans tous les cas, si vous souhaitez en savoir plus, n’hésitez pas à aller sur <a href="http://www.economie.gouv.fr/cedef/auto-entrepreneur">le site du gouvernement</a>.</p>
 
-]]></description><pubDate>Thu, 30 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</link><guid isPermaLink="true">http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</guid></item><item><title>Flux, qu'est-ce que c'est ?</title><description><![CDATA[
-<p>Allez, tant pis, on saute l’intro et on entre directement dans le vif du sujet (on n’a pas que ça à foutre, après tout).</p>
-<h2 id="la-petite-histoire"><a class="putainde-Title-anchor" href="#la-petite-histoire">#</a>La petite histoire</h2><p>Il était une fois un gros site web <em>que s’apelorio</em> Facebook. Qui dit Facebook, dit webapp plus grosse que la plus grosse de tes copines (<em>no offense</em> <sup><a href="#foonote-1">1</a></sup>) ; et du coup, propension à se retrouver submergé de bugs plus élevée.</p>
-<p>Les ingénieurs front-end de Facebook, confrontés à une codebase de plus en plus bordélique (personne ne voulant toucher certaines parties de celle-ci) ont dû repenser la structure des composants les plus cruciaux.</p>
-<p>Face à ce besoin, ces développeurs sont donc parvenus à deux solutions :</p>
-<ul>
-<li><a href="http://putaindecode.fr/posts/js/introduction-a-reactjs/">ReactJS</a></li>
-<li>Flux</li>
-</ul>
-<p>Flux n’est pas un framework, mais simplement une architecture, une sorte de <em>guideline</em> qui résout pas mal de problèmes ayant pu apparaître avec les divers bibliothèques et frameworks MV* apparus lors des dernières années.</p>
-<h2 id="flux-l-explication-claire"><a class="putainde-Title-anchor" href="#flux-l-explication-claire">#</a>Flux, l’explication claire</h2><p>Flux comporte 4 concepts :</p>
-<ul>
-<li>les <strong>actions</strong>, qu’elles proviennent du serveur ou d’une interaction utilisateur ;</li>
-<li>le <strong>dispatcher</strong> dans lequel sont envoyées les actions que ce dernier transmet <em>à qui veut</em>, un peu comme un <code>EventEmitter</code> global ;</li>
-<li>les <strong>stores</strong>, qui sont l’équivalent du <code>model</code> de l’architecture MVC, ils contiennent les données, et réagissent aux actions que le dispatcher leur transmet ;</li>
-<li>les <strong>views</strong>, qui s’occupent du rendu des données dans le DOM, et de lancer des actions lorsque l’utilisateur effectue certaines actions.</li>
-</ul>
-<p>Jusque-là, rien de bien fou. C’est dans leur manière d’interagir que la particularité se dessine :</p>
-<figure>
-  <img src="http://cl.ly/YENt/flux.png" alt="">
-  <figcaption>Oh bah dis donc, ça va toujours dans le même sens</figcaption>
-</figure>
-
-<p>En effet, le <em>flux</em> en question est unidirectionnel. Pour faire simple, on procède ainsi :</p>
-<p>On définit une action via un <strong>action creator</strong> (on passera toujours par ces action-creators pour signaler une action) :</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// actions/BasketActions.js</span>
-<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispacher"</span>)
-<span class="hljs-comment">/*
-  On garde un dictionnaire des types d'actions
-  afin d'avoir un fichier donnant une vision
-  globale de toutes les interactions de l'app.
- */</span>
-<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
-
-<span class="hljs-built_in">module</span>.exports = {
-  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(productId)</span></span>{
-    AppDispatcher.handleViewAction({
-      type : ActionTypes.ADD_TO_BASKET,
-      productId : productId
-    })
-  }
-}
-</code></pre>
-<p>On lancera par la suite cette action lorsque l’utilisateur aura cliqué sur un certain bouton, dans la vue concernée.</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// components/Product.jsx</span>
-<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">"react/addons"</span>)
-<span class="hljs-keyword">var</span> BasketActions = require(<span class="hljs-string">"../actions/BasketActions"</span>)
-
-<span class="hljs-keyword">var</span> Button = require(<span class="hljs-string">"./common/Button.jsx"</span>)
-
-<span class="hljs-keyword">var</span> Product = React.createClass({
-  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(productId)</span></span>{
-    BasketActions.addToBasket(productId)
-  },
-  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">return</span> (
-      &lt;div className=<span class="hljs-string">"Product"</span>&gt;
-        {<span class="hljs-comment">/* rest of the component*/</span>}
-        &lt;Button
-          onClick={<span class="hljs-keyword">this</span>.addToBasket.bind(<span class="hljs-keyword">this</span>.props.productId)}
-          label=<span class="hljs-string">"Add to basket"</span>
-        /&gt;
-      &lt;/div&gt;
-    )
-  }
-})
-
-module.exports = Product
-</code></pre>
-<p>Dès lors, à chaque clic sur le bouton en question, l’action <code>ADD_TO_BASKET</code> sera passée au dispatcher, qui le signalera aux stores.</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// stores/BasketStore.js</span>
-<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispatcher"</span>)
-<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
-<span class="hljs-keyword">var</span> API = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../api"</span>)
-
-<span class="hljs-keyword">var</span> merge = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/merge"</span>)
-<span class="hljs-keyword">var</span> Store = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/store"</span>)
-
-<span class="hljs-keyword">var</span> _store = {
-  products : []
-}
-
-<span class="hljs-keyword">var</span> BasketStore = merge(Store, {
-  <span class="hljs-comment">/*
-    Ici, on `register` un callback sur l'AppDispatcher,
-    ce qui signifie qu'on verra passer toutes les actions
-    de l'app.
-   */</span>
-  dispatchToken : AppDispatcher.register(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(payload)</span></span>{
-    <span class="hljs-keyword">var</span> action = payload.action
-    <span class="hljs-keyword">switch</span>(action.type) {
-      <span class="hljs-keyword">case</span> ActionTypes.ADD_TO_BASKET:
-          <span class="hljs-comment">/*
-             L'API va ajouter le produit et lancer une
-             action `BASKET_UPDATED` dès que le serveur a répondu.
-          */</span>
-        API.addToBasket(action.productId)
-        <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">case</span> ActionTypes.BASKET_UPDATED:
-          <span class="hljs-comment">/*
-            L'API a répondu, on peut stocker la réponse
-            et signaler le changement
-            aux vues récupérant ces données.
-          */</span>
-          _store = action.reponse
-          BasketStore.emitChange()
-        <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">default</span>:
-        <span class="hljs-keyword">break</span>
-    }
-  })
-})
-
-<span class="hljs-built_in">module</span>.exports = BasketStore
-</code></pre>
-<p>La vue, quant à elle, sera notifiée du changement, et effectuera un <code>render()</code> :</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// components/Basket.jsx</span>
-<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">"react/addons"</span>)
-<span class="hljs-keyword">var</span> BasketActions = require(<span class="hljs-string">"../actions/BasketActions"</span>)
-<span class="hljs-keyword">var</span> BasketStore = require(<span class="hljs-string">"../stores/BasketStore"</span>)
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getState</span><span class="hljs-params">()</span></span>{
-  <span class="hljs-keyword">return</span> BasketStore.getStore()
-}
-
-<span class="hljs-keyword">var</span> Product = React.createClass({
-  getInitialState : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">return</span> getState()
-  },
-  _onStoreChange : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-comment">/*
-      À chaque changement du store, on update naïvement
-      le component et on laisse le virtual DOM faire son job.
-    */</span>
-    <span class="hljs-keyword">this</span>.setState(getState())
-  },
-  componentDidMount : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-comment">/*
-      On écoute le store uniquement lorsque le
-      component est monté.
-     */</span>
-    BasketStore.addChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
-  },
-  componentWillUnmount : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-comment">/*
-      Et on arrête d'écouter quand il ne l'est plus.
-     */</span>
-    BasketStore.removeChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
-  },
-  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">return</span> (
-      &lt;div className=<span class="hljs-string">"Basket"</span>&gt;
-        &lt;div className=<span class="hljs-string">"Basket-count"</span>&gt;
-          {<span class="hljs-keyword">this</span>.state.products.length + <span class="hljs-string">" products"</span>}
-        &lt;/div&gt;
-        {<span class="hljs-comment">/* rest of the component */</span>}
-      &lt;/div&gt;
-    )
-  }
-})
-
-module.exports = Product
-</code></pre>
-<p>Tout cela peut sembler relativement verbeux, mais il faut préciser deux choses :</p>
-<ul>
-<li>les exemples ici le sont volontairement pour la démonstration, et il est aisément faisable d’utiliser un <code>StoreMixin</code> simplifier la déclaration des <code>class</code> React ;</li>
-<li>pour ce qui est du reste, notamment stocker les noms d’actions dans un objet partagé dans l’app, c’est pour rendre plus idiomatique et cohérente la façon dont on code l’app, et pour simplifier ses <em>refactoring</em>.</li>
-</ul>
-<h2 id="ce-qu-il-faut-savoir-sur-l-alliance-flux-react"><a class="putainde-Title-anchor" href="#ce-qu-il-faut-savoir-sur-l-alliance-flux-react">#</a>Ce qu’il faut savoir sur l’alliance Flux + React</h2><p>Si React et Flux vont si bien ensemble, c’est que l’approche de rendu “naïf” de React (comprendre “React s’en fout de ce qui change, il appelle <code>render</code> à chaque changement”) permet de réduire la logique à écrire dans les Stores, et donc de simplifier très fortement la codebase de l’app.</p>
-<p>Lorsque qu’un ou plusieurs stores composent l’état d’un state React, alors à chaque changement de l’un de ces stores, tous les composants React concernés et leurs enfants vont appeler leur méthode <code>render()</code>. Afin d’éviter des appels superflus à ces méthodes, React donne la possibilité de tester soi-même s’il est nécessaire de mettre à jour le component en déclarant une méthode <code>shouldComponentUpdate</code> retournant un <code>boolean</code> qui stipulera si oui ou non il est nécessaire d’appeler <code>render()</code>.</p>
-<h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><ul>
-<li>Flux, c’est comme du MVC en plus simple, et avec moins de bugs</li>
-<li>L’architecture est unidirectionnelle</li>
-<li>On raisonne en actions, qui sont déclenchées par la vue ou le serveur</li>
-<li>Toutes les actions passent par le dispatcher</li>
-<li>Seuls les stores signalent aux vues qu’il faut se mettre à jour</li>
-</ul>
-<p>Bisous bisous.</p>
-<p><img src="http://media.giphy.com/media/lxd2cZ2BkM4IE/giphy.gif" alt="angulol"></p>
-<p>Pour aller un peu plus loin :</p>
-<ul>
-<li><a href="https://gist.github.com/bloodyowl/b41532cf3627c560b57e">Les sources des exemples</a> contenant le dispatcher et les constants ;</li>
-<li><a href="http://facebook.github.io/flux/docs/overview.html#content">La doc de Flux</a> ;</li>
-<li><a href="https://github.com/facebook/flux">Le repository Flux</a> et ses différents exemples.</li>
-</ul>
-<p><small>
-  <a id="foonote-1"></a>1: <a href="https://www.youtube.com/watch?v=jRzv9gep5Ng&amp;t=4m">Référence utile (<code>ntm install reference</code>)</a>
-</small></p>
-
-]]></description><pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</guid></item><item><title>Première application Ember</title><description><![CDATA[
+]]></description><pubDate>Thu, 30 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</link><guid isPermaLink="true">http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</guid></item><item><title>Première application Ember</title><description><![CDATA[
 <p>Après l’<a href="/posts/js/debuter-avec-ember">article précédent</a> qui a détaillé les principaux concepts d’<a href="http://emberjs.com">Ember</a>, il est grand temps de
 se dégourdir les doigts. Comme on a peur de rien, on va même construire progressivement ensemble une application
 avec <a href="http://emberjs.com">Ember</a>.</p>
@@ -1827,7 +1717,196 @@ du scaffolding en général mais, au démarrage, ça peut donner une idée de la
 vous piquer les yeux. Désolé :-)</p>
 <p><em>Note: les sources de l’application exemple sont <a href="https://github.com/bmeurant/ember-articles/tree/premiere-app-ember">disponibles sur github</a>.</em></p>
 
-]]></description><pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/premiere-app-ember/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/premiere-app-ember/</guid></item><item><title>À la conquête des bugs</title><description><![CDATA[
+]]></description><pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/premiere-app-ember/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/premiere-app-ember/</guid></item><item><title>Flux, qu'est-ce que c'est ?</title><description><![CDATA[
+<p>Allez, tant pis, on saute l’intro et on entre directement dans le vif du sujet (on n’a pas que ça à foutre, après tout).</p>
+<h2 id="la-petite-histoire"><a class="putainde-Title-anchor" href="#la-petite-histoire">#</a>La petite histoire</h2><p>Il était une fois un gros site web <em>que s’apelorio</em> Facebook. Qui dit Facebook, dit webapp plus grosse que la plus grosse de tes copines (<em>no offense</em> <sup><a href="#foonote-1">1</a></sup>) ; et du coup, propension à se retrouver submergé de bugs plus élevée.</p>
+<p>Les ingénieurs front-end de Facebook, confrontés à une codebase de plus en plus bordélique (personne ne voulant toucher certaines parties de celle-ci) ont dû repenser la structure des composants les plus cruciaux.</p>
+<p>Face à ce besoin, ces développeurs sont donc parvenus à deux solutions :</p>
+<ul>
+<li><a href="http://putaindecode.fr/posts/js/introduction-a-reactjs/">ReactJS</a></li>
+<li>Flux</li>
+</ul>
+<p>Flux n’est pas un framework, mais simplement une architecture, une sorte de <em>guideline</em> qui résout pas mal de problèmes ayant pu apparaître avec les divers bibliothèques et frameworks MV* apparus lors des dernières années.</p>
+<h2 id="flux-l-explication-claire"><a class="putainde-Title-anchor" href="#flux-l-explication-claire">#</a>Flux, l’explication claire</h2><p>Flux comporte 4 concepts :</p>
+<ul>
+<li>les <strong>actions</strong>, qu’elles proviennent du serveur ou d’une interaction utilisateur ;</li>
+<li>le <strong>dispatcher</strong> dans lequel sont envoyées les actions que ce dernier transmet <em>à qui veut</em>, un peu comme un <code>EventEmitter</code> global ;</li>
+<li>les <strong>stores</strong>, qui sont l’équivalent du <code>model</code> de l’architecture MVC, ils contiennent les données, et réagissent aux actions que le dispatcher leur transmet ;</li>
+<li>les <strong>views</strong>, qui s’occupent du rendu des données dans le DOM, et de lancer des actions lorsque l’utilisateur effectue certaines actions.</li>
+</ul>
+<p>Jusque-là, rien de bien fou. C’est dans leur manière d’interagir que la particularité se dessine :</p>
+<figure>
+  <img src="http://cl.ly/YENt/flux.png" alt="">
+  <figcaption>Oh bah dis donc, ça va toujours dans le même sens</figcaption>
+</figure>
+
+<p>En effet, le <em>flux</em> en question est unidirectionnel. Pour faire simple, on procède ainsi :</p>
+<p>On définit une action via un <strong>action creator</strong> (on passera toujours par ces action-creators pour signaler une action) :</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// actions/BasketActions.js</span>
+<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispacher"</span>)
+<span class="hljs-comment">/*
+  On garde un dictionnaire des types d'actions
+  afin d'avoir un fichier donnant une vision
+  globale de toutes les interactions de l'app.
+ */</span>
+<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
+
+<span class="hljs-built_in">module</span>.exports = {
+  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(productId)</span></span>{
+    AppDispatcher.handleViewAction({
+      type : ActionTypes.ADD_TO_BASKET,
+      productId : productId
+    })
+  }
+}
+</code></pre>
+<p>On lancera par la suite cette action lorsque l’utilisateur aura cliqué sur un certain bouton, dans la vue concernée.</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// components/Product.jsx</span>
+<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">"react/addons"</span>)
+<span class="hljs-keyword">var</span> BasketActions = require(<span class="hljs-string">"../actions/BasketActions"</span>)
+
+<span class="hljs-keyword">var</span> Button = require(<span class="hljs-string">"./common/Button.jsx"</span>)
+
+<span class="hljs-keyword">var</span> Product = React.createClass({
+  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(productId)</span></span>{
+    BasketActions.addToBasket(productId)
+  },
+  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">return</span> (
+      &lt;div className=<span class="hljs-string">"Product"</span>&gt;
+        {<span class="hljs-comment">/* rest of the component*/</span>}
+        &lt;Button
+          onClick={<span class="hljs-keyword">this</span>.addToBasket.bind(<span class="hljs-keyword">this</span>.props.productId)}
+          label=<span class="hljs-string">"Add to basket"</span>
+        /&gt;
+      &lt;/div&gt;
+    )
+  }
+})
+
+module.exports = Product
+</code></pre>
+<p>Dès lors, à chaque clic sur le bouton en question, l’action <code>ADD_TO_BASKET</code> sera passée au dispatcher, qui le signalera aux stores.</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// stores/BasketStore.js</span>
+<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispatcher"</span>)
+<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
+<span class="hljs-keyword">var</span> API = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../api"</span>)
+
+<span class="hljs-keyword">var</span> merge = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/merge"</span>)
+<span class="hljs-keyword">var</span> Store = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/store"</span>)
+
+<span class="hljs-keyword">var</span> _store = {
+  products : []
+}
+
+<span class="hljs-keyword">var</span> BasketStore = merge(Store, {
+  <span class="hljs-comment">/*
+    Ici, on `register` un callback sur l'AppDispatcher,
+    ce qui signifie qu'on verra passer toutes les actions
+    de l'app.
+   */</span>
+  dispatchToken : AppDispatcher.register(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(payload)</span></span>{
+    <span class="hljs-keyword">var</span> action = payload.action
+    <span class="hljs-keyword">switch</span>(action.type) {
+      <span class="hljs-keyword">case</span> ActionTypes.ADD_TO_BASKET:
+          <span class="hljs-comment">/*
+             L'API va ajouter le produit et lancer une
+             action `BASKET_UPDATED` dès que le serveur a répondu.
+          */</span>
+        API.addToBasket(action.productId)
+        <span class="hljs-keyword">break</span>
+      <span class="hljs-keyword">case</span> ActionTypes.BASKET_UPDATED:
+          <span class="hljs-comment">/*
+            L'API a répondu, on peut stocker la réponse
+            et signaler le changement
+            aux vues récupérant ces données.
+          */</span>
+          _store = action.reponse
+          BasketStore.emitChange()
+        <span class="hljs-keyword">break</span>
+      <span class="hljs-keyword">default</span>:
+        <span class="hljs-keyword">break</span>
+    }
+  })
+})
+
+<span class="hljs-built_in">module</span>.exports = BasketStore
+</code></pre>
+<p>La vue, quant à elle, sera notifiée du changement, et effectuera un <code>render()</code> :</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// components/Basket.jsx</span>
+<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">"react/addons"</span>)
+<span class="hljs-keyword">var</span> BasketActions = require(<span class="hljs-string">"../actions/BasketActions"</span>)
+<span class="hljs-keyword">var</span> BasketStore = require(<span class="hljs-string">"../stores/BasketStore"</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getState</span><span class="hljs-params">()</span></span>{
+  <span class="hljs-keyword">return</span> BasketStore.getStore()
+}
+
+<span class="hljs-keyword">var</span> Product = React.createClass({
+  getInitialState : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">return</span> getState()
+  },
+  _onStoreChange : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-comment">/*
+      À chaque changement du store, on update naïvement
+      le component et on laisse le virtual DOM faire son job.
+    */</span>
+    <span class="hljs-keyword">this</span>.setState(getState())
+  },
+  componentDidMount : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-comment">/*
+      On écoute le store uniquement lorsque le
+      component est monté.
+     */</span>
+    BasketStore.addChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
+  },
+  componentWillUnmount : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-comment">/*
+      Et on arrête d'écouter quand il ne l'est plus.
+     */</span>
+    BasketStore.removeChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
+  },
+  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">return</span> (
+      &lt;div className=<span class="hljs-string">"Basket"</span>&gt;
+        &lt;div className=<span class="hljs-string">"Basket-count"</span>&gt;
+          {<span class="hljs-keyword">this</span>.state.products.length + <span class="hljs-string">" products"</span>}
+        &lt;/div&gt;
+        {<span class="hljs-comment">/* rest of the component */</span>}
+      &lt;/div&gt;
+    )
+  }
+})
+
+module.exports = Product
+</code></pre>
+<p>Tout cela peut sembler relativement verbeux, mais il faut préciser deux choses :</p>
+<ul>
+<li>les exemples ici le sont volontairement pour la démonstration, et il est aisément faisable d’utiliser un <code>StoreMixin</code> simplifier la déclaration des <code>class</code> React ;</li>
+<li>pour ce qui est du reste, notamment stocker les noms d’actions dans un objet partagé dans l’app, c’est pour rendre plus idiomatique et cohérente la façon dont on code l’app, et pour simplifier ses <em>refactoring</em>.</li>
+</ul>
+<h2 id="ce-qu-il-faut-savoir-sur-l-alliance-flux-react"><a class="putainde-Title-anchor" href="#ce-qu-il-faut-savoir-sur-l-alliance-flux-react">#</a>Ce qu’il faut savoir sur l’alliance Flux + React</h2><p>Si React et Flux vont si bien ensemble, c’est que l’approche de rendu “naïf” de React (comprendre “React s’en fout de ce qui change, il appelle <code>render</code> à chaque changement”) permet de réduire la logique à écrire dans les Stores, et donc de simplifier très fortement la codebase de l’app.</p>
+<p>Lorsque qu’un ou plusieurs stores composent l’état d’un state React, alors à chaque changement de l’un de ces stores, tous les composants React concernés et leurs enfants vont appeler leur méthode <code>render()</code>. Afin d’éviter des appels superflus à ces méthodes, React donne la possibilité de tester soi-même s’il est nécessaire de mettre à jour le component en déclarant une méthode <code>shouldComponentUpdate</code> retournant un <code>boolean</code> qui stipulera si oui ou non il est nécessaire d’appeler <code>render()</code>.</p>
+<h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><ul>
+<li>Flux, c’est comme du MVC en plus simple, et avec moins de bugs</li>
+<li>L’architecture est unidirectionnelle</li>
+<li>On raisonne en actions, qui sont déclenchées par la vue ou le serveur</li>
+<li>Toutes les actions passent par le dispatcher</li>
+<li>Seuls les stores signalent aux vues qu’il faut se mettre à jour</li>
+</ul>
+<p>Bisous bisous.</p>
+<p><img src="http://media.giphy.com/media/lxd2cZ2BkM4IE/giphy.gif" alt="angulol"></p>
+<p>Pour aller un peu plus loin :</p>
+<ul>
+<li><a href="https://gist.github.com/bloodyowl/b41532cf3627c560b57e">Les sources des exemples</a> contenant le dispatcher et les constants ;</li>
+<li><a href="http://facebook.github.io/flux/docs/overview.html#content">La doc de Flux</a> ;</li>
+<li><a href="https://github.com/facebook/flux">Le repository Flux</a> et ses différents exemples.</li>
+</ul>
+<p><small>
+  <a id="foonote-1"></a>1: <a href="https://www.youtube.com/watch?v=jRzv9gep5Ng&amp;t=4m">Référence utile (<code>ntm install reference</code>)</a>
+</small></p>
+
+]]></description><pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</guid></item><item><title>À la conquête des bugs</title><description><![CDATA[
 <p>Le Web, depuis sa création est un vaste champ de bataille. Que ce soit les problèmes de compatibilités, les formats ou les langages propriétaires, la volonté de faire du Web un monde ouvert ne date pas d’hier.</p>
 <h2 id="au-depart"><a class="putainde-Title-anchor" href="#au-depart">#</a>Au départ</h2><p>Les débuts du Web furent compliqués. On assista à une guerre entre Netscape et Microsoft. Chacun voulant dominer le marché, en tentant d’imposer ses propres technologies. En 1996, Netscape propose au W3C JSSS (JavaScript-Based Style Sheets). Ce n’est d’ailleurs que depuis novembre 2000 que Netscape, basé sur le moteur Gecko (moteur de Mozilla Firefox), prend véritablement en charge le CSS. Microsoft pour sa part ne supportait par JavaScript à ses débuts et avait développé son propre langage JScript.</p>
 <p>Ces problèmes de compatibilités, de technologies et de respect des normes vont considérablement ralentir l’évolution du Web.</p>
@@ -3312,137 +3391,4 @@ gulp.task(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-funct
 </code></pre>
 <p>Et voilà, on est bon. On peut transformer nos <em>svg</em> en <em>font</em>. \o/</p>
 
-]]></description><pubDate>Wed, 14 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/creez-vos-iconfonts-avec-gulp-iconfont/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/creez-vos-iconfonts-avec-gulp-iconfont/</guid></item><item><title>Array.reduce par l'exemple</title><description><![CDATA[
-<p>Souvent méconnue, la fonction <code>Array#reduce</code> se révèle super pratique dès lors
- qu’on prenne un peu le temps de faire un peu plus connaissance.
- Ce n’est que dernièrement que je me suis rendu compte que reduce pouvait servir
- à bien plus de chose que ce qui était présenté dans les documentations.</p>
-<p>Voici donc un petit tour d’horizon des cas d’utilisation de cette fonction.
-Mais avant cela, et histoire de faire les présentations, voici l’intro tirée de
-la documentation de <a href="https://developer.mozilla.org/fr/docs/JavaScript/Reference/Objets_globaux/Array/reduce">MDN</a>.</p>
-<blockquote>
-<p><strong><em>Résumé</em></strong>
-La méthode reduce() applique une
-fonction sur un accumulateur et chaque valeur d’une liste (de la gauche
-vers la droite) de sorte à le réduire à une seule valeur.</p>
-</blockquote>
-<h2 id="le-classique-operer-une-somme-sur-un-tableau"><a class="putainde-Title-anchor" href="#le-classique-operer-une-somme-sur-un-tableau">#</a>Le classique: Opérer une somme sur un tableau</h2><p>C’est souvent l’exemple qui illustre le plus les documentations. <code>Array#reduce</code>
-va permettre de parcourir le tableau, et pour chaque élément, appeler une fonction
-avec les paramètres suivants :</p>
-<ul>
-<li>le résultat de la précédente exécution de cette fonction (aussi appelé l’accumulateur).</li>
-<li>l’élément courant.</li>
-<li>l’index de l’élément courant.</li>
-<li>le tableau sur lequel on est entrain d’itérer</li>
-</ul>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> sum = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>].reduce( function( memo, <span class="hljs-function"><span class="hljs-keyword">val</span>){</span>
-  <span class="hljs-keyword">return</span> memo + <span class="hljs-function"><span class="hljs-keyword">val</span>;</span>
-});
-</code></pre>
-<p>En fait, <code>Array#reduce</code> accepte un deuxième argument après la fonction de callback.
- Cet argument sera utilisé comme accumulateur lors de la première exécution.
- Et c’est justement cela qui est intéressant et qui rend le reduce plutôt pratique.</p>
-<h2 id="chercher-remplacer-avec-plusieurs-motifs"><a class="putainde-Title-anchor" href="#chercher-remplacer-avec-plusieurs-motifs">#</a>Chercher/remplacer avec plusieurs motifs</h2><p>Imaginons que vous souhaitiez appliquer plusieurs opérations de rechercher/remplacer
-sur une chaine de caractère. Si vous avez une liste de motifs et leur valeur correspondante,
- reduce permet de faire cela assez simplement, genre en 3 lignes.</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> input = <span class="hljs-string">"I'm %USER% and I live in %COUNTRY%"</span>
-<span class="hljs-keyword">var</span> data = [{token:<span class="hljs-string">'%USER%'</span>, value:<span class="hljs-string">'lionel'</span>}, {token:<span class="hljs-string">'%COUNTRY%'</span>, value: <span class="hljs-string">'France'</span>}]
-
-<span class="hljs-keyword">var</span> output = data.reduce( <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(memo, item)</span></span>{
-  <span class="hljs-keyword">return</span> memo.replace(item.token, item.value);
-}, input);
-</code></pre>
-<h2 id="realiser-un-groupby"><a class="putainde-Title-anchor" href="#realiser-un-groupby">#</a>Réaliser un groupBy</h2><p>Reduce peut aussi nous permettre d’effectuer des manipulations comme des groupBy
- sur un tableau (bon avec l’aide de petits helpers).</p>
-<p>Prenons comme point de départ cette liste de stat représentant un découpage par
-site et par famille de navigateurs. Nous aimerions pouvoir grouper les résultats par site :</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> stats = [
-  {<span class="hljs-string">"site"</span>:<span class="hljs-string">"google.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"Chrome"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"50%"</span>},
-  {<span class="hljs-string">"site"</span>:<span class="hljs-string">"google.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"FireFox"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"30%"</span>},
-  {<span class="hljs-string">"site"</span>:<span class="hljs-string">"google.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"Internet Explorer"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"20%"</span>},
-  {<span class="hljs-string">"site"</span>:<span class="hljs-string">"mozilla.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"FireFox"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"60%"</span>},
-  {<span class="hljs-string">"site"</span>:<span class="hljs-string">"mozilla.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"Internet Explorer"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"20%"</span>},
-  {<span class="hljs-string">"site"</span>:<span class="hljs-string">"microsoft.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"Chrome"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"10%"</span>},
-  {<span class="hljs-string">"site"</span>:<span class="hljs-string">"microsoft.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"FireFox"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"20%"</span>},
-];
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareSite</span><span class="hljs-params">(site, item)</span></span>{
-  <span class="hljs-keyword">return</span> site === item.site
-}
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">containSite</span><span class="hljs-params">(site, items)</span> </span>{
-  <span class="hljs-keyword">return</span> items.some( compareSite.bind(<span class="hljs-literal">null</span>, site) )
-}
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span><span class="hljs-params">(memo, item)</span></span>{
-  <span class="hljs-keyword">var</span> site = memo.filter( containSite.bind(<span class="hljs-literal">null</span>, item.site) );
-  <span class="hljs-keyword">if</span> (site.length &gt; <span class="hljs-number">0</span>) {
-    site[<span class="hljs-number">0</span>].push(item)
-  } <span class="hljs-keyword">else</span> {
-    memo.push([item])
-  }
-  <span class="hljs-keyword">return</span> memo
-}
-<span class="hljs-comment">// Nous utilisons un tableau vide comme accumulateur</span>
-<span class="hljs-keyword">var</span> results = stats.reduce( groupBySite, [] );
-</code></pre>
-<p>Concernant cet exemple, on pouvait arriver au même résultat en déclarant une variable
- qui aurait le rôle d’accumulateur et un Array.forEach :</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> results = {};
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span><span class="hljs-params">( item)</span></span>{
-  <span class="hljs-keyword">var</span> site = results.filter( containSite.bind(<span class="hljs-keyword">null</span>, item.site) );
-  <span class="hljs-keyword">if</span> (site.length &gt; <span class="hljs-number">0</span>) {
-    site[<span class="hljs-number">0</span>].push(item)
-  } <span class="hljs-keyword">else</span> {
-    results.push([item])
-  }
-}
-
-stats.<span class="hljs-keyword">forEach</span>( groupBySite );
-</code></pre>
-<p>Mais ici, la fonction <code>groupBySite</code> devient bien moins ré-utilisable car elle
-dépend directement de la variable results, déclarée au dessus.</p>
-<h3 id="a-noter"><a class="putainde-Title-anchor" href="#a-noter">#</a>À noter</h3><p>L’utilisation de  <code>Function.bind</code> nous permet de réutiliser les fonctions <code>compareSite</code>
-et <code>containSite</code> en fixant leur premier paramètre. Ainsi <code>compareSite.bind(null, &#39;mozilla.fr&#39;)</code> équivaut à :</p>
-<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareMozilla</span><span class="hljs-params">(item)</span></span>{
-  <span class="hljs-keyword">return</span> <span class="hljs-string">"mozilla.fr"</span> === item.site;
-}
-</code></pre>
-<p>D’ailleurs, on pourrait assez simplement rendre <code>groupBySite</code> générique pour la réutiliser avec un <code>groupByBrowser</code>.</p>
-<h2 id="manipuler-la-structure-des-donnees"><a class="putainde-Title-anchor" href="#manipuler-la-structure-des-donnees">#</a>Manipuler la structure des données</h2><p><code>Array#reduce</code> peut aussi permettre de manipuler la structure de vos données et pouvoir la modifier.
-Par exemple, voici une liste de sites avec, pour chaque site, le pourcentage de visite par navigateur.
-Imaginons que nous souhaitons changer la structure de l’objet pour grouper ces
-résultats par type de navigateur plutôt que par site. Là encore <code>Array#reduce</code> s’avère plutôt pratique.</p>
-<pre><code class="lang-javascript">var data = {
-      <span class="hljs-string">"google.fr"</span> : [
-       {<span class="hljs-string">name:</span> <span class="hljs-string">"Chrome"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"50%"</span>},
-        {<span class="hljs-string">name:</span> <span class="hljs-string">"FireFox"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"30%"</span>},
-        {<span class="hljs-string">name:</span> <span class="hljs-string">"Internet Explorer"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"20%"</span> }
-      ],
-      <span class="hljs-string">"mozilla.fr"</span> : [
-        {<span class="hljs-string">name:</span> <span class="hljs-string">"Chrome"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"20%"</span>},
-        {<span class="hljs-string">name:</span> <span class="hljs-string">"FireFox"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"60%"</span>},
-        {<span class="hljs-string">name:</span> <span class="hljs-string">"Internet Explorer"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"20%"</span>}
-      ] ,
-      <span class="hljs-string">"microsoft.fr"</span> : [
-        {<span class="hljs-string">name:</span> <span class="hljs-string">"Chrome"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"10%"</span>},
-        {<span class="hljs-string">name:</span> <span class="hljs-string">"FireFox"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"20%"</span>},
-        {<span class="hljs-string">name:</span> <span class="hljs-string">"Internet Explorer"</span>, <span class="hljs-string">value:</span> <span class="hljs-string">"70%"</span>}
-      ]
-    };
-
-function groupByBrowser( site, memo, browser){
-  <span class="hljs-keyword">if</span> (!memo[browser.name]){
-    memo[browser.name] = [];
-  }
-  memo[browser.name].push({<span class="hljs-string">site:</span>site, <span class="hljs-string">value:</span> browser.value});
-  <span class="hljs-keyword">return</span> memo
-}
-
-var results = Object.keys(data).reduce( function (memo, site) {
-  <span class="hljs-keyword">return</span> data[site].reduce(groupByBrowser.bind(<span class="hljs-literal">null</span>, site), memo)
-}, {});
-</code></pre>
-<p>J’espère que vous avez apprécié ces quelques exemples d’utilisation de <code>Array#reduce</code>.
-Et n’hésitez pas à partager vos cas d’utilisations en éditant l’article ou via les commentaires !</p>
-
-]]></description><pubDate>Tue, 13 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/array-reduce/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/array-reduce/</guid></item></channel></rss>
+]]></description><pubDate>Wed, 14 May 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/frontend/creez-vos-iconfonts-avec-gulp-iconfont/</link><guid isPermaLink="true">http://putaindecode.fr/posts/frontend/creez-vos-iconfonts-avec-gulp-iconfont/</guid></item></channel></rss>
