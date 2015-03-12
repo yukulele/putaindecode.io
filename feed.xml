@@ -1,4 +1,186 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Tue, 10 Mar 2015 08:11:12 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>Du CSS évolutif</title><description><![CDATA[
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Putain de code !</title><description></description><link>http://putaindecode.fr</link><!-- generator putaindecode--><lastBuildDate>Thu, 12 Mar 2015 07:00:13 GMT</lastBuildDate><atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"></atom:link><item><title>HATEOAS, le Graal des développeurs d'API</title><description><![CDATA[
+<p>Nous vivons aujourd’hui dans un monde où tout devient service. Twitter, Facebook, Google Drive, GitHub, tout le monde y va de sa petite API pour que nous, geeks, puissions profiter pleinement des moult fonctionnalités offertes par ces plateformes. Qu’entend-on par service ? Comment les rendre disponibles facilement et intelligemment ? On va essayer d’y répondre ! </p>
+<h2 id="les-webservices"><a class="putainde-Title-anchor" href="#les-webservices">#</a>Les webservices</h2><p>Rappelons juste, pour mettre tout le monde d’accord, ce qui se passe pendant une simple navigation web.</p>
+<ol>
+<li>Tu tapes l’adresse de ton site préféré</li>
+<li>Le navigateur envoie la requête</li>
+<li>Le navigateur reçoit du code HTML et l’interprète, pour voir s’il faut charger d’autres choses</li>
+<li>Le navigateur relance les requêtes pour charger les images, scripts et CSS</li>
+<li>Le navigateur reçoit toutes les ressources et te les affiche dans sa fenêtre.</li>
+</ol>
+<p>On parle donc de contenu qu’il faut afficher pour les êtres humains, avec des images, des styles et des comportements qui facilitent l’ergonomie et te permettent de dire <em>“wouaouw, ce site est vraiment beau, cool et pratique !”</em></p>
+<p>Imaginons maintenant la même chose, mais à destination des programmes, qui ne consomment que de l’information brute et structurée, on ne va donc plus s’encombrer avec les CSS, les JS, et autres gifs animés (oui, les gifs animés, ça les fait pas marrer les machines…) ! On va se concentrer sur le contenu échangé et sur les moyens utilisés pour optimiser ces échanges.</p>
+<h3 id="la-premiere-ecole-soap"><a class="putainde-Title-anchor" href="#la-premiere-ecole-soap">#</a>La première école : SOAP</h3><p>Imaginons deux programmes qui veulent discuter en passant par le web. Dans les années 90, des mecs super brillants se sont dit : <em>“On va se baser sur le XML pour faire communiquer nos programmes sur le web”</em>.
+L’approche est assez logique et ingénieuse. Tout d’abord, les deux parties (le client et le serveur) se partagent une notice d’utilisation : la WSDL (Web Service Description Language), qui est un document XML décrivant toutes les méthodes qui peuvent être appelées par le client sur le serveur, avec les structures de données disponibles pour ces échanges.
+Le client prépare donc sa demande et l’enveloppe dans une grosse structure XML contenant toutes les métadonnées (méthode appelée, signature numérique, etc.). Une fois que le serveur a reçu cette demande, il la traite et répond aussi dans une grosse enveloppe XML.</p>
+<p>Tu viens de comprendre le SOAP (Service Oriented Application Protocol), aucun rapport avec une quelconque savonnette du coup. Cette méthode a fait ses preuves puisqu’elle fait tourner encore aujourd’hui des milliers de systèmes très complexes et très fiables.</p>
+<h3 id="la-maison-d-en-face-rest"><a class="putainde-Title-anchor" href="#la-maison-d-en-face-rest">#</a>La maison d’en face : REST</h3><p>Plusieurs années ont passées et les esprits ont évolué. On a commencé à entendre des grandes déclarations comme : <em>“Le SOAP c’est vraiment lourdingue !”</em>, <em>“Le protocole HTTP est sous-exploité !”</em> ou encore <em>“Les enveloppes XML et les WSDL ? Merci bien !”</em> et c’est à ce moment-là qu’on a donné un acronyme bidon pour décrire le protocole HTTP sans vraiment le nommer : REST (REpresentational State Transfert). Pour l’anecdote, tout le monde s’accorde à dire que cet acronyme ne veut rien dire ;)</p>
+<p>Le but du jeu est donc d’utiliser au maximum les possibilités du protocole HTTP, les verbes, les URL et les codes retours pour décrire des API de la manière la plus fidèle possible. On a donc gagné en simplicité et la communication entre machines se veut désormais à la portée de tous. Je reviendrai en détail sur le protocole HTTP un peu plus tard.</p>
+<h3 id="un-partout-balle-au-centre"><a class="putainde-Title-anchor" href="#un-partout-balle-au-centre">#</a>Un partout : balle au centre</h3><p>Je tiens à remettre les choses au clair. On entend beaucoup trop souvent : <em>“Fais du REST, SOAP c’est nul”</em>. Il y a en effet clairement un effet de mode ! Les API REST pullulent et sont vraiment très pratiques. Toutefois, dans les gros systèmes nécessitant du RPC ou encore de la signature numérique, pour les échanges de données médicales par exemple, le contrat WSDL et la rigueur du XML sont clairement des alliés ! </p>
+<h2 id="alors-comme-ca-http-ca-fait-tout-"><a class="putainde-Title-anchor" href="#alors-comme-ca-http-ca-fait-tout-">#</a>Alors comme ça, HTTP ça fait tout ?</h2><p>Il y a un type qui s’appelle Leonard Richardson et qui a mis en place un <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">modèle de maturité</a> pour qualifier les API webservice.</p>
+<h3 id="niveau-0"><a class="putainde-Title-anchor" href="#niveau-0">#</a>Niveau 0</h3><p>C’est le minimum acceptable dans la communication HTTP :</p>
+<ul>
+<li>Toutes les requêtes sont envoyées à la même URL, quelle que soit la demande.</li>
+<li>Toutes les requêtes sont envoyées avec le verbe POST.</li>
+<li>Quel que soit le type de retour (donnée ou erreur), le code HTTP retourné par le serveur sera toujours 200 (OK, tout s’est bien passé).</li>
+<li>Le contenu échangé est majoritairement du XML (pour les enveloppes notamment).</li>
+</ul>
+<p>Quand on fait du webservice avec SOAP, c’est ce niveau qui est utilisé lors de la communication HTTP.</p>
+<h3 id="niveau-1"><a class="putainde-Title-anchor" href="#niveau-1">#</a>Niveau 1</h3><p>Avec ce premier niveau, on essaye d’enrichir un peu plus l’utilisation. On ajoute la notion de <em>ressource</em>, en fonction de la donnée métier manipulée, l’URL de la requête sera différente. La preuve par l’exemple :</p>
+<ul>
+<li><strong><em>POST /agenda</em></strong> : permet de travailler avec les données de l’agenda de l’application</li>
+<li><strong><em>POST /customers</em></strong> : permet de travailler avec le registre des clients  </li>
+</ul>
+<p>On profite aussi de la vue hiérarchique que nous proposent les URL :</p>
+<ul>
+<li><strong><em>POST /customers/42</em></strong> : permet de travailler avec le client qui possède l’identifiant 42</li>
+</ul>
+<p>Rien qu’en traçant les URL appelées sur le serveur, on peut comprendre ce que le client HTTP cherche à faire… pas dégueu, non ?</p>
+<h3 id="niveau-2"><a class="putainde-Title-anchor" href="#niveau-2">#</a>Niveau 2</h3><p>Le protocole HTTP utilise des verbes pour les requêtes et des codes numériques pour les retours. Ce sont ces deux mécanismes qui seront utilisés en complément du niveau 1.</p>
+<p>Les principaux verbes HTTP que l’on utilise sont GET, POST, PUT et DELETE. Leur nom est déjà très évocateur.</p>
+<ul>
+<li><strong><em>GET /customers/42</em></strong> pour récupérer les informations du client 42</li>
+<li><strong><em>PUT /customers</em></strong> <em>(+ corps de la requête)</em> pour enregistrer un nouveau client</li>
+<li><strong><em>POST /customers/42</em></strong> <em>(+ corps de la requête)</em> pour mettre à jour les informations du client 42</li>
+<li><strong><em>DELETE /customers/42</em></strong> pour supprimer le client 42</li>
+</ul>
+<p>Facile, non ? La réponse du serveur devient tout aussi logique grâce aux codes HTTP.
+Ces codes sont juste des nombres de 3 chiffres respectant cette logique :</p>
+<ul>
+<li><strong><em>1xx</em></strong> : <em>“Je suis en train de bosser, attends encore un peu.”</em></li>
+<li><strong><em>2xx</em></strong> : <em>“Voilà le résultat, ça s’est bien passé.”</em></li>
+<li><strong><em>3xx</em></strong> : <em>“Le contenu est déplacé, va voir ailleurs (cf. en-tête location).”</em></li>
+<li><strong><em>4xx</em></strong> : <em>“Tu me demandes n’importe quoi, tu as merdé.”</em></li>
+<li><strong><em>5xx</em></strong> : <em>“J’ai merdé…”</em></li>
+</ul>
+<p>Parmi les plus connus, on a donc 404 (<em>“tu me demandes quelque chose qui n’existe pas”</em>), 403 (<em>“accès interdit”</em>), 304 (<em>“pas la peine de m’emmerder, la donnée est dans ton cache”</em>) et bien sûr 200 (<em>“OK, tout va bien”</em>).</p>
+<p>Et si les codes HTTP sont ta nouvelle passion, je te suggère de te documenter sur le code <a href="http://fr.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol">418</a> !</p>
+<h3 id="niveau-3-hateoas"><a class="putainde-Title-anchor" href="#niveau-3-hateoas">#</a>Niveau 3 : HATEOAS</h3><p>Alors on a les verbes HTTP et les codes retours. À quoi peut ressembler le Graal des API REST alors ? Si on réfléchit un peu, on peut se dire qu’il faudrait, pour toutes les URL, donner un code retour HTTP cohérent pour chaque verbe, logique non ? De cette manière, on peut entamer un véritable dialogue avec le serveur HTTP, entièrement basé sur REST. Voilà une bonne nouvelle pour ceux qui veulent tailler une bavette ailleurs que sur Google Hangouts !</p>
+<p>Un petit exemple de dialogue : </p>
+<pre><code>&gt; <span class="hljs-type">GET</span> /customers/<span class="hljs-number">42</span>
+<span class="hljs-number">200</span> <span class="hljs-type">OK</span>
+
+&gt; <span class="hljs-type">PUT</span> /customers/<span class="hljs-number">42</span> <span class="hljs-decorator">{...}</span>
+<span class="hljs-number">409</span> <span class="hljs-type">Conflict</span>
+
+&gt; <span class="hljs-type">DELETE</span> /customers/<span class="hljs-number">42</span>
+<span class="hljs-number">204</span> <span class="hljs-type">No</span> <span class="hljs-type">Content</span>
+
+&gt; <span class="hljs-type">GET</span> /customers/<span class="hljs-number">42</span>
+<span class="hljs-number">404</span> <span class="hljs-type">Not</span> <span class="hljs-type">Found</span>
+</code></pre><p>C’est un bon début, mais ce niveau 3 va quand même un peu plus loin ! N’as-tu jamais trouvé génial qu’avec de simples liens dans les pages web, tu pouvais naviguer des heures et des heures ? </p>
+<p>Pourquoi ne pas ajouter des liens dans les ressources retournées via REST ? Nous venons de mettre le doigt sur HATEOAS (<em>Hypermedia As The Engine Of Application State</em>). On peut désormais imaginer un tas de choses comme :</p>
+<ul>
+<li>Quand on renvoie un tableau json par exemple, dans chaque item, <ul>
+<li>on peut ajouter les liens qui permettent de le mettre à jour ;</li>
+<li>on peut ajouter les liens qui permettent de récupérer des données liées comme l’auteur d’un livre, les mentions d’un tweet, etc. ;</li>
+<li>on peut ajouter l’URL de putaindecode.fr.</li>
+</ul>
+</li>
+</ul>
+<p>Voici un exemple de trame JSON avec les informations HATEOAS. Pour information, il s’agit d’un webservice qui permet de lister des conférences.</p>
+<pre><code><span class="hljs-collection">[
+  <span class="hljs-collection">{
+    <span class="hljs-string">"conference"</span>: <span class="hljs-collection">{
+      <span class="hljs-string">"id"</span>: <span class="hljs-number">1</span>,
+      <span class="hljs-string">"links"</span>: <span class="hljs-collection">[
+        <span class="hljs-collection">{
+          <span class="hljs-string">"rel"</span>: <span class="hljs-string">"list"</span>,
+          <span class="hljs-string">"href"</span>: <span class="hljs-string">"http://localhost:8080/hateoas-webservice/rs/conferences/"</span>
+        }</span>,
+        <span class="hljs-collection">{
+          <span class="hljs-string">"rel"</span>: <span class="hljs-string">"self"</span>,
+          <span class="hljs-string">"href"</span>: <span class="hljs-string">"http://localhost:8080/hateoas-webservice/rs/conferences/1"</span>
+        }</span>
+      ]</span>,
+      <span class="hljs-string">"name"</span>: <span class="hljs-string">"Take Off Conf 2013"</span>,
+      <span class="hljs-string">"startDate"</span>: <span class="hljs-string">"2013-01-17T00:00:00+01:00"</span>,
+      <span class="hljs-string">"endDate"</span>: <span class="hljs-string">"2013-01-18T00:00:00+01:00"</span>,
+      <span class="hljs-string">"talks"</span>: <span class="hljs-collection">[
+        <span class="hljs-collection">{
+          <span class="hljs-string">"id"</span>: <span class="hljs-number">1</span>,
+          <span class="hljs-string">"speakerName"</span>: <span class="hljs-string">"Jakob Mattsson"</span>,
+          <span class="hljs-string">"title"</span>: <span class="hljs-string">"You are not service oriented enough!"</span>,
+          <span class="hljs-string">"links"</span>: <span class="hljs-collection">[
+            <span class="hljs-collection">{
+              <span class="hljs-string">"rel"</span>: <span class="hljs-string">"self"</span>,
+              <span class="hljs-string">"href"</span>: <span class="hljs-string">"http://localhost:8080/hateoas-webservice/rs/talks/1"</span>
+            }</span>,
+            <span class="hljs-collection">{
+              <span class="hljs-string">"rel"</span>: <span class="hljs-string">"list"</span>,
+              <span class="hljs-string">"href"</span>: <span class="hljs-string">"http://localhost:8080/hateoas-webservice/rs/talks/"</span>
+            }</span>
+          ]</span>
+        }</span>,
+        <span class="hljs-collection">{
+          <span class="hljs-string">"id"</span>: <span class="hljs-number">2</span>,
+          <span class="hljs-string">"speakerName"</span>: <span class="hljs-string">"Olivier Lacan"</span>,
+          <span class="hljs-string">"title"</span>: <span class="hljs-string">"Science-based development"</span>,
+          <span class="hljs-string">"links"</span>: <span class="hljs-collection">[
+            <span class="hljs-collection">{
+              <span class="hljs-string">"rel"</span>: <span class="hljs-string">"self"</span>,
+              <span class="hljs-string">"href"</span>: <span class="hljs-string">"http://localhost:8080/hateoas-webservice/rs/talks/2"</span>
+            }</span>,
+            <span class="hljs-collection">{
+              <span class="hljs-string">"rel"</span>: <span class="hljs-string">"list"</span>,
+              <span class="hljs-string">"href"</span>: <span class="hljs-string">"http://localhost:8080/hateoas-webservice/rs/talks/"</span>
+            }</span>
+          ]</span>
+        }</span>,
+        <span class="hljs-collection">{
+          <span class="hljs-string">"id"</span>: <span class="hljs-number">3</span>,
+          <span class="hljs-string">"speakerName"</span>: <span class="hljs-string">"Xavier Coulon"</span>,
+          <span class="hljs-string">"title"</span>: <span class="hljs-string">"Build your website with awestruct and publish..."</span>,
+          <span class="hljs-string">"links"</span>: <span class="hljs-collection">[
+            <span class="hljs-collection">{
+              <span class="hljs-string">"rel"</span>: <span class="hljs-string">"self"</span>,
+              <span class="hljs-string">"href"</span>: <span class="hljs-string">"http://localhost:8080/hateoas-webservice/rs/talks/3"</span>
+            }</span>,
+            <span class="hljs-collection">{
+              <span class="hljs-string">"rel"</span>: <span class="hljs-string">"list"</span>,
+              <span class="hljs-string">"href"</span>: <span class="hljs-string">"http://localhost:8080/hateoas-webservice/rs/talks/"</span>
+            }</span>
+          ]</span>
+        }</span>,
+        <span class="hljs-collection">{
+          <span class="hljs-string">"id"</span>: <span class="hljs-number">4</span>,
+          <span class="hljs-string">"speakerName"</span>: <span class="hljs-string">"Rémi Parmentier"</span>,
+          <span class="hljs-string">"title"</span>: <span class="hljs-string">"Design for developers"</span>,
+          <span class="hljs-string">"links"</span>: <span class="hljs-collection">[
+            <span class="hljs-collection">{
+              <span class="hljs-string">"rel"</span>: <span class="hljs-string">"self"</span>,
+              <span class="hljs-string">"href"</span>: <span class="hljs-string">"http://localhost:8080/hateoas-webservice/rs/talks/4"</span>
+            }</span>,
+            <span class="hljs-collection">{
+              <span class="hljs-string">"rel"</span>: <span class="hljs-string">"list"</span>,
+              <span class="hljs-string">"href"</span>: <span class="hljs-string">"http://localhost:8080/hateoas-webservice/rs/talks/"</span>
+            }</span>
+          ]</span>
+        }</span>
+      ]</span>
+    }</span>
+  }</span>,<span class="hljs-collection">{
+  ...
+  }</span> 
+]</span>
+</code></pre><p>Dans cette trame, tu auras remarqué les objets dans les tableaux nommés “links”, ce sont les liens disponibles pour chacun des objets renvoyés ! On peut imaginer qu’en fonction des droits de l’utilisateur courant, il y ait plus ou moins de liens.</p>
+<h2 id="est-ce-que-c-est-standard-"><a class="putainde-Title-anchor" href="#est-ce-que-c-est-standard-">#</a>Est-ce que c’est standard ?</h2><p>Eh bien non ! Il n’y a pas vraiment de convention pour l’écriture des liens dans les trames renvoyées. Cela dépend du format renvoyé dans un premier temps. Comment formaliser un standard si on renvoie en JSON, XML et YML en fonction des en-têtes HTTP du client ?</p>
+<p>De la même manière, tu auras remarqué que l’on ne précise pas le verbe HTTP à utiliser sur les URL. C’est la raison pour laquelle il faut implémenter un retour cohérent pour tous les verbes HTTP courants !</p>
+<p>Et pour finir, comment connaître le format du document JSON accepté avec les requêtes POST par exemple ? Il n’y a pas non plus de règle ! On pourrait imaginer par exemple un document “type” qui serait renvoyé après une requête “OPTION” sur l’URL.</p>
+<p>Il y a toutefois quelques expérimentations comme <a href="http://en.wikipedia.org/wiki/Hypertext_Application_Language">HAL</a> ou encore <a href="http://jsonapi.org/">JSON API</a> qui tentent de normaliser un peu ce flou artistique.</p>
+<p>Tu fais ta petite popote ! Tu fais comme tu veux ! Ça a du bon aussi !</p>
+<h2 id="-bon-ok-je-fais-comment-pour-le-mettre-en-place-maintenant-"><a class="putainde-Title-anchor" href="#-bon-ok-je-fais-comment-pour-le-mettre-en-place-maintenant-">#</a>“Bon ok, je fais comment pour le mettre en place maintenant ?”</h2><p>Tu remontes tes manches et tu te démerdes !</p>
+<p>Il y a quelques frameworks qui vont te donner un coup de main. Dans le monde Java par exemple, il existe <a href="http://docs.jboss.org/resteasy/docs/2.0.0.GA/userguide/html/LinkHeader.html">Resteasy-links</a> (avec un exemple d’utilisation <a href="https://github.com/awillemant/hateoas-example">sur mon repo GitHub</a>), ou encore <a href="http://projects.spring.io/spring-hateoas/">Spring HATEOAS</a></p>
+<p>Pour les <em>Nodistes</em>, une simple recherche sur <a href="https://www.npmjs.com/search?q=hateoas">npmjs</a> renverra un tas d’outils ! </p>
+<h2 id="references"><a class="putainde-Title-anchor" href="#references">#</a>Références</h2><p>Oui, parce qu’il y a des gens bien plus brillants que moi pour vous convaincre sur l’Hypermedia !</p>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/HATEOAS">Wikipédia</a></li>
+<li><a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Blog de Martin Fowler</a></li>
+<li>Les travaux de Steve Klabnik, Rubyiste reconnu (ex : <a href="https://www.youtube.com/watch?v=g4sqydY3hHU">Designing Hypermedia APIs</a>)</li>
+<li>Ori Pekelman : <a href="https://www.youtube.com/watch?v=ZZxOaCP8vyg">son talk à la Take Off Conf 2014</a></li>
+</ul>
+
+]]></description><pubDate>Thu, 12 Mar 2015 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/api/hateoas/</link><guid isPermaLink="true">http://putaindecode.fr/posts/api/hateoas/</guid></item><item><title>Du CSS évolutif</title><description><![CDATA[
 <p>Modulaire, maintenable, réutilisable, accessible. Ces termes sont au cœur de nos métiers et on nous les rabâche toute la journée.</p>
 <p>Malgré la grossièreté de ces mots pour certains d’entre vous, il est tout à fait possible de pondre du CSS en utilisant tous ces principes.</p>
 <h2 id="maintenable"><a class="putainde-Title-anchor" href="#maintenable">#</a>Maintenable</h2><p>L’un des trucs les plus chiants du CSS c’est bien la cascade, qui, malgré sa bonne volonté, n’apporte pas que des solutions. Pour pallier aux problèmes que l’on peut vite créer, <a href="http://putaindecode.fr/posts/css/petite-definition-bem/">la méthodologie BEM</a> a vu le jour avec son <a href="http://blog.kaelig.fr/post/48196348743/fifty-shades-of-bem">lot de variantes</a>.</p>
@@ -101,7 +283,8 @@ Les bons développeurs ont tous une bonne flemme au fond d’eux, c’est bien c
 dont notamment le livre <a href="https://vimebook.com/">Vim pour les humains</a>, le font très bien en douceur.</p>
 <p>C’est d’ailleur grâce à ce livre que je me suis lancé.
 Je tiens donc à remercier <a href="http://viserlalune.com/">Vincent Jousse</a> pour avoir pris le temps d’écrire cet ouvrage.</p>
-<p>Profitez de cet ouvrage, en plus <a href="http://ploum.net/le-prix-libre-une-impossible-utopie/">le prix est libre</a>.</p>
+<p>Profitez de cet ouvrage, en plus <a href="http://ploum.net/le-prix-libre-une-impossible-utopie/">le prix est libre</a>.
+Et puis quand on pense au prix des licences de certains IDE…</p>
 <p>Ce livre est fait pour n’importe qui, débutant ou pas.
 Vraiment, mangez-en si vous souhaitez essayer Vim (oui je sais, manger un e-book comme ça, ça paraît pas évident).</p>
 <p>J’ai essayé plusieurs fois sans trop savoir où commencer, sans succès.
@@ -1345,7 +1528,196 @@ Mais c’était sans compter que l’Internet, c’est un réseau mondial. Avec 
 <p>N’hésitez pas à vous en servir pour sortir de votre zone de confort !</p>
 <p>Dans tous les cas, si vous souhaitez en savoir plus, n’hésitez pas à aller sur <a href="http://www.economie.gouv.fr/cedef/auto-entrepreneur">le site du gouvernement</a>.</p>
 
-]]></description><pubDate>Thu, 30 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</link><guid isPermaLink="true">http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</guid></item><item><title>Première application Ember</title><description><![CDATA[
+]]></description><pubDate>Thu, 30 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</link><guid isPermaLink="true">http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</guid></item><item><title>Flux, qu'est-ce que c'est ?</title><description><![CDATA[
+<p>Allez, tant pis, on saute l’intro et on entre directement dans le vif du sujet (on n’a pas que ça à foutre, après tout).</p>
+<h2 id="la-petite-histoire"><a class="putainde-Title-anchor" href="#la-petite-histoire">#</a>La petite histoire</h2><p>Il était une fois un gros site web <em>que s’apelorio</em> Facebook. Qui dit Facebook, dit webapp plus grosse que la plus grosse de tes copines (<em>no offense</em> <sup><a href="#foonote-1">1</a></sup>) ; et du coup, propension à se retrouver submergé de bugs plus élevée.</p>
+<p>Les ingénieurs front-end de Facebook, confrontés à une codebase de plus en plus bordélique (personne ne voulant toucher certaines parties de celle-ci) ont dû repenser la structure des composants les plus cruciaux.</p>
+<p>Face à ce besoin, ces développeurs sont donc parvenus à deux solutions :</p>
+<ul>
+<li><a href="http://putaindecode.fr/posts/js/introduction-a-reactjs/">ReactJS</a></li>
+<li>Flux</li>
+</ul>
+<p>Flux n’est pas un framework, mais simplement une architecture, une sorte de <em>guideline</em> qui résout pas mal de problèmes ayant pu apparaître avec les divers bibliothèques et frameworks MV* apparus lors des dernières années.</p>
+<h2 id="flux-l-explication-claire"><a class="putainde-Title-anchor" href="#flux-l-explication-claire">#</a>Flux, l’explication claire</h2><p>Flux comporte 4 concepts :</p>
+<ul>
+<li>les <strong>actions</strong>, qu’elles proviennent du serveur ou d’une interaction utilisateur ;</li>
+<li>le <strong>dispatcher</strong> dans lequel sont envoyées les actions que ce dernier transmet <em>à qui veut</em>, un peu comme un <code>EventEmitter</code> global ;</li>
+<li>les <strong>stores</strong>, qui sont l’équivalent du <code>model</code> de l’architecture MVC, ils contiennent les données, et réagissent aux actions que le dispatcher leur transmet ;</li>
+<li>les <strong>views</strong>, qui s’occupent du rendu des données dans le DOM, et de lancer des actions lorsque l’utilisateur effectue certaines actions.</li>
+</ul>
+<p>Jusque-là, rien de bien fou. C’est dans leur manière d’interagir que la particularité se dessine :</p>
+<figure>
+  <img src="http://cl.ly/YENt/flux.png" alt="">
+  <figcaption>Oh bah dis donc, ça va toujours dans le même sens</figcaption>
+</figure>
+
+<p>En effet, le <em>flux</em> en question est unidirectionnel. Pour faire simple, on procède ainsi :</p>
+<p>On définit une action via un <strong>action creator</strong> (on passera toujours par ces action-creators pour signaler une action) :</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// actions/BasketActions.js</span>
+<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispacher"</span>)
+<span class="hljs-comment">/*
+  On garde un dictionnaire des types d'actions
+  afin d'avoir un fichier donnant une vision
+  globale de toutes les interactions de l'app.
+ */</span>
+<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
+
+<span class="hljs-built_in">module</span>.exports = {
+  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(productId)</span></span>{
+    AppDispatcher.handleViewAction({
+      type : ActionTypes.ADD_TO_BASKET,
+      productId : productId
+    })
+  }
+}
+</code></pre>
+<p>On lancera par la suite cette action lorsque l’utilisateur aura cliqué sur un certain bouton, dans la vue concernée.</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// components/Product.jsx</span>
+<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">"react/addons"</span>)
+<span class="hljs-keyword">var</span> BasketActions = require(<span class="hljs-string">"../actions/BasketActions"</span>)
+
+<span class="hljs-keyword">var</span> Button = require(<span class="hljs-string">"./common/Button.jsx"</span>)
+
+<span class="hljs-keyword">var</span> Product = React.createClass({
+  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(productId)</span></span>{
+    BasketActions.addToBasket(productId)
+  },
+  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">return</span> (
+      &lt;div className=<span class="hljs-string">"Product"</span>&gt;
+        {<span class="hljs-comment">/* rest of the component*/</span>}
+        &lt;Button
+          onClick={<span class="hljs-keyword">this</span>.addToBasket.bind(<span class="hljs-keyword">this</span>.props.productId)}
+          label=<span class="hljs-string">"Add to basket"</span>
+        /&gt;
+      &lt;/div&gt;
+    )
+  }
+})
+
+module.exports = Product
+</code></pre>
+<p>Dès lors, à chaque clic sur le bouton en question, l’action <code>ADD_TO_BASKET</code> sera passée au dispatcher, qui le signalera aux stores.</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// stores/BasketStore.js</span>
+<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispatcher"</span>)
+<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
+<span class="hljs-keyword">var</span> API = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../api"</span>)
+
+<span class="hljs-keyword">var</span> merge = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/merge"</span>)
+<span class="hljs-keyword">var</span> Store = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/store"</span>)
+
+<span class="hljs-keyword">var</span> _store = {
+  products : []
+}
+
+<span class="hljs-keyword">var</span> BasketStore = merge(Store, {
+  <span class="hljs-comment">/*
+    Ici, on `register` un callback sur l'AppDispatcher,
+    ce qui signifie qu'on verra passer toutes les actions
+    de l'app.
+   */</span>
+  dispatchToken : AppDispatcher.register(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(payload)</span></span>{
+    <span class="hljs-keyword">var</span> action = payload.action
+    <span class="hljs-keyword">switch</span>(action.type) {
+      <span class="hljs-keyword">case</span> ActionTypes.ADD_TO_BASKET:
+          <span class="hljs-comment">/*
+             L'API va ajouter le produit et lancer une
+             action `BASKET_UPDATED` dès que le serveur a répondu.
+          */</span>
+        API.addToBasket(action.productId)
+        <span class="hljs-keyword">break</span>
+      <span class="hljs-keyword">case</span> ActionTypes.BASKET_UPDATED:
+          <span class="hljs-comment">/*
+            L'API a répondu, on peut stocker la réponse
+            et signaler le changement
+            aux vues récupérant ces données.
+          */</span>
+          _store = action.reponse
+          BasketStore.emitChange()
+        <span class="hljs-keyword">break</span>
+      <span class="hljs-keyword">default</span>:
+        <span class="hljs-keyword">break</span>
+    }
+  })
+})
+
+<span class="hljs-built_in">module</span>.exports = BasketStore
+</code></pre>
+<p>La vue, quant à elle, sera notifiée du changement, et effectuera un <code>render()</code> :</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// components/Basket.jsx</span>
+<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">"react/addons"</span>)
+<span class="hljs-keyword">var</span> BasketActions = require(<span class="hljs-string">"../actions/BasketActions"</span>)
+<span class="hljs-keyword">var</span> BasketStore = require(<span class="hljs-string">"../stores/BasketStore"</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getState</span><span class="hljs-params">()</span></span>{
+  <span class="hljs-keyword">return</span> BasketStore.getStore()
+}
+
+<span class="hljs-keyword">var</span> Product = React.createClass({
+  getInitialState : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">return</span> getState()
+  },
+  _onStoreChange : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-comment">/*
+      À chaque changement du store, on update naïvement
+      le component et on laisse le virtual DOM faire son job.
+    */</span>
+    <span class="hljs-keyword">this</span>.setState(getState())
+  },
+  componentDidMount : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-comment">/*
+      On écoute le store uniquement lorsque le
+      component est monté.
+     */</span>
+    BasketStore.addChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
+  },
+  componentWillUnmount : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-comment">/*
+      Et on arrête d'écouter quand il ne l'est plus.
+     */</span>
+    BasketStore.removeChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
+  },
+  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">return</span> (
+      &lt;div className=<span class="hljs-string">"Basket"</span>&gt;
+        &lt;div className=<span class="hljs-string">"Basket-count"</span>&gt;
+          {<span class="hljs-keyword">this</span>.state.products.length + <span class="hljs-string">" products"</span>}
+        &lt;/div&gt;
+        {<span class="hljs-comment">/* rest of the component */</span>}
+      &lt;/div&gt;
+    )
+  }
+})
+
+module.exports = Product
+</code></pre>
+<p>Tout cela peut sembler relativement verbeux, mais il faut préciser deux choses :</p>
+<ul>
+<li>les exemples ici le sont volontairement pour la démonstration, et il est aisément faisable d’utiliser un <code>StoreMixin</code> simplifier la déclaration des <code>class</code> React ;</li>
+<li>pour ce qui est du reste, notamment stocker les noms d’actions dans un objet partagé dans l’app, c’est pour rendre plus idiomatique et cohérente la façon dont on code l’app, et pour simplifier ses <em>refactoring</em>.</li>
+</ul>
+<h2 id="ce-qu-il-faut-savoir-sur-l-alliance-flux-react"><a class="putainde-Title-anchor" href="#ce-qu-il-faut-savoir-sur-l-alliance-flux-react">#</a>Ce qu’il faut savoir sur l’alliance Flux + React</h2><p>Si React et Flux vont si bien ensemble, c’est que l’approche de rendu “naïf” de React (comprendre “React s’en fout de ce qui change, il appelle <code>render</code> à chaque changement”) permet de réduire la logique à écrire dans les Stores, et donc de simplifier très fortement la codebase de l’app.</p>
+<p>Lorsque qu’un ou plusieurs stores composent l’état d’un state React, alors à chaque changement de l’un de ces stores, tous les composants React concernés et leurs enfants vont appeler leur méthode <code>render()</code>. Afin d’éviter des appels superflus à ces méthodes, React donne la possibilité de tester soi-même s’il est nécessaire de mettre à jour le component en déclarant une méthode <code>shouldComponentUpdate</code> retournant un <code>boolean</code> qui stipulera si oui ou non il est nécessaire d’appeler <code>render()</code>.</p>
+<h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><ul>
+<li>Flux, c’est comme du MVC en plus simple, et avec moins de bugs</li>
+<li>L’architecture est unidirectionnelle</li>
+<li>On raisonne en actions, qui sont déclenchées par la vue ou le serveur</li>
+<li>Toutes les actions passent par le dispatcher</li>
+<li>Seuls les stores signalent aux vues qu’il faut se mettre à jour</li>
+</ul>
+<p>Bisous bisous.</p>
+<p><img src="http://media.giphy.com/media/lxd2cZ2BkM4IE/giphy.gif" alt="angulol"></p>
+<p>Pour aller un peu plus loin :</p>
+<ul>
+<li><a href="https://gist.github.com/bloodyowl/b41532cf3627c560b57e">Les sources des exemples</a> contenant le dispatcher et les constants ;</li>
+<li><a href="http://facebook.github.io/flux/docs/overview.html#content">La doc de Flux</a> ;</li>
+<li><a href="https://github.com/facebook/flux">Le repository Flux</a> et ses différents exemples.</li>
+</ul>
+<p><small>
+  <a id="foonote-1"></a>1: <a href="https://www.youtube.com/watch?v=jRzv9gep5Ng&amp;t=4m">Référence utile (<code>ntm install reference</code>)</a>
+</small></p>
+
+]]></description><pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</guid></item><item><title>Première application Ember</title><description><![CDATA[
 <p>Après l’<a href="/posts/js/debuter-avec-ember">article précédent</a> qui a détaillé les principaux concepts d’<a href="http://emberjs.com">Ember</a>, il est grand temps de
 se dégourdir les doigts. Comme on a peur de rien, on va même construire progressivement ensemble une application
 avec <a href="http://emberjs.com">Ember</a>.</p>
@@ -1777,196 +2149,7 @@ du scaffolding en général mais, au démarrage, ça peut donner une idée de la
 vous piquer les yeux. Désolé :-)</p>
 <p><em>Note: les sources de l’application exemple sont <a href="https://github.com/bmeurant/ember-articles/tree/premiere-app-ember">disponibles sur github</a>.</em></p>
 
-]]></description><pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/premiere-app-ember/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/premiere-app-ember/</guid></item><item><title>Flux, qu'est-ce que c'est ?</title><description><![CDATA[
-<p>Allez, tant pis, on saute l’intro et on entre directement dans le vif du sujet (on n’a pas que ça à foutre, après tout).</p>
-<h2 id="la-petite-histoire"><a class="putainde-Title-anchor" href="#la-petite-histoire">#</a>La petite histoire</h2><p>Il était une fois un gros site web <em>que s’apelorio</em> Facebook. Qui dit Facebook, dit webapp plus grosse que la plus grosse de tes copines (<em>no offense</em> <sup><a href="#foonote-1">1</a></sup>) ; et du coup, propension à se retrouver submergé de bugs plus élevée.</p>
-<p>Les ingénieurs front-end de Facebook, confrontés à une codebase de plus en plus bordélique (personne ne voulant toucher certaines parties de celle-ci) ont dû repenser la structure des composants les plus cruciaux.</p>
-<p>Face à ce besoin, ces développeurs sont donc parvenus à deux solutions :</p>
-<ul>
-<li><a href="http://putaindecode.fr/posts/js/introduction-a-reactjs/">ReactJS</a></li>
-<li>Flux</li>
-</ul>
-<p>Flux n’est pas un framework, mais simplement une architecture, une sorte de <em>guideline</em> qui résout pas mal de problèmes ayant pu apparaître avec les divers bibliothèques et frameworks MV* apparus lors des dernières années.</p>
-<h2 id="flux-l-explication-claire"><a class="putainde-Title-anchor" href="#flux-l-explication-claire">#</a>Flux, l’explication claire</h2><p>Flux comporte 4 concepts :</p>
-<ul>
-<li>les <strong>actions</strong>, qu’elles proviennent du serveur ou d’une interaction utilisateur ;</li>
-<li>le <strong>dispatcher</strong> dans lequel sont envoyées les actions que ce dernier transmet <em>à qui veut</em>, un peu comme un <code>EventEmitter</code> global ;</li>
-<li>les <strong>stores</strong>, qui sont l’équivalent du <code>model</code> de l’architecture MVC, ils contiennent les données, et réagissent aux actions que le dispatcher leur transmet ;</li>
-<li>les <strong>views</strong>, qui s’occupent du rendu des données dans le DOM, et de lancer des actions lorsque l’utilisateur effectue certaines actions.</li>
-</ul>
-<p>Jusque-là, rien de bien fou. C’est dans leur manière d’interagir que la particularité se dessine :</p>
-<figure>
-  <img src="http://cl.ly/YENt/flux.png" alt="">
-  <figcaption>Oh bah dis donc, ça va toujours dans le même sens</figcaption>
-</figure>
-
-<p>En effet, le <em>flux</em> en question est unidirectionnel. Pour faire simple, on procède ainsi :</p>
-<p>On définit une action via un <strong>action creator</strong> (on passera toujours par ces action-creators pour signaler une action) :</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// actions/BasketActions.js</span>
-<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispacher"</span>)
-<span class="hljs-comment">/*
-  On garde un dictionnaire des types d'actions
-  afin d'avoir un fichier donnant une vision
-  globale de toutes les interactions de l'app.
- */</span>
-<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
-
-<span class="hljs-built_in">module</span>.exports = {
-  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(productId)</span></span>{
-    AppDispatcher.handleViewAction({
-      type : ActionTypes.ADD_TO_BASKET,
-      productId : productId
-    })
-  }
-}
-</code></pre>
-<p>On lancera par la suite cette action lorsque l’utilisateur aura cliqué sur un certain bouton, dans la vue concernée.</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// components/Product.jsx</span>
-<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">"react/addons"</span>)
-<span class="hljs-keyword">var</span> BasketActions = require(<span class="hljs-string">"../actions/BasketActions"</span>)
-
-<span class="hljs-keyword">var</span> Button = require(<span class="hljs-string">"./common/Button.jsx"</span>)
-
-<span class="hljs-keyword">var</span> Product = React.createClass({
-  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(productId)</span></span>{
-    BasketActions.addToBasket(productId)
-  },
-  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">return</span> (
-      &lt;div className=<span class="hljs-string">"Product"</span>&gt;
-        {<span class="hljs-comment">/* rest of the component*/</span>}
-        &lt;Button
-          onClick={<span class="hljs-keyword">this</span>.addToBasket.bind(<span class="hljs-keyword">this</span>.props.productId)}
-          label=<span class="hljs-string">"Add to basket"</span>
-        /&gt;
-      &lt;/div&gt;
-    )
-  }
-})
-
-module.exports = Product
-</code></pre>
-<p>Dès lors, à chaque clic sur le bouton en question, l’action <code>ADD_TO_BASKET</code> sera passée au dispatcher, qui le signalera aux stores.</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// stores/BasketStore.js</span>
-<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispatcher"</span>)
-<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
-<span class="hljs-keyword">var</span> API = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../api"</span>)
-
-<span class="hljs-keyword">var</span> merge = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/merge"</span>)
-<span class="hljs-keyword">var</span> Store = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/store"</span>)
-
-<span class="hljs-keyword">var</span> _store = {
-  products : []
-}
-
-<span class="hljs-keyword">var</span> BasketStore = merge(Store, {
-  <span class="hljs-comment">/*
-    Ici, on `register` un callback sur l'AppDispatcher,
-    ce qui signifie qu'on verra passer toutes les actions
-    de l'app.
-   */</span>
-  dispatchToken : AppDispatcher.register(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(payload)</span></span>{
-    <span class="hljs-keyword">var</span> action = payload.action
-    <span class="hljs-keyword">switch</span>(action.type) {
-      <span class="hljs-keyword">case</span> ActionTypes.ADD_TO_BASKET:
-          <span class="hljs-comment">/*
-             L'API va ajouter le produit et lancer une
-             action `BASKET_UPDATED` dès que le serveur a répondu.
-          */</span>
-        API.addToBasket(action.productId)
-        <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">case</span> ActionTypes.BASKET_UPDATED:
-          <span class="hljs-comment">/*
-            L'API a répondu, on peut stocker la réponse
-            et signaler le changement
-            aux vues récupérant ces données.
-          */</span>
-          _store = action.reponse
-          BasketStore.emitChange()
-        <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">default</span>:
-        <span class="hljs-keyword">break</span>
-    }
-  })
-})
-
-<span class="hljs-built_in">module</span>.exports = BasketStore
-</code></pre>
-<p>La vue, quant à elle, sera notifiée du changement, et effectuera un <code>render()</code> :</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// components/Basket.jsx</span>
-<span class="hljs-keyword">var</span> React = require(<span class="hljs-string">"react/addons"</span>)
-<span class="hljs-keyword">var</span> BasketActions = require(<span class="hljs-string">"../actions/BasketActions"</span>)
-<span class="hljs-keyword">var</span> BasketStore = require(<span class="hljs-string">"../stores/BasketStore"</span>)
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getState</span><span class="hljs-params">()</span></span>{
-  <span class="hljs-keyword">return</span> BasketStore.getStore()
-}
-
-<span class="hljs-keyword">var</span> Product = React.createClass({
-  getInitialState : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">return</span> getState()
-  },
-  _onStoreChange : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-comment">/*
-      À chaque changement du store, on update naïvement
-      le component et on laisse le virtual DOM faire son job.
-    */</span>
-    <span class="hljs-keyword">this</span>.setState(getState())
-  },
-  componentDidMount : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-comment">/*
-      On écoute le store uniquement lorsque le
-      component est monté.
-     */</span>
-    BasketStore.addChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
-  },
-  componentWillUnmount : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-comment">/*
-      Et on arrête d'écouter quand il ne l'est plus.
-     */</span>
-    BasketStore.removeChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
-  },
-  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">return</span> (
-      &lt;div className=<span class="hljs-string">"Basket"</span>&gt;
-        &lt;div className=<span class="hljs-string">"Basket-count"</span>&gt;
-          {<span class="hljs-keyword">this</span>.state.products.length + <span class="hljs-string">" products"</span>}
-        &lt;/div&gt;
-        {<span class="hljs-comment">/* rest of the component */</span>}
-      &lt;/div&gt;
-    )
-  }
-})
-
-module.exports = Product
-</code></pre>
-<p>Tout cela peut sembler relativement verbeux, mais il faut préciser deux choses :</p>
-<ul>
-<li>les exemples ici le sont volontairement pour la démonstration, et il est aisément faisable d’utiliser un <code>StoreMixin</code> simplifier la déclaration des <code>class</code> React ;</li>
-<li>pour ce qui est du reste, notamment stocker les noms d’actions dans un objet partagé dans l’app, c’est pour rendre plus idiomatique et cohérente la façon dont on code l’app, et pour simplifier ses <em>refactoring</em>.</li>
-</ul>
-<h2 id="ce-qu-il-faut-savoir-sur-l-alliance-flux-react"><a class="putainde-Title-anchor" href="#ce-qu-il-faut-savoir-sur-l-alliance-flux-react">#</a>Ce qu’il faut savoir sur l’alliance Flux + React</h2><p>Si React et Flux vont si bien ensemble, c’est que l’approche de rendu “naïf” de React (comprendre “React s’en fout de ce qui change, il appelle <code>render</code> à chaque changement”) permet de réduire la logique à écrire dans les Stores, et donc de simplifier très fortement la codebase de l’app.</p>
-<p>Lorsque qu’un ou plusieurs stores composent l’état d’un state React, alors à chaque changement de l’un de ces stores, tous les composants React concernés et leurs enfants vont appeler leur méthode <code>render()</code>. Afin d’éviter des appels superflus à ces méthodes, React donne la possibilité de tester soi-même s’il est nécessaire de mettre à jour le component en déclarant une méthode <code>shouldComponentUpdate</code> retournant un <code>boolean</code> qui stipulera si oui ou non il est nécessaire d’appeler <code>render()</code>.</p>
-<h2 id="tl-dr"><a class="putainde-Title-anchor" href="#tl-dr">#</a>tl;dr</h2><ul>
-<li>Flux, c’est comme du MVC en plus simple, et avec moins de bugs</li>
-<li>L’architecture est unidirectionnelle</li>
-<li>On raisonne en actions, qui sont déclenchées par la vue ou le serveur</li>
-<li>Toutes les actions passent par le dispatcher</li>
-<li>Seuls les stores signalent aux vues qu’il faut se mettre à jour</li>
-</ul>
-<p>Bisous bisous.</p>
-<p><img src="http://media.giphy.com/media/lxd2cZ2BkM4IE/giphy.gif" alt="angulol"></p>
-<p>Pour aller un peu plus loin :</p>
-<ul>
-<li><a href="https://gist.github.com/bloodyowl/b41532cf3627c560b57e">Les sources des exemples</a> contenant le dispatcher et les constants ;</li>
-<li><a href="http://facebook.github.io/flux/docs/overview.html#content">La doc de Flux</a> ;</li>
-<li><a href="https://github.com/facebook/flux">Le repository Flux</a> et ses différents exemples.</li>
-</ul>
-<p><small>
-  <a id="foonote-1"></a>1: <a href="https://www.youtube.com/watch?v=jRzv9gep5Ng&amp;t=4m">Référence utile (<code>ntm install reference</code>)</a>
-</small></p>
-
-]]></description><pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</guid></item><item><title>À la conquête des bugs</title><description><![CDATA[
+]]></description><pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/premiere-app-ember/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/premiere-app-ember/</guid></item><item><title>À la conquête des bugs</title><description><![CDATA[
 <p>Le Web, depuis sa création est un vaste champ de bataille. Que ce soit les problèmes de compatibilités, les formats ou les langages propriétaires, la volonté de faire du Web un monde ouvert ne date pas d’hier.</p>
 <h2 id="au-depart"><a class="putainde-Title-anchor" href="#au-depart">#</a>Au départ</h2><p>Les débuts du Web furent compliqués. On assista à une guerre entre Netscape et Microsoft. Chacun voulant dominer le marché, en tentant d’imposer ses propres technologies. En 1996, Netscape propose au W3C JSSS (JavaScript-Based Style Sheets). Ce n’est d’ailleurs que depuis novembre 2000 que Netscape, basé sur le moteur Gecko (moteur de Mozilla Firefox), prend véritablement en charge le CSS. Microsoft pour sa part ne supportait par JavaScript à ses débuts et avait développé son propre langage JScript.</p>
 <p>Ces problèmes de compatibilités, de technologies et de respect des normes vont considérablement ralentir l’évolution du Web.</p>
@@ -2132,174 +2315,7 @@ est progressive et il est très simple à prendre en main une fois les concepts 
 article. Au prochain épisode, nous verrons justement - par la pratique cette fois, <strong>comment démarrer et construire progressivement une
 application <a href="http://emberjs.com">Ember</a></strong>.</p>
 
-]]></description><pubDate>Mon, 20 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/debuter-avec-ember/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/debuter-avec-ember/</guid></item><item><title>Comment essayer de coder à peu près comme un chef (raté) sous Windows</title><description><![CDATA[
-<figure>
-  <img src="index.jpg" alt="Keyboard">
-  <small><a href="http://www.customity.com/content/wallpaper/windows-key-wallpaper">Credit photo</a></small>
-</figure>
-
-<p>Oh oui, en voilà une belle question.</p>
-<p>Il n’est pas toujours évident d’avoir un Linux, Unix, BSD ou autre avec un petit shell bien sympa sous la main. Et parfois coder sous Windows est une nécessité voire un désir. (Ouais, je ne vous parlerai pas ici de changer de boulot si Windows vous est imposé(e). Je ne vous expliquerai pas non plus votre masochisme d’apprécier cet OS pour développer, ce n’est pas le sujet).</p>
-<p>Étant un homme de challenge, j’aime me mettre dans des contextes limités et voir comment je me débrouille pour sortir d’une situation pénible à une situation acceptable voire agréable. Je me suis alors lancé pour vous dans cette aventure.</p>
-<p>Oh mais pourquoi j’ai dû faire ça à la base ?</p>
-<p>Après avoir créé <a href="https://github.com/kud/my">mon propre système de synchronisation de machines sous Mac OS X</a> (plus souvent communément appelé dotfiles mais faisant un peu plus), j’ai voulu faire de même sous Windows au cas où mon système crasherait et où je devrais tout réinstaller. On n’est jamais à l’abri.</p>
-<p>Pour cela, plusieurs outils vont vous être nécessaires. Un chef sans bons outils, c’est drôlement handicapant. (Déjà que l’OS en question n’aide pas).</p>
-<h2 id="chocolatey-la-base"><a class="putainde-Title-anchor" href="#chocolatey-la-base">#</a>Chocolatey : la base</h2><p><a href="http://chocolatey.org/">Chocolatey</a>. Ouais, chocolatey, ce petit script vous permettra de télécharger tout et n’importe quoi en CLI (ligne de commandes). Pour ceux qui ont l’habitude de Mac ou Linux, c’est le brew / apt-get de Windows.</p>
-<p>Comment l’installer ?</p>
-<p>Lancez <code>cmd.exe</code> en mode administrateur (touche windows puis “cmd” puis shift+ctrl+enter) et exécutez ce code :</p>
-<pre><code class="lang-console">$ <span class="hljs-variable">@powershell</span> -NoProfile -ExecutionPolicy unrestricted -Command <span class="hljs-string">"iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))"</span> &amp;&amp; SET PATH=<span class="hljs-variable">%PATH</span><span class="hljs-variable">%;</span><span class="hljs-variable">%ALLUSERSPROFILE</span><span class="hljs-variable">%\</span>chocolatey\bin
-</code></pre>
-<p>Ou <code>PowerShell</code> en mode administrateur (touche windows puis “powershell” puis shift+ctrl+enter) et éxecutez :</p>
-<pre><code class="lang-console">$ iex ((new-<span class="hljs-tag">object</span> net.webclient).<span class="hljs-function"><span class="hljs-title">DownloadString</span><span class="hljs-params">(<span class="hljs-string">'https://chocolatey.org/install.ps1'</span>)</span></span>)
-</code></pre>
-<p>Une fois installé, vous pourrez installer n’importe quel logiciel listé sur <a href="http://chocolatey.org/packages">leur site</a>.</p>
-<p>Passons à la suite.</p>
-<h2 id="logiciels-de-developpement"><a class="putainde-Title-anchor" href="#logiciels-de-developpement">#</a>Logiciels de développement</h2><p>Yes, on a donc Chocolatey qui va nous simplifier grandement l’installation de logiciels. Passons maintenant aux outils pour bien développer.</p>
-<h3 id="git"><a class="putainde-Title-anchor" href="#git">#</a>Git</h3><p>Lorsque tu joues à un jeu vidéo, tu sauvegardes régulièrement ton avancement non ? Bah là, c’est pareil mais pour le code.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> git.<span class="hljs-keyword">install</span>
-</code></pre>
-<ul>
-<li><a href="http://git-scm.com/">site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/git.install">lien du package</a></li>
-</ul>
-<h3 id="node-js"><a class="putainde-Title-anchor" href="#node-js">#</a>Node.js</h3><p>Faire du JavaScript côté serveur ou en shell, le pied. Surtout pour faire des scripts Windows, plutôt que de passer par Batch.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> nodejs.<span class="hljs-keyword">install</span>
-</code></pre>
-<ul>
-<li><a href="http://nodejs.org/">site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/nodejs.install">lien du package</a></li>
-</ul>
-<h3 id="editeur-de-texte"><a class="putainde-Title-anchor" href="#editeur-de-texte">#</a>Éditeur de texte</h3><p>Sublime Text, l’éditeur préféré des Franç… je m’égare. Bref, un bon éditeur.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> sublimetext3
-</code></pre>
-<ul>
-<li><a href="http://www.sublimetext.com/">site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/sublimetext3">lien du package</a></li>
-</ul>
-<p>Vous pouvez aussi installer <a href="https://atom.io/">Atom</a> si vous préférez.</p>
-<h3 id="gestion-d-une-base-de-donnees"><a class="putainde-Title-anchor" href="#gestion-d-une-base-de-donnees">#</a>Gestion d’une base de données</h3><p>HeidiSQL, un logiciel avec une interface qui se rapproche de phpMyAdmin.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> HeidiSQL
-</code></pre>
-<ul>
-<li><a href="http://www.heidisql.com/">site officiel</a></li>
-<li><a href="http://chocolatey.org/packages/HeidiSQL">lien du package</a></li>
-</ul>
-<p>Ou encore MySQL Workbench un excellent soft pour gérer une base de données:</p>
-<ul>
-<li>Modélisation</li>
-<li>Édition</li>
-<li>Migration
-Par contre, il est un peu plus complexe à utiliser.</li>
-</ul>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> mysql.workbench
-</code></pre>
-<ul>
-<li><a href="http://dev.mysql.com/downloads/workbench/">site officiel</a></li>
-<li><a href="http://chocolatey.org/packages/mysql.workbench">lien du package</a></li>
-</ul>
-<h3 id="un-meilleur-shell"><a class="putainde-Title-anchor" href="#un-meilleur-shell">#</a>Un meilleur shell</h3><p>Cmder va vous permettre quelques fonctionnalités intéressantes que le shell de Windows n’a pas de base, comme taper <code>&lt;tab&gt;</code> pour l’autocomplétion, avoir un historique persistant entre 2 sessions, des onglets, le split de console, l’intégration de PuTTY et d’autres choses venu de la banquise. (le lieu de vie des pinguins)</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> Cmder
-</code></pre>
-<ul>
-<li><a href="https://bliker.github.io/cmder/">site officiel</a></li>
-<li><a href="http://chocolatey.org/packages/Cmder">lien du package</a></li>
-</ul>
-<h3 id="si-vous-avez-besoin-de-ssh"><a class="putainde-Title-anchor" href="#si-vous-avez-besoin-de-ssh">#</a>Si vous avez besoin de SSH</h3><p>Pour le SSH sous Windows c’est assez complexe, il faut quelques outils dont le principal, putty (un terminal et +).</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> putty
-</code></pre>
-<ul>
-<li><a href="http://chocolatey.org/packages/putty">site officiel</a></li>
-<li><a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">lien du package</a></li>
-</ul>
-<p>Putty vient avec une suite de logiciels :</p>
-<ul>
-<li><a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">PuTTYgen</a> pour générer une clé SSH sous Windows</li>
-<li><a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">Plink</a> pour permettre à HeidiSQL de se connecter à une base de données via SSH.</li>
-<li><a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">Pageant</a> pour charger votre clé SSH dans Windows pour éviter qu’il demande sans cesse la clé ou le mot de passe.</li>
-</ul>
-<blockquote>
-<p>Pour que le ssh soit agréable, je vous recommande pageant et ensuite un terminal comme <em>Clink</em> ou encore <em>git bash</em> qui s’installe via <em>git</em>.</p>
-</blockquote>
-<h3 id="une-machine-virtuelle-pour-tester-ie-ou-meme-gnu-linux"><a class="putainde-Title-anchor" href="#une-machine-virtuelle-pour-tester-ie-ou-meme-gnu-linux">#</a>Une machine virtuelle pour tester IE ou même GNU/Linux</h3><p>On a toujours une intégration à tester sous IE pour ça Microsoft nous donne accès à des machines virtuelles gratuitement sur <a href="https://www.modern.ie/fr-fr">ModernIE</a>. Il nous faut donc Virtualbox pour les lancer.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> virtualbox
-$ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
-</code></pre>
-<blockquote>
-<p>l’Extension Pack est utile pour une intégration parfaite avec votre machine si vous installez votre propre VM GNU/Linux ou Windows.</p>
-</blockquote>
-<ul>
-<li><a href="hhttps://www.virtualbox.org/">site officiel</a></li>
-<li><a href="http://chocolatey.org/packages/virtualbox">lien du package</a></li>
-</ul>
-<h3 id="compresser-decompresser-comme-vous-le-voulez"><a class="putainde-Title-anchor" href="#compresser-decompresser-comme-vous-le-voulez">#</a>Compresser / décompresser comme vous le voulez</h3><p>7zip, le logiciel de référence pour ce genre de pratique.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> <span class="hljs-number">7</span>zip.<span class="hljs-keyword">install</span>
-</code></pre>
-<ul>
-<li><a href="http://www.7-zip.org/">site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/7zip.install">lien du package</a></li>
-</ul>
-<h3 id="gerer-les-pdf"><a class="putainde-Title-anchor" href="#gerer-les-pdf">#</a>Gérer les pdf</h3><p>Sumatra pour les lire. PDFCreator pour faire une imprimante virtuelle sortant des PDFs.</p>
-<h4 id="sumatra"><a class="putainde-Title-anchor" href="#sumatra">#</a>Sumatra</h4><ul>
-<li><a href="http://blog.kowalczyk.info/software/sumatrapdf/free-pdf-reader.html">site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/sumatrapdf.install">lien du package</a></li>
-</ul>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> sumatrapdf.<span class="hljs-keyword">install</span>
-</code></pre>
-<h4 id="pdfcreator"><a class="putainde-Title-anchor" href="#pdfcreator">#</a>PDFCreator</h4><ul>
-<li><a href="http://www.pdfforge.org/pdfcreator">site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/pdfcreator">lien du package</a></li>
-</ul>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> pdfcreator
-</code></pre>
-<h3 id="mettre-des-onglets-dans-l-explorateur-de-fichiers"><a class="putainde-Title-anchor" href="#mettre-des-onglets-dans-l-explorateur-de-fichiers">#</a>Mettre des onglets dans l’explorateur de fichiers</h3><p>Nous sommes en 2014 ça fait des années que Microsoft sait mais, ce n’est toujours pas disponible. C’est là que Clover rentre en jeu.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> Clover
-</code></pre>
-<ul>
-<li><a href="http://ejie.me/">site officiel</a></li>
-<li><a href="http://chocolatey.org/packages/Clover">lien du package</a></li>
-</ul>
-<h3 id="spaaaaaaaces"><a class="putainde-Title-anchor" href="#spaaaaaaaces">#</a>Spaaaaaaaces</h3><p>Parce qu’avoir plusieurs bureaux / espaces, c’est plus pratique pour gérer ses fenêtres, je vous propose VirtuaWin. Cela vous permettra de garder en plein écran vos logiciels et de zapper d’un logiciel à un autre sans passer par <code>alt+tab</code> mais en allant d’un bureau à un autre.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> virtuawin
-</code></pre>
-<ul>
-<li><a href="http://virtuawin.sourceforge.net/">site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/virtuawin">lien du package</a></li>
-</ul>
-<h3 id="launchy-le-alfred-like-sous-windows"><a class="putainde-Title-anchor" href="#launchy-le-alfred-like-sous-windows">#</a>Launchy, le Alfred-like sous Windows</h3><p>Je sais pas vous mais moi, les raccourcis qui me gâchent mon beau wallpaper choisi avec goût, ça m’énerve. Et puis le clickodrome, c’est lent et chiant. Du coup, lancer ses logiciels à partir d’un moteur de recherche, c’est quand même vachement bien. Ca permet aussi de faire des recherches de fichier, des calculs, et tout un tas d’autres choses. Voici alors Launchy.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> launchy-beta
-</code></pre>
-<ul>
-<li><a href="http://www.launchy.net/">site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/launchy-beta">lien du package</a></li>
-</ul>
-<h3 id="pipette-et-retouche"><a class="putainde-Title-anchor" href="#pipette-et-retouche">#</a>Pipette et retouche</h3><p>L’indispensable <a href="http://photofiltre.free.fr/frames.htm">PhotoFiltre</a> qui, bien qu’il ne soit plus mis à jour depuis 2012, est très stable et efficace. Il fait peu mais, le fait bien.</p>
-<ul>
-<li>Édition rapide d’images</li>
-<li>Pipette</li>
-<li>etc.</li>
-</ul>
-<p>Et surtout, il est ultra léger et démarre en moins d’une seconde.</p>
-<h3 id="et-enfin-comment-ne-pas-se-niquer-les-yeux-toute-la-journee"><a class="putainde-Title-anchor" href="#et-enfin-comment-ne-pas-se-niquer-les-yeux-toute-la-journee">#</a>Et enfin, comment ne pas se niquer les yeux toute la journée</h3><h4 id="f-lux"><a class="putainde-Title-anchor" href="#f-lux">#</a>f.lux</h4><p>On va commencer par f.lux. Ce petit logiciel permettant de gérer la colorimétrie de votre écran en fonction de l’heure. Typiquement, les écrans rendent un blanc digne d’un soleil à midi. Sauf que le soir, on allume la lumière et celle-ci n’a pas du coup une couleur blanche mais souvent plutôt rouge. f.lux permet alors d’ajuster votre écran afin que la couleur soit identique à la lumière ambiante pour réduire les différences de couleurs et éviter de vous abimer les yeux. En plus, ça permet au cerveau de se préparer à aller se coucher. :D</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> f.lux
-</code></pre>
-<ul>
-<li><a href="https://justgetflux.com/">site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/f.lux">lien du package</a></li>
-</ul>
-<h4 id="mactype"><a class="putainde-Title-anchor" href="#mactype">#</a>MacType</h4><p>Et surtout, MacType. Oh oui MacType. Je pense que seule une personne venant de Mac OS X peut comprendre. Dieu sait que le font rendering sous Windows est vraiment pourri et que Steve Jobs depuis le départ de Mac a fait en sorte sur le rendering des fonts sous son OS soit de qualité.</p>
-<p>Pour réduire cette différence entre un Windows et un Mac OS X, je vous propose MacType qui permet de remplacer le font rendering de Windows et d’apprécier lire à nouveau sur cet OS.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> mactype
-</code></pre>
-<p>Je vous conseille le profil <code>XMac.LCD.Default</code>.</p>
-<ul>
-<li><a href="https://code.google.com/p/mactype/">site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/mactype">lien du package</a></li>
-</ul>
-<h2 id="vous-voila-pare-e-"><a class="putainde-Title-anchor" href="#vous-voila-pare-e-">#</a>Vous voilà paré(e) !</h2><p>On est bon, on a tous les outils nécessaires pour pouvoir coder correctement sur Windows.</p>
-<p>Si vous souhaitez en savoir plus et surtout vous tenir à jour d’éventuels logiciels que je pourrais installer, n’hésitez pas à vous rendre sur mon projet <a href="https://github.com/kud/my-unfortunately">my-unfortunately</a> qui est le <em>synchroniser</em> dont je vous ai parlé tout à l’heure.</p>
-<p>Bon code !</p>
-
-]]></description><pubDate>Wed, 15 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/windows/comment-coder-sous-windows/</link><guid isPermaLink="true">http://putaindecode.fr/posts/windows/comment-coder-sous-windows/</guid></item><item><title>Dépendances et premier projet en Ruby</title><description><![CDATA[
+]]></description><pubDate>Mon, 20 Oct 2014 00:00:00 GMT</pubDate><link>http://putaindecode.fr/posts/js/debuter-avec-ember/</link><guid isPermaLink="true">http://putaindecode.fr/posts/js/debuter-avec-ember/</guid></item><item><title>Dépendances et premier projet en Ruby</title><description><![CDATA[
 <p><a href="#tl-dr">tl;dr</a></p>
 <p>Dans l’<a href="/posts/backend/premiers-pas-avec-ruby">article précédent</a>
 nous avons installé Ruby. Désormais nous allons aborder les gems,
