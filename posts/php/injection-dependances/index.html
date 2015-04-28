@@ -1,41 +1,13 @@
-<!DOCTYPE html><html lang="fr" class="cssr-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>L'injection de dépendances en PHP</title><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@putaindecode"/><meta name="twitter:title" content="L'injection de dépendances en PHP"/><meta name="twitter:creator" content="@_neemzy"/><meta property="og:title" content="L'injection de dépendances en PHP"/><meta property="og:type" content="article"/><meta property="og:site_name" content="Putain de code !"/><link rel="stylesheet" href="../../../stylesheets/index.css"><link rel="alternate" href="../../../feed.xml" title="Putain de code !" type="application/atom+xml"></head><body><svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-    <symbol id="putainde-Icon-bookmark" viewBox="0 0 512 512">
-      <title>bookmark icon</title>
-      <path d="M318.275 90v283.23L256 318.16l-62.275 55.07V90h124.55m40-40h-204.55v412L256 371.557 358.275 462V50z"/>
-    </symbol>
-
-    <symbol id="putainde-Icon-github" viewBox="0 0 512 512">
-      <title>github icon</title>
-      <path d="M461.633 250.645l.367-3.82c-22.896-2.22-45.667-2.418-67.79-.73 3.557-11.346 5.43-24.163 5.295-38.738-.292-30.965-10.616-55.08-26.843-75.096 3.116-18.85.77-37.7-5.11-56.56-23.188 1.898-44.054 9.493-62.635 22.686-34.725-7.044-69.447-7.493-104.172 0-21.673-14.627-42.956-21.802-63.91-22.686-6.21 20.765-7.168 41.233-1.916 61.357-18.28 19.397-25.27 42.944-24.926 69.02.196 14.926 2.496 28.208 6.738 39.95-21.796-1.598-44.2-1.385-66.732.8l.367 3.818c22.947-2.228 45.76-2.41 67.92-.678.813 1.974 1.632 3.94 2.566 5.815-24.01-.633-45.618 1.453-65.854 6.43l.913 3.723c20.538-5.048 42.54-7.08 67.107-6.254 16.246 28.865 47.52 45.825 93.063 51.206-10.58 8.594-16.27 18.73-17.735 30.2h-24.12c-32.395 0-41.227-41.303-74.78-37.228C132 320 125.5 371.598 177.588 371.598h21.88v47.297c.234 7.643-3.093 12.754-8.47 16.297 18.655 1.884 32.675-7.43 32.675-18.854V353.82l5.833-6v72.992c.245 7.265-3.284 11.392-7.03 15.34 16.433.653 31.89-2.63 32.59-16.616V349.68s5.757-3.6 5.757 0v66.58c.17 11.8 10.36 21.366 31.953 19.892-5.776-4.65-7.55-9.35-7.55-16.15v-72.18s5.95-.307 5.95 6v60.88c0 13.55 16.268 19.14 34.83 18.615-6.08-4.558-10.196-9.99-10.223-17.256v-73.216c-.63-10.762-5.003-20.906-13.582-30.358 41.63-6.392 71.638-23.01 86.58-52.796 24.646-.847 46.714 1.183 67.306 6.246l.914-3.723c-20.394-5.014-42.18-7.096-66.416-6.415.84-1.89 1.67-3.79 2.39-5.785 22.39-1.798 45.457-1.622 68.66.632zM114 310.023c-1.023 0-1.853-.588-1.853-1.313 0-.728.83-1.315 1.853-1.315 1.024 0 1.854.588 1.854 1.315 0 .726-.83 1.313-1.854 1.313zm5.833 3.98c-1.137 0-2.06-.653-2.06-1.46s.923-1.462 2.06-1.462 2.06.656 2.06 1.463-.923 1.46-2.06 1.46zm5.917 5.17c-1.333 0-2.415-.767-2.415-1.713s1.082-1.714 2.415-1.714 2.416.768 2.416 1.714-1.083 1.712-2.416 1.712zm5.75 6.206c-1.56 0-2.825-.897-2.825-2.004s1.265-2.005 2.825-2.005 2.825.9 2.825 2.006-1.265 2.003-2.825 2.003zm6.333 7.014c-1.733 0-3.14-.996-3.14-2.226s1.407-2.228 3.14-2.228 3.14.998 3.14 2.228-1.407 2.226-3.14 2.226zm7.334 7.123c-1.926 0-3.488-1.107-3.488-2.474s1.56-2.476 3.487-2.476c1.925 0 3.487 1.11 3.487 2.476s-1.562 2.474-3.487 2.474zm9.916 6.774c-2.14 0-3.875-1.23-3.875-2.748 0-1.52 1.735-2.75 3.875-2.75s3.875 1.23 3.875 2.75c0 1.518-1.735 2.75-3.875 2.75zm12.292 3.626c-2.14 0-3.875-1.23-3.875-2.75 0-1.518 1.735-2.75 3.875-2.75s3.875 1.232 3.875 2.75c0 1.52-1.735 2.75-3.875 2.75zm12.958.417c-2.14 0-3.875-1.23-3.875-2.75 0-1.518 1.735-2.75 3.875-2.75s3.875 1.232 3.875 2.75c0 1.52-1.735 2.75-3.875 2.75zm12.792.25c-2.14 0-3.875-1.23-3.875-2.75 0-1.518 1.735-2.75 3.875-2.75s3.875 1.232 3.875 2.75c0 1.52-1.735 2.75-3.875 2.75z"/>
-    </symbol>
-
-    <symbol id="putainde-Icon-home" viewBox="0 0 512 512">
-      <title>home icon</title>
-      <path d="M394.072 174.805l-47.916-48.023v-38.31h47.916v86.333zM462 275.815h-42.508v166.213H92.508V275.815H50L256 69.972l206 205.843zm-165.153-3.843c-15.81-3.316-29.02 4.086-38.792 19.387-9.77-15.302-22.98-22.704-38.79-19.388-36.745 10.876-36.335 69.543 38.583 113.047 75.06-43.26 75.742-102.172 39-113.048z"/>
-    </symbol>
-
-    <symbol id="putainde-Icon-pencil" viewBox="0 0 512 512">
-      <title>pencil icon</title>
-      <path d="M74.686 340.686L50 460.95l122.365-22.585L379.52 231.21l-97.68-97.68L74.686 340.687zm228.402-135.654l-181.89 181.89-21.214-21.213 181.89-181.89 21.214 21.212zM462 148.732l-52.662 52.66-97.682-97.68 52.662-52.662L462 148.73z"/>
-    </symbol>
-
-    <symbol id="putainde-Icon-text-file" viewBox="0 0 512 512">
-      <title>text-file icon</title>
-      <path d="M256 370.312h-84.495v-30H256v30zm83.495-55.416h-167.99v-30h167.99v30zm0-55.334h-167.99v-30h167.99v30zM297.818 90v85.75h85.864V422H128.317V90h169.5m25-40h-234.5v412h335.365V150.75L322.818 50z"/>
-    </symbol>
-
-    <symbol id="putainde-Icon-twitter" viewBox="0 0 512 512">
-      <title>twitter icon</title>
-      <path d="M462 128.223c-15.158 6.724-31.45 11.27-48.547 13.31 17.45-10.46 30.854-27.025 37.164-46.764-16.333 9.686-34.422 16.72-53.676 20.51-15.417-16.428-37.385-26.69-61.697-26.69-54.56 0-94.668 50.915-82.337 103.786-70.25-3.524-132.534-37.177-174.223-88.314-22.142 37.983-11.485 87.69 26.158 112.85-13.853-.438-26.89-4.24-38.284-10.574-.917 39.162 27.146 75.78 67.795 83.95-11.895 3.236-24.925 3.977-38.17 1.446 10.755 33.58 41.973 58.018 78.96 58.7C139.605 378.28 94.847 390.72 50 385.435c37.406 23.982 81.837 37.977 129.57 37.977 156.933 0 245.596-132.55 240.252-251.435 16.517-11.917 30.846-26.804 42.178-43.755z"/>
-    </symbol>
-</svg><div class="putainde-Header"><div class="Grid"><div class="Grid-cell u-size5of12"><a href="../../.." class="putainde-SiteTitle"><img alt="Putain de code !" src="../../../images/p!-logo.svg" class="putainde-Logo"><span>Putain de code !</span></a></div><div class="Grid-cell u-size7of12"><nav class="putainde-Nav"><a href="../.." data-cssr-tooltip="" class="putainde-Nav-item  "><svg style="" class="putainde-Icon putainde-Icon-bookmark"><use xlink:href="#putainde-Icon-bookmark"></use></svg> Articles</a><a href="../../../c-est-quoi-putaindecode" data-cssr-tooltip="" class="putainde-Nav-item  "><svg style="" class="putainde-Icon putainde-Icon-text-file"><use xlink:href="#putainde-Icon-text-file"></use></svg> Readme</a><a href="../../comment-contribuer" data-cssr-tooltip="" class="putainde-Nav-item  "><svg style="" class="putainde-Icon putainde-Icon-pencil"><use xlink:href="#putainde-Icon-pencil"></use></svg> Participer</a><a href="https://github.com/putaindecode/" data-cssr-tooltip="GitHub" class="putainde-Nav-item  putainde-Nav-item--icon cssr-Tooltip cssr-Tooltip--bottom"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a><a href="https://twitter.com/putaindecode/" data-cssr-tooltip="Twitter" class="putainde-Nav-item  putainde-Nav-item--icon cssr-Tooltip cssr-Tooltip--bottom"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a></nav></div></div></div><div class="putainde-Main"><article class="Grid putainde-Post"><div class="Grid-cell u-size8of12 Grid putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">L'injection de dépendances en PHP</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas">Écrit par <a href="http://neemzy.org">neemzy</a>, <span class="putainde-Date"> le 5 nov. 2014</span>. <span data-cssr-tooltip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingTime-wpm="250" class="putainde-Post-readingTime putainde-Post-readingTime--hidden cssr-Tooltip cssr-Tooltip--top">Temps de lecture : environ  <span class="putainde-Post-readingTime-value"></span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">php</li><li class="putainde-Tag">php-di</li></ul></header><div class="putainde-Post-md"><p>Salutations ! Aujourd’hui, je suis venu te parler de PHP (sisi), et notamment du mécanisme d’injection de dépendances avec lequel tu n’es peut-être pas familier. Au menu, des objets, des usines et des conteneurs, alors enfile ton bonnet et tes gants, on va bouger du bordel !</p>
-<h2 id="l-injection-de-dependances-c-est-quoi-ce-truc-"><a class="putainde-Title-anchor" href="#l-injection-de-dependances-c-est-quoi-ce-truc-">#</a>L’injection de dépendances ? C’est quoi ce truc ?</h2><p>Si tu fais de la programmation orientée objet, il est fort probable que ce terme ne te soit pas totalement inconnu. En PHP, on a principalement commencé à nous en rebattre les oreilles avec l’avènement de Symfony, qui est aujourd’hui le framework web majeur pour ce langage. Fabien Potencier, créateur et <em>lead developer</em> de Symfony, cite en exemple sur <a href="http://fabien.potencier.org/article/11/what-is-dependency-injection">son blog</a> cette définition :</p>
+<!doctype html>
+<html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>L&#x27;injection de dépendances en PHP</title><link rel="stylesheet" href="/index.css"><link rel="alternate" href="/feed.xml" title="L&#x27;injection de dépendances en PHP" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="L&#x27;injection de dépendances en PHP"><meta name="twitter:creator" content="@_neemzy"><meta property="og:title" content="L&#x27;injection de dépendances en PHP"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><img class="putainde-Logo" alt="Putain de code !" src="/images/p!-logo.svg"><span>Putain de code !</span></a></div><div class="r-Grid-cell r-all--7of12"><nav class="putainde-Nav"><a class="putainde-Nav-item" href="/posts" data-r-tooltip=""><img class="putainde-Icon" src="/icons/bookmark.svg">Articles</a><a class="putainde-Nav-item" href="/c-est-quoi-putaindecode" data-r-tooltip=""><img class="putainde-Icon" src="/icons/text-file.svg">Readme</a><a class="putainde-Nav-item" href="/posts/comment-contribuer" data-r-tooltip=""><img class="putainde-Icon" src="/icons/pencil.svg">Participer</a><a class="putainde-Nav-item putainde-Nav-item--icon r-Tooltip r-Tooltip--bottom" href="https://github.com/putaindecode/" data-r-tooltip="GitHub"><img class="putainde-Icon" src="/icons/github.svg"></a><a class="putainde-Nav-item putainde-Nav-item--icon r-Tooltip r-Tooltip--bottom" href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a></nav></div></div></div><div class="putainde-Main"><article class="r-Grid putainde-Post"><div class="r-Grid-cell r-all--8of12 putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">L&#x27;injection de dépendances en PHP</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas"><span>Écrit par <span><a href="http://neemzy.org">neemzy</a><span></span></span></span><span>, </span><span class="putainde-Date"> le 5 nov. 2014</span>. <span class="putainde-Post-readingTime putainde-Post-readingTime--hidden r-Tooltip r-Tooltip--top" data-r-tooltip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingtime-wpm="250">Temps de lecture : environ  <span class="putainde-Post-readingTime-value">...</span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">php</li><li class="putainde-Tag">php-di</li></ul></header><div class="putainde-Post-md"><div><p>Salutations ! Aujourd’hui, je suis venu te parler de PHP (sisi), et notamment du mécanisme d’injection de dépendances avec lequel tu n’es peut-être pas familier. Au menu, des objets, des usines et des conteneurs, alors enfile ton bonnet et tes gants, on va bouger du bordel !</p>
+<h2 id="l-injection-de-d-pendances-c-est-quoi-ce-truc-">L’injection de dépendances ? C’est quoi ce truc ?</h2>
+<p>Si tu fais de la programmation orientée objet, il est fort probable que ce terme ne te soit pas totalement inconnu. En PHP, on a principalement commencé à nous en rebattre les oreilles avec l’avènement de Symfony, qui est aujourd’hui le framework web majeur pour ce langage. Fabien Potencier, créateur et <em>lead developer</em> de Symfony, cite en exemple sur <a href="http://fabien.potencier.org/article/11/what-is-dependency-injection">son blog</a> cette définition :</p>
 <blockquote>
 <p><em>Dependency Injection is where components are given their dependencies through their constructors, methods, or directly into fields.</em></p>
 <p>Quelqu’un</p>
 </blockquote>
 <p>C’est clair, non ? Non ? Bon. Imaginons un bout d’appli PHP, où l’on désire gérer des personnes qui ont chacune une adresse postale. Si tu n’as pas trop dormi à la fac le vendredi matin après ta cuite du jeudi soir, tu devrais pouvoir déterminer tout seul qu’on va avoir besoin d’une classe <code>Person</code> et d’une classe <code>Address</code> :</p>
-<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Address</span>
+<pre><code class="hljs php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Address</span>
 </span>{
     <span class="hljs-keyword">private</span> <span class="hljs-variable">$number</span>;
     <span class="hljs-keyword">private</span> <span class="hljs-variable">$street</span>;
@@ -54,10 +26,10 @@
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>
 </span>{
     <span class="hljs-keyword">private</span> <span class="hljs-variable">$address</span>;
-}
-</code></pre>
+}</code></pre>
+
 <p>Tu noteras que je n’ai pas encore écrit le constructeur de la classe <code>Person</code>. Justement. Le développeur naïf procédera de la façon suivante :</p>
-<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>
+<pre><code class="hljs php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>
 </span>{
     <span class="hljs-keyword">private</span> <span class="hljs-variable">$address</span>;
 
@@ -67,25 +39,25 @@
     }
 }
 
-<span class="hljs-variable">$person</span> = <span class="hljs-keyword">new</span> Person(<span class="hljs-number">5</span>, <span class="hljs-string">'Allée des Rosiers'</span>, <span class="hljs-number">78670</span>, <span class="hljs-string">'Villennes-sur-Seine'</span>);
-</code></pre>
+<span class="hljs-variable">$person</span> = <span class="hljs-keyword">new</span> Person(<span class="hljs-number">5</span>, <span class="hljs-string">'Allée des Rosiers'</span>, <span class="hljs-number">78670</span>, <span class="hljs-string">'Villennes-sur-Seine'</span>);</code></pre>
+
 <p>Alors oui, hein, ça marche, et on peut instancier une personne et son adresse en une ligne de code. Le problème est qu’en procédant ainsi, les classes <code>Person</code> et <code>Address</code> deviennent <strong>étroitement couplées</strong> : la classe <code>Person</code> est inutilisable sans la classe <code>Address</code>, et pire, le code interne de la première serait impacté par un changement sur la seconde.</p>
 <p>Pas convaincu ? Qu’est-ce qui se passera le jour où on lèvera 10 millions de dollars pour internationaliser l’appli ?</p>
-<pre><code class="lang-php">class Address
-{
-    // <span class="hljs-keyword">...</span>
-    private $country;
+<pre><code class="hljs php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Address</span>
+</span>{
+    <span class="hljs-comment">// ...</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-variable">$country</span>;
 
-    public <span class="hljs-keyword">function</span> __construct($number, $street, $zipcode, $city, $country)
-    {
-        // <span class="hljs-keyword">...</span>
-        $this-&gt;country = $country;
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(<span class="hljs-variable">$number</span>, <span class="hljs-variable">$street</span>, <span class="hljs-variable">$zipcode</span>, <span class="hljs-variable">$city</span>, <span class="hljs-variable">$country</span>)</span>
+    </span>{
+        <span class="hljs-comment">// ...</span>
+        <span class="hljs-variable">$this</span>-&gt;country = <span class="hljs-variable">$country</span>;
     }
-}
-</code></pre>
+}</code></pre>
+
 <p>Ah bah mince, il faut aussi modifier le constructeur de la classe <code>Person</code> pour y ajouter le nouveau paramètre <code>$country</code> de manière symétrique. C’est ballot.</p>
 <p>Dans l’idéal, la classe <code>Person</code> devrait se foutre royalement de la façon dont la classe <code>Address</code> fonctionne. Une personne a toujours besoin d’une adresse, mais ça n’implique certainement pas que ce soit le rôle de cette classe de la forger. Alors, on fait comment ? C’est très simple :</p>
-<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>
+<pre><code class="hljs php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>
 </span>{
     <span class="hljs-keyword">private</span> <span class="hljs-variable">$address</span>;
 
@@ -93,17 +65,18 @@
     </span>{
         <span class="hljs-variable">$this</span>-&gt;address = <span class="hljs-variable">$address</span>;
     }
-}
-</code></pre>
+}</code></pre>
+
 <p>L’injection de dépendances, c’est précisément ça. Si une classe a besoin d’une instance d’une autre classe, que ce soit dans son constructeur ou dans une autre méthode (un <em>setter</em> par exemple), alors elle prend cette instance directement en paramètre et ne s’occupe certainement pas de l’instancier elle-même. Procéder ainsi permet d’écrire du code <strong>découplé</strong>, évitant toute interdépendance entre ses différents composants, ce qui les rend <strong>réutilisables</strong> sans devoir embarquer toute la smala au passage, mais également beaucoup plus <strong>maintenables</strong> puisque chaque classe s’occupe de ses fesses et pas de celles des autres. En PHP, on tire également parti du <em>type hinting</em> d’objets, qui permet de s’assurer d’emblée que notre paramètre est une instance de la classe voulue et non pas n’importe quoi.</p>
 <p>Alors oui, je t’entends déjà grommeler :</p>
 <blockquote>
 <p>Ouais mais du coup je dois instancier une adresse moi-même à chaque fois que je crée une personne, c’est relou ton truc</p>
 </blockquote>
 <p>Si telle est ton opinion, <del>tu ne mérites pas de vivre</del> je t’invite à poursuivre la lecture de cet article avec l’entrain qui te caractérise.</p>
-<h2 id="l-usine-a-la-rescousse"><a class="putainde-Title-anchor" href="#l-usine-a-la-rescousse">#</a>L’usine à la rescousse</h2><p>Je ne sais pas si tu sais, mais il existe un <em>design pattern</em> assez répandu en programmation orientée objet que l’on nomme <strong>factory</strong> (usine en français, d’où le titre pourrave de cette partie).</p>
+<h2 id="l-usine-la-rescousse">L’usine à la rescousse</h2>
+<p>Je ne sais pas si tu sais, mais il existe un <em>design pattern</em> assez répandu en programmation orientée objet que l’on nomme <strong>factory</strong> (usine en français, d’où le titre pourrave de cette partie).</p>
 <p>En gros, le principe est de créer une classe dont le rôle est d’instancier d’autres classes, précisément dans le cas où une telle tâche demande plusieurs lignes de code, afin justement d’éviter de répéter celles-ci. Pour reprendre notre exemple :</p>
-<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PersonFactory</span>
+<pre><code class="hljs php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PersonFactory</span>
 </span>{
     <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPerson</span><span class="hljs-params">(<span class="hljs-variable">$number</span>, <span class="hljs-variable">$street</span>, <span class="hljs-variable">$zipcode</span>, <span class="hljs-variable">$city</span>, <span class="hljs-variable">$country</span>)</span>
     </span>{
@@ -111,11 +84,11 @@
 
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Person(<span class="hljs-variable">$address</span>);
     }
-}
-</code></pre>
+}</code></pre>
+
 <p>Pour le coup, tu te dis peut-être que je te prends allègrement pour un idiot : pourquoi se prendre le chou à créer une classe qui fait exactement ce qu’on faisait directement dans <code>Person</code> au départ ? Parce que tu n’as pas bien écouté, <del>petit c</del> jeune padawan. L’objectif en utilisant l’injection de dépendances, c’est que nos classes ne soient pas dépendantes (justement) les unes des autres si ce n’est pas justifié. Une personne a beau avoir besoin d’une adresse, on pourrait fort bien imaginer les utiliser l’une sans l’autre (tu comprendras à la partie suivante). Dans le cas de <code>PersonFactory</code>, notre objectif est justement de créer une personne à partir des différents composants d’une adresse en une ligne de code, pour conserver la simplicité du code métier qui te tient tant à coeur (et tu as bien raison, au fond). Seulement, <code>Person</code> et <code>Address</code> restent utilisables avec ou sans <code>PersonFactory</code> : l’objectif est atteint, petit navire.</p>
 <p>Tant qu’on en est à se simplifier la vie :</p>
-<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PersonFactory</span>
+<pre><code class="hljs php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PersonFactory</span>
 </span>{
     <span class="hljs-comment">// ...</span>
 
@@ -128,19 +101,20 @@
     </span>{
         <span class="hljs-keyword">return</span> <span class="hljs-variable">$this</span>-&gt;createPerson(<span class="hljs-variable">$number</span>, <span class="hljs-variable">$street</span>, <span class="hljs-variable">$this</span>-&gt;getZipcodeFromDistrict(<span class="hljs-variable">$district</span>), <span class="hljs-string">'Paris'</span>, <span class="hljs-string">'France'</span>);
     }
-}
-</code></pre>
+}</code></pre>
+
 <p>Tu t’imagines faire ce genre de chose dans la classe <code>Person</code> ou la classe <code>Address</code> ? J’espère bien que non.</p>
-<h2 id="oui-ca-sert-a-quelque-chose-une-interface"><a class="putainde-Title-anchor" href="#oui-ca-sert-a-quelque-chose-une-interface">#</a>Oui, ça sert à quelque chose une interface</h2><p>Dans tes souvenirs brumeux de vendredis matins étudiants (<em>cf. supra</em>), tu retrouveras peut-être des bribes de cours portant sur les <strong>interfaces</strong>. Si tout ce que tu as retenu, c’est qu’”une classe toute vide ça sert à rien”, lis donc ce qui va suivre.</p>
+<h2 id="oui-a-sert-quelque-chose-une-interface">Oui, ça sert à quelque chose une interface</h2>
+<p>Dans tes souvenirs brumeux de vendredis matins étudiants (<em>cf. supra</em>), tu retrouveras peut-être des bribes de cours portant sur les <strong>interfaces</strong>. Si tout ce que tu as retenu, c’est qu’”une classe toute vide ça sert à rien”, lis donc ce qui va suivre.</p>
 <p>Une interface, c’est avant tout un contrat. Une classe qui <strong>implémente</strong> une interface s’engage à implémenter toutes les méthodes que celle-ci déclare. Sans même lire le code de ladite classe, on sait donc d’emblée comment on peut jouer avec et comment elle est censée fonctionner.</p>
 <p>Poursuivons encore sur notre exemple et imaginons qu’on doive gérer des adresses ne respectant pas le format utilisé jusqu’ici, par exemple une adresse plus basique constituée d’une unique chaîne de caractères :</p>
-<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BasicAddress</span>
+<pre><code class="hljs php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BasicAddress</span>
 </span>{
     <span class="hljs-keyword">private</span> <span class="hljs-variable">$address</span>;
-}
-</code></pre>
+}</code></pre>
+
 <p>Dans l’état actuel des choses, on ne peut pas utiliser une instance de cette classe avec <code>Person</code>, puisque le constructeur de cette dernière attend une instance d’<code>Address</code>. Qu’à cela ne tienne !</p>
-<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">AddressInterface</span>
+<pre><code class="hljs php"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">AddressInterface</span>
 </span>{
     <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFullAddress</span><span class="hljs-params">()</span></span>;
 }
@@ -187,40 +161,44 @@
 <span class="hljs-variable">$robert</span> = <span class="hljs-variable">$factory</span>-&gt;createParigot(<span class="hljs-number">1</span>, <span class="hljs-string">'Rue de la Paix'</span>, <span class="hljs-number">2</span>);
 
 <span class="hljs-keyword">echo</span>(<span class="hljs-variable">$person</span>-&gt;getAddress()-&gt;getFullAddress()); <span class="hljs-comment">// 'test test un deux un deux'</span>
-<span class="hljs-keyword">echo</span>(<span class="hljs-variable">$robert</span>-&gt;getAddress()-&gt;getFullAddress()); <span class="hljs-comment">// '1, rue de la Paix, 75002 Paris, France'</span>
-</code></pre>
+<span class="hljs-keyword">echo</span>(<span class="hljs-variable">$robert</span>-&gt;getAddress()-&gt;getFullAddress()); <span class="hljs-comment">// '1, rue de la Paix, 75002 Paris, France'</span></code></pre>
+
 <p>Tu vois l’idée ? En demandant une instance de n’importe quelle classe implémentant <code>AddressInterface</code> au lieu d’une instance d’<code>Address</code> spécifiquement, on se donne plus de mou et on réduit encore davantage le couplage entre nos classes. Qu’on crée une personne avec une instance d’<code>Address</code> ou de <code>BasicAddress</code>, on pourra dans tous les cas obtenir l’adresse postale de ladite personne de la même façon.</p>
-<h2 id="elle-contient-ta-fiancee-hein-mitch-"><a class="putainde-Title-anchor" href="#elle-contient-ta-fiancee-hein-mitch-">#</a>Elle contient ta fiancée, hein Mitch ?</h2><p>Tu auras peut-être tiqué sur un détail du dernier exemple : le fait de ne pas faire de <code>PersonFactory</code> une classe statique (beurk) nous oblige à l’instancier pour pouvoir l’utiliser ; ce qui, à n’en pas douter, t’aura mené à te dire “arf, ça va m’en faire des <code>new MachinFactory()</code> pour instancier mes objets”. Là encore, l’injection de dépendances peut nous aider, quoique de manière indirecte : en utilisant un conteneur d’injection de dépendances.</p>
+<h2 id="elle-contient-ta-fianc-e-hein-mitch-">Elle contient ta fiancée, hein Mitch ?</h2>
+<p>Tu auras peut-être tiqué sur un détail du dernier exemple : le fait de ne pas faire de <code>PersonFactory</code> une classe statique (beurk) nous oblige à l’instancier pour pouvoir l’utiliser ; ce qui, à n’en pas douter, t’aura mené à te dire “arf, ça va m’en faire des <code>new MachinFactory()</code> pour instancier mes objets”. Là encore, l’injection de dépendances peut nous aider, quoique de manière indirecte : en utilisant un conteneur d’injection de dépendances.</p>
 <p>Un conteneur (ça sera plus court) peut <em>grosso modo</em> être comparé à une grosse <em>factory</em> capable d’instancier plusieurs classes. En pratique, afin d’éviter d’écrire et de devoir maintenir une classe monolithique, on en fera plutôt quelque chose qui fait appel aux différentes <em>factories</em>. Poursuivons sur notre exemple :</p>
-<pre><code class="lang-php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DependencyInjectionContainer</span>
+<pre><code class="hljs php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DependencyInjectionContainer</span>
 </span>{
     <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getPersonFactory</span><span class="hljs-params">()</span>
     </span>{
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> PersonFactory();
     }
-}
-</code></pre>
-<p>Mais ça ne s’arrête évidemment pas là. De par le fait d’utiliser l’injection de dépendances à grande échelle, on a souvent besoin d’instancier nous-même les objets dont on a besoin. Dans certains cas, ce seront toujours les mêmes, ce qui vaut pour les <em>factories</em> mais pas que : pense aux différentes librairies qui composent un projet web, par exemple. Ce ne serait pas génial que les différentes instances de ces classes soient accessibles via le conteneur pour pouvoir y accéder à l’envi ?</p>
-<pre><code class="lang-php">$container = <span class="hljs-keyword">new</span> <span class="hljs-type">DependencyInjectionContainer</span><span class="hljs-literal">()</span>;
+}</code></pre>
 
-$container-&gt;getOrm<span class="hljs-literal">()</span>-&gt;performSomeNaughtyQuery<span class="hljs-literal">()</span>;
-$container-&gt;getTwig<span class="hljs-literal">()</span>-&gt;renderUglyTemplate<span class="hljs-literal">()</span>;
-$container-&gt;getTranslator<span class="hljs-literal">()</span>-&gt;translate(<span class="hljs-symbol">'Putain</span> de code !<span class="hljs-char">');</span>
-</code></pre>
+<p>Mais ça ne s’arrête évidemment pas là. De par le fait d’utiliser l’injection de dépendances à grande échelle, on a souvent besoin d’instancier nous-même les objets dont on a besoin. Dans certains cas, ce seront toujours les mêmes, ce qui vaut pour les <em>factories</em> mais pas que : pense aux différentes librairies qui composent un projet web, par exemple. Ce ne serait pas génial que les différentes instances de ces classes soient accessibles via le conteneur pour pouvoir y accéder à l’envi ?</p>
+<pre><code class="hljs php"><span class="hljs-variable">$container</span> = <span class="hljs-keyword">new</span> DependencyInjectionContainer();
+
+<span class="hljs-variable">$container</span>-&gt;getOrm()-&gt;performSomeNaughtyQuery();
+<span class="hljs-variable">$container</span>-&gt;getTwig()-&gt;renderUglyTemplate();
+<span class="hljs-variable">$container</span>-&gt;getTranslator()-&gt;translate(<span class="hljs-string">'Putain de code !'</span>);</code></pre>
+
 <p>Les objets ainsi gérés par un tel conteneur deviennent dès lors des <strong>services</strong> dans ton application.</p>
 <blockquote>
 <p>Mais ça signifie instancier un service à chaque appel ?</p>
 </blockquote>
 <p>Pas nécessairement ! Il existe des mécanismes permettant de conserver une même instance pour la servir lors des appels suivants. Cela sort un peu du cadre de cet article, mais je t’invite vivement à jeter un oeil à <a href="http://php-di.org/">PHP-DI</a>, qui est un conteneur d’injection de dépendances très bien fichu que tu peux utiliser dans ton projet si tu le souhaites.</p>
-<h2 id="epilogue"><a class="putainde-Title-anchor" href="#epilogue">#</a>Épilogue</h2><p>Si tu développes en PHP, j’espère t’avoir montré qu’il est possible d’écrire du code plus maintenable et plus élégant en utilisant l’injection de dépendances. Dans le cas contraire, sache que ce concept est très répandu dans les langages orientés objet d’une manière générale - après tout, <a href="https://docs.angularjs.org/guide/di">on en retrouve même dans Angular</a>.</p>
+<h2 id="-pilogue">Épilogue</h2>
+<p>Si tu développes en PHP, j’espère t’avoir montré qu’il est possible d’écrire du code plus maintenable et plus élégant en utilisant l’injection de dépendances. Dans le cas contraire, sache que ce concept est très répandu dans les langages orientés objet d’une manière générale - après tout, <a href="https://docs.angularjs.org/guide/di">on en retrouve même dans Angular</a>.</p>
 <p>Bon code, et n’oublie pas, on ne met pas en prod le vendredi, c’est mal. Allez, file !</p>
-</div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="Grid"><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/putaindecode.fr/edit/master/src/pages/posts/php/injection-dependances/index.md" class="putainde-Post-footer-action">Modifier</a></div><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/putaindecode.fr/blame/master/src/pages/posts/php/injection-dependances/index.md" class="putainde-Post-footer-action">Tracer les changements</a></div><div class="Grid-cell u-size1of3"><a href="http://github.com/putaindecode/putaindecode.fr/commits/master/src/pages/posts/php/injection-dependances/index.md" class="putainde-Post-footer-action">Historique</a></div></div></footer><div class="putainde-Author"><a href="http://neemzy.org" class="putainde-Avatar putainde-Author-picture"><img src="https://avatars.githubusercontent.com/u/1804389?v=3&amp;s=128" alt="" class="js-AnimateLoad"/></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par</span> <a href="http://neemzy.org" class="putainde-Link">neemzy</a></h3><div class="putainde-Author-social"><a href="http://neemzy.org" data-cssr-tooltip="Website" class="cssr-Tooltip cssr-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-home"><use xlink:href="#putainde-Icon-home"></use></svg></a><a href="https://twitter.com/_neemzy" data-cssr-tooltip="Twitter" class="cssr-Tooltip cssr-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a><a href="https://github.com/neemzy" data-cssr-tooltip="Github" class="cssr-Tooltip cssr-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a></div></div><p class="putainde-Author-bio">Développeur full-stack tombé dans le web quand il était petit. <br> Fait surtout du PHP, mais aussi de plus en plus de JavaScript. <br> A une peur irraisonnée des utilisateurs de Mac / Ruby / Sass. <br> Atteint du syndrome de Patrick Modiano qui l'empêche parfois de finir ses</p></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">2 contributeurs</strong><div data-cssr-tooltip="MoOx" class="putainde-Contributor cssr-Tooltip cssr-Tooltip--bottom"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt="" class="js-AnimateLoad"/></a></div><div data-cssr-tooltip="neemzy" class="putainde-Contributor cssr-Tooltip cssr-Tooltip--bottom"><a href="http://neemzy.org" class="putainde-Avatar putainde-Contributor-avatar"><img src="https://avatars.githubusercontent.com/u/1804389?v=3&amp;s=128" alt="" class="js-AnimateLoad"/></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>| Please enable JavaScript to view the
-a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.</noscript></div></div></article></div><div class="putainde-Footer"><div class="Grid"><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="Grid-cell u-size6of12"><ul class="putainde-Footer-list"><li></li><li><a href="../../../feed.xml">Flux RSS</a></li><li><a href="../../../projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><a href="https://github.com/putaindecode/" data-cssr-tooltip="GitHub" class="cssr-Tooltip cssr-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-github"><use xlink:href="#putainde-Icon-github"></use></svg></a><a href="https://twitter.com/putaindecode/" data-cssr-tooltip="Twitter" class="cssr-Tooltip cssr-Tooltip--top"><svg style="" class="putainde-Icon putainde-Icon-twitter"><use xlink:href="#putainde-Icon-twitter"></use></svg></a></ul></div><div class="Grid-cell u-size3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var disqus_shortname = "putaindecode";var disqus_identifier = "http://putaindecode.fr/posts/php/injection-dependances/";
+</div></div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="r-Grid"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/edit/master/content/posts/php/injection-dependances/index.md">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/blame/master/content/posts/php/injection-dependances/index.md">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/commits/master/content/posts/php/injection-dependances/index.md">Historique</a></div></div><div><div class="putainde-Author undefined"><a href="http://neemzy.org" class="putainde-Avatar putainde-Author-picture"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1804389?v=3&amp;s=128" alt=""></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par </span><a class="putainde-Link" href="http://neemzy.org">neemzy</a></h3><div class="putainde-Author-social"><a href="http://neemzy.org" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Website"><img class="putainde-Icon" src="/icons/home.svg"></a><a href="https://twitter.com/_neemzy" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a><a href="https://github.com/neemzy" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Github"><img class="putainde-Icon" src="/icons/github.svg"></a></div></div><p class="putainde-Author-bio">Développeur full-stack tombé dans le web quand il était petit.Fait surtout du PHP, mais aussi de plus en plus de JavaScript.A une peur irraisonnée des utilisateurs de Mac / Ruby / Sass.Atteint du syndrome de Patrick Modiano qui l&#x27;empêche parfois de finir ses</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">2 contributeurs</strong><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
+(4 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="neemzy
+(1 commit)"><a href="http://neemzy.org" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1804389?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
+var disqus_identifier = "http://putaindecode.fr/posts/php/injection-dependances/";
 var disqus_url = "http://putaindecode.fr/posts/php/injection-dependances/";
-var disqus_script = "embed.js";;(function(d,s) {
-s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
-(d.getElementsByTagName('head')[0]).appendChild(s)
-})(document)</script><script src="../../../scripts/index.js"></script><script>var _gaq=[['_setAccount','UA-43771806-1'],['_trackPageview']];
-(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-g.src='//www.google-analytics.com/ga.js';
-s.parentNode.insertBefore(g,s)}(document,'script'));</script></body></html>
+var disqus_script = "embed.js";
+
+(function(d,s) {
+  s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+  (d.getElementsByTagName('head')[0]).appendChild(s)
+})(document)
+    </script></body></html>
