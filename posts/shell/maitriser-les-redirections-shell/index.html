@@ -11,8 +11,10 @@ pour faire mon barbu mais simplement car il me suffit amplement.</p>
 l’utilisation du shell : l’utilisation des redirections d’entrée/sortie de
 base.</p>
 <p>Si ça vous paraît barbare, tenez-vous bien, on attaque tout de suite !</p>
-<h2 id="une-entr-e-deux-sorties">Une entrée, deux sorties</h2>
-<p>Un des principes de base sous UNIX est que tout est fichier et que l’activité du
+<h2 id="une-entree-deux-sorties">
+      <a class="putainde-Title-anchor" href="#une-entree-deux-sorties">#</a>
+      Une entrée, deux sorties
+    </h2><p>Un des principes de base sous UNIX est que tout est fichier et que l’activité du
 système est rendue par l’interaction de programmes (ou processus) à l’aide
 des dits fichiers.</p>
 <p>Pour pouvoir collaborer avec ses congénères, chaque processus peut accéder par
@@ -28,8 +30,10 @@ d’erreur standards.</p>
 émulateur.</p>
 <p>L’idée pour pouvoir faire collaborer les processus est donc de <em>brancher</em> les
 entrées et sorties de différents programmes afin d’obtenir un résultat.</p>
-<h2 id="les-redirections-de-base">Les redirections de base</h2>
-<p>Commençons par quelques redirections de base, celles qu’il faut connaître et qui
+<h2 id="les-redirections-de-base">
+      <a class="putainde-Title-anchor" href="#les-redirections-de-base">#</a>
+      Les redirections de base
+    </h2><p>Commençons par quelques redirections de base, celles qu’il faut connaître et qui
 sont employées systématiquement.</p>
 <p>Pour nous exercer, nous allons utiliser principalement deux commandes :</p>
 <ul>
@@ -40,48 +44,60 @@ sortie standard ou de répéter son entrée standard sur sa sortie standard.</li
 </ul>
 <p>Rappelez vous que par défaut, la sortie standard est affichée dans le terminal
 et l’entrée standard est le clavier de l’utilisateur.</p>
-<h3 id="redirection-de-sortie-">Redirection de sortie : <code>&gt;</code></h3>
-<p>Ce type de redirection permet d’indiquer à un processus que tout ce qui devrait
+<h3 id="redirection-de-sortie-gt">
+      <a class="putainde-Title-anchor" href="#redirection-de-sortie-gt">#</a>
+      Redirection de sortie : <code>&gt;</code>
+    </h3><p>Ce type de redirection permet d’indiquer à un processus que tout ce qui devrait
 aller sur la sortie standard (par défaut, le terminal), doit plutôt être stocké
 dans un fichier.</p>
 <p>Pour ça, on utilise la syntaxe <code>&gt; [fichier]</code> :</p>
-<pre><code>$ echo <span class="hljs-string">"Hello"</span> &gt; <span class="hljs-keyword">message</span>
+<pre><code class="lang-console">$ echo <span class="hljs-string">"Hello"</span> &gt; <span class="hljs-keyword">message</span>
 $ cat <span class="hljs-keyword">message</span>
-Hello</code></pre>
-
-<h3 id="redirection-d-entr-e-">Redirection d’entrée : <code>&lt;</code></h3>
-<p>À l’inverse, on peut aussi spécifier à un programme qu’il doit utiliser un
+Hello
+</code></pre>
+<h3 id="redirection-d-entree-lt">
+      <a class="putainde-Title-anchor" href="#redirection-d-entree-lt">#</a>
+      Redirection d’entrée : <code>&lt;</code>
+    </h3><p>À l’inverse, on peut aussi spécifier à un programme qu’il doit utiliser un
 fichier comme son entrée standard, à la place du clavier de l’utilisateur.</p>
 <p>En réutilisant notre fichier <code>message</code>, on peut par exemple faire :</p>
-<pre><code>$ cat &lt; <span class="hljs-keyword">message</span>
-Hello</code></pre>
-
+<pre><code class="lang-console">$ cat &lt; <span class="hljs-keyword">message</span>
+Hello
+</code></pre>
 <p>Notez qu’on utilise bien <code>cat</code> <em>sans argument</em>, il utilise donc l’entrée
 standard.</p>
-<h3 id="connecter-deux-processus-">Connecter deux processus : <code>|</code></h3>
-<p>Dernier des connecteurs de base, l’opérateur <code>|</code>, aussi appelé <em>pipe</em> (et qui se
+<h3 id="connecter-deux-processus">
+      <a class="putainde-Title-anchor" href="#connecter-deux-processus">#</a>
+      Connecter deux processus : <code>|</code>
+    </h3><p>Dernier des connecteurs de base, l’opérateur <code>|</code>, aussi appelé <em>pipe</em> (et qui se
 prononce <em>paillepe</em>, avé l’accent).</p>
 <p>Il permet tout simplement d’utiliser la sortie d’un programme comme entrée d’un
 autre.</p>
 <p>Pour montrer ça, introduisons la commande <code>tr</code>, qui permet de remplacer des
 caractères dans l’entrée par d’autres.</p>
-<pre><code>$ echo <span class="hljs-string">"Hello!"</span> | <span class="hljs-tag">tr</span> <span class="hljs-string">"[:lower:]"</span> <span class="hljs-string">"[:upper:]"</span>
-HELLO!</code></pre>
-
-<h2 id="descripteurs-de-fichiers-et-redirections-avanc-es">Descripteurs de fichiers et redirections avancées</h2>
-<p>Pour aller plus loin, on va maintenant voir que chaque descripteur de fichier
+<pre><code class="lang-console">$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"Hello!"</span> | <span class="hljs-built_in">tr</span> <span class="hljs-string">"[:lower:]"</span> <span class="hljs-string">"[:upper:]"</span>
+HELLO!
+</code></pre>
+<h2 id="descripteurs-de-fichiers-et-redirections-avancees">
+      <a class="putainde-Title-anchor" href="#descripteurs-de-fichiers-et-redirections-avancees">#</a>
+      Descripteurs de fichiers et redirections avancées
+    </h2><p>Pour aller plus loin, on va maintenant voir que chaque descripteur de fichier
 possède son propre identifiant numérique.</p>
 <p>Pour <code>stdin</code>, <code>stdout</code> et <code>stderr</code> ce sera respectivement 0, 1 et 2.</p>
 <p>On peut se servir de ces identifiants pour faire des redirections plus
 poussées !</p>
-<h3 id="rediriger-les-autres-descripteur">Rediriger les autres descripteur</h3>
-<p>Par défaut, <code>&gt;</code> ne redirige que la sortie standard vers un fichier. Pour
+<h3 id="rediriger-les-autres-descripteur">
+      <a class="putainde-Title-anchor" href="#rediriger-les-autres-descripteur">#</a>
+      Rediriger les autres descripteur
+    </h3><p>Par défaut, <code>&gt;</code> ne redirige que la sortie standard vers un fichier. Pour
 rediriger un autre descripteur vers un fichier on emploiera la notation <code>X&gt;</code> où
 <em>X</em> prendra la valeur de l’identifiant du descripteur.</p>
 <p>Si vous avez bien suivi, on redirigera donc la sortie d’erreur vers un fichier à
 l’aide de la syntaxe <code>2&gt;</code>.</p>
-<h3 id="rediriger-vers-un-autre-descripteur-">Rediriger vers un autre descripteur : <code>&gt;&amp;</code></h3>
-<p>On peut connecter les descripteurs d’un processus entre eux. C’est un mécanisme
+<h3 id="rediriger-vers-un-autre-descripteur-gt-amp">
+      <a class="putainde-Title-anchor" href="#rediriger-vers-un-autre-descripteur-gt-amp">#</a>
+      Rediriger vers un autre descripteur : <code>&gt;&amp;</code>
+    </h3><p>On peut connecter les descripteurs d’un processus entre eux. C’est un mécanisme
 que l’on utilise très souvent quand on écrit des scripts Shell, notamment pour
 écrire sur la sortie d’erreur.</p>
 <p>Pour celà, on utilise la redirection <code>X&gt;&amp;Y</code> avec <em>X</em> étant l’identifiant
@@ -89,73 +105,83 @@ descripteur source et <em>Y</em> l’identifiant du descripteur sur lequel on ve
 rediriger.</p>
 <p>L’exemple suivant montre comment rediriger la sortie standard sur la sortie
 d’erreur (c’est comme ça qu’on écrit sur la sortie d’erreur dans un script).</p>
-<pre><code>$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Error"</span> <span class="hljs-number">1</span>&gt;&amp;<span class="hljs-number">2</span></code></pre>
-
+<pre><code class="lang-console">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Error"</span> <span class="hljs-number">1</span>&gt;&amp;<span class="hljs-number">2</span>
+</code></pre>
 <p>Plus généralement, on peut omettre la partie avant le <code>&gt;&amp;</code>, elle prendra la
 valeur 1 par défaut. On aura donc le script suivant :</p>
-<pre><code>$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Error"</span> &gt;&amp;<span class="hljs-number">2</span></code></pre>
-
-<h3 id="ajouter-en-fin-de-fichier-">Ajouter en fin de fichier : <code>&gt;&gt;</code></h3>
-<p>Par défaut, <code>&gt;</code> écrase le fichier dans lequel la redirection va s’effectuer.
+<pre><code class="lang-console">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Error"</span> &gt;&amp;<span class="hljs-number">2</span>
+</code></pre>
+<h3 id="ajouter-en-fin-de-fichier-gt-gt">
+      <a class="putainde-Title-anchor" href="#ajouter-en-fin-de-fichier-gt-gt">#</a>
+      Ajouter en fin de fichier : <code>&gt;&gt;</code>
+    </h3><p>Par défaut, <code>&gt;</code> écrase le fichier dans lequel la redirection va s’effectuer.
 Pour éviter ce problème, on peut utiliser à la place <code>&gt;&gt;</code> qui va ajouter en fin
 de fichier.</p>
-<pre><code># Sans &gt;&gt;
+<pre><code class="lang-console"># Sans &gt;&gt;
 $ <span class="hljs-keyword">echo</span> <span class="hljs-string">"1"</span> &gt; <span class="hljs-keyword">file</span>
 $ <span class="hljs-keyword">echo</span> <span class="hljs-string">"2"</span> &gt; <span class="hljs-keyword">file</span>
 $ <span class="hljs-keyword">cat</span> <span class="hljs-keyword">file</span>
-<span class="hljs-number">2</span></code></pre>
-
-<pre><code># Avec &gt;&gt;
-$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"1"</span> &gt; <span class="hljs-keyword">file</span>
-$ <span class="hljs-keyword">echo</span> <span class="hljs-string">"2"</span> &gt;&gt; <span class="hljs-keyword">file</span>
-$ <span class="hljs-keyword">cat</span> <span class="hljs-keyword">file</span>
+<span class="hljs-number">2</span>
+</code></pre>
+<pre><code class="lang-console"><span class="hljs-comment"># Avec &gt;&gt;</span>
+<span class="hljs-variable">$ </span>echo <span class="hljs-string">"1"</span> &gt; file
+<span class="hljs-variable">$ </span>echo <span class="hljs-string">"2"</span> <span class="hljs-prompt">&gt;&gt; </span>file
+<span class="hljs-variable">$ </span>cat file
 <span class="hljs-number">1</span>
-<span class="hljs-number">2</span></code></pre>
-
-<h3 id="-dev-null-le-trou-noir"><code>/dev/null</code>, le trou noir</h3>
-<p>Il existe un fichier un peu particulier sur tout bon UNIX qui se respecte :
+<span class="hljs-number">2</span>
+</code></pre>
+<h3 id="dev-null-le-trou-noir">
+      <a class="putainde-Title-anchor" href="#dev-null-le-trou-noir">#</a>
+      <code>/dev/null</code>, le trou noir
+    </h3><p>Il existe un fichier un peu particulier sur tout bon UNIX qui se respecte :
 <code>/dev/null</code>.</p>
 <p>Ce dernier est en fait une sorte de trou noir : Si on affiche son contenu on
 n’obtient rien, et si on écrit quelque chose dedans elle disparait.</p>
 <p>On se sert souvent de ce fichier pour supprimer la sortie d’un programme :</p>
-<pre><code>$ echo <span class="hljs-string">"Hello"</span> &gt;<span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span>
+<pre><code class="lang-console">$ echo <span class="hljs-string">"Hello"</span> &gt;<span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span>
 $ cat <span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span>
-$</code></pre>
-
-<h3 id="ordre-des-redirections">Ordre des redirections</h3>
-<p>Un dernier mot avant la fin, l’ordre des redirections est très important !</p>
+$
+</code></pre>
+<h3 id="ordre-des-redirections">
+      <a class="putainde-Title-anchor" href="#ordre-des-redirections">#</a>
+      Ordre des redirections
+    </h3><p>Un dernier mot avant la fin, l’ordre des redirections est très important !</p>
 <p>Imaginez la fonction suivante qui affiche un message sur la sortie standard et
 un sur la sortie d’erreur :</p>
-<pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">programme</span><span class="hljs-params">()</span> </span>{
+<pre><code class="lang-console"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">programme</span><span class="hljs-params">()</span> </span>{
   <span class="hljs-keyword">echo</span> <span class="hljs-string">"Message"</span>
   <span class="hljs-keyword">echo</span> <span class="hljs-string">"Error"</span> &gt;&amp;<span class="hljs-number">2</span>
-}</code></pre>
-
+}
+</code></pre>
 <p>Si on veut rediriger toutes les sorties vers <code>/dev/null</code> on peut utiliser la
 syntaxe suivante :</p>
-<pre><code>$ programme <span class="hljs-number">2</span>&gt;<span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span> &gt;<span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span></code></pre>
-
+<pre><code class="lang-console">$ programme <span class="hljs-number">2</span>&gt;<span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span> &gt;<span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span>
+</code></pre>
 <p>Vous remarquerez que c’est assez verbeux, et qu’on pourrait simplifier celà en
 utilisant <code>&gt;&amp;</code> comme vu précédemment.</p>
 <p>On essaie donc naïvement :</p>
-<pre><code><span class="hljs-prompt">$ programme 2&gt;</span>&amp;<span class="hljs-number">1</span> &gt;<span class="hljs-regexp">/dev/null</span>
-<span class="hljs-constant">Error</span></code></pre>
-
+<pre><code class="lang-console">$ programme <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span> &gt;<span class="hljs-regexp">/dev/</span><span class="hljs-literal">null</span>
+<span class="hljs-built_in">Error</span>
+</code></pre>
 <p>Hmm, pourtant on a tout branché ensemble non ? En fait non, on a redirigé la
 sortie sur le fichier pointé par <code>1</code> au moment où on écrit la redirection, donc
 avant qu’il soit redirigé sur <code>/dev/null</code>.</p>
 <p>Pour bien faire, il faut écrire les redirections dans l’autre ordre :</p>
-<pre><code><span class="hljs-variable">$ </span>programme &gt;<span class="hljs-regexp">/dev/null</span> <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span></code></pre>
-
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>programme &gt;<span class="hljs-regexp">/dev/null</span> <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span>
+</code></pre>
 <p>On lira ceci : Rediriger la sortie standard vers <code>/dev/null</code>, puis rediriger la
 sortie d’erreur vers la sortie standard.</p>
-<h3 id="pour-r-sumer">Pour résumer</h3>
-<p>On a en fait que deux redirections de sortie, <code>&gt;</code> et <code>&gt;&gt;</code>, les symboles qui les
+<h3 id="pour-resumer">
+      <a class="putainde-Title-anchor" href="#pour-resumer">#</a>
+      Pour résumer
+    </h3><p>On a en fait que deux redirections de sortie, <code>&gt;</code> et <code>&gt;&gt;</code>, les symboles qui les
 entourent sont souvent optionnels.</p>
 <p>Si on veut spécifier un fichier on donnera son nom, si on veut spécifier un
 descripteur on donnera son identifiant préfixé de <code>&amp;</code>.</p>
-<h2 id="pour-aller-plus-loin">Pour aller plus loin</h2>
-<p>Le manuel de bash contient <a href="http://www.gnu.org/software/bash/manual/bashref.html#Redirections">une section complète sur les
+<h2 id="pour-aller-plus-loin">
+      <a class="putainde-Title-anchor" href="#pour-aller-plus-loin">#</a>
+      Pour aller plus loin
+    </h2><p>Le manuel de bash contient <a href="http://www.gnu.org/software/bash/manual/bashref.html#Redirections">une section complète sur les
 redirections</a>. Elle va beaucoup plus loin que cet article et je vous
 invite à la lire pour voir tout ce qu’il est possible de faire.</p>
 <p>Il y a aussi une section dédiée à ce sujet dans l’<a href="http://tldp.org/LDP/abs/html/io-redirection.html">Advanced Bash-Scripting Guide</a>.</p>
@@ -163,8 +189,8 @@ invite à la lire pour voir tout ce qu’il est possible de faire.</p>
 (3 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="madx
 (1 commit)"><a href="http://madx.me/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/5723?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MattiSG
 (1 commit)"><a href="http://mattischneider.fr" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/222463?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
-var disqus_identifier = "http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/index.md";
-var disqus_url = "http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/index.md";
+var disqus_identifier = "http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/";
+var disqus_url = "http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/";
 var disqus_script = "embed.js";
 
 (function(d,s) {
@@ -172,4 +198,3 @@ var disqus_script = "embed.js";
   (d.getElementsByTagName('head')[0]).appendChild(s)
 })(document)
     </script></body></html>
-<script src="http://localhost:4243/livereload.js"></script>

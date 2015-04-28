@@ -1,7 +1,9 @@
 <!doctype html>
 <html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Flux, qu&#x27;est-ce que c&#x27;est ?</title><link rel="stylesheet" href="/index.css"><link rel="alternate" href="/feed.xml" title="Flux, qu&#x27;est-ce que c&#x27;est ?" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Flux, qu&#x27;est-ce que c&#x27;est ?"><meta name="twitter:creator" content="@bloodyowl"><meta property="og:title" content="Flux, qu&#x27;est-ce que c&#x27;est ?"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><img class="putainde-Logo" alt="Putain de code !" src="/images/p!-logo.svg"><span>Putain de code !</span></a></div><div class="r-Grid-cell r-all--7of12"><nav class="putainde-Nav"><a class="putainde-Nav-item" href="/posts" data-r-tooltip=""><img class="putainde-Icon" src="/icons/bookmark.svg">Articles</a><a class="putainde-Nav-item" href="/c-est-quoi-putaindecode" data-r-tooltip=""><img class="putainde-Icon" src="/icons/text-file.svg">Readme</a><a class="putainde-Nav-item" href="/posts/comment-contribuer" data-r-tooltip=""><img class="putainde-Icon" src="/icons/pencil.svg">Participer</a><a class="putainde-Nav-item putainde-Nav-item--icon r-Tooltip r-Tooltip--bottom" href="https://github.com/putaindecode/" data-r-tooltip="GitHub"><img class="putainde-Icon" src="/icons/github.svg"></a><a class="putainde-Nav-item putainde-Nav-item--icon r-Tooltip r-Tooltip--bottom" href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a></nav></div></div></div><div class="putainde-Main"><article class="r-Grid putainde-Post"><div class="r-Grid-cell r-all--8of12 putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Flux, qu&#x27;est-ce que c&#x27;est ?</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas"><span>Écrit par <span><a href="http://bloodyowl.github.io">bloodyowl</a><span></span></span></span><span>, </span><span class="putainde-Date"> le 27 oct. 2014</span>. <span class="putainde-Post-readingTime putainde-Post-readingTime--hidden r-Tooltip r-Tooltip--top" data-r-tooltip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingtime-wpm="250">Temps de lecture : environ  <span class="putainde-Post-readingTime-value">...</span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">javascript</li><li class="putainde-Tag">reactjs</li><li class="putainde-Tag">flux</li></ul></header><div class="putainde-Post-md"><div><p>Allez, tant pis, on saute l’intro et on entre directement dans le vif du sujet (on n’a pas que ça à foutre, après tout).</p>
-<h2 id="la-petite-histoire">La petite histoire</h2>
-<p>Il était une fois un gros site web <em>que s’apelorio</em> Facebook. Qui dit Facebook, dit webapp plus grosse que la plus grosse de tes copines (<em>no offense</em> <sup><a href="#foonote-1">1</a></sup>) ; et du coup, propension à se retrouver submergé de bugs plus élevée.</p>
+<h2 id="la-petite-histoire">
+      <a class="putainde-Title-anchor" href="#la-petite-histoire">#</a>
+      La petite histoire
+    </h2><p>Il était une fois un gros site web <em>que s’apelorio</em> Facebook. Qui dit Facebook, dit webapp plus grosse que la plus grosse de tes copines (<em>no offense</em> <sup><a href="#foonote-1">1</a></sup>) ; et du coup, propension à se retrouver submergé de bugs plus élevée.</p>
 <p>Les ingénieurs front-end de Facebook, confrontés à une codebase de plus en plus bordélique (personne ne voulant toucher certaines parties de celle-ci) ont dû repenser la structure des composants les plus cruciaux.</p>
 <p>Face à ce besoin, ces développeurs sont donc parvenus à deux solutions :</p>
 <ul>
@@ -9,8 +11,10 @@
 <li>Flux</li>
 </ul>
 <p>Flux n’est pas un framework, mais simplement une architecture, une sorte de <em>guideline</em> qui résout pas mal de problèmes ayant pu apparaître avec les divers bibliothèques et frameworks MV* apparus lors des dernières années.</p>
-<h2 id="flux-l-explication-claire">Flux, l’explication claire</h2>
-<p>Flux comporte 4 concepts :</p>
+<h2 id="flux-l-explication-claire">
+      <a class="putainde-Title-anchor" href="#flux-l-explication-claire">#</a>
+      Flux, l’explication claire
+    </h2><p>Flux comporte 4 concepts :</p>
 <ul>
 <li>les <strong>actions</strong>, qu’elles proviennent du serveur ou d’une interaction utilisateur ;</li>
 <li>le <strong>dispatcher</strong> dans lequel sont envoyées les actions que ce dernier transmet <em>à qui veut</em>, un peu comme un <code>EventEmitter</code> global ;</li>
@@ -25,7 +29,7 @@
 
 <p>En effet, le <em>flux</em> en question est unidirectionnel. Pour faire simple, on procède ainsi :</p>
 <p>On définit une action via un <strong>action creator</strong> (on passera toujours par ces action-creators pour signaler une action) :</p>
-<pre><code class="hljs javascript"><span class="hljs-comment">// actions/BasketActions.js</span>
+<pre><code class="lang-javascript"><span class="hljs-comment">// actions/BasketActions.js</span>
 <span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispacher"</span>)
 <span class="hljs-comment">/*
   On garde un dictionnaire des types d'actions
@@ -41,10 +45,10 @@
       productId : productId
     })
   }
-}</code></pre>
-
+}
+</code></pre>
 <p>On lancera par la suite cette action lorsque l’utilisateur aura cliqué sur un certain bouton, dans la vue concernée.</p>
-<pre><code class="hljs javascript"><span class="hljs-comment">// components/Product.jsx</span>
+<pre><code class="lang-javascript"><span class="hljs-comment">// components/Product.jsx</span>
 <span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">"react/addons"</span>)
 <span class="hljs-keyword">var</span> BasketActions = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../actions/BasketActions"</span>)
 
@@ -63,14 +67,14 @@
           <span class="hljs-attribute">label</span>=<span class="hljs-value">"Add to basket"</span>
         /&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    )
+    )</span>
   }
 })
 
-module.exports = Product</span></code></pre>
-
+<span class="hljs-built_in">module</span>.exports = Product
+</code></pre>
 <p>Dès lors, à chaque clic sur le bouton en question, l’action <code>ADD_TO_BASKET</code> sera passée au dispatcher, qui le signalera aux stores.</p>
-<pre><code class="hljs javascript"><span class="hljs-comment">// stores/BasketStore.js</span>
+<pre><code class="lang-javascript"><span class="hljs-comment">// stores/BasketStore.js</span>
 <span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispatcher"</span>)
 <span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
 <span class="hljs-keyword">var</span> API = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../api"</span>)
@@ -113,10 +117,10 @@ module.exports = Product</span></code></pre>
   })
 })
 
-<span class="hljs-built_in">module</span>.exports = BasketStore</code></pre>
-
+<span class="hljs-built_in">module</span>.exports = BasketStore
+</code></pre>
 <p>La vue, quant à elle, sera notifiée du changement, et effectuera un <code>render()</code> :</p>
-<pre><code class="hljs javascript"><span class="hljs-comment">// components/Basket.jsx</span>
+<pre><code class="lang-javascript"><span class="hljs-comment">// components/Basket.jsx</span>
 <span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">"react/addons"</span>)
 <span class="hljs-keyword">var</span> BasketActions = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../actions/BasketActions"</span>)
 <span class="hljs-keyword">var</span> BasketStore = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../stores/BasketStore"</span>)
@@ -157,22 +161,26 @@ module.exports = Product</span></code></pre>
         <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
         {/* rest of the component */}
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    )
+    )</span>
   }
 })
 
-module.exports = Product</span></code></pre>
-
+<span class="hljs-built_in">module</span>.exports = Product
+</code></pre>
 <p>Tout cela peut sembler relativement verbeux, mais il faut préciser deux choses :</p>
 <ul>
 <li>les exemples ici le sont volontairement pour la démonstration, et il est aisément faisable d’utiliser un <code>StoreMixin</code> simplifier la déclaration des <code>class</code> React ;</li>
 <li>pour ce qui est du reste, notamment stocker les noms d’actions dans un objet partagé dans l’app, c’est pour rendre plus idiomatique et cohérente la façon dont on code l’app, et pour simplifier ses <em>refactoring</em>.</li>
 </ul>
-<h2 id="ce-qu-il-faut-savoir-sur-l-alliance-flux-react">Ce qu’il faut savoir sur l’alliance Flux + React</h2>
-<p>Si React et Flux vont si bien ensemble, c’est que l’approche de rendu “naïf” de React (comprendre “React s’en fout de ce qui change, il appelle <code>render</code> à chaque changement”) permet de réduire la logique à écrire dans les Stores, et donc de simplifier très fortement la codebase de l’app.</p>
+<h2 id="ce-qu-il-faut-savoir-sur-l-alliance-flux-react">
+      <a class="putainde-Title-anchor" href="#ce-qu-il-faut-savoir-sur-l-alliance-flux-react">#</a>
+      Ce qu’il faut savoir sur l’alliance Flux + React
+    </h2><p>Si React et Flux vont si bien ensemble, c’est que l’approche de rendu “naïf” de React (comprendre “React s’en fout de ce qui change, il appelle <code>render</code> à chaque changement”) permet de réduire la logique à écrire dans les Stores, et donc de simplifier très fortement la codebase de l’app.</p>
 <p>Lorsque qu’un ou plusieurs stores composent l’état d’un state React, alors à chaque changement de l’un de ces stores, tous les composants React concernés et leurs enfants vont appeler leur méthode <code>render()</code>. Afin d’éviter des appels superflus à ces méthodes, React donne la possibilité de tester soi-même s’il est nécessaire de mettre à jour le component en déclarant une méthode <code>shouldComponentUpdate</code> retournant un <code>boolean</code> qui stipulera si oui ou non il est nécessaire d’appeler <code>render()</code>.</p>
-<h2 id="tl-dr">tl;dr</h2>
-<ul>
+<h2 id="tl-dr">
+      <a class="putainde-Title-anchor" href="#tl-dr">#</a>
+      tl;dr
+    </h2><ul>
 <li>Flux, c’est comme du MVC en plus simple, et avec moins de bugs</li>
 <li>L’architecture est unidirectionnelle</li>
 <li>On raisonne en actions, qui sont déclenchées par la vue ou le serveur</li>
@@ -193,8 +201,8 @@ module.exports = Product</span></code></pre>
 </div></div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="r-Grid"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/edit/master/content/posts/js/flux-qu-est-ce-c-est/index.md">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/blame/master/content/posts/js/flux-qu-est-ce-c-est/index.md">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/commits/master/content/posts/js/flux-qu-est-ce-c-est/index.md">Historique</a></div></div><div><div class="putainde-Author undefined"><a href="http://bloodyowl.github.io" class="putainde-Avatar putainde-Author-picture"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1688645?v=3&amp;s=128" alt=""></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par </span><a class="putainde-Link" href="http://bloodyowl.github.io">bloodyowl</a></h3><div class="putainde-Author-social"><a href="http://bloodyowl.github.io" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Website"><img class="putainde-Icon" src="/icons/home.svg"></a><a href="https://twitter.com/bloodyowl" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a><a href="https://github.com/bloodyowl" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Github"><img class="putainde-Icon" src="/icons/github.svg"></a></div></div><p class="putainde-Author-bio">Développeur front-end, aime la bonne bière artisanale, la musique, et JavaScript; n&#x27;aime ni les points virgules, ni les gens</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">2 contributeurs</strong><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="bloodyowl
 (3 commits)"><a href="http://bloodyowl.github.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1688645?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
 (3 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
-var disqus_identifier = "http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/index.md";
-var disqus_url = "http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/index.md";
+var disqus_identifier = "http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/";
+var disqus_url = "http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/";
 var disqus_script = "embed.js";
 
 (function(d,s) {
@@ -202,4 +210,3 @@ var disqus_script = "embed.js";
   (d.getElementsByTagName('head')[0]).appendChild(s)
 })(document)
     </script></body></html>
-<script src="http://localhost:4243/livereload.js"></script>

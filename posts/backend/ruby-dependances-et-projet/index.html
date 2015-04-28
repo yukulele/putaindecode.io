@@ -10,15 +10,17 @@ qui ici va installer la bibliothèque <code>sass</code>.</p>
 <p>Un projet Ruby nécessite la plupart du temps des bibliothèques afin
 de ne pas tout faire soi-même, il est donc nécessaire d’avoir une
 gestion des dépendances pour le projet.</p>
-<h2 id="bundler-le-gem-qui-g-re-les-gems">Bundler, le gem qui gère les gems</h2>
-<p><a href="http://bundler.io">Bundler</a> est un gem qui va vous permettre de créer un fichier Gemfile
+<h2 id="bundler-le-gem-qui-gere-les-gems">
+      <a class="putainde-Title-anchor" href="#bundler-le-gem-qui-gere-les-gems">#</a>
+      Bundler, le gem qui gère les gems
+    </h2><p><a href="http://bundler.io">Bundler</a> est un gem qui va vous permettre de créer un fichier Gemfile
 contenant vos dépendances, et qui vous installera les gems
 nécessaires avec la gestion des versions et de leurs propres
 dépendances. Un fichier Gemfile se présente comme ceci :</p>
-<pre><code class="hljs ruby">source <span class="hljs-string">'https://rubygems.org'</span>
+<pre><code class="lang-ruby">source <span class="hljs-string">'https://rubygems.org'</span>
 ruby <span class="hljs-string">'2.1.2'</span>
-gem <span class="hljs-string">'sinatra'</span></code></pre>
-
+gem <span class="hljs-string">'sinatra'</span>
+</code></pre>
 <p>L’instruction <code>source</code> permet de préciser l’url des dépôts de gems.
 La version de ruby n’est pas obligatoire mais j’aime la préciser pour
 ne pas me mélanger dans mes projets avec différentes versions de Ruby
@@ -29,25 +31,25 @@ déclaration de notre première bibliothèque de dépendance :
 <a href="http://www.sinatrarb.com">Sinatra</a>.</p>
 <p>Il est possible d’être bien plus précis dans le Gemfile, comme…</p>
 <p>Préciser dans quel environnement charger les gems :</p>
-<pre><code class="hljs ruby">gem <span class="hljs-string">'sqlite3'</span>, <span class="hljs-symbol">group:</span> [<span class="hljs-symbol">:development</span>, <span class="hljs-symbol">:test</span>]</code></pre>
-
+<pre><code class="lang-ruby">gem <span class="hljs-string">'sqlite3'</span>, <span class="hljs-symbol">group:</span> [<span class="hljs-symbol">:development</span>, <span class="hljs-symbol">:test</span>]
+</code></pre>
 <p>Une numéro de version :</p>
-<pre><code class="hljs ruby">gem <span class="hljs-string">'rails'</span>, <span class="hljs-string">'4.1.6'</span>         <span class="hljs-comment"># version 4.1.6</span>
-<span class="hljs-prompt">gem 'sass-rails', '~&gt;</span> <span class="hljs-number">4.0</span>.<span class="hljs-number">3</span><span class="hljs-string">' # &gt;= 4.0.3 mais &lt; 4.1.0</span></code></pre>
-
+<pre><code class="lang-ruby">gem <span class="hljs-string">'rails'</span>, <span class="hljs-string">'4.1.6'</span>         <span class="hljs-comment"># version 4.1.6</span>
+gem <span class="hljs-string">'sass-rails'</span>, <span class="hljs-string">'~&gt; 4.0.3'</span> <span class="hljs-comment"># &gt;= 4.0.3 mais &lt; 4.1.0</span>
+</code></pre>
 <p>Préciser la classe à charger :</p>
-<pre><code class="hljs ruby">gem <span class="hljs-string">'valid_email'</span>, <span class="hljs-symbol">require:</span> <span class="hljs-string">'valid_email/email_validator'</span></code></pre>
-
+<pre><code class="lang-ruby">gem <span class="hljs-string">'valid_email'</span>, <span class="hljs-symbol">require:</span> <span class="hljs-string">'valid_email/email_validator'</span>
+</code></pre>
 <p>Aller chercher directement sur Github :</p>
-<pre><code class="hljs ruby">gem <span class="hljs-string">'nokogiri'</span>, <span class="hljs-symbol">github:</span> <span class="hljs-string">'sparklemotion/nokogiri'</span>
+<pre><code class="lang-ruby">gem <span class="hljs-string">'nokogiri'</span>, <span class="hljs-symbol">github:</span> <span class="hljs-string">'sparklemotion/nokogiri'</span>
 <span class="hljs-comment"># https://github.com/sparklemotion/nokogiri.git</span>
 
 gem <span class="hljs-string">'rails'</span>, <span class="hljs-symbol">github:</span> <span class="hljs-string">'rails'</span>
 <span class="hljs-comment"># https://github.com/rails/rails.git</span>
 
 gem <span class="hljs-string">'rails'</span>, <span class="hljs-symbol">github:</span> <span class="hljs-string">'rails'</span>, <span class="hljs-symbol">branch:</span> <span class="hljs-string">'4-1-stable'</span>
-<span class="hljs-comment"># https://github.com/rails/rails.git sur la branche 4-1-stable</span></code></pre>
-
+<span class="hljs-comment"># https://github.com/rails/rails.git sur la branche 4-1-stable</span>
+</code></pre>
 <p>Il existe encore d’autres instructions, de quoi rendre sa gestion des
 dépendances vraiment fine et précise.</p>
 <p>Une fois le Gemfile prêt, bundler a plusieurs commandes de
@@ -61,28 +63,29 @@ disponibles pour pouvoir les télécharger et utiliser.</p>
 exhaustive des dépendances de votre application, chaque gem avec le
 numéro de sa version installée, chaque dépendance pour chaque gem,
 une jolie arborescence plus que précise.</p>
-<h2 id="commen-ons-notre-web-service">Commençons notre web service</h2>
-<p>Assez parlé des outils qui existent, utilisons-les. Tout d’abord
+<h2 id="commencons-notre-web-service">
+      <a class="putainde-Title-anchor" href="#commencons-notre-web-service">#</a>
+      Commençons notre web service
+    </h2><p>Assez parlé des outils qui existent, utilisons-les. Tout d’abord
 installons Bundler, sans oublier le <code>$ rbenv rehash</code> nécessaire si vous
 utilisez rbenv pour vos versions de Ruby afin de mettre à jour les
 commandes disponibles dans le terminal :</p>
-<pre><code class="hljs"><span class="hljs-variable">$ </span>gem install bundler
-<span class="hljs-variable">$ </span>rbenv rehash</code></pre>
-
-<p>Pour notre première application, nous allons faire un web service
+<pre><code><span class="hljs-variable">$ </span>gem install bundler
+<span class="hljs-variable">$ </span>rbenv rehash
+</code></pre><p>Pour notre première application, nous allons faire un web service
 avec Sinatra qui est un micro-framework web, ayant d’ailleurs
 clairement inspiré Express (“Sinatra inspired web development
 framework for node.js”). Notre Gemfile va donc être exactement
 comme notre premier exemple :</p>
-<pre><code class="hljs ruby">source <span class="hljs-string">'https://rubygems.org'</span>
+<pre><code class="lang-ruby">source <span class="hljs-string">'https://rubygems.org'</span>
 ruby <span class="hljs-string">'2.1.2'</span>
-gem <span class="hljs-string">'sinatra'</span></code></pre>
-
+gem <span class="hljs-string">'sinatra'</span>
+</code></pre>
 <p>Un petit <code>bundle install</code> et nous sommes prêts à démarrer !</p>
 <p>Pour ne pas brusquer les choses, nous allons faire la version la plus
 simple d’un web service avec Sinatra, ce qui nous permettra de
 constater la simplicité extrême de Ruby et du framework :</p>
-<pre><code class="hljs ruby"><span class="hljs-comment">########</span>
+<pre><code class="lang-ruby"><span class="hljs-comment">########</span>
 <span class="hljs-comment"># app.rb</span>
 <span class="hljs-comment">#</span>
 
@@ -90,8 +93,8 @@ constater la simplicité extrême de Ruby et du framework :</p>
 
 get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
   <span class="hljs-string">'Hello World!'</span>
-<span class="hljs-keyword">end</span></code></pre>
-
+<span class="hljs-keyword">end</span>
+</code></pre>
 <p>Qu’avons-nous fait là ? Pas grand chose, et en même temps tout juste
 ce qu’il faut. Nous avons inclus le gem à notre script et utilisé la
 méthode Sinatra <code>get</code> nous permettant de déclarer un point d’entrée
@@ -108,31 +111,37 @@ tout premier web service est fonctionnel.</p>
 réduisant la syntaxe du block on se retrouve avec un script de deux
 lignes qui crée un vrai web service web. Et vous allez vite voir
 qu’en quelques lignes de plus on peut vite complexifier le bousin.</p>
-<h2 id="au-prochain-pisode">Au prochain épisode</h2>
-<p>Dans l’article suivant nous allons ajouter des fonctionnalités à
+<h2 id="au-prochain-episode">
+      <a class="putainde-Title-anchor" href="#au-prochain-episode">#</a>
+      Au prochain épisode
+    </h2><p>Dans l’article suivant nous allons ajouter des fonctionnalités à
 notre toute nouvelle application, de nouvelles routes, de la
 persistence et aussi des vues dans un format un peu plus utile.</p>
 <p>Stay tuned!</p>
-<h2 id="tl-dr">tl;dr</h2>
-<p>Voici la version abrégée de cet article :</p>
-<pre><code class="hljs ruby"><span class="hljs-comment"># Gemfile</span>
+<h2 id="tl-dr">
+      <a class="putainde-Title-anchor" href="#tl-dr">#</a>
+      tl;dr
+    </h2><p>Voici la version abrégée de cet article :</p>
+<pre><code class="lang-ruby"><span class="hljs-comment"># Gemfile</span>
 source <span class="hljs-string">'https://rubygems.org'</span>
 ruby <span class="hljs-string">'2.1.2'</span>
-gem <span class="hljs-string">'sinatra'</span></code></pre>
-
-<pre><code class="hljs ruby"><span class="hljs-comment"># app.rb</span>
+gem <span class="hljs-string">'sinatra'</span>
+</code></pre>
+<pre><code class="lang-ruby"><span class="hljs-comment"># app.rb</span>
 <span class="hljs-keyword">require</span> <span class="hljs-string">'sinatra'</span>
 get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
   <span class="hljs-string">'Hello World!'</span>
-<span class="hljs-keyword">end</span></code></pre>
-
-<pre><code><span class="hljs-variable">$ </span>gem install bundler
+<span class="hljs-keyword">end</span>
+</code></pre>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>gem install bundler
 <span class="hljs-variable">$ </span>rbenv rehash
 <span class="hljs-variable">$ </span>bundle install
-<span class="hljs-variable">$ </span>ruby app.rb</code></pre>
-
-<h2 id="sources">Sources</h2>
-<ul>
+<span class="hljs-variable">$ </span>ruby app.rb
+</code></pre>
+<h2 id="sources">
+      <a class="putainde-Title-anchor" href="#sources">#</a>
+      Sources
+    </h2><ul>
 <li><a href="https://rubygems.org">RubyGems</a></li>
 <li><a href="http://bundler.io">Bundler</a></li>
 <li><a href="https://github.com/sstephenson/rbenv">rbenv</a></li>
@@ -142,8 +151,8 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 (3 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="rhannequin
 (1 commit)"><a href="http://rhannequ.in" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1019025?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Nyalab
 (1 commit)"><a href="http://putaindecode.fr" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/721993?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
-var disqus_identifier = "http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/index.md";
-var disqus_url = "http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/index.md";
+var disqus_identifier = "http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/";
+var disqus_url = "http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/";
 var disqus_script = "embed.js";
 
 (function(d,s) {
@@ -151,4 +160,3 @@ var disqus_script = "embed.js";
   (d.getElementsByTagName('head')[0]).appendChild(s)
 })(document)
     </script></body></html>
-<script src="http://localhost:4243/livereload.js"></script>

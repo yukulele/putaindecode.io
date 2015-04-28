@@ -12,41 +12,43 @@ de compiler ses fichiers et de lancer des tâches.</p>
 eux qui ont donné leurs noms aux <code>(Gulp|Grunt|Rake)files</code>). Les instructions
 qu’ils contiennent sont exécutées grâce à la commande <code>make</code> dans votre
 terminal.</p>
-<h1 id="hello-world">Hello World</h1>
-<p>Je vous propose de commencer en douceur par un classique <em>Hello World</em>. On va
+<h1 id="hello-world">
+      <a class="putainde-Title-anchor" href="#hello-world">#</a>
+      Hello World
+    </h1><p>Je vous propose de commencer en douceur par un classique <em>Hello World</em>. On va
 simplement définir une tâche <code>hello-world</code> dont l’action va être d’afficher
 <em>“Hello, world”</em> à l’écran (boooring).</p>
-<pre><code>hello-world:
-    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello, world"</span></code></pre>
-
+<pre><code class="lang-make">hello-world:
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello, world"</span>
+</code></pre>
 <p>Première remarque importante, les indentations dans un <em>Makefile</em> <strong>doivent</strong>
 être faites avec des tabulations. Oui, je sais, c’est moche, on dirait du
 Python, mais c’est comme ça.</p>
 <p>Voilà le genre d’erreurs qu’on se prend si on met des espaces à la place des
 tabulations :</p>
-<pre><code class="hljs">Makefile:2: <span class="hljs-keyword">*</span><span class="hljs-keyword">*</span><span class="hljs-keyword">*</span> séparateur manquant . Arrêt.</code></pre>
-
-
-<p>Pour exécuter notre commande, il nous suffit de lancer <code>make hello-world</code> dans
+<pre><code>Makefile:2: <span class="hljs-keyword">*</span><span class="hljs-keyword">*</span><span class="hljs-keyword">*</span> séparateur manquant . Arrêt.
+</code></pre><p>Pour exécuter notre commande, il nous suffit de lancer <code>make hello-world</code> dans
 un terminal :</p>
-<pre><code>$ <span class="hljs-keyword">make</span> hello-world
+<pre><code class="lang-console">$ <span class="hljs-keyword">make</span> hello-world
 <span class="hljs-keyword">echo</span> <span class="hljs-string">"Hello, world"</span>
-Hello, world</code></pre>
-
+Hello, world
+</code></pre>
 <p>Décortiquons un peu cette exécution. Pour chaque commande qu’il exécute, <em>Make</em>
 affiche la commande complète avant d’afficher la sortie standard de ladite
 commande. C’est souvent très pratique car toutes les variables (on va revenir là dessus)
 qu’on met dans la commande sont résolues, et on voit clairement ce que <em>Make</em>
 exécute. Par contre, dans certains cas on s’en fout un peu, on peut alors
 préfixer la ligne à rendre silencieuse par un <code>@</code>, comme ça :</p>
-<pre><code>hello-world:
-    @ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello, world"</span></code></pre>
-
-<pre><code><span class="hljs-variable">$ </span>make hello-world
-<span class="hljs-constant">Hello,</span> world</code></pre>
-
-<h1 id="r-gles-cibles-recettes-et-pr-requis">Règles, cibles, recettes et pré-requis</h1>
-<p>OK, jusque là c’est génial, on a un super outil pour lancer des commandes qu’on
+<pre><code class="lang-make">hello-world:
+    @ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello, world"</span>
+</code></pre>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>make hello-world
+<span class="hljs-constant">Hello,</span> world
+</code></pre>
+<h1 id="regles-cibles-recettes-et-pre-requis">
+      <a class="putainde-Title-anchor" href="#regles-cibles-recettes-et-pre-requis">#</a>
+      Règles, cibles, recettes et pré-requis
+    </h1><p>OK, jusque là c’est génial, on a un super outil pour lancer des commandes qu’on
 pourrait déjà stocker dans un bête script shell. Pas super utile finalement.</p>
 <p>Bon, on va corser un peu les choses et commencer par définir un peu de
 terminologie avant que vous soyez totalement largués.</p>
@@ -62,27 +64,29 @@ c’est la première règle trouvée qui est exécutée (donc dans notre cas,
 <code>hello-world</code>).</p>
 <p>Les pré-requis sont déclarés après la cible. On pourrait par exemple ajouter un
 <code>sauter-une-ligne</code> comme pré-requis à notre cible <code>hello-world</code> :</p>
-<pre><code>hello-world: sauter-une-ligne
+<pre><code class="lang-make">hello-world: sauter-une-ligne
     @ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello, world"</span>
 
 sauter-une-ligne:
-    @ <span class="hljs-built_in">echo</span></code></pre>
+    @ <span class="hljs-built_in">echo</span>
+</code></pre>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>make hello-world
 
-<pre><code><span class="hljs-variable">$ </span>make hello-world
-
-<span class="hljs-constant">Hello,</span> world</code></pre>
-
+<span class="hljs-constant">Hello,</span> world
+</code></pre>
 <p>Facile, non ? Ok alors on peut <em>vraiment</em> attaquer les choses sérieuses.</p>
-<h1 id="construire-des-fichiers">Construire des fichiers</h1>
-<p>Les pré-requis sont particulièrement pratiques quand on veut construire un
+<h1 id="construire-des-fichiers">
+      <a class="putainde-Title-anchor" href="#construire-des-fichiers">#</a>
+      Construire des fichiers
+    </h1><p>Les pré-requis sont particulièrement pratiques quand on veut construire un
 fichier depuis un autre, ce qui est la principale action d’à peu près tout
 processus de compilation (paraît même que c’est grosso modo la définition de la
 compilation).</p>
 <p>On peut par exemple écrire un <em>Makefile</em> nous permettant de compiler un fichier
 <em>Markdown</em> en <em>HTML</em> :</p>
-<pre><code><span class="hljs-tag">article</span><span class="hljs-class">.html</span>: <span class="hljs-tag">article</span><span class="hljs-class">.md</span>
-    marked <span class="hljs-tag">article</span><span class="hljs-class">.html</span> &gt; <span class="hljs-tag">article</span>.md</code></pre>
-
+<pre><code class="lang-make"><span class="hljs-tag">article</span><span class="hljs-class">.html</span>: <span class="hljs-tag">article</span><span class="hljs-class">.md</span>
+    marked <span class="hljs-tag">article</span><span class="hljs-class">.html</span> &gt; <span class="hljs-tag">article</span>.md
+</code></pre>
 <p>Cette règle spécifie simplement que pour construire le fichier <code>article.html</code>
 j’ai besoin du fichier <code>article.md</code> et que j’utilise la commande
 <a href="https://www.npmjs.org/package/marked"><code>marked</code></a> pour construire le fichier. Essayez, vous verrez, c’est
@@ -97,41 +101,45 @@ fichiers, qui à leur tour dépendent de fichiers, …</p>
 <p>On peut aussi avoir une cible factice qui ne représente pas un fichier et qui
 elle-même dépend de plusieurs fichiers (<code>website: index.html apropos.html
 contact.html</code>).</p>
-<h1 id="variables-et-substitutions">Variables et substitutions</h1>
-<p>La syntaxe des variables dans un <em>Makefile</em> ressemblent beaucoup aux variables
+<h1 id="variables-et-substitutions">
+      <a class="putainde-Title-anchor" href="#variables-et-substitutions">#</a>
+      Variables et substitutions
+    </h1><p>La syntaxe des variables dans un <em>Makefile</em> ressemblent beaucoup aux variables
 de votre Shell, <em>mais pas tout à fait</em>.</p>
-<pre><code>SOURCE = <span class="hljs-keyword">index</span>.md
+<pre><code class="lang-make">SOURCE = <span class="hljs-keyword">index</span>.md
 DESTINATION = <span class="hljs-keyword">index</span>.html
 
 <span class="hljs-variable">${DESTINATION}</span>: <span class="hljs-variable">${SOURCE}</span>
-  marked <span class="hljs-variable">${SOURCE}</span> &gt; <span class="hljs-variable">${DESTINATION}</span></code></pre>
-
+  marked <span class="hljs-variable">${SOURCE}</span> &gt; <span class="hljs-variable">${DESTINATION}</span>
+</code></pre>
 <p>On peut aussi utiliser une substitution pour s’éviter de tout retaper. La
 syntaxe pour ça est assez simple et se passe d’explications :</p>
-<pre><code><span class="hljs-variable">SOURCE =</span> index.md
-<span class="hljs-variable">DESTINATION =</span> ${SOURCE:.<span class="hljs-variable">md=</span>.html}</code></pre>
-
+<pre><code class="lang-make"><span class="hljs-variable">SOURCE =</span> index.md
+<span class="hljs-variable">DESTINATION =</span> ${SOURCE:.<span class="hljs-variable">md=</span>.html}
+</code></pre>
 <p>Là où ça devient beaucoup plus intéressant c’est qu’on peut stocker des listes
 dans une variable. Pour ça, pas vraiment d’effort à faire, il suffit de rajouter
 des noms à la suite :</p>
-<pre><code>SOURCE = index.<span class="hljs-built_in">md</span> article.<span class="hljs-built_in">md</span>
-DESTINATION = ${SOURCE:.<span class="hljs-built_in">md</span>=.html}</code></pre>
-
+<pre><code class="lang-make">SOURCE = index.<span class="hljs-built_in">md</span> article.<span class="hljs-built_in">md</span>
+DESTINATION = ${SOURCE:.<span class="hljs-built_in">md</span>=.html}
+</code></pre>
 <p>Attention par contre ! En faisant ça si vous utilisez <code>${SOURCE}</code> comme cible
 d’une règle, vous allez définir plusieurs règles d’un coup, ce qui n’est peut
 être pas ce que vous voulez.</p>
 <p>On peut contourner ça assez simplement en utilisant une substitution au niveau
 de la règle. La syntaxe est un poil différente :</p>
-<pre><code>%.html: %.md
-  [<span class="hljs-keyword">...</span>]</code></pre>
-
+<pre><code class="lang-make"><span class="hljs-preprocessor">%</span>.html: <span class="hljs-preprocessor">%</span>.md
+  [...]
+</code></pre>
 <p>Vous l’aurez compris, <code>%</code> est identique dans la cible et dans la dépendance,
 donc avec cette règle si vous faites un <code>make index.html</code>, <em>Make</em> va tenter de
 construire la dépendance <code>index.md</code> avant tout.</p>
 <p>Un problème se pose à nous avec cette syntaxe : « Bah merde, comment je récupère
 les noms de fichiers là ? »</p>
-<h1 id="variables-sp-ciales">Variables spéciales</h1>
-<p>Superbe transition étant donné qu’on va parler ici de quelques variables
+<h1 id="variables-speciales">
+      <a class="putainde-Title-anchor" href="#variables-speciales">#</a>
+      Variables spéciales
+    </h1><p>Superbe transition étant donné qu’on va parler ici de quelques variables
 spéciales bien pratiques !</p>
 <ul>
 <li><code>$@</code> contient le nom de la cible de la règle en cours d’exécution ;</li>
@@ -141,24 +149,26 @@ liste de dépendances) ;</li>
 là où est la dépendance).</li>
 </ul>
 <p>À l’aide de celles-ci on peut du coup compléter notre exemple précédent :</p>
-<pre><code>%.html: %.md
-  marked {{contents}}lt; &gt; $@
-  [<span class="hljs-keyword">...</span>]</code></pre>
-
-<h1 id="fonctions">Fonctions</h1>
-<p>Pour faciliter quelques opérations, <em>Make</em> fournit un ensemble de fonctions de
+<pre><code class="lang-make"><span class="hljs-variable">%.</span>html: <span class="hljs-variable">%.</span>md
+  marked <span class="hljs-variable">{{contents}}lt;</span> &gt; <span class="hljs-variable">$@</span>
+  [...]
+</code></pre>
+<h1 id="fonctions">
+      <a class="putainde-Title-anchor" href="#fonctions">#</a>
+      Fonctions
+    </h1><p>Pour faciliter quelques opérations, <em>Make</em> fournit un ensemble de fonctions de
 base. Appeler ces fonctions rappelle un peu la façon dont on lance une commande
 dans un sous-shell en Bash : <code>$(fonction argument1 argument2)</code>.</p>
 <p>Voici une petite démonstration de <code>wildcard</code>, <code>addsuffix</code> et <code>basename</code> dont
 vous vous doutez sans doute les effets :</p>
-<pre><code>SOURCES = <span class="hljs-variable">$(</span>wildcard <span class="hljs-variable">*.</span>md)
+<pre><code class="lang-make">SOURCES = <span class="hljs-variable">$(</span>wildcard <span class="hljs-variable">*.</span>md)
 DESTINATIONS = <span class="hljs-variable">$(</span>addsuffix .html,<span class="hljs-variable">$(</span><span class="hljs-keyword">basename</span> <span class="hljs-variable">${SOURCES}</span>))
 
 all: <span class="hljs-variable">${DESTINATIONS}</span>
 
 <span class="hljs-variable">%.</span>html: <span class="hljs-variable">%.</span>md
-  marked <span class="hljs-variable">{{contents}}lt;</span> &gt; <span class="hljs-variable">$@</span></code></pre>
-
+  marked <span class="hljs-variable">{{contents}}lt;</span> &gt; <span class="hljs-variable">$@</span>
+</code></pre>
 <p>L’exemple construit dynamiquement la liste des fichiers HTML à produire à partir
 de la liste des fichiers <em>Markdown</em> disponibles puis définit une règle <code>all</code>
 permettant de tout construire d’un coup, et une règle définissant compiler
@@ -167,8 +177,10 @@ unitairement un fichier <em>Markdown</em> vers HTML.</p>
 simple comme on a vu précédemment.</p>
 <p>Je vous invite à fouiller
 <a href="https://www.gnu.org/software/make/manual/make.html#Functions">le chapitre sur les fonctions du manuel</a>.</p>
-<h1 id="la-cible-phony-">La cible <code>.PHONY</code></h1>
-<p>Dans certains cas la cible d’une règle ne représente pas un fichier (c’était le
+<h1 id="la-cible-phony">
+      <a class="putainde-Title-anchor" href="#la-cible-phony">#</a>
+      La cible <code>.PHONY</code>
+    </h1><p>Dans certains cas la cible d’une règle ne représente pas un fichier (c’était le
 cas de notre cible <code>website</code> <a href="#ref-phony-target">un peu plus haut</a>).</p>
 <p>Dans ces cas-là, on va vouloir exécuter la règle quoi qu’il arrive, comme si la
 cible était tout le temps périmée.</p>
@@ -176,17 +188,19 @@ cible était tout le temps périmée.</p>
 cette cible seront marquées comme (traduction pourrie) imposteurs (<em>phony</em>
 donc).</p>
 <p>Pour reprendre l’exemple précédent, on déclarera donc :</p>
-<pre><code>.PHONY: website
+<pre><code class="lang-make"><span class="hljs-class">.PHONY</span>: website
 
-website: index.html apropos.html contact.html
-  [<span class="hljs-keyword">...</span>]</code></pre>
-
+website: index<span class="hljs-class">.html</span> apropos<span class="hljs-class">.html</span> contact<span class="hljs-class">.html</span>
+  [...]
+</code></pre>
 <p>Désormais, chaque appel à <code>make website</code> tentera de construire les dépendances
 et exécutera les commandes de la recette de la règle.</p>
-<h1 id="un-exemple-complet">Un exemple complet</h1>
-<p>L’exemple suivant permet de compiler un site Web depuis un ensemble de fichiers
+<h1 id="un-exemple-complet">
+      <a class="putainde-Title-anchor" href="#un-exemple-complet">#</a>
+      Un exemple complet
+    </h1><p>L’exemple suivant permet de compiler un site Web depuis un ensemble de fichiers
 <em>Markdown</em>.</p>
-<pre><code><span class="hljs-constant">SOURCES</span> = <span class="hljs-variable">$(</span>wildcard src/*.md)
+<pre><code class="lang-make"><span class="hljs-constant">SOURCES</span> = <span class="hljs-variable">$(</span>wildcard src/*.md)
 <span class="hljs-constant">DESTINATIONS</span> = <span class="hljs-variable">${</span><span class="hljs-constant">SOURCES</span><span class="hljs-symbol">:src/%</span>.md=build/%.html}
 
 <span class="hljs-symbol">all:</span> <span class="hljs-variable">${</span><span class="hljs-constant">DESTINATIONS</span>}
@@ -201,12 +215,14 @@ build/%.<span class="hljs-symbol">html:</span> src/%.md
     mkdir -p build
     marked <span class="hljs-variable">{{contents}}lt;</span> &gt; <span class="hljs-variable">$@</span>
 
-.<span class="hljs-constant">PHONY</span><span class="hljs-symbol">:</span> all info clean</code></pre>
-
+.<span class="hljs-constant">PHONY</span><span class="hljs-symbol">:</span> all info clean
+</code></pre>
 <p>Vous noterez que comme on stocke nos résultats dans le dossier <code>build</code>, il faut
 potentiellement le créer quand on compile un fichier dedans.</p>
-<h1 id="pour-aller-plus-loin">Pour aller plus loin</h1>
-<p>Il existe bien d’autres fonctionnalités dans <em>Make</em> (du moins dans <em>GNU Make</em>),
+<h1 id="pour-aller-plus-loin">
+      <a class="putainde-Title-anchor" href="#pour-aller-plus-loin">#</a>
+      Pour aller plus loin
+    </h1><p>Il existe bien d’autres fonctionnalités dans <em>Make</em> (du moins dans <em>GNU Make</em>),
 avec notamment :</p>
 <ul>
 <li>Les <a href="https://www.gnu.org/software/make/manual/make.html#Canned-Recipes"><em>canned recipes</em></a> (recettes en boîte), permettant de
@@ -231,8 +247,8 @@ que vous êtes fin prêts à affronter tous ces bouseux avec leur système de bu
 (2 commits)"><a href="https://github.com/Macxim" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1909957?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
 (2 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="madx
 (1 commit)"><a href="http://madx.me/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/5723?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
-var disqus_identifier = "http://putaindecode.fr/posts/shell/apprendre-les-makefiles/index.md";
-var disqus_url = "http://putaindecode.fr/posts/shell/apprendre-les-makefiles/index.md";
+var disqus_identifier = "http://putaindecode.fr/posts/shell/apprendre-les-makefiles/";
+var disqus_url = "http://putaindecode.fr/posts/shell/apprendre-les-makefiles/";
 var disqus_script = "embed.js";
 
 (function(d,s) {
@@ -240,4 +256,3 @@ var disqus_script = "embed.js";
   (d.getElementsByTagName('head')[0]).appendChild(s)
 })(document)
     </script></body></html>
-<script src="http://localhost:4243/livereload.js"></script>

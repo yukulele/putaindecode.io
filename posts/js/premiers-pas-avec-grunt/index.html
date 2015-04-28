@@ -2,8 +2,10 @@
 <html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Premiers pas avec Grunt</title><link rel="stylesheet" href="/index.css"><link rel="alternate" href="/feed.xml" title="Premiers pas avec Grunt" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Premiers pas avec Grunt"><meta name="twitter:creator" content="@_kud"><meta property="og:title" content="Premiers pas avec Grunt"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><img class="putainde-Logo" alt="Putain de code !" src="/images/p!-logo.svg"><span>Putain de code !</span></a></div><div class="r-Grid-cell r-all--7of12"><nav class="putainde-Nav"><a class="putainde-Nav-item" href="/posts" data-r-tooltip=""><img class="putainde-Icon" src="/icons/bookmark.svg">Articles</a><a class="putainde-Nav-item" href="/c-est-quoi-putaindecode" data-r-tooltip=""><img class="putainde-Icon" src="/icons/text-file.svg">Readme</a><a class="putainde-Nav-item" href="/posts/comment-contribuer" data-r-tooltip=""><img class="putainde-Icon" src="/icons/pencil.svg">Participer</a><a class="putainde-Nav-item putainde-Nav-item--icon r-Tooltip r-Tooltip--bottom" href="https://github.com/putaindecode/" data-r-tooltip="GitHub"><img class="putainde-Icon" src="/icons/github.svg"></a><a class="putainde-Nav-item putainde-Nav-item--icon r-Tooltip r-Tooltip--bottom" href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a></nav></div></div></div><div class="putainde-Main"><article class="r-Grid putainde-Post"><div class="r-Grid-cell r-all--8of12 putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Premiers pas avec Grunt</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas"><span>Écrit par <span><a href="http://kud.io">kud</a><span></span></span></span><span>, </span><span class="putainde-Date"> le 16 nov. 2013</span>. <span class="putainde-Post-readingTime putainde-Post-readingTime--hidden r-Tooltip r-Tooltip--top" data-r-tooltip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingtime-wpm="250">Temps de lecture : environ  <span class="putainde-Post-readingTime-value">...</span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">javascript</li><li class="putainde-Tag">tools</li><li class="putainde-Tag">grunt</li></ul></header><div class="putainde-Post-md"><div><figure class="putainde-Media putainde-Media--left"><img src="gruntjs.png" alt=""></figure>
 
 <p>Vous avez sûrement déjà entendu parler de <strong>Grunt</strong> à droite à gauche, en conférence, voire votre boite l’utilise déjà mais vous ne savez toujours pas trop ce qui se cache derrière ce terme saugrenu digne d’un personnage de Warcraft. Soit, ce n’est pas bien grave. <strong>Grunt</strong> est simplement un <em>JavaScript Task Runner</em>, un outil vous permettant de créer des tâches automatisées en JavaScript. Forcément ce n’est pas très parlant mais c’est tout l’intérêt de cet article, vous expliquer ce qu’est <strong>Grunt</strong> et pourquoi il peut vous être utile dans un <em>workflow</em> de front-end dev.</p>
-<h1 id="commen-ons">Commençons</h1>
-<p>Vous est-il déjà arrivé de devoir régulièrement lancer, lancer et relancer des processus tels que <em>Sass</em>, <em>LESS</em>, <em>uglify</em> - en somme des préprocesseurs ou des minifiers - régulièrement à la main ? N’est-ce pas pénible ? N’est-ce pas aussi pénible de devoir indiquer à tous ses collègues comment ils doivent bosser pour que vous soyez tous cohérents ? Oui ? <strong>Grunt</strong> permet de résoudre ce genre de choses : respecter un putain de <em>workflow</em> en s’assurant que le parcours soit le même pour tout le monde et d’exécuter tout ça en lançant une seule commande. N’est-ce pas fucking aweeeeesome dude ? Bref.</p>
+<h1 id="commencons">
+      <a class="putainde-Title-anchor" href="#commencons">#</a>
+      Commençons
+    </h1><p>Vous est-il déjà arrivé de devoir régulièrement lancer, lancer et relancer des processus tels que <em>Sass</em>, <em>LESS</em>, <em>uglify</em> - en somme des préprocesseurs ou des minifiers - régulièrement à la main ? N’est-ce pas pénible ? N’est-ce pas aussi pénible de devoir indiquer à tous ses collègues comment ils doivent bosser pour que vous soyez tous cohérents ? Oui ? <strong>Grunt</strong> permet de résoudre ce genre de choses : respecter un putain de <em>workflow</em> en s’assurant que le parcours soit le même pour tout le monde et d’exécuter tout ça en lançant une seule commande. N’est-ce pas fucking aweeeeesome dude ? Bref.</p>
 <p>Voici un <em>workflow</em> assez classique :</p>
 <ul>
 <li>Compiler mes <code>.scss</code> en <code>.css</code>;</li>
@@ -11,23 +13,27 @@
 <li>Minifier (avec <em>uglify</em> par exemple) la résultante de l’action précédente.</li>
 </ul>
 <p>Voyons maintenant comment l’on peut mettre en place ceci via <strong>Grunt</strong>.</p>
-<h2 id="installation">Installation</h2>
-<p>Tout d’abord, installons <strong>Grunt</strong>. Notez que <strong>Grunt</strong> est en <em>nodejs</em> et que je considère que vous avez déjà <em>nodejs</em> d’installé. D’autre part, nous allons créer un nouveau projet <strong>npm</strong> afin d’enregistrer tous les packages que vous allez installer. Je vous explique par la suite pourquoi nous faisons ça.</p>
-<pre><code>$ npm <span class="hljs-keyword">init</span> <span class="hljs-comment">// puis plusieurs fois entrée</span></code></pre>
-
+<h2 id="installation">
+      <a class="putainde-Title-anchor" href="#installation">#</a>
+      Installation
+    </h2><p>Tout d’abord, installons <strong>Grunt</strong>. Notez que <strong>Grunt</strong> est en <em>nodejs</em> et que je considère que vous avez déjà <em>nodejs</em> d’installé. D’autre part, nous allons créer un nouveau projet <strong>npm</strong> afin d’enregistrer tous les packages que vous allez installer. Je vous explique par la suite pourquoi nous faisons ça.</p>
+<pre><code class="lang-console">$ npm <span class="hljs-keyword">init</span> <span class="hljs-comment">// puis plusieurs fois entrée</span>
+</code></pre>
 <p>En premier lieu, il faut installer le <em>package</em> qui permet de gérer <strong>Grunt</strong> en ligne de commande. C’est le <em>commander</em> de <strong>Grunt</strong> en gros.</p>
-<pre><code>$ npm install -g grunt-<span class="hljs-keyword">cli</span></code></pre>
-
+<pre><code class="lang-console">$ npm install -<span class="hljs-keyword">g</span> grunt-<span class="hljs-keyword">cli</span>
+</code></pre>
 <p>Une fois cela fait, installez <strong>Grunt</strong> en local dans votre projet.</p>
-<pre><code>$ npm install grunt --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span></code></pre>
-
+<pre><code class="lang-console">$ npm install grunt --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span>
+</code></pre>
 <p>Ni plus ni moins, <strong>Grunt</strong> est enfin installé dans votre projet.</p>
-<h2 id="initialisation">Initialisation</h2>
-<p>Maintenant, il est nécessaire de créer un fichier de configuration <strong>Grunt</strong>. Pour cela, nous allons créer un fichier nommé <code>Gruntfile.js</code> à la racine de votre projet.</p>
-<pre><code><span class="hljs-variable">$ </span>touch <span class="hljs-constant">Gruntfile.</span>js</code></pre>
-
+<h2 id="initialisation">
+      <a class="putainde-Title-anchor" href="#initialisation">#</a>
+      Initialisation
+    </h2><p>Maintenant, il est nécessaire de créer un fichier de configuration <strong>Grunt</strong>. Pour cela, nous allons créer un fichier nommé <code>Gruntfile.js</code> à la racine de votre projet.</p>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>touch <span class="hljs-constant">Gruntfile.</span>js
+</code></pre>
 <p>Fait ? Voici maintenant à quoi doit ressembler la base d’une configuration <strong>Grunt</strong>.</p>
-<pre><code class="hljs javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
 
   <span class="hljs-comment">// Configuration de Grunt</span>
   grunt.initConfig({})
@@ -35,18 +41,20 @@
   <span class="hljs-comment">// Définition des tâches Grunt</span>
   grunt.registerTask(<span class="hljs-string">'default'</span>, <span class="hljs-string">''</span>)
 
-}</code></pre>
-
+}
+</code></pre>
 <p>Nous avons maintenant tout le nécessaire pour débuter notre projet. Nous allons enfin pouvoir attaquer les choses sérieuses. Revenons un peu en arrière où nous expliquions que nous voulons en tout premier lieu compiler nos <code>.scss</code> en <code>.css</code>.</p>
-<h2 id="cr-er-sa-premi-re-t-che">Créer sa première tâche</h2>
-<p>Une petite recherche sur votre moteur de recherche préféré en tapant <code>grunt sass</code> et vous trouverez le projet <a href="https://github.com/gruntjs/grunt-contrib-sass"><code>grunt-contrib-sass</code></a>.</p>
+<h2 id="creer-sa-premiere-tache">
+      <a class="putainde-Title-anchor" href="#creer-sa-premiere-tache">#</a>
+      Créer sa première tâche
+    </h2><p>Une petite recherche sur votre moteur de recherche préféré en tapant <code>grunt sass</code> et vous trouverez le projet <a href="https://github.com/gruntjs/grunt-contrib-sass"><code>grunt-contrib-sass</code></a>.</p>
 <p>Toute documentation pour installer une tâche <strong>Grunt</strong> est indiquée sur chaque <code>README.md</code> du projet mais pour un souci de clarté et de compréhension, je vais tout de même vous expliquer ici comment faire.</p>
 <p>D’abord, installons le package pour <em>Sass</em>.</p>
-<pre><code>$ npm install grunt-contrib-sass --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span></code></pre>
-
+<pre><code class="lang-console">$ npm install grunt-contrib-sass --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span>
+</code></pre>
 <p>Ceci va installer le <em>package</em> <code>grunt-contrib-sass</code> dans votre dossier <code>node_modules</code> où vous pourrez l’utiliser en l’important dans votre <code>Gruntfile.js</code>.</p>
 <p>Un exemple d’utilisation :</p>
-<pre><code class="hljs javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
 
   grunt.initConfig({
     sass: {                              <span class="hljs-comment">// Nom de la tâche</span>
@@ -68,11 +76,11 @@
   <span class="hljs-comment">// Redéfinition de la tâche `default` qui est la tâche lancée dès que vous lancez Grunt sans rien spécifier.</span>
   <span class="hljs-comment">// Note : ici, nous définissons sass comme une tâche à lancer si on lance la tâche `default`.</span>
   grunt.registerTask(<span class="hljs-string">'default'</span>, [<span class="hljs-string">'sass:dist'</span>])
-}</code></pre>
-
+}
+</code></pre>
 <p>Nous avons maintenant tout le nécessaire pour pouvoir compiler nos <code>.scss</code> en  <code>.css</code>.</p>
 <p>Vous vous demandez peut-être comment vous pouvez généraliser vos sources plutôt que les définir une par une. Pas de souci.</p>
-<pre><code class="hljs javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
 
   grunt.initConfig({
     sass: {
@@ -94,15 +102,17 @@
   grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-sass'</span>)
 
   grunt.registerTask(<span class="hljs-string">'default'</span>, [<span class="hljs-string">'sass:dist'</span>])
-}</code></pre>
-
-<h2 id="deuxi-me-t-che-concat-ner-ses-fichiers-javascript">Deuxième tâche : concaténer ses fichiers JavaScript</h2>
-<p>Passons maintenant à la concaténation des fichiers JavaScript.</p>
+}
+</code></pre>
+<h2 id="deuxieme-tache-concatener-ses-fichiers-javascript">
+      <a class="putainde-Title-anchor" href="#deuxieme-tache-concatener-ses-fichiers-javascript">#</a>
+      Deuxième tâche : concaténer ses fichiers JavaScript
+    </h2><p>Passons maintenant à la concaténation des fichiers JavaScript.</p>
 <p>Comme pour la majorité des tâches dont vous aurez besoin avec <strong>Grunt</strong>, un <em>package</em> <strong>Grunt</strong> existe déjà pour ce travail demandé.</p>
 <p>-&gt; <a href="https://github.com/gruntjs/grunt-contrib-concat"><code>grunt-contrib-concat</code></a></p>
 <p>Installation : <code>npm install grunt-contrib-concat --save-dev</code> (<code>--save-dev</code> permet de sauvegarder le package dans <code>package.json</code> pour pouvoir à tout moment le réinstaller en faisant <code>npm install</code>)</p>
 <p>On ajoute alors à notre configuration <strong>Grunt</strong> l’importation de <code>grunt-contrib-concat</code> :</p>
-<pre><code class="hljs javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
 
   grunt.initConfig({
     sass: {
@@ -125,10 +135,10 @@
   grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-concat'</span>); <span class="hljs-comment">// Voilà l'ajout.</span>
 
   grunt.registerTask(<span class="hljs-string">'default'</span>, [<span class="hljs-string">'sass:dist'</span>])
-}</code></pre>
-
+}
+</code></pre>
 <p>Puis on ajoute notre tâche :</p>
-<pre><code class="hljs javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
 
   grunt.initConfig({
     sass: {
@@ -160,10 +170,10 @@
   grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-concat'</span>);
 
   grunt.registerTask(<span class="hljs-string">'default'</span>, [<span class="hljs-string">'sass:dist'</span>])
-}</code></pre>
-
+}
+</code></pre>
 <p>Ne pas oublier d’ajouter la tâche de concaténation à notre tâche par défaut :</p>
-<pre><code class="hljs javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
 
   grunt.initConfig({
     sass: {
@@ -195,12 +205,14 @@
   grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-concat'</span>);
 
   grunt.registerTask(<span class="hljs-string">'default'</span>, [<span class="hljs-string">'sass:dist'</span>, <span class="hljs-string">'concat:dist'</span>]) <span class="hljs-comment">// ici même.</span>
-}</code></pre>
-
-<h2 id="compressons-le-tout-">Compressons le tout !</h2>
-<p>Pour finir, compressons nos fichiers JavaScript ! Pour cela : <a href="https://github.com/gruntjs/grunt-contrib-uglify"><code>grunt-contrib-uglify</code></a> fera l’affaire.</p>
+}
+</code></pre>
+<h2 id="compressons-le-tout">
+      <a class="putainde-Title-anchor" href="#compressons-le-tout">#</a>
+      Compressons le tout !
+    </h2><p>Pour finir, compressons nos fichiers JavaScript ! Pour cela : <a href="https://github.com/gruntjs/grunt-contrib-uglify"><code>grunt-contrib-uglify</code></a> fera l’affaire.</p>
 <p>Je vous passe les détails pour l’installer, si vous avez bien suivi cet article, vous ne devriez avoir aucun problème pour cela.</p>
-<pre><code class="hljs javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
 
   grunt.initConfig({
     sass: {
@@ -241,12 +253,14 @@
   grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-concat'</span>)
 
   grunt.registerTask(<span class="hljs-string">'default'</span>, [<span class="hljs-string">'sass:dist'</span>, <span class="hljs-string">'concat:dist'</span>])
-}</code></pre>
-
+}
+</code></pre>
 <p>Ne constatez-vous pas un souci ici ? Oui, nous ne voulons sûrement pas à la fois concaténer nos fichiers et les compresser. Alors comment faire ? Pas d’inquiétude, il suffit de créer des tâches d’environnement ou de contexte. On pourrait par exemple créer une tâche développement et une tâche de production, qu’en pensez-vous ? Pas mal non ? :)</p>
-<h2 id="optimisons-">Optimisons !</h2>
-<p>Supprimons alors dans un premier temps notre tâche par défaut et créons deux tâches : <code>dev</code> et <code>dist</code>.</p>
-<pre><code class="hljs javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<h2 id="optimisons">
+      <a class="putainde-Title-anchor" href="#optimisons">#</a>
+      Optimisons !
+    </h2><p>Supprimons alors dans un premier temps notre tâche par défaut et créons deux tâches : <code>dev</code> et <code>dist</code>.</p>
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
 
   grunt.initConfig({
     sass: {
@@ -288,10 +302,10 @@
 
   grunt.registerTask(<span class="hljs-string">'dev'</span>, [])
   grunt.registerTask(<span class="hljs-string">'dist'</span>, [])
-}</code></pre>
-
+}
+</code></pre>
 <p>Sauf que comme ça, vous le voyez, cela ne va pas faire grand chose, voire rien du tout. Agrémentons alors nos deux tâches par ce qu’on souhaite faire.</p>
-<pre><code class="hljs javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
 
   grunt.initConfig({
     sass: {
@@ -333,127 +347,203 @@
 
   grunt.registerTask(<span class="hljs-string">'dev'</span>, [<span class="hljs-string">'sass:dist'</span>, <span class="hljs-string">'concat:dist'</span>]) <span class="hljs-comment">// C'est pas chouette ça ?</span>
   grunt.registerTask(<span class="hljs-string">'dist'</span>, [<span class="hljs-string">'sass:dist'</span>, <span class="hljs-string">'uglify:dist'</span>]) <span class="hljs-comment">// Et hop, je compresse si je lance $ grunt dist</span>
-}</code></pre>
-
-<p>Ha ! Nous y voilà ! Nous avons alors deux tâches <pre><code>Sauf que comme tout <span class="hljs-function"><span class="hljs-title">bon</span><span class="hljs-params">(ne)</span></span> développeur/euse, vous êtes une grosse feignasse et compiler à chaque fois que vous faites des modifications sur vos fichiers va vite être saoulant.</p>
-<p>Pour cela, une tâche existe, elle s<span class="hljs-string">‘appelle</span></code></pre>watch<pre><code><span class="hljs-comment">## Regarde ce fichier que je ne… euh bref.</span></p>
-<p>Très simple, <code>watch</code> va vous permettre de <span class="hljs-string">“regarder”</span> vos fichiers, savoir lesquels ont changé et donc lancer une action en fonction du type de fichiers.</p>
-<p>Imaginons que l’<span class="hljs-function_start"><span class="hljs-keyword">on</span></span> veut par exemple compiler nos CSS à chaque fois que l’<span class="hljs-function_start"><span class="hljs-keyword">on</span></span> change un fichier <em>Sass</em>. Ou encore que l’<span class="hljs-function_start"><span class="hljs-keyword">on</span></span> concatène nos fichiers JavaScript dès que l’<span class="hljs-function_start"><span class="hljs-keyword">on</span></span> touche à l’un d’entre eux.</code></pre>javascript
-module.exports = function(grunt) {</p>
-<p>  grunt.initConfig({
-    sass: {
-      dist: {
-        options: {
-          style: ‘expanded’
-        },
-        files: [{
-          “expand”: true,
-          “cwd”: “src/styles/“,
-          “src”: [“<em>.scss”],
-          “dest”: “dist/styles/“,
-          “ext”: “.css”
-        }]
-      }
-    },
-    concat: {
-      options: {
-        separator: ‘;’
-      },
-      dist: {
-        src: [‘src/intro.js’, ‘src/project.js’, ‘src/outro.js’],
-        dest: ‘dist/built.js’
-      }
-    },
-    uglify: {
-      options: {
-        separator: ‘;’
-      },
-      dist: {
-        src: [‘src/intro.js’, ‘src/project.js’, ‘src/outro.js’]
-        dest: ‘dist/built.js’
-      }
-    },
-    watch: {
-      scripts: {
-        files: ‘**/</em>.js’, // tous les fichiers JavaScript de n’importe quel dossier
-        tasks: [‘concat:dist’]
-      },
-      styles: {
-        files: ‘<em>*/</em>.scss’, // tous les fichiers Sass de n’importe quel dossier
-        tasks: [‘sass:dist’]
-      }
-    }
-  })</p>
-<p>  grunt.loadNpmTasks(‘grunt-contrib-sass’)
-  grunt.loadNpmTasks(‘grunt-contrib-concat’)
-  grunt.loadNpmTasks(‘grunt-contrib-watch’)</p>
-<p>  grunt.registerTask(‘dev’, [‘sass:dist’, ‘concat:dist’])
-  grunt.registerTask(‘dist’, [‘sass:dist’, ‘uglify:dist’])
-}</p>
-<pre><code class="hljs">Maintenant, vous êtes capable à tout moment de <span class="hljs-keyword">compiler</span> automatiquement vos fichiers <span class="hljs-keyword">en</span> <span class="hljs-keyword">lan</span>çant simplement `$ grunt watch`.
-
-Oui, comprenez bien que lorsque vous ajoutez une <span class="hljs-keyword">t</span>â<span class="hljs-keyword">che</span> dans <span class="hljs-keyword">la</span> <span class="hljs-keyword">d</span>éfinition de <span class="hljs-keyword">la</span> configuration de **Grunt**, elle est appelable directement. Typiquement, vous pouvez faire</code></pre>$ grunt premier-niveau:deuxieme-niveau<pre><code>Je ne sais pas si vous vous rappelez mais nous avions <span class="hljs-keyword">cr</span>éé une <span class="hljs-keyword">t</span>â<span class="hljs-keyword">che</span> de base <span class="hljs-keyword">s</span><span class="hljs-string">'appelant</span></code></pre>default<pre><code>Tout ça pour dire qu'il est serait sûrement intéressant de lancer la tâche <span class="hljs-smartquote">`watch` dès qu'</span>on souhaite lancer *<span class="hljs-strong">*Grunt*</span>* étant donné que c'est sûrement la tâche la plus récurrente que vous utiliserez.
-
-C'est parti !</code></pre>javascript
-module.exports = function(grunt) {
+}
+</code></pre>
+<p>Ha ! Nous y voilà ! Nous avons alors deux tâches <code>grunt dev</code> et <code>grunt dist</code> qui nous permettent dans tous les cas de générer nos CSS et dans un cas concaténer nos JS, et dans l’autre de les compresser (la compression fait aussi la concaténation implicitement).</p>
+<p>Sauf que comme tout bon(ne) développeur/euse, vous êtes une grosse feignasse et compiler à chaque fois que vous faites des modifications sur vos fichiers va vite être saoulant.</p>
+<p>Pour cela, une tâche existe, elle s’appelle <code>watch</code> (via le package <a href="https://github.com/gruntjs/grunt-contrib-watch/"><code>grunt-contrib-watch</code></a>).</p>
+<h2 id="regarde-ce-fichier-que-je-ne-euh-bref">
+      <a class="putainde-Title-anchor" href="#regarde-ce-fichier-que-je-ne-euh-bref">#</a>
+      Regarde ce fichier que je ne… euh bref.
+    </h2><p>Très simple, <code>watch</code> va vous permettre de “regarder” vos fichiers, savoir lesquels ont changé et donc lancer une action en fonction du type de fichiers.</p>
+<p>Imaginons que l’on veut par exemple compiler nos CSS à chaque fois que l’on change un fichier <em>Sass</em>. Ou encore que l’on concatène nos fichiers JavaScript dès que l’on touche à l’un d’entre eux.</p>
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
 
   grunt.initConfig({
     sass: {
       dist: {
         options: {
-          style: 'expanded'
+          style: <span class="hljs-string">'expanded'</span>
         },
         files: [{
-          "expand": true,
-          "cwd": "src/styles/",
-          "src": ["*.scss"],
-          "dest": "dist/styles/",
-          "ext": ".css"
+          <span class="hljs-string">"expand"</span>: <span class="hljs-literal">true</span>,
+          <span class="hljs-string">"cwd"</span>: <span class="hljs-string">"src/styles/"</span>,
+          <span class="hljs-string">"src"</span>: [<span class="hljs-string">"*.scss"</span>],
+          <span class="hljs-string">"dest"</span>: <span class="hljs-string">"dist/styles/"</span>,
+          <span class="hljs-string">"ext"</span>: <span class="hljs-string">".css"</span>
         }]
       }
     },
     concat: {
       options: {
-        separator: ';'
+        separator: <span class="hljs-string">';'</span>
       },
       dist: {
-        src: ['src/intro.js', 'src/project.js', 'src/outro.js'],
-        dest: 'dist/built.js'
+        src: [<span class="hljs-string">'src/intro.js'</span>, <span class="hljs-string">'src/project.js'</span>, <span class="hljs-string">'src/outro.js'</span>],
+        dest: <span class="hljs-string">'dist/built.js'</span>
       }
     },
     uglify: {
       options: {
-        separator: ';'
+        separator: <span class="hljs-string">';'</span>
       },
       dist: {
-        src: ['src/intro.js', 'src/project.js', 'src/outro.js']
-        dest: 'dist/built.js'
+        src: [<span class="hljs-string">'src/intro.js'</span>, <span class="hljs-string">'src/project.js'</span>, <span class="hljs-string">'src/outro.js'</span>]
+        dest: <span class="hljs-string">'dist/built.js'</span>
       }
     },
     watch: {
       scripts: {
-        files: '**/*.js', // tous les fichiers JavaScript de n'importe quel dossier
-        tasks: ['concat:dist']
+        files: <span class="hljs-string">'**/*.js'</span>, <span class="hljs-comment">// tous les fichiers JavaScript de n'importe quel dossier</span>
+        tasks: [<span class="hljs-string">'concat:dist'</span>]
       },
       styles: {
-        files: '**/*.scss', // tous les fichiers Sass de n'importe quel dossier
-        tasks: ['sass:dist']
+        files: <span class="hljs-string">'**/*.scss'</span>, <span class="hljs-comment">// tous les fichiers Sass de n'importe quel dossier</span>
+        tasks: [<span class="hljs-string">'sass:dist'</span>]
       }
     }
   })
 
-  grunt.loadNpmTasks('grunt-contrib-sass')
-  grunt.loadNpmTasks('grunt-contrib-concat')
-  grunt.loadNpmTasks('grunt-contrib-watch')
+  grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-sass'</span>)
+  grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-concat'</span>)
+  grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-watch'</span>)
 
-  grunt.registerTask('default', ['dev', 'watch']) // Oui, je conseille de toujours compiler une fois avant de lancer watch.
-  grunt.registerTask('dev', ['sass:dist', 'concat:dist'])
-  grunt.registerTask('dist', ['sass:dist', 'uglify:dist'])
+  grunt.registerTask(<span class="hljs-string">'dev'</span>, [<span class="hljs-string">'sass:dist'</span>, <span class="hljs-string">'concat:dist'</span>])
+  grunt.registerTask(<span class="hljs-string">'dist'</span>, [<span class="hljs-string">'sass:dist'</span>, <span class="hljs-string">'uglify:dist'</span>])
 }
-<pre><code class="hljs">That<span class="hljs-operator">'</span>s it. Nous avons maintenant tout le nécessaire pour compiler des CSS, du JS, l<span class="hljs-operator">'</span>optimiser, ainsi qu<span class="hljs-operator">'</span>avoir une commande de développement avec compilation automatique.
+</code></pre>
+<p>Maintenant, vous êtes capable à tout moment de compiler automatiquement vos fichiers en lançant simplement <code>$ grunt watch</code>.</p>
+<p>Oui, comprenez bien que lorsque vous ajoutez une tâche dans la définition de la configuration de <strong>Grunt</strong>, elle est appelable directement. Typiquement, vous pouvez faire <code>$ grunt premier-niveau:deuxieme-niveau</code> soit par exemple <code>$ grunt sass:dist</code>. Vous n’êtes pas obligé(e) de (re)définir chaque tâche via <code>grunt.registerTask()</code>.</p>
+<p>Je ne sais pas si vous vous rappelez mais nous avions créé une tâche de base s’appelant <code>default</code>. Cette tâche se lance dès que vous ne passez aucun paramètre à <strong>Grunt</strong> soit <code>$ grunt</code>. Vous pouvez aussi l’appeler via <code>$ grunt default</code> mais aucun intérêt.</p>
+<p>Tout ça pour dire qu’il est serait sûrement intéressant de lancer la tâche <code>watch</code> dès qu’on souhaite lancer <strong>Grunt</strong> étant donné que c’est sûrement la tâche la plus récurrente que vous utiliserez.</p>
+<p>C’est parti !</p>
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
 
-Et puisque je suis maniaque, nous allons ranger un peu :</code></pre>
+  grunt.initConfig({
+    sass: {
+      dist: {
+        options: {
+          style: <span class="hljs-string">'expanded'</span>
+        },
+        files: [{
+          <span class="hljs-string">"expand"</span>: <span class="hljs-literal">true</span>,
+          <span class="hljs-string">"cwd"</span>: <span class="hljs-string">"src/styles/"</span>,
+          <span class="hljs-string">"src"</span>: [<span class="hljs-string">"*.scss"</span>],
+          <span class="hljs-string">"dest"</span>: <span class="hljs-string">"dist/styles/"</span>,
+          <span class="hljs-string">"ext"</span>: <span class="hljs-string">".css"</span>
+        }]
+      }
+    },
+    concat: {
+      options: {
+        separator: <span class="hljs-string">';'</span>
+      },
+      dist: {
+        src: [<span class="hljs-string">'src/intro.js'</span>, <span class="hljs-string">'src/project.js'</span>, <span class="hljs-string">'src/outro.js'</span>],
+        dest: <span class="hljs-string">'dist/built.js'</span>
+      }
+    },
+    uglify: {
+      options: {
+        separator: <span class="hljs-string">';'</span>
+      },
+      dist: {
+        src: [<span class="hljs-string">'src/intro.js'</span>, <span class="hljs-string">'src/project.js'</span>, <span class="hljs-string">'src/outro.js'</span>]
+        dest: <span class="hljs-string">'dist/built.js'</span>
+      }
+    },
+    watch: {
+      scripts: {
+        files: <span class="hljs-string">'**/*.js'</span>, <span class="hljs-comment">// tous les fichiers JavaScript de n'importe quel dossier</span>
+        tasks: [<span class="hljs-string">'concat:dist'</span>]
+      },
+      styles: {
+        files: <span class="hljs-string">'**/*.scss'</span>, <span class="hljs-comment">// tous les fichiers Sass de n'importe quel dossier</span>
+        tasks: [<span class="hljs-string">'sass:dist'</span>]
+      }
+    }
+  })
 
+  grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-sass'</span>)
+  grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-concat'</span>)
+  grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-watch'</span>)
+
+  grunt.registerTask(<span class="hljs-string">'default'</span>, [<span class="hljs-string">'dev'</span>, <span class="hljs-string">'watch'</span>]) <span class="hljs-comment">// Oui, je conseille de toujours compiler une fois avant de lancer watch.</span>
+  grunt.registerTask(<span class="hljs-string">'dev'</span>, [<span class="hljs-string">'sass:dist'</span>, <span class="hljs-string">'concat:dist'</span>])
+  grunt.registerTask(<span class="hljs-string">'dist'</span>, [<span class="hljs-string">'sass:dist'</span>, <span class="hljs-string">'uglify:dist'</span>])
+}
+</code></pre>
+<p>That’s it. Nous avons maintenant tout le nécessaire pour compiler des CSS, du JS, l’optimiser, ainsi qu’avoir une commande de développement avec compilation automatique.</p>
+<p>Et puisque je suis maniaque, nous allons ranger un peu :</p>
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+
+  <span class="hljs-comment">// Je préfère définir mes imports tout en haut</span>
+  grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-sass'</span>)
+  grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-concat'</span>)
+  grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-watch'</span>)
+
+  <span class="hljs-keyword">var</span> jsSrc = [<span class="hljs-string">'src/intro.js'</span>, <span class="hljs-string">'src/project.js'</span>, <span class="hljs-string">'src/outro.js'</span>]
+  <span class="hljs-keyword">var</span> jsDist = <span class="hljs-string">'dist/built.js'</span>
+
+  <span class="hljs-comment">// Configuration de Grunt</span>
+  grunt.initConfig({
+    sass: {
+      dist: {
+        options: {
+          style: <span class="hljs-string">'expanded'</span>
+        },
+        files: [{
+          <span class="hljs-string">"expand"</span>: <span class="hljs-literal">true</span>,
+          <span class="hljs-string">"cwd"</span>: <span class="hljs-string">"src/styles/"</span>,
+          <span class="hljs-string">"src"</span>: [<span class="hljs-string">"*.scss"</span>],
+          <span class="hljs-string">"dest"</span>: <span class="hljs-string">"dist/styles/"</span>,
+          <span class="hljs-string">"ext"</span>: <span class="hljs-string">".css"</span>
+        }]
+      },
+      dev: {} <span class="hljs-comment">// À vous de le faire ! vous verrez que certaines options Sass sont plus intéressantes en mode dev que d'autres.</span>
+    },
+    concat: {
+      options: {
+        separator: <span class="hljs-string">';'</span>
+      },
+      compile: { <span class="hljs-comment">// On renomme vu qu'on n'a pas de mode dev/dist. Dist étant une autre tâche : uglify</span>
+        src: jsSrc, <span class="hljs-comment">// Vu qu'on doit l'utiliser deux fois, autant en faire une variable.</span>
+        dest: jsDist <span class="hljs-comment">// Il existe des hacks plus intéressants mais ce n'est pas le sujet du post.</span>
+      }
+    },
+    uglify: {
+      options: {
+        separator: <span class="hljs-string">';'</span>
+      },
+      compile: {
+        src: jsSrc,
+        dest: jsDist
+      }
+    },
+    watch: {
+      scripts: {
+        files: <span class="hljs-string">'**/*.js'</span>,
+        tasks: [<span class="hljs-string">'scripts:dev'</span>]
+      },
+      styles: {
+        files: <span class="hljs-string">'**/*.scss'</span>,
+        tasks: [<span class="hljs-string">'styles:dev'</span>]
+      }
+    }
+  })
+
+  grunt.registerTask(<span class="hljs-string">'default'</span>, [<span class="hljs-string">'dev'</span>, <span class="hljs-string">'watch'</span>])
+  grunt.registerTask(<span class="hljs-string">'dev'</span>, [<span class="hljs-string">'styles:dev'</span>, <span class="hljs-string">'scripts:dev'</span>])
+  grunt.registerTask(<span class="hljs-string">'dist'</span>, [<span class="hljs-string">'styles:dist'</span>, <span class="hljs-string">'scripts:dist'</span>])
+
+  <span class="hljs-comment">// J'aime bien avoir des noms génériques</span>
+  grunt.registerTask(<span class="hljs-string">'scripts:dev'</span>, [<span class="hljs-string">'concat:compile'</span>])
+  grunt.registerTask(<span class="hljs-string">'scripts:dist'</span>, [<span class="hljs-string">'uglify:compile'</span>])
+
+  grunt.registerTask(<span class="hljs-string">'styles:dev'</span>, [<span class="hljs-string">'sass:dev'</span>])
+  grunt.registerTask(<span class="hljs-string">'styles:dist'</span>, [<span class="hljs-string">'sass:dist'</span>])
+}
+</code></pre>
 <p>Avec ça, je pense qu’on est pas trop mal. Il reste des optimisations éventuelles à faire et nombreuses autres tâches intéressantes peuvent être ajoutées comme <a href="https://github.com/gruntjs/grunt-contrib-jshint/">jshint</a>. Cela fera probablement office d’un autre article.</p>
 <p>J’espère que vous y voyez maintenant un peu plus clair dans <strong>Grunt</strong> ainsi que dans la compilation côté front-end. <strong>Grunt</strong> est un excellent produit, avec une communauté réactive et il est rare qu’une tâche que vous souhaitiez mettre en place n’existe pas déjà.</p>
 <p>Bon workflow !</p>
@@ -463,8 +553,8 @@ Et puisque je suis maniaque, nous allons ranger un peu :</code></pre>
 (1 commit)"><a href="http://bloodyowl.github.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1688645?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Macxim
 (1 commit)"><a href="https://github.com/Macxim" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1909957?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="sdussaut
 (1 commit)"><a href="http://switch-company.com" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/643853?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
-var disqus_identifier = "http://putaindecode.fr/posts/js/premiers-pas-avec-grunt/index.md";
-var disqus_url = "http://putaindecode.fr/posts/js/premiers-pas-avec-grunt/index.md";
+var disqus_identifier = "http://putaindecode.fr/posts/js/premiers-pas-avec-grunt/";
+var disqus_url = "http://putaindecode.fr/posts/js/premiers-pas-avec-grunt/";
 var disqus_script = "embed.js";
 
 (function(d,s) {
@@ -472,4 +562,3 @@ var disqus_script = "embed.js";
   (d.getElementsByTagName('head')[0]).appendChild(s)
 })(document)
     </script></body></html>
-<script src="http://localhost:4243/livereload.js"></script>

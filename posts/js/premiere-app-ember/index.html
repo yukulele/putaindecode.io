@@ -4,15 +4,19 @@ se dégourdir les doigts. Comme on a peur de rien, on va même construire progre
 avec <a href="http://emberjs.com">Ember</a>.</p>
 <p>Bon, faut pas non plus trop vous emballer, c’est juste une application bateau de gestion d’une collection de BD. 
 Ça pourrait être des clients, des légumes ou des timbres mais là, c’est des BD.</p>
-<h2 id="structure-d-une-application-ember">Structure d’une application Ember</h2>
-<p>L’<a href="/posts/js/debuter-avec-ember">article précédent</a> a insisté sur le fait qu’<a href="http://emberjs.com">Ember</a> était un framework avec des partis pris forts et un modèle de développement structurant. </p>
+<h2 id="structure-d-une-application-ember">
+      <a class="putainde-Title-anchor" href="#structure-d-une-application-ember">#</a>
+      Structure d’une application Ember
+    </h2><p>L’<a href="/posts/js/debuter-avec-ember">article précédent</a> a insisté sur le fait qu’<a href="http://emberjs.com">Ember</a> était un framework avec des partis pris forts et un modèle de développement structurant. </p>
 <p><em>Note : sur ce sujet, vu que <a href="/posts/js/debuter-avec-ember/#comment-1644383934">ça fait réagir</a>, je précise. Je ne dis pas que c’est bien ou que ce n’est pas bien.
 Je dis juste que c’est une caractéristique importante d’<a href="http://emberjs.com">Ember</a>. Autant le savoir.</em></p>
 <p>Eh bien, aussi étonnant que cela puisse paraître, <a href="http://emberjs.com">Ember</a> <strong>nous laisse quand même nous débrouiller tout seul comme des grands pour organiser nos applications</strong>.</p>
 <p>Il existe donc différentes manières de structurer une application <a href="http://emberjs.com">Ember</a>, de la plus basique à la plus complète et, sur ce point, chacun pourra trouver ce qui conviendra le mieux à ses goûts, ses envies, ses contraintes, son contexte… Que sais-je ? Ci-dessous, quelques exemples parmi d’autres.</p>
-<h3 id="-la-mano">À la mano</h3>
-<p>De base, avec <a href="http://emberjs.com">Ember</a> on peut donc déclarer nos routes, contrôleurs, modèles, etc. dans un seul fichier JavaScript ou dans une balise <code>&lt;script&gt;</code>. On doit par contre impérativement respecter les <a href="http://emberjs.com/guides/concepts/naming-conventions/">conventions de nommage</a> et enregistrer nos objets dans une variable globale : </p>
-<pre><code class="hljs js">App = Ember.Application.create();
+<h3 id="a-la-mano">
+      <a class="putainde-Title-anchor" href="#a-la-mano">#</a>
+      À la mano
+    </h3><p>De base, avec <a href="http://emberjs.com">Ember</a> on peut donc déclarer nos routes, contrôleurs, modèles, etc. dans un seul fichier JavaScript ou dans une balise <code>&lt;script&gt;</code>. On doit par contre impérativement respecter les <a href="http://emberjs.com/guides/concepts/naming-conventions/">conventions de nommage</a> et enregistrer nos objets dans une variable globale : </p>
+<pre><code class="lang-js">App = Ember.Application.create();
 
 App.Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
   ...
@@ -20,29 +24,33 @@ App.Router.map(<span class="hljs-function"><span class="hljs-keyword">function</
 
 App.BookRoute = Ember.Route.extend({
   ...
-});</code></pre>
-
+});
+</code></pre>
 <p>De la même manière, on peut déclarer nos gabarits <a href="http://handlebarsjs.com/">Handlebars</a> via des balises <code>&lt;script&gt;</code> :</p>
-<pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/x-handlebars"</span>&gt;</span><span class="javascript">
-  &lt;div&gt;
-    {{outlet}}
-  &lt;<span class="hljs-regexp">/div&gt;
-</span></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span></code></pre>
-
-<h3 id="outill-">Outillé</h3>
-<p>Comme on peut trouver ça un peu limité dans la vraie vie, on peut essayer d’organiser nous-même notre application, nos fichiers, gérer des modules, etc. Tout ça va passer par l’utilisation d’un outil de build javascript de type <a href="http://gruntjs.com/">Grunt</a>, <a href="http://gulpjs.com/">Gulp</a>, <a href="https://github.com/broccolijs/broccoli">Broccoli</a>. Ces outils vont nous permettre
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/x-handlebars"</span>&gt;</span><span class="handlebars"><span class="xml">
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+    </span><span class="hljs-expression">{{<span class="hljs-variable"><span class="hljs-keyword">outlet</span></span>}}</span><span class="xml">
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</span></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<h3 id="outille">
+      <a class="putainde-Title-anchor" href="#outille">#</a>
+      Outillé
+    </h3><p>Comme on peut trouver ça un peu limité dans la vraie vie, on peut essayer d’organiser nous-même notre application, nos fichiers, gérer des modules, etc. Tout ça va passer par l’utilisation d’un outil de build javascript de type <a href="http://gruntjs.com/">Grunt</a>, <a href="http://gulpjs.com/">Gulp</a>, <a href="https://github.com/broccolijs/broccoli">Broccoli</a>. Ces outils vont nous permettre
 de concaténer nos différents fichiers JavaScript en un seul, de sortir les gabarits dans des fichiers <code>.hbs</code> et de les précompiler. On n’aura ensuite qu’à importer ces fichiers dans notre index.html :</p>
-<pre><code class="hljs html">...
-<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"dist/libs/handlebars.min.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"dist/libs/ember.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"dist/application.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"dist/templates.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-...</code></pre>
-
+<pre><code class="lang-html">...
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"dist/libs/handlebars.min.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"dist/libs/ember.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"dist/application.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"dist/templates.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+...
+</code></pre>
 <p>Ça peut convenir parfaitement et on peut se mitonner des phases de build aux petits oignons pour nos besoins spécifiques. Mais on peut aussi rester un peu sur sa faim. Surtout si on a choisi <a href="http://emberjs.com">Ember</a> pour son côté structurant.</p>
 <p>Du coup, une partie des membres de l’équipe <a href="http://emberjs.com">Ember</a> a mis au point <a href="http://www.ember-cli.com/">Ember CLI</a>.</p>
-<h3 id="ember-cli">Ember CLI</h3>
-<p><a href="http://www.ember-cli.com/">Ember CLI</a> est une <strong>interface en ligne de commande</strong> pour <a href="http://emberjs.com">Ember</a>. Elle repose
+<h3 id="ember-cli">
+      <a class="putainde-Title-anchor" href="#ember-cli">#</a>
+      Ember CLI
+    </h3><p><a href="http://www.ember-cli.com/">Ember CLI</a> est une <strong>interface en ligne de commande</strong> pour <a href="http://emberjs.com">Ember</a>. Elle repose
 sur l’outil de build <a href="https://github.com/broccolijs/broccoli">Broccoli</a> et permet : </p>
 <ul>
 <li>d’initialiser une application Ember avec, cette fois, une <a href="http://www.ember-cli.com/#folder-layout">structure de fichiers</a> et des
@@ -61,62 +69,70 @@ largement débattue. Si ça vous intéresse, je vous laisse découvrir un
 Ici encore, question de goût, question de contexte, question de besoins.</em></p>
 <p>Trèves de bavardages, on s’y met sérieusement :</p>
 <p>On installe <a href="http://nodejs.org/">Node</a>, <a href="http://www.ember-cli.com/">Ember CLI</a>, <a href="http://bower.io/">Bower</a> :</p>
-<pre><code>$ npm <span class="hljs-keyword">install</span> -g ember-cli
-$ npm <span class="hljs-keyword">install</span> -g bower</code></pre>
-
+<pre><code class="lang-console">$ npm install -<span class="hljs-keyword">g</span> ember-<span class="hljs-keyword">cli</span>
+$ npm install -<span class="hljs-keyword">g</span> bower
+</code></pre>
 <p>Ça y est, on peut maintenant demander gentiment à <a href="http://www.ember-cli.com/">Ember CLI</a> de nous créer notre application grâce à la 
 commande <code>ember</code> et voir ensuite une magnifique page de bienvenue sur <a href="http://localhost:4200/">http://localhost:4200/</a> :</p>
-<pre><code><span class="hljs-variable">$ </span>ember new ember-articles
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>ember new ember-articles
 <span class="hljs-variable">$ </span>cd ember-articles
-<span class="hljs-variable">$ </span>ember server</code></pre>
-
+<span class="hljs-variable">$ </span>ember server
+</code></pre>
 <p>Je ne vous fais pas l’affront de détailler ici la structure de l’application, tout est décrit dans la 
 <a href="http://www.ember-cli.com/#folder-layout">documentation</a>.</p>
-<h3 id="styles-fonts">Styles &amp; Fonts</h3>
-<p>Pour que cela ne soit pas trop moche dans le cadre de cet exemple ou va ajouter un peu de CSS et des fonts mais comme c’est pas l’objet de l’article,
+<h3 id="styles-amp-fonts">
+      <a class="putainde-Title-anchor" href="#styles-amp-fonts">#</a>
+      Styles &amp; Fonts
+    </h3><p>Pour que cela ne soit pas trop moche dans le cadre de cet exemple ou va ajouter un peu de CSS et des fonts mais comme c’est pas l’objet de l’article,
 on ne va pas passer de temps là-dessus. Ceci dit, comme il y a  quand même un peu de conf <a href="http://www.ember-cli.com/">Ember CLI</a> qui peut vous intéresser, vous avez les styles 
 et la conf sur <a href="https://github.com/bmeurant/ember-articles/tree/premiere-app-ember">GitHub</a> et l’explication dans ce <a href="https://gist.github.com/bmeurant/1bba49d8a12bf69a4cf0">gist</a>.</p>
-<h2 id="et-maintenant-on-code-">Et maintenant, on code !</h2>
-<p><em>Note: le code de l’exemple est dispo sur <a href="https://github.com/bmeurant/ember-articles/tree/premiere-app-ember">github</a>.</em></p>
+<h2 id="et-maintenant-on-code">
+      <a class="putainde-Title-anchor" href="#et-maintenant-on-code">#</a>
+      Et maintenant, on code !
+    </h2><p><em>Note: le code de l’exemple est dispo sur <a href="https://github.com/bmeurant/ember-articles/tree/premiere-app-ember">github</a>.</em></p>
 <ul>
 <li>Modification du gabarit général de l’application <code>/app/templates/application.hbs</code> : </li>
 </ul>
-<pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"app"</span>&gt;</span>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"app"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"sources"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"https://github.com/bmeurant/ember-articles"</span>&gt;</span>View source on GitHub<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Comic books library<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"main"</span>&gt;</span>
       {{outlet}}
     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span></code></pre>
-
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
 <p><em>Note : on en profite pour remarquer le rechargement à chaud via <code>ember server</code> lorsqu’on modifie un fichier.</em></p>
 <ul>
 <li>Création de la première route <code>/series</code> via <code>ember</code> :</li>
 </ul>
-<pre><code><span class="hljs-variable">$ </span>ember generate route series</code></pre>
-
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>ember generate route series
+</code></pre>
 <p><a href="http://www.ember-cli.com/">Ember CLI</a> met à jour le routeur : </p>
-<pre><code class="hljs js"><span class="hljs-comment">// routeur app/router.js</span>
+<pre><code class="lang-js"><span class="hljs-comment">// routeur app/router.js</span>
 Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
   <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'series'</span>);
-});</code></pre>
-
+});
+</code></pre>
 <p>Il génère aussi pour nous une route <code>app/routes/series.js</code> et un gabarit <code>app/templates/series.hbs</code>, vides.</p>
 <p>Modifions tout de suite le gabarit <code>app/templates/series.hbs</code>, histoire de mieux visualiser les choses : </p>
-<pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Comics Series<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span></code></pre>
-
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Comics Series<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+</code></pre>
 <p>L’URL <code>/series</code> est désormais accessible sur <a href="http://localhost:4200/series">http://localhost:4200/series</a> et on peut constater l’imbrication du gabarit <code>series.hbs</code> dans le gabarit
 général <code>application.hbs</code> grâce à son <code>{{outlet}}</code>.</p>
-<h3 id="-outlet-et-routes-imbriqu-es"><code>{{outlet}}</code> et routes imbriquées</h3>
-<p>Ces notions sont au cœur d’<a href="http://emberjs.com">Ember</a>. Leur fonctionnement est assez simple. Lorsqu’une route est imbriquée dans une autre,
+<h3 id="outlet-et-routes-imbriquees">
+      <a class="putainde-Title-anchor" href="#outlet-et-routes-imbriquees">#</a>
+      <code>{{outlet}}</code> et routes imbriquées
+    </h3><p>Ces notions sont au cœur d’<a href="http://emberjs.com">Ember</a>. Leur fonctionnement est assez simple. Lorsqu’une route est imbriquée dans une autre,
 <a href="http://emberjs.com">Ember</a> va rechercher les gabarits de ces deux routes et remplacer la zone <code>{{outlet}}</code> de la <em>route mère</em>
 avec le rendu de la <em>route fille</em>. Ainsi de suite jusqu’à résolution complète de la route. Lors des transitions entre routes, les
 zones des <code>{{outlet}}</code> concernées par le changement sont mises à jour.</p>
 <p>Toutes les routes de l’application sont imbriquées dans la route <code>ApplicationRoute</code> générée par <a href="http://emberjs.com">Ember</a> et dont le gabarit est <code>application.hbs</code>. 
 C’est ce qui explique que, dans le cas présent, le gabarit <code>series.hbs</code> ait été <em>injecté</em> dans <code>application.hbs</code> pour construire l’application 
 entière.</p>
-<h3 id="routes-et-contr-leurs-implicites">Routes et contrôleurs implicites</h3>
-<p>Pour rappel, <a href="http://emberjs.com">Ember</a> définit et utilise différents types d’objets ayant chacun une responsabilité propre (voir <a href="/posts/js/debuter-avec-ember">article précédent</a>) et, pour ne pas
+<h3 id="routes-et-controleurs-implicites">
+      <a class="putainde-Title-anchor" href="#routes-et-controleurs-implicites">#</a>
+      Routes et contrôleurs implicites
+    </h3><p>Pour rappel, <a href="http://emberjs.com">Ember</a> définit et utilise différents types d’objets ayant chacun une responsabilité propre (voir <a href="/posts/js/debuter-avec-ember">article précédent</a>) et, pour ne pas
 nous obliger à fournir nous-même une implémentation par défaut de ces objets, les génère pour nous (voir <a href="/posts/js/debuter-avec-ember/#generation-d-objets">article précédent - <em>Génération d’objets</em></a>).</p>
 <p>Si nous n’avons eu ici qu’à fournir le gabarit <code>application.hbs</code>, c’est qu’<a href="http://emberjs.com">Ember</a> a généré pour nous la route implicite <code>ApplicationRoute</code> activée au démarrage
 de l’application et le contrôleur <code>ApplicationController</code>.</p>
@@ -127,21 +143,23 @@ caractéristiques peuvent être trouvées dans la <a href="http://emberjs.com/gu
 <ul>
 <li>L’URL <code>/</code> ne nous intéresse pas. Surchargeons la route <code>IndexRoute</code> pour rediriger vers <code>/series</code> :</li>
 </ul>
-<pre><code class="hljs js"><span class="hljs-comment">// /app/routes/index.js</span>
-import Ember from <span class="hljs-string">'ember'</span>;
+<pre><code class="lang-js"><span class="hljs-comment">// /app/routes/index.js</span>
+<span class="hljs-keyword">import</span> Ember <span class="hljs-keyword">from</span> <span class="hljs-string">'ember'</span>;
 
-export <span class="hljs-keyword">default</span> Ember.Route.extend({
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Ember.Route.extend({
     redirect: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
         <span class="hljs-keyword">this</span>.transitionTo(<span class="hljs-string">'series'</span>);
     }
-});</code></pre>
-
+});
+</code></pre>
 <p>-&gt; Par-là la <a href="http://emberjs.com/guides/routing/redirection/">doc sur les redirections</a>.</p>
 <p>Maintenant, on veut afficher la liste des séries en allant sur <code>/series</code>. Encore faut-il avoir des séries… Pour ça, on va utiliser
 la librairie <a href="https://github.com/emberjs/data">Ember Data</a> pour la gestion de nos modèles. Ce n’est pas obligatoire
 et beaucoup font sans, mais nous on va l’utiliser quand même. </p>
-<h3 id="ember-data">Ember Data</h3>
-<p>Cette librairie qui est développée en parallèle d’<a href="http://emberjs.com">Ember</a> permet de gérer les modèles de données et les relations entre eux 
+<h3 id="ember-data">
+      <a class="putainde-Title-anchor" href="#ember-data">#</a>
+      Ember Data
+    </h3><p>Cette librairie qui est développée en parallèle d’<a href="http://emberjs.com">Ember</a> permet de gérer les modèles de données et les relations entre eux 
 à la manière d’un <a href="http://fr.wikipedia.org/wiki/Mapping_objet-relationnel">ORM</a> (à la <a href="http://en.wikipedia.org/wiki/Active_record_pattern">ActiveRecord</a>). 
 Elle permet notamment de récupérer les données depuis une interface REST HTTP 
 (et est parfaitement adaptée à <a href="http://jsonapi.org/">JSON API</a>) mais pas que.</p>
@@ -154,17 +172,17 @@ interface REST spécifique.</p>
 <p>Pour un <a href="http://en.wikipedia.org/wiki/Proof_of_concept">POC</a>, on peut utiliser le <code>FixtureAdapter</code> 
 (cf. <a href="http://emberjs.com/api/data/classes/DS.FixtureAdapter.html">doc</a>) qui permet
 de charger simplement les objets depuis la mémoire. C’est ce que l’on utilise ici.</p>
-<pre><code class="hljs js"><span class="hljs-comment">// /app/adapters/application.js</span>
-import DS from <span class="hljs-string">'ember-data'</span>;
+<pre><code class="lang-js"><span class="hljs-comment">// /app/adapters/application.js</span>
+<span class="hljs-keyword">import</span> DS <span class="hljs-keyword">from</span> <span class="hljs-string">'ember-data'</span>;
 
-export <span class="hljs-keyword">default</span> DS.FixtureAdapter.extend({});</code></pre>
-
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> DS.FixtureAdapter.extend({});
+</code></pre>
 <ul>
 <li>On va donc créer un modèle correspondant. Seulement, voilà, comme j’ai eu la bonne idée de prendre un des rares mots en anglais
 où le pluriel et le singulier sont identiques (<em>serie</em> n’existe pas), on va devoir créer un modèle <em>seriesItem</em> :</li>
 </ul>
-<pre><code class="hljs js"><span class="hljs-comment">// /app/models/series-item.js</span>
-import DS from <span class="hljs-string">'ember-data'</span>;
+<pre><code class="lang-js"><span class="hljs-comment">// /app/models/series-item.js</span>
+<span class="hljs-keyword">import</span> DS <span class="hljs-keyword">from</span> <span class="hljs-string">'ember-data'</span>;
 
 <span class="hljs-keyword">var</span> SeriesItem = DS.Model.extend({
     title               : DS.attr(<span class="hljs-string">'string'</span>, {defaultValue: <span class="hljs-string">'New Series'</span>}),
@@ -198,22 +216,22 @@ SeriesItem.reopenClass({
 }, ...
 ]});
 
-export <span class="hljs-keyword">default</span> SeriesItem;</code></pre>
-
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> SeriesItem;
+</code></pre>
 <p>Au passage, on remarque les valeurs par défaut ainsi que la <a href="http://emberjs.com/guides/object-model/computed-properties/">propriété calculée</a> <code>coverUrl</code>. On aura l’occasion d’en reparler.</p>
 <ul>
 <li>On modifie donc notre application pour afficher, lors de l’activation de <code>SeriesRoute</code>, la liste des séries :</li>
 </ul>
-<pre><code class="hljs js"><span class="hljs-comment">// /app/routes/series.js</span>
-import Ember from <span class="hljs-string">'ember'</span>;
+<pre><code class="lang-js"><span class="hljs-comment">// /app/routes/series.js</span>
+<span class="hljs-keyword">import</span> Ember <span class="hljs-keyword">from</span> <span class="hljs-string">'ember'</span>;
 
-export <span class="hljs-keyword">default</span> Ember.Route.extend({
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Ember.Route.extend({
     model: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.store.find(<span class="hljs-string">'seriesItem'</span>);
     }
-});</code></pre>
-
-<pre><code class="hljs html"><span class="hljs-comment">&lt;!-- /app/templates/series.hbs --&gt;</span>
+});
+</code></pre>
+<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- /app/templates/series.hbs --&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"series"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Comic Series<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
 
@@ -228,27 +246,27 @@ export <span class="hljs-keyword">default</span> Ember.Route.extend({
     <span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span>Number of series: {{length}}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 
-{{outlet}}</code></pre>
-
+{{outlet}}
+</code></pre>
 <p>On remarque le <code>{{#each}}</code> sans arguments qui par convention retrouve l’objet <code>model</code> du contrôleur. <code>{{#each model}}</code>, <code>{{#each controller}}</code> ou <code>{{#each controller.model}}</code> sont
 des notations équivalentes.</p>
 <ul>
 <li>Maintenant, on va essayer de dynamiser un peu tout ça en ajoutant un bouton pour trier la liste :</li>
 </ul>
-<pre><code class="hljs html"><span class="hljs-comment">&lt;!-- /app/templates/series.hbs --&gt;</span>
+<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- /app/templates/series.hbs --&gt;</span>
 ...
 <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Comic Series<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
 
 <span class="hljs-tag">&lt;<span class="hljs-title">button</span> {{<span class="hljs-attribute">action</span> "<span class="hljs-attribute">sort</span>"}} {{<span class="hljs-attribute">bind-attr</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">":sort sortAscending:asc:desc"</span><span class="hljs-value">}}</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
 
 <span class="hljs-tag">&lt;<span class="hljs-title">ul</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"series-list"</span>&gt;</span>
-...</code></pre>
-
+...
+</code></pre>
 <p>Pour ça, il est nécessaire de définir notre propre <code>SeriesController</code> :</p>
-<pre><code class="hljs js"><span class="hljs-comment">// /app/controllers/series.js</span>
-import Ember from <span class="hljs-string">'ember'</span>;
+<pre><code class="lang-js"><span class="hljs-comment">// /app/controllers/series.js</span>
+<span class="hljs-keyword">import</span> Ember <span class="hljs-keyword">from</span> <span class="hljs-string">'ember'</span>;
 
-export <span class="hljs-keyword">default</span> Ember.ArrayController.extend({
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Ember.ArrayController.extend({
   sortAscending: <span class="hljs-literal">true</span>,
 
   actions: {
@@ -256,29 +274,35 @@ export <span class="hljs-keyword">default</span> Ember.ArrayController.extend({
       <span class="hljs-keyword">this</span>.toggleProperty(<span class="hljs-string">'sortAscending'</span>);
     }
   }
-});</code></pre>
-
+});
+</code></pre>
 <p>Ce simple ajout demande de s’arrêter sur quelques points importants, histoire de bien comprendre ce qui se passe.</p>
-<h3 id="types-de-contr-leurs">Types de contrôleurs</h3>
-<p>Nous avons dû remplacer le <code>SeriesController</code> implicite par notre propre contrôleur, histoire de proposer cette fonction de tri. <a href="http://emberjs.com">Ember</a>
+<h3 id="types-de-controleurs">
+      <a class="putainde-Title-anchor" href="#types-de-controleurs">#</a>
+      Types de contrôleurs
+    </h3><p>Nous avons dû remplacer le <code>SeriesController</code> implicite par notre propre contrôleur, histoire de proposer cette fonction de tri. <a href="http://emberjs.com">Ember</a>
 dispose de deux types de contrôleurs : <a href="http://emberjs.com/api/classes/Ember.ObjectController.html">ObjectController</a> et <a href="http://emberjs.com/api/classes/Ember.ArrayController.html">ArrayController</a>.
 Comme leur nom l’indique, ces contrôleurs permettent respectivement de gérer des modèles de type objet ou de type collection.</p>
 <p>Dans notre cas, nous souhaitons manipuler la liste des séries et utilisons donc un <code>ArrayController</code>. Il utilise notamment le <a href="http://emberjs.com/api/classes/Ember.SortableMixin.html">SortableMixin</a>
 qui fournit des fonctions de tri natives. Il nous suffit donc d’initialiser et de mettre à jour la propriété <code>sortAscending</code> apportée par ce mixin pour bénéficier du tri sur notre
 collection de séries, sans avoir besoin d’autre chose.</p>
-<h3 id="actions">Actions</h3>
-<p>La mise à jour de cette propriété est effectuée grâce à <code>{{action &quot;sort&quot;}}</code> qui nous permet de lier l’action sur le bouton (le clic) à une
+<h3 id="actions">
+      <a class="putainde-Title-anchor" href="#actions">#</a>
+      Actions
+    </h3><p>La mise à jour de cette propriété est effectuée grâce à <code>{{action &quot;sort&quot;}}</code> qui nous permet de lier l’action sur le bouton (le clic) à une
 fonction <code>sort</code> du contrôleur définie dans <code>actions: { ... }</code>.</p>
 <p>-&gt; Plus d’infos sur les actions <a href="http://emberjs.com/guides/templates/actions/">ici</a>.</p>
-<h3 id="-bindings-de-classes-dynamiques"><em>Bindings</em> de classes dynamiques</h3>
-<p>On remarque aussi la manière dont les classes de l’élément <code>button</code> sont liées aux propriétés du contrôleur de manière à être mises à
+<h3 id="bindings-de-classes-dynamiques">
+      <a class="putainde-Title-anchor" href="#bindings-de-classes-dynamiques">#</a>
+      <em>Bindings</em> de classes dynamiques
+    </h3><p>On remarque aussi la manière dont les classes de l’élément <code>button</code> sont liées aux propriétés du contrôleur de manière à être mises à
 jour dynamiquement grâce à <code>{{bind-attr class=&quot;...&quot;}}</code>. Cette syntaxe permet de basculer la classe du bouton de <code>asc</code> à <code>desc</code> automatiquement
 lorsque la valeur de <code>sortAscending</code> change. On note la notation <code>:sort</code> qui permet d’ajouter une classe de base, statique.</p>
 <p>-&gt; Plus d’infos sur les classes <a href="http://emberjs.com/guides/templates/binding-element-class-names/">ici</a>.</p>
 <ul>
 <li>Mais on ne va pas s’arrêter là. On va ajouter un petit filtre sur le titre des séries :</li>
 </ul>
-<pre><code class="hljs html"><span class="hljs-comment">&lt;!-- /app/templates/series.hbs --&gt;</span>
+<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- /app/templates/series.hbs --&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"series"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Comic Series<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
 
@@ -296,9 +320,9 @@ lorsque la valeur de <code>sortAscending</code> change. On note la notation <cod
     <span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span>Number of series: {{filteredModel.length}}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 
-{{outlet}}</code></pre>
-
-<pre><code class="hljs js"><span class="hljs-comment">// /app/controllers/series.js</span>
+{{outlet}}
+</code></pre>
+<pre><code class="lang-js"><span class="hljs-comment">// /app/controllers/series.js</span>
 ...
 filter: <span class="hljs-string">""</span>,
 sortAscending: <span class="hljs-literal">true</span>,
@@ -317,10 +341,12 @@ filteredModel: <span class="hljs-function"><span class="hljs-keyword">function</
 }.property(<span class="hljs-string">'filter'</span>, <span class="hljs-string">'sortAscending'</span>, <span class="hljs-string">'model.@each.title'</span>),
 
 actions: {
-...</code></pre>
-
-<h3 id="propri-t-s-calcul-es">Propriétés calculées</h3>
-<p>Je vous passe le contenu de la fonction <code>filteredModel</code> qui n’apporte rien au sujet. Examinons par contre la notation <code>.property(&#39;filter&#39;, &#39;sortAscending&#39;, &#39;model.@each.title&#39;)</code>. 
+...
+</code></pre>
+<h3 id="proprietes-calculees">
+      <a class="putainde-Title-anchor" href="#proprietes-calculees">#</a>
+      Propriétés calculées
+    </h3><p>Je vous passe le contenu de la fonction <code>filteredModel</code> qui n’apporte rien au sujet. Examinons par contre la notation <code>.property(&#39;filter&#39;, &#39;sortAscending&#39;, &#39;model.@each.title&#39;)</code>. 
 Cela constitue la définition d’une <a href="http://emberjs.com/guides/object-model/computed-properties/">propriété calculée</a> : propriété
 accessible et manipulable comme n’importe quelle propriété au sein des gabarits mais qui est le résultat d’une fonction dont le retour dépend de l’état d’autres propriétés. </p>
 <p>La syntaxe <code>.property(&#39;filter&#39;, &#39;sortAscending&#39;, &#39;model.@each.title&#39;)</code> définit les autres propriétés <em>observées</em> par cette propriété calculée et dont le changement provoquera
@@ -333,21 +359,23 @@ la liste est mise à jour automatiquement.</p>
 <p>Les <em>bindings</em> et les <a href="http://emberjs.com/guides/object-model/computed-properties/">propriétés calculées</a> constituent deux manières d’observer les changements et de <em>rafraîchir</em>
 l’application en conséquence. Les <a href="http://emberjs.com/guides/object-model/observers">observeurs</a> en sont une troisième. Si vous avez un doute sur ce qu’il faut utiliser, allez
 voir <a href="http://emberjs.com/guides/object-model/what-do-i-use-when">ici</a>.</p>
-<h3 id="-bindings-et-mise-jour-des-gabarits"><em>Bindings</em> et mise à jour des gabarits</h3>
-<p>Alors, comment ça marche ? Comment, concrètement, <a href="http://emberjs.com">Ember</a> se débrouille pour mettre à jour le gabarit lors de la mise à jour d’un modèle, d’une propriété ? En réalité, lorsqu’on
+<h3 id="bindings-et-mise-a-jour-des-gabarits">
+      <a class="putainde-Title-anchor" href="#bindings-et-mise-a-jour-des-gabarits">#</a>
+      <em>Bindings</em> et mise à jour des gabarits
+    </h3><p>Alors, comment ça marche ? Comment, concrètement, <a href="http://emberjs.com">Ember</a> se débrouille pour mettre à jour le gabarit lors de la mise à jour d’un modèle, d’une propriété ? En réalité, lorsqu’on
 affiche dans un gabarit une propriété dynamique liée à un modèle ou à une propriété, <a href="http://emberjs.com">Ember</a> va l’encadrer par des éléments HTML spéciaux, des marqueurs de type <code>&lt;script&gt;</code> d’id unique
 appelé <code>metamorph</code>. Attention, je préfère vous prévenir, ça va piquer !</p>
 <p>Ainsi,</p>
-<pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Blog de {{name}}<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span></code></pre>
-
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Blog de {{name}}<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+</code></pre>
 <p>va se transformer en : </p>
-<pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>
 Blog de 
-<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"metamorph-0-start"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/x-placeholder"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"metamorph-0-start"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/x-placeholder"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 Baptiste Meurant
-<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"metamorph-0-end"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/x-placeholder"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span></code></pre>
-
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"metamorph-0-end"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/x-placeholder"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+</code></pre>
 <p>Alors oui, il faut avouer que là on est tenté de partir en courant. C’est le point qui m’a vraiment gêné quand j’ai découvert <a href="http://emberjs.com">Ember</a> et ça me gêne encore. C’était même
 à la limite du rédhibitoire. Ça pollue vraiment le DOM et introduit même quelques effets de bord en CSS lorsqu’on utilise les <code>:first-child</code> ou <code>:last-child</code>. Ceci étant,
 c’est ce qui permet à <a href="http://emberjs.com">Ember</a> de mettre à jour non pas un gabarit mais uniquement ces zones dynamiques de manière performante - j’ai fini par voir ça comme un mal nécessaire.
@@ -357,8 +385,10 @@ jeter un œil à ce sujet à la <a href="http://talks.erikbryn.com/htmlbars/">pr
 <p><em>Bonus: l’élément est un élément <code>script</code> et pas un autre car c’est à priori le seul élément qui peut être inséré partout sans rien casser.</em></p>
 <p><em><strong>Edit</strong>: Aujourd’hui (28/10/2014) est sortie la <a href="http://emberjs.com/blog/2014/10/26/ember-1-8-0-released.html">version 1.8.0 d’Ember</a>. Cette release ne contient pas encore
 le support complet d’<a href="https://github.com/tildeio/htmlbars">HTMLBars</a> mais signe déjà la fin des <code>metamorph</code> au profit de l’utilisation d’élements <code>Text</code> vides, non intrusifs ! Ça méritait d’être signalé.</em> </p>
-<h3 id="-runloop-"><em>RunLoop</em></h3>
-<p>Un autre mécanisme important est impliqué tant dans le rendu des gabarits que dans le calcul et la synchronisation des propriétés entre elles : la <em>RunLoop</em>. Ce mécanisme est
+<h3 id="runloop">
+      <a class="putainde-Title-anchor" href="#runloop">#</a>
+      <em>RunLoop</em>
+    </h3><p>Un autre mécanisme important est impliqué tant dans le rendu des gabarits que dans le calcul et la synchronisation des propriétés entre elles : la <em>RunLoop</em>. Ce mécanisme est
 absolument central dans le fonctionnement d’<a href="http://emberjs.com">Ember</a> et s’appuie sur la lib <a href="https://github.com/ebryn/backburner.js/">Backburner</a>. Dans la plupart des cas, vous n’avez pas
 à vous en préoccuper et vous pouvez parfaitement mettre en place une application <a href="http://emberjs.com">Ember</a> complète sans interagir directement avec la <em>RunLoop</em>, sauf lorsque
 vous ajoutez vos propres <code>helpers</code> <a href="http://handlebarsjs.com/">Handlebars</a> ou vos propres composants avancés. C’est par contre important d’en comprendre le fonctionnement.</p>
@@ -369,31 +399,31 @@ Je vous laisse découvrir par vous-même dans la <a href="http://emberjs.com/gui
 <p>Je voudrais juste insister sur un aspect particulier : c’est ce mécanisme qui permet, en quelque sorte, d’empiler les calculs de propriétés calculées lorsque les propriétés
 <em>observées</em> sont modifiées et surtout c’est grâce à ce mécanisme que le rendu n’est effectué qu’une seule fois lors de la modification d’un modèle.</p>
 <p>Pour reprendre l’exemple de la <a href="http://emberjs.com/guides/understanding-ember/run-loop/">doc officielle</a>, si vous avez l’objet suivant :</p>
-<pre><code class="hljs js"><span class="hljs-keyword">var</span> User = Ember.Object.extend({
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> User = Ember.Object.extend({
   firstName: <span class="hljs-literal">null</span>,
   lastName: <span class="hljs-literal">null</span>,
   fullName: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.get(<span class="hljs-string">'firstName'</span>) + <span class="hljs-string">' '</span> + <span class="hljs-keyword">this</span>.get(<span class="hljs-string">'lastName'</span>);
   }.property(<span class="hljs-string">'firstName'</span>, <span class="hljs-string">'lastName'</span>)
-});</code></pre>
-
+});
+</code></pre>
 <p>Et le gabarit :</p>
-<pre><code class="hljs html">{{firstName}}
-{{fullName}}</code></pre>
-
+<pre><code class="lang-html">{{firstName}}
+{{fullName}}
+</code></pre>
 <p>Tout ça, sans la <em>RunLoop</em>, ferait qu’on exécuterait le rendu deux fois si l’on modifie successivement <code>firstname</code> puis <code>lastname</code>. La <em>RunLoop</em> met tout ça (et plein d’autres
 choses) en queue et n’effectue le rendu qu’une seule et unique fois, lorsque nécessaire.</p>
 <ul>
 <li>Après ça, on va finir en douceur en ajoutant simplement ou nouvelle route pour afficher la série qu’on a sélectionné :</li>
 </ul>
-<pre><code class="hljs js"><span class="hljs-comment">// /app/router.js</span>
+<pre><code class="lang-js"><span class="hljs-comment">// /app/router.js</span>
 Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
   <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'series'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'seriesItem'</span>, { path: <span class="hljs-string">'/:seriesItem_id'</span> });
   });
-});</code></pre>
-
-<pre><code class="hljs html"><span class="hljs-comment">&lt;!-- /app/templates/series.hbs --&gt;</span>
+});
+</code></pre>
+<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- /app/templates/series.hbs --&gt;</span>
 ...
   <span class="hljs-tag">&lt;<span class="hljs-title">ul</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"series-list"</span>&gt;</span>
     {{#each filteredModel}}
@@ -421,8 +451,8 @@ Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span
   <span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"summary"</span>&gt;</span>
     {{summary}}
   <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span></code></pre>
-
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
 <p>Et voilà ! Quelques remarques en passant : </p>
 <ul>
 <li>on peut maintenant sélectionner une série dans la liste grâce au <code>{{link-to}}</code>. On remarque au passage qu’<a href="http://emberjs.com">Ember</a> sélectionne automatiquement
@@ -433,8 +463,10 @@ avait été une ressource, on aurait dû fournir le template <code>/app/template
 une ressource réinitialise l’espace de nommage et permet ainsi de simplifier les URL. -&gt; <a href="http://emberjs.com/guides/routing/defining-your-routes/#toc_resources">doc officielle</a></li>
 <li>on a ajouté un <em>segment dynamique</em> <code>{path: &#39;/:seriesItem_id&#39;}</code> à la route <code>seriesItem</code> pour l’ID de la série. -&gt; <a href="http://emberjs.com/guides/routing/defining-your-routes/#toc_dynamic-segments">doc officielle</a>.</li>
 </ul>
-<h2 id="conclusions">Conclusions</h2>
-<p>Cet article est un peu plus long que ce que j’avais prévu et je n’ai pas abordé tous les sujets que je voulais traiter. Mais, plutôt que de dérouler simplement du code pour montrer que ça marche, j’ai
+<h2 id="conclusions">
+      <a class="putainde-Title-anchor" href="#conclusions">#</a>
+      Conclusions
+    </h2><p>Cet article est un peu plus long que ce que j’avais prévu et je n’ai pas abordé tous les sujets que je voulais traiter. Mais, plutôt que de dérouler simplement du code pour montrer que ça marche, j’ai
 préféré m’arrêter sur les points importants pour en expliquer le fonctionnement. Ça me paraissait important. J’espère que ce n’était pas trop pénible à lire. Les points que je n’ai pas eu le temps
 de traiter (API REST avec un backend, tests, helpers, partials, composants, relations avec ember-data, etc.) feront peut-être l’objet d’un autre post mais un peu plus tard parce que je suis fatigué là et 
 je sens que vous aussi.</p>
@@ -449,8 +481,8 @@ vous piquer les yeux. Désolé :-)</p>
 (3 commits)"><a href="http://baptiste.meurant.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/141720?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
 (3 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="NotGrm
 (1 commit)"><a href="http://notgrm.fr" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/793603?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
-var disqus_identifier = "http://putaindecode.fr/posts/js/premiere-app-ember/index.md";
-var disqus_url = "http://putaindecode.fr/posts/js/premiere-app-ember/index.md";
+var disqus_identifier = "http://putaindecode.fr/posts/js/premiere-app-ember/";
+var disqus_url = "http://putaindecode.fr/posts/js/premiere-app-ember/";
 var disqus_script = "embed.js";
 
 (function(d,s) {
@@ -458,4 +490,3 @@ var disqus_script = "embed.js";
   (d.getElementsByTagName('head')[0]).appendChild(s)
 })(document)
     </script></body></html>
-<script src="http://localhost:4243/livereload.js"></script>

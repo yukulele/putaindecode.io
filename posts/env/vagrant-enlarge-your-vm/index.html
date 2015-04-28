@@ -6,8 +6,10 @@ et configurer des machines virtuelles (VM) depuis un seul fichier texte,
 le <code>Vagrantfile</code>.  Plutôt pratique pour avoir un environnement de dev
 équivalent à celui de la prod. Et tout cela avec un processus simplifié
 à l’extrême.</p>
-<h1 id="et-c-est-pour-qui-le-beau-joujou-">Et c’est pour qui le beau joujou ?</h1>
-<p>Vagrant s’adresse principalement à toi, mais aussi à un public
+<h1 id="et-c-est-pour-qui-le-beau-joujou">
+      <a class="putainde-Title-anchor" href="#et-c-est-pour-qui-le-beau-joujou">#</a>
+      Et c’est pour qui le beau joujou ?
+    </h1><p>Vagrant s’adresse principalement à toi, mais aussi à un public
 de <strong>développeurs</strong> qui souhaitent pouvoir mettre en place rapidement
 un environnement de dev avec une machine virtuelle (genre Apache-PHP-SQL)
 sans y passer trop de temps.
@@ -22,8 +24,10 @@ on n’a jamais vu un designer dégainer une console :)</p>
 <li><code>vagrant up</code> pour lancer la VM, et ;</li>
 <li><code>vagrant halt</code>pour l’arrêter.</li>
 </ol>
-<h1 id="-tape-1-vagrant-init-">Étape 1 - <code>vagrant init</code></h1>
-<p>Vagrant fournit un support pour les principales plates-formes de virtualisation,
+<h1 id="etape-1-vagrant-init">
+      <a class="putainde-Title-anchor" href="#etape-1-vagrant-init">#</a>
+      Étape 1 - <code>vagrant init</code>
+    </h1><p>Vagrant fournit un support pour les principales plates-formes de virtualisation,
 appelées <em>Provider</em> dans la langue de Justin Bieber et avec par défaut celui
 pour VirtualBox. Et cerise sur le clafoutis, tu as aussi la possibilité
 de configurer / provisionner tes box avec des scripts Chef ou Puppet
@@ -37,8 +41,10 @@ un fichier <code>Vagrantfile</code>  qui va décrire ta machine virtuelle
 En gros, de quelle box de base tu pars, comment tu la configures (réseaux,
 dossier partagé entre la VM et le host, ta machine réelle) et comment tu
 la provisionnes (via un shell, avec un script Puppet…).</p>
-<h2 id="la-config-de-la-box">La config de la box</h2>
-<p>Ensuite, voilà les quelques points à paramétrer :</p>
+<h2 id="la-config-de-la-box">
+      <a class="putainde-Title-anchor" href="#la-config-de-la-box">#</a>
+      La config de la box
+    </h2><p>Ensuite, voilà les quelques points à paramétrer :</p>
 <ul>
 <li><code>config.vm.box = &quot;base&quot;</code> pour spécifier le nom d’une box préalablement
 téléchargée.</li>
@@ -56,8 +62,10 @@ avec ta machine virtuelle.
 Par défaut, Vagrant te permet d’accéder au répertoire courant
 depuis <code>/home/vagrant</code> dans la VM.</li>
 </ul>
-<h2 id="le-provisioning-de-box">Le provisioning de box</h2>
-<p>Alors attention, c’est un des trucs cools avec Vagrant. Avant, quand tu
+<h2 id="le-provisioning-de-box">
+      <a class="putainde-Title-anchor" href="#le-provisioning-de-box">#</a>
+      Le provisioning de box
+    </h2><p>Alors attention, c’est un des trucs cools avec Vagrant. Avant, quand tu
 voulais te monter une VM pour travailler, il fallait aussi la configurer,
 installer les bonnes versions de chaque brique que le projet utilise. Ça
 pouvait être pénible et surtout prendre du temps.
@@ -70,22 +78,26 @@ de box déjà prêtes à l’emploi, avec ou sans support pour Puppet, Chef…</
 <p>La suite du fichier contient des exemples de type de provisioning
 (Puppet, Chef Solo ou Chef Server).
 Et si jamais tu souhaites lancer un script de provisioning :</p>
-<pre><code class="hljs ruby"><span class="hljs-constant">Vagrant</span>.configure(<span class="hljs-string">"2"</span>) <span class="hljs-keyword">do</span> |config|
+<pre><code class="lang-ruby"><span class="hljs-constant">Vagrant</span>.configure(<span class="hljs-string">"2"</span>) <span class="hljs-keyword">do</span> |config|
   config.vm.provision <span class="hljs-string">"shell"</span>, <span class="hljs-symbol">path:</span> <span class="hljs-string">"provision.sh"</span>
-<span class="hljs-keyword">end</span></code></pre>
-
+<span class="hljs-keyword">end</span>
+</code></pre>
 <blockquote>
 <p>Vagrant te permet aussi de créer tes propres box déjà provisionnées via
 la commande <code>vagrant package</code>. C’est assez pratique quand tu dois
 télécharger-compiler-installer tout l’Internet.</p>
 </blockquote>
-<h1 id="-tape-2-vagrant-up-">Étape 2 - <code>vagrant up</code></h1>
-<p>Bon, la première fois risque de prendre du temps, parce que Vagrant
+<h1 id="etape-2-vagrant-up">
+      <a class="putainde-Title-anchor" href="#etape-2-vagrant-up">#</a>
+      Étape 2 - <code>vagrant up</code>
+    </h1><p>Bon, la première fois risque de prendre du temps, parce que Vagrant
 va télécharger ta box, puis lancer le provisioning. Profites-en pour faire
 un tour sur <a href="http://vim-adventures.com/">http://vim-adventures.com/</a> et jouer un peu en attendant.</p>
 <p>Une fois terminé, tu as maintenant une box dispo avec laquelle travailler.</p>
-<h1 id="-tape-3-joie-o-">Étape 3 - Joie \o/.</h1>
-<p>Je pensais faire une troisième partie sur comment arrêter la VM mais
+<h1 id="etape-3-joie-o">
+      <a class="putainde-Title-anchor" href="#etape-3-joie-o">#</a>
+      Étape 3 - Joie \o/.
+    </h1><p>Je pensais faire une troisième partie sur comment arrêter la VM mais
 ça présente pas vraiment d’intérêt car ça tient en une ligne de commande.</p>
 <p>Bref, le point important de tout ça, c’est que les autres relous de ton équipe
 ne pourront plus dire que pourtant ça marche bien chez eux, et qu’ils
@@ -104,13 +116,17 @@ avec les dernières techno à la mode.</li>
 et configurées pour éviter d’avoir à configurer les postes des autres
 dev à chaque changement de projet.</li>
 </ul>
-<h1 id="quelques-commandes-pratiques">Quelques commandes pratiques</h1>
-<blockquote>
+<h1 id="quelques-commandes-pratiques">
+      <a class="putainde-Title-anchor" href="#quelques-commandes-pratiques">#</a>
+      Quelques commandes pratiques
+    </h1><blockquote>
 <p><code>vagrant ssh</code> te permet de te connecter en mode terminal
 <code>vagrant status</code> pour les têtes <del>à claques</del> en l’air</p>
 </blockquote>
-<h1 id="quelques-liens">Quelques liens</h1>
-<ul>
+<h1 id="quelques-liens">
+      <a class="putainde-Title-anchor" href="#quelques-liens">#</a>
+      Quelques liens
+    </h1><ul>
 <li><a href="http://docs.vagrantup.com/v2/">La documentation officielle de <del>viagra</del> Vagrant</a></li>
 <li><a href="http://jolicode.com/blog/cuisinez-vos-serveurs-comme-un-chef-premiere-partie">Cuisinez vos serveurs comme un Chef – Première partie</a></li>
 </ul>
@@ -121,8 +137,8 @@ dev à chaque changement de projet.</li>
 (1 commit)"><a href="http://alexandre.gaudencio.fr" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/204561?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="kud
 (1 commit)"><a href="http://kud.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/655838?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="bloodyowl
 (1 commit)"><a href="http://bloodyowl.github.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1688645?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
-var disqus_identifier = "http://putaindecode.fr/posts/env/vagrant-enlarge-your-vm/index.md";
-var disqus_url = "http://putaindecode.fr/posts/env/vagrant-enlarge-your-vm/index.md";
+var disqus_identifier = "http://putaindecode.fr/posts/env/vagrant-enlarge-your-vm/";
+var disqus_url = "http://putaindecode.fr/posts/env/vagrant-enlarge-your-vm/";
 var disqus_script = "embed.js";
 
 (function(d,s) {
@@ -130,4 +146,3 @@ var disqus_script = "embed.js";
   (d.getElementsByTagName('head')[0]).appendChild(s)
 })(document)
     </script></body></html>
-<script src="http://localhost:4243/livereload.js"></script>

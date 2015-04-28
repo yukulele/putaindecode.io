@@ -16,84 +16,84 @@
 <li>Notre <em>element</em> “Content” sera <code>.Window-content</code></li>
 </ul>
 <p>Jusque là, cela devrait aller :</p>
-<pre><code class="hljs css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
 
-<span class="hljs-rule">}</span></span>
+}</span>
 
   <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
 
-  <span class="hljs-rule">}</span></span>
+  }</span>
 
   <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
 
-  <span class="hljs-rule">}</span></span></code></pre>
-
+  }</span>
+</code></pre>
 <p>Ce qui revient de manère générique à :</p>
-<pre><code class="hljs css"><span class="hljs-class">.Block</span> <span class="hljs-rules">{
+<pre><code class="lang-css"><span class="hljs-class">.Block</span> <span class="hljs-rules">{
 
-<span class="hljs-rule">}</span></span>
+}</span>
 
   <span class="hljs-class">.Block-element</span> <span class="hljs-rules">{
 
-  <span class="hljs-rule">}</span></span></code></pre>
-
+  }</span>
+</code></pre>
 <p>Oui, je vous conseille d’indenter votre code afin de grouper vos classes.</p>
 <p>Maintenant, nous allons définir ce qu’est un <em>modifier</em>. Un <em>modifier</em> change l’état de l’élément, il peut s’appliquer aussi bien sur un <em>block</em>, qu’un <em>element</em>.</p>
 <p>Si par exemple je souhaite mettre en actif un onglet (le mettre en avant car séléctionné), je ferai alors <code>.Window-tab--active</code>, soit :</p>
-<pre><code class="hljs css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
 
-<span class="hljs-rule">}</span></span>
+}</span>
 
   <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
     <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
-  <span class="hljs-rule">}</span></span>
+  }</span>
 
     <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
       <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-    <span class="hljs-rule">}</span></span>
+    }</span>
 
   <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
 
-  <span class="hljs-rule">}</span></span></code></pre>
-
+  }</span>
+</code></pre>
 <p>J’aimerais aussi afficher ou non le contenu. Pour cela, je vais lui rajouter un <em>modifier</em></p>
-<pre><code class="hljs css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
+<pre><code class="lang-css"><span class="hljs-class">.Window</span> <span class="hljs-rules">{
 
-<span class="hljs-rule">}</span></span>
+}</span>
 
   <span class="hljs-class">.Window-tab</span> <span class="hljs-rules">{
     <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
-  <span class="hljs-rule">}</span></span>
+  }</span>
 
     <span class="hljs-class">.Window-tab--active</span> <span class="hljs-rules">{
       <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
-    <span class="hljs-rule">}</span></span>
+    }</span>
 
   <span class="hljs-class">.Window-content</span> <span class="hljs-rules">{
-  <span class="hljs-rule">}</span></span>
+  }</span>
 
   <span class="hljs-class">.Window-content--hidden</span> <span class="hljs-rules">{
     <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
-  <span class="hljs-rule">}</span></span></code></pre>
-
+  }</span>
+</code></pre>
 <p>J’aurais très bien pu inverser et dire que par défaut le contenu est caché et je lui rajoute la classe <code>.Window-tab--active</code> pour l’afficher (<code>display: block</code>) mais lorsqu’il s’agit de cacher ou de faire appaître des éléments, je vous conseille vivement de plutôt ajouter un <em>modifier</em> qui cache les éléments, car cela évite de se prendre la tête sur quel <code>display</code> mettre par défaut. Là, vous mettez un <code>display: none</code> et voilà, qu’importe si celui de base est un <code>inline</code>, <code>inline-block</code>, <code>table-cell</code> ou autre.</p>
 <p>Du coup, nous avons maintenant nos différents types de classes. Cela se résume de manière générique à :</p>
-<pre><code class="hljs css"><span class="hljs-class">.Block</span> <span class="hljs-rules">{
+<pre><code class="lang-css"><span class="hljs-class">.Block</span> <span class="hljs-rules">{
 
-<span class="hljs-rule">}</span></span>
+}</span>
 
   <span class="hljs-class">.Block--modifier</span> <span class="hljs-rules">{
 
-  <span class="hljs-rule">}</span></span>
+  }</span>
 
   <span class="hljs-class">.Block-element</span> <span class="hljs-rules">{
 
-  <span class="hljs-rule">}</span></span>
+  }</span>
 
     <span class="hljs-class">.Block-element--modifier</span> <span class="hljs-rules">{
 
-    <span class="hljs-rule">}</span></span></code></pre>
-
+    }</span>
+</code></pre>
 <p>Ce qui donne <code>.Block-element--modifier</code> (notre <strong>BEM</strong>).</p>
 <p>Parlons maintenant du cas des termes multiples dans chaque partie. Voici comment cela se traduit.</p>
 <p><code>.MyBlock-myElement--myModifier</code></p>
@@ -107,23 +107,23 @@
 <p>Nous arrivons à la convention suivante : <code>.org[-js]-Block[-element][--modifier]</code></p>
 <p>Certains vous diront qu’ils mettent <code>.js-org-</code> mais étant donné que je considère cela comme un <em>namespace</em> global (autant css que js), je préfère mettre l’ <code>org</code> au début.</p>
 <p>Voilà, voilà, c’est certes un peu déroutant au début, et ca parait très verbeux mais cela vous permettra d’éviter de nooooooombreux soucis de nommage de classes où vous vous emmèlerez les pinceaux à coup de :</p>
-<pre><code class="hljs css"><span class="hljs-class">.footer</span> <span class="hljs-rules">{
+<pre><code class="lang-css"><span class="hljs-class">.footer</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> underline</span></span>;
-<span class="hljs-rule">}</span></span>
+}</span>
 
 <span class="hljs-class">.content</span> <span class="hljs-class">.footer</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> none</span></span>; <span class="hljs-comment">/* annule la propriété du précédent sélecteur */</span>
-<span class="hljs-rule">}</span></span></code></pre>
-
+}</span>
+</code></pre>
 <p>Ciao les kids.</p>
 </div></div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="r-Grid"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/edit/master/content/posts/css/petite-definition-bem/index.md">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/blame/master/content/posts/css/petite-definition-bem/index.md">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/commits/master/content/posts/css/petite-definition-bem/index.md">Historique</a></div></div><div><div class="putainde-Author undefined"><a href="http://kud.io" class="putainde-Avatar putainde-Author-picture"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/655838?v=3&amp;s=128" alt=""></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par </span><a class="putainde-Link" href="http://kud.io">kud</a></h3><div class="putainde-Author-social"><a href="http://kud.io" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Website"><img class="putainde-Icon" src="/icons/home.svg"></a><a href="https://twitter.com/_kud" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a><a href="https://github.com/kud" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Github"><img class="putainde-Icon" src="/icons/github.svg"></a></div></div><p class="putainde-Author-bio">Viking UI engineer (avec une pointe de node.js), batteur, s&#x27;essayant à la photographie, aime le cinema.</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">4 contributeurs</strong><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
 (3 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="kud
 (1 commit)"><a href="http://kud.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/655838?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Erwyn
 (1 commit)"><a href="http://erwyn.piwany.com" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/206743?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="NotGrm
 (1 commit)"><a href="http://notgrm.fr" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/793603?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
-var disqus_identifier = "http://putaindecode.fr/posts/css/petite-definition-bem/index.md";
-var disqus_url = "http://putaindecode.fr/posts/css/petite-definition-bem/index.md";
+var disqus_identifier = "http://putaindecode.fr/posts/css/petite-definition-bem/";
+var disqus_url = "http://putaindecode.fr/posts/css/petite-definition-bem/";
 var disqus_script = "embed.js";
 
 (function(d,s) {
@@ -131,4 +131,3 @@ var disqus_script = "embed.js";
   (d.getElementsByTagName('head')[0]).appendChild(s)
 })(document)
     </script></body></html>
-<script src="http://localhost:4243/livereload.js"></script>

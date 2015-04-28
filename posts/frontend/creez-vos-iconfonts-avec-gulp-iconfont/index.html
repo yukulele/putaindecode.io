@@ -4,23 +4,31 @@
 <p>M’enfin, il y a toujours une solution à un problème.</p>
 <p>Justement, là, mon problème était de répliquer mon <em>process</em> de <strong>svg-to-font</strong>.</p>
 <p>Je me suis creusé les méninges et j’ai finalement trouvé. Cette solution, je vous la propose.</p>
-<h2 id="gulp-iconfont">gulp-iconfont</h2>
-<p>Tout d’abord, installez <strong>gulp</strong> (évident…) et faites ce que vous avez à faire avec gulp.</p>
+<h2 id="gulp-iconfont">
+      <a class="putainde-Title-anchor" href="#gulp-iconfont">#</a>
+      gulp-iconfont
+    </h2><p>Tout d’abord, installez <strong>gulp</strong> (évident…) et faites ce que vous avez à faire avec gulp.</p>
 <p>Maintenant, vous êtes prêt(e) ? Okay, go.</p>
-<h3 id="installez-les-_packages_-ad-quats">Installez les <em>packages</em> adéquats</h3>
-<p>Oui, deux packages, <a href="https://github.com/nfroidure/gulp-iconfont">gulp-iconfont</a> et <a href="https://github.com/backflip/gulp-iconfont-css">gulp-iconfont-css</a>.</p>
-<pre><code>$ npm install gulp-iconfont gulp-iconfont-css --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span></code></pre>
-
-<h3 id="importez-les">Importez-les</h3>
-<pre><code class="hljs js"><span class="hljs-comment">// import</span>
+<h3 id="installez-les-packages-adequats">
+      <a class="putainde-Title-anchor" href="#installez-les-packages-adequats">#</a>
+      Installez les <em>packages</em> adéquats
+    </h3><p>Oui, deux packages, <a href="https://github.com/nfroidure/gulp-iconfont">gulp-iconfont</a> et <a href="https://github.com/backflip/gulp-iconfont-css">gulp-iconfont-css</a>.</p>
+<pre><code class="lang-console">$ npm install gulp-iconfont gulp-iconfont-css --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span>
+</code></pre>
+<h3 id="importez-les">
+      <a class="putainde-Title-anchor" href="#importez-les">#</a>
+      Importez-les
+    </h3><pre><code class="lang-js"><span class="hljs-comment">// import</span>
 <span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>)
 
 <span class="hljs-keyword">var</span> iconfont = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-iconfont'</span>)
-<span class="hljs-keyword">var</span> iconfontCss = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-iconfont-css'</span>)</code></pre>
-
-<h3 id="cr-ez-votre-propre-t-che-gulp">Créez votre propre tâche gulp</h3>
-<p>Je préconise d’appeler toute transformation d’une image vers une fonte “glyphicon”.</p>
-<pre><code class="hljs js"><span class="hljs-comment">// glyphicons</span>
+<span class="hljs-keyword">var</span> iconfontCss = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-iconfont-css'</span>)
+</code></pre>
+<h3 id="creez-votre-propre-tache-gulp">
+      <a class="putainde-Title-anchor" href="#creez-votre-propre-tache-gulp">#</a>
+      Créez votre propre tâche gulp
+    </h3><p>Je préconise d’appeler toute transformation d’une image vers une fonte “glyphicon”.</p>
+<pre><code class="lang-js"><span class="hljs-comment">// glyphicons</span>
 gulp.task(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
  <span class="hljs-keyword">return</span> gulp.src(<span class="hljs-string">'src/glyphicons/**/*'</span>) <span class="hljs-comment">// où sont vos svg</span>
     .pipe(iconfontCss({
@@ -32,12 +40,13 @@ gulp.task(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-funct
       fontName: <span class="hljs-string">'icons'</span> <span class="hljs-comment">// identique au nom de iconfontCss</span>
      }))
     .pipe( gulp.dest(<span class="hljs-string">'src/assets/fonts'</span>) )
-})</code></pre>
-
-
-<h3 id="le-final">Le final</h3>
-<p>Voilà l’écriture entière de la tâche :</p>
-<pre><code class="hljs js"><span class="hljs-comment">// import</span>
+})
+</code></pre>
+<h3 id="le-final">
+      <a class="putainde-Title-anchor" href="#le-final">#</a>
+      Le final
+    </h3><p>Voilà l’écriture entière de la tâche :</p>
+<pre><code class="lang-js"><span class="hljs-comment">// import</span>
 <span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>)
 
 <span class="hljs-keyword">var</span> iconfont = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-iconfont'</span>)
@@ -54,14 +63,14 @@ gulp.task(<span class="hljs-string">'glyphicons'</span>, <span class="hljs-funct
       fontName: <span class="hljs-string">'icons'</span> <span class="hljs-comment">// identique au nom de iconfontCss</span>
      }))
     .pipe( gulp.dest(<span class="hljs-string">'src/assets/fonts'</span>) )
-})</code></pre>
-
+})
+</code></pre>
 <p>Et voilà, on est bon. On peut transformer nos <em>svg</em> en <em>font</em>. \o/</p>
 </div></div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="r-Grid"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/edit/master/content/posts/frontend/creez-vos-iconfonts-avec-gulp-iconfont/index.md">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/blame/master/content/posts/frontend/creez-vos-iconfonts-avec-gulp-iconfont/index.md">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/commits/master/content/posts/frontend/creez-vos-iconfonts-avec-gulp-iconfont/index.md">Historique</a></div></div><div><div class="putainde-Author undefined"><a href="http://kud.io" class="putainde-Avatar putainde-Author-picture"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/655838?v=3&amp;s=128" alt=""></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par </span><a class="putainde-Link" href="http://kud.io">kud</a></h3><div class="putainde-Author-social"><a href="http://kud.io" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Website"><img class="putainde-Icon" src="/icons/home.svg"></a><a href="https://twitter.com/_kud" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a><a href="https://github.com/kud" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Github"><img class="putainde-Icon" src="/icons/github.svg"></a></div></div><p class="putainde-Author-bio">Viking UI engineer (avec une pointe de node.js), batteur, s&#x27;essayant à la photographie, aime le cinema.</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">2 contributeurs</strong><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
 (7 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="kud
 (1 commit)"><a href="http://kud.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/655838?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
-var disqus_identifier = "http://putaindecode.fr/posts/frontend/creez-vos-iconfonts-avec-gulp-iconfont/index.md";
-var disqus_url = "http://putaindecode.fr/posts/frontend/creez-vos-iconfonts-avec-gulp-iconfont/index.md";
+var disqus_identifier = "http://putaindecode.fr/posts/frontend/creez-vos-iconfonts-avec-gulp-iconfont/";
+var disqus_url = "http://putaindecode.fr/posts/frontend/creez-vos-iconfonts-avec-gulp-iconfont/";
 var disqus_script = "embed.js";
 
 (function(d,s) {
@@ -69,4 +78,3 @@ var disqus_script = "embed.js";
   (d.getElementsByTagName('head')[0]).appendChild(s)
 })(document)
     </script></body></html>
-<script src="http://localhost:4243/livereload.js"></script>

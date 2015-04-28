@@ -6,41 +6,47 @@ où chaque module fait une seule tâche (évite la complexité, facilite la réu
 <p>Cependant NPM ne se limite pas aux modules JavaScript. Il est en effet possible
 de publier tout type de fichier et c’est là que ça devient intéressant pour nos
 modules front-end, qui peuvent aussi être CSS, HTML, fonts, etc.</p>
-<h2 id="module-javascript">Module JavaScript</h2>
-<p>Si vous n’êtes pas familier(e) avec la création d’un module JavaScript, je vous
+<h2 id="module-javascript">
+      <a class="putainde-Title-anchor" href="#module-javascript">#</a>
+      Module JavaScript
+    </h2><p>Si vous n’êtes pas familier(e) avec la création d’un module JavaScript, je vous
 conseille d’exécuter la commande <code>npm init</code> qui va vous aider à générer votre
 <code>package.json</code> (fichier de configuration utilisé par NPM). Le champ
 “<a href="https://www.npmjs.org/doc/json.html#main">main</a>“ définit le point d’entrée de
 votre module.</p>
-<pre><code class="hljs json">{
+<pre><code class="lang-json">{
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"putaindemodule"</span></span>,
   "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.0.1"</span></span>,
   "<span class="hljs-attribute">main</span>": <span class="hljs-value"><span class="hljs-string">"index.js"</span>
-</span>}</code></pre>
-
+</span>}
+</code></pre>
 <p>Dans un article précédent, il vous a été présenté le développement d’une application
 autour de <a href="/posts/js/browserify-all-the-things/">modules JavaScript avec Browserify</a>.</p>
-<h2 id="module-pour-tout-type-de-fichier">Module pour tout type de fichier</h2>
-<p>C’est grâce au champ “<a href="https://www.npmjs.org/doc/json.html#files">files</a>“ que
+<h2 id="module-pour-tout-type-de-fichier">
+      <a class="putainde-Title-anchor" href="#module-pour-tout-type-de-fichier">#</a>
+      Module pour tout type de fichier
+    </h2><p>C’est grâce au champ “<a href="https://www.npmjs.org/doc/json.html#files">files</a>“ que
 l’on peut définir la liste des fichiers que l’on va publier (autre que les fichiers JavaScript).
 Voici un exemple de <code>package.json</code> d’un module pour un système de grille CSS.</p>
-<pre><code class="hljs json">{
+<pre><code class="lang-json">{
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"putaindegrid"</span></span>,
   "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.0.1"</span></span>,
   "<span class="hljs-attribute">files</span>": <span class="hljs-value">[
     <span class="hljs-string">"grid.css"</span>
   ]
-</span>}</code></pre>
-
+</span>}
+</code></pre>
 <p>Il ne reste de plus qu’à le <a href="https://gist.github.com/coolaj86/1318304">publier</a>
 et à l’installer (<code>npm install putaindegrid --save</code>) dans vos différents projets
 où vous en aurez besoin. Votre fichier <code>grid.css</code> est accessible dans le dossier
 <code>node_modules/putaindegrid/grid.css</code>, vous pouvez donc l’inclure dans votre page
 HTML. (Ou l’<code>@import</code>er dans votre fichier Sass/Less principal.)</p>
-<pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"node_modules/putaindegrid/grid.css"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span>&gt;</span></code></pre>
-
-<h2 id="pourquoi-npm-plut-t-qu-un-autre-package-manager-">Pourquoi NPM plutôt qu’un autre package manager ?</h2>
-<ul>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"node_modules/putaindegrid/grid.css"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span>&gt;</span>
+</code></pre>
+<h2 id="pourquoi-npm-plutot-qu-un-autre-package-manager">
+      <a class="putainde-Title-anchor" href="#pourquoi-npm-plutot-qu-un-autre-package-manager">#</a>
+      Pourquoi NPM plutôt qu’un autre package manager ?
+    </h2><ul>
 <li>Il a déjà fait ses preuves comme package manager pour Node.js.</li>
 <li>Pas besoin d’installer un nouvel outil, NPM étant installé avec Node.js, ce qui
 évite un lot de bugs et de fichiers de configuration supplémentaires (un simple <code>package.json</code> suffit).</li>
@@ -72,8 +78,8 @@ fonctionnalités que le téléchargement de modules.  </p>
 (7 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="kewah
 (1 commit)"><a href="https://twitter.com/kewah" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/195442?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="kud
 (1 commit)"><a href="http://kud.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/655838?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
-var disqus_identifier = "http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/index.md";
-var disqus_url = "http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/index.md";
+var disqus_identifier = "http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/";
+var disqus_url = "http://putaindecode.fr/posts/frontend/npm-comme-package-manager-pour-le-front-end/";
 var disqus_script = "embed.js";
 
 (function(d,s) {
@@ -81,4 +87,3 @@ var disqus_script = "embed.js";
   (d.getElementsByTagName('head')[0]).appendChild(s)
 })(document)
     </script></body></html>
-<script src="http://localhost:4243/livereload.js"></script>

@@ -3,9 +3,11 @@
 et le sont encore trop.</p>
 <p>Écrire des tests peut paraître chiant, mais le temps qu’ils rapportent
 compense largement celui que l’on passe à les écrire.</p>
-<h2 id="-crire-du-js-testable">Écrire du js testable</h2>
-<p>Prenons un exemple simple et moche :</p>
-<pre><code class="hljs javascript"><span class="hljs-comment">//app.js</span>
+<h2 id="ecrire-du-js-testable">
+      <a class="putainde-Title-anchor" href="#ecrire-du-js-testable">#</a>
+      Écrire du js testable
+    </h2><p>Prenons un exemple simple et moche :</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">//app.js</span>
 ;(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
 
   <span class="hljs-keyword">var</span> cart = $(<span class="hljs-string">"#cart"</span>)
@@ -20,8 +22,8 @@ compense largement celui que l’on passe à les écrire.</p>
       addToCart($(<span class="hljs-keyword">this</span>).data(<span class="hljs-string">"id"</span>))
     })
 
-})()</code></pre>
-
+})()
+</code></pre>
 <p>Tester ce code est particulièrement lourd, pour plusieurs raisons :</p>
 <ul>
 <li>les functions à tester ne sont pas accessibles</li>
@@ -29,12 +31,14 @@ compense largement celui que l’on passe à les écrire.</p>
 <li>on doit créer un element et modifier son <code>data-id</code> à chaque cas souhaité.</li>
 <li>pour tester <code>addToCart</code> on doit aller regarder dans le DOM.</li>
 </ul>
-<h3 id="1-rendez-accessibles-vos-m-thodes-au-test-runner">1. Rendez accessibles vos méthodes au test runner</h3>
-<p>Vous pouvez utiliser un namespace adéquat.</p>
-<pre><code class="hljs javascript"><span class="hljs-keyword">var</span> app = <span class="hljs-built_in">window</span>.app = {}
+<h3 id="1-rendez-accessibles-vos-methodes-au-test-runner">
+      <a class="putainde-Title-anchor" href="#1-rendez-accessibles-vos-methodes-au-test-runner">#</a>
+      1. Rendez accessibles vos méthodes au test runner
+    </h3><p>Vous pouvez utiliser un namespace adéquat.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> app = <span class="hljs-built_in">window</span>.app = {}
 app.cart = {}
-app.cart.addToCart = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{ <span class="hljs-comment">/* … */</span> }</code></pre>
-
+app.cart.addToCart = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{ <span class="hljs-comment">/* … */</span> }
+</code></pre>
 <p>Mais ne souhaitez probablement pas rendre vos méthodes accessibles à la console.</p>
 <p>Utilisez un module-system : <a href="http://browserify.org">browserify</a> ou
 <a href="http://requirejs.org">requirejs</a> (si vous n’avez pas besoin de chargement
@@ -42,24 +46,26 @@ conditionnel et souhaitez créer un bundle par build, utilisez browserify qui
 possède une syntaxe beaucoup plus sympathique et une codebase réduite, vous
 pourrez même <code>require</code> depuis un module npm
 <a href="/posts/js/browserify-all-the-things/">comme on vous l’explique dans un article dédié</a>).</p>
-<pre><code class="hljs javascript"><span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"jquery"</span>) <span class="hljs-comment">// oh, un module npm</span>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"jquery"</span>) <span class="hljs-comment">// oh, un module npm</span>
 
 <span class="hljs-built_in">module</span>.exports = {
   element : $(<span class="hljs-string">"#cart"</span>),
   addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     <span class="hljs-comment">/* … */</span>
   }
-}</code></pre>
-
+}
+</code></pre>
 <p>Vous pourrez ainsi séparer proprement votre application en modules et les tester individuellement.</p>
-<h3 id="2-oui-mais-les-modules-interd-pendants-alors-">2. Oui, mais les modules interdépendants alors ?</h3>
-<p>Là, ça devient un peu plus tricky.
+<h3 id="2-oui-mais-les-modules-interdependants-alors">
+      <a class="putainde-Title-anchor" href="#2-oui-mais-les-modules-interdependants-alors">#</a>
+      2. Oui, mais les modules interdépendants alors ?
+    </h3><p>Là, ça devient un peu plus tricky.
 Ce que je conseille à titre personnel c’est d’utiliser des events
 pour faire communiquer les différentes parties de l’application.</p>
 <p>Cela permet d’éviter d’utiliser des mocks d’autres parties de l’application partout.</p>
 <p>Par exemple, si je souhaite tester le fait qu’un click sur <code>.js-updateCart</code>
 déclanchera bien <code>updateCart</code> :</p>
-<pre><code class="hljs javascript"><span class="hljs-comment">//view.js</span>
+<pre><code class="lang-javascript"><span class="hljs-comment">//view.js</span>
 
 <span class="hljs-comment">// view est une petite class qui route les events</span>
 <span class="hljs-comment">// en rendant les listeners accessibles aux tests</span>
@@ -89,10 +95,10 @@ déclanchera bien <code>updateCart</code> :</p>
       id : id
     })
   }
-})</code></pre>
-
+})
+</code></pre>
 <p>et je n’aurais qu’à écouter cet event depuis <code>cart</code> :</p>
-<pre><code class="hljs javascript"><span class="hljs-comment">// cart.js</span>
+<pre><code class="lang-javascript"><span class="hljs-comment">// cart.js</span>
 <span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
 <span class="hljs-keyword">var</span> catalog = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../catalog"</span>)
 
@@ -108,11 +114,11 @@ déclanchera bien <code>updateCart</code> :</p>
     <span class="hljs-comment">// et on a eventObject.id</span>
     <span class="hljs-keyword">this</span>.products.push(catalog[eventObject.currentTarget.data(<span class="hljs-string">"id"</span>)])
   }
-}</code></pre>
-
+}
+</code></pre>
 <p>Grâce à cette architecture, je vais pouvoir tester individuellement
 les deux modules.</p>
-<pre><code class="hljs javascript"><span class="hljs-comment">// view.test.js</span>
+<pre><code class="lang-javascript"><span class="hljs-comment">// view.test.js</span>
 
 <span class="hljs-keyword">var</span> tape = <span class="hljs-built_in">require</span>(<span class="hljs-string">"tape"</span>)
 <span class="hljs-keyword">var</span> view = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../app/view"</span>)
@@ -130,9 +136,9 @@ tape(<span class="hljs-string">"view"</span>, <span class="hljs-function"><span 
   view.addToCart({
     currentTarget : element
   })
-})</code></pre>
-
-<pre><code class="hljs javascript"><span class="hljs-comment">// cart.test.js</span>
+})
+</code></pre>
+<pre><code class="lang-javascript"><span class="hljs-comment">// cart.test.js</span>
 
 <span class="hljs-keyword">var</span> tape = <span class="hljs-built_in">require</span>(<span class="hljs-string">"tape"</span>)
 <span class="hljs-keyword">var</span> cart = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../app/cart"</span>)
@@ -148,47 +154,51 @@ tape(<span class="hljs-string">"cart"</span>, <span class="hljs-function"><span 
     <span class="hljs-string">"receives addToCart event"</span>
   )
   test.end()
-})</code></pre>
-
-<h2 id="tester-tous-les-cas-possibles">Tester tous les cas possibles</h2>
-<p>Ce sont souvent les edge-cases qui nous font nous arracher les cheveux.
+})
+</code></pre>
+<h2 id="tester-tous-les-cas-possibles">
+      <a class="putainde-Title-anchor" href="#tester-tous-les-cas-possibles">#</a>
+      Tester tous les cas possibles
+    </h2><p>Ce sont souvent les edge-cases qui nous font nous arracher les cheveux.
 Pour pallier ces soucis, tester en profondeur est essentiel.</p>
 <p>Prenons un exemple, une méthode qui teste si la valeur qu’on lui passe est
 une <code>string</code>.</p>
 <p>On serait tenté de simplement tester les résultats positifs de cette façon :</p>
-<pre><code class="hljs javascript">tape(<span class="hljs-string">"type.isString on strings"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
+<pre><code class="lang-javascript">tape(<span class="hljs-string">"type.isString on strings"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
   test.equal(type.isString(<span class="hljs-string">""</span>), <span class="hljs-literal">true</span>)
   test.end()
-})</code></pre>
-
+})
+</code></pre>
 <p>Or, si par mégarde ma méthode <code>isString</code> se révèle être :</p>
-<pre><code class="hljs javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
+<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> value == <span class="hljs-string">"string"</span>
-}</code></pre>
-
+}
+</code></pre>
 <p>on ne vérifie pas le cas <code>type.isString(new String(&quot;&quot;))</code>.</p>
 <p>Du coup, des tests complets :</p>
-<pre><code class="hljs javascript">tape(<span class="hljs-string">"type.isString on strings"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
+<pre><code class="lang-javascript">tape(<span class="hljs-string">"type.isString on strings"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
   test.equal(type.isString(<span class="hljs-string">""</span>), <span class="hljs-literal">true</span>)
   test.equal(type.isString(<span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-string">""</span>)), <span class="hljs-literal">false</span>)
   test.end()
-})</code></pre>
-
+})
+</code></pre>
 <p>permettent ici d’identifier qu’en réalité on a besoin de :</p>
-<pre><code class="hljs javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
+<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
   <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(value) == <span class="hljs-string">"[object String]"</span>
-}</code></pre>
-
+}
+</code></pre>
 <p>Et c’est à la force des résultats de tests que vous identifierez rapidement
 vous familiariserez à tous ces edge-cases.</p>
 <p>À chaque correctif de bug, ajoutez des tests (mais ça, vous le saviez déjà).</p>
-<h2 id="cross-browser-testing">Cross-browser testing</h2>
-<p>À l’heure actuelle, où l’on se trouve notamment très souvent avec du
+<h2 id="cross-browser-testing">
+      <a class="putainde-Title-anchor" href="#cross-browser-testing">#</a>
+      Cross-browser testing
+    </h2><p>À l’heure actuelle, où l’on se trouve notamment très souvent avec du
 feature testing.
 Pour le tester complètement, on doit se servir de vrais navigateurs :
 un headless (certes, très pratique) comme <a href="http://phantomjs.org">phantomjs</a>
 ne permettra pas d’obtenir 100% de coverage.</p>
-<pre><code class="hljs javascript"><span class="hljs-keyword">var</span> supportsAnimationFrame =
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> supportsAnimationFrame =
   !!(
     win.requestAnimationFrame ||
     win.webkitRequestAnimationFrame ||
@@ -199,15 +209,15 @@ ne permettra pas d’obtenir 100% de coverage.</p>
     <span class="hljs-comment">// test sur les version concernées d'Opera</span>
     <span class="hljs-comment">// vous permettront de l'identifier</span>
     win.msRequestAnimationFrame
-  )</code></pre>
-
+  )
+</code></pre>
 <p>De plus, vous pouvez par habitude être tenté d’utiliser un
 <code>Array.prototype.forEach</code> alors que votre scope navigateur inclut
 IE8; seuls des tests sur un vrai browser vous permettront d’identifier le souci.</p>
 <p>Je vous conseille fortement testling, très simple à intégrer dans vos
 modules, et gratuit pour tout projet open-source.</p>
 <p>Dans le <code>package.json</code> :</p>
-<pre><code class="hljs json">{
+<pre><code class="lang-json">{
   "<span class="hljs-attribute">testling</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">files</span>": <span class="hljs-value"><span class="hljs-string">"test/**/*.js"</span></span>,
     "<span class="hljs-attribute">browsers</span>": <span class="hljs-value">[
@@ -221,8 +231,8 @@ modules, et gratuit pour tout projet open-source.</p>
       <span class="hljs-string">"android-browser/latest"</span>
     ]
   </span>}
-</span>}</code></pre>
-
+</span>}
+</code></pre>
 <p>Et ajouter un webhook dans l’admin de votre repository GitHub pointant vers</p>
 <blockquote>
 <p><a href="http://git.testling.com">http://git.testling.com</a></p>
@@ -236,30 +246,32 @@ de test supportant <code>TAP</code> comme indiqué sur
 ou ayant <a href="http://karma-runner.github.io">une approche différente</a>.</p>
 <p>Par ailleurs, si dans votre code il existe des variations entre les navigateurs,
 vous pouvez utiliser du test conditionnel :</p>
-<pre><code class="hljs javascript"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> {}.__proto__ == <span class="hljs-string">"object"</span>){
+<pre><code class="lang-javascript"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> {}.__proto__ == <span class="hljs-string">"object"</span>){
   test.equal(list.__proto__ === <span class="hljs-built_in">Array</span>.prototype, <span class="hljs-literal">false</span>, <span class="hljs-string">"__proto__ isn't Array.prototype"</span>)
 } <span class="hljs-keyword">else</span> {
   test.equal(list <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Array</span>, <span class="hljs-literal">false</span>, <span class="hljs-string">"Isn't a window Array"</span>)
-}</code></pre>
-
+}
+</code></pre>
 <p>Happy testing!</p>
-<pre><code>$ testling
+<pre><code class="lang-console">$ testling
 
 TAP version <span class="hljs-number">13</span>
 <span class="hljs-preprocessor"># tests</span>
 ok <span class="hljs-number">1</span> bisous
 
-<span class="hljs-number">1.</span><span class="hljs-number">.1</span>
+<span class="hljs-number">1.</span>.<span class="hljs-number">1</span>
 <span class="hljs-preprocessor"># tests 1</span>
 <span class="hljs-preprocessor"># pass  1</span>
 
-<span class="hljs-preprocessor"># ok</span></code></pre></div></div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="r-Grid"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/edit/master/content/posts/js/introduction-au-testing-js-front/index.md">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/blame/master/content/posts/js/introduction-au-testing-js-front/index.md">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/commits/master/content/posts/js/introduction-au-testing-js-front/index.md">Historique</a></div></div><div><div class="putainde-Author undefined"><a href="http://bloodyowl.github.io" class="putainde-Avatar putainde-Author-picture"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1688645?v=3&amp;s=128" alt=""></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par </span><a class="putainde-Link" href="http://bloodyowl.github.io">bloodyowl</a></h3><div class="putainde-Author-social"><a href="http://bloodyowl.github.io" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Website"><img class="putainde-Icon" src="/icons/home.svg"></a><a href="https://twitter.com/bloodyowl" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a><a href="https://github.com/bloodyowl" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Github"><img class="putainde-Icon" src="/icons/github.svg"></a></div></div><p class="putainde-Author-bio">Développeur front-end, aime la bonne bière artisanale, la musique, et JavaScript; n&#x27;aime ni les points virgules, ni les gens</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">4 contributeurs</strong><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
+<span class="hljs-preprocessor"># ok</span>
+</code></pre>
+</div></div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="r-Grid"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/edit/master/content/posts/js/introduction-au-testing-js-front/index.md">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/blame/master/content/posts/js/introduction-au-testing-js-front/index.md">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/commits/master/content/posts/js/introduction-au-testing-js-front/index.md">Historique</a></div></div><div><div class="putainde-Author undefined"><a href="http://bloodyowl.github.io" class="putainde-Avatar putainde-Author-picture"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1688645?v=3&amp;s=128" alt=""></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par </span><a class="putainde-Link" href="http://bloodyowl.github.io">bloodyowl</a></h3><div class="putainde-Author-social"><a href="http://bloodyowl.github.io" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Website"><img class="putainde-Icon" src="/icons/home.svg"></a><a href="https://twitter.com/bloodyowl" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a><a href="https://github.com/bloodyowl" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Github"><img class="putainde-Icon" src="/icons/github.svg"></a></div></div><p class="putainde-Author-bio">Développeur front-end, aime la bonne bière artisanale, la musique, et JavaScript; n&#x27;aime ni les points virgules, ni les gens</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">4 contributeurs</strong><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
 (7 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="bloodyowl
 (2 commits)"><a href="http://bloodyowl.github.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1688645?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="lionelB
 (1 commit)"><a href="http://lumographe.fr/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/160320?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="gostbuster
 (1 commit)"><a href="https://github.com/gostbuster" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1633593?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
-var disqus_identifier = "http://putaindecode.fr/posts/js/introduction-au-testing-js-front/index.md";
-var disqus_url = "http://putaindecode.fr/posts/js/introduction-au-testing-js-front/index.md";
+var disqus_identifier = "http://putaindecode.fr/posts/js/introduction-au-testing-js-front/";
+var disqus_url = "http://putaindecode.fr/posts/js/introduction-au-testing-js-front/";
 var disqus_script = "embed.js";
 
 (function(d,s) {
@@ -267,4 +279,3 @@ var disqus_script = "embed.js";
   (d.getElementsByTagName('head')[0]).appendChild(s)
 })(document)
     </script></body></html>
-<script src="http://localhost:4243/livereload.js"></script>

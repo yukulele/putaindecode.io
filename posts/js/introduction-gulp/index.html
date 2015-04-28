@@ -27,8 +27,10 @@ les problématiques gérées de ce côté sont (il me semble) moins nouvelles.</
 runner, ni faire une comparaison entre Make, Rake, Cake, Jake, Grunt, Brunch
 et Broccoli.
 Rentrons dans le vif. Parlons Gulp.</p>
-<h1 id="pourquoi-gulp">Pourquoi Gulp</h1>
-<p>Je vais faire court. Pour faire simple, son point fort réside dans le fait qu’il utilise des
+<h1 id="pourquoi-gulp">
+      <a class="putainde-Title-anchor" href="#pourquoi-gulp">#</a>
+      Pourquoi Gulp
+    </h1><p>Je vais faire court. Pour faire simple, son point fort réside dans le fait qu’il utilise des
 <a href="http://dailyjs.com/2012/09/10/streams/">streams</a> (tl;dr: un flux de données - en mémoire)
 et qu’il limite au maximum l’utilisation de fichiers.
 Au point qu’il existe une <a href="https://github.com/godaddy/gulp-header/issues/4#issuecomment-32111457">police Gulp</a>
@@ -52,23 +54,27 @@ de fichiers</a>.</p>
   <figcaption>Avec stream</figcaption>
 </figure>
 
-<h2 id="installation">Installation</h2>
-<p>Pour avoir la commande globale sur le système (comme grunt-cli) :</p>
-<pre><code>$ npm <span class="hljs-tag">i</span> -g gulp</code></pre>
-
+<h2 id="installation">
+      <a class="putainde-Title-anchor" href="#installation">#</a>
+      Installation
+    </h2><p>Pour avoir la commande globale sur le système (comme grunt-cli) :</p>
+<pre><code class="lang-console">$ npm <span class="hljs-tag">i</span> -g gulp
+</code></pre>
 <p>Ensuite dans votre projet :</p>
-<pre><code>$ npm <span class="hljs-tag">i</span> -D gulp gulp-util gulp-plumber gulp-WHATEVER</code></pre>
-
+<pre><code class="lang-console">$ npm <span class="hljs-tag">i</span> -D gulp gulp-util gulp-plumber gulp-WHATEVER
+</code></pre>
 <p><em>Note : <code>npm i -D</code> == <code>npm install --save-dev</code>, c’est cadeau.</em></p>
 <p>Bon dans mon exemple j’ai mis un peu n’importe quoi, donc on va faire un mini workflow de hipster hacker.</p>
-<h2 id="utilisation">Utilisation</h2>
-<p>On part avec une tâche très simple : pré-processeur CSS <a href="http://www.myth.io">Myth</a> et
+<h2 id="utilisation">
+      <a class="putainde-Title-anchor" href="#utilisation">#</a>
+      Utilisation
+    </h2><p>On part avec une tâche très simple : pré-processeur CSS <a href="http://www.myth.io">Myth</a> et
 optimisation avec <a href="https://github.com/css/csso">CSSO</a>.</p>
-<pre><code><span class="hljs-variable">$ </span>mkdir putaindegulp &amp;&amp; cd putaindegulp
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>mkdir putaindegulp &amp;&amp; cd putaindegulp
 <span class="hljs-variable">$ </span>npm init
-<span class="hljs-variable">$ </span>npm i -<span class="hljs-constant">D </span>gulp gulp-util gulp-plumber gulp-myth gulp-csso minimist</code></pre>
-
-<pre><code class="hljs js"><span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp"</span>)
+<span class="hljs-variable">$ </span>npm i -<span class="hljs-constant">D </span>gulp gulp-util gulp-plumber gulp-myth gulp-csso minimist
+</code></pre>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp"</span>)
 <span class="hljs-keyword">var</span> gutil = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-util"</span>)
 <span class="hljs-keyword">var</span> plumber = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-plumber"</span>)
 <span class="hljs-keyword">var</span> myth = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-myth"</span>)
@@ -85,11 +91,11 @@ gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"
 
 gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
   gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, [<span class="hljs-string">"styles"</span>])
-})</code></pre>
-
+})
+</code></pre>
 <p>Voilà c’est tout. Et heureusement.</p>
 <p>Bon, on se refait l’exemple commenté :</p>
-<pre><code class="hljs js"><span class="hljs-comment">// bah là ok, on est obligé d'y passer pour avoir l'API Gulp</span>
+<pre><code class="lang-js"><span class="hljs-comment">// bah là ok, on est obligé d'y passer pour avoir l'API Gulp</span>
 <span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp"</span>)
 
   <span class="hljs-comment">// Ça c'est optionnel, c'est pour avoir (entre autres la méthode noop())</span>
@@ -147,12 +153,14 @@ gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string"
   gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, [<span class="hljs-string">"styles"</span>])
 })
 
-<span class="hljs-comment">// Comme grunt, `gulp` sans argument lancera la tâche `default`.</span></code></pre>
-
+<span class="hljs-comment">// Comme grunt, `gulp` sans argument lancera la tâche `default`.</span>
+</code></pre>
 <p>Bien entendu, vous avez déjà compris que si vous voulez remplacer Myth par Sass,
 c’est l’histoire de 4 secondes.</p>
-<h2 id="_putain-de-code-_-approuve-gulp-"><em>Putain de code !</em> approuve Gulp.</h2>
-<p>Ici on est carrément fan de Gulp. Il faut bien avouer que
+<h2 id="putain-de-code-approuve-gulp">
+      <a class="putainde-Title-anchor" href="#putain-de-code-approuve-gulp">#</a>
+      <em>Putain de code !</em> approuve Gulp.
+    </h2><p>Ici on est carrément fan de Gulp. Il faut bien avouer que
 <a href="https://twitter.com/putaindecode/status/460868992396460032">ça va vite</a>
 (encore plus appréciable lorsque l’on n’a pas de SSD) et que c’est plaisant à écrire.
 Pas de configurations pas spécialement verbeuse et trop espacée.
@@ -183,8 +191,10 @@ notre tâche qui mélange (pour l’instant) Stylus et Rework (suite à une rixe
 <p>Bien entendu, si vous ne comprenez pas certaines parties, n’hésitez pas à
 <a href="https://github.com/putaindecode/putaindecode.fr/issues/new">ouvrir une issue</a>
 pour demander des explications.</p>
-<h2 id="vous-reprendrez-bien-un-peu-de-gulp-pardon-">Vous reprendrez bien un peu de… Gulp* ! Pardon.</h2>
-<p>Si vous avez encore envie de détails je vous renvoie sur l’article anglais
+<h2 id="vous-reprendrez-bien-un-peu-de-gulp-pardon">
+      <a class="putainde-Title-anchor" href="#vous-reprendrez-bien-un-peu-de-gulp-pardon">#</a>
+      Vous reprendrez bien un peu de… Gulp* ! Pardon.
+    </h2><p>Si vous avez encore envie de détails je vous renvoie sur l’article anglais
 <a href="http://markgoodyear.com/2014/01/getting-started-with-gulp/">Getting started with gulp</a>
 qui détaille tellement bien chaque point que même un anglophobe comprendrait.</p>
 <p>Vous avez aussi
@@ -201,14 +211,16 @@ Je trouve que c’est gage de qualité.</p>
 <li><a href="http://insertafter.com/fr/blog/retour_experience_gulp.html">Gulp : Retour d’expérience</a></li>
 <li><a href="http://jaysoo.ca/2014/01/27/gruntjs-vs-gulpjs/">Grunt vs. Gulp, au-delà des chiffres</a> (anglais)</li>
 </ul>
-<pre><code><span class="hljs-variable">$ </span>gulp bisous
-❯ ♡ 😘</code></pre></div></div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="r-Grid"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/edit/master/content/posts/js/introduction-gulp/index.md">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/blame/master/content/posts/js/introduction-gulp/index.md">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/commits/master/content/posts/js/introduction-gulp/index.md">Historique</a></div></div><div><div class="putainde-Author undefined"><a href="http://moox.io/" class="putainde-Avatar putainde-Author-picture"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par </span><a class="putainde-Link" href="http://moox.io/">MoOx</a></h3><div class="putainde-Author-social"><a href="http://moox.io/" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Website"><img class="putainde-Icon" src="/icons/home.svg"></a><a href="https://twitter.com/MoOx" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a><a href="https://github.com/MoOx" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Github"><img class="putainde-Icon" src="/icons/github.svg"></a></div></div><p class="putainde-Author-bio">Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.  Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">4 contributeurs</strong><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>gulp bisous
+❯ ♡ 😘
+</code></pre>
+</div></div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="r-Grid"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/edit/master/content/posts/js/introduction-gulp/index.md">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/blame/master/content/posts/js/introduction-gulp/index.md">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/commits/master/content/posts/js/introduction-gulp/index.md">Historique</a></div></div><div><div class="putainde-Author undefined"><a href="http://moox.io/" class="putainde-Avatar putainde-Author-picture"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par </span><a class="putainde-Link" href="http://moox.io/">MoOx</a></h3><div class="putainde-Author-social"><a href="http://moox.io/" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Website"><img class="putainde-Icon" src="/icons/home.svg"></a><a href="https://twitter.com/MoOx" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a><a href="https://github.com/MoOx" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Github"><img class="putainde-Icon" src="/icons/github.svg"></a></div></div><p class="putainde-Author-bio">Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.  Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">4 contributeurs</strong><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
 (10 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Nickdouille
 (1 commit)"><a href="http://sojavascript.com" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/2188628?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="madx
 (1 commit)"><a href="http://madx.me/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/5723?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="nfroidure
 (1 commit)"><a href="http://insertafter.com" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/229633?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
-var disqus_identifier = "http://putaindecode.fr/posts/js/introduction-gulp/index.md";
-var disqus_url = "http://putaindecode.fr/posts/js/introduction-gulp/index.md";
+var disqus_identifier = "http://putaindecode.fr/posts/js/introduction-gulp/";
+var disqus_url = "http://putaindecode.fr/posts/js/introduction-gulp/";
 var disqus_script = "embed.js";
 
 (function(d,s) {
@@ -216,4 +228,3 @@ var disqus_script = "embed.js";
   (d.getElementsByTagName('head')[0]).appendChild(s)
 })(document)
     </script></body></html>
-<script src="http://localhost:4243/livereload.js"></script>

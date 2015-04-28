@@ -5,27 +5,24 @@
 <p>napa est un <em>helper for installing stuff without a package.json with npm</em>. Pardon, napa est un aideur pour installer des trucs sans un package.json avec npm. BON. napa vous aide à travers npm à installer des modules qui n’ont pas de package.json. C’est plus clair là ?</p>
 <p>napa est ce qui manque à npm où bower avait justement son utilité : télécharger n’importe quel <em>package</em> <em>front</em> n’importe où. Mais plutôt que d’installer un autre <em>packager</em>, napa s’insère directement dans npm afin de ne pas perturber le <em>workflow</em>, et ça, j’apprécie grandement.</p>
 <p>Simple, tout simple. Dans un premier temps, téléchargez-le :</p>
-<pre><code class="hljs">$ npm install napa --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span></code></pre>
-
-<p>Cela ajoutera napa au <code>package.json</code>.</p>
+<pre><code>$ npm install napa --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span>
+</code></pre><p>Cela ajoutera napa au <code>package.json</code>.</p>
 <p>Puis dans <code>package.json</code>, ajoutez :</p>
-<pre><code class="hljs">{
+<pre><code>{
   "<span class="hljs-attribute">scripts</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">install</span>": <span class="hljs-value"><span class="hljs-string">"napa"</span>
   </span>}
-</span>}</code></pre>
-
-<p>Cela permettra de lancer napa à chaque fois que vous faites <code>npm install</code>.</p>
+</span>}
+</code></pre><p>Cela permettra de lancer napa à chaque fois que vous faites <code>npm install</code>.</p>
 <p>Afin d’ajouter les projets qui seront téléchargés par napa et donc par npm, il suffit d’ajouter un objet <code>napa</code> toujours dans <code>package.json</code> :</p>
-<pre><code class="hljs">{
+<pre><code>{
   "<span class="hljs-attribute">napa</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">foo</span>": <span class="hljs-value"><span class="hljs-string">"username/repo"</span></span>,
     "<span class="hljs-attribute">bar</span>": <span class="hljs-value"><span class="hljs-string">"git@example.com:user/repo"</span>
   </span>}
-</span>}</code></pre>
-
-<p>ce qui donne au final :</p>
-<pre><code class="hljs">{
+</span>}
+</code></pre><p>ce qui donne au final :</p>
+<pre><code>{
   "<span class="hljs-attribute">scripts</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">install</span>": <span class="hljs-value"><span class="hljs-string">"napa"</span>
   </span>}</span>,
@@ -33,11 +30,10 @@
     "<span class="hljs-attribute">foo</span>": <span class="hljs-value"><span class="hljs-string">"username/repo"</span></span>,
     "<span class="hljs-attribute">bar</span>": <span class="hljs-value"><span class="hljs-string">"git@example.com:user/repo"</span>
   </span>}
-</span>}</code></pre>
-
-<p>Je vous ai volontairement donné la version structurée (et/ou explicite) parce que d’une, c’est celle que j’utilise :D et de deux, c’est celle que je trouve la plus claire, mais il y a d’<a href="https://github.com/shama/napa#want-to-name-the-package-something-else">autres façons</a> de l’écrire.</p>
+</span>}
+</code></pre><p>Je vous ai volontairement donné la version structurée (et/ou explicite) parce que d’une, c’est celle que j’utilise :D et de deux, c’est celle que je trouve la plus claire, mais il y a d’<a href="https://github.com/shama/napa#want-to-name-the-package-something-else">autres façons</a> de l’écrire.</p>
 <p>On se retrouve alors dans la vraie vie à avoir un <code>package.json</code> comme ceci :</p>
-<pre><code class="hljs">{
+<pre><code>{
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"my-project"</span></span>,
   "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"1.0.0"</span></span>,
   "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Brilliant project"</span></span>,
@@ -62,16 +58,15 @@
   "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"Myself"</span></span>,
   "<span class="hljs-attribute">license</span>": <span class="hljs-value"><span class="hljs-string">"BSD"</span></span>,
   "<span class="hljs-attribute">readmeFilename</span>": <span class="hljs-value"><span class="hljs-string">"readme.md"</span>
-</span>}</code></pre>
-
-<p>Top non ?</p>
+</span>}
+</code></pre><p>Top non ?</p>
 <p>Note : napa et npm-shrinkwrap, c’est pas encore ça, alors n’hésitez pas à supprimer la partie “napa” avant de lancer votre génération de npm-shrinkwrap.</p>
 <p>Bon download à vous.</p>
 </div></div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="r-Grid"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/edit/master/content/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/index.md">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/blame/master/content/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/index.md">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/commits/master/content/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/index.md">Historique</a></div></div><div><div class="putainde-Author undefined"><a href="http://kud.io" class="putainde-Avatar putainde-Author-picture"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/655838?v=3&amp;s=128" alt=""></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par </span><a class="putainde-Link" href="http://kud.io">kud</a></h3><div class="putainde-Author-social"><a href="http://kud.io" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Website"><img class="putainde-Icon" src="/icons/home.svg"></a><a href="https://twitter.com/_kud" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a><a href="https://github.com/kud" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Github"><img class="putainde-Icon" src="/icons/github.svg"></a></div></div><p class="putainde-Author-bio">Viking UI engineer (avec une pointe de node.js), batteur, s&#x27;essayant à la photographie, aime le cinema.</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">2 contributeurs</strong><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
 (3 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="kud
 (2 commits)"><a href="http://kud.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/655838?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
-var disqus_identifier = "http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/index.md";
-var disqus_url = "http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/index.md";
+var disqus_identifier = "http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/";
+var disqus_url = "http://putaindecode.fr/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/";
 var disqus_script = "embed.js";
 
 (function(d,s) {
@@ -79,4 +74,3 @@ var disqus_script = "embed.js";
   (d.getElementsByTagName('head')[0]).appendChild(s)
 })(document)
     </script></body></html>
-<script src="http://localhost:4243/livereload.js"></script>
