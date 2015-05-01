@@ -5,10 +5,245 @@
         <description><![CDATA[Putain de code !]]></description>
         <link>http://putaindecode.fr</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Tue, 28 Apr 2015 13:20:14 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 01 May 2015 12:21:54 GMT</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"/>
         <language><![CDATA[fr]]></language>
         <category><![CDATA[code]]></category>
+        <item>
+            <title><![CDATA[Implémenter Flux]]></title>
+            <description><![CDATA[<p>Si vous n’avez pas encore lu
+<a href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/">l’introduction à flux</a>,
+n’hésitez pas à jeter un œil avant de lire ce post.</p>
+<p>Une des choses importantes avec Flux, et pourtant pas évidentes après lecture
+<a href="https://github.com/facebook/flux/tree/master/examples/">des exemples officiels</a>,
+c’est que les stores doivent être des instances, et non des singletons que
+les composants récupèrent en dépendance directe.</p>
+<p>La raison de cette nécessité, c’est la possibilité de servir une page
+pre-rendue sur le serveur. En soi, vous devez impérativement amorcer votre
+dispatcher et vos stores dans le scope de la requête, ou vos utilisateurs
+se retrouveront avec des stores remplis de data ne leur appartenant pas.</p>
+<p>Puisque l’intérêt d’une solution comme react dans le cadre du server-side
+rendering est d’utiliser les mêmes composants que sur le client, il faut
+que notre approche soit convenable sur nos deux environements.</p>
+<p>La question dès lors est «comment passer les stores à nos composants react
+maintenant qu’ils ne sont plus des dépendances directes ?».</p>
+<p>On va les passer via les <code>props</code> de parent à enfant ? lolnope.
+La plupart de nos composants n’auront pas conscience de la présence de ces
+stores, et seront utilisés dans différents contextes. Et c’est justement
+l’API <code>context</code> que nous allons utiliser.</p>
+<p>Cette API est assez simple, en soi, le <code>context</code> d’un composant est construit
+au fur et à mesure que ses ancêtres décident d’y ajouter de la data.</p>
+<p>Exemple simple :</p>
+<pre><code class="lang-javascript">import React, {Component, PropTypes} from "react"
+
+class App extends Component {
+
+  // on définit les types de ce que l'on souhaite passer dans
+  // le contexte
+  static childContextTypes = {
+    foo: PropTypes.string,
+  }
+
+  // on crée une méthode qui retourne ce contexte
+  getChildContext() {
+    return {
+      foo: this.props.foo,
+    }
+  }
+
+  render() {
+    return (
+      &lt;div className="putainde-App"&gt;
+        &lt;Container /&gt;
+      &lt;/div&gt;
+    )
+  }
+}
+
+class Container extends Component {
+
+  // les contextes sont *merged*, ce qui nous permet de le construire
+  // sans se soucier du niveau auquel sera notre composant.
+  static childContextTypes = {
+    bar: PropTypes.string,
+  }
+
+  getChildContext() {
+    return {
+      bar: "oh hai",
+    }
+  }
+
+  render() {
+    return (
+      &lt;div className="putainde-Container"&gt;
+        &lt;IntermediaryComponent /&gt;
+      &lt;/div&gt;
+    )
+  }
+
+}
+
+// ce composant n'a pas besoin de savoir que ses enfants on besoin
+// de certaines propriétés du contexte
+class IntermediaryComponent extends Component {
+  render() {
+    return (
+      &lt;Content /&gt;
+    )
+  }
+}
+
+class Content extends Component {
+
+  // pour chaque composant utilisant des propriétés du contexte,
+  // on stipule ce dont on a besoin
+  static contextTypes = {
+    foo: PropTypes.string,
+    bar: PropTypes.string,
+  }
+
+  render() {
+    return (
+      &lt;div className="putainde-Content"&gt;
+        &lt;div className="putainde-Content-line"&gt;
+          &lt;strong&gt;foo&lt;/strong&gt;: {this.context.foo}
+        &lt;/div&gt;
+        &lt;div className="putainde-Content-line"&gt;
+          &lt;strong&gt;bar&lt;/strong&gt;: {this.context.bar}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    )
+  }
+
+}
+
+React.render(
+  &lt;App foo={Date.now()} /&gt;,
+  document.getElementById("App")
+)
+</code></pre>
+<p>Cela nous donne cet output :
+<a href="http://jsbin.com/zitohibaze/1/">http://jsbin.com/zitohibaze/1/</a></p>
+<p>Grâce à cette API, on peut créer des composants isolés, et dont les
+composants parents n’auront pas nécessairement besoin de connaître le
+contexte.</p>
+<p>L’idée, pour en revenir à Flux, c’est de passer notre dispatcher dans
+ce contexte, et de placer les stores dans le dispatcher au moment de
+l’amorce de l’app.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> dispatcher = <span class="hljs-keyword">new</span> Dispatcher()
+
+dispatcher.registerStore(<span class="hljs-keyword">new</span> SomeStore())
+dispatcher.registerStore(<span class="hljs-keyword">new</span> SomeOtherStore())
+
+React.render(
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">App</span> <span class="hljs-attribute">dispatcher</span>=<span class="hljs-value">{dispatcher}</span> /&gt;</span>,
+  document.getElementById("App")
+)</span>
+</code></pre>
+<p>Désormais, pour avoir une API décente pour récuperer les données des stores,
+on a deux principales solutions:</p>
+<ul>
+<li>utiliser un mixin</li>
+<li>utiliser un higher-order component</li>
+</ul>
+<p>Puisque la direction que prend l’API de React, à terme, est de ne plus
+fournir de mixins, et de laisser au TC39 le temps de prendre la bonne
+décision sur la façon dont JavaScript traitera la composition ; il semble
+plus adéquat d’utiliser un higher-order component. Cela aura en plus
+l’avantage de rendre le composant récupérant les données <em>stateless</em>.</p>
+<p>Ce genre d’API ressemble à ça :</p>
+<pre><code class="lang-javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ComponentWithData</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{
+  static stores = {
+    <span class="hljs-comment">// nom du store: nom de la prop souhaitée</span>
+    MyStore: <span class="hljs-string">"my_store"</span>,
+  }
+
+  render() {
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+        {/* la data est passée via les props*/}
+        {this.props.my_store.foo}
+      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    )</span>
+  }
+}
+
+<span class="hljs-comment">// storeReceiver wrap `ComponentWithData` dans un higher-order component</span>
+<span class="hljs-comment">// et se charge de récupérer le store dans le contexte pour les passer</span>
+<span class="hljs-comment">// dans les props de `ComponentWithData`</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> storeReceiver(ComponentWithData)
+</code></pre>
+<p>Enfin, avec cette approche, les action creators que l’on voit dans les
+exemples de flux ne peuvent plus garder la même forme, puisqu’il ne doivent
+plus avoir le dispatcher comme dépendance directe (ce dernier étant une
+instance). Du coup, ce sont désormais des fonctions pures :</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> PostActions = {
+  getPost(slug) {
+    <span class="hljs-keyword">return</span> {
+      type: ActionTypes.POST_GET,
+      slug: slug,
+    }
+  },
+  receivePost(res) {
+    <span class="hljs-keyword">return</span> {
+      type: ActionTypes.POST_RECEIVE,
+      res,
+    }
+  },
+  error(res) {
+    <span class="hljs-keyword">return</span> {
+      type: ActionTypes.POST_ERROR,
+      res,
+    }
+  },
+}
+</code></pre>
+<p>et nos composants utilisent :</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> React, {Component, PropTypes} <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
+<span class="hljs-keyword">import</span> PostActions <span class="hljs-keyword">from</span> <span class="hljs-string">"actions/PostActions"</span>
+
+class MyComponent extends Component {
+
+  static contextTypes = {
+    dispatcher: PropTypes.object,
+  }
+
+  static propTypes = {
+    slug: PropTypes.string,
+    title: PropTypes.title,
+  }
+
+  handleClick() {
+    this.context.dispatcher.dispatch(
+      PostActions.getPost(this.props.slug)
+    )
+  }
+
+  render() {
+    return (
+      &lt;button
+        onClick={() =&gt; this.handleClick()}&gt;
+        {this.props.title}
+      &lt;/button&gt;
+    )
+  }
+}
+</code></pre>
+<p>Pour résumer, les avantages de cette approche sont :</p>
+<ul>
+<li>un meilleur découplage</li>
+<li>une isolation solide des composants</li>
+<li>la possibilité de pre-render sur le serveur</li>
+<li>une testabilité accrue, puisqu’il est simple d’utiliser un mock ou des
+instances crées pour le test dans le contexte de nos composants.</li>
+</ul>
+<p>Bisous bisous.</p>
+]]></description>
+            <link>http://putaindecode.fr/posts/js/implementer-flux/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/js/implementer-flux/</guid>
+            <pubDate>Fri, 01 May 2015 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[HATEOAS, le Graal des développeurs d'API]]></title>
             <description><![CDATA[<p>Nous vivons aujourd’hui dans un monde où tout devient service. Twitter, Facebook, Google Drive, GitHub, tout le monde y va de sa petite API pour que nous, geeks, puissions profiter pleinement des moult fonctionnalités offertes par ces plateformes. Qu’entend-on par service ? Comment les rendre disponibles facilement et intelligemment ? On va essayer d’y répondre ! </p>
@@ -3921,379 +4156,6 @@ pour ne pas les render systématiquement, c’est pas beau, ça ?</p>
             <link>http://putaindecode.fr/posts/js/introduction-a-reactjs/</link>
             <guid isPermaLink="true">http://putaindecode.fr/posts/js/introduction-a-reactjs/</guid>
             <pubDate>Wed, 04 Jun 2014 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Faire son préprocesseur CSS à la carte]]></title>
-            <description><![CDATA[<p>Après vous avoir fait un petit <a href="/posts/css/le-point-sur-les-preprocesseurs/">état de l’art des préprocesseurs CSS historiques</a>
-et vous avoir parlé <a href="/posts/css/le-point-sur-les-preprocesseurs/">des postprocesseurs</a>,
-je me dois de vous montrer le chemin qui me semble le plus pertinent aujourd’hui,
-en 2014, maintenant que <a href="http://www.w3.org/standards/techs/css#cr">les spécifications CSS sont découpées en modules</a>
-qui peuvent du coup avancer (plus rapidement) chacune de leur côté.</p>
-<p>Bon après faut avouer que chez {p!} on fait genre on est des hipsters hackers,
-du coup quand on voit que <a href="http://blog.kaelig.fr/post/85546040569/net-awards-sass-game-changer-of-the-year">Sass est le game changer of the year</a>
- et que tout le monde l’adopte, on se doit de rester hipster.
-Du coup on est obligés de passer à autre chose.</p>
-<p><strong>Mise à jour du 11 décembre 2014:</strong> <em>depuis le temps où j’ai rédigé cette article, j’ai travaillé sur un transpileur CSS future-proof, basé sur PostCSS. Je vous invite à jeter au project <strong><a href="https://cssnext.github.io/">cssnext</a></strong>.</em></p>
-<h2 id="pre-ou-postprocesseurs">
-      <a class="putainde-Title-anchor" href="#pre-ou-postprocesseurs">#</a>
-      Pré ou postprocesseurs ?
-    </h2><p>Je vais ici utiliser le mot préprocesseur, alors que certains trouveront postprocesseurs plus pertinent,
-car pour moi le préprocessing reste simplement une étape avant le <em>processing</em>
-de nos feuilles de styles par les navigateurs.</p>
-<p>Cela dit il faut bien distinguer les étapes :</p>
-<ol>
-<li>Preprocessing d’un langage spécifique (Sass, Stylus*) ou superset du langage CSS (Scss, Less);</li>
-<li>Preprocessing d’un fichier respectant la syntaxe CSS;</li>
-<li>Processing par le navigateur</li>
-</ol>
-<p>Revenons rapidement sur ces 3 points :</p>
-<h3 id="preprocessing-via-langage-dedie">
-      <a class="putainde-Title-anchor" href="#preprocessing-via-langage-dedie">#</a>
-      Preprocessing via langage dédié
-    </h3><p>Ici je parle d’un langage, car superset ou pas, on a des éléments nouveaux,
-incompréhensibles par le navigateur (ex: <code>@if</code>, <code>@foreach</code>…).</p>
-<p>Note: Je case Stylus dans le langage spécifique car il n’est pas vraiment compatible,
-ne tolérant pas l’indentation :</p>
-<pre><code class="lang-css"><span class="hljs-class">.Block</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">prop</span>:<span class="hljs-value"> value }
-
-  .Block-element { prop: value }
-
-<span class="hljs-comment">/* 💥 BOOM ! CA PAS MARCHER EN STYLUS */</span></span></span></span>
-</code></pre>
-<h3 id="preprocessing-futureproof-fallback">
-      <a class="putainde-Title-anchor" href="#preprocessing-futureproof-fallback">#</a>
-      Préprocessing futureproof/fallback
-    </h3><p>Ici on conserve la syntaxe CSS, le parsing est donc simple est connu.
-Mais attention on peut avoir un résultat non compréhensible par certains navigateurs
-(ex: unité REM sur IE 8, variables CSS…).</p>
-<p>À la différence de la solution du dessus, on reste ici avec un langage à la syntaxe simple
-et connue, avec des spécifications (en brouillon ou pas).</p>
-<p>Dès que c’est possible on va rendre le CSS encore plus compatible en ajoutant
-des fallbacks (roues de secours) à tout va.
-Ainsi par exemple pour assurer une utilisation de l’unité REM, on peut (en roue de secours)
-doubler nos valeurs en <code>px</code>.
-Autre exemple avec les variables CSS natives : on peut (pour une utilisation simpliste)
-faire un prérendu et mettre des roues de secours là où c’est possible.</p>
-<h3 id="processing-par-le-navigateur">
-      <a class="putainde-Title-anchor" href="#processing-par-le-navigateur">#</a>
-      Processing par le navigateur
-    </h3><p>Ici on a blindé notre feuille de fallback, on est (en théorie) sensé avoir un support “au mieux”.</p>
-<h2 id="creer-un-preprocesseur-css">
-      <a class="putainde-Title-anchor" href="#creer-un-preprocesseur-css">#</a>
-      Créer un préprocesseur CSS
-    </h2><p>Allons à l’essentiel : pour créer votre préprocesseur on va utiliser une bibliothèque.
-À ce jour nous avons le choix entre <a href="https://github.com/reworkcss/rework">Rework</a>
- ou <a href="https://github.com/ai/postcss">PostCSS</a> qui permettent d’inspecter et de manipuler nos CSS.
-Tout deux sont des bibliothèques écrites en JavaScript (NodeJs).</p>
-<p>Pour la petite histoire, Autoprefixer est à l’origine de PostCSS. En effet les
-premières versions utilisaient Rework, mais à cause de limitation dues à l’API de Rework,
-l’auteur d’Autoprefixer a décidé de créer son propre moteur, qui a une API presque
-plus sympa il faut le dire (il faudra voir comment évolue Rework).</p>
-<p>D’un autre côté Rework étant plus ancien, il possède un écosystème plus fourni et répondra
-donc mieux à nos besoins.</p>
-<p>Cela étant dit, avec l’approche futureproof nous pourrons switcher de Rework à PostCSS
- sans problème et surtout sans toucher à nos feuilles de styles.
-Il suffira de trouver un plugin équivalent (ex: rework-vars et postcss-vars font la même chose).</p>
-<p>Pour des raisons d’écosystème, je partirai sur Rework histoire de ne pas réinventer la roue.</p>
-<h2 id="creer-un-preprocesseur-css-avec-rework">
-      <a class="putainde-Title-anchor" href="#creer-un-preprocesseur-css-avec-rework">#</a>
-      Créer un préprocesseur CSS avec Rework
-    </h2><p>Rework prend une chaîne CSS en entrée, produit un AST (arbre de syntaxe abtrait)
-de notre CSS et nous fournis une API pour le manipuler.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> rework = <span class="hljs-built_in">require</span>(<span class="hljs-string">"rework"</span>)
-<span class="hljs-keyword">var</span> unPlugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">"rework-BIDULE"</span>)
-<span class="hljs-comment">// usage simple</span>
-<span class="hljs-keyword">var</span> css = rework(<span class="hljs-string">"html { font-size: 2rem}"</span>).use(unPlugin).toString()
-</code></pre>
-<h3 id="plugin-rework">
-      <a class="putainde-Title-anchor" href="#plugin-rework">#</a>
-      Plugin Rework
-    </h3><p>Un plugin Rework n’est rien d’autre qu’une fonction JavaScript.
-L’exemple suivant remplacera toutes les couleurs de texte par du noir.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> monPlugin = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">plugin</span><span class="hljs-params">(ast, reworkInstance)</span> </span>{
-  ast.rules.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rule)</span> </span>{
-    <span class="hljs-comment">// dans notre cas on ne veut que travailler sur des règles</span>
-    <span class="hljs-keyword">if</span> (rule.type !== <span class="hljs-string">"rule"</span>) <span class="hljs-keyword">return</span>
-
-    rule.declarations.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(declaration, index)</span> </span>{
-      <span class="hljs-keyword">if</span> (declaration.property === <span class="hljs-string">"color"</span>) {
-        declaration.value = <span class="hljs-string">'#000'</span>
-      }
-    })
-  })
-}
-</code></pre>
-<p>Il est certain que l’exemple ci-dessus ne doit pas vous exciter beaucoup. Moi non plus.
-Je n’ai d’ailleurs pas du tout accroché lorsque Rework est apparu par manque de compréhension.
-<strong>Ou plutôt par manque d’imagination</strong>.</p>
-<p>Pour un exemple plus costaud je vous invite à regarder le code <a href="https://github.com/reworkcss/rework-vars/blob/master/index.js">rework-vars</a>.</p>
-<h2 id="l-ecosysteme-rework">
-      <a class="putainde-Title-anchor" href="#l-ecosysteme-rework">#</a>
-      L’Ecosystème Rework
-    </h2><p>Heureusement pour nous, nous avons un écosystème. Donc pour un usage classique (écrire
-du CSS futureproof ou ajouter quelques petites améliorations) il n’y aura pas besoin
-d’écrire de plugin, juste en utiliser fera l’affaire.</p>
-<h3 id="plugins-rework-natif">
-      <a class="putainde-Title-anchor" href="#plugins-rework-natif">#</a>
-      Plugins Rework natif
-    </h3><p>Rework embarque en natif quelques plugins. Il faudra tout de même les activer (on voit comment juste après).</p>
-<ul>
-<li><a href="https://github.com/reworkcss/rework#extend">extend</a>: Permet d’hériter d’un sélecteur (<code>@extend</code> quoi).</li>
-<li><a href="https://github.com/reworkcss/rework#ease">ease</a>: Ajout un paquet de fonctions d’easing pour les animations et transitions.</li>
-<li><a href="https://github.com/reworkcss/rework#at2x">at2x</a>: Gestion automatique des images <code>@2x</code>.</li>
-<li><a href="https://github.com/reworkcss/rework#prefixselectorsstring">prefixSelectors</a>: Permet de préfixer vos sélecteurs.</li>
-<li><a href="https://github.com/reworkcss/rework#colors">colors</a>: Explication par l’exemple : <code>rgba(#fc0, .5)</code>.</li>
-<li><a href="https://github.com/reworkcss/rework#mixinobject">mixin</a>: Faire ses propres mixins via des fonctions JavaScript.</li>
-<li><a href="https://github.com/reworkcss/rework#functionobject">function</a>: Ajouter ses propres fonctions CSS.</li>
-<li><a href="https://github.com/reworkcss/rework#references">references</a>: Permet de faire référence à des valeurs de propriétés (ex: <code>height: @width</code>)</li>
-<li><a href="https://github.com/reworkcss/rework#urlfn">url</a>: Réécrire les <code>url()</code>s via une fonction JavaScript.</li>
-<li><a href="https://github.com/reworkcss/rework#inlinedir">inline</a>: Inliner des ressources via des datauri.</li>
-</ul>
-<h3 id="plugins-rework-npm">
-      <a class="putainde-Title-anchor" href="#plugins-rework-npm">#</a>
-      Plugins Rework NPM
-    </h3><p>On a déjà plus d’une soixantaine de <a href="https://www.npmjs.org/search?q=rework">plugins Rework disponible sur NPM</a> en plus des plugins natifs.</p>
-<h4 id="ajouter-des-fallbacks">
-      <a class="putainde-Title-anchor" href="#ajouter-des-fallbacks">#</a>
-      Ajouter des fallbacks
-    </h4><p>Si vous souhaitez écrire des CSS sans pour autant vous limiter à certaines implémentations, ces plugins devraient vous plaire.</p>
-<h5 id="rework-vars">
-      <a class="putainde-Title-anchor" href="#rework-vars">#</a>
-      rework-vars
-    </h5><p><a href="https://github.com/reworkcss/rework-vars">rework-vars</a>
-permet un usage des <a href="http://www.w3.org/TR/css-variables/">variables CSS</a>.
-Ce plugin est (pour l’instant) restreint aux déclarations à la racine (<code>:root</code>).
-Cela permet toutefois un usage classique de variables globales.
-Et de se séparer de Sass ou Less si on utilise pas beaucoup plus que des variables.</p>
-<h5 id="rework-calc">
-      <a class="putainde-Title-anchor" href="#rework-calc">#</a>
-      rework-calc
-    </h5><p><a href="https://github.com/reworkcss/rework-calc">rework-calc</a>
-ajoute les résultats des opérations <code>calc()</code> quand c’est possible (même unité).
-Très pratique spécialement couplé avec rework-vars pour ajouter un peu de math via vos variables.</p>
-<h5 id="rework-npm">
-      <a class="putainde-Title-anchor" href="#rework-npm">#</a>
-      rework-npm
-    </h5><p><a href="https://github.com/conradz/rework-npm">rework-npm</a>
-nous parse <code>@import</code> comme on l’aime.
-Peut taper dans votre dossier de sources ou en plus dans <code>node_modules</code>
-(pratique pour utiliser <a href="https://www.npmjs.org/package/normalize.css">normalize.css</a>
-<a href="/posts/frontend/npm-comme-package-manager-pour-le-front-end/">via npm</a> par exemple).
-Il existe aussi <a href="https://github.com/simme/rework-importer">rework-importer</a> qui amène quelques différences de syntaxe.</p>
-<h5 id="rework-rem-fallback">
-      <a class="putainde-Title-anchor" href="#rework-rem-fallback">#</a>
-      <a href="https://github.com/ctalkington/rework-rem-fallback">rework-rem-fallback</a>
-    </h5><p><a href="https://github.com/ctalkington/rework-rem-fallback">rework-rem-fallback</a>
-ajoute un fallback sur les unités REM. Pratique si vous voulez utiliser REM mais
-que vous devez supporter IE 8.</p>
-<h5 id="rework-color-function">
-      <a class="putainde-Title-anchor" href="#rework-color-function">#</a>
-      rework-color-function
-    </h5><p><a href="https://github.com/ianstormtaylor/rework-color-function">rework-color-function</a> permet
-de manipuler les couleurs via
-<a href="http://dev.w3.org/csswg/css-color/#modifying-colors">les nouvelles fonctions en cours de spécifications</a>
-(hue, saturation, lightness, whiteness, blackness, tint, shade, blend, blenda, contrast).</p>
-<h5 id="rework-mixin-opacity">
-      <a class="putainde-Title-anchor" href="#rework-mixin-opacity">#</a>
-      rework-mixin-opacity
-    </h5><p><a href="https://github.com/reworkcss/rework-mixin-opacity">rework-mixin-opacity</a> ajoute l’<code>opacity</code> pour IE 8.</p>
-<h4 id="ameliorer-un-peu-vos-feuilles-de-styles">
-      <a class="putainde-Title-anchor" href="#ameliorer-un-peu-vos-feuilles-de-styles">#</a>
-      Améliorer un peu vos feuilles de styles
-    </h4><p>Sans pour autant partir en vrille vers des <code>@if</code> ou <code>@each</code>, voici quelques plugins
-qui peuvent ajouter un peu de beurre dans les épinards :</p>
-<h5 id="rework-parent">
-      <a class="putainde-Title-anchor" href="#rework-parent">#</a>
-      rework-parent
-    </h5><p><a href="https://github.com/fgnass/rework-parent">rework-parent</a> permet de référencer le sélecteur précédent via <code>&amp;</code>. Pratique dans pour les media-queries ou pour les états (:hover etc).</p>
-<h5 id="rework-breakpoints">
-      <a class="putainde-Title-anchor" href="#rework-breakpoints">#</a>
-      rework-breakpoints
-    </h5><p><a href="https://github.com/reworkcss/rework-breakpoints">rework-breakpoints</a> permet de spécifier des media-queries via des breakpoints prédéfinis. Pratique en attendant un plugin gérant les <a href="http://dev.w3.org/csswg/mediaqueries4/#custom-mq"><code>@custom-media</code></a>.</p>
-<h5 id="rework-hex-alpha">
-      <a class="putainde-Title-anchor" href="#rework-hex-alpha">#</a>
-      rework-hex-alpha
-    </h5><p><a href="https://github.com/ianstormtaylor/rework-hex-alpha">rework-hex-alpha</a> permet de spécifier des couleurs avec alpha sous la forme #rrggbbaa.</p>
-<h5 id="rework-clearfix">
-      <a class="putainde-Title-anchor" href="#rework-clearfix">#</a>
-      rework-clearfix
-    </h5><p><a href="https://github.com/fgnass/rework-clearfix">rework-clearfix</a> permet d’utiliser <code>clear: fix</code> via l’insertion automatique du <a href="http://nicolasgallagher.com/micro-clearfix-hack/">micro clearfix de @necolas</a>.</p>
-<h5 id="rework-assets">
-      <a class="putainde-Title-anchor" href="#rework-assets">#</a>
-      rework-assets
-    </h5><p><a href="https://github.com/conradz/rework-assets">rework-assets</a> permet de copier les assets référencés. Pratique avec rework-npm et des modules externes.</p>
-<h5 id="rework-namespace-css">
-      <a class="putainde-Title-anchor" href="#rework-namespace-css">#</a>
-      rework-namespace-css
-    </h5><p><a href="https://github.com/geordiemhall/rework-namespace-css">rework-namespace-css</a> permet de namespacer vos CSS par une classe sur <code>&lt;html&gt;</code>.</p>
-<h5 id="rework-namespace">
-      <a class="putainde-Title-anchor" href="#rework-namespace">#</a>
-      rework-namespace
-    </h5><p><a href="https://github.com/kristoferjoseph/rework-namespace">rework-namespace</a> permet de namespacer vos CSS par un préfixe. Pratique avec <a href="/posts/css/petite-definition-bem/">BEM</a> lorsque vous préfixez par votre <code>.org-</code>.</p>
-<h5 id="rework-classmap">
-      <a class="putainde-Title-anchor" href="#rework-classmap">#</a>
-      rework-classmap
-    </h5><p><a href="https://github.com/andreypopp/rework-classmap">rework-classmap</a> permet de renommer des classes via du mapping. Avec ça on pourrait presque avoir un code Bootstrap propre.</p>
-<h5 id="rework-palette">
-      <a class="putainde-Title-anchor" href="#rework-palette">#</a>
-      rework-palette
-    </h5><p><a href="https://github.com/fgnass/rework-palette">rework-palette</a> permet d’ajouter une palette de couleur personnalisée (via des noms de couleurs).</p>
-<h5 id="rework-deduplicate">
-      <a class="putainde-Title-anchor" href="#rework-deduplicate">#</a>
-      rework-deduplicate
-    </h5><p><a href="https://github.com/kristoferjoseph/rework-deduplicate">rework-deduplicate</a> permet de supprimer les règles dupliquées.</p>
-<h5 id="rework-split-media">
-      <a class="putainde-Title-anchor" href="#rework-split-media">#</a>
-      rework-split-media
-    </h5><p><a href="https://github.com/reworkcss/split-media">rework-split-media</a> permet de couper les contenus des media queries dans d’autres fichiers.</p>
-<h5 id="rework-move-media">
-      <a class="putainde-Title-anchor" href="#rework-move-media">#</a>
-      rework-move-media
-    </h5><p><a href="https://github.com/reworkcss/rework-move-media">rework-move-media</a> permet de regrouper les contenus des media queries. Pas très utile car gzip fera aussi bien.</p>
-<h4 id="au-dela-du-preprocessing">
-      <a class="putainde-Title-anchor" href="#au-dela-du-preprocessing">#</a>
-      Au delà du préprocessing
-    </h4><p>En utilisant le parser Rework, on peut faire plus que des ajustements ou du remplacement: on peut balancer des erreurs.</p>
-<ul>
-<li><a href="https://github.com/reworkcss/rework-ie-limits">rework-ie-limits</a>: prévient si vos CSS dépassent la limite de 4095 selectors (limite pour IE &lt; 10).</li>
-<li><a href="https://github.com/suitcss/rework-suit-conformance">rework-suit-conformance</a>: permet de vérifier que votre code suit bien les <a href="https://github.com/suitcss/suit/tree/master/doc">conventions SUIT</a> (pour peu que vous les suiviez).</li>
-</ul>
-<p>En partant dans d’autres directions on pourrait réaliser des statistiques sur
-nos CSS (nombre de sélecteurs, de couleurs utilisées etc) comme le fait <a href="http://www.cssstats.com/">CSS Stats</a>.</p>
-<p>Retrouvrez en plus de la recherche via npm (qui sera la plus à jour), <a href="https://github.com/reworkcss/rework/wiki/Plugins-and-Utilities">une liste des plugins et utilitaires sur le wiki de Rework</a>.</p>
-<h2 id="mise-en-place-de-rework-pour-faire-votre-preprocesseur-en-moins-de-5-min">
-      <a class="putainde-Title-anchor" href="#mise-en-place-de-rework-pour-faire-votre-preprocesseur-en-moins-de-5-min">#</a>
-      Mise en place de Rework pour faire votre préprocesseur en moins de 5 min
-    </h2><p>Maintenant que nous avons vu comment utiliser Rework et quels sont les plugins
-les plus sympas, on se faire un petit fichier pour automatiser tout ce process.</p>
-<p>Plutôt que de réinventer la roue comme l’a fait <a href="http://pleeease.io/">Pleeease</a> (en gérant un watcher et tout le tralala),
-on va plutôt partir comme <a href="http://myth.io/">Myth.io</a> ou <a href="https://github.com/visionmedia/styl">Styl</a> (successeur spirituel de Stylus)
-qui se concentrent sur le rendu et non le workflow pour générer ce rendu.</p>
-<p>Nous allons donc faire simple et efficace avec une task <a href="/posts/js/introduction-gulp/">gulp</a>.
-Ceci pourrait bien entendu être aussi bien fait avec grunt ou même make et <a href="https://github.com/facebook/watchman">watchman</a>.</p>
-<pre><code class="lang-console">$ <span class="hljs-built_in">mkdir</span> monrework &amp;&amp; <span class="hljs-built_in">cd</span> monrework
-
-# on crée un package.json pour sauvegarder les références des paquets qu'on va utiliser
-$ npm init
-
-# on install gulp, autoprefixer et rework &amp; co en les sauvegardants dans la partie "devDependencies"
-$ npm i -D minimist gulp gulp-util gulp-plumber gulp-autoprefixer gulp-rework rework-npm rework-vars rework-calc rework-<span class="hljs-built_in">color</span>-function rework-<span class="hljs-comment">rem-fallback rework-parent rework-ie-limits</span>
-
-# on créé notre fichier vide
-$ <span class="hljs-built_in">mkdir</span> src &amp;&amp; <span class="hljs-built_in">mkdir</span> src/styles &amp;&amp; touch src/styles/index.css
-</code></pre>
-<p>Ensuite il nous reste à faire notre petit <code>Gulpfile.js</code></p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> options = <span class="hljs-built_in">require</span>(<span class="hljs-string">"minimist"</span>)(process.argv.slice(<span class="hljs-number">2</span>))
-<span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp"</span>)
-<span class="hljs-keyword">var</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-util"</span>)
-<span class="hljs-keyword">var</span> plumber = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-plumber"</span>)
-<span class="hljs-keyword">var</span> rework = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-rework"</span>)
-
-<span class="hljs-keyword">var</span> reworkPlugins = {
-  atimport: <span class="hljs-built_in">require</span>(<span class="hljs-string">"rework-npm"</span>),
-  parent: <span class="hljs-built_in">require</span>(<span class="hljs-string">"rework-parent"</span>),
-  vars: <span class="hljs-built_in">require</span>(<span class="hljs-string">"rework-vars"</span>),
-  calc: <span class="hljs-built_in">require</span>(<span class="hljs-string">"rework-calc"</span>),
-  colorFn: <span class="hljs-built_in">require</span>(<span class="hljs-string">"rework-color-function"</span>),
-  remFallback: <span class="hljs-built_in">require</span>(<span class="hljs-string">"rework-rem-fallback"</span>),
-  ieLimits: <span class="hljs-built_in">require</span>(<span class="hljs-string">"rework-ie-limits"</span>)
-}
-<span class="hljs-keyword">var</span> autoprefixer = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-autoprefixer"</span>)
-
-gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  <span class="hljs-comment">// ici on prend toutes les CSS à la racine</span>
-  <span class="hljs-comment">// on considère que celles dans des sous dossiers sont à importer</span>
-  <span class="hljs-keyword">return</span> gulp.src(<span class="hljs-string">"./src/styles/*.css"</span>)
-    .pipe(opts.production ? plumber() : util.noop())
-    .pipe(rework(
-      reworkPlugins.atimport({dir: <span class="hljs-string">"./src/styles/"</span>}),
-      rework.colors(),
-      rework.references(),
-      rework.ease(),
-      rework.inline,
-      reworkPlugins.parent,
-      reworkPlugins.vars(), <span class="hljs-comment">// notez que certains plugins nécessitent d'être éxecutés (retournant une fonction dynamique)</span>
-      reworkPlugins.calc,
-      reworkPlugins.colorFn,
-      reworkPlugins.remFallback(),
-      reworkPlugins.ieLimits
-    ))
-    .pipe(autoprefixer())
-    .pipe(gulp.dest(<span class="hljs-string">"./dist/styles"</span>))
-})
-
-gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, [<span class="hljs-string">"styles"</span>])
-})
-</code></pre>
-<p>Ensuite il ne reste plus qu’à lancer Gulp au besoin qui s’occupera d’éxecuter le preprocessing
-au démarrage et lors des changements de fichiers.
-Il ne reste plus grand chose à faire si ce n’est ajouter livereload en plus pour avoir le petit process aux petits oignons.</p>
-<pre><code class="lang-console">$ <span class="hljs-atom">gulp</span>
-[<span class="hljs-atom">gulp</span>] <span class="hljs-name">Using</span> <span class="hljs-atom">gulpfile</span> ~/<span class="hljs-name">Development</span>/<span class="hljs-atom">monrework</span>/<span class="hljs-name">Gulpfile</span>.<span class="hljs-atom">js</span>
-[<span class="hljs-atom">gulp</span>] <span class="hljs-name">Starting</span> <span class="hljs-string">'styles'</span>...
-[<span class="hljs-atom">gulp</span>] <span class="hljs-name">Finished</span> <span class="hljs-string">'styles'</span> <span class="hljs-atom">after</span> <span class="hljs-number">49</span> <span class="hljs-atom">ms</span>
-[<span class="hljs-atom">gulp</span>] <span class="hljs-name">Starting</span> <span class="hljs-string">'default'</span>...
-[<span class="hljs-atom">gulp</span>] <span class="hljs-name">Finished</span> <span class="hljs-string">'default'</span> <span class="hljs-atom">after</span> <span class="hljs-number">4.16</span> <span class="hljs-atom">ms</span>
-</code></pre>
-<p>Le watch est lancé, on peut remplir notre fichier CSS</p>
-<pre><code class="lang-css"><span class="hljs-pseudo">:root</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">--fontSize</span>:<span class="hljs-value"> <span class="hljs-number">1rem</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">--lineHeight</span>:<span class="hljs-value"> <span class="hljs-number">1.5rem</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">--color-highlight</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-hexcolor">#f00</span>, .<span class="hljs-number">8</span>)</span></span>;
-}</span>
-
-<span class="hljs-tag">html</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> @width</span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--fontSize)
-}
-
-p {
-    margin: <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--lineHeight) / <span class="hljs-number">2</span>) <span class="hljs-number">0</span></span></span>;
-}</span>
-
-<span class="hljs-tag">a</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--color-highlight)</span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> all <span class="hljs-number">500ms</span> ease-out-back</span></span>;
-}</span>
-
-&amp;<span class="hljs-pseudo">:hover</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-function">var</span>(--color-highlight) <span class="hljs-function">lightness</span>(-<span class="hljs-number">10%</span>))</span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">trasnform</span>:<span class="hljs-value"> <span class="hljs-function">rotate</span>(<span class="hljs-number">1deg</span>)</span></span>;
-}</span>
-</code></pre>
-<p>Et on obtiendra</p>
-<pre><code class="lang-css"><span class="hljs-tag">html</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">16px</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1rem</span></span></span>;
-}</span>
-
-<span class="hljs-tag">p</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">12px</span> <span class="hljs-number">0</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0.75rem</span> <span class="hljs-number">0</span></span></span>;
-}</span>
-
-<span class="hljs-tag">a</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, .<span class="hljs-number">8</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">-webkit-transition</span>:<span class="hljs-value"> all <span class="hljs-number">500ms</span> <span class="hljs-function">cubic-bezier</span>(<span class="hljs-number">0.175</span>, <span class="hljs-number">0.885</span>, <span class="hljs-number">0.320</span>, <span class="hljs-number">1.275</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> all <span class="hljs-number">500ms</span> <span class="hljs-function">cubic-bezier</span>(<span class="hljs-number">0.175</span>, <span class="hljs-number">0.885</span>, <span class="hljs-number">0.320</span>, <span class="hljs-number">1.275</span>)</span></span>;
-}</span>
-
-<span class="hljs-rule"><span class="hljs-attribute">a</span>:<span class="hljs-value">hover {
-  color: <span class="hljs-function">rgba</span>(<span class="hljs-number">204</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.8</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">rotate</span>(<span class="hljs-number">1deg</span>)</span></span>;
-}
-</code></pre>
-<p>Gardez bien en tête qu’avec le code CSS d’origine, vous avez (en majeur partie) un code futureproof.
-D’ici quelques temps on pourra supprimer une grande partie des plugins et les navigateurs prendront le relais 😉.</p>
-<p><strong>Bon alors, on Less tomber Sass ?</strong></p>
-]]></description>
-            <link>http://putaindecode.fr/posts/css/preprocesseur-a-la-carte/</link>
-            <guid isPermaLink="true">http://putaindecode.fr/posts/css/preprocesseur-a-la-carte/</guid>
-            <pubDate>Tue, 20 May 2014 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>
