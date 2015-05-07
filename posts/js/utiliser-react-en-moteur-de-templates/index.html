@@ -1,0 +1,261 @@
+<html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Utiliser React en moteur de templates</title><link rel="stylesheet" href="/index.css"><link rel="alternate" href="/feed.xml" title="Utiliser React en moteur de templates" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Utiliser React en moteur de templates"><meta name="twitter:creator" content="@MoOx"><meta property="og:title" content="Utiliser React en moteur de templates"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><img class="putainde-Logo" alt="Putain de code !" src="/images/p!-logo.svg"><span>Putain de code !</span></a></div><div class="r-Grid-cell r-all--7of12"><nav class="putainde-Nav"><a class="putainde-Nav-item" href="/posts" data-r-tooltip=""><img class="putainde-Icon" src="/icons/bookmark.svg">Articles</a><a class="putainde-Nav-item" href="/c-est-quoi-putaindecode" data-r-tooltip=""><img class="putainde-Icon" src="/icons/text-file.svg">Readme</a><a class="putainde-Nav-item" href="/posts/comment-contribuer" data-r-tooltip=""><img class="putainde-Icon" src="/icons/pencil.svg">Participer</a><a class="putainde-Nav-item putainde-Nav-item--icon r-Tooltip r-Tooltip--bottom" href="https://github.com/putaindecode/" data-r-tooltip="GitHub"><img class="putainde-Icon" src="/icons/github.svg"></a><a class="putainde-Nav-item putainde-Nav-item--icon r-Tooltip r-Tooltip--bottom" href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a></nav></div></div></div><div class="putainde-Main"><article class="r-Grid putainde-Post"><div class="r-Grid-cell r-all--8of12 putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Utiliser React en moteur de templates</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas"><span>Écrit par <span><a href="http://moox.io/">MoOx</a><span></span></span></span><span>, </span><span class="putainde-Date"> le 7 mai 2015</span>. <span class="putainde-Post-readingTime putainde-Post-readingTime--hidden r-Tooltip r-Tooltip--top" data-r-tooltip="Temps de lecture approximatif, sur une base de {{wpm}} mots par minute" data-readingtime-wpm="250">Temps de lecture : environ  <span class="putainde-Post-readingTime-value">...</span> minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">javascript</li><li class="putainde-Tag">react</li></ul></header><div class="putainde-Post-md"><div><p>Vous connaissez probablement tous des moteurs de templates.
+En JavaScript nous avons Handlebars, Jade, EJS, Slim…
+Tous ces projets partent de bonnes intentions mais à l’utilisation,
+on peut sentir des limitations et donc de l’insatisfaction.</p>
+<p>Utiliser Handlebars par exemple, c’est un peu devoir coder tout un tas de helpers
+pour gérer une partie de votre affichage, ça peut vite devenir lourd.
+Être restreint à une syntaxe limité par choix est un peu frustrant.
+Quand c’est pas ça, c’est la syntaxe du moteur qui va être lourde.</p>
+<p>On peut en regretter PHP. Faut avouer que ce language était plutôt simple
+à utiliser en tant que moteur de template.
+Efficace et pas de restrictions. On trouve même parfois des <code>mysql_query()</code>
+dans des templates…</p>
+<p>Blague à part, nous cherchions des langages pour refaire une partie de notre site
+puisque nous n’étions pas vraiment satisfaits du processus actuel
+(anciennement Handlebars, puis Jade).</p>
+<p>Mais au final, pourquoi ne pas rester avec du JavaScript, purement et simplement ?</p>
+<p>C’est ce que nous avons fait avec React et JSX qui sont de plus en plus utilisés.
+La syntaxe est plutôt libératrice.</p>
+<p>Pour ceux qui ne connaissent pas JSX, il s’agit d’un superset de JavaScript qui
+supporte une syntaxe XML transformé en appel de fonctions JavaScript.
+Il faut dire que le XML a beau être verbeux, pour définir des
+éléments ayant des propriétés et des enfants, on a pas vraiment fait plus
+lisible et clair sur ce point. Le HTML est plutôt simple à prendre en main c’est
+certain. Les méthodes de rendu de React (ce qui va nous intéresser) sont très proche
+de l’HTML.</p>
+<p>Ceux qui ont utilisé JSX (bien qu’ayant pu avoir des nausées au premier contact)
+avouent souvent qu’ils ont fini par aimer cette petite syntaxe créée par Facebook qui
+fonctionne très bien avec React.</p>
+<p>Du coup, si on utilisait ça pour faire de simple templates et non pas des composants
+d’interface utilisateur dynamiques ? Qui peut le plus peut le moins (quoi qu’en
+fait, des templates, c’est un peu des composants d’interface).</p>
+<h2 id="exemple-de-template-react-jsx">
+      <a class="putainde-Title-anchor" href="#exemple-de-template-react-jsx">#</a>
+      Exemple de template React/JSX
+    </h2><p>Si vous ne savez pas trop ce qu’est React, nous vous recommandons de lire
+notre <a href="/posts/js/introduction-a-reactjs/">introduction à React</a>.</p>
+<p>Dans notre cas, on ne va pas spécialement bénéficier de certaines de ses forces,
+mais ça fera très bien le job pour notre besoin.</p>
+<p>Nous n’aborderons pas dans le détail la syntaxe React/JSX, ni ES6, pour rester
+focalisés sur la finalité (on a prévu des articles à ce propos, en attendant
+  <a href="http://babeljs.io/docs/learn-es6/">voici de quoi vous occuper avec ES6</a>).</p>
+<p><em>Attention, pour ceux qui sont encore sur des plugins jQuery, ça risque de vous
+piquer les yeux</em> 😭.</p>
+<p><a name="es6-class"></a></p>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> React, {Component} <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
+
+export default class PostTemplate extends Component {
+
+  static displayName = <span class="hljs-string">"PostTemplate"</span>
+
+  render() {
+    return (
+      &lt;html&gt;
+        &lt;head&gt;
+          &lt;title&gt;{this.props.pageTitle}&lt;/title&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+          &lt;article className=<span class="hljs-string">"org-Post"</span>&gt;
+            &lt;header className=<span class="hljs-string">"org-Post-header"</span>&gt;
+              &lt;h1&gt;{this.props.pageTitle}&lt;/h1&gt;
+            &lt;/header&gt;
+            &lt;div
+              className=<span class="hljs-string">"org-Post-content"</span>
+              dangerouslySetInnerHTML={{__html: this.props.pageContent}}
+            /&gt;
+          &lt;/article&gt;
+        &lt;/body&gt;
+      &lt;/html&gt;
+    )
+  }
+}
+</code></pre>
+<p>Ce que vous voyez c’est bien du JavaScript. Un peu amélioré via JSX, on ne va
+pas le nier (dans notre cas, on gère tout ça de manière transparente avec
+<a href="http://babeljs.io/">babel(-node)</a>).</p>
+<p>Ça ressemble drôlement à de l’HTML et c’est ça qui est appréciable pour nous.
+Vous noterez que l’attribut pour définir une classe HTML est <code>className</code> puisque
+React est en JavaScript et que le mot <code>class</code> est réservé
+(cf. <a href="#es6-class">la définition en ES6 de la classe</a>).</p>
+<p>En même temps ce qui est cool, c’est qu’on reste dans du JavaScript.</p>
+<p>On peut donc utiliser toutes nos bibliothèques préférés via <em>npm</em> pour l’affichage
+(exemple : <code>momentjs</code>), ou simplement des boucles via les méthodes de parcours de
+tableau tel que <code>forEach()</code> ou <code>map()</code> en appelant d’autres composants.</p>
+<p>Ci-dessous vous trouverez un exemple plus complexe avec une page pour la liste
+des posts et quelques composants.
+Les balises qui ressemblent à de HTML et qui commencent par une majuscule sont liés à des
+composants qui doivent être définis (dans notre cas importés).
+C’est une particularité de React.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> React, {Component} <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
+
+<span class="hljs-keyword">import</span> Html <span class="hljs-keyword">from</span> <span class="hljs-string">"../Html"</span>
+<span class="hljs-keyword">import</span> Head <span class="hljs-keyword">from</span> <span class="hljs-string">"../Head"</span>
+<span class="hljs-keyword">import</span> Body <span class="hljs-keyword">from</span> <span class="hljs-string">"../Body"</span>
+<span class="hljs-keyword">import</span> PostsList <span class="hljs-keyword">from</span> <span class="hljs-string">"../PostsList"</span>
+
+export default class Posts extends Component {
+
+  static displayName = <span class="hljs-string">"Posts"</span>
+
+  render() {
+    return (
+      &lt;Html&gt;
+        &lt;Head title={this.props.file.title} /&gt;
+        &lt;Body&gt;
+          &lt;h1&gt;{this.props.file.title}&lt;/h1&gt;
+          &lt;PostsList
+            posts={
+              this.props.collections.posts
+                .filter((item) =&gt; {
+                  /*
+                    ce que vous voulez pour filtrer votre collection
+                    eg:
+                    return !item.draft
+                  */
+                }
+              }
+          /&gt;
+        &lt;/Body&gt;
+      &lt;/Html&gt;
+    )
+  }
+}
+</code></pre>
+<p>Voici deux exemples de composants utilisés ci-dessus :</p>
+<h3 id="head">
+      <a class="putainde-Title-anchor" href="#head">#</a>
+      Head
+    </h3><pre><code class="lang-js"><span class="hljs-keyword">import</span> React, {Component} <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
+
+export default class Head extends Component {
+
+  static displayName = <span class="hljs-string">"Head"</span>
+
+  render() {
+    return (
+      &lt;head&gt;
+        &lt;meta charSet=<span class="hljs-string">"utf-8"</span> /&gt;
+        &lt;meta httpEquiv=<span class="hljs-string">"X-UA-Compatible"</span> content=<span class="hljs-string">"IE=Edge"</span> /&gt;
+        &lt;meta
+          name=<span class="hljs-string">"viewport"</span>
+          content=<span class="hljs-string">"width=device-width, initial-scale=1.0, minimal-ui"</span>
+        /&gt;
+        &lt;title&gt;{this.props.title}&lt;/title&gt;
+        &lt;link
+          rel=<span class="hljs-string">"stylesheet"</span>
+          href=<span class="hljs-string">"/index.css"</span>
+        /&gt;
+        &lt;link
+          rel=<span class="hljs-string">"alternate"</span>
+          href=<span class="hljs-string">"/feed.xml"</span>
+          title={this.props.title}
+          type=<span class="hljs-string">"application/atom+xml"</span>
+        /&gt;
+        {this.props.children}
+      &lt;/head&gt;
+    )
+  }
+}
+</code></pre>
+<h3 id="body">
+      <a class="putainde-Title-anchor" href="#body">#</a>
+      Body
+    </h3><pre><code class="lang-js"><span class="hljs-keyword">import</span> React, {Component, PropTypes} <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
+
+<span class="hljs-keyword">import</span> Header <span class="hljs-keyword">from</span> <span class="hljs-string">"../Header"</span>
+<span class="hljs-keyword">import</span> Footer <span class="hljs-keyword">from</span> <span class="hljs-string">"../Footer"</span>
+<span class="hljs-keyword">import</span> GoogleAnalytics <span class="hljs-keyword">from</span> <span class="hljs-string">"../Analytics"</span>
+
+export default class Body extends Component {
+
+  static displayName = <span class="hljs-string">"Body"</span>
+
+  render() {
+    return (
+      &lt;body&gt;
+
+        &lt;Header /&gt;
+
+        &lt;div className=<span class="hljs-string">"Main"</span>&gt;
+          {this.props.children}
+        &lt;/div&gt;
+
+        &lt;Footer /&gt;
+
+        &lt;script src={<span class="hljs-string">"/index.js"</span>}&gt;&lt;/script&gt;
+
+        &lt;GoogleAnalytics /&gt;
+
+      &lt;/body&gt;
+    )
+  }
+}
+</code></pre>
+<p>Bon c’est bien beau mais comment je gère l’affichage du composant initial
+au final (le parent) ?</p>
+<h2 id="comment-utiliser-un-template-react-jsx">
+      <a class="putainde-Title-anchor" href="#comment-utiliser-un-template-react-jsx">#</a>
+      Comment utiliser un template React/JSX ?
+    </h2><p>C’est bien simple. Dans notre cas, pas besoin de React côté client. On doit gérer
+ça côté « serveur » (je met ça entre guillement puisque dans notre cas précis, c’est
+pour générer un site statique, et c’est donc sur une machine quelconque que la
+génération se fait).</p>
+<p>Voilà de quoi effectuer le rendu de nos composants vers du bon vieux HTML (car c’est la finalité
+d’un <em>moteur de template</em>).</p>
+<pre><code class="lang-js">import react from &quot;react&quot;
+import markdownify from &quot;./markdown-parser&quot;
+// je vous conseille marked pour rendre du markdown
+// c&#39;est ce que nous utilisons pour rendre nos pages à l&#39;heure où j&#39;écris ce post
+
+const reactClass = require(&quot;./template/PostTemplate&quot;)
+const component = new (react.createFactory(reactClass))({
+  // ici on passe nos &quot;props&quot; react
+  pageTitle: &quot;Test&quot;,
+  pageContent: markdownify(&quot;Imaginons du **markdown** parsé&quot;),
+  // vous pouvez bien entendu rajouter d&#39;autres choses
+  collections: {
+    posts: [
+      //...
+    ]
+  }
+})
+
+let html
+try {
+  html = react.renderToStaticMarkup(component)
+}
+catch (err) {
+  // Vous devrez gérer votre exception selon votre environnement
+  // si c&#39;est pour un test on peut simplement ne pas utiliser
+  // try/catch, ça nous pètera à la gueule et c&#39;est tant mieux
+  throw err
+}
+
+// maintenant vous faites ce que vous voulez de votre string html !
+// ex: require(&quot;fs&quot;).writeFile(...)
+</code></pre>
+<p>La méthode intéressante de React est dans notre cas <code>renderToStaticMarkup()</code> qui
+va nous générer un HTML qui va bien.</p>
+<p>Pour aller plus loin on pourrait décider d’utiliser <code>renderToString()</code> plutôt que
+<code>renderToStaticMarkup()</code> afin de pouvoir faire prendre le relais à ReactJS côté client
+mais là <a href="/posts/js/reactjs-et-rendu-serverside/">le niveau de complexité est différent</a>.</p>
+<p>Pour la petit anecdote, notre site utilise actuellement <a href="http://www.metalsmith.io/">metalsmith</a>,
+une petite bibliothèque simple mais qui permet par son API de faire des choses sympas.</p>
+<p>J’ai donc codé <a href="https://github.com/search?q=user%3AMoOx+metalsmith">quelques plugins metalsmith</a>
+dont un <a href="https://github.com/MoOx/metalsmith-react">metalsmith-react</a> à l’occassion.</p>
+<p>N’hésitez pas à consulter
+<a href="https://github.com/putaindecode/putaindecode.fr">le code source de notre site</a>
+pour faire des découvertes sympas.</p>
+</div></div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="r-Grid"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/edit/master/content/posts/js/utiliser-react-en-moteur-de-templates/index.md">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/blame/master/content/posts/js/utiliser-react-en-moteur-de-templates/index.md">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/commits/master/content/posts/js/utiliser-react-en-moteur-de-templates/index.md">Historique</a></div></div><div><div class="putainde-Author undefined"><a href="http://moox.io/" class="putainde-Avatar putainde-Author-picture"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par </span><a class="putainde-Link" href="http://moox.io/">MoOx</a></h3><div class="putainde-Author-social"><a href="http://moox.io/" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Website"><img class="putainde-Icon" src="/icons/home.svg"></a><a href="https://twitter.com/MoOx" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a><a href="https://github.com/MoOx" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Github"><img class="putainde-Icon" src="/icons/github.svg"></a></div></div><p class="putainde-Author-bio">Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.  Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">3 contributeurs</strong><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="madx
+(1 commit)"><a href="http://madx.me/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/5723?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
+(1 commit)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Nyalab
+(1 commit)"><a href="http://putaindecode.fr" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/721993?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
+var disqus_identifier = "http://putaindecode.fr/posts/js/utiliser-react-en-moteur-de-templates/";
+var disqus_url = "http://putaindecode.fr/posts/js/utiliser-react-en-moteur-de-templates/";
+var disqus_script = "embed.js";
+
+(function(d,s) {
+  s = d.createElement('script');s.async=1;s.src = '//' + disqus_shortname + '.disqus.com/'+disqus_script;
+  (d.getElementsByTagName('head')[0]).appendChild(s)
+})(document)
+    </script></body></html>
