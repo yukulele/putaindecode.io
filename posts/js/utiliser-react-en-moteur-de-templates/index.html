@@ -4,16 +4,16 @@ Tous ces projets partent de bonnes intentions mais à l’utilisation,
 on peut sentir des limitations et donc de l’insatisfaction.</p>
 <p>Utiliser Handlebars par exemple, c’est un peu devoir coder tout un tas de helpers
 pour gérer une partie de votre affichage, ça peut vite devenir lourd.
-Être restreint à une syntaxe limité par choix est un peu frustrant.
+Être restreint à une syntaxe limitée par choix est un peu frustrant.
 Quand c’est pas ça, c’est la syntaxe du moteur qui va être lourde.</p>
-<p>On peut en regretter PHP. Faut avouer que ce language était plutôt simple
+<p>On peut en venir à regretter PHP. Faut avouer que ce langage était plutôt simple
 à utiliser en tant que moteur de template.
 Efficace et pas de restrictions. On trouve même parfois des <code>mysql_query()</code>
 dans des templates…</p>
 <p>Blague à part, nous cherchions des langages pour refaire une partie de notre site
 puisque nous n’étions pas vraiment satisfaits du processus actuel
 (anciennement Handlebars, puis Jade).</p>
-<p>Mais au final, pourquoi ne pas rester avec du JavaScript, purement et simplement ?</p>
+<p>Mais finalement, pourquoi ne pas rester avec du JavaScript, purement et simplement ?</p>
 <p>C’est ce que nous avons fait avec React et JSX qui sont de plus en plus utilisés.
 La syntaxe est plutôt libératrice.</p>
 <p>Pour ceux qui ne connaissent pas JSX, il s’agit d’un superset de JavaScript qui
@@ -21,7 +21,7 @@ supporte une syntaxe XML transformé en appel de fonctions JavaScript.
 Il faut dire que le XML a beau être verbeux, pour définir des
 éléments ayant des propriétés et des enfants, on a pas vraiment fait plus
 lisible et clair sur ce point. Le HTML est plutôt simple à prendre en main c’est
-certain. Les méthodes de rendu de React (ce qui va nous intéresser) sont très proche
+certain. Les méthodes de rendu de React (ce qui va nous intéresser) sont très proches
 de l’HTML.</p>
 <p>Ceux qui ont utilisé JSX (bien qu’ayant pu avoir des nausées au premier contact)
 avouent souvent qu’ils ont fini par aimer cette petite syntaxe créée par Facebook qui
@@ -78,12 +78,12 @@ Vous noterez que l’attribut pour définir une classe HTML est <code>className<
 React est en JavaScript et que le mot <code>class</code> est réservé
 (cf. <a href="#es6-class">la définition en ES6 de la classe</a>).</p>
 <p>En même temps ce qui est cool, c’est qu’on reste dans du JavaScript.</p>
-<p>On peut donc utiliser toutes nos bibliothèques préférés via <em>npm</em> pour l’affichage
+<p>On peut donc utiliser toutes nos bibliothèques préférées via <em>npm</em> pour l’affichage
 (exemple : <code>momentjs</code>), ou simplement des boucles via les méthodes de parcours de
 tableau tel que <code>forEach()</code> ou <code>map()</code> en appelant d’autres composants.</p>
 <p>Ci-dessous vous trouverez un exemple plus complexe avec une page pour la liste
 des posts et quelques composants.
-Les balises qui ressemblent à de HTML et qui commencent par une majuscule sont liés à des
+Les balises qui ressemblent à du HTML et qui commencent par une majuscule sont liées à des
 composants qui doivent être définis (dans notre cas importés).
 C’est une particularité de React.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">import</span> React, {Component} <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
@@ -192,12 +192,12 @@ export default class Body extends Component {
 }
 </code></pre>
 <p>Bon c’est bien beau mais comment je gère l’affichage du composant initial
-au final (le parent) ?</p>
+finalement (le parent) ?</p>
 <h2 id="comment-utiliser-un-template-react-jsx">
       <a class="putainde-Title-anchor" href="#comment-utiliser-un-template-react-jsx">#</a>
       Comment utiliser un template React/JSX ?
     </h2><p>C’est bien simple. Dans notre cas, pas besoin de React côté client. On doit gérer
-ça côté « serveur » (je met ça entre guillement puisque dans notre cas précis, c’est
+ça côté « serveur » (je mets ça entre guillemets puisque dans notre cas précis, c’est
 pour générer un site statique, et c’est donc sur une machine quelconque que la
 génération se fait).</p>
 <p>Voilà de quoi effectuer le rendu de nos composants vers du bon vieux HTML (car c’est la finalité
@@ -239,18 +239,20 @@ va nous générer un HTML qui va bien.</p>
 <p>Pour aller plus loin on pourrait décider d’utiliser <code>renderToString()</code> plutôt que
 <code>renderToStaticMarkup()</code> afin de pouvoir faire prendre le relais à ReactJS côté client
 mais là <a href="/posts/js/reactjs-et-rendu-serverside/">le niveau de complexité est différent</a>.</p>
-<p>Pour la petit anecdote, notre site utilise actuellement <a href="http://www.metalsmith.io/">metalsmith</a>,
+<p>Pour la petite anecdote, notre site utilise actuellement <a href="http://www.metalsmith.io/">metalsmith</a>,
 une petite bibliothèque simple mais qui permet par son API de faire des choses sympas.</p>
 <p>J’ai donc codé <a href="https://github.com/search?q=user%3AMoOx+metalsmith">quelques plugins metalsmith</a>
-dont un <a href="https://github.com/MoOx/metalsmith-react">metalsmith-react</a> à l’occassion.</p>
+dont un <a href="https://github.com/MoOx/metalsmith-react">metalsmith-react</a> à l’occasion.</p>
 <p>N’hésitez pas à consulter
 <a href="https://github.com/putaindecode/putaindecode.fr">le code source de notre site</a>
 pour faire des découvertes sympas.</p>
-</div></div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="r-Grid"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/edit/master/content/posts/js/utiliser-react-en-moteur-de-templates/index.md">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/blame/master/content/posts/js/utiliser-react-en-moteur-de-templates/index.md">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/commits/master/content/posts/js/utiliser-react-en-moteur-de-templates/index.md">Historique</a></div></div><div><div class="putainde-Author undefined"><a href="http://moox.io/" class="putainde-Avatar putainde-Author-picture"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par </span><a class="putainde-Link" href="http://moox.io/">MoOx</a></h3><div class="putainde-Author-social"><a href="http://moox.io/" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Website"><img class="putainde-Icon" src="/icons/home.svg"></a><a href="https://twitter.com/MoOx" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a><a href="https://github.com/MoOx" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Github"><img class="putainde-Icon" src="/icons/github.svg"></a></div></div><p class="putainde-Author-bio">Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.  Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">4 contributeurs</strong><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
-(2 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="madx
+</div></div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="r-Grid"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/edit/master/content/posts/js/utiliser-react-en-moteur-de-templates/index.md">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/blame/master/content/posts/js/utiliser-react-en-moteur-de-templates/index.md">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/commits/master/content/posts/js/utiliser-react-en-moteur-de-templates/index.md">Historique</a></div></div><div><div class="putainde-Author undefined"><a href="http://moox.io/" class="putainde-Avatar putainde-Author-picture"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par </span><a class="putainde-Link" href="http://moox.io/">MoOx</a></h3><div class="putainde-Author-social"><a href="http://moox.io/" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Website"><img class="putainde-Icon" src="/icons/home.svg"></a><a href="https://twitter.com/MoOx" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a><a href="https://github.com/MoOx" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Github"><img class="putainde-Icon" src="/icons/github.svg"></a></div></div><p class="putainde-Author-bio">Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.  Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">6 contributeurs</strong><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
+(2 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="kud
+(1 commit)"><a href="http://kud.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/655838?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="madx
 (1 commit)"><a href="http://madx.me/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/5723?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="bloodyowl
 (1 commit)"><a href="http://bloodyowl.github.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1688645?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Nyalab
-(1 commit)"><a href="http://putaindecode.fr" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/721993?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
+(1 commit)"><a href="http://putaindecode.fr" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/721993?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="skinnyfoetusboy
+(1 commit)"><a href="https://github.com/skinnyfoetusboy" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/5133452?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
 var disqus_identifier = "http://putaindecode.fr/posts/js/utiliser-react-en-moteur-de-templates/";
 var disqus_url = "http://putaindecode.fr/posts/js/utiliser-react-en-moteur-de-templates/";
 var disqus_script = "embed.js";
