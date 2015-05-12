@@ -5,10 +5,197 @@
         <description><![CDATA[Putain de code !]]></description>
         <link>http://putaindecode.fr</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Fri, 08 May 2015 12:04:11 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 12 May 2015 05:42:24 GMT</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"/>
         <language><![CDATA[fr]]></language>
         <category><![CDATA[code]]></category>
+        <item>
+            <title><![CDATA[Les utilitaires en ligne de commande]]></title>
+            <description><![CDATA[<p>Avoir accès à ses utilitaires en ligne de commande (<a href="https://en.wikipedia.org/wiki/Command-line_interface">CLI</a>) est un quotidien dans nos métiers et un avantage indéniable. Ce n’est pas nouveau et cela existe depuis la nuit des temps. Tout utilisateur
+d’Unix voue un culte particulier à son terminal.</p>
+<p>J’ai récemment eu à développer un utilitaire en Node.js/iojs, j’ai donc voulu avec cet article déblayer un peu le terrain
+et présenter quelques utilitaires très pratiques.</p>
+<p>Deux postulats avant de commencer :</p>
+<ul>
+<li>Pourquoi JavaScript ? En cohérence avec le workflow que j’utilise.</li>
+<li>Cet article n’a pas pour but d’apprendre à écrire du JavaScript avec Node.js/iojs.</li>
+</ul>
+<h2 id="hello-world">
+      <a class="putainde-Title-anchor" href="#hello-world">#</a>
+      Hello world
+    </h2><p>Avant de commencer à coder, il va tout d’abord falloir créer deux fichiers qui seront nécessaires et obligatoires :</p>
+<pre><code class="lang-console"><span class="hljs-comment">// création du dossier</span>
+$ <span class="hljs-keyword">mkdir</span> putaindecode-<span class="hljs-keyword">cli</span> &amp;&amp; <span class="hljs-keyword">cd</span> putaindecode-<span class="hljs-keyword">cli</span>
+
+<span class="hljs-comment">// création de index.js</span>
+$ touch index.js
+
+<span class="hljs-comment">// création de package.json</span>
+$ touch package.json
+</code></pre>
+<p>Le fichier <code>index.js</code> va se présenter comme ceci :</p>
+<pre><code><span class="hljs-shebang">#!/usr/bin/env node</span>
+<span class="hljs-comment">// Cette ligne ou shebang permet de définir l'interpréteur de notre script, à savoir `node`</span>
+
+<span class="hljs-comment">// notre fameux hello world</span>
+console.log(<span class="hljs-string">"Hello world"</span>)
+</code></pre><p>Pour notre fichier <code>package.json</code>, deux méthodes possibles pour l’écrire, soit en faisant <code>npm init</code> puis suivre les instructions, soit adapter ce JSON :</p>
+<pre><code class="lang-console">{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"putaindecode-cli"</span></span>,
+  "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"0.1.0"</span></span>,
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Putaindecode cli"</span></span>,
+  "<span class="hljs-attribute">keywords</span>": <span class="hljs-value">[
+    <span class="hljs-string">"cli"</span>,
+    <span class="hljs-string">"npm"</span>
+  ]</span>,
+  "<span class="hljs-attribute">author</span>": <span class="hljs-value"><span class="hljs-string">"magsout"</span></span>,
+  "<span class="hljs-attribute">license</span>": <span class="hljs-value"><span class="hljs-string">"MIT"</span></span>,
+  "<span class="hljs-attribute">repository</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"git"</span></span>,
+    "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-string">"https://github.com/putaindecode/putaindecode-cli.git"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">engines</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">node</span>": <span class="hljs-value"><span class="hljs-string">"&gt;=0.10"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">homepage</span>":<span class="hljs-value"><span class="hljs-string">"https://github.com/putaindecode-cs/putaindecode-cli"</span>
+  <span class="hljs-string">"bugs"</span>: {
+    "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-string">"https://github.com/putaindecode-cs/putaindecode-cli/issues"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">files</span>": <span class="hljs-value">[
+    <span class="hljs-string">"index.js"</span>
+  ]</span>,
+  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{}</span>,
+  "<span class="hljs-attribute">devDependencies</span>": <span class="hljs-value">{}</span>,
+  "<span class="hljs-attribute">bin</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">putaindecode</span>": <span class="hljs-value"><span class="hljs-string">"index.js"</span>
+  </span>}
+</span>}
+</code></pre>
+<p>La ligne importante à ne surtout pas oublier :</p>
+<pre><code class="lang-console"><span class="hljs-string">"bin"</span>: {
+  <span class="hljs-string">"putaindecode-cli"</span>: <span class="hljs-string">"index.js"</span>
+}
+</code></pre>
+<p>Elle permettra de déterminer le script à exécuter lorsque la commande <code>putaindecode-cli</code> sera lancée.</p>
+<p>Si on vulgarise un peu le principe, en installant le script, le fichier <code>index.js</code> sera renommé en <code>putaindecode-cli.js</code> et sera copié dans le répertoire adéquat (cela dépend de l’OS).</p>
+<p>Lorsque la commande <code>putaindecode-cli</code> sera exécutée, le shell va chercher le fichier exécutable en utilisant les répertoires listés dans la variable PATH.</p>
+<p>Si on suit ce raisonnement, l’installation d’un script écrasera automatiquement l’ancienne version ou tout script de même nom.</p>
+<p>Pour s’assurer qu’il n’existe pas d’autres commandes portant le même nom, il est conseillé d’utiliser la commande : <code>which putaindecode-cli</code> qui ne retournera rien s’il n’y a aucun résultat :</p>
+<pre><code class="lang-console">#putaindecode-<span class="hljs-keyword">cli</span> ne retourne aucun résultat
+$ <span class="hljs-keyword">which</span> putaindecode-<span class="hljs-keyword">cli</span>
+
+#node <span class="hljs-keyword">est</span> installé et accessible au path suivant
+$ <span class="hljs-keyword">which</span> node
+  /usr/<span class="hljs-keyword">local</span>/bin/node
+</code></pre>
+<h2 id="installation-du-script">
+      <a class="putainde-Title-anchor" href="#installation-du-script">#</a>
+      Installation du script
+    </h2><p>Afin de vérifier que le script fonctionne correctement, il suffit tout simplement d’exécuter dans le répertoire la commande : <code>./index.js</code>.</p>
+<p>Une erreur de droit ? Un petit chmod pour arranger ça : <code>chmod +x index.js</code>.</p>
+<p>À ce stade, si tout fonctionne bien, <code>Hello World</code> va s’afficher.</p>
+<p>Par contre, exécuter notre script de la sorte n’est pas très pratique, d’autant plus qu’il sera nécessaire de connaître à chaque fois le chemin vers le fichier.</p>
+<p>Il serait beaucoup plus simple de pouvoir exécuter le script comme une commande. Comme pour tout package npm, cela se fait avec <code>npm install</code>.</p>
+<pre><code class="lang-console"><span class="hljs-comment">// installation en global du script</span>
+$ npm install -<span class="hljs-keyword">g</span>
+
+<span class="hljs-comment">// exécution de la commande</span>
+$ putaindecode-<span class="hljs-keyword">cli</span>
+
+<span class="hljs-comment">// résultat de la commande</span>
+Hello world
+</code></pre>
+<p>Le script est maintenant accessible partout sur l’OS grâce à la commande <code>putaindecode-cli</code>. L’installation en global n’est pas absolument pas nécessaire, tout dépend de l’intérêt de votre script. Il est d’ailleurs souvent préférable de l’installer en local dans un projet avec <code>--save</code> ou <code>--save-dev</code>.</p>
+<h2 id="installation-des-scripts-de-base">
+      <a class="putainde-Title-anchor" href="#installation-des-scripts-de-base">#</a>
+      Installation des scripts de base
+    </h2><p>La puissance de <code>NPM</code> provient de son nombre impressionnant de packages mis à disposition.</p>
+<p>Pour gagner du temps et éviter d’avoir à recoder la roue. Le script <code>putaindecode-cli</code> va avoir besoin de trois choses :</p>
+<ul>
+<li>une gestion des commandes (commande, argument, aide)</li>
+<li>une gestion des couleurs (notice, error, warning)</li>
+<li>une capacité à stopper proprement notre code.</li>
+</ul>
+<h3 id="commander">
+      <a class="putainde-Title-anchor" href="#commander">#</a>
+      <code>commander</code>
+    </h3><p>Pour les commandes avec en prime la gestion des arguments et de l’aide, <a href="https://github.com/tj/commander">commander</a> est tout a fait adapté et répondra pratiquement à tous nos besoins.</p>
+<p>Il est simple d’utilisation et très bien maintenu.</p>
+<p>Voici un exemple de ce qu’on peut faire :</p>
+<pre><code class="lang-js"><span class="hljs-comment">/* Default */</span>
+program
+  .version(pkg.version)
+
+<span class="hljs-comment">/* command */</span>
+program
+  .command(<span class="hljs-string">"command"</span>)
+  .alias(<span class="hljs-string">'c'</span>)
+  .description(<span class="hljs-string">"   command does something"</span>)
+  .option(<span class="hljs-string">"-v, --verbose"</span>, <span class="hljs-string">"Verbose"</span>)
+  .option(<span class="hljs-string">"-f, --force"</span>, <span class="hljs-string">"Force installation"</span>)
+  .action(commandAction)
+  .on(<span class="hljs-string">"--help"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"  Example:"</span>)
+    <span class="hljs-built_in">console</span>.log();
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"     command does something"</span>)
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"     $ putaindecode-cli command"</span>)
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">""</span>)
+  });
+
+<span class="hljs-comment">/* help */</span>
+program.on(<span class="hljs-string">"--help"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"  Examples:"</span>)
+  <span class="hljs-built_in">console</span>.log();
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"     command do something"</span>)
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"     $ putaindecode-cli command"</span>)
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">""</span>)
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"     Force command does something"</span>)
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"     $ putaindecode-cli command -f"</span>)
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">""</span>)
+});
+
+program.parse(process.argv)
+
+<span class="hljs-comment">/* help by default */</span>
+<span class="hljs-keyword">if</span> (!program.args.length) program.help()
+</code></pre>
+<h3 id="chalk">
+      <a class="putainde-Title-anchor" href="#chalk">#</a>
+      <code>chalk</code>
+    </h3><p><em>Null</em> besoin de faire un cours sur les couleurs, mais l’affichage d’une notice est bien plus pertinent avec sa couleur associée. C’est à ce moment qu’entre en jeu <a href="https://github.com/sindresorhus/chalk">chalk</a>. Relativement simple à mettre en place et à utiliser :</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> chalk = <span class="hljs-built_in">require</span>(<span class="hljs-string">'chalk'</span>)
+
+<span class="hljs-comment">/* var */</span>
+<span class="hljs-keyword">var</span> error   = chalk.bold.red
+<span class="hljs-keyword">var</span> warn    = chalk.yellow
+<span class="hljs-keyword">var</span> success = chalk.green
+<span class="hljs-keyword">var</span> notice  = chalk.blue
+
+<span class="hljs-comment">/* code */</span>
+<span class="hljs-built_in">console</span>.log(warn(<span class="hljs-string">'No command'</span>))
+<span class="hljs-built_in">console</span>.log(notice(<span class="hljs-string">"file modified !"</span>))
+</code></pre>
+<h3 id="exit">
+      <a class="putainde-Title-anchor" href="#exit">#</a>
+      <code>exit</code>
+    </h3><p>Peu importe comment s’exécute son code, il est important de bien savoir maitriser l’arrêt de son script. Pour ça, <code>process.exit()</code> nous sera bien utile.</p>
+<p>Dans le cas d’une erreur, la valeur de <code>exit</code> doit systématiquement être supérieure à 0, et donc bien naturellement en cas de succès, elle doit être égale à 0.</p>
+<p>Voici une <a href="http://www.virtsync.com/c-error-codes-include-errno">liste des valeurs</a> de <code>exit</code> et de leurs correspondances.</p>
+<h2 id="thanks-god-for-our-terminal">
+      <a class="putainde-Title-anchor" href="#thanks-god-for-our-terminal">#</a>
+      Thanks god for our terminal
+    </h2><p>Si vous souhaitez voir quelques exemples de projets avec des commandes et des mises en situations intéressantes, allez faire un tour sur ces projets :</p>
+<ul>
+<li><a href="https://github.com/cssnext/cssnext/blob/master/bin/cssnext.js">cssnext</a></li>
+<li><a href="https://github.com/sindresorhus/trash/blob/master/cli.js">trash</a></li>
+</ul>
+<p>Je vous invite également à visionner la <a href="http://blog.clement.delafargue.name/posts/2015-02-25-declarative-cli-parsing-in-js.html">vidéo</a> de <a href="https://twitter.com/clementd">Clement Delafargue</a> qui a fait une présentation sur le sujet en début d’année.</p>
+<p>À partir de là on dispose d’une bonne base pour refaire le monde et accroître la flemme du développeur que l’on est en automatisant tout plein de tâches.</p>
+]]></description>
+            <link>http://putaindecode.fr/posts/shell/utilitaires-ligne-commande/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/shell/utilitaires-ligne-commande/</guid>
+            <pubDate>Tue, 12 May 2015 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Utiliser React en moteur de templates]]></title>
             <description><![CDATA[<p>Vous connaissez probablement tous des moteurs de templates.
@@ -4164,94 +4351,6 @@ invite à la lire pour voir tout ce qu’il est possible de faire.</p>
             <link>http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/</link>
             <guid isPermaLink="true">http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/</guid>
             <pubDate>Wed, 16 Jul 2014 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Un point sur les grilles CSS en inline-block]]></title>
-            <description><![CDATA[<p>Les grilles sont devenues incontournables pour le layout d’un site.
-<a href="http://justifygrid.com/#methodology">Plusieurs</a> <a href="https://github.com/suitcss/components-grid">méthodes</a>  <a href="http://www.palantir.net/blog/responsive-design-s-dirty-little-secret">existent</a> en attendant de pouvoir utiliser le Graal, <a href="http://dev.w3.org/csswg/css-grid/">CSS3 grid layout</a>.</p>
-<p>Mais en attendant, on bricole. Et une des solutions que j’aime bien consiste à utiliser des inline-block, car elle offre plusieurs avantages pratiques :</p>
-<ul>
-<li>On peut simplement renverser la grille grâce à la propriété  <code>direction:rtl;</code> ce qui est particulièrement pratique sur des sites qui doivent supporter des langues dont le sens de lecture va de droite à gauche.</li>
-<li>les éléments en inline-block peuvent utiliser la propriété <code>vertical-align</code>.</li>
-<li>les éléments de la grilles reste dans le flux, ce qui évite l’utilisation de clearfix.</li>
-</ul>
-<p>Ce dernier point est aussi une source de problèmes puisque notre <code>.Grid</code> contient non seulement nos éléments de grille <code>.Grid-cell</code> mais aussi quelques caractères espace ça et là entre les noeuds enfants.</p>
-<p>De la même manière qu’un espaces sépare 2 mots, on retrouve ces espaces entre nos blocs. Ces caractères proviennent des espaces et autre sauts de lignes qu’on insère dans le code source pour formater notre document.</p>
-<p>Voici donc un aperçu des différents moyens de se débarasser de ces espaces, afin que tout les éléments de notre grille restent à leur place.</p>
-<h2 id="supprimer-les-espaces-entre-les-tag-grid-cell">
-      <a class="putainde-Title-anchor" href="#supprimer-les-espaces-entre-les-tag-grid-cell">#</a>
-      Supprimer les espaces entre les tag <code>.Grid-cell</code>
-    </h2><pre><code>&lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">"Grid"</span>&gt;
-  &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">"Grid-cell"</span>&gt;...&lt;/<span class="hljs-keyword">div</span>&gt;&lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">"Grid-cell"</span>&gt;...&lt;/<span class="hljs-keyword">div</span>&gt;&lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">"Grid-cell"</span>&gt;...&lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-</code></pre><p>Une méthode pas forcément très lisible mais qui est robuste. Soyons créatifs,
-on peut aussi faire comme ça, même si le formatage en prend un coup.</p>
-<pre><code>&lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">"Grid"</span>&gt;
-      &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">"Grid-cell"</span>&gt;...
-&lt;/<span class="hljs-keyword">div</span>&gt;&lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">"Grid-cell"</span>&gt;...
-&lt;/<span class="hljs-keyword">div</span>&gt;&lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">"Grid-cell"</span>&gt;...&lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-</code></pre><p>Notez que la première technique peut être facilement mise en place de manière automatique, via une traitement de <a href="https://github.com/kangax/html-minifier">minification du code html</a>.</p>
-<h2 id="inserer-des-commentaires-html-entre-les-tags-grid-cell">
-      <a class="putainde-Title-anchor" href="#inserer-des-commentaires-html-entre-les-tags-grid-cell">#</a>
-      Insérer des commentaires html entre les tags <code>.Grid-cell</code>
-    </h2><p>La solution est robuste, au prix de quelques caractères supplémentaires. Un surpoids que gzip se fera un plaisir de vous faire oublier !
-C’est la méthode choisie dans le framework <a href="https://github.com/csswizardry/inuit.css/blob/master/objects/_grids.scss">inuitCss</a>.</p>
-<pre><code><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"Grid"</span>&gt;</span>
-   <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"Grid-cell"</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span><span class="hljs-comment">&lt;!--
---&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"Grid-cell"</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span><span class="hljs-comment">&lt;!--
---&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"Grid-cell"</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-</code></pre><h2 id="font-size-0">
-      <a class="putainde-Title-anchor" href="#font-size-0">#</a>
-      font-size: 0
-    </h2><pre><code><span class="hljs-class">.Grid</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-}</span>
-<span class="hljs-class">.Grid-cell</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">16px</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1rem</span></span></span>;
-}</span>
-</code></pre><p>L’idée est de faire disparaître les caractères <em>espace</em> situés entre les balises enfants en réglant la taille de la police à zéro. Il suffit ensuite de ré-initialiser la taille sur les noeuds enfants <code>.Grid-cell</code>. Cette méthode est utilisée dans <a href="https://github.com/suitcss/components-grid">SUIT Grid</a>.</p>
-<p><em>Attention</em>, si votre scope navigateur va en dessous d’IE9, cette méthode fait perdre le bénéfice d’une intégration à base d’em puisque la taille de la typo sur les blocs enfants est désormais fixe.</p>
-<h2 id="appliquer-une-marge-negative-entre-les-blocs-enfants">
-      <a class="putainde-Title-anchor" href="#appliquer-une-marge-negative-entre-les-blocs-enfants">#</a>
-      Appliquer une marge négative entre les blocs enfants
-    </h2><pre><code><span class="hljs-class">.Grid-cell</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> -<span class="hljs-number">4px</span></span></span>;
-}</span>
-</code></pre><p>Cette méthode n’est à mon sens pas très robuste, surtout sur des intégrations à base d’em, car on introduit un nombre magique qui dépend de plusieurs paramètre, comme la typo utilisée, sa taille de base, etc. Cette méthode demande donc de bien tester puisque les font disponibles ne seront pas les mêmes selon des équipements, les OS…</p>
-<h2 id="la-methode-kellum">
-      <a class="putainde-Title-anchor" href="#la-methode-kellum">#</a>
-      La méthode Kellum
-    </h2><p>Ici, la méthode consiste à utiliser une font particulière contenant le caractère espace et dont la particularité est d’avoir une largeur nulle. Cette technique est décrite dans l’article de <a href="http://scottkellum.com/2013/10/25/the-new-kellum-method.html">Scott Kellum</a></p>
-<p>Comme la technique précédente, il suffit d’appliquer la font au conteneur <code>.Grid</code> puis de remettre la font-family par defaut pour les enfants <code>.Grid-cell</code>. Et ainsi, toutes valeurs relatives en <em>em</em> sont préservées.</p>
-<pre><code><span class="hljs-class">.Grid</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> <span class="hljs-string">'blank-kellum'</span></span></span>;
-}</span>
-
-<span class="hljs-class">.Grid-cell</span><span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">33.333333%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value">sans-serif</span></span>;
-}</span>
-</code></pre><p>L’inconvénient de cette technique est qu’elle nécessite le téléchargement d’un fichier font particulièr si le navigateur ne supporte pas éléments encodées en data-uri (en gros, en dessous d’ie8). Par contre, si vous utilisez une font d’icônes, rien ne vous empêche de combiner les deux, en ajoutant votre icône de largeur nulle avec vos icônes. Voici un aperçu sur <a href="http://codepen.io/lionelB/pen/fvyjH">codepen</a></p>
-<h1 id="le-mot-de-la-fin">
-      <a class="putainde-Title-anchor" href="#le-mot-de-la-fin">#</a>
-      Le mot de la fin
-    </h1><p>Non, il n’y a pas vraiment une technique qui sort du lot. Comme toujours, cela dépend des navigateurs à supporter, est ce que l’utilisateur pourra personnaliser le layout, qui sera chargé des mise à jour, etc… autant de points qui aideront à choisir la meilleure solution.</p>
-<hr>
-<p>Quelques ressources :</p>
-<ul>
-<li>L’article <a href="http://css-tricks.com/fighting-the-space-between-inline-block-elements/">Fighting the space between inline block elements</a> sur css-tricks</li>
-<li>L’article <a href="http://webdesigner-webdeveloper.com/weblog/about-inline-blocks/">About inline-block</a> sur lequel je suis tombé en rédigeant cet article.</li>
-</ul>
-]]></description>
-            <link>http://putaindecode.fr/posts/css/les-grilles-en-inline-block/</link>
-            <guid isPermaLink="true">http://putaindecode.fr/posts/css/les-grilles-en-inline-block/</guid>
-            <pubDate>Fri, 13 Jun 2014 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>
