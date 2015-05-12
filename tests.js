@@ -44,11 +44,12 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1);
+	module.exports = __webpack_require__(2);
 
 
 /***/ },
-/* 1 */
+/* 1 */,
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// webpack context helps to require a bundle of files
@@ -70,7 +71,6 @@
 	// contextComponents.keys().forEach(contextComponents)
 
 /***/ },
-/* 2 */,
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
