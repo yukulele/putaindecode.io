@@ -44,17 +44,20 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1);
+	module.exports = __webpack_require__(2);
 
 
 /***/ },
-/* 1 */
+/* 1 */,
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
+
+	// import "./modules/polyfills"
 
 	"use strict";
 
 	if (console && console.info) {
-	  console.info("Putain de Console");
+	  console.info("Putain de console !");
 	}
 
 /***/ }
