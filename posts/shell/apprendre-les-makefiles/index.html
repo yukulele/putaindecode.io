@@ -12,7 +12,7 @@ eux qui ont donné leurs noms aux <code>(Gulp|Grunt|Rake)files</code>). Les inst
 qu’ils contiennent sont exécutées grâce à la commande <code>make</code> dans votre
 terminal.</p>
 <h1 id="hello-world">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#hello-world">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#hello-world">#</a>
       Hello World
     </h1><p>Je vous propose de commencer en douceur par un classique <em>Hello World</em>. On va
 simplement définir une tâche <code>hello-world</code> dont l’action va être d’afficher
@@ -45,7 +45,7 @@ préfixer la ligne à rendre silencieuse par un <code>@</code>, comme ça :</p>
 <span class="hljs-constant">Hello,</span> world
 </code></pre>
 <h1 id="regles-cibles-recettes-et-pre-requis">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#regles-cibles-recettes-et-pre-requis">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#regles-cibles-recettes-et-pre-requis">#</a>
       Règles, cibles, recettes et pré-requis
     </h1><p>OK, jusque là c’est génial, on a un super outil pour lancer des commandes qu’on
 pourrait déjà stocker dans un bête script shell. Pas super utile finalement.</p>
@@ -75,7 +75,7 @@ sauter-une-ligne:
 </code></pre>
 <p>Facile, non ? Ok alors on peut <em>vraiment</em> attaquer les choses sérieuses.</p>
 <h1 id="construire-des-fichiers">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#construire-des-fichiers">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#construire-des-fichiers">#</a>
       Construire des fichiers
     </h1><p>Les pré-requis sont particulièrement pratiques quand on veut construire un
 fichier depuis un autre, ce qui est la principale action d’à peu près tout
@@ -101,7 +101,7 @@ fichiers, qui à leur tour dépendent de fichiers, …</p>
 elle-même dépend de plusieurs fichiers (<code>website: index.html apropos.html
 contact.html</code>).</p>
 <h1 id="variables-et-substitutions">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#variables-et-substitutions">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#variables-et-substitutions">#</a>
       Variables et substitutions
     </h1><p>La syntaxe des variables dans un <em>Makefile</em> ressemblent beaucoup aux variables
 de votre Shell, <em>mais pas tout à fait</em>.</p>
@@ -136,7 +136,7 @@ construire la dépendance <code>index.md</code> avant tout.</p>
 <p>Un problème se pose à nous avec cette syntaxe : « Bah merde, comment je récupère
 les noms de fichiers là ? »</p>
 <h1 id="variables-speciales">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#variables-speciales">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#variables-speciales">#</a>
       Variables spéciales
     </h1><p>Superbe transition étant donné qu’on va parler ici de quelques variables
 spéciales bien pratiques !</p>
@@ -153,7 +153,7 @@ là où est la dépendance).</li>
   [...]
 </code></pre>
 <h1 id="fonctions">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#fonctions">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#fonctions">#</a>
       Fonctions
     </h1><p>Pour faciliter quelques opérations, <em>Make</em> fournit un ensemble de fonctions de
 base. Appeler ces fonctions rappelle un peu la façon dont on lance une commande
@@ -177,10 +177,10 @@ simple comme on a vu précédemment.</p>
 <p>Je vous invite à fouiller
 <a href="https://www.gnu.org/software/make/manual/make.html#Functions" >le chapitre sur les fonctions du manuel</a>.</p>
 <h1 id="la-cible-phony">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#la-cible-phony">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#la-cible-phony">#</a>
       La cible <code>.PHONY</code>
     </h1><p>Dans certains cas la cible d’une règle ne représente pas un fichier (c’était le
-cas de notre cible <code>website</code> <a href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#ref-phony-target" >un peu plus haut</a>).</p>
+cas de notre cible <code>website</code> <a href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#ref-phony-target" >un peu plus haut</a>).</p>
 <p>Dans ces cas-là, on va vouloir exécuter la règle quoi qu’il arrive, comme si la
 cible était tout le temps périmée.</p>
 <p>Une cible particulière existe pour ça : <code>.PHONY</code>. Toutes les dépendances de
@@ -195,7 +195,7 @@ website: index<span class="hljs-class">.html</span> apropos<span class="hljs-cla
 <p>Désormais, chaque appel à <code>make website</code> tentera de construire les dépendances
 et exécutera les commandes de la recette de la règle.</p>
 <h1 id="un-exemple-complet">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#un-exemple-complet">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#un-exemple-complet">#</a>
       Un exemple complet
     </h1><p>L’exemple suivant permet de compiler un site Web depuis un ensemble de fichiers
 <em>Markdown</em>.</p>
@@ -219,7 +219,7 @@ build/%.<span class="hljs-symbol">html:</span> src/%.md
 <p>Vous noterez que comme on stocke nos résultats dans le dossier <code>build</code>, il faut
 potentiellement le créer quand on compile un fichier dedans.</p>
 <h1 id="pour-aller-plus-loin">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#pour-aller-plus-loin">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#pour-aller-plus-loin">#</a>
       Pour aller plus loin
     </h1><p>Il existe bien d’autres fonctionnalités dans <em>Make</em> (du moins dans <em>GNU Make</em>),
 avec notamment :</p>
@@ -245,7 +245,7 @@ que vous êtes fin prêts à affronter tous ces bouseux avec leur système de bu
 </div></div><footer class="putainde-Post-footer"><div class="putainde-Post-footer-title">Action sur cette page</div><div class="r-Grid"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/posts/shell/apprendre-les-makefiles/index.md/master/content/edit">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/posts/shell/apprendre-les-makefiles/index.md/master/content/blame">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Post-footer-action" href="http://github.com/putaindecode/putaindecode.fr/posts/shell/apprendre-les-makefiles/index.md/master/content/commits">Historique</a></div></div><div><div class="putainde-Author undefined"><a href="http://madx.me/" class="putainde-Avatar putainde-Author-picture"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/5723?v=3&amp;s=128" alt=""></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par </span><a class="putainde-Link" href="http://madx.me/">madx</a></h3><div class="putainde-Author-social"><a href="http://madx.me/" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Website"><img class="putainde-Icon" src="/icons/home.svg"></a><a href="https://twitter.com/madx" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a><a href="https://github.com/madx" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Github"><img class="putainde-Icon" src="/icons/github.svg"></a></div></div><p class="putainde-Author-bio">Développeur Ruby et JavaScript, avec un goût prononcé pour la simplicité, le soleil, le pastis.Il n&#x27;aime pas OS X car, objectivement, c&#x27;est nul.Quand il n&#x27;est pas devant son ordi, il y a de grandes chances qu&#x27;il compense avec son téléphone.Spécialiste en développement d&#x27;applications inutiles.</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">3 contributeurs</strong><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Macxim
 (3 commits)"><a href="https://github.com/Macxim" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1909957?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
 (2 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="madx
-(1 commit)"><a href="http://madx.me/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/5723?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script src="/index.d5c1d3c.js"></script><script src="http://0.0.0.0:4243/livereload.js"></script><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
+(1 commit)"><a href="http://madx.me/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/5723?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script src="/index.853076c.js"></script><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
 var disqus_identifier = "http://putaindecode.fr/posts/shell/apprendre-les-makefiles/";
 var disqus_url = "http://putaindecode.fr/posts/shell/apprendre-les-makefiles/";
 var disqus_script = "embed.js";

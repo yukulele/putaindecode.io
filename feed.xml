@@ -3,10 +3,10 @@
     <channel>
         <title><![CDATA[Putain de code !]]></title>
         <description><![CDATA[Putain de code !]]></description>
-        <link>http://0.0.0.0:4242</link>
+        <link>http://putaindecode.fr</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Thu, 14 May 2015 07:27:23 GMT</lastBuildDate>
-        <atom:link href="http://0.0.0.0:4242/feed.xml" rel="self" type="application/rss+xml"/>
+        <lastBuildDate>Thu, 14 May 2015 07:33:02 GMT</lastBuildDate>
+        <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"/>
         <language><![CDATA[fr]]></language>
         <category><![CDATA[code]]></category>
         <item>
@@ -21,7 +21,7 @@ et présenter quelques utilitaires très pratiques.</p>
 <li>Cet article n’a pas pour but d’apprendre à écrire du JavaScript avec Node.js/iojs.</li>
 </ul>
 <h2 id="hello-world">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/utilitaires-ligne-commande/#hello-world">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/utilitaires-ligne-commande/#hello-world">#</a>
       Hello world
     </h2><p>Avant de commencer à coder, il va tout d’abord falloir créer deux fichiers qui seront nécessaires et obligatoires :</p>
 <pre><code class="lang-console"><span class="hljs-comment">// création du dossier</span>
@@ -89,7 +89,7 @@ $ <span class="hljs-keyword">which</span> node
   /usr/<span class="hljs-keyword">local</span>/bin/node
 </code></pre>
 <h2 id="installation-du-script">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/utilitaires-ligne-commande/#installation-du-script">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/utilitaires-ligne-commande/#installation-du-script">#</a>
       Installation du script
     </h2><p>Afin de vérifier que le script fonctionne correctement, il suffit tout simplement d’exécuter dans le répertoire la commande : <code>./index.js</code>.</p>
 <p>Une erreur de droit ? Un petit chmod pour arranger ça : <code>chmod +x index.js</code>.</p>
@@ -107,7 +107,7 @@ Hello world
 </code></pre>
 <p>Le script est maintenant accessible partout sur l’OS grâce à la commande <code>putaindecode-cli</code>. L’installation en global n’est pas absolument pas nécessaire, tout dépend de l’intérêt de votre script. Il est d’ailleurs souvent préférable de l’installer en local dans un projet avec <code>--save</code> ou <code>--save-dev</code>.</p>
 <h2 id="installation-des-scripts-de-base">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/utilitaires-ligne-commande/#installation-des-scripts-de-base">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/utilitaires-ligne-commande/#installation-des-scripts-de-base">#</a>
       Installation des scripts de base
     </h2><p>La puissance de <code>NPM</code> provient de son nombre impressionnant de packages mis à disposition.</p>
 <p>Pour gagner du temps et éviter d’avoir à recoder la roue. Le script <code>putaindecode-cli</code> va avoir besoin de trois choses :</p>
@@ -117,7 +117,7 @@ Hello world
 <li>une capacité à stopper proprement notre code.</li>
 </ul>
 <h3 id="commander">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/utilitaires-ligne-commande/#commander">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/utilitaires-ligne-commande/#commander">#</a>
       <code>commander</code>
     </h3><p>Pour les commandes avec en prime la gestion des arguments et de l’aide, <a href="https://github.com/tj/commander" >commander</a> est tout a fait adapté et répondra pratiquement à tous nos besoins.</p>
 <p>Il est simple d’utilisation et très bien maintenu.</p>
@@ -160,7 +160,7 @@ program.parse(process.argv)
 <span class="hljs-keyword">if</span> (!program.args.length) program.help()
 </code></pre>
 <h3 id="chalk">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/utilitaires-ligne-commande/#chalk">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/utilitaires-ligne-commande/#chalk">#</a>
       <code>chalk</code>
     </h3><p><em>Null</em> besoin de faire un cours sur les couleurs, mais l’affichage d’une notice est bien plus pertinent avec sa couleur associée. C’est à ce moment qu’entre en jeu <a href="https://github.com/sindresorhus/chalk" >chalk</a>. Relativement simple à mettre en place et à utiliser :</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> chalk = <span class="hljs-built_in">require</span>(<span class="hljs-string">'chalk'</span>)
@@ -176,13 +176,13 @@ program.parse(process.argv)
 <span class="hljs-built_in">console</span>.log(notice(<span class="hljs-string">"file modified !"</span>))
 </code></pre>
 <h3 id="exit">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/utilitaires-ligne-commande/#exit">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/utilitaires-ligne-commande/#exit">#</a>
       <code>exit</code>
     </h3><p>Peu importe comment s’exécute son code, il est important de bien savoir maitriser l’arrêt de son script. Pour ça, <code>process.exit()</code> nous sera bien utile.</p>
 <p>Dans le cas d’une erreur, la valeur de <code>exit</code> doit systématiquement être supérieure à 0, et donc bien naturellement en cas de succès, elle doit être égale à 0.</p>
 <p>Voici une <a href="http://www.virtsync.com/c-error-codes-include-errno" >liste des valeurs</a> de <code>exit</code> et de leurs correspondances.</p>
 <h2 id="thanks-god-for-our-terminal">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/utilitaires-ligne-commande/#thanks-god-for-our-terminal">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/utilitaires-ligne-commande/#thanks-god-for-our-terminal">#</a>
       Thanks god for our terminal
     </h2><p>Si vous souhaitez voir quelques exemples de projets avec des commandes et des mises en situations intéressantes, allez faire un tour sur ces projets :</p>
 <ul>
@@ -192,8 +192,8 @@ program.parse(process.argv)
 <p>Je vous invite également à visionner la <a href="http://blog.clement.delafargue.name/posts/2015-02-25-declarative-cli-parsing-in-js.html" >vidéo</a> de <a href="https://twitter.com/clementd" >Clement Delafargue</a> qui a fait une présentation sur le sujet en début d’année.</p>
 <p>À partir de là on dispose d’une bonne base pour refaire le monde et accroître la flemme du développeur que l’on est en automatisant tout plein de tâches.</p>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/shell/utilitaires-ligne-commande/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/shell/utilitaires-ligne-commande/</guid>
+            <link>http://putaindecode.fr/posts/shell/utilitaires-ligne-commande/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/shell/utilitaires-ligne-commande/</guid>
             <pubDate>Tue, 12 May 2015 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -230,7 +230,7 @@ fonctionne très bien avec React.</p>
 d’interface utilisateur dynamiques ? Qui peut le plus peut le moins (quoi qu’en
 fait, des templates, c’est un peu des composants d’interface).</p>
 <h2 id="exemple-de-template-react-jsx">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/utiliser-react-en-moteur-de-templates/#exemple-de-template-react-jsx">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/utiliser-react-en-moteur-de-templates/#exemple-de-template-react-jsx">#</a>
       Exemple de template React/JSX
     </h2><p>Si vous ne savez pas trop ce qu’est React, nous vous recommandons de lire
 notre <a href="/posts/js/introduction-a-reactjs/" >introduction à React</a>.</p>
@@ -276,7 +276,7 @@ pas le nier (dans notre cas, on gère tout ça de manière transparente avec
 <p>Ça ressemble drôlement à de l’HTML et c’est ça qui est appréciable pour nous.
 Vous noterez que l’attribut pour définir une classe HTML est <code>className</code> puisque
 React est en JavaScript et que le mot <code>class</code> est réservé
-(cf. <a href="http://0.0.0.0:4242/posts/js/utiliser-react-en-moteur-de-templates/#es6-class" >la définition en ES6 de la classe</a>).</p>
+(cf. <a href="http://putaindecode.fr/posts/js/utiliser-react-en-moteur-de-templates/#es6-class" >la définition en ES6 de la classe</a>).</p>
 <p>En même temps ce qui est cool, c’est qu’on reste dans du JavaScript.</p>
 <p>On peut donc utiliser toutes nos bibliothèques préférées via <em>npm</em> pour l’affichage
 (exemple : <code>momentjs</code>), ou simplement des boucles via les méthodes de parcours de
@@ -323,7 +323,7 @@ export default class Posts extends Component {
 </code></pre>
 <p>Voici deux exemples de composants utilisés ci-dessus :</p>
 <h3 id="head">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/utiliser-react-en-moteur-de-templates/#head">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/utiliser-react-en-moteur-de-templates/#head">#</a>
       Head
     </h3><pre><code class="lang-js"><span class="hljs-keyword">import</span> React, {Component} <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
 
@@ -358,7 +358,7 @@ export default class Head extends Component {
 }
 </code></pre>
 <h3 id="body">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/utiliser-react-en-moteur-de-templates/#body">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/utiliser-react-en-moteur-de-templates/#body">#</a>
       Body
     </h3><pre><code class="lang-js"><span class="hljs-keyword">import</span> React, {Component, PropTypes} <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
 
@@ -394,7 +394,7 @@ export default class Body extends Component {
 <p>Bon c’est bien beau mais comment je gère l’affichage du composant initial
 finalement (le parent) ?</p>
 <h2 id="comment-utiliser-un-template-react-jsx">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/utiliser-react-en-moteur-de-templates/#comment-utiliser-un-template-react-jsx">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/utiliser-react-en-moteur-de-templates/#comment-utiliser-un-template-react-jsx">#</a>
       Comment utiliser un template React/JSX ?
     </h2><p>C’est bien simple. Dans notre cas, pas besoin de React côté client. On doit gérer
 ça côté « serveur » (je mets ça entre guillemets puisque dans notre cas précis, c’est
@@ -447,8 +447,8 @@ dont un <a href="https://github.com/MoOx/metalsmith-react" >metalsmith-react</a>
 <a href="https://github.com/putaindecode/putaindecode.fr" >le code source de notre site</a>
 pour faire des découvertes sympas.</p>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/js/utiliser-react-en-moteur-de-templates/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/js/utiliser-react-en-moteur-de-templates/</guid>
+            <link>http://putaindecode.fr/posts/js/utiliser-react-en-moteur-de-templates/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/js/utiliser-react-en-moteur-de-templates/</guid>
             <pubDate>Thu, 07 May 2015 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -682,15 +682,15 @@ instances crées pour le test dans le contexte de nos composants.</li>
 </ul>
 <p>Bisous bisous.</p>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/js/implementer-flux/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/js/implementer-flux/</guid>
+            <link>http://putaindecode.fr/posts/js/implementer-flux/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/js/implementer-flux/</guid>
             <pubDate>Fri, 01 May 2015 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[HATEOAS, le Graal des développeurs d'API]]></title>
             <description><![CDATA[<p>Nous vivons aujourd’hui dans un monde où tout devient service. Twitter, Facebook, Google Drive, GitHub, tout le monde y va de sa petite API pour que nous, geeks, puissions profiter pleinement des moult fonctionnalités offertes par ces plateformes. Qu’entend-on par service ? Comment les rendre disponibles facilement et intelligemment ? On va essayer d’y répondre ! </p>
 <h2 id="les-webservices">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/api/hateoas/#les-webservices">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/api/hateoas/#les-webservices">#</a>
       Les webservices
     </h2><p>Rappelons juste, pour mettre tout le monde d’accord, ce qui se passe pendant une simple navigation web.</p>
 <ol>
@@ -703,27 +703,27 @@ instances crées pour le test dans le contexte de nos composants.</li>
 <p>On parle donc de contenu qu’il faut afficher pour les êtres humains, avec des images, des styles et des comportements qui facilitent l’ergonomie et te permettent de dire <em>“wouaouw, ce site est vraiment beau, cool et pratique !”</em></p>
 <p>Imaginons maintenant la même chose, mais à destination des programmes, qui ne consomment que de l’information brute et structurée, on ne va donc plus s’encombrer avec les CSS, les JS, et autres gifs animés (oui, les gifs animés, ça les fait pas marrer les machines…) ! On va se concentrer sur le contenu échangé et sur les moyens utilisés pour optimiser ces échanges.</p>
 <h3 id="la-premiere-ecole-soap">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/api/hateoas/#la-premiere-ecole-soap">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/api/hateoas/#la-premiere-ecole-soap">#</a>
       La première école : SOAP
     </h3><p>Imaginons deux programmes qui veulent discuter en passant par le web. Dans les années 90, des mecs super brillants se sont dit : <em>“On va se baser sur le XML pour faire communiquer nos programmes sur le web”</em>.
 L’approche est assez logique et ingénieuse. Tout d’abord, les deux parties (le client et le serveur) se partagent une notice d’utilisation : la WSDL (Web Service Description Language), qui est un document XML décrivant toutes les méthodes qui peuvent être appelées par le client sur le serveur, avec les structures de données disponibles pour ces échanges.
 Le client prépare donc sa demande et l’enveloppe dans une grosse structure XML contenant toutes les métadonnées (méthode appelée, signature numérique, etc.). Une fois que le serveur a reçu cette demande, il la traite et répond aussi dans une grosse enveloppe XML.</p>
 <p>Tu viens de comprendre le SOAP (Service Oriented Application Protocol), aucun rapport avec une quelconque savonnette du coup. Cette méthode a fait ses preuves puisqu’elle fait tourner encore aujourd’hui des milliers de systèmes très complexes et très fiables.</p>
 <h3 id="la-maison-d-en-face-rest">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/api/hateoas/#la-maison-d-en-face-rest">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/api/hateoas/#la-maison-d-en-face-rest">#</a>
       La maison d’en face : REST
     </h3><p>Plusieurs années ont passées et les esprits ont évolué. On a commencé à entendre des grandes déclarations comme : <em>“Le SOAP c’est vraiment lourdingue !”</em>, <em>“Le protocole HTTP est sous-exploité !”</em> ou encore <em>“Les enveloppes XML et les WSDL ? Merci bien !”</em> et c’est à ce moment-là qu’on a donné un acronyme bidon pour décrire le protocole HTTP sans vraiment le nommer : REST (REpresentational State Transfert). Pour l’anecdote, tout le monde s’accorde à dire que cet acronyme ne veut rien dire ;)</p>
 <p>Le but du jeu est donc d’utiliser au maximum les possibilités du protocole HTTP, les verbes, les URL et les codes retours pour décrire des API de la manière la plus fidèle possible. On a donc gagné en simplicité et la communication entre machines se veut désormais à la portée de tous. Je reviendrai en détail sur le protocole HTTP un peu plus tard.</p>
 <h3 id="un-partout-balle-au-centre">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/api/hateoas/#un-partout-balle-au-centre">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/api/hateoas/#un-partout-balle-au-centre">#</a>
       Un partout : balle au centre
     </h3><p>Je tiens à remettre les choses au clair. On entend beaucoup trop souvent : <em>“Fais du REST, SOAP c’est nul”</em>. Il y a en effet clairement un effet de mode ! Les API REST pullulent et sont vraiment très pratiques. Toutefois, dans les gros systèmes nécessitant du RPC ou encore de la signature numérique, pour les échanges de données médicales par exemple, le contrat WSDL et la rigueur du XML sont clairement des alliés ! </p>
 <h2 id="alors-comme-ca-http-ca-fait-tout">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/api/hateoas/#alors-comme-ca-http-ca-fait-tout">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/api/hateoas/#alors-comme-ca-http-ca-fait-tout">#</a>
       Alors comme ça, HTTP ça fait tout ?
     </h2><p>Il y a un type qui s’appelle Leonard Richardson et qui a mis en place un <a href="http://martinfowler.com/articles/richardsonMaturityModel.html" >modèle de maturité</a> pour qualifier les API webservice.</p>
 <h3 id="niveau-0">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/api/hateoas/#niveau-0">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/api/hateoas/#niveau-0">#</a>
       Niveau 0
     </h3><p>C’est le minimum acceptable dans la communication HTTP :</p>
 <ul>
@@ -734,7 +734,7 @@ Le client prépare donc sa demande et l’enveloppe dans une grosse structure XM
 </ul>
 <p>Quand on fait du webservice avec SOAP, c’est ce niveau qui est utilisé lors de la communication HTTP.</p>
 <h3 id="niveau-1">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/api/hateoas/#niveau-1">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/api/hateoas/#niveau-1">#</a>
       Niveau 1
     </h3><p>Avec ce premier niveau, on essaye d’enrichir un peu plus l’utilisation. On ajoute la notion de <em>ressource</em>, en fonction de la donnée métier manipulée, l’URL de la requête sera différente. La preuve par l’exemple :</p>
 <ul>
@@ -747,7 +747,7 @@ Le client prépare donc sa demande et l’enveloppe dans une grosse structure XM
 </ul>
 <p>Rien qu’en traçant les URL appelées sur le serveur, on peut comprendre ce que le client HTTP cherche à faire… pas dégueu, non ?</p>
 <h3 id="niveau-2">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/api/hateoas/#niveau-2">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/api/hateoas/#niveau-2">#</a>
       Niveau 2
     </h3><p>Le protocole HTTP utilise des verbes pour les requêtes et des codes numériques pour les retours. Ce sont ces deux mécanismes qui seront utilisés en complément du niveau 1.</p>
 <p>Les principaux verbes HTTP que l’on utilise sont GET, POST, PUT et DELETE. Leur nom est déjà très évocateur.</p>
@@ -769,7 +769,7 @@ Ces codes sont juste des nombres de 3 chiffres respectant cette logique :</p>
 <p>Parmi les plus connus, on a donc 404 (<em>“tu me demandes quelque chose qui n’existe pas”</em>), 403 (<em>“accès interdit”</em>), 304 (<em>“pas la peine de m’emmerder, la donnée est dans ton cache”</em>) et bien sûr 200 (<em>“OK, tout va bien”</em>).</p>
 <p>Et si les codes HTTP sont ta nouvelle passion, je te suggère de te documenter sur le code <a href="http://fr.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol" >418</a> !</p>
 <h3 id="niveau-3-hateoas">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/api/hateoas/#niveau-3-hateoas">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/api/hateoas/#niveau-3-hateoas">#</a>
       Niveau 3 : HATEOAS
     </h3><p>Alors on a les verbes HTTP et les codes retours. À quoi peut ressembler le Graal des API REST alors ? Si on réfléchit un peu, on peut se dire qu’il faudrait, pour toutes les URL, donner un code retour HTTP cohérent pour chaque verbe, logique non ? De cette manière, on peut entamer un véritable dialogue avec le serveur HTTP, entièrement basé sur REST. Voilà une bonne nouvelle pour ceux qui veulent tailler une bavette ailleurs que sur Google Hangouts !</p>
 <p>Un petit exemple de dialogue : </p>
@@ -881,7 +881,7 @@ Ces codes sont juste des nombres de 3 chiffres respectant cette logique :</p>
 ]</span>
 </code></pre><p>Dans cette trame, tu auras remarqué les objets dans les tableaux nommés “links”, ce sont les liens disponibles pour chacun des objets renvoyés ! On peut imaginer qu’en fonction des droits de l’utilisateur courant, il y ait plus ou moins de liens.</p>
 <h2 id="est-ce-que-c-est-standard">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/api/hateoas/#est-ce-que-c-est-standard">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/api/hateoas/#est-ce-que-c-est-standard">#</a>
       Est-ce que c’est standard ?
     </h2><p>Eh bien non ! Il n’y a pas vraiment de convention pour l’écriture des liens dans les trames renvoyées. Cela dépend du format renvoyé dans un premier temps. Comment formaliser un standard si on renvoie en JSON, XML et YML en fonction des en-têtes HTTP du client ?</p>
 <p>De la même manière, tu auras remarqué que l’on ne précise pas le verbe HTTP à utiliser sur les URL. C’est la raison pour laquelle il faut implémenter un retour cohérent pour tous les verbes HTTP courants !</p>
@@ -889,13 +889,13 @@ Ces codes sont juste des nombres de 3 chiffres respectant cette logique :</p>
 <p>Il y a toutefois quelques expérimentations comme <a href="http://en.wikipedia.org/wiki/Hypertext_Application_Language" >HAL</a> ou encore <a href="http://jsonapi.org/" >JSON API</a> qui tentent de normaliser un peu ce flou artistique.</p>
 <p>Tu fais ta petite popote ! Tu fais comme tu veux ! Ça a du bon aussi !</p>
 <h2 id="bon-ok-je-fais-comment-pour-le-mettre-en-place-maintenant">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/api/hateoas/#bon-ok-je-fais-comment-pour-le-mettre-en-place-maintenant">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/api/hateoas/#bon-ok-je-fais-comment-pour-le-mettre-en-place-maintenant">#</a>
       “Bon ok, je fais comment pour le mettre en place maintenant ?”
     </h2><p>Tu remontes tes manches et tu te démerdes !</p>
 <p>Il y a quelques frameworks qui vont te donner un coup de main. Dans le monde Java par exemple, il existe <a href="http://docs.jboss.org/resteasy/docs/2.0.0.GA/userguide/html/LinkHeader.html" >Resteasy-links</a> (avec un exemple d’utilisation <a href="https://github.com/awillemant/hateoas-example" >sur mon repo GitHub</a>), ou encore <a href="http://projects.spring.io/spring-hateoas/" >Spring HATEOAS</a></p>
 <p>Pour les <em>Nodistes</em>, une simple recherche sur <a href="https://www.npmjs.com/search?q=hateoas" >npmjs</a> renverra un tas d’outils ! </p>
 <h2 id="references">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/api/hateoas/#references">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/api/hateoas/#references">#</a>
       Références
     </h2><p>Oui, parce qu’il y a des gens bien plus brillants que moi pour vous convaincre sur l’Hypermedia !</p>
 <ul>
@@ -906,8 +906,8 @@ Ces codes sont juste des nombres de 3 chiffres respectant cette logique :</p>
 <li><a href="http://blog.xebia.fr/2014/03/17/post-vs-put-la-confusion/" >Un excellent article de Xebia sur la bonne utilisation de POST et PUT</a></li>
 </ul>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/api/hateoas/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/api/hateoas/</guid>
+            <link>http://putaindecode.fr/posts/api/hateoas/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/api/hateoas/</guid>
             <pubDate>Thu, 12 Mar 2015 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -915,7 +915,7 @@ Ces codes sont juste des nombres de 3 chiffres respectant cette logique :</p>
             <description><![CDATA[<p>Modulaire, maintenable, réutilisable, accessible. Ces termes sont au cœur de nos métiers et on nous les rabâche toute la journée.</p>
 <p>Malgré la grossièreté de ces mots pour certains d’entre vous, il est tout à fait possible de pondre du CSS en utilisant tous ces principes.</p>
 <h2 id="maintenable">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/du-css-evolutif/#maintenable">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/du-css-evolutif/#maintenable">#</a>
       Maintenable
     </h2><p>L’un des trucs les plus chiants du CSS c’est bien la cascade, qui, malgré sa bonne volonté, n’apporte pas que des solutions. Pour pallier aux problèmes que l’on peut vite créer, <a href="http://putaindecode.fr/posts/css/petite-definition-bem/" >la méthodologie BEM</a> a vu le jour avec son <a href="http://blog.kaelig.fr/post/48196348743/fifty-shades-of-bem" >lot de variantes</a>.</p>
 <p>La grande majorité des membres de p! utilisent cette convention :</p>
@@ -933,13 +933,13 @@ Ces codes sont juste des nombres de 3 chiffres respectant cette logique :</p>
 <p>L’intérêt ? Apporter de la sémantique à notre code CSS, en utilisant des classes, des classes et des classes afin de clairement s’abstraire de la cascade. Finis les <code>!important</code>, on évite ainsi les problèmes d’éléments et les soudains changements de structure HTML qui te forcent à réécrire tes sélecteurs.</p>
 <p>Cette méthode est d’ailleurs, entre autres, utilisée par <a href="http://twitter.com" >Twitter</a> via <a href="http://suitcss.github.io/" >SUIT CSS</a>.</p>
 <h2 id="modulaire">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/du-css-evolutif/#modulaire">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/du-css-evolutif/#modulaire">#</a>
       Modulaire
     </h2><p>Partant de notre méthodologie, on va développer notre site web comme un gros Lego. Chaque partie graphique de notre projet sera un composant, une brique.</p>
 <p>On pourrait imaginer des éléments comme <code>NavBar</code>, <code>Pagination</code>, <code>Article</code> que l’on va assembler au fur et à mesure de notre développement. Notre site sera composé de plusieurs dizaines de fichiers (<code>Composant</code>), mais aucun n’excèdera quelques centaines de lignes, grand maximum. Beaucoup plus facile à débugger et donc sur le long terme plus maintenable.</p>
 <p>Il va de soi qu’on utilisera son outil préféré pour concaténer et minimiser le tout en un seul fichier, sinon on risque d’avoir quelques problèmes de <em>webperf</em>.</p>
 <h2 id="accessible">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/du-css-evolutif/#accessible">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/du-css-evolutif/#accessible">#</a>
       Accessible
     </h2><p>Pour obtenir un design adaptatif ou accessible, il est nécessaire d’utiliser des unités dites relatives. C’est à ce moment qu’interviennent les unités stars du moment que sont <code>em</code> et <code>rem</code>.</p>
 <p>Mais voilà que <code>em</code> rencontre un inconvénient majeur, encore et toujours notre fameuse cascade. Chaque élément dépend de son propre <code>font-size</code> ou de celui de son parent. Alors, vous imaginez l’élément de l’élément de l’élément. On peut vite perdre les pédales. Je vous vois venir avec l’unité <code>rem</code>. Effectivement on résout complètement le problème de la cascade, mais on perd en modularité.</p>
@@ -956,7 +956,7 @@ Ces codes sont juste des nombres de 3 chiffres respectant cette logique :</p>
 On diminue ainsi de nouveau les problèmes de cascade. De plus, on peut très facilement augmenter la taille générale de notre composant, en augmentant la taille de son <code>font-size</code> dans sa classe principale.
 On atteint alors un double d’objectif : en plus d’être accessible en supprimant les pixels, on rend notre composant réutilisable sur d’autres projets en s’adaptant très facilement à son contexte.</p>
 <h2 id="namespace">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/du-css-evolutif/#namespace">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/du-css-evolutif/#namespace">#</a>
       Namespace
     </h2><p>On utilise tous des scripts <code>vendors</code>. Pour éviter les collisions avec ceux-ci et encore une fois à cause de cette maudite cascade, voici un petit truc qui vous évitera de modifier vos classes : l’ajout d’un namespace à nos composants.</p>
 <p>On va utiliser notre exemple de tout à l’heure avec <code>NavBar</code> :</p>
@@ -969,14 +969,14 @@ On atteint alors un double d’objectif : en plus d’être accessible en suppri
   }</span>
 </code></pre>
 <h2 id="pour-finir">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/du-css-evolutif/#pour-finir">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/du-css-evolutif/#pour-finir">#</a>
       Pour finir
     </h2><p>C’est verbeux, on ne peut pas le nier. Par moment, on peut se dire qu’écrire une classe seulement pour une propriété, est-ce si pertinent que ça ? Sauf qu’au moment ou vous écrivez votre <code>css</code> vous ne pouvez pas dire qu’à la prochaine mise à jour, il vous faudra peut-être en rajouter 5, et donc votre classe sera finalement bien utile.</p>
 <p>Toutes ces méthodes m’ont fait abandonner <code>Sass</code> et son framework <code>Compass</code>. Ce qu’apporte un langage comme <code>Sass</code> (au-delà de l’aspect programmation, mais c’est une autre histoire) vient principalement de ses features telles que  <a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#nested_rules" >nested</a> et <a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#extend" >@extend</a>. Et franchement, une bonne indentation, un bon nommage de classes et une utilisation intelligente de <code>BEM</code> vous feront vite oublier <code>Sass</code> sans regarder en arrière.</p>
 <p>Sur l’ensemble de mes projets, je n’écris plus que ce qu’on appelle communément du <code>Vanilla CSS</code>. Petit bémol quand même, histoire de pouvoir utiliser des spécifications pas forcément encore compatibles sur tous les navigateurs, j’ai ajouté dans mon workflow l’outil <a href="https://github.com/postcss/postcss" >PostCSS</a>, le tout contrôlé par <a href="http://cssnext.github.io/" >cssnext</a> dont voici quelques exemples d’<a href="https://cssnext.github.io/cssnext-playground/" >utilisation</a>.</p>
 <p>Je vous encourage vivement à tester ces deux outils (<a href="https://github.com/postcss/postcss" >PostCSS</a> ou <a href="http://cssnext.github.io/" >cssnext</a>) qui vous apporteront variables, manipulation des couleurs, etc, ainsi que concaténation des <code>@import</code> tout en conservant du CSS valide (selon les spécifications).</p>
 <h2 id="le-truc-du-moment">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/du-css-evolutif/#le-truc-du-moment">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/du-css-evolutif/#le-truc-du-moment">#</a>
       Le truc du moment
     </h2><p>Avant de terminer cet article, je voulais mentionner l’idée/concept qui commence à faire son petit bout de chemin à savoir le <code>style inline</code>.</p>
 <p>Cela revient tout simplement à écrire directement le CSS dans son code <code>HTML</code></p>
@@ -987,8 +987,8 @@ On atteint alors un double d’objectif : en plus d’être accessible en suppri
 <p>Avant d’hurler au blasphème ou au scandale, il est nécessaire de mettre en adéquation cette idée avec les contraintes rencontrées lors du développement d’une application utilisant principalement du <code>JavaScript</code>.</p>
 <p>Si vous souhaitez un peu plus d’informations sur le sujet, je vous invite à lire la <a href="https://speakerdeck.com/vjeux/react-css-in-js" >présentation</a> de <a href="https://twitter.com/Vjeux" >@Vjeux</a>, front-end engineer chez Facebook. Il explique les problèmes rencontrés avec le <code>CSS</code> et les solutions mises en place par les développeurs de Facebook ou plus exactement de <code>ReactJS</code>.</p>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/css/du-css-evolutif/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/css/du-css-evolutif/</guid>
+            <link>http://putaindecode.fr/posts/css/du-css-evolutif/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/css/du-css-evolutif/</guid>
             <pubDate>Tue, 10 Mar 2015 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -1012,7 +1012,7 @@ Maxime ne s’est pas laissé abattre et a persisté dans sa démarche…</p>
 </blockquote>
 <p>Bon, assez plaisanté.</p>
 <h2 id="_pourquoi-j-essayerais-vim-_">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/vim/il-demarre-vim-par-erreur-ce-qui-se-passe-ensuite-est-tout-simplement-bluffant/#_pourquoi-j-essayerais-vim-_">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/vim/il-demarre-vim-par-erreur-ce-qui-se-passe-ensuite-est-tout-simplement-bluffant/#_pourquoi-j-essayerais-vim-_">#</a>
       <em>Pourquoi j’essayerais Vim ?</em>
     </h2><p>J’ai commencé par Eclipse. Qu’il fallait réinstaller assez souvent sans quoi on perdait 10 minutes de sa vie à chaque ouverture d’autocomplete.
 Je suis passé par NetBeans, WebStorm… Sans être convaincu. Plus récemment, j’étais assez content sous Sublime Text avant d’essayer Atom
@@ -1026,7 +1026,7 @@ et se moquaient un bon coup à chaque sortie d’un nouvel éditeur.
 Car bon faut avouer, se moquer c’est facile.
 Du coup un jour, j’ai démarré Vim.</p>
 <h2 id="_pourquoi-j-ai-rien-compris-quand-je-me-suis-retrouve-dans-vim-_">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/vim/il-demarre-vim-par-erreur-ce-qui-se-passe-ensuite-est-tout-simplement-bluffant/#_pourquoi-j-ai-rien-compris-quand-je-me-suis-retrouve-dans-vim-_">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/vim/il-demarre-vim-par-erreur-ce-qui-se-passe-ensuite-est-tout-simplement-bluffant/#_pourquoi-j-ai-rien-compris-quand-je-me-suis-retrouve-dans-vim-_">#</a>
       <em>Pourquoi j’ai rien compris quand je me suis retrouvé dans Vim ?</em>
     </h2><p>Le truc le plus déroutant dans Vim, c’est les modes.
 Et quand on ouvre Vim, on ne se retrouve pas dans le mode le plus logique (à première vue).</p>
@@ -1037,7 +1037,7 @@ Vous allez me répondre qu’on peut en faire de même avec tous les éditeurs d
 Les bons développeurs ont tous une bonne flemme au fond d’eux, c’est bien connu.</p>
 <p>Pour un peu plus sur l’histoire de Vim, direction <a href="https://fr.wikipedia.org/wiki/Vim" >wikipedia.org/wiki/Vim</a>.</p>
 <h2 id="commencer-avec-vim">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/vim/il-demarre-vim-par-erreur-ce-qui-se-passe-ensuite-est-tout-simplement-bluffant/#commencer-avec-vim">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/vim/il-demarre-vim-par-erreur-ce-qui-se-passe-ensuite-est-tout-simplement-bluffant/#commencer-avec-vim">#</a>
       Commencer avec Vim
     </h2><p>Du coup, quand je suis dans Vim, comment ça se passe ?</p>
 <p>Je passerai plus tard assez rapidement sur les différents points, vu que d’autres ressources,
@@ -1056,7 +1056,7 @@ clavier sous les mains (bah oui rien de mieux pour se lancer).</p>
 Cela a fonctionné pour moi : je gagne déjà du temps au bout de quelques semaines d’utilisation.</p>
 <p>Pourquoi pas vous ?</p>
 <h2 id="pour-apprendre-vim">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/vim/il-demarre-vim-par-erreur-ce-qui-se-passe-ensuite-est-tout-simplement-bluffant/#pour-apprendre-vim">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/vim/il-demarre-vim-par-erreur-ce-qui-se-passe-ensuite-est-tout-simplement-bluffant/#pour-apprendre-vim">#</a>
       Pour apprendre Vim
     </h2><p>Vous pouvez donc :</p>
 <ul>
@@ -1067,10 +1067,10 @@ Cela a fonctionné pour moi : je gagne déjà du temps au bout de quelques semai
 </ul>
 <p>Voici aussi un cheatsheet indispensable qui permet de bien mémoriser le pourquoi des touches
 (b = begin, w = word, e = end, r = replace, i = insert, a = append, o = open, ctrl f = forward, ctrl b = backward, etc).</p>
-<p><img src="http://0.0.0.0:4242/posts/vim/vim-cheatsheet.gif" alt="cheatsheet VIM"></p>
+<p><img src="http://putaindecode.fr/posts/vim/vim-cheatsheet.gif" alt="cheatsheet VIM"></p>
 <p>Vous remarquerez que souvent les commandes en majuscules font la même chose mais dans le sens inverse (f/F, o/O), ou de manière plus catégorique (d/D, y/Y).</p>
 <h2 id="passer-a-vim-est-un-investissement">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/vim/il-demarre-vim-par-erreur-ce-qui-se-passe-ensuite-est-tout-simplement-bluffant/#passer-a-vim-est-un-investissement">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/vim/il-demarre-vim-par-erreur-ce-qui-se-passe-ensuite-est-tout-simplement-bluffant/#passer-a-vim-est-un-investissement">#</a>
       Passer à Vim est un investissement
     </h2><p>Point important : il faut avoir envie.
 Il ne s’agit pas de changer simplement d’éditeur, car on doit complètement changer ses habitudes.
@@ -1087,8 +1087,8 @@ ce qui permet de créer de nouvelles fonctionnalités simplement. Et même du co
 <p>:q^C:wq</p>
 </blockquote>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/vim/il-demarre-vim-par-erreur-ce-qui-se-passe-ensuite-est-tout-simplement-bluffant/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/vim/il-demarre-vim-par-erreur-ce-qui-se-passe-ensuite-est-tout-simplement-bluffant/</guid>
+            <link>http://putaindecode.fr/posts/vim/il-demarre-vim-par-erreur-ce-qui-se-passe-ensuite-est-tout-simplement-bluffant/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/vim/il-demarre-vim-par-erreur-ce-qui-se-passe-ensuite-est-tout-simplement-bluffant/</guid>
             <pubDate>Tue, 03 Mar 2015 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -1118,7 +1118,7 @@ l’utiliser pour mon site web (un site statique). </p>
 <p><strong>Inutile et donc totalement justifié pour le développeur que je suis</strong>. 
 Une des premières briques que j’ai mises en place a été le routeur.</p>
 <h2 id="react-router">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/reactjs-et-rendu-serverside/#react-router">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/reactjs-et-rendu-serverside/#react-router">#</a>
       react-router
     </h2><p>Pour une fois dans la communauté JavaScript, il y a une bibliothèque de référence 
 et c’est celle là : <a href="https://github.com/rackt/react-router" >react-router</a>. 
@@ -1226,7 +1226,7 @@ comme n’importe quel moteur de <em>template</em>.</p>
 la création de l’application via des <em>props</em> React. Quid de l’utilisation 
 de flux dans tout ça ?</p>
 <h2 id="flux-et-le-rendu-serveur">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/reactjs-et-rendu-serverside/#flux-et-le-rendu-serveur">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/reactjs-et-rendu-serverside/#flux-et-le-rendu-serveur">#</a>
       Flux et le rendu serveur
     </h2><p>Avec <a href="http://facebook.github.io/flux/" >Flux</a>, ce sont les stores qui maintiennent 
 l’état de notre application. Si l’on ne veut pas afficher notre application 
@@ -1251,7 +1251,7 @@ Il ne reste plus qu’a récupérer ces données avant d’appeler <code>React.r
 });</span>
 </code></pre>
 <h2 id="le-mot-de-la-fin">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/reactjs-et-rendu-serverside/#le-mot-de-la-fin">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/reactjs-et-rendu-serverside/#le-mot-de-la-fin">#</a>
       Le mot de la fin
     </h2><p>Penser son application React pour qu’elle puisse être rendue coté serveur 
 introduit de nouvelles problématiques, notamment avec l’ajout du <em>pattern</em> Flux. 
@@ -1305,8 +1305,8 @@ si vous souhaitez partager vos expériences dans ce domaine. </p>
 <li><a href="https://www.youtube.com/watch?v=z5e7kWSHWTg" >React.js Conf 2015 - Hype!</a> : un aperçu des possibilités de react-router</li>
 </ul>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/js/reactjs-et-rendu-serverside/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/js/reactjs-et-rendu-serverside/</guid>
+            <link>http://putaindecode.fr/posts/js/reactjs-et-rendu-serverside/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/js/reactjs-et-rendu-serverside/</guid>
             <pubDate>Mon, 23 Feb 2015 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -1322,7 +1322,7 @@ Donc quand on décide de se mettre au JavaScript modulaire, on trouve tout un ta
 <li>la convention de résolution des dépendances de module</li>
 </ul>
 <h1 id="format-d-ecriture-des-modules">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/etat-lieux-js-modulaire-front/#format-d-ecriture-des-modules">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/#format-d-ecriture-des-modules">#</a>
       Format d’écriture des modules
     </h1><p>Le module est la brique de base pour décomposer un gros fichier JS en plusieurs fichiers plus petits et focalisés sur une fonctionnalité précise. La plupart du temps un module est un fichier JS qui fournit une fonction, un constructeur ou un objet de valeur. Et comme, pour fournir cette fonctionnalité, un module peut avoir besoin d’autres modules, il existe un mécanisme pour déclarer ses dépendances.</p>
 <p>Actuellement, 2 standards principaux existent pour écrire ces modules : <strong>AMD</strong> et <strong>CommonJS</strong>.
@@ -1352,7 +1352,7 @@ C’est pourquoi on parle de format “synchrone” dans le premier cas et “as
 </ul>
 <p>Dans les 2 cas, par contre, il y a besoin d’une <em>résolution des dépendances</em>, c’est à dire qu’un module ne peut pas être exécuté tel quel dans un navigateur en le chargeant via un tag <code>script</code>. Non, il faut un <em>loader</em>, c’est à dire un outil qui va charger le module qu’on lui demande et va résoudre les dépendances en cascade. Mais contrairement à ce que l’on pourrait croire, les règles de résolution des dépendances n’ont rien à voir avec le format du module (on verra ça plus tard).</p>
 <h1 id="package-management">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/etat-lieux-js-modulaire-front/#package-management">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/#package-management">#</a>
       Package management
     </h1><p>Parlons maintenant des packages. En effet, pouvoir découper du code en modules, c’est bien ; mais ce qui est encore mieux c’est de pouvoir le partager avec d’autres pour qu’il soit facilement réutilisable et arrêter le syndrôme de :</p>
 <blockquote>
@@ -1470,7 +1470,7 @@ le package B déclare une dépendance sur X mais en version 2</p>
 </li>
 </ul>
 <h1 id="resolution-des-dependances-de-module">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/etat-lieux-js-modulaire-front/#resolution-des-dependances-de-module">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/#resolution-des-dependances-de-module">#</a>
       Résolution des dépendances de module
     </h1><p>La question est alors :</p>
 <blockquote>
@@ -1484,13 +1484,13 @@ le package B déclare une dépendance sur X mais en version 2</p>
 <p>Et bien, venons en au coeur du problème : <em>la résolution des module-id en fichier</em>. Comme on l’a vu, pour charger un module dans le navigateur, il faut utiliser un loader. Et une de ses tâches est de <em>résoudre</em> les <code>module_id</code> en adresse de fichier.</p>
 <p>Au pire il faudrait explicitement dire au loader pour chaque <code>module_id</code> où est le fichier correspondant. Heureusement, ce n’est pas le cas, ni avec requireJS, ni avec les loaders compatibles npm.</p>
 <h2 id="amd">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/etat-lieux-js-modulaire-front/#amd">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/#amd">#</a>
       AMD
     </h2><p>RequireJS et les autres loaders AMD vont assez loin en  matière de <a href="http://requirejs.org/docs/api.html#config" >configuration</a> mais souvent , ça revient à décrire des règles du style <em>tous les modules id qui commencent par <code>mon-package</code> sont à chercher dans le dossier <code>./mon-package</code></em>.</p>
 <p>En fait, ça n’est pas tout à fait vrai qu’il faille systématiquement configurer les règles de résolution avec RequireJS : il y a une règle par défaut qui stipule que les module_id sont résolus par rapport à une “baseURL” (qui par défaut est celle du fichier html). Donc si on installe tous les packages au même niveau, ça marche par défaut.
 C’est pour cela que bower est souvent utilisé pour les packages front-end en AMD car il installe les fichiers à plat et de cette façon on limite le besoin de configuration.</p>
 <h2 id="npm">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/etat-lieux-js-modulaire-front/#npm">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/#npm">#</a>
       NPM
     </h2><p>A l’opposé de cette approche très flexible, il y a nodeJS avec une <a href="https://github.com/substack/browserify-handbook#how-node_modules-works" >convention simple et statique</a>, qui dit en gros :</p>
 <ul>
@@ -1499,7 +1499,7 @@ C’est pour cela que bower est souvent utilisé pour les packages front-end en 
 </ul>
 <p>Et donc zéro config, puisque ça n’est pas configurable. Ca peut paraître être une limitation mais c’est une force.</p>
 <h1 id="conclusion">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/etat-lieux-js-modulaire-front/#conclusion">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/#conclusion">#</a>
       Conclusion
     </h1><p>Si tous les packages en AMD utilisaient la règle de résolution par défaut et que l’on utilisait bower pour les installer, on n’aurait rien à configurer. Mais dans la pratique, ça n’est pas le cas et on se retrouve à devoir configurer les règles de résolution non seulement pour ses propres dépendances (<em>pourquoi pas</em>) mais également pour les dépendances de ses dépendances (<em>et là ça ne va plus</em>).
 Et il reste toujours le problème des conflits de version liés à l’approche de mettre les dépendances à plat.</p>
@@ -1513,7 +1513,7 @@ On peut lui reprocher la nécessité d’une étape de build et le fait que le c
 </ol>
 <p>Au final, ça en devient même un avantage, car le code que l’on exécute en dev dans le navigateur est très proche de ce que l’on aura en prod, en tout cas plus proche qu’avec requireJS pour lequel on développe sans build et pour lequel il faut écrire à nouveau une config de build pour la mise en prod.</p>
 <h1 id="conclusion-de-la-conclusion">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/etat-lieux-js-modulaire-front/#conclusion-de-la-conclusion">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/#conclusion-de-la-conclusion">#</a>
       Conclusion de la conclusion
     </h1><p>Ma conclusion est que le point crucial pour faciliter la réutilisation de modules, c’est de <strong>minimiser les contraintes sur les utilisateurs</strong> et donc de se rapprocher d’un usage <em>plug and play</em>. Pour cela il faut une convention forte entre le package manager et le loader/builder de modules, afin d’éviter à l’utilisateur de devoir écrire des configs … la plupart du temps.
 Bien sûr, la recherche du “zéro config” n’est pas une fin et c’est particulièrement vrai côté front où les contraintes de chargement de fichiers sont fortes. Et si vous voulez diviser votre bundle en plusieurs fichiers ou si vous voulez des règles d’optimisation complexes pour votre build, il est normal de devoir mettre les mains dans le cambouis.
@@ -1525,8 +1525,8 @@ Mais dans la pratique, nous migrons vers la solution <code>npm + browserify</cod
 Je n’estime pas être un expert du sujet, il y a sûrement beaucoup de choses à compléter ou préciser, donc n’hésitez pas à réagir.</p>
 <p>Pour aller plus loin et regarder vers le futur que nous amène ES6, il y a cet <a href="https://medium.com/@brianleroux/es6-modules-amd-and-commonjs-c1acefbe6fc0" >excellent article</a>.</p>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/js/etat-lieux-js-modulaire-front/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/js/etat-lieux-js-modulaire-front/</guid>
+            <link>http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/</guid>
             <pubDate>Mon, 15 Dec 2014 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -1536,31 +1536,31 @@ Mais il faut bien reconnaître que l’exemple était très simple et que, du co
 Pour se  rattraper, on va complexifier un peu les choses.</p>
 <p>Tout comme dans l’article précédent, nous détaillerons régulièrement les concepts mis en œuvre. Parce que vous le valez bien.</p>
 <h2 id="sommaire">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#sommaire">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#sommaire">#</a>
       Sommaire
     </h2><ul>
-<li><a href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#edition-d-une-serie" >Édition d’une série</a><ul>
-<li><a href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#routes-imbriquees" >Routes imbriquées</a></li>
-<li><a href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#-code-outlets-code-" >Outlets</a></li>
-<li><a href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#liens-entre-routes" >Liens entre routes</a></li>
-<li><a href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#enregistrement-des-modifications" >Enregistrement des modifications</a></li>
-<li><a href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#actions-sur-les-transitions" >Actions sur les transitions</a></li>
+<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#edition-d-une-serie" >Édition d’une série</a><ul>
+<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#routes-imbriquees" >Routes imbriquées</a></li>
+<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#-code-outlets-code-" >Outlets</a></li>
+<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#liens-entre-routes" >Liens entre routes</a></li>
+<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#enregistrement-des-modifications" >Enregistrement des modifications</a></li>
+<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#actions-sur-les-transitions" >Actions sur les transitions</a></li>
 </ul>
 </li>
-<li><a href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#relations-avec-ember-data" >Relations avec Ember Data</a></li>
-<li><a href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#insertion-d-un-gabarit" >Insertion d’un gabarit</a></li>
-<li><a href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#creation-d-une-nouvelle-serie" >Création d’une nouvelle série</a></li>
-<li><a href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#conclusion" >Conclusion</a></li>
+<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#relations-avec-ember-data" >Relations avec Ember Data</a></li>
+<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#insertion-d-un-gabarit" >Insertion d’un gabarit</a></li>
+<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#creation-d-une-nouvelle-serie" >Création d’une nouvelle série</a></li>
+<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#conclusion" >Conclusion</a></li>
 </ul>
 <h2 id="edition-d-une-serie">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#edition-d-une-serie">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#edition-d-une-serie">#</a>
       Édition d’une série
     </h2><p>On veut pouvoir basculer depuis la fiche d’une série vers son édition en mode <em>in place</em>. C’est-à-dire
 en <strong>remplaçant</strong> la zone de visualisation de cette fiche par sa zone d’édition.</p>
 <p>On accède à la fiche en mode visualisation à l’URL <code>/series/{id}/</code> et en mode édition à l’URL <code>/series/{id}/edit</code>. Évidemment, 
 on reconstruit uniquement la zone de la fiche et non l’application entière (et donc ni l’en-tête ni la liste des séries).</p>
 <h3 id="routes-imbriquees">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#routes-imbriquees">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#routes-imbriquees">#</a>
       Routes imbriquées
     </h3><p>Commençons par définir une nouvelle route <code>edit</code>, sous-route de <code>seriesItem</code> : </p>
 <pre><code class="lang-js"><span class="hljs-comment">// /app/router.js</span>
@@ -1604,7 +1604,7 @@ répertoire <code>/app/templates/series/series-item/</code> :</p>
 défini une route imbriquée mais conservé le gabarit <code>/app/templates/series/series-item.hbs</code> inchangé. L’activation de la route <code>series.seriesItem</code> 
 affiche donc toujours ce gabarit, même dans le cas d’une sous-route telle que <code>series.seriesItem.edit</code>. </p>
 <h3 id="outlets">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#outlets">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#outlets">#</a>
       <code>outlets</code>
     </h3><p>La solution est à aller chercher du côté du concept d’<code>{{outlet}}</code> défini dans l’<a href="/posts/js/premiere-app-ember/#-code-outlet-code-et-routes-imbriquees" >article précédent</a>.
 Un <code>{{outlet}}</code> est nécessaire <strong>à chaque fois qu’on définit un niveau d’imbrication.</strong> Mais comme on veut quand même continuer à afficher la série à 
@@ -1635,7 +1635,7 @@ Et puisqu’on ne veut rien afficher de plus, son contenu se résume à un <code
 <p>Et voilà ! L’affichage de l’URL <code>/series/{@id}/</code> est inchangé alors que l’URL <code>/series/{@id}/edit</code> 
 affiche désormais le formulaire d’édition.</p>
 <h3 id="liens-entre-routes">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#liens-entre-routes">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#liens-entre-routes">#</a>
       Liens entre routes
     </h3><p>Pour pouvoir plus facilement basculer en mode édition, on ajoute un lien vers la route correspondante grâce à <code>link-to</code> 
 (cf. <a href="http://emberjs.com/guides/templates/links/" >doc officielle</a>).</p>
@@ -1651,7 +1651,7 @@ remplacer <code>this.route(&#39;seriesItem&#39;, ...</code> par <code>this.resou
 <p>On peut désormais éditer notre série. On remarque au passage que la modification du titre de la série le met également à jour en temps réel dans la liste des séries grâce
 au <em>binding</em> (cf. <a href="/posts/js/premiere-app-ember/#-em-bindings-em-et-mise-a-jour-des-gabarits" >article précédent</a>).</p>
 <h3 id="enregistrement-des-modifications">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#enregistrement-des-modifications">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#enregistrement-des-modifications">#</a>
       Enregistrement des modifications
     </h3><p>Nous allons maintenant rendre opérationnels nos deux boutons d’édition <em>annuler</em> et <em>valider</em>. Pour cela, on commence par associer des actions à nos boutons :</p>
 <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- /app/templates/series/series-item/edit.hbs` --&gt;</span>
@@ -1698,7 +1698,7 @@ exécuté avant la fin du traitement et ne permettrait pas de proposer un retour
 <li>Les transitions entre routes sont possibles via <code>this.transitionTo(&#39;nomRoute&#39;)</code>.</li>
 </ul>
 <h3 id="actions-sur-les-transitions">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#actions-sur-les-transitions">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#actions-sur-les-transitions">#</a>
       Actions sur les transitions
     </h3><p>Mais je voudrais encore ajouter une dernière petite cerise sur ce gâteau : annuler automatiquement toutes les modifications effectuées
 sur la série dès que l’on quitte la route. <a href="http://emberjs.com" >Ember</a> prévoit en effet des mécanismes avancés pour travailler sur les transitions entre 
@@ -1715,7 +1715,7 @@ routes (cf. <a href="http://emberjs.com/guides/routing/preventing-and-retrying-t
 <p>L’action est très simple ici mais on imagine facilement comment on pourrait ajouter une confirmation et déterminer, en fonction
 de la réponse, si l’on doit continuer la transition ou l’abandonner.</p>
 <h2 id="relations-avec-ember-data-ember-data">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#relations-avec-ember-data-ember-data">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#relations-avec-ember-data-ember-data">#</a>
       Relations avec <a href="https://github.com/emberjs/data" >Ember Data</a>
     </h2><p><a href="https://github.com/emberjs/data" >Ember Data</a> permet de définir des relations entre nos modèles. Ajoutons donc des albums à nos séries :</p>
 <p>On définit d’abord une nouvelle entité <code>Album</code> et ses propriétés et on indique que cet album était associé à une série via la propriété <code>series</code> 
@@ -1779,7 +1779,7 @@ SeriesItem.reopenClass({
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> SeriesItem;
 </code></pre>
 <h2 id="insertion-d-un-gabarit">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#insertion-d-un-gabarit">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#insertion-d-un-gabarit">#</a>
       Insertion d’un gabarit
     </h2><p>Maintenant qu’on a des albums pour nos séries, on serait bien intéressé de les voir s’afficher. Seulement voilà, on veut juste les
 afficher à côté de la visualisation d’une série. On ne veut rien proposer d’autre pour ces albums que le <em>binding</em> des propriétés et
@@ -1814,7 +1814,7 @@ d’insérer (d’afficher) un gabarit au sein d’une route existante via le <e
 <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
 </code></pre>
 <h2 id="creation-d-une-nouvelle-serie">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#creation-d-une-nouvelle-serie">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#creation-d-une-nouvelle-serie">#</a>
       Création d’une nouvelle série
     </h2><p>Histoire de terminer en beauté on va ajouter vite fait la création d’une série.</p>
 <p>Comme on commence à avoir l’habitude, on fait ça en deux coups de cuillère à pot : </p>
@@ -1880,7 +1880,7 @@ renvoient vers d’autres routes.</li>
 de l’article mais pourrait être envisagé à l’aide d’un <code>mixin</code> partagé (cf. <a href="http://emberjs.com/api/classes/Ember.Mixin.html" >doc officielle</a>).  </li>
 </ul>
 <h2 id="conclusion">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/#conclusion">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#conclusion">#</a>
       Conclusion
     </h2><p>Au travers de cet article et des précédents, j’espère vous avoir donné un aperçu du modèle de développement que propose
 <a href="http://emberjs.com" >Ember</a>. Vous avez compris, j’espère, qu’<a href="http://emberjs.com" >Ember</a> est un véritable framework avec des opinions fortes et qu’il doit être pris comme
@@ -1891,15 +1891,15 @@ des configurations explicites afin d’aller plus loin que les conventions par d
 <p>Maintenant, vous n’avez plus d’excuses… Vous ne pourrez pas dire que vous ne connaissiez pas. </p>
 <p><em>Note: les sources de l’application exemple sont <a href="https://github.com/bmeurant/ember-articles/tree/premiere-app-ember-suite" >disponibles sur github</a>.</em></p>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/js/premiere-app-ember-suite/</guid>
+            <link>http://putaindecode.fr/posts/js/premiere-app-ember-suite/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/js/premiere-app-ember-suite/</guid>
             <pubDate>Tue, 09 Dec 2014 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[L'injection de dépendances en PHP]]></title>
             <description><![CDATA[<p>Salutations ! Aujourd’hui, je suis venu te parler de PHP (sisi), et notamment du mécanisme d’injection de dépendances avec lequel tu n’es peut-être pas familier. Au menu, des objets, des usines et des conteneurs, alors enfile ton bonnet et tes gants, on va bouger du bordel !</p>
 <h2 id="l-injection-de-dependances-c-est-quoi-ce-truc">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/php/injection-dependances/#l-injection-de-dependances-c-est-quoi-ce-truc">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/php/injection-dependances/#l-injection-de-dependances-c-est-quoi-ce-truc">#</a>
       L’injection de dépendances ? C’est quoi ce truc ?
     </h2><p>Si tu fais de la programmation orientée objet, il est fort probable que ce terme ne te soit pas totalement inconnu. En PHP, on a principalement commencé à nous en rebattre les oreilles avec l’avènement de Symfony, qui est aujourd’hui le framework web majeur pour ce langage. Fabien Potencier, créateur et <em>lead developer</em> de Symfony, cite en exemple sur <a href="http://fabien.potencier.org/article/11/what-is-dependency-injection" >son blog</a> cette définition :</p>
 <blockquote>
@@ -1974,7 +1974,7 @@ des configurations explicites afin d’aller plus loin que les conventions par d
 </blockquote>
 <p>Si telle est ton opinion, <del>tu ne mérites pas de vivre</del> je t’invite à poursuivre la lecture de cet article avec l’entrain qui te caractérise.</p>
 <h2 id="l-usine-a-la-rescousse">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/php/injection-dependances/#l-usine-a-la-rescousse">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/php/injection-dependances/#l-usine-a-la-rescousse">#</a>
       L’usine à la rescousse
     </h2><p>Je ne sais pas si tu sais, mais il existe un <em>design pattern</em> assez répandu en programmation orientée objet que l’on nomme <strong>factory</strong> (usine en français, d’où le titre pourrave de cette partie).</p>
 <p>En gros, le principe est de créer une classe dont le rôle est d’instancier d’autres classes, précisément dans le cas où une telle tâche demande plusieurs lignes de code, afin justement d’éviter de répéter celles-ci. Pour reprendre notre exemple :</p>
@@ -2007,7 +2007,7 @@ des configurations explicites afin d’aller plus loin que les conventions par d
 </code></pre>
 <p>Tu t’imagines faire ce genre de chose dans la classe <code>Person</code> ou la classe <code>Address</code> ? J’espère bien que non.</p>
 <h2 id="oui-ca-sert-a-quelque-chose-une-interface">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/php/injection-dependances/#oui-ca-sert-a-quelque-chose-une-interface">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/php/injection-dependances/#oui-ca-sert-a-quelque-chose-une-interface">#</a>
       Oui, ça sert à quelque chose une interface
     </h2><p>Dans tes souvenirs brumeux de vendredis matins étudiants (<em>cf. supra</em>), tu retrouveras peut-être des bribes de cours portant sur les <strong>interfaces</strong>. Si tout ce que tu as retenu, c’est qu’”une classe toute vide ça sert à rien”, lis donc ce qui va suivre.</p>
 <p>Une interface, c’est avant tout un contrat. Une classe qui <strong>implémente</strong> une interface s’engage à implémenter toutes les méthodes que celle-ci déclare. Sans même lire le code de ladite classe, on sait donc d’emblée comment on peut jouer avec et comment elle est censée fonctionner.</p>
@@ -2069,7 +2069,7 @@ des configurations explicites afin d’aller plus loin que les conventions par d
 </code></pre>
 <p>Tu vois l’idée ? En demandant une instance de n’importe quelle classe implémentant <code>AddressInterface</code> au lieu d’une instance d’<code>Address</code> spécifiquement, on se donne plus de mou et on réduit encore davantage le couplage entre nos classes. Qu’on crée une personne avec une instance d’<code>Address</code> ou de <code>BasicAddress</code>, on pourra dans tous les cas obtenir l’adresse postale de ladite personne de la même façon.</p>
 <h2 id="elle-contient-ta-fiancee-hein-mitch">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/php/injection-dependances/#elle-contient-ta-fiancee-hein-mitch">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/php/injection-dependances/#elle-contient-ta-fiancee-hein-mitch">#</a>
       Elle contient ta fiancée, hein Mitch ?
     </h2><p>Tu auras peut-être tiqué sur un détail du dernier exemple : le fait de ne pas faire de <code>PersonFactory</code> une classe statique (beurk) nous oblige à l’instancier pour pouvoir l’utiliser ; ce qui, à n’en pas douter, t’aura mené à te dire “arf, ça va m’en faire des <code>new MachinFactory()</code> pour instancier mes objets”. Là encore, l’injection de dépendances peut nous aider, quoique de manière indirecte : en utilisant un conteneur d’injection de dépendances.</p>
 <p>Un conteneur (ça sera plus court) peut <em>grosso modo</em> être comparé à une grosse <em>factory</em> capable d’instancier plusieurs classes. En pratique, afin d’éviter d’écrire et de devoir maintenir une classe monolithique, on en fera plutôt quelque chose qui fait appel aux différentes <em>factories</em>. Poursuivons sur notre exemple :</p>
@@ -2094,13 +2094,13 @@ des configurations explicites afin d’aller plus loin que les conventions par d
 </blockquote>
 <p>Pas nécessairement ! Il existe des mécanismes permettant de conserver une même instance pour la servir lors des appels suivants. Cela sort un peu du cadre de cet article, mais je t’invite vivement à jeter un oeil à <a href="http://php-di.org/" >PHP-DI</a>, qui est un conteneur d’injection de dépendances très bien fichu que tu peux utiliser dans ton projet si tu le souhaites.</p>
 <h2 id="epilogue">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/php/injection-dependances/#epilogue">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/php/injection-dependances/#epilogue">#</a>
       Épilogue
     </h2><p>Si tu développes en PHP, j’espère t’avoir montré qu’il est possible d’écrire du code plus maintenable et plus élégant en utilisant l’injection de dépendances. Dans le cas contraire, sache que ce concept est très répandu dans les langages orientés objet d’une manière générale - après tout, <a href="https://docs.angularjs.org/guide/di" >on en retrouve même dans Angular</a>.</p>
 <p>Bon code, et n’oublie pas, on ne met pas en prod le vendredi, c’est mal. Allez, file !</p>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/php/injection-dependances/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/php/injection-dependances/</guid>
+            <link>http://putaindecode.fr/posts/php/injection-dependances/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/php/injection-dependances/</guid>
             <pubDate>Wed, 05 Nov 2014 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -2119,7 +2119,7 @@ eux qui ont donné leurs noms aux <code>(Gulp|Grunt|Rake)files</code>). Les inst
 qu’ils contiennent sont exécutées grâce à la commande <code>make</code> dans votre
 terminal.</p>
 <h1 id="hello-world">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#hello-world">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#hello-world">#</a>
       Hello World
     </h1><p>Je vous propose de commencer en douceur par un classique <em>Hello World</em>. On va
 simplement définir une tâche <code>hello-world</code> dont l’action va être d’afficher
@@ -2152,7 +2152,7 @@ préfixer la ligne à rendre silencieuse par un <code>@</code>, comme ça :</p>
 <span class="hljs-constant">Hello,</span> world
 </code></pre>
 <h1 id="regles-cibles-recettes-et-pre-requis">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#regles-cibles-recettes-et-pre-requis">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#regles-cibles-recettes-et-pre-requis">#</a>
       Règles, cibles, recettes et pré-requis
     </h1><p>OK, jusque là c’est génial, on a un super outil pour lancer des commandes qu’on
 pourrait déjà stocker dans un bête script shell. Pas super utile finalement.</p>
@@ -2182,7 +2182,7 @@ sauter-une-ligne:
 </code></pre>
 <p>Facile, non ? Ok alors on peut <em>vraiment</em> attaquer les choses sérieuses.</p>
 <h1 id="construire-des-fichiers">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#construire-des-fichiers">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#construire-des-fichiers">#</a>
       Construire des fichiers
     </h1><p>Les pré-requis sont particulièrement pratiques quand on veut construire un
 fichier depuis un autre, ce qui est la principale action d’à peu près tout
@@ -2208,7 +2208,7 @@ fichiers, qui à leur tour dépendent de fichiers, …</p>
 elle-même dépend de plusieurs fichiers (<code>website: index.html apropos.html
 contact.html</code>).</p>
 <h1 id="variables-et-substitutions">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#variables-et-substitutions">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#variables-et-substitutions">#</a>
       Variables et substitutions
     </h1><p>La syntaxe des variables dans un <em>Makefile</em> ressemblent beaucoup aux variables
 de votre Shell, <em>mais pas tout à fait</em>.</p>
@@ -2243,7 +2243,7 @@ construire la dépendance <code>index.md</code> avant tout.</p>
 <p>Un problème se pose à nous avec cette syntaxe : « Bah merde, comment je récupère
 les noms de fichiers là ? »</p>
 <h1 id="variables-speciales">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#variables-speciales">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#variables-speciales">#</a>
       Variables spéciales
     </h1><p>Superbe transition étant donné qu’on va parler ici de quelques variables
 spéciales bien pratiques !</p>
@@ -2260,7 +2260,7 @@ là où est la dépendance).</li>
   [...]
 </code></pre>
 <h1 id="fonctions">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#fonctions">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#fonctions">#</a>
       Fonctions
     </h1><p>Pour faciliter quelques opérations, <em>Make</em> fournit un ensemble de fonctions de
 base. Appeler ces fonctions rappelle un peu la façon dont on lance une commande
@@ -2284,10 +2284,10 @@ simple comme on a vu précédemment.</p>
 <p>Je vous invite à fouiller
 <a href="https://www.gnu.org/software/make/manual/make.html#Functions" >le chapitre sur les fonctions du manuel</a>.</p>
 <h1 id="la-cible-phony">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#la-cible-phony">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#la-cible-phony">#</a>
       La cible <code>.PHONY</code>
     </h1><p>Dans certains cas la cible d’une règle ne représente pas un fichier (c’était le
-cas de notre cible <code>website</code> <a href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#ref-phony-target" >un peu plus haut</a>).</p>
+cas de notre cible <code>website</code> <a href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#ref-phony-target" >un peu plus haut</a>).</p>
 <p>Dans ces cas-là, on va vouloir exécuter la règle quoi qu’il arrive, comme si la
 cible était tout le temps périmée.</p>
 <p>Une cible particulière existe pour ça : <code>.PHONY</code>. Toutes les dépendances de
@@ -2302,7 +2302,7 @@ website: index<span class="hljs-class">.html</span> apropos<span class="hljs-cla
 <p>Désormais, chaque appel à <code>make website</code> tentera de construire les dépendances
 et exécutera les commandes de la recette de la règle.</p>
 <h1 id="un-exemple-complet">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#un-exemple-complet">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#un-exemple-complet">#</a>
       Un exemple complet
     </h1><p>L’exemple suivant permet de compiler un site Web depuis un ensemble de fichiers
 <em>Markdown</em>.</p>
@@ -2326,7 +2326,7 @@ build/%.<span class="hljs-symbol">html:</span> src/%.md
 <p>Vous noterez que comme on stocke nos résultats dans le dossier <code>build</code>, il faut
 potentiellement le créer quand on compile un fichier dedans.</p>
 <h1 id="pour-aller-plus-loin">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/#pour-aller-plus-loin">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#pour-aller-plus-loin">#</a>
       Pour aller plus loin
     </h1><p>Il existe bien d’autres fonctionnalités dans <em>Make</em> (du moins dans <em>GNU Make</em>),
 avec notamment :</p>
@@ -2350,14 +2350,14 @@ source d’idées.</p>
 que vous êtes fin prêts à affronter tous ces bouseux avec leur système de build
 à base de streams, de brocolis et autres râteaux.</p>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/shell/apprendre-les-makefiles/</guid>
+            <link>http://putaindecode.fr/posts/shell/apprendre-les-makefiles/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/shell/apprendre-les-makefiles/</guid>
             <pubDate>Mon, 03 Nov 2014 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[L'auto-entrepreneuriat : retour d'expériences]]></title>
             <description><![CDATA[<figure>
-  <img src="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/index.jpg" alt="Desktop">
+  <img src="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/index.jpg" alt="Desktop">
   <small><a href="http://freebiesxpress.com/gallery/macbook-air-table-direct-stock-photo/" >Credit photo</a></small>
 </figure>
 
@@ -2367,23 +2367,23 @@ que vous êtes fin prêts à affronter tous ces bouseux avec leur système de bu
 <p>Étudiant(e) ? Cela peut sérieusement vous aider à financer (malheureusement ?) vos études ou à être plus indépendant(e) de vos parents.</p>
 <p>Tant de raisons qui peuvent vous pousser à vous ouvrir à l’auto-entreprise. Et pour ça, <a href="http://kud.io/" >_kud</a> et <a href="http://moox.io/" >MoOx</a> ont vécu cette expérience et vous proposent de répondre à quelques questions pour vous faire une petite idée.</p>
 <h2 id="pourquoi-avez-vous-cree-votre-entreprise">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#pourquoi-avez-vous-cree-votre-entreprise">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#pourquoi-avez-vous-cree-votre-entreprise">#</a>
       Pourquoi avez-vous créé votre entreprise ?
     </h2><h5 id="_kud">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud">#</a>
       <strong>_kud</strong>
     </h5><p>Étant déjà en CDI et étant souvent sollicité pour créer des petits sites à droite à gauche, je voulais m’initier à plusieurs choses comme la création d’entreprise, l’indépendance, me confronter à l’administration et surtout gérer un client.</p>
 <p>Et puis bon, cela me permettait aussi d’avoir un petit bonus non désagréable en fin de mois.</p>
 <h5 id="moox">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox">#</a>
       <strong>MoOx</strong>
     </h5><p><em>Travailler plus pour gagner plus</em>, au départ ça devait être pour cette raison. Je n’avais pas de quoi frimer à la sortie de l’école, et je pouvais encore moins me payer de la blanche. Il me fallait donc une solution (rires). Plus sérieusement, dans le fond, tout comme Erwann, j’avais sûrement envie de tester un modèle plus indépendant que le CDI, en attendant que <a href="http://revenudebase.info/comprendre-le-revenu-de-base/" >le revenu de base</a> vienne bien démolir le modèle actuel.</p>
 <h2 id="comment-s-inscrire">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#comment-s-inscrire">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#comment-s-inscrire">#</a>
       Comment s’inscrire ?
     </h2><p>C’est relativement simple. Il faut aller sur le <a href="http://www.lautoentrepreneur.fr/" >site de l’auto-entrepreneur</a> et remplir le formulaire.</p>
 <h5 id="_kud-2">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud-2">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud-2">#</a>
       <strong>_kud</strong>
     </h5><p>En ce qui me concerne, j’ai choisi “Prestations de services informatiques”, ce qui me permettait d’être plutôt libre sur mes actions :</p>
 <ul>
@@ -2392,22 +2392,22 @@ que vous êtes fin prêts à affronter tous ces bouseux avec leur système de bu
 <li>faire de la réparation (même si ce n’est pas vraiment un cas que je souhaitais envisager).</li>
 </ul>
 <h5 id="moox-2">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox-2">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox-2">#</a>
       <strong>MoOx</strong>
     </h5><p>Dans la pratique, l’inscription peut en effet être très rapide. Cela dit, je me rappelle m’être pris la tête avec le choix des mutuelles (choix qui, si tu as déjà un CDI, ne sert pas vraiment à grand-chose à ce que j’ai fini par comprendre).
 Pour ce qui est du code, j’avais pris “Programmation informatique” (6201Z)  car je ne regardais pas vraiment plus loin que le bout de mon nez à l’époque (2010). Après, on n’ira pas vous ennuyer avec ça, je pense.</p>
 <h2 id="qu-avez-vous-fait-avec">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#qu-avez-vous-fait-avec">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#qu-avez-vous-fait-avec">#</a>
       Qu’avez vous fait avec ?
     </h2><h5 id="_kud-3">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud-3">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud-3">#</a>
       <strong>_kud</strong>
     </h5><p>C’est une bonne question.</p>
 <p>J’ai passé quelques soirées et week-end à faire des sites en urgence, chose pas forcément agréable car peu d’apprentissage côté technologie… Mais par contre gérer le client était très passionnant.</p>
 <p>J’ai aussi, à ma surprise, réussi à donner des cours. Deux fois. Une fois une semaine avec des licences sur le thème de la création de sites mobiles en <em>single page</em> avec du <a href="http://backbonejs.org/" >backbone.js</a> entre autres. Une autre fois à des gens en reconversion. Le but était de leur apprendre à créer leur propre site web (statique) ainsi qu’à comprendre (brièvement) comment marchaient Internet et le Web. J’ai tout bonnement <strong>adoré</strong>.</p>
 <p>(Je sens que MoOx va encore dire “pareil qu’Erwann”…)</p>
 <h5 id="moox-3">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox-3">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox-3">#</a>
       <strong>MoOx</strong>
     </h5><p>Pareil qu’Erwann (<strong>_kud</strong>: <em>bingo</em>), au début c’était forfait soir et week-end de temps en temps. J’ai pris quelques petits projets sur mesure ou “du WordPress pour manger” (2 fois seulement je le jure).
 Ensuite ça m’a fatigué mine de rien, puis j’avais d’autres priorités même si mon seul salaire en CDI pour nourrir 2 bouches était juste. J’ai donc arrêté un moment, sans pour autant fermer l’AE (étant donné qu’au début, 0 CA = 0 charge).
@@ -2426,25 +2426,25 @@ Mais c’était sans compter que l’Internet, c’est un réseau mondial. Avec 
 <p>Pour l’anecdote, je n’ai demandé les indemnités de chômage que deux mois seulement sur près d’un an en situation freestyle (avant que je change pour un vrai statut).</p>
 <p>Du coup, pour moi l’AE aura été une bonne transition entre CDI, situation précaire et ma situation actuelle de freelance. J’ai bien entendu changé rapidement de statut depuis (pour passer simplement à l’AE Level 2, l’<a href="http://www.apce.com/pid1628/l-entreprise-individuelle.html?espace=1&amp;tp=1" >entreprise individuelle</a>.</p>
 <h2 id="que-deviez-vous-declarer">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#que-deviez-vous-declarer">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#que-deviez-vous-declarer">#</a>
       Que deviez-vous déclarer ?
     </h2><p>Oui, parce que c’est bien beau tout ça mais qui dit statut administratif dit déclaration.</p>
 <h5 id="_kud-4">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud-4">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud-4">#</a>
       <strong>_kud</strong>
     </h5><p>Tous les trimestres, je me devais de <a href="http://www.net-entreprises.fr/" >déclarer</a> ce que je facturais à mes clients et je payais directement mes impôts via le versement libératoire.</p>
 <p>Bon, je vous avoue que j’ai mis du temps à comprendre où je devais déclarer car vous avez trois champs à remplir, et quand vous ne comprenez rien au charabia administratif, c’est pas super facile.</p>
 <p>Bref, une fois que vous avez déclaré vos revenus, un impôt se calcule automatiquement et vous êtes débité(e) à la date indiquée.</p>
 <p>Plutôt simple dans l’idée.</p>
 <h5 id="moox-4">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox-4">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox-4">#</a>
       <strong>MoOx</strong>
     </h5><p>J’avais choisi aussi le versement libératoire, même constat. Il ne faut pas hésiter à prendre le téléphone pour obtenir une réponse pertinente au plus vite sans perdre de temps. Se rendre sur place dans le lieu adéquat est encore une meilleure idée pour être sûr de ne pas se tromper.</p>
 <h2 id="avez-vous-eu-des-surprises">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#avez-vous-eu-des-surprises">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#avez-vous-eu-des-surprises">#</a>
       Avez-vous eu des surprises ?
     </h2><h5 id="_kud-5">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud-5">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud-5">#</a>
       <strong>_kud</strong>
     </h5><p>Tout d’abord, ce qui est quelque peu déstabilisant, c’est la quantité de courriers reçus. Prévoyances, mutuelles, maaaaaass papiers. En fait, c’est pas tant la quantité qui déstabilise, ce sont plutôt les propos. “Vous avez créé une entreprise, c’est bien. Savez-vous que vous êtes dans l’obligation de souscrire à une mutuelle/prévoyance ?!”.</p>
 <p>Si vous n’êtes pas un tant soit peu renseigné(e), vous tomberez dans le piège et vous souscrirez à des choses dont vous n’avez pas du tout besoin.</p>
@@ -2458,39 +2458,39 @@ Mais c’était sans compter que l’Internet, c’est un réseau mondial. Avec 
 <p>Explication. Si vous étiez de base à 10 % sur le revenu en impôts sur votre CDI, le fait que vous soyez en auto-entrepreneur et que vous gagniez de l’argent fait que votre quotient familial sera plus important et donc vous augmenterez le taux d’imposition sur votre CDI qui sera par exemple à 13,5 %, au lieu de 10 % initiaux. Ce qui ne vous fera finalement pas un impôt à 23,5 % sur votre activité d’AE (que vous payez directement chaque trimestre) mais plutôt 30 % du fait d’avoir un travail à côté.</p>
 <p>C’est tout à fait normal me direz-vous vu qu’il doit bien y avoir une différence entre une personne qui n’a que l’AE et une personne ayant déjà un job. Mais c’est juste que ce n’était pas du tout prévu dans mes calculs et en connaissance de cause, j’aurais sûrement augmenté mes tarifs AE.</p>
 <h5 id="moox-5">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox-5">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox-5">#</a>
       <strong>MoOx</strong>
     </h5><p>Ce qui m’a le plus surpris aussi c’est l’impression de me transformer en fichier vendu : je me suis aussi retrouvé à recevoir plein de courriers d’entreprise en tout sens. C’est d’un pénible…</p>
 <p>J’avais choisi aussi le versement libératoire, et mon faible revenu pour 2 parts à l’époque n’avait pas eu d’impact puisque je ne payais même pas d’impôts.</p>
 <h2 id="si-vous-l-avez-arrete-pourquoi">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#si-vous-l-avez-arrete-pourquoi">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#si-vous-l-avez-arrete-pourquoi">#</a>
       Si vous l’avez arrêté, pourquoi ?
     </h2><h5 id="_kud-6">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud-6">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud-6">#</a>
       <strong>_kud</strong>
     </h5><p>Je n’avais plus assez de temps pour moi. Les démarches m’ont un peu saoulé (même s’il y en avait vraiment pas beaucoup mais devoir constamment déclarer même si vous êtes à 0 € sous peine d’avoir une amende, ça fait chier).</p>
 <p>Je n’ai pas non plus apprécié voir mon taux d’impôts sur le revenu augmenter, c’était pas ce qui était “vendu” lorsque ce statut m’a été présenté.</p>
 <p>Et puis, je risquais de payer <a href="http://vosdroits.service-public.fr/professionnels-entreprises/F23547.xhtml" >la taxe CFE</a> d’ici l’année prochaine. Chose d’ailleurs qui n’est toujours pas claire d’après ce que je peux lire sur Internet : les AE ne savent toujours pas si la CFE va devoir être payée ou non.</p>
 <p>J’ai surtout constaté que je souhaitais avant tout donner des cours et à ce sujet, on m’a proposé une offre plus avantageuse que le statut d’AE, donc…</p>
 <h5 id="moox-6">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox-6">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox-6">#</a>
       <strong>MoOx</strong>
     </h5><p>Comme indiqué plus tôt, j’ai été limité par le plafond, j’ai donc passé la vitesse supérieure via une EI !</p>
 <h2 id="comment-arreter">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#comment-arreter">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#comment-arreter">#</a>
       Comment arrêter
     </h2><p>Aller sur le site de l’<a href="https://www.cfe.urssaf.fr/autoentrepreneur/CFE_Bienvenue" >AE</a> puis cliquer sur “Cesser définitivement votre activité” tout en bas. Un formulaire vous sera proposé où vous rentrerez vos informations puis il vous sera demandé de l’imprimer. Signez-le et envoyez-le à l’adresse uniquement (avec accusé de réception vivement conseillé).</p>
 <p>Vous recevrez dans les jours suivants un courrier de l’URSSAF vous indiquant que vous avez bien été radié(e).</p>
 <p>Oh et vous recevrez aussi du courrier de mutuelles ou prévoyances, comme d’habitude, à jeter. Du début à la fin, ils vous feront chier.</p>
 <h2 id="conclusion">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#conclusion">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#conclusion">#</a>
       Conclusion
     </h2><p>L’AE reste un très bon moyen de s’initier au freelance, à la création d’entreprise sans trop de risque. Les démarches sont plutôt simples, vous n’avez pas besoin de comptable, et l’impôt est de l’ordre de 23 % à 35 % en fonction de votre situation professionnelle initiale, ce qui est tout reste tout de même bien moins important que freelance ou une “vraie” entreprise.</p>
 <p>N’hésitez pas à vous en servir pour sortir de votre zone de confort !</p>
 <p>Dans tous les cas, si vous souhaitez en savoir plus, n’hésitez pas à aller sur <a href="http://www.economie.gouv.fr/cedef/auto-entrepreneur" >le site du gouvernement</a>.</p>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</guid>
+            <link>http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</guid>
             <pubDate>Thu, 30 Oct 2014 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -2501,7 +2501,7 @@ avec <a href="http://emberjs.com" >Ember</a>.</p>
 <p>Bon, faut pas non plus trop vous emballer, c’est juste une application bateau de gestion d’une collection de BD. 
 Ça pourrait être des clients, des légumes ou des timbres mais là, c’est des BD.</p>
 <h2 id="structure-d-une-application-ember">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember/#structure-d-une-application-ember">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember/#structure-d-une-application-ember">#</a>
       Structure d’une application Ember
     </h2><p>L’<a href="/posts/js/debuter-avec-ember" >article précédent</a> a insisté sur le fait qu’<a href="http://emberjs.com" >Ember</a> était un framework avec des partis pris forts et un modèle de développement structurant. </p>
 <p><em>Note : sur ce sujet, vu que <a href="/posts/js/debuter-avec-ember/#comment-1644383934" >ça fait réagir</a>, je précise. Je ne dis pas que c’est bien ou que ce n’est pas bien.
@@ -2509,7 +2509,7 @@ Je dis juste que c’est une caractéristique importante d’<a href="http://emb
 <p>Eh bien, aussi étonnant que cela puisse paraître, <a href="http://emberjs.com" >Ember</a> <strong>nous laisse quand même nous débrouiller tout seul comme des grands pour organiser nos applications</strong>.</p>
 <p>Il existe donc différentes manières de structurer une application <a href="http://emberjs.com" >Ember</a>, de la plus basique à la plus complète et, sur ce point, chacun pourra trouver ce qui conviendra le mieux à ses goûts, ses envies, ses contraintes, son contexte… Que sais-je ? Ci-dessous, quelques exemples parmi d’autres.</p>
 <h3 id="a-la-mano">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember/#a-la-mano">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember/#a-la-mano">#</a>
       À la mano
     </h3><p>De base, avec <a href="http://emberjs.com" >Ember</a> on peut donc déclarer nos routes, contrôleurs, modèles, etc. dans un seul fichier JavaScript ou dans une balise <code>&lt;script&gt;</code>. On doit par contre impérativement respecter les <a href="http://emberjs.com/guides/concepts/naming-conventions/" >conventions de nommage</a> et enregistrer nos objets dans une variable globale : </p>
 <pre><code class="lang-js">App = Ember.Application.create();
@@ -2530,7 +2530,7 @@ App.BookRoute = Ember.Route.extend({
 </span></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 </code></pre>
 <h3 id="outille">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember/#outille">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember/#outille">#</a>
       Outillé
     </h3><p>Comme on peut trouver ça un peu limité dans la vraie vie, on peut essayer d’organiser nous-même notre application, nos fichiers, gérer des modules, etc. Tout ça va passer par l’utilisation d’un outil de build javascript de type <a href="http://gruntjs.com/" >Grunt</a>, <a href="http://gulpjs.com/" >Gulp</a>, <a href="https://github.com/broccolijs/broccoli" >Broccoli</a>. Ces outils vont nous permettre
 de concaténer nos différents fichiers JavaScript en un seul, de sortir les gabarits dans des fichiers <code>.hbs</code> et de les précompiler. On n’aura ensuite qu’à importer ces fichiers dans notre index.html :</p>
@@ -2544,7 +2544,7 @@ de concaténer nos différents fichiers JavaScript en un seul, de sortir les gab
 <p>Ça peut convenir parfaitement et on peut se mitonner des phases de build aux petits oignons pour nos besoins spécifiques. Mais on peut aussi rester un peu sur sa faim. Surtout si on a choisi <a href="http://emberjs.com" >Ember</a> pour son côté structurant.</p>
 <p>Du coup, une partie des membres de l’équipe <a href="http://emberjs.com" >Ember</a> a mis au point <a href="http://www.ember-cli.com/" >Ember CLI</a>.</p>
 <h3 id="ember-cli">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember/#ember-cli">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember/#ember-cli">#</a>
       Ember CLI
     </h3><p><a href="http://www.ember-cli.com/" >Ember CLI</a> est une <strong>interface en ligne de commande</strong> pour <a href="http://emberjs.com" >Ember</a>. Elle repose
 sur l’outil de build <a href="https://github.com/broccolijs/broccoli" >Broccoli</a> et permet : </p>
@@ -2577,13 +2577,13 @@ commande <code>ember</code> et voir ensuite une magnifique page de bienvenue sur
 <p>Je ne vous fais pas l’affront de détailler ici la structure de l’application, tout est décrit dans la 
 <a href="http://www.ember-cli.com/#folder-layout" >documentation</a>.</p>
 <h3 id="styles-fonts">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember/#styles-fonts">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember/#styles-fonts">#</a>
       Styles &amp; Fonts
     </h3><p>Pour que cela ne soit pas trop moche dans le cadre de cet exemple ou va ajouter un peu de CSS et des fonts mais comme c’est pas l’objet de l’article,
 on ne va pas passer de temps là-dessus. Ceci dit, comme il y a  quand même un peu de conf <a href="http://www.ember-cli.com/" >Ember CLI</a> qui peut vous intéresser, vous avez les styles 
 et la conf sur <a href="https://github.com/bmeurant/ember-articles/tree/premiere-app-ember" >GitHub</a> et l’explication dans ce <a href="https://gist.github.com/bmeurant/1bba49d8a12bf69a4cf0" >gist</a>.</p>
 <h2 id="et-maintenant-on-code">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember/#et-maintenant-on-code">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember/#et-maintenant-on-code">#</a>
       Et maintenant, on code !
     </h2><p><em>Note: le code de l’exemple est dispo sur <a href="https://github.com/bmeurant/ember-articles/tree/premiere-app-ember" >github</a>.</em></p>
 <ul>
@@ -2616,7 +2616,7 @@ Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span
 <p>L’URL <code>/series</code> est désormais accessible sur <a href="http://localhost:4200/series" >http://localhost:4200/series</a> et on peut constater l’imbrication du gabarit <code>series.hbs</code> dans le gabarit
 général <code>application.hbs</code> grâce à son <code>{{outlet}}</code>.</p>
 <h3 id="outlet-et-routes-imbriquees">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember/#outlet-et-routes-imbriquees">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember/#outlet-et-routes-imbriquees">#</a>
       <code>{{outlet}}</code> et routes imbriquées
     </h3><p>Ces notions sont au cœur d’<a href="http://emberjs.com" >Ember</a>. Leur fonctionnement est assez simple. Lorsqu’une route est imbriquée dans une autre,
 <a href="http://emberjs.com" >Ember</a> va rechercher les gabarits de ces deux routes et remplacer la zone <code>{{outlet}}</code> de la <em>route mère</em>
@@ -2626,7 +2626,7 @@ zones des <code>{{outlet}}</code> concernées par le changement sont mises à jo
 C’est ce qui explique que, dans le cas présent, le gabarit <code>series.hbs</code> ait été <em>injecté</em> dans <code>application.hbs</code> pour construire l’application 
 entière.</p>
 <h3 id="routes-et-controleurs-implicites">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember/#routes-et-controleurs-implicites">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember/#routes-et-controleurs-implicites">#</a>
       Routes et contrôleurs implicites
     </h3><p>Pour rappel, <a href="http://emberjs.com" >Ember</a> définit et utilise différents types d’objets ayant chacun une responsabilité propre (voir <a href="/posts/js/debuter-avec-ember" >article précédent</a>) et, pour ne pas
 nous obliger à fournir nous-même une implémentation par défaut de ces objets, les génère pour nous (voir <a href="/posts/js/debuter-avec-ember/#generation-d-objets" >article précédent - <em>Génération d’objets</em></a>).</p>
@@ -2653,7 +2653,7 @@ caractéristiques peuvent être trouvées dans la <a href="http://emberjs.com/gu
 la librairie <a href="https://github.com/emberjs/data" >Ember Data</a> pour la gestion de nos modèles. Ce n’est pas obligatoire
 et beaucoup font sans, mais nous on va l’utiliser quand même. </p>
 <h3 id="ember-data">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember/#ember-data">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember/#ember-data">#</a>
       Ember Data
     </h3><p>Cette librairie qui est développée en parallèle d’<a href="http://emberjs.com" >Ember</a> permet de gérer les modèles de données et les relations entre eux 
 à la manière d’un <a href="http://fr.wikipedia.org/wiki/Mapping_objet-relationnel" >ORM</a> (à la <a href="http://en.wikipedia.org/wiki/Active_record_pattern" >ActiveRecord</a>). 
@@ -2774,7 +2774,7 @@ des notations équivalentes.</p>
 </code></pre>
 <p>Ce simple ajout demande de s’arrêter sur quelques points importants, histoire de bien comprendre ce qui se passe.</p>
 <h3 id="types-de-controleurs">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember/#types-de-controleurs">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember/#types-de-controleurs">#</a>
       Types de contrôleurs
     </h3><p>Nous avons dû remplacer le <code>SeriesController</code> implicite par notre propre contrôleur, histoire de proposer cette fonction de tri. <a href="http://emberjs.com" >Ember</a>
 dispose de deux types de contrôleurs : <a href="http://emberjs.com/api/classes/Ember.ObjectController.html" >ObjectController</a> et <a href="http://emberjs.com/api/classes/Ember.ArrayController.html" >ArrayController</a>.
@@ -2783,13 +2783,13 @@ Comme leur nom l’indique, ces contrôleurs permettent respectivement de gérer
 qui fournit des fonctions de tri natives. Il nous suffit donc d’initialiser et de mettre à jour la propriété <code>sortAscending</code> apportée par ce mixin pour bénéficier du tri sur notre
 collection de séries, sans avoir besoin d’autre chose.</p>
 <h3 id="actions">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember/#actions">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember/#actions">#</a>
       Actions
     </h3><p>La mise à jour de cette propriété est effectuée grâce à <code>{{action &quot;sort&quot;}}</code> qui nous permet de lier l’action sur le bouton (le clic) à une
 fonction <code>sort</code> du contrôleur définie dans <code>actions: { ... }</code>.</p>
 <p>-&gt; Plus d’infos sur les actions <a href="http://emberjs.com/guides/templates/actions/" >ici</a>.</p>
 <h3 id="bindings-de-classes-dynamiques">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember/#bindings-de-classes-dynamiques">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember/#bindings-de-classes-dynamiques">#</a>
       <em>Bindings</em> de classes dynamiques
     </h3><p>On remarque aussi la manière dont les classes de l’élément <code>button</code> sont liées aux propriétés du contrôleur de manière à être mises à
 jour dynamiquement grâce à <code>{{bind-attr class=&quot;...&quot;}}</code>. Cette syntaxe permet de basculer la classe du bouton de <code>asc</code> à <code>desc</code> automatiquement
@@ -2840,7 +2840,7 @@ actions: {
 ...
 </code></pre>
 <h3 id="proprietes-calculees">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember/#proprietes-calculees">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember/#proprietes-calculees">#</a>
       Propriétés calculées
     </h3><p>Je vous passe le contenu de la fonction <code>filteredModel</code> qui n’apporte rien au sujet. Examinons par contre la notation <code>.property(&#39;filter&#39;, &#39;sortAscending&#39;, &#39;model.@each.title&#39;)</code>. 
 Cela constitue la définition d’une <a href="http://emberjs.com/guides/object-model/computed-properties/" >propriété calculée</a> : propriété
@@ -2856,7 +2856,7 @@ la liste est mise à jour automatiquement.</p>
 l’application en conséquence. Les <a href="http://emberjs.com/guides/object-model/observers" >observeurs</a> en sont une troisième. Si vous avez un doute sur ce qu’il faut utiliser, allez
 voir <a href="http://emberjs.com/guides/object-model/what-do-i-use-when" >ici</a>.</p>
 <h3 id="bindings-et-mise-a-jour-des-gabarits">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember/#bindings-et-mise-a-jour-des-gabarits">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember/#bindings-et-mise-a-jour-des-gabarits">#</a>
       <em>Bindings</em> et mise à jour des gabarits
     </h3><p>Alors, comment ça marche ? Comment, concrètement, <a href="http://emberjs.com" >Ember</a> se débrouille pour mettre à jour le gabarit lors de la mise à jour d’un modèle, d’une propriété ? En réalité, lorsqu’on
 affiche dans un gabarit une propriété dynamique liée à un modèle ou à une propriété, <a href="http://emberjs.com" >Ember</a> va l’encadrer par des éléments HTML spéciaux, des marqueurs de type <code>&lt;script&gt;</code> d’id unique
@@ -2882,7 +2882,7 @@ jeter un œil à ce sujet à la <a href="http://talks.erikbryn.com/htmlbars/" >p
 <p><em><strong>Edit</strong>: Aujourd’hui (28/10/2014) est sortie la <a href="http://emberjs.com/blog/2014/10/26/ember-1-8-0-released.html" >version 1.8.0 d’Ember</a>. Cette release ne contient pas encore
 le support complet d’<a href="https://github.com/tildeio/htmlbars" >HTMLBars</a> mais signe déjà la fin des <code>metamorph</code> au profit de l’utilisation d’élements <code>Text</code> vides, non intrusifs ! Ça méritait d’être signalé.</em> </p>
 <h3 id="runloop">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember/#runloop">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember/#runloop">#</a>
       <em>RunLoop</em>
     </h3><p>Un autre mécanisme important est impliqué tant dans le rendu des gabarits que dans le calcul et la synchronisation des propriétés entre elles : la <em>RunLoop</em>. Ce mécanisme est
 absolument central dans le fonctionnement d’<a href="http://emberjs.com" >Ember</a> et s’appuie sur la lib <a href="https://github.com/ebryn/backburner.js/" >Backburner</a>. Dans la plupart des cas, vous n’avez pas
@@ -2960,7 +2960,7 @@ une ressource réinitialise l’espace de nommage et permet ainsi de simplifier 
 <li>on a ajouté un <em>segment dynamique</em> <code>{path: &#39;/:seriesItem_id&#39;}</code> à la route <code>seriesItem</code> pour l’ID de la série. -&gt; <a href="http://emberjs.com/guides/routing/defining-your-routes/#toc_dynamic-segments" >doc officielle</a>.</li>
 </ul>
 <h2 id="conclusions">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/premiere-app-ember/#conclusions">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember/#conclusions">#</a>
       Conclusions
     </h2><p>Cet article est un peu plus long que ce que j’avais prévu et je n’ai pas abordé tous les sujets que je voulais traiter. Mais, plutôt que de dérouler simplement du code pour montrer que ça marche, j’ai
 préféré m’arrêter sur les points importants pour en expliquer le fonctionnement. Ça me paraissait important. J’espère que ce n’était pas trop pénible à lire. Les points que je n’ai pas eu le temps
@@ -2974,17 +2974,17 @@ du scaffolding en général mais, au démarrage, ça peut donner une idée de la
 vous piquer les yeux. Désolé :-)</p>
 <p><em>Note: les sources de l’application exemple sont <a href="https://github.com/bmeurant/ember-articles/tree/premiere-app-ember" >disponibles sur github</a>.</em></p>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/js/premiere-app-ember/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/js/premiere-app-ember/</guid>
+            <link>http://putaindecode.fr/posts/js/premiere-app-ember/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/js/premiere-app-ember/</guid>
             <pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Flux, qu'est-ce que c'est ?]]></title>
             <description><![CDATA[<p>Allez, tant pis, on saute l’intro et on entre directement dans le vif du sujet (on n’a pas que ça à foutre, après tout).</p>
 <h2 id="la-petite-histoire">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/flux-qu-est-ce-c-est/#la-petite-histoire">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#la-petite-histoire">#</a>
       La petite histoire
-    </h2><p>Il était une fois un gros site web <em>que s’apelorio</em> Facebook. Qui dit Facebook, dit webapp plus grosse que la plus grosse de tes copines (<em>no offense</em> <sup><a href="http://0.0.0.0:4242/posts/js/flux-qu-est-ce-c-est/#foonote-1" >1</a></sup>) ; et du coup, propension à se retrouver submergé de bugs plus élevée.</p>
+    </h2><p>Il était une fois un gros site web <em>que s’apelorio</em> Facebook. Qui dit Facebook, dit webapp plus grosse que la plus grosse de tes copines (<em>no offense</em> <sup><a href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#foonote-1" >1</a></sup>) ; et du coup, propension à se retrouver submergé de bugs plus élevée.</p>
 <p>Les ingénieurs front-end de Facebook, confrontés à une codebase de plus en plus bordélique (personne ne voulant toucher certaines parties de celle-ci) ont dû repenser la structure des composants les plus cruciaux.</p>
 <p>Face à ce besoin, ces développeurs sont donc parvenus à deux solutions :</p>
 <ul>
@@ -2993,7 +2993,7 @@ vous piquer les yeux. Désolé :-)</p>
 </ul>
 <p>Flux n’est pas un framework, mais simplement une architecture, une sorte de <em>guideline</em> qui résout pas mal de problèmes ayant pu apparaître avec les divers bibliothèques et frameworks MV* apparus lors des dernières années.</p>
 <h2 id="flux-l-explication-claire">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/flux-qu-est-ce-c-est/#flux-l-explication-claire">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#flux-l-explication-claire">#</a>
       Flux, l’explication claire
     </h2><p>Flux comporte 4 concepts :</p>
 <ul>
@@ -3154,12 +3154,12 @@ vous piquer les yeux. Désolé :-)</p>
 <li>pour ce qui est du reste, notamment stocker les noms d’actions dans un objet partagé dans l’app, c’est pour rendre plus idiomatique et cohérente la façon dont on code l’app, et pour simplifier ses <em>refactoring</em>.</li>
 </ul>
 <h2 id="ce-qu-il-faut-savoir-sur-l-alliance-flux-react">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/flux-qu-est-ce-c-est/#ce-qu-il-faut-savoir-sur-l-alliance-flux-react">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#ce-qu-il-faut-savoir-sur-l-alliance-flux-react">#</a>
       Ce qu’il faut savoir sur l’alliance Flux + React
     </h2><p>Si React et Flux vont si bien ensemble, c’est que l’approche de rendu “naïf” de React (comprendre “React s’en fout de ce qui change, il appelle <code>render</code> à chaque changement”) permet de réduire la logique à écrire dans les Stores, et donc de simplifier très fortement la codebase de l’app.</p>
 <p>Lorsque qu’un ou plusieurs stores composent l’état d’un state React, alors à chaque changement de l’un de ces stores, tous les composants React concernés et leurs enfants vont appeler leur méthode <code>render()</code>. Afin d’éviter des appels superflus à ces méthodes, React donne la possibilité de tester soi-même s’il est nécessaire de mettre à jour le component en déclarant une méthode <code>shouldComponentUpdate</code> retournant un <code>boolean</code> qui stipulera si oui ou non il est nécessaire d’appeler <code>render()</code>.</p>
 <h2 id="tl-dr">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/flux-qu-est-ce-c-est/#tl-dr">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#tl-dr">#</a>
       tl;dr
     </h2><ul>
 <li>Flux, c’est comme du MVC en plus simple, et avec moins de bugs</li>
@@ -3180,25 +3180,25 @@ vous piquer les yeux. Désolé :-)</p>
   <a id="foonote-1"></a>1: <a href="https://www.youtube.com/watch?v=jRzv9gep5Ng&amp;t=4m" >Référence utile (<code>ntm install reference</code>)</a>
 </small></p>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/js/flux-qu-est-ce-c-est/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/js/flux-qu-est-ce-c-est/</guid>
+            <link>http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</guid>
             <pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[À la conquête des bugs]]></title>
             <description><![CDATA[<p>Le Web, depuis sa création est un vaste champ de bataille. Que ce soit les problèmes de compatibilités, les formats ou les langages propriétaires, la volonté de faire du Web un monde ouvert ne date pas d’hier.</p>
 <h2 id="au-depart">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/bug-webcompat/#au-depart">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/bug-webcompat/#au-depart">#</a>
       Au départ
     </h2><p>Les débuts du Web furent compliqués. On assista à une guerre entre Netscape et Microsoft. Chacun voulant dominer le marché, en tentant d’imposer ses propres technologies. En 1996, Netscape propose au W3C JSSS (JavaScript-Based Style Sheets). Ce n’est d’ailleurs que depuis novembre 2000 que Netscape, basé sur le moteur Gecko (moteur de Mozilla Firefox), prend véritablement en charge le CSS. Microsoft pour sa part ne supportait par JavaScript à ses débuts et avait développé son propre langage JScript.</p>
 <p>Ces problèmes de compatibilités, de technologies et de respect des normes vont considérablement ralentir l’évolution du Web.</p>
 <h2 id="les-petits-nouveaux">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/bug-webcompat/#les-petits-nouveaux">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/bug-webcompat/#les-petits-nouveaux">#</a>
       Les petits nouveaux
     </h2><p>L’arrivée des nouveaux navigateurs tels que Firefox, Chrome ou même Opera va inverser cette tendance. Les parts de marchés d’Internet Explorer baissant, les développeurs prenant conscience du potentiel du Web, vont déclencher une montée en puissance du Web.</p>
 <p>On pourrait croire que cette concurrence ne va apporter que des points positifs, mais pas tant que ça. Les parts de marchés vont pousser les navigateurs (ou les développeurs) à supporter des propriétés non standardisées, à mettre en place des préfixes et à développer une monoculture.</p>
 <h2 id="le-debut-des-problemes">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/bug-webcompat/#le-debut-des-problemes">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/bug-webcompat/#le-debut-des-problemes">#</a>
       Le début des problèmes
     </h2><p>Les préfixes bien que partis d’une bonne idée, avaient pour objectif d’introduire les nouvelles propriétés CSS  toujours à l’état de proposition/discussion/standardisation. Cela a permis de pouvoir utiliser des propriétés telles que  <code>border-radius</code>, <code>transform</code>, <code>box-shadow</code> bien avant leurs finalisations. Le risque bien entendu, étant d’utiliser des propriétés qui pouvaient changer de spécification, comme ce fut le cas par exemple pour <code>flexbox</code>.</p>
 <p>L’effet pervers a été aussi de ne pas utiliser tous les préfixes d’une propriété. Cela a eu pour conséquence de créer un Web (notamment sur le mobile) à deux facettes. Nous avions d’un coté les sites <code>-webkit</code> compatibles iPhone/iPad et le reste du monde.</p>
@@ -3206,7 +3206,7 @@ vous piquer les yeux. Désolé :-)</p>
 <p>Plusieurs discussions houleuses ont d’ailleurs eu lieu sur l’implémentation des propriétés <code>-webkit</code> dans les moteurs Gecko ou Presto. Idée abandonnée en cours de route.</p>
 <p>Coup de théatre <a href="http://blogs.msdn.com/b/ie/archive/2014/07/31/the-mobile-web-should-just-work-for-everyone.aspx" >récemment</a>, Microsoft a intégré dans son moteur certaines propriétés <code>-webkit</code> pour obtenir des sites Web mobiles (trop basés sur <code>-webkit</code>) compatibles avec Windows Phone 8.1.</p>
 <h2 id="un-debut-de-solution">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/bug-webcompat/#un-debut-de-solution">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/bug-webcompat/#un-debut-de-solution">#</a>
       Un début de solution ?
     </h2><p>C’est dans ce contexte qu’est née l’initiative <a href="http://webcompat.com" >webcompat.com</a>. Lancée initialement par des développeurs de chez <a href="https://hacks.mozilla.org/2014/06/introducing-webcompat-com/" >Mozilla</a> et quelques autres <a href="https://github.com/webcompat/webcompat.com/graphs/contributors" >contributeurs</a> en juin 2014.</p>
 <p>Le site a un double objectif : rendre le Web le plus compatible possible et éliminer les bugs.</p>
@@ -3217,8 +3217,8 @@ vous piquer les yeux. Désolé :-)</p>
 <p>Microsoft vient d’ailleurs de <a href="http://blogs.msdn.com/b/ie/archive/2014/07/31/the-mobile-web-should-just-work-for-everyone.aspx" >rejoindre</a> Mozilla sur l’initiative webcompat.com. En lançant leur dernière version de Window Phone 8.1 ils ont constaté les <a href="https://github.com/webcompat/web-bugs/issues?q=is%3Aissue+is%3Aopen+is%3Aclosed+label%3Aie" >dégâts</a> de la monoculture des sites mobile.</p>
 <p>Si comme eux, vous souhaitez rendre le Web plus compatible, n’hésitez pas à proposer votre aide. En effet, il est de notre responsabilité d’éviter tout monopole ou monoculture. Car même si les navigateurs ont leur part de responsabilité, nous, développeurs en avons une aussi.</p>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/bug-webcompat/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/bug-webcompat/</guid>
+            <link>http://putaindecode.fr/posts/bug-webcompat/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/bug-webcompat/</guid>
             <pubDate>Tue, 21 Oct 2014 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -3229,7 +3229,7 @@ faut que je prenne ?” Et, vu que c’est pas ça qui manque, ça se complique 
 ne se résume pas à prendre celui qui a le plus joli logo ou qui génère le plus de spam sur votre Twitter, on vous propose de découvrir 
 <a href="http://emberjs.com" >Ember</a>. Dans les posts à venir on verra comment construire concrètement une application avec ce framework.</p>
 <h2 id="les-fondamentaux">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/debuter-avec-ember/#les-fondamentaux">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#les-fondamentaux">#</a>
       Les fondamentaux
     </h2><p>Parce que l’approche “tête la première” c’est bien mais que comprendre un minimum ce qu’on fait c’est encore mieux, il me paraît sage de commencer
 par expliquer la philosophie et les principaux éléments du framework, sous peine de se prendre un bon vieux <a href="http://en.wikipedia.org/wiki/RTFM" >RTFM</a> 
@@ -3247,7 +3247,7 @@ un framework ! <a href="http://emberjs.com" >Ember</a> propose un véritable mod
 </li>
 </ul>
 <h3 id="conventions-de-nommage">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/debuter-avec-ember/#conventions-de-nommage">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#conventions-de-nommage">#</a>
       Conventions de nommage
     </h3><p>Ce modèle de développement commence par les conventions de nommage. <a href="http://emberjs.com" >Ember</a>
 applique en effet le principe de “<em>conventions over configuration</em>“ et repose sur un nommage cohérent des différents composants 
@@ -3256,7 +3256,7 @@ de votre application. Et finalement, quand on y réflechit bien, la cohérence, 
 Jusqu’ici, tout va bien.</p>
 <p>Curieux ? -&gt; <a href="http://emberjs.com/guides/concepts/naming-conventions/" >doc officielle</a>.</p>
 <h3 id="modeles">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/debuter-avec-ember/#modeles">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#modeles">#</a>
       Modèles
     </h3><p>Un modèle est un objet avec des propriétés contenant des données métier. Le modèle est ensuite passé au gabarit pour être rendu par lui
 en HTML. Typiquement, les modèles peuvent être récupérés d’un back end via une API REST JSON via <a href="https://github.com/emberjs/data" >Ember Data</a>
@@ -3271,7 +3271,7 @@ mais pas que.</p>
 </code></pre>
 <p>Assoifé de connaissances ? -&gt; <a href="http://emberjs.com/guides/models/" >doc officielle</a>.</p>
 <h3 id="routeur">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/debuter-avec-ember/#routeur">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#routeur">#</a>
       Routeur
     </h3><p>Le routeur permet de faire correspondre à une URL un ensemble de gabarits imbriqués permettant le rendu des modèles associés à 
 chacun de ces gabarits.</p>
@@ -3292,7 +3292,7 @@ chacun de ces gabarits.</p>
 });
 </code></pre>
 <h3 id="routes">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/debuter-avec-ember/#routes">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#routes">#</a>
       Routes
     </h3><p>Les routes associent un modèle à un gabarit et sont également impliquées dans les transitions entre les différentes URL (et donc les différents
 états) de l’application. Elles gèrent notamment un certain nombre d’opérations sur un modèle lors de ces transitions.</p>
@@ -3304,7 +3304,7 @@ chacun de ces gabarits.</p>
 </code></pre>
 <p>Intrigué ? -&gt; <a href="http://emberjs.com/guides/routing/" >doc officielle</a>.</p>
 <h3 id="controleurs">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/debuter-avec-ember/#controleurs">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#controleurs">#</a>
       Contrôleurs
     </h3><p>Le contrôleur gère l’état de l’application. Il est situé entre la route dont il récupère le modèle et le gabarit dont il répond aux appels.
 Les données du contrôleur sont accessibles au gabarit au même titre que le modèle.</p>
@@ -3322,13 +3322,13 @@ Les données du contrôleur sont accessibles au gabarit au même titre que le mo
 </code></pre>
 <p>Perdu ? -&gt; <a href="http://emberjs.com/guides/controllers/" >doc officielle</a>.</p>
 <h3 id="vues">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/debuter-avec-ember/#vues">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#vues">#</a>
       Vues
     </h3><p>Il est très rare d’avoir à définir des vues en <a href="http://emberjs.com" >Ember</a> parce que les gabarits <a href="http://handlebarsjs.com/" >Handlebars</a>
 sont surpuissants et que les contrôleurs se chargent de la gestion de l’état de l’application.</p>
 <p>Vous en voulez quand même ? -&gt; <a href="http://emberjs.com/guides/views/" >doc officielle</a>.</p>
 <h3 id="gabarits">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/debuter-avec-ember/#gabarits">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#gabarits">#</a>
       Gabarits
     </h3><p>Un gabarit est un fragment de code HTML permettant, via des expressions, d’afficher les données du modèle associé. Les gabarits d’<a href="http://emberjs.com" >Ember</a>
 sont des gabarits <a href="http://handlebarsjs.com/" >Handlebars</a>. Les expressions Handlebars sont délimitées par <code>{{</code> et <code>}}</code>.</p>
@@ -3350,20 +3350,20 @@ pour un autre gabarit permettant ainsi de multiples imbrications à mesure que l
 associé au gabarit sera modifié. Évidemment, seul cet élément sera rafraîchit et non le gabarit entier sinon c’est tricher.</p>
 <p>Envie de tester ? -&gt; <a href="http://emberjs.com/guides/templates/the-application-template/" >doc officielle</a>.</p>
 <h3 id="composants">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/debuter-avec-ember/#composants">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#composants">#</a>
       Composants
     </h3><p>Un composant <a href="http://emberjs.com" >Ember</a> permet de définir une balise HTML personnalisée, permettant ainsi de partager de puissants 
 éléments réutilisables au sein de votre application.</p>
 <p>Vous en avez toujours rêvé ? -&gt; <a href="http://emberjs.com/guides/components/" >doc officielle</a>.</p>
 <h3 id="generation-d-objets">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/debuter-avec-ember/#generation-d-objets">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#generation-d-objets">#</a>
       Géneration d’objets
     </h3><p>Pour qu’un gabarit soit rendu lorsqu’une URL est demandée, il faut donc que le routeur définisse cette URL, qu’elle soit implémentée par 
 une route qui récupèrera un modèle qu’elle mettra à disposition du contrôleur et du gabarit. Le contrôleur écoutera les 
 évènements en provenance du gabarit et y apportera la réponse adaptée. À noter que l’évènement peut également remonter jusqu’à la route.
 Le gabarit est quant à lui encapsulé dans une vue gérée par Ember tout seul comme un grand.</p>
 <p>Il n’est cependant <strong>pas nécessaire de créer systématiquement tous ces objets</strong> si aucune logique spécifique n’a besoin d’y être définie.
-En effet, <a href="http://emberjs.com" >Ember</a> s’appuie sur les <a href="http://0.0.0.0:4242/posts/js/debuter-avec-ember/#conventions-de-nommage" >conventions de nommage</a> pour retrouver successivement,
+En effet, <a href="http://emberjs.com" >Ember</a> s’appuie sur les <a href="http://putaindecode.fr/posts/js/debuter-avec-ember/#conventions-de-nommage" >conventions de nommage</a> pour retrouver successivement,
 à partir d’une URL, la route, le contrôleur, la vue et le gabarit associés. Si l’un de ces objet n’est pas trouvé, <a href="http://emberjs.com" >Ember</a>
 va en générer un par défaut. </p>
 <p>Donc si l’on crée dans le routeur la route suivante sans créer aucun autre objet : </p>
@@ -3386,7 +3386,7 @@ créés par vous et ceux générés par Ember. </p>
 <p>Ce module s’appelle <strong>Ember Inspector</strong> et est disponible pour <a href="https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi?hl=en" >Chrome</a> 
 et <a href="https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/" >Firefox</a>. C’est absolument indispensable lorsqu’on développe en Ember.</p>
 <h2 id="conclusion-et-next-steps">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/debuter-avec-ember/#conclusion-et-next-steps">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#conclusion-et-next-steps">#</a>
       Conclusion et next steps
     </h2><p><a href="http://emberjs.com" >Ember</a> est donc un framework très riche et extrêmement plaisant à pratiquer. 
 <strong>Un vrai framework avec un vrai parti pris et des vrais choix structurants.</strong>
@@ -3401,14 +3401,14 @@ est progressive et il est très simple à prendre en main une fois les concepts 
 article. Au prochain épisode, nous verrons justement - par la pratique cette fois, <strong>comment démarrer et construire progressivement une
 application <a href="http://emberjs.com" >Ember</a></strong>.</p>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/js/debuter-avec-ember/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/js/debuter-avec-ember/</guid>
+            <link>http://putaindecode.fr/posts/js/debuter-avec-ember/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/js/debuter-avec-ember/</guid>
             <pubDate>Mon, 20 Oct 2014 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Comment essayer de coder à peu près comme un chef (raté) sous Windows]]></title>
             <description><![CDATA[<figure>
-  <img src="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/index.jpg" alt="Keyboard">
+  <img src="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/index.jpg" alt="Keyboard">
   <small><a href="http://www.customity.com/content/wallpaper/windows-key-wallpaper" >Credit photo</a></small>
 </figure>
 
@@ -3419,7 +3419,7 @@ application <a href="http://emberjs.com" >Ember</a></strong>.</p>
 <p>Après avoir créé <a href="https://github.com/kud/my" >mon propre système de synchronisation de machines sous Mac OS X</a> (plus souvent communément appelé dotfiles mais faisant un peu plus), j’ai voulu faire de même sous Windows au cas où mon système crasherait et où je devrais tout réinstaller. On n’est jamais à l’abri.</p>
 <p>Pour cela, plusieurs outils vont vous être nécessaires. Un chef sans bons outils, c’est drôlement handicapant. (Déjà que l’OS en question n’aide pas).</p>
 <h2 id="chocolatey-la-base">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#chocolatey-la-base">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#chocolatey-la-base">#</a>
       Chocolatey : la base
     </h2><p><a href="http://chocolatey.org/" >Chocolatey</a>. Ouais, chocolatey, ce petit script vous permettra de télécharger tout et n’importe quoi en CLI (ligne de commandes). Pour ceux qui ont l’habitude de Mac ou Linux, c’est le brew / apt-get de Windows.</p>
 <p>Comment l’installer ?</p>
@@ -3432,11 +3432,11 @@ application <a href="http://emberjs.com" >Ember</a></strong>.</p>
 <p>Une fois installé, vous pourrez installer n’importe quel logiciel listé sur <a href="http://chocolatey.org/packages" >leur site</a>.</p>
 <p>Passons à la suite.</p>
 <h2 id="logiciels-de-developpement">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#logiciels-de-developpement">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#logiciels-de-developpement">#</a>
       Logiciels de développement
     </h2><p>Yes, on a donc Chocolatey qui va nous simplifier grandement l’installation de logiciels. Passons maintenant aux outils pour bien développer.</p>
 <h3 id="git">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#git">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#git">#</a>
       Git
     </h3><p>Lorsque tu joues à un jeu vidéo, tu sauvegardes régulièrement ton avancement non ? Bah là, c’est pareil mais pour le code.</p>
 <pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> git.<span class="hljs-keyword">install</span>
@@ -3446,7 +3446,7 @@ application <a href="http://emberjs.com" >Ember</a></strong>.</p>
 <li><a href="https://chocolatey.org/packages/git.install" >lien du package</a></li>
 </ul>
 <h3 id="node-js">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#node-js">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#node-js">#</a>
       Node.js
     </h3><p>Faire du JavaScript côté serveur ou en shell, le pied. Surtout pour faire des scripts Windows, plutôt que de passer par Batch.</p>
 <pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> nodejs.<span class="hljs-keyword">install</span>
@@ -3456,7 +3456,7 @@ application <a href="http://emberjs.com" >Ember</a></strong>.</p>
 <li><a href="https://chocolatey.org/packages/nodejs.install" >lien du package</a></li>
 </ul>
 <h3 id="editeur-de-texte">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#editeur-de-texte">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#editeur-de-texte">#</a>
       Éditeur de texte
     </h3><p>Sublime Text, l’éditeur préféré des Franç… je m’égare. Bref, un bon éditeur.</p>
 <pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> sublimetext3
@@ -3467,7 +3467,7 @@ application <a href="http://emberjs.com" >Ember</a></strong>.</p>
 </ul>
 <p>Vous pouvez aussi installer <a href="https://atom.io/" >Atom</a> si vous préférez.</p>
 <h3 id="gestion-d-une-base-de-donnees">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#gestion-d-une-base-de-donnees">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#gestion-d-une-base-de-donnees">#</a>
       Gestion d’une base de données
     </h3><p>HeidiSQL, un logiciel avec une interface qui se rapproche de phpMyAdmin.</p>
 <pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> HeidiSQL
@@ -3490,7 +3490,7 @@ Par contre, il est un peu plus complexe à utiliser.</li>
 <li><a href="http://chocolatey.org/packages/mysql.workbench" >lien du package</a></li>
 </ul>
 <h3 id="un-meilleur-shell">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#un-meilleur-shell">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#un-meilleur-shell">#</a>
       Un meilleur shell
     </h3><p>Cmder va vous permettre quelques fonctionnalités intéressantes que le shell de Windows n’a pas de base, comme taper <code>&lt;tab&gt;</code> pour l’autocomplétion, avoir un historique persistant entre 2 sessions, des onglets, le split de console, l’intégration de PuTTY et d’autres choses venu de la banquise. (le lieu de vie des pinguins)</p>
 <pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> Cmder
@@ -3500,7 +3500,7 @@ Par contre, il est un peu plus complexe à utiliser.</li>
 <li><a href="http://chocolatey.org/packages/Cmder" >lien du package</a></li>
 </ul>
 <h3 id="si-vous-avez-besoin-de-ssh">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#si-vous-avez-besoin-de-ssh">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#si-vous-avez-besoin-de-ssh">#</a>
       Si vous avez besoin de SSH
     </h3><p>Pour le SSH sous Windows c’est assez complexe, il faut quelques outils dont le principal, putty (un terminal et +).</p>
 <pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> putty
@@ -3519,7 +3519,7 @@ Par contre, il est un peu plus complexe à utiliser.</li>
 <p>Pour que le ssh soit agréable, je vous recommande pageant et ensuite un terminal comme <em>Clink</em> ou encore <em>git bash</em> qui s’installe via <em>git</em>.</p>
 </blockquote>
 <h3 id="une-machine-virtuelle-pour-tester-ie-ou-meme-gnu-linux">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#une-machine-virtuelle-pour-tester-ie-ou-meme-gnu-linux">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#une-machine-virtuelle-pour-tester-ie-ou-meme-gnu-linux">#</a>
       Une machine virtuelle pour tester IE ou même GNU/Linux
     </h3><p>On a toujours une intégration à tester sous IE pour ça Microsoft nous donne accès à des machines virtuelles gratuitement sur <a href="https://www.modern.ie/fr-fr" >ModernIE</a>. Il nous faut donc Virtualbox pour les lancer.</p>
 <pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> virtualbox
@@ -3533,7 +3533,7 @@ $ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
 <li><a href="http://chocolatey.org/packages/virtualbox" >lien du package</a></li>
 </ul>
 <h3 id="compresser-decompresser-comme-vous-le-voulez">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#compresser-decompresser-comme-vous-le-voulez">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#compresser-decompresser-comme-vous-le-voulez">#</a>
       Compresser / décompresser comme vous le voulez
     </h3><p>7zip, le logiciel de référence pour ce genre de pratique.</p>
 <pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> <span class="hljs-number">7</span>zip.<span class="hljs-keyword">install</span>
@@ -3543,11 +3543,11 @@ $ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
 <li><a href="https://chocolatey.org/packages/7zip.install" >lien du package</a></li>
 </ul>
 <h3 id="gerer-les-pdf">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#gerer-les-pdf">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#gerer-les-pdf">#</a>
       Gérer les pdf
     </h3><p>Sumatra pour les lire. PDFCreator pour faire une imprimante virtuelle sortant des PDFs.</p>
 <h4 id="sumatra">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#sumatra">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#sumatra">#</a>
       Sumatra
     </h4><ul>
 <li><a href="http://blog.kowalczyk.info/software/sumatrapdf/free-pdf-reader.html" >site officiel</a></li>
@@ -3556,7 +3556,7 @@ $ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
 <pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> sumatrapdf.<span class="hljs-keyword">install</span>
 </code></pre>
 <h4 id="pdfcreator">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#pdfcreator">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#pdfcreator">#</a>
       PDFCreator
     </h4><ul>
 <li><a href="http://www.pdfforge.org/pdfcreator" >site officiel</a></li>
@@ -3565,7 +3565,7 @@ $ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
 <pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> pdfcreator
 </code></pre>
 <h3 id="mettre-des-onglets-dans-l-explorateur-de-fichiers">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#mettre-des-onglets-dans-l-explorateur-de-fichiers">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#mettre-des-onglets-dans-l-explorateur-de-fichiers">#</a>
       Mettre des onglets dans l’explorateur de fichiers
     </h3><p>Nous sommes en 2014 ça fait des années que Microsoft sait mais, ce n’est toujours pas disponible. C’est là que Clover rentre en jeu.</p>
 <pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> Clover
@@ -3575,7 +3575,7 @@ $ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
 <li><a href="http://chocolatey.org/packages/Clover" >lien du package</a></li>
 </ul>
 <h3 id="spaaaaaaaces">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#spaaaaaaaces">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#spaaaaaaaces">#</a>
       Spaaaaaaaces
     </h3><p>Parce qu’avoir plusieurs bureaux / espaces, c’est plus pratique pour gérer ses fenêtres, je vous propose VirtuaWin. Cela vous permettra de garder en plein écran vos logiciels et de zapper d’un logiciel à un autre sans passer par <code>alt+tab</code> mais en allant d’un bureau à un autre.</p>
 <pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> virtuawin
@@ -3585,7 +3585,7 @@ $ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
 <li><a href="https://chocolatey.org/packages/virtuawin" >lien du package</a></li>
 </ul>
 <h3 id="launchy-le-alfred-like-sous-windows">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#launchy-le-alfred-like-sous-windows">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#launchy-le-alfred-like-sous-windows">#</a>
       Launchy, le Alfred-like sous Windows
     </h3><p>Je sais pas vous mais moi, les raccourcis qui me gâchent mon beau wallpaper choisi avec goût, ça m’énerve. Et puis le clickodrome, c’est lent et chiant. Du coup, lancer ses logiciels à partir d’un moteur de recherche, c’est quand même vachement bien. Ca permet aussi de faire des recherches de fichier, des calculs, et tout un tas d’autres choses. Voici alors Launchy.</p>
 <pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> launchy-beta
@@ -3595,7 +3595,7 @@ $ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
 <li><a href="https://chocolatey.org/packages/launchy-beta" >lien du package</a></li>
 </ul>
 <h3 id="pipette-et-retouche">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#pipette-et-retouche">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#pipette-et-retouche">#</a>
       Pipette et retouche
     </h3><p>L’indispensable <a href="http://photofiltre.free.fr/frames.htm" >PhotoFiltre</a> qui, bien qu’il ne soit plus mis à jour depuis 2012, est très stable et efficace. Il fait peu mais, le fait bien.</p>
 <ul>
@@ -3605,10 +3605,10 @@ $ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
 </ul>
 <p>Et surtout, il est ultra léger et démarre en moins d’une seconde.</p>
 <h3 id="et-enfin-comment-ne-pas-se-niquer-les-yeux-toute-la-journee">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#et-enfin-comment-ne-pas-se-niquer-les-yeux-toute-la-journee">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#et-enfin-comment-ne-pas-se-niquer-les-yeux-toute-la-journee">#</a>
       Et enfin, comment ne pas se niquer les yeux toute la journée
     </h3><h4 id="f-lux">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#f-lux">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#f-lux">#</a>
       f.lux
     </h4><p>On va commencer par f.lux. Ce petit logiciel permettant de gérer la colorimétrie de votre écran en fonction de l’heure. Typiquement, les écrans rendent un blanc digne d’un soleil à midi. Sauf que le soir, on allume la lumière et celle-ci n’a pas du coup une couleur blanche mais souvent plutôt rouge. f.lux permet alors d’ajuster votre écran afin que la couleur soit identique à la lumière ambiante pour réduire les différences de couleurs et éviter de vous abimer les yeux. En plus, ça permet au cerveau de se préparer à aller se coucher. :D</p>
 <pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> f.lux
@@ -3618,7 +3618,7 @@ $ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
 <li><a href="https://chocolatey.org/packages/f.lux" >lien du package</a></li>
 </ul>
 <h4 id="mactype">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#mactype">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#mactype">#</a>
       MacType
     </h4><p>Et surtout, MacType. Oh oui MacType. Je pense que seule une personne venant de Mac OS X peut comprendre. Dieu sait que le font rendering sous Windows est vraiment pourri et que Steve Jobs depuis le départ de Mac a fait en sorte sur le rendering des fonts sous son OS soit de qualité.</p>
 <p>Pour réduire cette différence entre un Windows et un Mac OS X, je vous propose MacType qui permet de remplacer le font rendering de Windows et d’apprécier lire à nouveau sur cet OS.</p>
@@ -3630,19 +3630,19 @@ $ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
 <li><a href="https://chocolatey.org/packages/mactype" >lien du package</a></li>
 </ul>
 <h2 id="vous-voila-pare-e">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/#vous-voila-pare-e">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#vous-voila-pare-e">#</a>
       Vous voilà paré(e) !
     </h2><p>On est bon, on a tous les outils nécessaires pour pouvoir coder correctement sur Windows.</p>
 <p>Si vous souhaitez en savoir plus et surtout vous tenir à jour d’éventuels logiciels que je pourrais installer, n’hésitez pas à vous rendre sur mon projet <a href="https://github.com/kud/my-unfortunately" >my-unfortunately</a> qui est le <em>synchroniser</em> dont je vous ai parlé tout à l’heure.</p>
 <p>Bon code !</p>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/windows/comment-coder-sous-windows/</guid>
+            <link>http://putaindecode.fr/posts/windows/comment-coder-sous-windows/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/windows/comment-coder-sous-windows/</guid>
             <pubDate>Wed, 15 Oct 2014 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Dépendances et premier projet en Ruby]]></title>
-            <description><![CDATA[<p><a href="http://0.0.0.0:4242/posts/backend/ruby-dependances-et-projet/#tl-dr" >tl;dr</a></p>
+            <description><![CDATA[<p><a href="http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/#tl-dr" >tl;dr</a></p>
 <p>Dans l’<a href="/posts/backend/premiers-pas-avec-ruby" >article précédent</a>
 nous avons installé Ruby. Désormais nous allons aborder les gems,
 les dépendances et commencer notre web service.</p>
@@ -3654,7 +3654,7 @@ qui ici va installer la bibliothèque <code>sass</code>.</p>
 de ne pas tout faire soi-même, il est donc nécessaire d’avoir une
 gestion des dépendances pour le projet.</p>
 <h2 id="bundler-le-gem-qui-gere-les-gems">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/backend/ruby-dependances-et-projet/#bundler-le-gem-qui-gere-les-gems">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/#bundler-le-gem-qui-gere-les-gems">#</a>
       Bundler, le gem qui gère les gems
     </h2><p><a href="http://bundler.io" >Bundler</a> est un gem qui va vous permettre de créer un fichier Gemfile
 contenant vos dépendances, et qui vous installera les gems
@@ -3707,7 +3707,7 @@ exhaustive des dépendances de votre application, chaque gem avec le
 numéro de sa version installée, chaque dépendance pour chaque gem,
 une jolie arborescence plus que précise.</p>
 <h2 id="commencons-notre-web-service">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/backend/ruby-dependances-et-projet/#commencons-notre-web-service">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/#commencons-notre-web-service">#</a>
       Commençons notre web service
     </h2><p>Assez parlé des outils qui existent, utilisons-les. Tout d’abord
 installons Bundler, sans oublier le <code>$ rbenv rehash</code> nécessaire si vous
@@ -3755,14 +3755,14 @@ réduisant la syntaxe du block on se retrouve avec un script de deux
 lignes qui crée un vrai web service web. Et vous allez vite voir
 qu’en quelques lignes de plus on peut vite complexifier le bousin.</p>
 <h2 id="au-prochain-episode">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/backend/ruby-dependances-et-projet/#au-prochain-episode">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/#au-prochain-episode">#</a>
       Au prochain épisode
     </h2><p>Dans l’article suivant nous allons ajouter des fonctionnalités à
 notre toute nouvelle application, de nouvelles routes, de la
 persistence et aussi des vues dans un format un peu plus utile.</p>
 <p>Stay tuned!</p>
 <h2 id="tl-dr">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/backend/ruby-dependances-et-projet/#tl-dr">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/#tl-dr">#</a>
       tl;dr
     </h2><p>Voici la version abrégée de cet article :</p>
 <pre><code class="lang-ruby"><span class="hljs-comment"># Gemfile</span>
@@ -3782,7 +3782,7 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 <span class="hljs-variable">$ </span>ruby app.rb
 </code></pre>
 <h2 id="sources">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/backend/ruby-dependances-et-projet/#sources">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/#sources">#</a>
       Sources
     </h2><ul>
 <li><a href="https://rubygems.org" >RubyGems</a></li>
@@ -3791,8 +3791,8 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 <li><a href="http://www.sinatrarb.com" >Sinatra</a> et surtout son <a href="http://www.sinatrarb.com/intro.html" >README</a></li>
 </ul>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/backend/ruby-dependances-et-projet/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/backend/ruby-dependances-et-projet/</guid>
+            <link>http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/</guid>
             <pubDate>Tue, 14 Oct 2014 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -3801,24 +3801,24 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 <p>Les principales techniques de centrage en css seront expliquées pendant les premières déclarations, et réutilisées par la suite dans tout le guide, vous pouvez donc avoir un intérêt à lire le guide dans le sens normal de la lecture.</p>
 <p>Cependant, si vous souhaitez juste avoir le code correspondant à votre problème, vous pouvez utiliser le menu composé d’ancres ci-dessous.</p>
 <h2 id="sommaire">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#sommaire">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#sommaire">#</a>
       Sommaire
     </h2><ul>
-<li><a href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#tl-dr-mes-techniques-preferees" >tl;dr - mes techniques préférées</a></li>
-<li><a href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#techniques-traditionnelles" >Techniques tradtionnelles</a><ul>
-<li><a href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#un-bloc-dans-un-bloc" >Un bloc dans un bloc</a></li>
-<li><a href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#des-blocs-dans-un-bloc" >Des blocs dans un bloc</a></li>
-<li><a href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#des-elements-inlines-dans-un-bloc" >Des éléments inlines dans un bloc</a></li>
+<li><a href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#tl-dr-mes-techniques-preferees" >tl;dr - mes techniques préférées</a></li>
+<li><a href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#techniques-traditionnelles" >Techniques tradtionnelles</a><ul>
+<li><a href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#un-bloc-dans-un-bloc" >Un bloc dans un bloc</a></li>
+<li><a href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#des-blocs-dans-un-bloc" >Des blocs dans un bloc</a></li>
+<li><a href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#des-elements-inlines-dans-un-bloc" >Des éléments inlines dans un bloc</a></li>
 </ul>
 </li>
-<li><a href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#techniques-avancees-flexbox-ie11-" >Techniques avancées : flexbox (ie11+)</a></li>
-<li><a href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#conclusion" >Conclusion</a></li>
+<li><a href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#techniques-avancees-flexbox-ie11-" >Techniques avancées : flexbox (ie11+)</a></li>
+<li><a href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#conclusion" >Conclusion</a></li>
 </ul>
 <h2 id="tl-dr-mes-techniques-preferees">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#tl-dr-mes-techniques-preferees">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#tl-dr-mes-techniques-preferees">#</a>
       tl;dr - mes techniques préférées
     </h2><h3 id="un-bloc-dans-un-bloc">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#un-bloc-dans-un-bloc">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#un-bloc-dans-un-bloc">#</a>
       Un bloc dans un bloc
     </h3><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
@@ -3836,7 +3836,7 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 </code></pre>
 <p><em>Note : le détail de la technique est expliqué plus loin dans le post</em></p>
 <h3 id="des-blocs-dans-un-bloc">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#des-blocs-dans-un-bloc">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#des-blocs-dans-un-bloc">#</a>
       Des blocs dans un bloc
     </h3><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
@@ -3857,7 +3857,7 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 </code></pre>
 <p><em>Note : le détail de la technique est expliqué plus loin dans le post</em></p>
 <h3 id="des-elements-inline-dans-un-bloc">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#des-elements-inline-dans-un-bloc">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#des-elements-inline-dans-un-bloc">#</a>
       Des éléments inline dans un bloc
     </h3><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
@@ -3869,13 +3869,13 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 </code></pre>
 <p><em>Note : le détail de la technique est expliqué plus loin dans le post</em></p>
 <h2 id="techniques-traditionnelles">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#techniques-traditionnelles">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#techniques-traditionnelles">#</a>
       Techniques traditionnelles
     </h2><h3 id="un-bloc-dans-un-bloc-2">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#un-bloc-dans-un-bloc-2">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#un-bloc-dans-un-bloc-2">#</a>
       Un bloc dans un bloc
     </h3><h4 id="centrage-horizontal">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-horizontal">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-horizontal">#</a>
       Centrage horizontal
     </h4><p>La technique du <code>margin: 0 auto;</code> consiste à dire au browser que les marges de gauche et droite seront identiques et que leur valeur sera <code>auto</code>. Le browser calcule donc des marges de même taille de chaque côté et centre le bloc naturellement.</p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{}</span>
@@ -3911,7 +3911,7 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 }</span>
 </code></pre>
 <h4 id="centrage-vertical">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-vertical">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-vertical">#</a>
       Centrage vertical
     </h4><p>Même principe que la technique <code>left: 50%; + margin négative en unités</code>, sauf qu’on applique le principe aux propriétés css relatives à la hauteur. Vous avez donc besoin de connaitre à l’avance la hauteur de votre bloc.</p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
@@ -3940,7 +3940,7 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 }</span>
 </code></pre>
 <h4 id="les-deux">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#les-deux">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#les-deux">#</a>
       Les deux
     </h4><p>En réutilisant toutes les techniques expliquées précédemment, on peut arriver à plusieurs solutions, à choisir selon votre contexte et vos préférences.</p>
 <p>Méthode à base de <code>display: inline-block</code></p>
@@ -3990,10 +3990,10 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 }</span>
 </code></pre>
 <h3 id="des-blocs-dans-un-bloc-2">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#des-blocs-dans-un-bloc-2">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#des-blocs-dans-un-bloc-2">#</a>
       Des blocs dans un bloc
     </h3><h4 id="centrage-horizontal-2">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-horizontal-2">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-horizontal-2">#</a>
       Centrage horizontal
     </h4><p>On utilise la propriété <code>display: inline-block;</code> qui permet d’avoir des propriétés d’affichage relatives aux éléments de type <code>block</code> et de type <code>inline</code>. Le côté <code>inline</code> nous permet d’utiliser tout simplement un <code>text-align: center;</code></p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
@@ -4005,7 +4005,7 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 }</span>
 </code></pre>
 <h4 id="centrage-vertical-2">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-vertical-2">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-vertical-2">#</a>
       Centrage vertical
     </h4><p>De la même façon que pour le centrage horizontal, on utilise le côté <code>inline</code> de la propriété <code>display: inline-block;</code> pour aligner verticalement les éléments enfants par rapport à leur conteneur parent.</p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{}</span>
@@ -4031,7 +4031,7 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 }</span>
 </code></pre>
 <h4 id="les-deux-2">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#les-deux-2">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#les-deux-2">#</a>
       Les deux
     </h4><p>On peut combiner les deux solutions basées sur le <code>display: inline-block;</code> pour avoir le résultat souhaité.</p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
@@ -4079,11 +4079,11 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 }</span>
 </code></pre>
 <h3 id="des-elements-inlines-dans-un-bloc">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#des-elements-inlines-dans-un-bloc">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#des-elements-inlines-dans-un-bloc">#</a>
       Des éléments inlines dans un bloc
     </h3><p>Ces éléments <code>inline</code> peuvent être par exemple des liens <code>&lt;a&gt;</code> ou des <code>&lt;span&gt;</code> tout simples. Ces techniques sont souvent très connues et ne devraient pas vous poser beaucoup de problèmes, elles ne seront pas commentées. Veuillez vous référer <a href="https://developer.mozilla.org/fr/docs/Web/CSS/text-align" >text-align</a> et <a href="https://developer.mozilla.org/fr/docs/Web/CSS/vertical-align" >vertical-align</a> si vous souhaitez plus d’informations.</p>
 <h4 id="centrage-horizontal-3">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-horizontal-3">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-horizontal-3">#</a>
       Centrage horizontal
     </h4><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
@@ -4092,7 +4092,7 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 <span class="hljs-class">.child</span> <span class="hljs-rules">{}</span>
 </code></pre>
 <h4 id="centrage-vertical-3">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-vertical-3">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-vertical-3">#</a>
       Centrage vertical
     </h4><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{}</span>
 
@@ -4101,7 +4101,7 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 }</span>
 </code></pre>
 <h4 id="les-deux-3">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#les-deux-3">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#les-deux-3">#</a>
       Les deux
     </h4><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
@@ -4112,11 +4112,11 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 }</span>
 </code></pre>
 <h2 id="techniques-avancees-flexbox-ie11-http-caniuse-com-feat-flexbox">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#techniques-avancees-flexbox-ie11-http-caniuse-com-feat-flexbox">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#techniques-avancees-flexbox-ie11-http-caniuse-com-feat-flexbox">#</a>
       Techniques avancées : flexbox (<a href="http://caniuse.com/#feat=flexbox" >ie11+</a>)
     </h2><p>Flexbox est un outil très puissant quand il s’agit de gérer le position de blocs flex. Son seul défaut consiste en son faible support navigateur, mais il vous faudra maitriser ces techniques si vous comptez faire du développement web dans les années à venir, d’autant plus qu’elles sont très simples à rédiger et comprendre.</p>
 <h3 id="centrage-horizontal-4">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-horizontal-4">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-horizontal-4">#</a>
       Centrage horizontal
     </h3><p>On déclare le conteneur en bloc flex, et on lui applique la propriété <a href="https://developer.mozilla.org/fr/docs/Web/CSS/justify-content" >justify-content</a>.</p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
@@ -4127,7 +4127,7 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 <span class="hljs-class">.child</span> <span class="hljs-rules">{}</span>
 </code></pre>
 <h3 id="centrage-vertical-4">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-vertical-4">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-vertical-4">#</a>
       Centrage vertical
     </h3><p>Idem, on déclare le conteneur en bloc flex, et cette fois, on lui applique la propriété <a href="https://developer.mozilla.org/fr/docs/Web/CSS/align-items" >align-items</a>.</p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
@@ -4138,7 +4138,7 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 <span class="hljs-class">.child</span> <span class="hljs-rules">{}</span>
 </code></pre>
 <h3 id="les-deux-4">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#les-deux-4">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#les-deux-4">#</a>
       Les deux
     </h3><p>On combine le tout pour un résultat génial et simpliste.</p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
@@ -4150,13 +4150,13 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
 <span class="hljs-class">.child</span> <span class="hljs-rules">{}</span>
 </code></pre>
 <h2 id="conclusion">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/#conclusion">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#conclusion">#</a>
       Conclusion
     </h2><p>Essayez de toujours utiliser la solution la plus avancée techniquement par rapport à votre scope navigateur : si vous devez ne supporter que les IE récents, utilisez flexbox ; si vous devez ne supporter que IE9+, utilisez les transform: translate() ; sinon utilisez des techniques de plus en plus <em>anciennes</em>.</p>
 <p>Ce guide n’a volontairement pas parlé des préfixes navigateurs, car ce genre de chose doit être pris en charge automatiquement dans votre workflow par un autoprefixer (<a href="https://www.npmjs.org/package/gulp-autoprefixer" >gulp-autoprefixer</a>, <a href="https://www.npmjs.org/package/grunt-autoprefixer" >grunt-autoprefixer</a>, <a href="http://www.myth.io/" >inclus dans myth</a>, …). Pour apprendre à l’installer ou à en apprendre plus sur le sujet, je vous renvoie <a href="http://localhost:4242/posts/css/mise-en-place-autoprefixer/" >à l’article de MoOx</a>. Si vous souhaitez quand même vous passez d’autoprefixer, vous pourrez vérifier la compatibilité des propriétés sur <a href="http://caniuse.com/" >caniuse</a>.</p>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/css/le-guide-complet-pour-centrer-en-css/</guid>
+            <link>http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/</guid>
             <pubDate>Tue, 23 Sep 2014 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -4174,7 +4174,7 @@ l’utilisation du shell : l’utilisation des redirections d’entrée/sortie d
 base.</p>
 <p>Si ça vous paraît barbare, tenez-vous bien, on attaque tout de suite !</p>
 <h2 id="une-entree-deux-sorties">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/maitriser-les-redirections-shell/#une-entree-deux-sorties">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/#une-entree-deux-sorties">#</a>
       Une entrée, deux sorties
     </h2><p>Un des principes de base sous UNIX est que tout est fichier et que l’activité du
 système est rendue par l’interaction de programmes (ou processus) à l’aide
@@ -4193,7 +4193,7 @@ d’erreur standards.</p>
 <p>L’idée pour pouvoir faire collaborer les processus est donc de <em>brancher</em> les
 entrées et sorties de différents programmes afin d’obtenir un résultat.</p>
 <h2 id="les-redirections-de-base">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/maitriser-les-redirections-shell/#les-redirections-de-base">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/#les-redirections-de-base">#</a>
       Les redirections de base
     </h2><p>Commençons par quelques redirections de base, celles qu’il faut connaître et qui
 sont employées systématiquement.</p>
@@ -4207,7 +4207,7 @@ sortie standard ou de répéter son entrée standard sur sa sortie standard.</li
 <p>Rappelez vous que par défaut, la sortie standard est affichée dans le terminal
 et l’entrée standard est le clavier de l’utilisateur.</p>
 <h3 id="redirection-de-sortie">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/maitriser-les-redirections-shell/#redirection-de-sortie">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/#redirection-de-sortie">#</a>
       Redirection de sortie : <code>&gt;</code>
     </h3><p>Ce type de redirection permet d’indiquer à un processus que tout ce qui devrait
 aller sur la sortie standard (par défaut, le terminal), doit plutôt être stocké
@@ -4218,7 +4218,7 @@ $ cat <span class="hljs-keyword">message</span>
 Hello
 </code></pre>
 <h3 id="redirection-d-entree">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/maitriser-les-redirections-shell/#redirection-d-entree">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/#redirection-d-entree">#</a>
       Redirection d’entrée : <code>&lt;</code>
     </h3><p>À l’inverse, on peut aussi spécifier à un programme qu’il doit utiliser un
 fichier comme son entrée standard, à la place du clavier de l’utilisateur.</p>
@@ -4229,7 +4229,7 @@ Hello
 <p>Notez qu’on utilise bien <code>cat</code> <em>sans argument</em>, il utilise donc l’entrée
 standard.</p>
 <h3 id="connecter-deux-processus">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/maitriser-les-redirections-shell/#connecter-deux-processus">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/#connecter-deux-processus">#</a>
       Connecter deux processus : <code>|</code>
     </h3><p>Dernier des connecteurs de base, l’opérateur <code>|</code>, aussi appelé <em>pipe</em> (et qui se
 prononce <em>paillepe</em>, avé l’accent).</p>
@@ -4241,7 +4241,7 @@ caractères dans l’entrée par d’autres.</p>
 HELLO!
 </code></pre>
 <h2 id="descripteurs-de-fichiers-et-redirections-avancees">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/maitriser-les-redirections-shell/#descripteurs-de-fichiers-et-redirections-avancees">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/#descripteurs-de-fichiers-et-redirections-avancees">#</a>
       Descripteurs de fichiers et redirections avancées
     </h2><p>Pour aller plus loin, on va maintenant voir que chaque descripteur de fichier
 possède son propre identifiant numérique.</p>
@@ -4249,7 +4249,7 @@ possède son propre identifiant numérique.</p>
 <p>On peut se servir de ces identifiants pour faire des redirections plus
 poussées !</p>
 <h3 id="rediriger-les-autres-descripteur">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/maitriser-les-redirections-shell/#rediriger-les-autres-descripteur">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/#rediriger-les-autres-descripteur">#</a>
       Rediriger les autres descripteur
     </h3><p>Par défaut, <code>&gt;</code> ne redirige que la sortie standard vers un fichier. Pour
 rediriger un autre descripteur vers un fichier on emploiera la notation <code>X&gt;</code> où
@@ -4257,7 +4257,7 @@ rediriger un autre descripteur vers un fichier on emploiera la notation <code>X&
 <p>Si vous avez bien suivi, on redirigera donc la sortie d’erreur vers un fichier à
 l’aide de la syntaxe <code>2&gt;</code>.</p>
 <h3 id="rediriger-vers-un-autre-descripteur">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/maitriser-les-redirections-shell/#rediriger-vers-un-autre-descripteur">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/#rediriger-vers-un-autre-descripteur">#</a>
       Rediriger vers un autre descripteur : <code>&gt;&amp;</code>
     </h3><p>On peut connecter les descripteurs d’un processus entre eux. C’est un mécanisme
 que l’on utilise très souvent quand on écrit des scripts Shell, notamment pour
@@ -4274,7 +4274,7 @@ valeur 1 par défaut. On aura donc le script suivant :</p>
 <pre><code class="lang-console">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Error"</span> &gt;&amp;<span class="hljs-number">2</span>
 </code></pre>
 <h3 id="ajouter-en-fin-de-fichier">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/maitriser-les-redirections-shell/#ajouter-en-fin-de-fichier">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/#ajouter-en-fin-de-fichier">#</a>
       Ajouter en fin de fichier : <code>&gt;&gt;</code>
     </h3><p>Par défaut, <code>&gt;</code> écrase le fichier dans lequel la redirection va s’effectuer.
 Pour éviter ce problème, on peut utiliser à la place <code>&gt;&gt;</code> qui va ajouter en fin
@@ -4293,7 +4293,7 @@ $ <span class="hljs-keyword">cat</span> <span class="hljs-keyword">file</span>
 <span class="hljs-number">2</span>
 </code></pre>
 <h3 id="dev-null-le-trou-noir">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/maitriser-les-redirections-shell/#dev-null-le-trou-noir">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/#dev-null-le-trou-noir">#</a>
       <code>/dev/null</code>, le trou noir
     </h3><p>Il existe un fichier un peu particulier sur tout bon UNIX qui se respecte :
 <code>/dev/null</code>.</p>
@@ -4305,7 +4305,7 @@ $ cat <span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</spa
 $
 </code></pre>
 <h3 id="ordre-des-redirections">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/maitriser-les-redirections-shell/#ordre-des-redirections">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/#ordre-des-redirections">#</a>
       Ordre des redirections
     </h3><p>Un dernier mot avant la fin, l’ordre des redirections est très important !</p>
 <p>Imaginez la fonction suivante qui affiche un message sur la sortie standard et
@@ -4334,22 +4334,22 @@ avant qu’il soit redirigé sur <code>/dev/null</code>.</p>
 <p>On lira ceci : Rediriger la sortie standard vers <code>/dev/null</code>, puis rediriger la
 sortie d’erreur vers la sortie standard.</p>
 <h3 id="pour-resumer">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/maitriser-les-redirections-shell/#pour-resumer">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/#pour-resumer">#</a>
       Pour résumer
     </h3><p>On a en fait que deux redirections de sortie, <code>&gt;</code> et <code>&gt;&gt;</code>, les symboles qui les
 entourent sont souvent optionnels.</p>
 <p>Si on veut spécifier un fichier on donnera son nom, si on veut spécifier un
 descripteur on donnera son identifiant préfixé de <code>&amp;</code>.</p>
 <h2 id="pour-aller-plus-loin">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/shell/maitriser-les-redirections-shell/#pour-aller-plus-loin">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/#pour-aller-plus-loin">#</a>
       Pour aller plus loin
     </h2><p>Le manuel de bash contient <a href="http://www.gnu.org/software/bash/manual/bashref.html#Redirections" >une section complète sur les
 redirections</a>. Elle va beaucoup plus loin que cet article et je vous
 invite à la lire pour voir tout ce qu’il est possible de faire.</p>
 <p>Il y a aussi une section dédiée à ce sujet dans l’<a href="http://tldp.org/LDP/abs/html/io-redirection.html" >Advanced Bash-Scripting Guide</a>.</p>
 ]]></description>
-            <link>http://0.0.0.0:4242/posts/shell/maitriser-les-redirections-shell/</link>
-            <guid isPermaLink="true">http://0.0.0.0:4242/posts/shell/maitriser-les-redirections-shell/</guid>
+            <link>http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/shell/maitriser-les-redirections-shell/</guid>
             <pubDate>Wed, 16 Jul 2014 00:00:00 GMT</pubDate>
         </item>
     </channel>

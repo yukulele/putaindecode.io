@@ -9,7 +9,7 @@ Donc quand on décide de se mettre au JavaScript modulaire, on trouve tout un ta
 <li>la convention de résolution des dépendances de module</li>
 </ul>
 <h1 id="format-d-ecriture-des-modules">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/etat-lieux-js-modulaire-front/#format-d-ecriture-des-modules">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/#format-d-ecriture-des-modules">#</a>
       Format d’écriture des modules
     </h1><p>Le module est la brique de base pour décomposer un gros fichier JS en plusieurs fichiers plus petits et focalisés sur une fonctionnalité précise. La plupart du temps un module est un fichier JS qui fournit une fonction, un constructeur ou un objet de valeur. Et comme, pour fournir cette fonctionnalité, un module peut avoir besoin d’autres modules, il existe un mécanisme pour déclarer ses dépendances.</p>
 <p>Actuellement, 2 standards principaux existent pour écrire ces modules : <strong>AMD</strong> et <strong>CommonJS</strong>.
@@ -39,7 +39,7 @@ C’est pourquoi on parle de format “synchrone” dans le premier cas et “as
 </ul>
 <p>Dans les 2 cas, par contre, il y a besoin d’une <em>résolution des dépendances</em>, c’est à dire qu’un module ne peut pas être exécuté tel quel dans un navigateur en le chargeant via un tag <code>script</code>. Non, il faut un <em>loader</em>, c’est à dire un outil qui va charger le module qu’on lui demande et va résoudre les dépendances en cascade. Mais contrairement à ce que l’on pourrait croire, les règles de résolution des dépendances n’ont rien à voir avec le format du module (on verra ça plus tard).</p>
 <h1 id="package-management">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/etat-lieux-js-modulaire-front/#package-management">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/#package-management">#</a>
       Package management
     </h1><p>Parlons maintenant des packages. En effet, pouvoir découper du code en modules, c’est bien ; mais ce qui est encore mieux c’est de pouvoir le partager avec d’autres pour qu’il soit facilement réutilisable et arrêter le syndrôme de :</p>
 <blockquote>
@@ -157,7 +157,7 @@ le package B déclare une dépendance sur X mais en version 2</p>
 </li>
 </ul>
 <h1 id="resolution-des-dependances-de-module">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/etat-lieux-js-modulaire-front/#resolution-des-dependances-de-module">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/#resolution-des-dependances-de-module">#</a>
       Résolution des dépendances de module
     </h1><p>La question est alors :</p>
 <blockquote>
@@ -171,13 +171,13 @@ le package B déclare une dépendance sur X mais en version 2</p>
 <p>Et bien, venons en au coeur du problème : <em>la résolution des module-id en fichier</em>. Comme on l’a vu, pour charger un module dans le navigateur, il faut utiliser un loader. Et une de ses tâches est de <em>résoudre</em> les <code>module_id</code> en adresse de fichier.</p>
 <p>Au pire il faudrait explicitement dire au loader pour chaque <code>module_id</code> où est le fichier correspondant. Heureusement, ce n’est pas le cas, ni avec requireJS, ni avec les loaders compatibles npm.</p>
 <h2 id="amd">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/etat-lieux-js-modulaire-front/#amd">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/#amd">#</a>
       AMD
     </h2><p>RequireJS et les autres loaders AMD vont assez loin en  matière de <a href="http://requirejs.org/docs/api.html#config" >configuration</a> mais souvent , ça revient à décrire des règles du style <em>tous les modules id qui commencent par <code>mon-package</code> sont à chercher dans le dossier <code>./mon-package</code></em>.</p>
 <p>En fait, ça n’est pas tout à fait vrai qu’il faille systématiquement configurer les règles de résolution avec RequireJS : il y a une règle par défaut qui stipule que les module_id sont résolus par rapport à une “baseURL” (qui par défaut est celle du fichier html). Donc si on installe tous les packages au même niveau, ça marche par défaut.
 C’est pour cela que bower est souvent utilisé pour les packages front-end en AMD car il installe les fichiers à plat et de cette façon on limite le besoin de configuration.</p>
 <h2 id="npm">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/etat-lieux-js-modulaire-front/#npm">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/#npm">#</a>
       NPM
     </h2><p>A l’opposé de cette approche très flexible, il y a nodeJS avec une <a href="https://github.com/substack/browserify-handbook#how-node_modules-works" >convention simple et statique</a>, qui dit en gros :</p>
 <ul>
@@ -186,7 +186,7 @@ C’est pour cela que bower est souvent utilisé pour les packages front-end en 
 </ul>
 <p>Et donc zéro config, puisque ça n’est pas configurable. Ca peut paraître être une limitation mais c’est une force.</p>
 <h1 id="conclusion">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/etat-lieux-js-modulaire-front/#conclusion">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/#conclusion">#</a>
       Conclusion
     </h1><p>Si tous les packages en AMD utilisaient la règle de résolution par défaut et que l’on utilisait bower pour les installer, on n’aurait rien à configurer. Mais dans la pratique, ça n’est pas le cas et on se retrouve à devoir configurer les règles de résolution non seulement pour ses propres dépendances (<em>pourquoi pas</em>) mais également pour les dépendances de ses dépendances (<em>et là ça ne va plus</em>).
 Et il reste toujours le problème des conflits de version liés à l’approche de mettre les dépendances à plat.</p>
@@ -200,7 +200,7 @@ On peut lui reprocher la nécessité d’une étape de build et le fait que le c
 </ol>
 <p>Au final, ça en devient même un avantage, car le code que l’on exécute en dev dans le navigateur est très proche de ce que l’on aura en prod, en tout cas plus proche qu’avec requireJS pour lequel on développe sans build et pour lequel il faut écrire à nouveau une config de build pour la mise en prod.</p>
 <h1 id="conclusion-de-la-conclusion">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/etat-lieux-js-modulaire-front/#conclusion-de-la-conclusion">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/#conclusion-de-la-conclusion">#</a>
       Conclusion de la conclusion
     </h1><p>Ma conclusion est que le point crucial pour faciliter la réutilisation de modules, c’est de <strong>minimiser les contraintes sur les utilisateurs</strong> et donc de se rapprocher d’un usage <em>plug and play</em>. Pour cela il faut une convention forte entre le package manager et le loader/builder de modules, afin d’éviter à l’utilisateur de devoir écrire des configs … la plupart du temps.
 Bien sûr, la recherche du “zéro config” n’est pas une fin et c’est particulièrement vrai côté front où les contraintes de chargement de fichiers sont fortes. Et si vous voulez diviser votre bundle en plusieurs fichiers ou si vous voulez des règles d’optimisation complexes pour votre build, il est normal de devoir mettre les mains dans le cambouis.
@@ -215,7 +215,7 @@ Je n’estime pas être un expert du sujet, il y a sûrement beaucoup de choses 
 (2 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="syvuilliot
 (2 commits)"><a href="http://kaes.fr" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1689880?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="kud
 (1 commit)"><a href="http://kud.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/655838?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Macxim
-(1 commit)"><a href="https://github.com/Macxim" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1909957?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script src="/index.d5c1d3c.js"></script><script src="http://0.0.0.0:4243/livereload.js"></script><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
+(1 commit)"><a href="https://github.com/Macxim" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1909957?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script src="/index.853076c.js"></script><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
 var disqus_identifier = "http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/";
 var disqus_url = "http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/";
 var disqus_script = "embed.js";

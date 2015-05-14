@@ -8,7 +8,7 @@
 <p>Dnsmasq est un serveur léger pour fournir les services DNS, DHCP, Bootstrap Protocol et TFTP pour un petit réseau, voire pour un poste de travail. Il permet d’offrir un service de nommage des machines du réseau interne non intégrées au service de nommage global (i.e. le service DNS d’Internet). Le service de nommage est associé au service d’adressage de telle manière que les machines dont le bail DHCP est fourni par Dnsmasq peuvent avoir automatiquement un nom DNS sur le réseau interne. Le logiciel offre un service DHCP statique ou dynamique.</p>
 </blockquote>
 <h2 id="dnsmasq-le-serveur-dns-tout-petit">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/#dnsmasq-le-serveur-dns-tout-petit">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#dnsmasq-le-serveur-dns-tout-petit">#</a>
       dnsmasq, le serveur dns tout petit
     </h2><p><strong>dnsmasq</strong> va me permettre de faire plusieurs choses :</p>
 <ul>
@@ -19,7 +19,7 @@
 </ul>
 <p>Cependant, tout n’est pas si rose, je vais vous montrer pourquoi après.</p>
 <h3 id="partage-de-connexion">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/#partage-de-connexion">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#partage-de-connexion">#</a>
       Partage de connexion
     </h3><p>Je vous propose dans un premier temps de partager votre connexion via le Wifi sous Mac OS X afin :</p>
 <ul>
@@ -27,7 +27,7 @@
 <li>d’utiliser le serveur dns (dnsmasq) que vous allez monter</li>
 </ul>
 <p>Pour cela, il suffit de faire : <code>System Preferences &gt; Sharing &gt; Internet Sharing</code> puis choisir <code>Ethernet</code> en source, et <code>Wifi</code> en sortie. (Je vous conseille d’ailleurs de protéger votre Wifi avec une clé WPA2).</p>
-<figure><img src="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/macosx-network-sharing.png" alt=""></figure>
+<figure><img src="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/macosx-network-sharing.png" alt=""></figure>
 
 <p><em>Ici, c’est USB Ethernet en source car je suis sur un Mac Book Air donc aucun port ethernet natif mais choisissez Ethernet si possible.</em></p>
 <p>Une fois que le partage de connexion via Wifi est activé, vous pouvez vous y connecter avec votre smartphone (ou tablette).</p>
@@ -35,15 +35,15 @@
 <p>C’est alors un autre réseau que le réseau interne à la boite en <code>192.168.1.x</code>.</p>
 <p>Notez aussi que la machine hôte, faisant bridge, donne les informations en cascade aux appareils connectés. Ce que vous spécifiez comme serveurs dns sur la machine hôte sera alors ceux utilisés par les appareils étant connectés à votre partage de réseau.</p>
 <h3 id="aaaah-dnsmasq">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/#aaaah-dnsmasq">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#aaaah-dnsmasq">#</a>
       Aaaah dnsmasq !
     </h3><p>On est sous Mac OS X, la vie est si simple, on installe <strong>dnsmasq</strong> via <strong>homebrew</strong>.</p>
 <h4 id="dnsmasq-via-homebrew">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/#dnsmasq-via-homebrew">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#dnsmasq-via-homebrew">#</a>
       dnsmasq via homebrew
     </h4><pre><code>$ brew <span class="hljs-keyword">install</span> dnsmasq
 </code></pre><h4 id="configuration-de-dnsmasq">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/#configuration-de-dnsmasq">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#configuration-de-dnsmasq">#</a>
       configuration de dnsmasq
     </h4><p>Une fois installé, on copie la configuration :</p>
 <pre><code>$ cp <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/opt/</span>dnsmasq<span class="hljs-regexp">/dnsmasq.conf.example /u</span>sr<span class="hljs-regexp">/local/</span>etc<span class="hljs-regexp">/dnsmasq.conf</span>
@@ -70,13 +70,13 @@ no-hosts</span>
 </code></pre><p>Nous précisons dans un premier temps la résolution du nom de domaine <code>monsite.dev</code> (notez que c’est du wildcard, donc pas besoin de préciser les sous-domaines), puis nous indiquons que le serveur DNS marche sur toutes les IPs de la machine hôte et enfin nous indiquons que nous ne voulons pas prendre en compte le fichier <code>/etc/hosts</code> vu qu’on spécifie les résolutions via <code>address</code>.</p>
 <p>Cela permettra à terme de ne plus gérer le fichier <code>/etc/hosts</code> et de tout spécifier dans <code>dnsmasq.conf</code>.</p>
 <h4 id="lancer-dnsmasq-au-demarrage-de-la-machine">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/#lancer-dnsmasq-au-demarrage-de-la-machine">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#lancer-dnsmasq-au-demarrage-de-la-machine">#</a>
       lancer dnsmasq au démarrage de la machine
     </h4><p>On copie le fichier de démon dans le dossier qui va bien puis on lance le démon.</p>
 <pre><code><span class="hljs-variable">$ </span>sudo cp -fv /usr/local/opt/dnsmasq/*.plist /<span class="hljs-constant">Library/LaunchDaemons</span>
 <span class="hljs-variable">$ </span>sudo launchctl load /<span class="hljs-constant">Library/LaunchDaemons/</span>homebrew.mxcl.dnsmasq.plist
 </code></pre><h4 id="utiliser-le-serveur-dnsmasq">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/#utiliser-le-serveur-dnsmasq">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#utiliser-le-serveur-dnsmasq">#</a>
       utiliser le serveur dnsmasq
     </h4><p>Etant donné que vous partagez votre connexion et que votre poste fait hôte, le serveur dns utilisé sera celui installé sur votre poste, donc rien à faire.</p>
 <p>Sinon :</p>
@@ -88,7 +88,7 @@ no-hosts</span>
 </ul>
 <p><em>(Sous Android)</em></p>
 <p><code>Wifi &gt; Press on the current connnection &gt; Modify network &gt; Show advanced options</code></p>
-<figure><img src="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/android-network-advanced.jpg" alt=""></figure>
+<figure><img src="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/android-network-advanced.jpg" alt=""></figure>
 
 <p>Mais quel intérêt car vous devrez faire cela sur tous vos appareils connectés</p>
 <ul>
@@ -144,7 +144,7 @@ no-hosts</span>
 </code></pre>
 <p><code>192.168.2.1</code> est l’adresse de votre machine hôte dans le réseau de partage.</p>
 <h2 id="oh-oui-j-oubliais-mac-os-x-peut-etre-lourd-parfois">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/#oh-oui-j-oubliais-mac-os-x-peut-etre-lourd-parfois">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#oh-oui-j-oubliais-mac-os-x-peut-etre-lourd-parfois">#</a>
       Oh oui, j’oubliais, Mac OS X peut être lourd parfois
     </h2><p>Oui, quand vous créez un partage de connexion sur Mac OS X, il lance son propre serveur dns s’appelant <strong>_mdnsresponder</strong>. C’est le système <em>Bonjour</em> de iOS/Mac OS X permettant à n’importe quel appareil Apple de communiquer entre eux. Le problème c’est qu’il risque de marcher sur les pieds de <strong>dnsmasq</strong>.</p>
 <p>Faites donc un <code>$ sudo lsof -i :53</code> et vous pourrez éventuellement voir que <strong>_mdnsresponder</strong> est lancé aussi bien en ipv6 qu’en ipv4 sur le port 53. Cela vous empêchera de lancer <strong>dnsmasq</strong>.</p>
@@ -155,7 +155,7 @@ no-hosts</span>
 (8 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="kud
 (1 commit)"><a href="http://kud.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/655838?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="bloodyowl
 (1 commit)"><a href="http://bloodyowl.github.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1688645?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Macxim
-(1 commit)"><a href="https://github.com/Macxim" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1909957?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script src="/index.d5c1d3c.js"></script><script src="http://0.0.0.0:4243/livereload.js"></script><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
+(1 commit)"><a href="https://github.com/Macxim" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1909957?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script src="/index.853076c.js"></script><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
 var disqus_identifier = "http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/";
 var disqus_url = "http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/";
 var disqus_script = "embed.js";
