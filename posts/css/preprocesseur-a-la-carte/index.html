@@ -1,15 +1,15 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Faire son préprocesseur CSS à la carte</title><link rel="stylesheet" href="/index.css"><link rel="alternate" href="/feed.xml" title="Faire son préprocesseur CSS à la carte" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Faire son préprocesseur CSS à la carte"><meta name="twitter:creator" content="@MoOx"><meta property="og:title" content="Faire son préprocesseur CSS à la carte"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><img class="putainde-Logo" alt="Putain de code !" src="/images/p!-logo.svg"><span>Putain de code !</span></a></div><div class="r-Grid-cell r-all--7of12"><nav class="putainde-Nav"><a class="putainde-Nav-item" href="/posts" data-r-tooltip=""><img class="putainde-Icon" src="/icons/bookmark.svg">Articles</a><a class="putainde-Nav-item" href="/c-est-quoi-putaindecode" data-r-tooltip=""><img class="putainde-Icon" src="/icons/text-file.svg">Readme</a><a class="putainde-Nav-item" href="/posts/comment-contribuer" data-r-tooltip=""><img class="putainde-Icon" src="/icons/pencil.svg">Participer</a><a class="putainde-Nav-item putainde-Nav-item--icon r-Tooltip r-Tooltip r-Tooltip--bottom" href="https://github.com/putaindecode/" data-r-tooltip="GitHub"><img class="putainde-Icon" src="/icons/github.svg"></a><a class="putainde-Nav-item putainde-Nav-item--icon r-Tooltip r-Tooltip r-Tooltip--bottom" href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a></nav></div></div></div><div class="putainde-Main"><article class="r-Grid putainde-Post"><div class="r-Grid-cell r-all--8of12 putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Faire son préprocesseur CSS à la carte</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas"><span>Écrit par <span><a href="http://moox.io/">MoOx</a><span></span></span></span><span>, </span><span class="putainde-Date"> le 20 mai 2014</span>. <span class="r-Tooltip r-Tooltip--top putainde-Post-readingTime" data-r-tooltip="Temps de lecture approximatif, sur une base de 250 mots par minute">Temps de lecture : environ 9 minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">css</li><li class="putainde-Tag">preprocesseur</li><li class="putainde-Tag">postprocesseur</li></ul></header><div class="putainde-Post-md"><div><p>Après vous avoir fait un petit <a href="/posts/css/le-point-sur-les-preprocesseurs/">état de l’art des préprocesseurs CSS historiques</a>
-et vous avoir parlé <a href="/posts/css/le-point-sur-les-preprocesseurs/">des postprocesseurs</a>,
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Faire son préprocesseur CSS à la carte</title><link rel="stylesheet" href="/index.css"><link rel="alternate" href="/feed.xml" title="Faire son préprocesseur CSS à la carte" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Faire son préprocesseur CSS à la carte"><meta name="twitter:creator" content="@MoOx"><meta property="og:title" content="Faire son préprocesseur CSS à la carte"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><img class="putainde-Logo" alt="Putain de code !" src="/images/p!-logo.svg"><span>Putain de code !</span></a></div><div class="r-Grid-cell r-all--7of12"><nav class="putainde-Nav"><a class="putainde-Nav-item" href="/posts" data-r-tooltip=""><img class="putainde-Icon" src="/icons/bookmark.svg">Articles</a><a class="putainde-Nav-item" href="/c-est-quoi-putaindecode" data-r-tooltip=""><img class="putainde-Icon" src="/icons/text-file.svg">Readme</a><a class="putainde-Nav-item" href="/posts/comment-contribuer" data-r-tooltip=""><img class="putainde-Icon" src="/icons/pencil.svg">Participer</a><a class="putainde-Nav-item putainde-Nav-item--icon r-Tooltip r-Tooltip r-Tooltip--bottom" href="https://github.com/putaindecode/" data-r-tooltip="GitHub"><img class="putainde-Icon" src="/icons/github.svg"></a><a class="putainde-Nav-item putainde-Nav-item--icon r-Tooltip r-Tooltip r-Tooltip--bottom" href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter"><img class="putainde-Icon" src="/icons/twitter.svg"></a></nav></div></div></div><div class="putainde-Main"><article class="r-Grid putainde-Post"><div class="r-Grid-cell r-all--8of12 putainde-Post-contents"><div class="putainde-Title"><h1 class="putainde-Title-text">Faire son préprocesseur CSS à la carte</h1></div><header class="putainde-Post-header"><div class="putainde-Post-metas"><span>Écrit par <span><a href="http://moox.io/">MoOx</a><span></span></span></span><span>, </span><span class="putainde-Date"> le 20 mai 2014</span>. <span class="r-Tooltip r-Tooltip--top putainde-Post-readingTime" data-r-tooltip="Temps de lecture approximatif, sur une base de 250 mots par minute">Temps de lecture : environ 9 minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">css</li><li class="putainde-Tag">preprocesseur</li><li class="putainde-Tag">postprocesseur</li></ul></header><div class="putainde-Post-md"><div><p>Après vous avoir fait un petit <a href="/posts/css/le-point-sur-les-preprocesseurs/" >état de l’art des préprocesseurs CSS historiques</a>
+et vous avoir parlé <a href="/posts/css/le-point-sur-les-preprocesseurs/" >des postprocesseurs</a>,
 je me dois de vous montrer le chemin qui me semble le plus pertinent aujourd’hui,
-en 2014, maintenant que <a href="http://www.w3.org/standards/techs/css#cr">les spécifications CSS sont découpées en modules</a>
+en 2014, maintenant que <a href="http://www.w3.org/standards/techs/css#cr" >les spécifications CSS sont découpées en modules</a>
 qui peuvent du coup avancer (plus rapidement) chacune de leur côté.</p>
 <p>Bon après faut avouer que chez {p!} on fait genre on est des hipsters hackers,
-du coup quand on voit que <a href="http://blog.kaelig.fr/post/85546040569/net-awards-sass-game-changer-of-the-year">Sass est le game changer of the year</a>
+du coup quand on voit que <a href="http://blog.kaelig.fr/post/85546040569/net-awards-sass-game-changer-of-the-year" >Sass est le game changer of the year</a>
  et que tout le monde l’adopte, on se doit de rester hipster.
 Du coup on est obligés de passer à autre chose.</p>
-<p><strong>Mise à jour du 11 décembre 2014:</strong> <em>depuis le temps où j’ai rédigé cette article, j’ai travaillé sur un transpileur CSS future-proof, basé sur PostCSS. Je vous invite à jeter au project <strong><a href="https://cssnext.github.io/">cssnext</a></strong>.</em></p>
+<p><strong>Mise à jour du 11 décembre 2014:</strong> <em>depuis le temps où j’ai rédigé cette article, j’ai travaillé sur un transpileur CSS future-proof, basé sur PostCSS. Je vous invite à jeter au project <strong><a href="https://cssnext.github.io/" >cssnext</a></strong>.</em></p>
 <h2 id="pre-ou-postprocesseurs">
-      <a class="putainde-Title-anchor" href="#pre-ou-postprocesseurs">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#pre-ou-postprocesseurs">#</a>
       Pré ou postprocesseurs ?
     </h2><p>Je vais ici utiliser le mot préprocesseur, alors que certains trouveront postprocesseurs plus pertinent,
 car pour moi le préprocessing reste simplement une étape avant le <em>processing</em>
@@ -22,7 +22,7 @@ de nos feuilles de styles par les navigateurs.</p>
 </ol>
 <p>Revenons rapidement sur ces 3 points :</p>
 <h3 id="preprocessing-via-langage-dedie">
-      <a class="putainde-Title-anchor" href="#preprocessing-via-langage-dedie">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#preprocessing-via-langage-dedie">#</a>
       Preprocessing via langage dédié
     </h3><p>Ici je parle d’un langage, car superset ou pas, on a des éléments nouveaux,
 incompréhensibles par le navigateur (ex: <code>@if</code>, <code>@foreach</code>…).</p>
@@ -35,7 +35,7 @@ ne tolérant pas l’indentation :</p>
 <span class="hljs-comment">/* 💥 BOOM ! CA PAS MARCHER EN STYLUS */</span></span></span></span>
 </code></pre>
 <h3 id="preprocessing-futureproof-fallback">
-      <a class="putainde-Title-anchor" href="#preprocessing-futureproof-fallback">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#preprocessing-futureproof-fallback">#</a>
       Préprocessing futureproof/fallback
     </h3><p>Ici on conserve la syntaxe CSS, le parsing est donc simple est connu.
 Mais attention on peut avoir un résultat non compréhensible par certains navigateurs
@@ -49,15 +49,15 @@ doubler nos valeurs en <code>px</code>.
 Autre exemple avec les variables CSS natives : on peut (pour une utilisation simpliste)
 faire un prérendu et mettre des roues de secours là où c’est possible.</p>
 <h3 id="processing-par-le-navigateur">
-      <a class="putainde-Title-anchor" href="#processing-par-le-navigateur">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#processing-par-le-navigateur">#</a>
       Processing par le navigateur
     </h3><p>Ici on a blindé notre feuille de fallback, on est (en théorie) sensé avoir un support “au mieux”.</p>
 <h2 id="creer-un-preprocesseur-css">
-      <a class="putainde-Title-anchor" href="#creer-un-preprocesseur-css">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#creer-un-preprocesseur-css">#</a>
       Créer un préprocesseur CSS
     </h2><p>Allons à l’essentiel : pour créer votre préprocesseur on va utiliser une bibliothèque.
-À ce jour nous avons le choix entre <a href="https://github.com/reworkcss/rework">Rework</a>
- ou <a href="https://github.com/ai/postcss">PostCSS</a> qui permettent d’inspecter et de manipuler nos CSS.
+À ce jour nous avons le choix entre <a href="https://github.com/reworkcss/rework" >Rework</a>
+ ou <a href="https://github.com/ai/postcss" >PostCSS</a> qui permettent d’inspecter et de manipuler nos CSS.
 Tout deux sont des bibliothèques écrites en JavaScript (NodeJs).</p>
 <p>Pour la petite histoire, Autoprefixer est à l’origine de PostCSS. En effet les
 premières versions utilisaient Rework, mais à cause de limitation dues à l’API de Rework,
@@ -70,7 +70,7 @@ donc mieux à nos besoins.</p>
 Il suffira de trouver un plugin équivalent (ex: rework-vars et postcss-vars font la même chose).</p>
 <p>Pour des raisons d’écosystème, je partirai sur Rework histoire de ne pas réinventer la roue.</p>
 <h2 id="creer-un-preprocesseur-css-avec-rework">
-      <a class="putainde-Title-anchor" href="#creer-un-preprocesseur-css-avec-rework">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#creer-un-preprocesseur-css-avec-rework">#</a>
       Créer un préprocesseur CSS avec Rework
     </h2><p>Rework prend une chaîne CSS en entrée, produit un AST (arbre de syntaxe abtrait)
 de notre CSS et nous fournis une API pour le manipuler.</p>
@@ -80,7 +80,7 @@ de notre CSS et nous fournis une API pour le manipuler.</p>
 <span class="hljs-keyword">var</span> css = rework(<span class="hljs-string">"html { font-size: 2rem}"</span>).use(unPlugin).toString()
 </code></pre>
 <h3 id="plugin-rework">
-      <a class="putainde-Title-anchor" href="#plugin-rework">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#plugin-rework">#</a>
       Plugin Rework
     </h3><p>Un plugin Rework n’est rien d’autre qu’une fonction JavaScript.
 L’exemple suivant remplacera toutes les couleurs de texte par du noir.</p>
@@ -100,151 +100,151 @@ L’exemple suivant remplacera toutes les couleurs de texte par du noir.</p>
 <p>Il est certain que l’exemple ci-dessus ne doit pas vous exciter beaucoup. Moi non plus.
 Je n’ai d’ailleurs pas du tout accroché lorsque Rework est apparu par manque de compréhension.
 <strong>Ou plutôt par manque d’imagination</strong>.</p>
-<p>Pour un exemple plus costaud je vous invite à regarder le code <a href="https://github.com/reworkcss/rework-vars/blob/master/index.js">rework-vars</a>.</p>
+<p>Pour un exemple plus costaud je vous invite à regarder le code <a href="https://github.com/reworkcss/rework-vars/blob/master/index.js" >rework-vars</a>.</p>
 <h2 id="l-ecosysteme-rework">
-      <a class="putainde-Title-anchor" href="#l-ecosysteme-rework">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#l-ecosysteme-rework">#</a>
       L’Ecosystème Rework
     </h2><p>Heureusement pour nous, nous avons un écosystème. Donc pour un usage classique (écrire
 du CSS futureproof ou ajouter quelques petites améliorations) il n’y aura pas besoin
 d’écrire de plugin, juste en utiliser fera l’affaire.</p>
 <h3 id="plugins-rework-natif">
-      <a class="putainde-Title-anchor" href="#plugins-rework-natif">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#plugins-rework-natif">#</a>
       Plugins Rework natif
     </h3><p>Rework embarque en natif quelques plugins. Il faudra tout de même les activer (on voit comment juste après).</p>
 <ul>
-<li><a href="https://github.com/reworkcss/rework#extend">extend</a>: Permet d’hériter d’un sélecteur (<code>@extend</code> quoi).</li>
-<li><a href="https://github.com/reworkcss/rework#ease">ease</a>: Ajout un paquet de fonctions d’easing pour les animations et transitions.</li>
-<li><a href="https://github.com/reworkcss/rework#at2x">at2x</a>: Gestion automatique des images <code>@2x</code>.</li>
-<li><a href="https://github.com/reworkcss/rework#prefixselectorsstring">prefixSelectors</a>: Permet de préfixer vos sélecteurs.</li>
-<li><a href="https://github.com/reworkcss/rework#colors">colors</a>: Explication par l’exemple : <code>rgba(#fc0, .5)</code>.</li>
-<li><a href="https://github.com/reworkcss/rework#mixinobject">mixin</a>: Faire ses propres mixins via des fonctions JavaScript.</li>
-<li><a href="https://github.com/reworkcss/rework#functionobject">function</a>: Ajouter ses propres fonctions CSS.</li>
-<li><a href="https://github.com/reworkcss/rework#references">references</a>: Permet de faire référence à des valeurs de propriétés (ex: <code>height: @width</code>)</li>
-<li><a href="https://github.com/reworkcss/rework#urlfn">url</a>: Réécrire les <code>url()</code>s via une fonction JavaScript.</li>
-<li><a href="https://github.com/reworkcss/rework#inlinedir">inline</a>: Inliner des ressources via des datauri.</li>
+<li><a href="https://github.com/reworkcss/rework#extend" >extend</a>: Permet d’hériter d’un sélecteur (<code>@extend</code> quoi).</li>
+<li><a href="https://github.com/reworkcss/rework#ease" >ease</a>: Ajout un paquet de fonctions d’easing pour les animations et transitions.</li>
+<li><a href="https://github.com/reworkcss/rework#at2x" >at2x</a>: Gestion automatique des images <code>@2x</code>.</li>
+<li><a href="https://github.com/reworkcss/rework#prefixselectorsstring" >prefixSelectors</a>: Permet de préfixer vos sélecteurs.</li>
+<li><a href="https://github.com/reworkcss/rework#colors" >colors</a>: Explication par l’exemple : <code>rgba(#fc0, .5)</code>.</li>
+<li><a href="https://github.com/reworkcss/rework#mixinobject" >mixin</a>: Faire ses propres mixins via des fonctions JavaScript.</li>
+<li><a href="https://github.com/reworkcss/rework#functionobject" >function</a>: Ajouter ses propres fonctions CSS.</li>
+<li><a href="https://github.com/reworkcss/rework#references" >references</a>: Permet de faire référence à des valeurs de propriétés (ex: <code>height: @width</code>)</li>
+<li><a href="https://github.com/reworkcss/rework#urlfn" >url</a>: Réécrire les <code>url()</code>s via une fonction JavaScript.</li>
+<li><a href="https://github.com/reworkcss/rework#inlinedir" >inline</a>: Inliner des ressources via des datauri.</li>
 </ul>
 <h3 id="plugins-rework-npm">
-      <a class="putainde-Title-anchor" href="#plugins-rework-npm">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#plugins-rework-npm">#</a>
       Plugins Rework NPM
-    </h3><p>On a déjà plus d’une soixantaine de <a href="https://www.npmjs.org/search?q=rework">plugins Rework disponible sur NPM</a> en plus des plugins natifs.</p>
+    </h3><p>On a déjà plus d’une soixantaine de <a href="https://www.npmjs.org/search?q=rework" >plugins Rework disponible sur NPM</a> en plus des plugins natifs.</p>
 <h4 id="ajouter-des-fallbacks">
-      <a class="putainde-Title-anchor" href="#ajouter-des-fallbacks">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#ajouter-des-fallbacks">#</a>
       Ajouter des fallbacks
     </h4><p>Si vous souhaitez écrire des CSS sans pour autant vous limiter à certaines implémentations, ces plugins devraient vous plaire.</p>
 <h5 id="rework-vars">
-      <a class="putainde-Title-anchor" href="#rework-vars">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-vars">#</a>
       rework-vars
-    </h5><p><a href="https://github.com/reworkcss/rework-vars">rework-vars</a>
-permet un usage des <a href="http://www.w3.org/TR/css-variables/">variables CSS</a>.
+    </h5><p><a href="https://github.com/reworkcss/rework-vars" >rework-vars</a>
+permet un usage des <a href="http://www.w3.org/TR/css-variables/" >variables CSS</a>.
 Ce plugin est (pour l’instant) restreint aux déclarations à la racine (<code>:root</code>).
 Cela permet toutefois un usage classique de variables globales.
 Et de se séparer de Sass ou Less si on utilise pas beaucoup plus que des variables.</p>
 <h5 id="rework-calc">
-      <a class="putainde-Title-anchor" href="#rework-calc">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-calc">#</a>
       rework-calc
-    </h5><p><a href="https://github.com/reworkcss/rework-calc">rework-calc</a>
+    </h5><p><a href="https://github.com/reworkcss/rework-calc" >rework-calc</a>
 ajoute les résultats des opérations <code>calc()</code> quand c’est possible (même unité).
 Très pratique spécialement couplé avec rework-vars pour ajouter un peu de math via vos variables.</p>
 <h5 id="rework-npm">
-      <a class="putainde-Title-anchor" href="#rework-npm">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-npm">#</a>
       rework-npm
-    </h5><p><a href="https://github.com/conradz/rework-npm">rework-npm</a>
+    </h5><p><a href="https://github.com/conradz/rework-npm" >rework-npm</a>
 nous parse <code>@import</code> comme on l’aime.
 Peut taper dans votre dossier de sources ou en plus dans <code>node_modules</code>
-(pratique pour utiliser <a href="https://www.npmjs.org/package/normalize.css">normalize.css</a>
-<a href="/posts/frontend/npm-comme-package-manager-pour-le-front-end/">via npm</a> par exemple).
-Il existe aussi <a href="https://github.com/simme/rework-importer">rework-importer</a> qui amène quelques différences de syntaxe.</p>
-<h5 id="rework-rem-fallback">
-      <a class="putainde-Title-anchor" href="#rework-rem-fallback">#</a>
-      <a href="https://github.com/ctalkington/rework-rem-fallback">rework-rem-fallback</a>
-    </h5><p><a href="https://github.com/ctalkington/rework-rem-fallback">rework-rem-fallback</a>
+(pratique pour utiliser <a href="https://www.npmjs.org/package/normalize.css" >normalize.css</a>
+<a href="/posts/frontend/npm-comme-package-manager-pour-le-front-end/" >via npm</a> par exemple).
+Il existe aussi <a href="https://github.com/simme/rework-importer" >rework-importer</a> qui amène quelques différences de syntaxe.</p>
+<h5 id="rework-rem-fallback-https-github-com-ctalkington-rework-rem-fallback">
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-rem-fallback-https-github-com-ctalkington-rework-rem-fallback">#</a>
+      <a href="https://github.com/ctalkington/rework-rem-fallback" >rework-rem-fallback</a>
+    </h5><p><a href="https://github.com/ctalkington/rework-rem-fallback" >rework-rem-fallback</a>
 ajoute un fallback sur les unités REM. Pratique si vous voulez utiliser REM mais
 que vous devez supporter IE 8.</p>
 <h5 id="rework-color-function">
-      <a class="putainde-Title-anchor" href="#rework-color-function">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-color-function">#</a>
       rework-color-function
-    </h5><p><a href="https://github.com/ianstormtaylor/rework-color-function">rework-color-function</a> permet
+    </h5><p><a href="https://github.com/ianstormtaylor/rework-color-function" >rework-color-function</a> permet
 de manipuler les couleurs via
-<a href="http://dev.w3.org/csswg/css-color/#modifying-colors">les nouvelles fonctions en cours de spécifications</a>
+<a href="http://dev.w3.org/csswg/css-color/#modifying-colors" >les nouvelles fonctions en cours de spécifications</a>
 (hue, saturation, lightness, whiteness, blackness, tint, shade, blend, blenda, contrast).</p>
 <h5 id="rework-mixin-opacity">
-      <a class="putainde-Title-anchor" href="#rework-mixin-opacity">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-mixin-opacity">#</a>
       rework-mixin-opacity
-    </h5><p><a href="https://github.com/reworkcss/rework-mixin-opacity">rework-mixin-opacity</a> ajoute l’<code>opacity</code> pour IE 8.</p>
+    </h5><p><a href="https://github.com/reworkcss/rework-mixin-opacity" >rework-mixin-opacity</a> ajoute l’<code>opacity</code> pour IE 8.</p>
 <h4 id="ameliorer-un-peu-vos-feuilles-de-styles">
-      <a class="putainde-Title-anchor" href="#ameliorer-un-peu-vos-feuilles-de-styles">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#ameliorer-un-peu-vos-feuilles-de-styles">#</a>
       Améliorer un peu vos feuilles de styles
     </h4><p>Sans pour autant partir en vrille vers des <code>@if</code> ou <code>@each</code>, voici quelques plugins
 qui peuvent ajouter un peu de beurre dans les épinards :</p>
 <h5 id="rework-parent">
-      <a class="putainde-Title-anchor" href="#rework-parent">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-parent">#</a>
       rework-parent
-    </h5><p><a href="https://github.com/fgnass/rework-parent">rework-parent</a> permet de référencer le sélecteur précédent via <code>&amp;</code>. Pratique dans pour les media-queries ou pour les états (:hover etc).</p>
+    </h5><p><a href="https://github.com/fgnass/rework-parent" >rework-parent</a> permet de référencer le sélecteur précédent via <code>&amp;</code>. Pratique dans pour les media-queries ou pour les états (:hover etc).</p>
 <h5 id="rework-breakpoints">
-      <a class="putainde-Title-anchor" href="#rework-breakpoints">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-breakpoints">#</a>
       rework-breakpoints
-    </h5><p><a href="https://github.com/reworkcss/rework-breakpoints">rework-breakpoints</a> permet de spécifier des media-queries via des breakpoints prédéfinis. Pratique en attendant un plugin gérant les <a href="http://dev.w3.org/csswg/mediaqueries4/#custom-mq"><code>@custom-media</code></a>.</p>
+    </h5><p><a href="https://github.com/reworkcss/rework-breakpoints" >rework-breakpoints</a> permet de spécifier des media-queries via des breakpoints prédéfinis. Pratique en attendant un plugin gérant les <a href="http://dev.w3.org/csswg/mediaqueries4/#custom-mq" ><code>@custom-media</code></a>.</p>
 <h5 id="rework-hex-alpha">
-      <a class="putainde-Title-anchor" href="#rework-hex-alpha">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-hex-alpha">#</a>
       rework-hex-alpha
-    </h5><p><a href="https://github.com/ianstormtaylor/rework-hex-alpha">rework-hex-alpha</a> permet de spécifier des couleurs avec alpha sous la forme #rrggbbaa.</p>
+    </h5><p><a href="https://github.com/ianstormtaylor/rework-hex-alpha" >rework-hex-alpha</a> permet de spécifier des couleurs avec alpha sous la forme #rrggbbaa.</p>
 <h5 id="rework-clearfix">
-      <a class="putainde-Title-anchor" href="#rework-clearfix">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-clearfix">#</a>
       rework-clearfix
-    </h5><p><a href="https://github.com/fgnass/rework-clearfix">rework-clearfix</a> permet d’utiliser <code>clear: fix</code> via l’insertion automatique du <a href="http://nicolasgallagher.com/micro-clearfix-hack/">micro clearfix de @necolas</a>.</p>
+    </h5><p><a href="https://github.com/fgnass/rework-clearfix" >rework-clearfix</a> permet d’utiliser <code>clear: fix</code> via l’insertion automatique du <a href="http://nicolasgallagher.com/micro-clearfix-hack/" >micro clearfix de @necolas</a>.</p>
 <h5 id="rework-assets">
-      <a class="putainde-Title-anchor" href="#rework-assets">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-assets">#</a>
       rework-assets
-    </h5><p><a href="https://github.com/conradz/rework-assets">rework-assets</a> permet de copier les assets référencés. Pratique avec rework-npm et des modules externes.</p>
+    </h5><p><a href="https://github.com/conradz/rework-assets" >rework-assets</a> permet de copier les assets référencés. Pratique avec rework-npm et des modules externes.</p>
 <h5 id="rework-namespace-css">
-      <a class="putainde-Title-anchor" href="#rework-namespace-css">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-namespace-css">#</a>
       rework-namespace-css
-    </h5><p><a href="https://github.com/geordiemhall/rework-namespace-css">rework-namespace-css</a> permet de namespacer vos CSS par une classe sur <code>&lt;html&gt;</code>.</p>
+    </h5><p><a href="https://github.com/geordiemhall/rework-namespace-css" >rework-namespace-css</a> permet de namespacer vos CSS par une classe sur <code>&lt;html&gt;</code>.</p>
 <h5 id="rework-namespace">
-      <a class="putainde-Title-anchor" href="#rework-namespace">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-namespace">#</a>
       rework-namespace
-    </h5><p><a href="https://github.com/kristoferjoseph/rework-namespace">rework-namespace</a> permet de namespacer vos CSS par un préfixe. Pratique avec <a href="/posts/css/petite-definition-bem/">BEM</a> lorsque vous préfixez par votre <code>.org-</code>.</p>
+    </h5><p><a href="https://github.com/kristoferjoseph/rework-namespace" >rework-namespace</a> permet de namespacer vos CSS par un préfixe. Pratique avec <a href="/posts/css/petite-definition-bem/" >BEM</a> lorsque vous préfixez par votre <code>.org-</code>.</p>
 <h5 id="rework-classmap">
-      <a class="putainde-Title-anchor" href="#rework-classmap">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-classmap">#</a>
       rework-classmap
-    </h5><p><a href="https://github.com/andreypopp/rework-classmap">rework-classmap</a> permet de renommer des classes via du mapping. Avec ça on pourrait presque avoir un code Bootstrap propre.</p>
+    </h5><p><a href="https://github.com/andreypopp/rework-classmap" >rework-classmap</a> permet de renommer des classes via du mapping. Avec ça on pourrait presque avoir un code Bootstrap propre.</p>
 <h5 id="rework-palette">
-      <a class="putainde-Title-anchor" href="#rework-palette">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-palette">#</a>
       rework-palette
-    </h5><p><a href="https://github.com/fgnass/rework-palette">rework-palette</a> permet d’ajouter une palette de couleur personnalisée (via des noms de couleurs).</p>
+    </h5><p><a href="https://github.com/fgnass/rework-palette" >rework-palette</a> permet d’ajouter une palette de couleur personnalisée (via des noms de couleurs).</p>
 <h5 id="rework-deduplicate">
-      <a class="putainde-Title-anchor" href="#rework-deduplicate">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-deduplicate">#</a>
       rework-deduplicate
-    </h5><p><a href="https://github.com/kristoferjoseph/rework-deduplicate">rework-deduplicate</a> permet de supprimer les règles dupliquées.</p>
+    </h5><p><a href="https://github.com/kristoferjoseph/rework-deduplicate" >rework-deduplicate</a> permet de supprimer les règles dupliquées.</p>
 <h5 id="rework-split-media">
-      <a class="putainde-Title-anchor" href="#rework-split-media">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-split-media">#</a>
       rework-split-media
-    </h5><p><a href="https://github.com/reworkcss/split-media">rework-split-media</a> permet de couper les contenus des media queries dans d’autres fichiers.</p>
+    </h5><p><a href="https://github.com/reworkcss/split-media" >rework-split-media</a> permet de couper les contenus des media queries dans d’autres fichiers.</p>
 <h5 id="rework-move-media">
-      <a class="putainde-Title-anchor" href="#rework-move-media">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#rework-move-media">#</a>
       rework-move-media
-    </h5><p><a href="https://github.com/reworkcss/rework-move-media">rework-move-media</a> permet de regrouper les contenus des media queries. Pas très utile car gzip fera aussi bien.</p>
+    </h5><p><a href="https://github.com/reworkcss/rework-move-media" >rework-move-media</a> permet de regrouper les contenus des media queries. Pas très utile car gzip fera aussi bien.</p>
 <h4 id="au-dela-du-preprocessing">
-      <a class="putainde-Title-anchor" href="#au-dela-du-preprocessing">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#au-dela-du-preprocessing">#</a>
       Au delà du préprocessing
     </h4><p>En utilisant le parser Rework, on peut faire plus que des ajustements ou du remplacement: on peut balancer des erreurs.</p>
 <ul>
-<li><a href="https://github.com/reworkcss/rework-ie-limits">rework-ie-limits</a>: prévient si vos CSS dépassent la limite de 4095 selectors (limite pour IE &lt; 10).</li>
-<li><a href="https://github.com/suitcss/rework-suit-conformance">rework-suit-conformance</a>: permet de vérifier que votre code suit bien les <a href="https://github.com/suitcss/suit/tree/master/doc">conventions SUIT</a> (pour peu que vous les suiviez).</li>
+<li><a href="https://github.com/reworkcss/rework-ie-limits" >rework-ie-limits</a>: prévient si vos CSS dépassent la limite de 4095 selectors (limite pour IE &lt; 10).</li>
+<li><a href="https://github.com/suitcss/rework-suit-conformance" >rework-suit-conformance</a>: permet de vérifier que votre code suit bien les <a href="https://github.com/suitcss/suit/tree/master/doc" >conventions SUIT</a> (pour peu que vous les suiviez).</li>
 </ul>
 <p>En partant dans d’autres directions on pourrait réaliser des statistiques sur
-nos CSS (nombre de sélecteurs, de couleurs utilisées etc) comme le fait <a href="http://www.cssstats.com/">CSS Stats</a>.</p>
-<p>Retrouvrez en plus de la recherche via npm (qui sera la plus à jour), <a href="https://github.com/reworkcss/rework/wiki/Plugins-and-Utilities">une liste des plugins et utilitaires sur le wiki de Rework</a>.</p>
+nos CSS (nombre de sélecteurs, de couleurs utilisées etc) comme le fait <a href="http://www.cssstats.com/" >CSS Stats</a>.</p>
+<p>Retrouvrez en plus de la recherche via npm (qui sera la plus à jour), <a href="https://github.com/reworkcss/rework/wiki/Plugins-and-Utilities" >une liste des plugins et utilitaires sur le wiki de Rework</a>.</p>
 <h2 id="mise-en-place-de-rework-pour-faire-votre-preprocesseur-en-moins-de-5-min">
-      <a class="putainde-Title-anchor" href="#mise-en-place-de-rework-pour-faire-votre-preprocesseur-en-moins-de-5-min">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/preprocesseur-a-la-carte/#mise-en-place-de-rework-pour-faire-votre-preprocesseur-en-moins-de-5-min">#</a>
       Mise en place de Rework pour faire votre préprocesseur en moins de 5 min
     </h2><p>Maintenant que nous avons vu comment utiliser Rework et quels sont les plugins
 les plus sympas, on se faire un petit fichier pour automatiser tout ce process.</p>
-<p>Plutôt que de réinventer la roue comme l’a fait <a href="http://pleeease.io/">Pleeease</a> (en gérant un watcher et tout le tralala),
-on va plutôt partir comme <a href="http://myth.io/">Myth.io</a> ou <a href="https://github.com/visionmedia/styl">Styl</a> (successeur spirituel de Stylus)
+<p>Plutôt que de réinventer la roue comme l’a fait <a href="http://pleeease.io/" >Pleeease</a> (en gérant un watcher et tout le tralala),
+on va plutôt partir comme <a href="http://myth.io/" >Myth.io</a> ou <a href="https://github.com/visionmedia/styl" >Styl</a> (successeur spirituel de Stylus)
 qui se concentrent sur le rendu et non le workflow pour générer ce rendu.</p>
-<p>Nous allons donc faire simple et efficace avec une task <a href="/posts/js/introduction-gulp/">gulp</a>.
-Ceci pourrait bien entendu être aussi bien fait avec grunt ou même make et <a href="https://github.com/facebook/watchman">watchman</a>.</p>
+<p>Nous allons donc faire simple et efficace avec une task <a href="/posts/js/introduction-gulp/" >gulp</a>.
+Ceci pourrait bien entendu être aussi bien fait avec grunt ou même make et <a href="https://github.com/facebook/watchman" >watchman</a>.</p>
 <pre><code class="lang-console">$ <span class="hljs-built_in">mkdir</span> monrework &amp;&amp; <span class="hljs-built_in">cd</span> monrework
 
 # on crée un package.json pour sauvegarder les références des paquets qu'on va utiliser
@@ -368,7 +368,7 @@ D’ici quelques temps on pourra supprimer une grande partie des plugins et les 
 (10 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="kud
 (1 commit)"><a href="http://kud.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/655838?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Macxim
 (1 commit)"><a href="https://github.com/Macxim" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1909957?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="mickaelandrieu
-(1 commit)"><a href="http://www.mickael-andrieu.com" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1247388?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script src="/index.add992a.js"></script><script src="http://0.0.0.0:4243/livereload.js"></script><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
+(1 commit)"><a href="http://www.mickael-andrieu.com" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1247388?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/github.svg"></a></li><li><a href="https://twitter.com/putaindecode/" data-r-tooltip="Twitter" class="r-Tooltip r-Tooltip--top"><img class="putainde-Icon" src="/icons/twitter.svg"></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script src="/index.1a779b6.js"></script><script src="http://0.0.0.0:4243/livereload.js"></script><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
 var disqus_identifier = "http://putaindecode.fr/posts/css/preprocesseur-a-la-carte/";
 var disqus_url = "http://putaindecode.fr/posts/css/preprocesseur-a-la-carte/";
 var disqus_script = "embed.js";
