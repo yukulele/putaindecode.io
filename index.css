@@ -2199,7 +2199,7 @@ body {
   margin-right: auto;
 }
 
-@media (max-width: 54em) {
+@media (max-width: 50em) {
   .r-Grid {
     width: auto;
   }
@@ -2237,7 +2237,7 @@ body {
   line-height: 3.125rem;
 }
 
-  @media (max-width:54em) {
+  @media (max-width: 50em) {
     .putainde-Header .r-Grid-cell {
       text-align: center
     }
@@ -2251,12 +2251,12 @@ body {
   text-decoration: none
 }
 
-  @media (min-width: 54em) {
+  @media (min-width: 50.01em) {
     .putainde-SiteTitle {
       padding: 0 0 0 5.6875rem;
     }
   }
-  @media (max-width:54em) {
+  @media (max-width: 50em) {
     .putainde-SiteTitle {
     font-size: 0.83333em;
     }
@@ -2270,6 +2270,7 @@ body {
   }
 
 .putainde-Logo {
+  z-index: 1;
   position: absolute;
   top: 50%;
   left: 0;
@@ -2283,7 +2284,7 @@ body {
       -ms-transform: translateY(-50%);
           transform: translateY(-50%);
 }
-  @media (min-width: 54em) {
+  @media (min-width: 50.01em) {
     .putainde-Logo {
       width: 4.6875rem;
       height: 4.6875rem;
@@ -2306,7 +2307,7 @@ body {
     margin-top: -1px;
   }
 
-    @media (max-width:54em) {
+    @media (max-width: 50em) {
       .putainde-Footer > .r-Grid > .r-Grid-cell {
         padding: 0.78125rem 0;
         text-align: center;
@@ -2336,13 +2337,13 @@ body {
   font-size: 0.83333em;
 }
 
-@media (min-width:54em) {
+@media (min-width: 50.01em) {
   .putainde-Footer-text--right {
     text-align: right;
   }
 }
 
-  @media (min-width:54em) {
+  @media (min-width: 50.01em) {
     .putainde-Footer-list {
       text-align: center
     }
@@ -2365,7 +2366,7 @@ body {
     padding: 0 1.25em;
   }
 
-@media (min-width:54em) {
+@media (min-width: 50.01em) {
   .putainde-Nav {
     text-align: right;
   }
@@ -2521,7 +2522,7 @@ body {
   text-align: left;
   padding: 0 2em;
 }
-  @media (max-width:54em) {
+  @media (max-width: 50em) {
     .putainde-Column {
       padding: .5em
     }
@@ -2564,7 +2565,7 @@ body {
   cursor: pointer;
 }
 
-  @media (max-width:54em) {
+  @media (max-width: 50em) {
     .putainde-TagFilters-toggle {
       display: inline-block
     }
@@ -2586,13 +2587,13 @@ body {
   line-height: 1;
 }
 
-  @media (max-width:54em) {
+  @media (max-width: 50em) {
     .putainde-TagFilters-close {
       display: inline-block
     }
   }
 
-@media (max-width:54em) {
+@media (max-width: 50em) {
   .putainde-TagFilters {
     background: #fff;
     box-shadow: .2em 0 .4em rgba(0, 0, 0, 0.1), 1px 0 #000000;
@@ -2636,68 +2637,174 @@ body {
           transition: .2s ease-in-out left
 }
 
-  @media (max-width:54em) {
+  @media (max-width: 50em) {
     .putainde-Body--tagFiltersOpened .putainde-TagFilters {
       display: block;
       left: 0em;
     }
   }
 .putainde-Post {
+  color: #444;
   text-align: center;
-  padding: 0 25px;
-  padding: 0 1.5625rem;
+  padding: 0 16px;
+  padding: 0 1rem;
 }
 
-.putainde-Title {
-  z-index: 3;
+  /* if a custom header is here, we adjust the post to be near the nav */
+  .putainde-Post--customHeader {
+    margin: -25px 0 0;
+    margin: -1.5625rem 0 0;
+  }
 
-  margin: 12px 0;
-  margin: 0.78125rem 0;
-  overflow: auto;
+  .putainde-Post a {
+    color: #c33;
+    fill: #c33;
+    text-decoration: none;
+  }
+    .putainde-Post a:hover,
+    .putainde-Post a:focus {
+      text-decoration: underline;
+    }
 
-  color: #222;
-  background: #fff;
-  background: -webkit-linear-gradient(top, #fff 60%, rgba(255, 255, 255, 0));
-  background: linear-gradient(to bottom, #fff 60%, rgba(255, 255, 255, 0));
-}
+  .putainde-Post-header {
+    position: relative;
+    text-align: center;
+    margin: 0 -16px 25px;
+    margin: 0 -1rem 1.5625rem;
+    padding: 50px 0;
+    padding: 3.125rem 0;
 
-.putainde-Title--home {
-  text-align: center;
-}
+    /* for putainde-Post-header--dark.putainde-Post-header--filter */
+    overflow: hidden;
+  }
 
-.putainde-Title-text {
-  font-weight: 400;
-}
+    .putainde-Post-header--custom {
+      padding: 15vh 0;
+      box-shadow:
+        0 0 1rem rgba(0, 0, 0, 0.2) inset,
+        0 .4rem 1rem rgba(0, 0, 0, 0.2) inset
+      ;
+    }
 
-.putainde-Post-metas  {
-  display: inline-block;
-  font-size: 0.83333em;
-  color: #999;
-}
+    .putainde-Post-header .putainde-Title {
+      padding: 0 16px;
+      padding: 0 1rem;
+    }
+
+    .putainde-Title {
+      margin: 12px 0;
+      margin: 0.78125rem 0;
+      overflow: auto;
+    }
+
+      .putainde-Post-header--dark .putainde-Title {
+        color: #fff;
+      }
+
+      .putainde-Post-header--light .putainde-Title {
+
+      }
+
+    .putainde-Title--home {
+      text-align: center;
+
+    }
+
+    @media (min-width: 65.01em) {
+      .putainde-Post-header .putainde-Title {
+        font-size: 3.1104rem;
+        line-height: 4.6875rem;
+        margin: 3.1104rem 0;
+        padding: 0 4rem;
+      }
+    }
+
+      .putainde-Post-header--dark .putainde-Title {
+        text-shadow:
+          0 0 6px rgba(0, 0, 0, 0.25),
+          0 0 5px rgba(0, 0, 0, 0.19999999999999996),
+          0 0 4px rgba(0, 0, 0, 0.15000000000000002),
+          0 0 3px rgba(0, 0, 0, 0.09999999999999998),
+          0 0 2px rgba(0, 0, 0, 0.050000000000000044)
+        ;
+      }
+
+      .putainde-Post-header--light .putainde-Title {
+        text-shadow:
+          0 0 5px rgba(255, 255, 255, 0.19999999999999996),
+          0 0 4px rgba(255, 255, 255, 0.15000000000000002),
+          0 0 3px rgba(255, 255, 255, 0.09999999999999998),
+          0 0 2px rgba(255, 255, 255, 0.050000000000000044)
+        ;
+      }
+
+      .putainde-Post-header-picture {
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        /* to avoid shitty rendering for low def background */
+        filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="2" /></filter></svg>#filter');
+        -webkit-filter: blur(2px);
+                filter: blur(2px);
+
+        /*
+          to avoid shitty rendering of filter: blur() on edge
+          example of the issue:
+          <div style="background: green">
+            <img src="http://lorempixel.com/400/200/" style="filter: blur(5px)"/>
+          </div>
+         */
+        -webkit-transform: scale(1.05);
+            -ms-transform: scale(1.05);
+                transform: scale(1.05);
+      }
+
+        .putainde-Post-header-pictureCredit {
+          position: absolute;
+          bottom: 6px;
+          bottom: .4rem;
+          right: 6px;
+          right: .4rem;
+
+          font-size: 0.69444em;
+
+          opacity: .6;
+          -webkit-transition: .2s;
+                  transition: .2s;
+        }
+
+          .putainde-Post-header-pictureCredit:hover {
+            opacity: .8;
+          }
+
+  .putainde-Post-metas  {
+    display: inline-block;
+    font-size: 0.83333em;
+    color: #999;
+  }
+
+  .putainde-Post .putainde-Post-tags {
+    margin-bottom: 50px;
+    margin-bottom: 3.125rem;
+  }
 
 /* enable nowrap for tooltip only for medium screen, to avoid scrollbar & shit */
 /* https://github.com/putaindecode/putaindecode.fr/issues/266 */
-@media (min-width: 54.01em) {
+@media (min-width: 50.01em) {
   .putainde-Post-readingTime:before {
     white-space: nowrap;
   }
 }
 
 .putainde-Post-contents {
-  text-align: left;
-  color: #444;
+  /*text-align: left;*/
 }
-  .putainde-Post-contents a {
-    color: #c33;
-    fill: #c33;
-    text-decoration: none;
-  }
-    .putainde-Post-contents a:hover,
-    .putainde-Post-contents a:focus {
-      text-decoration: underline;
-    }
 
 .putainde-Post-md {
+  text-align: left;
 }
 
   .putainde-Post-md ul,
@@ -2887,39 +2994,22 @@ body {
   font-style: italic;
 }
 
-.putainde-Networks * {
-  vertical-align: top;
-}
+  .putainde-Networks * {
+    vertical-align: top;
+  }
 
-.putainde-Network {
-  display: inline-block;
-  font-size: 2.074em;
-  padding: 0 0.2em;
-}
+  .putainde-Network {
+    display: inline-block;
+    font-size: 2.074em;
+    padding: 0 0.2em;
+  }
 
 .putainde-Post-footer  {
-  margin: 50px 0;
-  margin: 3.125rem 0;
+  margin: 25px 0;
+  margin: 1.5625rem 0;
+  padding: 25px 0;
+  padding: 1.5625rem 0;
   box-shadow: inset 0 1px 0 0 #ebeef0;
-}
-
-.putainde-Post-footer-title  {
-  color: #999;
-}
-
-.putainde-Post-footer-title,
-.putainde-Post-footer-action {
-  font-size: 0.83333em;
-}
-
-@media (min-width: 54em) {
-  .putainde-Post-footer .r-all--1of3 + .r-all--1of3  {
-    text-align: center;
-  }
-
-  .putainde-Post-footer .r-all--1of3 + .r-all--1of3 + .r-all--1of3  {
-    text-align: right;
-  }
 }
 
 #disqus_thread {
@@ -2956,16 +3046,22 @@ body {
 
 
 .putainde-Author {
+  text-align: left;
   position: relative;
   padding: 0 0 0 91px;
   padding: 0 0 0 5.6875rem;
   margin: 25px 0;
   margin: 1.5625rem 0;
 }
-  @media (max-width:28em) {
+  @media (max-width: 30em) {
     .putainde-Author {
       padding-left: 4em;
     }
+  }
+
+  .putainde-WrittenBy {
+    color: #444444;
+    color: rgba(68, 68, 68, 0.6);
   }
 
   .putainde-Author-picture {
@@ -2977,7 +3073,7 @@ body {
     width: 75px;
     width: 4.6875rem;
   }
-    @media (max-width:28em) {
+    @media (max-width: 30em) {
       .putainde-Author-picture {
         height: 3.125rem;
         width: 3.125rem;
@@ -3005,11 +3101,6 @@ body {
       opacity: .8;
     }
 
-  .putainde-WrittenBy {
-    color: #444444;
-    color: rgba(68, 68, 68, .6);
-  }
-
   .putainde-Author-social {
     position: absolute;
     top: .5em;
@@ -3017,7 +3108,7 @@ body {
     background: #fafafa;
     border-radius: 2em;
   }
-    @media (max-width:28em) {
+    @media (max-width: 30em) {
       .putainde-Author-social {
         position: static;
         display: inline-block;
@@ -3032,7 +3123,7 @@ body {
     }
 
       .putainde-Author-social a .putainde-Icon { font-size: 1.2em; }
-      @media (max-width:28em) { .putainde-Author-social a { font-size: 1em } }
+      @media (max-width: 30em) { .putainde-Author-social a { font-size: 1em } }
 
       .putainde-Author-social a:hover,
       .putainde-Author-social a:focus { background: #eee }
@@ -3048,9 +3139,6 @@ body {
     }
 
 .putainde-Contributors {
-  box-shadow: inset 0 1px 0 0 #ebeef0;
-  margin: 50px 0;
-  margin: 3.125rem 0;
   line-height: 50px;
   line-height: 3.125rem;
 }
@@ -3058,6 +3146,19 @@ body {
   .putainde-Contributors-label {
     font-size: 0.83333em;
     display: inline-block;
+  }
+
+  .putainde-Contributors-actions {
+    margin: 0 0 12px;
+    margin: 0 0 0.78125rem;
+    padding: 12px 0;
+    padding: 0.78125rem 0;
+    box-shadow: inset 0 1px 0 0 #ebeef0,
+      inset 0 -1px 0 0 #ebeef0;
+  }
+
+  .putainde-Contributors-action {
+    font-size: 0.83333em;
   }
 
   .putainde-Contributor {
@@ -3081,7 +3182,7 @@ body {
   margin-top: -1px;
   border-bottom: 1px solid #eee;
 }
-  @media (max-width:28em) {
+  @media (max-width: 30em) {
     .putainde-List-item {
       padding: 0 0 0 4rem;
     }
@@ -3178,14 +3279,16 @@ body {
 .putainde-Tag {
   display: inline-block;
   background: #fdfdfd;
+  color: #333;
+  text-shadow: none;
   box-shadow: inset 0 0 0 1px #000000;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
-  padding: 0 1em;
-  margin-right: 3px;
-  margin-right: .2rem;
+  padding: 0 .6em;
+  margin-right: 6px;
+  margin-right: .4rem;
   font-size: 0.83333em;
-  line-height: 1.6;
-  border-radius: 1em;
+  line-height: 1.4;
+  border-radius: 6px;
 }
 
 .putainde-List-author {
