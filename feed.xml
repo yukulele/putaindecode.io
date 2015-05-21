@@ -5,10 +5,153 @@
         <description><![CDATA[Putain de code !]]></description>
         <link>http://putaindecode.fr</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Thu, 21 May 2015 20:52:51 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 21 May 2015 21:24:15 GMT</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"/>
         <language><![CDATA[fr]]></language>
         <category><![CDATA[code]]></category>
+        <item>
+            <title><![CDATA[Qu'est-ce que l'intégration continue ?]]></title>
+            <description><![CDATA[<p>Certains risquent d’être déçus puisque nous ne parlerons pas ici des fameux <code>3x8</code>,
+technique qui consiste à faire tourner 3 équipes d’intégrateurs HTML en
+continu afin d’avoir du PSD &gt; HTML 24h sur 24.</p>
+<h2 id="le-principe-de-l-integration-continue">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#le-principe-de-l-integration-continue">#</a>
+      Le principe de l’intégration continue
+    </h2><p>Nous allons aborder un sujet qui permet d’avoir un site stable en production,
+ceci de manière automatisée et continue.</p>
+<p>Il faut comprendre par là sans passer par FTP avec Filezilla.
+Pas de bouton “Upload” ou “Sync” après avoir fait une modification de code.
+Pas de risque de péter tout votre site si vos modifications rentrent en conflit
+avec les modifications de votre collègue, qui lui aussi vient de pousser un
+bon gros patch bien sale.</p>
+<blockquote>
+<p>L’intégration continue est un ensemble de pratiques utilisées en génie
+logiciel consistant à vérifier à chaque modification de code source que le
+résultat des modifications ne produit pas de régression dans l’application
+développée.</p>
+</blockquote>
+<p><a href="https://fr.wikipedia.org/wiki/Int%C3%A9gration_continue" >Source: Wikipédia</a></p>
+<p>Notez que dans cette définition, il manque un point assez important :
+le déploiement automatisé à la suite des vérifications.</p>
+<h2 id="pre-requis-pour-mettre-en-place-l-integration-continue">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#pre-requis-pour-mettre-en-place-l-integration-continue">#</a>
+      Pré-requis pour mettre en place l’intégration continue
+    </h2><p>Avant de rentrer dans le vif du sujet, assurez-vous d’avoir déjà de bonne bases,
+pour maintenir une base de code saine en
+<a href="/posts/git/versionner-avec-git/" >versionnant avec git</a>.
+Nous sommes en 2015, l’année où l’on était censé avoir les voitures
+volantes, nous n’allons donc pas expliquer ici à quoi sert de versionner du
+code.</p>
+<p>Du code versionné ne suffit pas, il faut avoir des tests automatisés bien
+entendu.
+<a href="/posts/js/introduction-au-testing-js-front/" >Front</a> et back, il en faut de tous
+les côtés.</p>
+<p>Ensuite, il nous faudra choisir un serveur qui va gérer l’intégration continue.
+Il existe des services tels que:</p>
+<ul>
+<li><a href="http://travis-ci.org/" >Travis</a></li>
+<li><a href="https://circleci.com/" >CircleCI</a></li>
+<li><a href="https://www.atlassian.com/software/bamboo/" >Bamboo</a></li>
+<li><a href="https://codeship.com/" >Codeship</a></li>
+<li><a href="http://jenkins-ci.org/" >Jenkins</a></li>
+</ul>
+<h2 id="l-integration-continue-en-pratique">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#l-integration-continue-en-pratique">#</a>
+      L’intégration continue en pratique
+    </h2><p>Un fois qu’on a notre code testé et versionné et qu’on a configuré son serveur
+de <em>CI</em>, chaque modification va déclencher des actions sur ce serveur, puis,
+en fonction des résultats, va déclencher d’autres actions tout en vous notifiant
+si besoin.</p>
+<p>Un exemple classique serait le suivant : une fois les dernières modifications de
+code poussées sur la branche principale sur votre dépôt de code, le serveur
+d’intégration continue va jouer tous les tests et déployer le tout en production si
+tout a marché sur des roulettes.</p>
+<p>Si des problèmes surviennent, rien ne sera déployé et vous serez notifié sur
+les services que vous avez configurés (email, IRC, webhook, etc).</p>
+<p>Nous pouvons imaginer que votre serveur vienne vous insulter sur
+votre logiciel de chat interne, en vous montrant du doigt.
+On pourrait aussi imaginer une synthèse vocale crier votre nom et préciser à
+toute l’équipe que
+<a href="https://www.youtube.com/watch?v=mbDcnUH6rOc" >vous avez merté</a> :
+<em>“MoOx, you just fucked up the build by breaking 42 tests!
+Fix that please”</em>.
+Pour finir dans les exemples farfelus, nous pourrions avoir une petite tourelle
+type <em>Nerf</em> qui vous met un petit headshot qui va bien.
+Des équipes font vraiment ça, et vous vous en doutez, y’a de la grosse marrade au
+programme.</p>
+<p>L’idée est vraiment de pousser le plus souvent possible, les plus petites
+modifications possibles avec la meilleure couverture de tests possible.
+Ceci afin de minimiser les risques. De plus, cela aide à rester focalisé.</p>
+<p>Tout ce processus (versionné aussi tant qu’à faire), qui permet de jouer tous
+les tests <strong>rapidement</strong> (dans un environnement similaire à la production), doit
+être transparent et accessible localement, afin que les développeurs aient une
+bonne visibilité et une bonne compréhension du système en place.</p>
+<h2 id="faire-des-tests-automatises-c-est-la-vie">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#faire-des-tests-automatises-c-est-la-vie">#</a>
+      Faire des tests automatisés, c’est la vie
+    </h2><p>J’ai mis un titre pour ça car c’est important. Vraiment.
+Tout développeur qui n’a pas encore écrit ses premiers tests a peur.
+Puis avec le temps, il se dit que finalement, il ne fallait pas
+avoir autant d’appréhension et qu’il était très con de ne pas avoir
+testé automatiquement tout ses codes sources plus tôt.
+À tel point qu’une
+<a href="http://the--kyza.deviantart.com/art/What-the-Flux-511691704" >DeLorean modifiée</a>
+pour se prévenir soi-même ne serait pas de refus.</p>
+<p>Une fois la barrière franchie, on se dit vraiment qu’on était stupide de pas
+avoir essayé avant.</p>
+<p>Même chez <em>Putain de code !</em> (en date de cette article), notre couverture de
+tests est loin d’être bonne. Mais ce site étant un petit plaisir un peu risqué,
+nous faisons quand même du déploiement continu.
+On aime bien l’idée du <em><a href="http://zachholman.com/talk/move-fast-break-nothing" >move fast &amp; break nothing
+</a></em>.</p>
+<h2 id="une-commande-qui-execute-les-tests">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#une-commande-qui-execute-les-tests">#</a>
+      Une commande qui éxecute les tests
+    </h2><p>Un fois qu’on a écrit des tests, ou même souvent avant, on automatise
+l’exécution des tests. En général c’est rapide, étant donné qu’une simple
+commande ou un simple script suffit.
+Beaucoup de <em>test runners</em> existent et vous n’aurez aucune difficulté à en
+trouver un en adéquation avec votre language favori.</p>
+<p>Pour notre site, la commande est <code>npm test</code>. Simple, efficace.</p>
+<p>Elle exécute tout ce qui est nécessaire à compiler notre application et à jouer
+les tests tout en retournant un résultat lisible et un code d’erreur si besoin.</p>
+<h2 id="faire-un-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#faire-un-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">#</a>
+      Faire un script qui fait les choses qui vont bien quand les tests vont bien
+    </h2><p>Une fois qu’on a une commande qui peut jouer tous les tests et dire “y’a bon” ou
+“tatoukassé”, il nous faut prévoir les actions à réaliser quand nos tests sont OK.</p>
+<p>Un déploiement FTP, un déploiement git, ou plus compliqué via CDN, peu importe.
+<strong>Il faut juste une commande qui marche simplement.</strong></p>
+<p>Pour notre site, la command est <code>npm run deploy</code>. Cette commande pousse le site généré sur la
+branche <code>gh-pages</code>
+(puisqu’on se sert <a href="https://pages.github.com/" >des pages GitHub</a>).</p>
+<h2 id="automatiser-le-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#automatiser-le-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">#</a>
+      Automatiser le script qui fait les choses qui vont bien quand les tests vont bien
+    </h2><p>On peut ensuite éventuellement englober les précentes étapes dans une seule
+commande qui va se débrouiller s’il n’y a pas d’erreur. Mais bon, si vous n’avez
+que deux commandes (comme on a dans l’exemple de notre site), un simple appel de cette façon devrait
+faire l’affaire :</p>
+<pre><code class="lang-console">$ <span class="hljs-built_in">npm</span> test &amp;&amp; <span class="hljs-built_in">npm</span> run deploy
+</code></pre>
+<p>Si <code>npm test</code> retourne une erreur, la deuxième commande ne sera pas exécutée.</p>
+<h2 id="la-suite-au-prochaine-episode">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#la-suite-au-prochaine-episode">#</a>
+      La suite au prochaine épisode
+    </h2><p>Là, si vous avez déjà mis tout ça en place, le bonheur ultime du développeur
+n’est pas loin : vous pouvez rapidement vérifier qu’il n’y a pas de régressions
+et agir en conséquence.</p>
+<p>La prochaine étape (dans un prochain article) sera de mettre ça en place sur un
+serveur d’intégration continue, nous y étudirons simplement ce que nous avons
+fait pour notre site.</p>
+<p>Si vous êtes trop curieux, vous pouvez déjà <a href="https://github.com/putaindecode/putaindecode.fr" >consulter le code source de notre
+site</a> et fouiller dans le
+<code>package.json</code> (section <code>scripts</code>) pour deviner la suite…</p>
+]]></description>
+            <link>http://putaindecode.fr/posts/ci/introduction/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/ci/introduction/</guid>
+            <pubDate>Thu, 21 May 2015 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Comment déboguer facilement du web y compris sur tablettes et téléphones]]></title>
             <description><![CDATA[<p>Vous souhaitez déboguer votre site ou application web mais vous ne savez pas trop comment faire ? Bon. Je sais que vous savez mais je peux peut-être vous faciliter la tâche.</p>
@@ -3899,370 +4042,6 @@ get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
             <link>http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/</link>
             <guid isPermaLink="true">http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/</guid>
             <pubDate>Tue, 14 Oct 2014 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Le guide complet pour centrer en css]]></title>
-            <description><![CDATA[<p>Centrer en css, c’est la base, et parfois, ce n’est pas si simple. Ce guide vous servira donc pour vous lister les techniques les plus connues pour réaliser ce fameux effet centré.</p>
-<p>Les principales techniques de centrage en css seront expliquées pendant les premières déclarations, et réutilisées par la suite dans tout le guide, vous pouvez donc avoir un intérêt à lire le guide dans le sens normal de la lecture.</p>
-<p>Cependant, si vous souhaitez juste avoir le code correspondant à votre problème, vous pouvez utiliser le menu composé d’ancres ci-dessous.</p>
-<h2 id="sommaire">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#sommaire">#</a>
-      Sommaire
-    </h2><ul>
-<li><a href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#tl-dr-mes-techniques-preferees" >tl;dr - mes techniques préférées</a></li>
-<li><a href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#techniques-traditionnelles" >Techniques tradtionnelles</a><ul>
-<li><a href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#un-bloc-dans-un-bloc" >Un bloc dans un bloc</a></li>
-<li><a href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#des-blocs-dans-un-bloc" >Des blocs dans un bloc</a></li>
-<li><a href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#des-elements-inlines-dans-un-bloc" >Des éléments inlines dans un bloc</a></li>
-</ul>
-</li>
-<li><a href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#techniques-avancees-flexbox-ie11-" >Techniques avancées : flexbox (ie11+)</a></li>
-<li><a href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#conclusion" >Conclusion</a></li>
-</ul>
-<h2 id="tl-dr-mes-techniques-preferees">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#tl-dr-mes-techniques-preferees">#</a>
-      tl;dr - mes techniques préférées
-    </h2><h3 id="un-bloc-dans-un-bloc">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#un-bloc-dans-un-bloc">#</a>
-      Un bloc dans un bloc
-    </h3><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
-
-  <span class="hljs-comment">/* facultatif : résoud un bug non systématique de blur sur IE */</span>
-  <span class="hljs-rule"><span class="hljs-attribute">transform-style</span>:<span class="hljs-value"> preserve-<span class="hljs-number">3</span>d</span></span>; 
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">translate</span>(-<span class="hljs-number">50%</span>, -<span class="hljs-number">50%</span>)</span></span>; <span class="hljs-comment">/* compatibilité : ie9+ */</span>
-}</span>
-</code></pre>
-<p><em>Note : le détail de la technique est expliqué plus loin dans le post</em></p>
-<h3 id="des-blocs-dans-un-bloc">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#des-blocs-dans-un-bloc">#</a>
-      Des blocs dans un bloc
-    </h3><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
-}</span>
-
-<span class="hljs-rule"><span class="hljs-attribute">.parent</span>:<span class="hljs-value">before {
-  content: <span class="hljs-string">''</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> -<span class="hljs-number">0.25em</span></span></span>; <span class="hljs-comment">/* space width */</span>
-}
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
-}</span>
-</code></pre>
-<p><em>Note : le détail de la technique est expliqué plus loin dans le post</em></p>
-<h3 id="des-elements-inline-dans-un-bloc">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#des-elements-inline-dans-un-bloc">#</a>
-      Des éléments inline dans un bloc
-    </h3><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
-}</span>
-</code></pre>
-<p><em>Note : le détail de la technique est expliqué plus loin dans le post</em></p>
-<h2 id="techniques-traditionnelles">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#techniques-traditionnelles">#</a>
-      Techniques traditionnelles
-    </h2><h3 id="un-bloc-dans-un-bloc-2">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#un-bloc-dans-un-bloc-2">#</a>
-      Un bloc dans un bloc
-    </h3><h4 id="centrage-horizontal">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-horizontal">#</a>
-      Centrage horizontal
-    </h4><p>La technique du <code>margin: 0 auto;</code> consiste à dire au browser que les marges de gauche et droite seront identiques et que leur valeur sera <code>auto</code>. Le browser calcule donc des marges de même taille de chaque côté et centre le bloc naturellement.</p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span> auto</span></span>;
-}</span>
-</code></pre>
-<p>La technique du <code>left: 50%; + margin négative en unités</code> est à utiliser sur les blocs dont vous connaissez la taille à l’avance. Le principe consiste à expliquer au navigateur qu’on place un bloc en <code>position: absolute;</code>. Celui-ci va donc chercher à se placer par rapport à son élément parent le plus proche qui est en <code>position: relative;</code>. Il faut donc ne pas oublier d’attribuer cette propriété sur le <code>.parent</code>. Il suffit ensuite d’indiquer qu’on place le bloc à <code>left: 50%;</code>. Le bloc se place donc à 50% vers la gauche par rapport à la taille totale du bloc conteneur. Il ne nous reste plus qu’à décaler vers la droite le bloc <code>.child</code> en lui donnant une valeur de margin négative vers la gauche. Celle-ci doit être égale à la moitié de la <code>width</code>(en pixels, em, rems, pourcentages, …).</p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> {X}em</span></span>; <span class="hljs-comment">/* remplacer {X} par votre valeur */</span>
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">margin-left</span>:<span class="hljs-value"> -{X/<span class="hljs-number">2</span>}em</span></span>; <span class="hljs-comment">/* remplacer {X/2} par la moitié de votre width */</span>
-}</span>
-</code></pre>
-<p>En combinant la technique précédente et des propriétés css modernes, on arrive à la technique du <code>transform: translate; négatif</code>. Même principe que la technique précédente, sauf qu’à la fin, on indique au bloc enfant d’effectuer une translation sur lui-même, en suivant l’axe X (l’axe horizontal) de -50%, donc 50% vers la droite. Sauf que ce 50% s’applique sur le bloc enfant directement. Vous n’avez donc pas besoin de connaitre la <code>width</code> de l’élément enfant à l’avance. Le <code>transform-style: preserve-3d;</code> sur le bloc <code>.parent</code> est là pour régler des problèmes de flou sur certains navigateurs lors de transitions.</p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
-
-  <span class="hljs-comment">/* facultatif : résoud un bug non systématique de blur sur IE */</span>
-  <span class="hljs-rule"><span class="hljs-attribute">transform-style</span>:<span class="hljs-value"> preserve-<span class="hljs-number">3</span>d</span></span>;
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">translateX</span>(-<span class="hljs-number">50%</span>)</span></span>;
-}</span>
-</code></pre>
-<h4 id="centrage-vertical">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-vertical">#</a>
-      Centrage vertical
-    </h4><p>Même principe que la technique <code>left: 50%; + margin négative en unités</code>, sauf qu’on applique le principe aux propriétés css relatives à la hauteur. Vous avez donc besoin de connaitre à l’avance la hauteur de votre bloc.</p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> {Y}em</span></span>; <span class="hljs-comment">/* remplacer {Y} par votre valeur */</span>
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> -{Y/<span class="hljs-number">2</span>}em</span></span>; <span class="hljs-comment">/* remplacer {Y/2} par la moitié de votre height */</span>
-}</span>
-</code></pre>
-<p>Ici on réutilise le principe expliqué dans la technique <code>transform: translate; négatif</code>, mais appliqué à la hauteur. Notez que le nom de la <a href="http://apps.workflower.fi/vocabs/css/fr" >valeur de la propriété</a> css passe de <code>translateX</code> à <code>translateY</code>.</p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
-
-  <span class="hljs-comment">/* facultatif : résoud un bug non systématique de blur sur IE */</span>
-  <span class="hljs-rule"><span class="hljs-attribute">transform-style</span>:<span class="hljs-value"> preserve-<span class="hljs-number">3</span>d</span></span>;
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">translateY</span>(-<span class="hljs-number">50%</span>)</span></span>;
-}</span>
-</code></pre>
-<h4 id="les-deux">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#les-deux">#</a>
-      Les deux
-    </h4><p>En réutilisant toutes les techniques expliquées précédemment, on peut arriver à plusieurs solutions, à choisir selon votre contexte et vos préférences.</p>
-<p>Méthode à base de <code>display: inline-block</code></p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
-}</span>
-
-<span class="hljs-rule"><span class="hljs-attribute">.parent</span>:<span class="hljs-value">before {
-  content: <span class="hljs-string">''</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> -<span class="hljs-number">0.25em</span></span></span>;
-}
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
-}</span>
-</code></pre>
-<p>Technique des <code>position: absolute; + marges négatives</code> avec tailles connues à l’avance</p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> {X}em</span></span>; <span class="hljs-comment">/* remplacer {X} par votre valeur */</span>
-  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> {Y}em</span></span>; <span class="hljs-comment">/* remplacer {Y} par votre valeur */</span>
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">margin-left</span>:<span class="hljs-value"> -{X/<span class="hljs-number">2</span>}em</span></span>; <span class="hljs-comment">/* remplacer {X/2} par la moitié de votre height */</span>
-  <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> -{Y/<span class="hljs-number">2</span>}em</span></span>; <span class="hljs-comment">/* remplacer {Y/2} par la moitié de votre height */</span>
-}</span>
-</code></pre>
-<p>Technique des <code>position: absolute; + marges négatives</code> avec tailles inconnues</p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">transform-style</span>:<span class="hljs-value"> preserve-<span class="hljs-number">3</span>d</span></span>;
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">translate</span>(-<span class="hljs-number">50%</span>, -<span class="hljs-number">50%</span>)</span></span>;
-}</span>
-</code></pre>
-<h3 id="des-blocs-dans-un-bloc-2">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#des-blocs-dans-un-bloc-2">#</a>
-      Des blocs dans un bloc
-    </h3><h4 id="centrage-horizontal-2">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-horizontal-2">#</a>
-      Centrage horizontal
-    </h4><p>On utilise la propriété <code>display: inline-block;</code> qui permet d’avoir des propriétés d’affichage relatives aux éléments de type <code>block</code> et de type <code>inline</code>. Le côté <code>inline</code> nous permet d’utiliser tout simplement un <code>text-align: center;</code></p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;  
-}</span>
-</code></pre>
-<h4 id="centrage-vertical-2">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-vertical-2">#</a>
-      Centrage vertical
-    </h4><p>De la même façon que pour le centrage horizontal, on utilise le côté <code>inline</code> de la propriété <code>display: inline-block;</code> pour aligner verticalement les éléments enfants par rapport à leur conteneur parent.</p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>; 
-}</span>
-</code></pre>
-<p>Une autre technique consiste à utiliser les propriétés css de <code>mise en tableaux</code>. On est obligé de créer un <a href="https://developer.mozilla.org/fr/docs/Web/CSS/Pseudo-%C3%A9l%C3%A9ments" >pseudo-élément</a> pour gérer la mise en page par tableau. On créée tout simplement un tableau, puis une cellule de tableau, qu’on positionne grâce à un <code>vertical-align: middle;</code>. Les éléments <code>.child</code> s’alignent automatiquement dans leur conteneur.</p>
-<pre><code class="lang-css"><span class="hljs-rule"><span class="hljs-attribute">.parent</span>:<span class="hljs-value">before {
-  display: table</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
-}
-
-<span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> table-cell</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>; <span class="hljs-comment">/* à enlever si vous ne souhaitez pas avoir vos blocs enfants alignés sur la même ligne, mais juste centrés verticalement sur la hauteur */</span>
-}</span>
-</code></pre>
-<h4 id="les-deux-2">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#les-deux-2">#</a>
-      Les deux
-    </h4><p>On peut combiner les deux solutions basées sur le <code>display: inline-block;</code> pour avoir le résultat souhaité.</p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
-}</span>
-</code></pre>
-<p>On peut aussir réutiliser la méthode à base de <code>display: table-cell</code> et l’adapter pour qu’elle centre horizontalement et verticalement.</p>
-<pre><code class="lang-css"><span class="hljs-rule"><span class="hljs-attribute">.parent</span>:<span class="hljs-value">before {
-  display: table</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
-}
-
-<span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> table-cell</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> left</span></span>;
-}</span>
-</code></pre>
-<p>On peut réutiliser la technique précédente en étant un peu imaginatif pour fonctionner avec des <code>display: inline-block;</code>. Pour détailler, on crée un pseudo-élément, qui aura un <code>content: &#39;&#39;;</code> pour faire qu’il existe et soit affiché, puis on annule son affichage via un <code>margin-right négatif</code> qui a pour valeur magique <code>-0.25em</code> ce qui correspond à la largeur d’un espace. On lui applique ensuite un <code>display: inline-block + height: 100% + vertical-align: middle</code> pour créer le conteneur à la taille souhaitée et on termine en calant l’élément enfant <code>.child</code> avec un centrage vertical.</p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
-}</span>
-
-<span class="hljs-rule"><span class="hljs-attribute">.parent</span>:<span class="hljs-value">before {
-  content: <span class="hljs-string">''</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> -<span class="hljs-number">0.25em</span></span></span>;
-}
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
-}</span>
-</code></pre>
-<h3 id="des-elements-inlines-dans-un-bloc">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#des-elements-inlines-dans-un-bloc">#</a>
-      Des éléments inlines dans un bloc
-    </h3><p>Ces éléments <code>inline</code> peuvent être par exemple des liens <code>&lt;a&gt;</code> ou des <code>&lt;span&gt;</code> tout simples. Ces techniques sont souvent très connues et ne devraient pas vous poser beaucoup de problèmes, elles ne seront pas commentées. Veuillez vous référer <a href="https://developer.mozilla.org/fr/docs/Web/CSS/text-align" >text-align</a> et <a href="https://developer.mozilla.org/fr/docs/Web/CSS/vertical-align" >vertical-align</a> si vous souhaitez plus d’informations.</p>
-<h4 id="centrage-horizontal-3">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-horizontal-3">#</a>
-      Centrage horizontal
-    </h4><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{}</span>
-</code></pre>
-<h4 id="centrage-vertical-3">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-vertical-3">#</a>
-      Centrage vertical
-    </h4><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
-}</span>
-</code></pre>
-<h4 id="les-deux-3">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#les-deux-3">#</a>
-      Les deux
-    </h4><pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
-}</span>
-</code></pre>
-<h2 id="techniques-avancees-flexbox-ie11-http-caniuse-com-feat-flexbox">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#techniques-avancees-flexbox-ie11-http-caniuse-com-feat-flexbox">#</a>
-      Techniques avancées : flexbox (<a href="http://caniuse.com/#feat=flexbox" >ie11+</a>)
-    </h2><p>Flexbox est un outil très puissant quand il s’agit de gérer le position de blocs flex. Son seul défaut consiste en son faible support navigateur, mais il vous faudra maitriser ces techniques si vous comptez faire du développement web dans les années à venir, d’autant plus qu’elles sont très simples à rédiger et comprendre.</p>
-<h3 id="centrage-horizontal-4">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-horizontal-4">#</a>
-      Centrage horizontal
-    </h3><p>On déclare le conteneur en bloc flex, et on lui applique la propriété <a href="https://developer.mozilla.org/fr/docs/Web/CSS/justify-content" >justify-content</a>.</p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> flex</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">justify-content</span>:<span class="hljs-value"> center</span></span>;
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{}</span>
-</code></pre>
-<h3 id="centrage-vertical-4">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-vertical-4">#</a>
-      Centrage vertical
-    </h3><p>Idem, on déclare le conteneur en bloc flex, et cette fois, on lui applique la propriété <a href="https://developer.mozilla.org/fr/docs/Web/CSS/align-items" >align-items</a>.</p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> flex</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">align-items</span>:<span class="hljs-value"> center</span></span>;
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{}</span>
-</code></pre>
-<h3 id="les-deux-4">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#les-deux-4">#</a>
-      Les deux
-    </h3><p>On combine le tout pour un résultat génial et simpliste.</p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> flex</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">justify-content</span>:<span class="hljs-value"> center</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">align-items</span>:<span class="hljs-value"> center</span></span>;
-}</span>
-
-<span class="hljs-class">.child</span> <span class="hljs-rules">{}</span>
-</code></pre>
-<h2 id="conclusion">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#conclusion">#</a>
-      Conclusion
-    </h2><p>Essayez de toujours utiliser la solution la plus avancée techniquement par rapport à votre scope navigateur : si vous devez ne supporter que les IE récents, utilisez flexbox ; si vous devez ne supporter que IE9+, utilisez les transform: translate() ; sinon utilisez des techniques de plus en plus <em>anciennes</em>.</p>
-<p>Ce guide n’a volontairement pas parlé des préfixes navigateurs, car ce genre de chose doit être pris en charge automatiquement dans votre workflow par un autoprefixer (<a href="https://www.npmjs.org/package/gulp-autoprefixer" >gulp-autoprefixer</a>, <a href="https://www.npmjs.org/package/grunt-autoprefixer" >grunt-autoprefixer</a>, <a href="http://www.myth.io/" >inclus dans myth</a>, …). Pour apprendre à l’installer ou à en apprendre plus sur le sujet, je vous renvoie <a href="http://localhost:4242/posts/css/mise-en-place-autoprefixer/" >à l’article de MoOx</a>. Si vous souhaitez quand même vous passez d’autoprefixer, vous pourrez vérifier la compatibilité des propriétés sur <a href="http://caniuse.com/" >caniuse</a>.</p>
-]]></description>
-            <link>http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/</link>
-            <guid isPermaLink="true">http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/</guid>
-            <pubDate>Tue, 23 Sep 2014 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>
