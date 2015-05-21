@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Responsive webdesign et structure du DOM</title><link rel="stylesheet" href="/index.63900337.css"><link rel="alternate" href="/feed.xml" title="Responsive webdesign et structure du DOM" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Responsive webdesign et structure du DOM"><meta name="twitter:creator" content="@_neemzy"><meta property="og:title" content="Responsive webdesign et structure du DOM"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Responsive webdesign et structure du DOM</title><link rel="stylesheet" href="/index.2e7e1495.css"><link rel="alternate" href="/feed.xml" title="Responsive webdesign et structure du DOM" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Responsive webdesign et structure du DOM"><meta name="twitter:creator" content="@_neemzy"><meta property="og:title" content="Responsive webdesign et structure du DOM"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -400,12 +400,12 @@ avec JavaScript :</p>
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
 }</span>
 </code></pre>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> handleImages = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> handleImages = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-comment">// On charge les images ayant l'attribut data-src,</span>
   <span class="hljs-comment">// non encore chargées (attribut src indéfini)</span>
   <span class="hljs-comment">// et non masquées par CSS</span>
 
-  [].forEach.call(<span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'img[data-src]:not([src])'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(el)</span> </span>{
+  [].forEach.call(<span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'img[data-src]:not([src])'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el</span>) </span>{
     <span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.getComputedStyle(el).display != <span class="hljs-string">'none'</span>) {
       el.src = el.getAttribute(<span class="hljs-string">'data-src'</span>);
     }
@@ -430,11 +430,11 @@ parler d’une petite librairie que j’aime beaucoup et que j’ai déjà utili
 ce genre de cas. Elle se nomme <a href="http://wicky.nillia.ms/enquire.js/" >enquire.js</a>
 et permet tout simplement d’affecter des callbacks à des media queries :</p>
 <pre><code class="lang-javascript">enquire.register(<span class="hljs-string">'screen and (min-width: 768px)'</span>, {
-  match: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  match: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     <span class="hljs-comment">// L'écran fait 768px de large ou plus...</span>
   },
 
-  unmatch: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  unmatch: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     <span class="hljs-comment">// ...et ici, 767px de large ou moins.</span>
     <span class="hljs-comment">// La librairie repose sur matchMedia et matchMedia.addListener</span>
   }
@@ -456,10 +456,10 @@ plus nécessaire) :</p>
 </code></pre>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> content = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'p'</span>),
 
-  switchImage = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(isMobile)</span> </span>{
+  switchImage = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">isMobile</span>) </span>{
     <span class="hljs-keyword">var</span> attr = isMobile ? <span class="hljs-string">'data-mobile-src'</span> : <span class="hljs-string">'data-src'</span>;
 
-    [].forEach.call(<span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'img['</span> + attr + <span class="hljs-string">']'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(el)</span> </span>{
+    [].forEach.call(<span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'img['</span> + attr + <span class="hljs-string">']'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el</span>) </span>{
       <span class="hljs-comment">// On affecte l'une ou l'autre source à notre image,</span>
       <span class="hljs-comment">// entraînant son chargement si nécessaire.</span>
       el.src = el.getAttribute(attr);
@@ -469,11 +469,11 @@ plus nécessaire) :</p>
     });
   };
 
-enquire.register(<span class="hljs-string">'screen and (min-width: 768px)'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+enquire.register(<span class="hljs-string">'screen and (min-width: 768px)'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
   switchImage(<span class="hljs-literal">false</span>);
 });
 
-enquire.register(<span class="hljs-string">'screen and (max-width: 767px)'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+enquire.register(<span class="hljs-string">'screen and (max-width: 767px)'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
   switchImage(<span class="hljs-literal">true</span>);
 });
 </code></pre>

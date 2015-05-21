@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Array.reduce par l&#x27;exemple</title><link rel="stylesheet" href="/index.63900337.css"><link rel="alternate" href="/feed.xml" title="Array.reduce par l&#x27;exemple" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Array.reduce par l&#x27;exemple"><meta name="twitter:creator" content="@b_lionel"><meta property="og:title" content="Array.reduce par l&#x27;exemple"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Array.reduce par l&#x27;exemple</title><link rel="stylesheet" href="/index.2e7e1495.css"><link rel="alternate" href="/feed.xml" title="Array.reduce par l&#x27;exemple" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Array.reduce par l&#x27;exemple"><meta name="twitter:creator" content="@b_lionel"><meta property="og:title" content="Array.reduce par l&#x27;exemple"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -311,7 +311,7 @@ avec les paramètres suivants :</p>
 <li>l’index de l’élément courant.</li>
 <li>le tableau sur lequel on est entrain d’itérer</li>
 </ul>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> sum = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>].reduce( <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">( memo, val)</span></span>{
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> sum = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>].reduce( <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> memo, val</span>)</span>{
   <span class="hljs-keyword">return</span> memo + val;
 });
 </code></pre>
@@ -327,7 +327,7 @@ sur une chaine de caractère. Si vous avez une liste de motifs et leur valeur co
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> input = <span class="hljs-string">"I'm %USER% and I live in %COUNTRY%"</span>
 <span class="hljs-keyword">var</span> data = [{token:<span class="hljs-string">'%USER%'</span>, value:<span class="hljs-string">'lionel'</span>}, {token:<span class="hljs-string">'%COUNTRY%'</span>, value: <span class="hljs-string">'France'</span>}]
 
-<span class="hljs-keyword">var</span> output = data.reduce( <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(memo, item)</span></span>{
+<span class="hljs-keyword">var</span> output = data.reduce( <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">memo, item</span>)</span>{
   <span class="hljs-keyword">return</span> memo.replace(item.token, item.value);
 }, input);
 </code></pre>
@@ -348,13 +348,13 @@ site et par famille de navigateurs. Nous aimerions pouvoir grouper les résultat
   {<span class="hljs-string">"site"</span>:<span class="hljs-string">"microsoft.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"FireFox"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"20%"</span>},
 ];
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareSite</span><span class="hljs-params">(site, item)</span></span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareSite</span>(<span class="hljs-params">site, item</span>)</span>{
   <span class="hljs-keyword">return</span> site === item.site
 }
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">containSite</span><span class="hljs-params">(site, items)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">containSite</span>(<span class="hljs-params">site, items</span>) </span>{
   <span class="hljs-keyword">return</span> items.some( compareSite.bind(<span class="hljs-literal">null</span>, site) )
 }
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span><span class="hljs-params">(memo, item)</span></span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span>(<span class="hljs-params">memo, item</span>)</span>{
   <span class="hljs-keyword">var</span> site = memo.filter( containSite.bind(<span class="hljs-literal">null</span>, item.site) );
   <span class="hljs-keyword">if</span> (site.length &gt; <span class="hljs-number">0</span>) {
     site[<span class="hljs-number">0</span>].push(item)
@@ -370,7 +370,7 @@ site et par famille de navigateurs. Nous aimerions pouvoir grouper les résultat
  qui aurait le rôle d’accumulateur et un Array.forEach :</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> results = {};
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span><span class="hljs-params">( item)</span></span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span>(<span class="hljs-params"> item</span>)</span>{
   <span class="hljs-keyword">var</span> site = results.filter( containSite.bind(<span class="hljs-literal">null</span>, item.site) );
   <span class="hljs-keyword">if</span> (site.length &gt; <span class="hljs-number">0</span>) {
     site[<span class="hljs-number">0</span>].push(item)
@@ -388,7 +388,7 @@ dépend directement de la variable results, déclarée au dessus.</p>
       À noter
     </h3><p>L’utilisation de  <code>Function.bind</code> nous permet de réutiliser les fonctions <code>compareSite</code>
 et <code>containSite</code> en fixant leur premier paramètre. Ainsi <code>compareSite.bind(null, &#39;mozilla.fr&#39;)</code> équivaut à :</p>
-<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareMozilla</span><span class="hljs-params">(item)</span></span>{
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareMozilla</span>(<span class="hljs-params">item</span>)</span>{
   <span class="hljs-keyword">return</span> <span class="hljs-string">"mozilla.fr"</span> === item.site;
 }
 </code></pre>
@@ -418,7 +418,7 @@ résultats par type de navigateur plutôt que par site. Là encore <code>Array#r
       ]
     };
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupByBrowser</span><span class="hljs-params">( site, memo, browser)</span></span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupByBrowser</span>(<span class="hljs-params"> site, memo, browser</span>)</span>{
   <span class="hljs-keyword">if</span> (!memo[browser.name]){
     memo[browser.name] = [];
   }
@@ -426,7 +426,7 @@ résultats par type de navigateur plutôt que par site. Là encore <code>Array#r
   <span class="hljs-keyword">return</span> memo
 }
 
-<span class="hljs-keyword">var</span> results = <span class="hljs-built_in">Object</span>.keys(data).reduce( <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(memo, site)</span> </span>{
+<span class="hljs-keyword">var</span> results = <span class="hljs-built_in">Object</span>.keys(data).reduce( <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">memo, site</span>) </span>{
   <span class="hljs-keyword">return</span> data[site].reduce(groupByBrowser.bind(<span class="hljs-literal">null</span>, site), memo)
 }, {});
 </code></pre>

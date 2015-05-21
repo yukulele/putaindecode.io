@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Introduction à Gulp</title><link rel="stylesheet" href="/index.63900337.css"><link rel="alternate" href="/feed.xml" title="Introduction à Gulp" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Introduction à Gulp"><meta name="twitter:creator" content="@MoOx"><meta property="og:title" content="Introduction à Gulp"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Introduction à Gulp</title><link rel="stylesheet" href="/index.2e7e1495.css"><link rel="alternate" href="/feed.xml" title="Introduction à Gulp" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Introduction à Gulp"><meta name="twitter:creator" content="@MoOx"><meta property="og:title" content="Introduction à Gulp"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -368,7 +368,7 @@ optimisation avec <a href="https://github.com/css/csso" >CSSO</a>.</p>
 <span class="hljs-keyword">var</span> csso = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-csso"</span>)
 <span class="hljs-keyword">var</span> options = <span class="hljs-built_in">require</span>(<span class="hljs-string">"minimist"</span>)(process.argv.slice(<span class="hljs-number">2</span>))
 
-gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
   gulp.src(<span class="hljs-string">"./src/css/*.css"</span>)
     .pipe(options.production ? plumber() : gutil.noop())
     .pipe(myth({sourcemap: !options.production}))
@@ -376,7 +376,7 @@ gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"
     .pipe(gulp.dest(<span class="hljs-string">"./dist/css/"</span>))
 })
 
-gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
   gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, [<span class="hljs-string">"styles"</span>])
 })
 </code></pre>
@@ -411,7 +411,7 @@ gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string"
 <span class="hljs-comment">// y compris un console.log() ^^</span>
 <span class="hljs-comment">// un autre paramètre peut être ajouté avant la fonction, qui permet de préciser</span>
 <span class="hljs-comment">// les dépendances (cf task dev plus bas par exemple)</span>
-gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
 
   <span class="hljs-comment">// Ici on attrape les fichiers (glob classique)</span>
   <span class="hljs-comment">// à la racine (on va considérer que nos fichiers finaux ne seront pas dans</span>
@@ -432,7 +432,7 @@ gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"
 })
 
 <span class="hljs-comment">// Ici on a une tâche de dev qui lance un watch APRES avoir exécuté `styles` une fois</span>
-gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
 
   <span class="hljs-comment">// gulp.watch est natif (pas comme avec grunt)</span>
   <span class="hljs-comment">// vous noterez qu'ici par exemple on va surveiller tous les fichiers</span>
@@ -498,8 +498,8 @@ Je trouve que c’est gage de qualité.</p>
 <li><a href="http://insertafter.com/fr/blog/retour_experience_gulp.html" >Gulp : Retour d’expérience</a></li>
 <li><a href="http://jaysoo.ca/2014/01/27/gruntjs-vs-gulpjs/" >Grunt vs. Gulp, au-delà des chiffres</a> (anglais)</li>
 </ul>
-<pre><code class="lang-console"><span class="hljs-variable">$ </span>gulp bisous
-❯ ♡ 😘
+<pre><code class="lang-console">$ gulp <span class="hljs-keyword">bisous
+</span>❯ ♡ 😘
 </code></pre>
 </div></div><footer class="putainde-Post-footer"><div><div class="putainde-Author undefined"><a href="http://moox.io/" class="putainde-Avatar putainde-Author-picture"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par </span><a class="putainde-Link" href="http://moox.io/">MoOx</a></h3><div class="putainde-Author-social"><a href="http://moox.io/" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Website"><span class="SVGIcon SVGIcon--cleaned putainde-Icon"><?xml version="1.0" encoding="utf-8"?>
 

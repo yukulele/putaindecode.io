@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Mise en place d’autoprefixer</title><link rel="stylesheet" href="/index.63900337.css"><link rel="alternate" href="/feed.xml" title="Mise en place d’autoprefixer" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Mise en place d’autoprefixer"><meta name="twitter:creator" content="@MoOx"><meta property="og:title" content="Mise en place d’autoprefixer"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Mise en place d’autoprefixer</title><link rel="stylesheet" href="/index.2e7e1495.css"><link rel="alternate" href="/feed.xml" title="Mise en place d’autoprefixer" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Mise en place d’autoprefixer"><meta name="twitter:creator" content="@MoOx"><meta property="og:title" content="Mise en place d’autoprefixer"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -301,8 +301,8 @@ $ npm i -<span class="hljs-keyword">g</span> autoprefixer
 </code></pre>
 <p>Une fois ceci fait, vous devriez avoir la commande <code>autoprefixer</code> disponible.
 On vérifie de suite avec <code>autoprefixer -v</code>.</p>
-<pre><code class="lang-console"><span class="hljs-variable">$ </span>autoprefixer -v
-autoprefixer <span class="hljs-number">1.0</span>.<span class="hljs-number">20140203</span>
+<pre><code class="lang-console">$ autoprefixer -v
+autoprefixer <span class="hljs-number">1.0.201402</span>03
 </code></pre>
 <p>Vous remarquerez que le numéro de version est un peu spécial : il contient une
 date en place d’un numéro de patch. Cette date correspond à la dernière mise à
@@ -336,8 +336,8 @@ $ <span class="hljs-keyword">echo</span> <span class="hljs-string">"* { box-sizi
 </code></pre>
 <p>On peut donc essayer notre commande plus haut qui va remplir le fichier <code>prefixed.css</code></p>
 <p>Pour vérifier :</p>
-<pre><code class="lang-console">$ <span class="hljs-tag">cat</span> <span class="hljs-tag">prefixed</span><span class="hljs-class">.css</span>
-* <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">-webkit-box-sizing</span>:<span class="hljs-value">border-box</span></span>; <span class="hljs-rule"><span class="hljs-attribute">-moz-box-sizing</span>:<span class="hljs-value">border-box</span></span>; <span class="hljs-rule"><span class="hljs-attribute">box-sizing</span>:<span class="hljs-value">border-box}</span></span></span>
+<pre><code class="lang-console">$ cat prefixed.css
+* { -webkit-<span class="hljs-built_in">box</span>-sizing:border-<span class="hljs-built_in">box</span>; -moz-<span class="hljs-built_in">box</span>-sizing:border-<span class="hljs-built_in">box</span>; <span class="hljs-built_in">box</span>-sizing:border-<span class="hljs-built_in">box</span>}
 </code></pre>
 <p>On a bien eu des préfixes ajoutés en fonction de notre demande (bon rien pour IE
 qui n’est pas passé par une version préfixé)</p>
@@ -435,7 +435,7 @@ une seule écriture sur le système de fichier (contrairement à la solution Gru
 <span class="hljs-keyword">var</span> csso = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-csso"</span>)
 
 <span class="hljs-comment">// css task: sass, autoprefixer et csso si --production</span>
-gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
   gulp.src(<span class="hljs-string">"./src/css/*.scss"</span>)
     <span class="hljs-comment">// it’s me, Mario</span>
     .pipe(plumber())
@@ -459,8 +459,8 @@ gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"
     <span class="hljs-comment">//.pipe(livereload(livereloadServer))</span>
 })
 
-gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> </span>{
+gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
     gulp.run(<span class="hljs-string">"styles"</span>)
   })
 })
@@ -478,7 +478,7 @@ gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"st
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/#autoprefixer-avec-grunt">#</a>
       Autoprefixer avec Grunt
     </h3><p>Voici un petit Gruntfile avec la même configuration que ci dessus</p>
-<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">grunt</span>) </span>{
 <span class="hljs-pi">  "use strict"</span>;
 
   grunt.loadNpmTasks(<span class="hljs-string">"grunt-contrib-sass"</span>)

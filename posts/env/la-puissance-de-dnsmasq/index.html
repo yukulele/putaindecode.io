@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>La puissance de dnsmasq</title><link rel="stylesheet" href="/index.63900337.css"><link rel="alternate" href="/feed.xml" title="La puissance de dnsmasq" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="La puissance de dnsmasq"><meta name="twitter:creator" content="@_kud"><meta property="og:title" content="La puissance de dnsmasq"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>La puissance de dnsmasq</title><link rel="stylesheet" href="/index.2e7e1495.css"><link rel="alternate" href="/feed.xml" title="La puissance de dnsmasq" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="La puissance de dnsmasq"><meta name="twitter:creator" content="@_kud"><meta property="og:title" content="La puissance de dnsmasq"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -288,7 +288,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 
 </svg></span></a></nav></div></div></div><div class="putainde-Main"><article class="putainde-Post"><header><div class="putainde-Post-header"><h1 class="putainde-Title">La puissance de dnsmasq</h1></div><div class="putainde-Post-metas"><span>Écrit par <span><a href="http://kud.io">kud</a><span></span></span></span><span>, </span><span class="putainde-Date"> le 20 fév. 2014</span>. <span class="r-Tooltip r-Tooltip--top putainde-Post-readingTime" data-r-tooltip="Temps de lecture approximatif, sur une base de 250 mots par minute">Temps de lecture : environ 6 minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">dnsmasq</li><li class="putainde-Tag">macosx</li><li class="putainde-Tag">test</li><li class="putainde-Tag">dns</li><li class="putainde-Tag">serveur</li></ul></header><div class="r-Grid"><div class="r-Grid-cell r-all--8of12 putainde-Post-contents"><div class="putainde-Post-md"><div><p>Dernièrement, j’ai voulu accéder avec mon Smartphone à ma machine virtuelle (<em>VM</em>) de développement qui se trouve sur mon poste de travail (<em>machine ou poste hôte</em>). Ma machine virtuelle me permet de reproduire à l’identique la production afin d’avoir le moins de marge d’erreur possible entre la phase de développement et la phase de mise en production.</p>
 <p>A ce moment là, j’accédais à ma machine virtuelle à partir de mon poste via le fichier <em>hosts</em> comprenant ceci :</p>
-<pre><code><span class="hljs-number">192.168</span>.1.145 monsite.<span class="hljs-built_in">dev</span>
+<pre><code>192<span class="hljs-class">.168</span><span class="hljs-class">.1</span><span class="hljs-class">.145</span> <span class="hljs-tag">monsite</span><span class="hljs-class">.dev</span>
 </code></pre><p>Le problème est que seul mon poste est au courant de la résolution du nom de domaine de par cette méthode.</p>
 <p>Étant donné qu’il est laborieux de changer des <em>hosts</em> sur un appareil comme un téléphone et que je n’ai pas non plus envie de dupliquer cette modification sur chaque appareil, il me fallait trouver une solution généralisée.</p>
 <p>C’est là que <strong><a href="http://fr.wikipedia.org/wiki/Dnsmasq" >dnsmasq</a></strong> entre en jeu.</p>
@@ -329,7 +329,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 <h4 id="dnsmasq-via-homebrew">
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#dnsmasq-via-homebrew">#</a>
       dnsmasq via homebrew
-    </h4><pre><code>$ brew <span class="hljs-keyword">install</span> dnsmasq
+    </h4><pre><code>$ <span class="hljs-keyword">brew </span>install dnsmasq
 </code></pre><h4 id="configuration-de-dnsmasq">
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#configuration-de-dnsmasq">#</a>
       configuration de dnsmasq
@@ -361,8 +361,8 @@ no-hosts</span>
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#lancer-dnsmasq-au-demarrage-de-la-machine">#</a>
       lancer dnsmasq au démarrage de la machine
     </h4><p>On copie le fichier de démon dans le dossier qui va bien puis on lance le démon.</p>
-<pre><code><span class="hljs-variable">$ </span>sudo cp -fv /usr/local/opt/dnsmasq/*.plist /<span class="hljs-constant">Library/LaunchDaemons</span>
-<span class="hljs-variable">$ </span>sudo launchctl load /<span class="hljs-constant">Library/LaunchDaemons/</span>homebrew.mxcl.dnsmasq.plist
+<pre><code>$ sudo <span class="hljs-preprocessor">cp</span> -fv /usr/local/<span class="hljs-preprocessor">opt</span>/dnsmasq<span class="hljs-comment">/*.plist /Library/LaunchDaemons
+$ sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist</span>
 </code></pre><h4 id="utiliser-le-serveur-dnsmasq">
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#utiliser-le-serveur-dnsmasq">#</a>
       utiliser le serveur dnsmasq

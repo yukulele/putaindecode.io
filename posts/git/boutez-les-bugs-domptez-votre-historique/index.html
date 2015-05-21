@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Git, boutez les bugs, domptez votre historique!</title><link rel="stylesheet" href="/index.63900337.css"><link rel="alternate" href="/feed.xml" title="Git, boutez les bugs, domptez votre historique!" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Git, boutez les bugs, domptez votre historique!"><meta name="twitter:creator" content="@Erwyn"><meta property="og:title" content="Git, boutez les bugs, domptez votre historique!"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Git, boutez les bugs, domptez votre historique!</title><link rel="stylesheet" href="/index.2e7e1495.css"><link rel="alternate" href="/feed.xml" title="Git, boutez les bugs, domptez votre historique!" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Git, boutez les bugs, domptez votre historique!"><meta name="twitter:creator" content="@Erwyn"><meta property="og:title" content="Git, boutez les bugs, domptez votre historique!"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -332,7 +332,7 @@ train de baver devant votre écran, mais non, Git ne va pas corriger vos bugs bi
 à trouver le changement dans le code qui l’a fait apparaître et ceci grâce à la commande <code>git bisect</code>.</p>
 <p>Pour lancer une <em>bisection</em> par Git il suffit d’entrer <code>git bisect start</code> dans votre terminal préféré
 et le tour est joué!</p>
-<pre><code class="lang-console">$ git bisect <span class="hljs-built_in">start</span>
+<pre><code class="lang-console">$ git <span class="hljs-keyword">bisect </span>start
 $
 </code></pre>
 <figure>
@@ -352,14 +352,14 @@ le signaler à son tour: <code>git bisect good</code>.</p>
 qu’à le déclarer bon ou mauvais comme expliqué au dessus, jusqu’à ce que Git vous fournisse le premier commit
 comportant le bug, celui dont le changement a révélé le disfonctionnement.</p>
 <pre><code class="lang-console">$ git bisect bad
-1082351d9157e98aed1bbee8b9ad6deedca1288f is the first bad <span class="hljs-operator"><span class="hljs-keyword">commit</span>
-<span class="hljs-keyword">commit</span> <span class="hljs-number">1082351</span>d9157e98aed1bbee8b9ad6deedca1288f
+<span class="hljs-number">1082351d91</span>57e98aed1bbee8b9ad6deedca1288f is the first bad commit
+commit <span class="hljs-number">1082351d91</span>57e98aed1bbee8b9ad6deedca1288f
 Author: Maxime Thirouin &lt;m@***.io&gt;
-<span class="hljs-built_in">Date</span>:   Fri Jan <span class="hljs-number">17</span> <span class="hljs-number">08</span>:<span class="hljs-number">19</span>:<span class="hljs-number">46</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+Date:   Fri Jan <span class="hljs-number">17 08:19:46</span> 2014 +0100
 
-    ¯\_(ツ)_/¯ Fix shit bring <span class="hljs-keyword">in</span> <span class="hljs-number">34</span>a44c98048f2b74fc2dd20f0be807c1e23e8b58
+    ¯\_(ツ)_/¯ Fix shit bring in <span class="hljs-number">34a44c98048</span>f2b74fc2dd20f0be<span class="hljs-number">807c1e23</span>e8b58
 
-:<span class="hljs-number">040000</span> <span class="hljs-number">040000</span> <span class="hljs-number">7</span>a5d5010f0aaa052ffdc0747b182dc6178a346db d3562872efd1b9d662a89825a3070d64f860cc34 M  src</span>
+:<span class="hljs-number">040000 04</span><span class="hljs-number">0000 7a5</span>d5010f0aaa052ffdc<span class="hljs-number">0747b182</span>dc<span class="hljs-number">6178a346</span>db d<span class="hljs-number">3562872</span>efd<span class="hljs-number">1b9d662</span>a<span class="hljs-number">89825a3070</span>d64f860cc34 M  src
 </code></pre>
 <figure>
     <figcaption>1, 2, 3, Soleil!</figcaption>
@@ -381,29 +381,29 @@ recherche du premier commit défectueux se fera alors toute seule!</p>
 peu de commits poubelles, ces commits avec comme message “step” ou autre “stuff”. Chaque commit correspond à une fonctionnalité,
 un bug fix, une unité logique cohérente. Je ne sais pas pour vous, mais personnellement un <em>git log</em> ne ressemble pas à
 ça chez moi!</p>
-<pre><code><span class="hljs-operator"><span class="hljs-keyword">commit</span> e739e7c0248b841b0250eb85d99a1b4ba149149d
+<pre><code>commit e<span class="hljs-number">739e7c02</span><span class="hljs-number">48b841b02</span>50eb<span class="hljs-number">85d99a1b4</span>ba149149d
 Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">50</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+Date:   Tue Feb <span class="hljs-number">18 21:39:50</span> 2014 +0100
 
-    <span class="hljs-keyword">Now</span> my new functionality finally works
+    Now my new functionality finally works
 
-<span class="hljs-keyword">commit</span> <span class="hljs-number">551</span>b243525d826afcfece3e2c4c471ebd1e91779
+commit <span class="hljs-number">551b243525</span>d826afcfece<span class="hljs-number">3e2c4c47</span>1ebd<span class="hljs-number">1e91779</span>
 Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+Date:   Tue Feb <span class="hljs-number">18 21:39:23</span> 2014 +0100
 
     misc
 
-<span class="hljs-keyword">commit</span> <span class="hljs-number">9</span>db49a39fdb05a54adcfc2b46832818ef05b9c72
+commit 9db49a39fdb05a54adcfc<span class="hljs-number">2b46832818</span>ef05b9c72
 Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">43</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+Date:   Tue Feb <span class="hljs-number">18 21:38:43</span> 2014 +0100
 
-    <span class="hljs-keyword">stuff</span>
+    stuff
 
-<span class="hljs-keyword">commit</span> ca4ff952310d6246216e83f49309b32b2d2fa010
+commit ca4ff<span class="hljs-number">952310d62</span><span class="hljs-number">46216e83f49</span><span class="hljs-number">309b32b2</span>d2fa010
 Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">35</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+Date:   Tue Feb <span class="hljs-number">18 21:38:35</span> 2014 +0100
 
-    <span class="hljs-keyword">first</span> <span class="hljs-keyword">commit</span></span>
+    first commit
 </code></pre><figure>
     <figcaption>best git log, ever</figcaption>
 </figure>
@@ -513,11 +513,11 @@ Git vous demande d’éditer le message du commit marqué en <em>reword</em>:</p
 </figure>
 
 <p>L’opération va continuer puis Git va vous rendre la main. Il vous suffit alors de faire un <code>git log</code> pour apprécier le résultat:</p>
-<pre><code><span class="hljs-title">commit</span> 481b4dccf4fedf4ed9d7f4e83ae5c19a07f7e12e
-Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@**<span class="hljs-regexp">*.com</span>&gt;
-Date:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+<pre><code><span class="hljs-label">commit</span> <span class="hljs-number">481</span>b4dccf4fedf4ed9d7f4e83ae5c19a07f7e12e
+<span class="hljs-label">Author</span>: <span class="hljs-keyword">Martin </span>GOYOT (Erwyn/<span class="hljs-keyword">Martinus) </span>&lt;<span class="hljs-keyword">martin@***.com&gt;
+</span><span class="hljs-label">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
 
-    Story <span class="hljs-comment">#34 - Poker cards now have a real back picture</span>
+    Story <span class="hljs-number">#34</span> - Poker cards now have a real <span class="hljs-keyword">back </span>picture
 </code></pre><figure>
     <figcaption>Et c’est le succèèèèèèès</figcaption>
 </figure>
@@ -564,29 +564,29 @@ dans le miens:</p>
 fait quelques tests avant d’écrire cette partie de l’article). Chaque opération possède un SHA1 qui est en fait une référence vers le commit concerné, dans l’état
 dans lequel il était au moment de l’opération. Bien, imaginons que j’ai fait n’importe quoi avec le rebase et que je veuille retrouver mon état précédent, et bien
 il me suffira ici de faire un <code>git checkout e739e7c</code> (dans votre cas la ligne sera probablement plus simple à trouver). Et là si je refais un <code>git log</code>, miracle:</p>
-<pre><code><span class="hljs-operator"><span class="hljs-keyword">commit</span> e739e7c0248b841b0250eb85d99a1b4ba149149d
+<pre><code>commit e<span class="hljs-number">739e7c02</span><span class="hljs-number">48b841b02</span>50eb<span class="hljs-number">85d99a1b4</span>ba149149d
 Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">50</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+Date:   Tue Feb <span class="hljs-number">18 21:39:50</span> 2014 +0100
 
-    <span class="hljs-keyword">Now</span> my new functionality finally works
+    Now my new functionality finally works
 
-<span class="hljs-keyword">commit</span> <span class="hljs-number">551</span>b243525d826afcfece3e2c4c471ebd1e91779
+commit <span class="hljs-number">551b243525</span>d826afcfece<span class="hljs-number">3e2c4c47</span>1ebd<span class="hljs-number">1e91779</span>
 Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">39</span>:<span class="hljs-number">23</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+Date:   Tue Feb <span class="hljs-number">18 21:39:23</span> 2014 +0100
 
     misc
 
-<span class="hljs-keyword">commit</span> <span class="hljs-number">9</span>db49a39fdb05a54adcfc2b46832818ef05b9c72
+commit 9db49a39fdb05a54adcfc<span class="hljs-number">2b46832818</span>ef05b9c72
 Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">43</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+Date:   Tue Feb <span class="hljs-number">18 21:38:43</span> 2014 +0100
 
-    <span class="hljs-keyword">stuff</span>
+    stuff
 
-<span class="hljs-keyword">commit</span> ca4ff952310d6246216e83f49309b32b2d2fa010
+commit ca4ff<span class="hljs-number">952310d62</span><span class="hljs-number">46216e83f49</span><span class="hljs-number">309b32b2</span>d2fa010
 Author: Martin GOYOT (Erwyn/Martinus) &lt;martin@***.com&gt;
-<span class="hljs-built_in">Date</span>:   Tue Feb <span class="hljs-number">18</span> <span class="hljs-number">21</span>:<span class="hljs-number">38</span>:<span class="hljs-number">35</span> <span class="hljs-number">2014</span> +<span class="hljs-number">0100</span>
+Date:   Tue Feb <span class="hljs-number">18 21:38:35</span> 2014 +0100
 
-    <span class="hljs-keyword">first</span> <span class="hljs-keyword">commit</span></span>
+    first commit
 </code></pre><p>Vous voilà retombés sur vos pieds! Vous n’avez plus qu’à reconnecter votre branche à ce commit si jamais vous en aviez une et vous êtes reparti pour de nouvelles
 aventures.</p>
 <p>Sachez tout de même que ce <em>references log</em> peut être effacé, et il est même conseillé de le faire régulièrement pour des problématiques de performance de Git sur

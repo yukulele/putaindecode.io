@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Premiers pas avec Grunt</title><link rel="stylesheet" href="/index.63900337.css"><link rel="alternate" href="/feed.xml" title="Premiers pas avec Grunt" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Premiers pas avec Grunt"><meta name="twitter:creator" content="@_kud"><meta property="og:title" content="Premiers pas avec Grunt"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Premiers pas avec Grunt</title><link rel="stylesheet" href="/index.2e7e1495.css"><link rel="alternate" href="/feed.xml" title="Premiers pas avec Grunt" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Premiers pas avec Grunt"><meta name="twitter:creator" content="@_kud"><meta property="og:title" content="Premiers pas avec Grunt"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -320,7 +320,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 <pre><code class="lang-console"><span class="hljs-variable">$ </span>touch <span class="hljs-constant">Gruntfile.</span>js
 </code></pre>
 <p>Fait ? Voici maintenant à quoi doit ressembler la base d’une configuration <strong>Grunt</strong>.</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">grunt</span>) </span>{
 
   <span class="hljs-comment">// Configuration de Grunt</span>
   grunt.initConfig({})
@@ -341,7 +341,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 </code></pre>
 <p>Ceci va installer le <em>package</em> <code>grunt-contrib-sass</code> dans votre dossier <code>node_modules</code> où vous pourrez l’utiliser en l’important dans votre <code>Gruntfile.js</code>.</p>
 <p>Un exemple d’utilisation :</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">grunt</span>) </span>{
 
   grunt.initConfig({
     sass: {                              <span class="hljs-comment">// Nom de la tâche</span>
@@ -361,13 +361,13 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
   grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-sass'</span>)
 
   <span class="hljs-comment">// Redéfinition de la tâche `default` qui est la tâche lancée dès que vous lancez Grunt sans rien spécifier.</span>
-  <span class="hljs-comment">// Note : ici, nous définissons sass comme une tâche à lancer si on lance la tâche `default`.</span>
+  <span class="hljs-comment">// <span class="hljs-doctag">Note</span> : ici, nous définissons sass comme une tâche à lancer si on lance la tâche `default`.</span>
   grunt.registerTask(<span class="hljs-string">'default'</span>, [<span class="hljs-string">'sass:dist'</span>])
 }
 </code></pre>
 <p>Nous avons maintenant tout le nécessaire pour pouvoir compiler nos <code>.scss</code> en  <code>.css</code>.</p>
 <p>Vous vous demandez peut-être comment vous pouvez généraliser vos sources plutôt que les définir une par une. Pas de souci.</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">grunt</span>) </span>{
 
   grunt.initConfig({
     sass: {
@@ -399,7 +399,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 <p>-&gt; <a href="https://github.com/gruntjs/grunt-contrib-concat" ><code>grunt-contrib-concat</code></a></p>
 <p>Installation : <code>npm install grunt-contrib-concat --save-dev</code> (<code>--save-dev</code> permet de sauvegarder le package dans <code>package.json</code> pour pouvoir à tout moment le réinstaller en faisant <code>npm install</code>)</p>
 <p>On ajoute alors à notre configuration <strong>Grunt</strong> l’importation de <code>grunt-contrib-concat</code> :</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">grunt</span>) </span>{
 
   grunt.initConfig({
     sass: {
@@ -425,7 +425,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 }
 </code></pre>
 <p>Puis on ajoute notre tâche :</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">grunt</span>) </span>{
 
   grunt.initConfig({
     sass: {
@@ -460,7 +460,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 }
 </code></pre>
 <p>Ne pas oublier d’ajouter la tâche de concaténation à notre tâche par défaut :</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">grunt</span>) </span>{
 
   grunt.initConfig({
     sass: {
@@ -499,7 +499,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
       Compressons le tout !
     </h2><p>Pour finir, compressons nos fichiers JavaScript ! Pour cela : <a href="https://github.com/gruntjs/grunt-contrib-uglify" ><code>grunt-contrib-uglify</code></a> fera l’affaire.</p>
 <p>Je vous passe les détails pour l’installer, si vous avez bien suivi cet article, vous ne devriez avoir aucun problème pour cela.</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">grunt</span>) </span>{
 
   grunt.initConfig({
     sass: {
@@ -547,7 +547,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiers-pas-avec-grunt/#optimisons">#</a>
       Optimisons !
     </h2><p>Supprimons alors dans un premier temps notre tâche par défaut et créons deux tâches : <code>dev</code> et <code>dist</code>.</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">grunt</span>) </span>{
 
   grunt.initConfig({
     sass: {
@@ -592,7 +592,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 }
 </code></pre>
 <p>Sauf que comme ça, vous le voyez, cela ne va pas faire grand chose, voire rien du tout. Agrémentons alors nos deux tâches par ce qu’on souhaite faire.</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">grunt</span>) </span>{
 
   grunt.initConfig({
     sass: {
@@ -644,7 +644,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
       Regarde ce fichier que je ne… euh bref.
     </h2><p>Très simple, <code>watch</code> va vous permettre de “regarder” vos fichiers, savoir lesquels ont changé et donc lancer une action en fonction du type de fichiers.</p>
 <p>Imaginons que l’on veut par exemple compiler nos CSS à chaque fois que l’on change un fichier <em>Sass</em>. Ou encore que l’on concatène nos fichiers JavaScript dès que l’on touche à l’un d’entre eux.</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">grunt</span>) </span>{
 
   grunt.initConfig({
     sass: {
@@ -704,7 +704,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 <p>Je ne sais pas si vous vous rappelez mais nous avions créé une tâche de base s’appelant <code>default</code>. Cette tâche se lance dès que vous ne passez aucun paramètre à <strong>Grunt</strong> soit <code>$ grunt</code>. Vous pouvez aussi l’appeler via <code>$ grunt default</code> mais aucun intérêt.</p>
 <p>Tout ça pour dire qu’il est serait sûrement intéressant de lancer la tâche <code>watch</code> dès qu’on souhaite lancer <strong>Grunt</strong> étant donné que c’est sûrement la tâche la plus récurrente que vous utiliserez.</p>
 <p>C’est parti !</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">grunt</span>) </span>{
 
   grunt.initConfig({
     sass: {
@@ -762,7 +762,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 </code></pre>
 <p>That’s it. Nous avons maintenant tout le nécessaire pour compiler des CSS, du JS, l’optimiser, ainsi qu’avoir une commande de développement avec compilation automatique.</p>
 <p>Et puisque je suis maniaque, nous allons ranger un peu :</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">grunt</span>) </span>{
 
   <span class="hljs-comment">// Je préfère définir mes imports tout en haut</span>
   grunt.loadNpmTasks(<span class="hljs-string">'grunt-contrib-sass'</span>)

@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Débuter avec Ember</title><link rel="stylesheet" href="/index.63900337.css"><link rel="alternate" href="/feed.xml" title="Débuter avec Ember" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Débuter avec Ember"><meta name="twitter:creator" content="@bmeurant"><meta property="og:title" content="Débuter avec Ember"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Débuter avec Ember</title><link rel="stylesheet" href="/index.2e7e1495.css"><link rel="alternate" href="/feed.xml" title="Débuter avec Ember" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Débuter avec Ember"><meta name="twitter:creator" content="@bmeurant"><meta property="og:title" content="Débuter avec Ember"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -345,9 +345,9 @@ chacun de ces gabarits.</p>
 <li><code>/books/:book_id/edit</code></li>
 <li><code>/books/create</code></li>
 </ul>
-<pre><code class="lang-js">App.Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'books'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-      <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'book'</span>, { path: <span class="hljs-string">'/:book_id'</span> }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+<pre><code class="lang-js">App.Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'books'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'book'</span>, { path: <span class="hljs-string">'/:book_id'</span> }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
           <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'edit'</span>);
       });
       <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'create'</span>);
@@ -360,7 +360,7 @@ chacun de ces gabarits.</p>
     </h3><p>Les routes associent un modèle à un gabarit et sont également impliquées dans les transitions entre les différentes URL (et donc les différents
 états) de l’application. Elles gèrent notamment un certain nombre d’opérations sur un modèle lors de ces transitions.</p>
 <pre><code class="lang-js">App.BooksRoute = Ember.Route.extend({
-    model: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    model: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.store.find(<span class="hljs-string">'book'</span>);
     }
 });
@@ -377,7 +377,7 @@ Les données du contrôleur sont accessibles au gabarit au même titre que le mo
 <pre><code class="lang-js">App.BooksController = Ember.ArrayController.extend({
   actions: {
     <span class="hljs-comment">// appelé lors du clic sur le bouton</span>
-    sort: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    sort: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         ...
     }
   }
@@ -430,7 +430,7 @@ En effet, <a href="http://emberjs.com" >Ember</a> s’appuie sur les <a href="ht
 à partir d’une URL, la route, le contrôleur, la vue et le gabarit associés. Si l’un de ces objet n’est pas trouvé, <a href="http://emberjs.com" >Ember</a>
 va en générer un par défaut. </p>
 <p>Donc si l’on crée dans le routeur la route suivante sans créer aucun autre objet : </p>
-<pre><code class="lang-js">App.Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+<pre><code class="lang-js">App.Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">this</span>.route(<span class="hljs-string">"about"</span>, { path: <span class="hljs-string">"/about"</span> });
 });
 </code></pre>

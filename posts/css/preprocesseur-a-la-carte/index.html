@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Faire son préprocesseur CSS à la carte</title><link rel="stylesheet" href="/index.63900337.css"><link rel="alternate" href="/feed.xml" title="Faire son préprocesseur CSS à la carte" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Faire son préprocesseur CSS à la carte"><meta name="twitter:creator" content="@MoOx"><meta property="og:title" content="Faire son préprocesseur CSS à la carte"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Faire son préprocesseur CSS à la carte</title><link rel="stylesheet" href="/index.2e7e1495.css"><link rel="alternate" href="/feed.xml" title="Faire son préprocesseur CSS à la carte" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Faire son préprocesseur CSS à la carte"><meta name="twitter:creator" content="@MoOx"><meta property="og:title" content="Faire son préprocesseur CSS à la carte"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -372,12 +372,12 @@ de notre CSS et nous fournis une API pour le manipuler.</p>
       Plugin Rework
     </h3><p>Un plugin Rework n’est rien d’autre qu’une fonction JavaScript.
 L’exemple suivant remplacera toutes les couleurs de texte par du noir.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> monPlugin = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">plugin</span><span class="hljs-params">(ast, reworkInstance)</span> </span>{
-  ast.rules.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rule)</span> </span>{
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> monPlugin = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">plugin</span>(<span class="hljs-params">ast, reworkInstance</span>) </span>{
+  ast.rules.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">rule</span>) </span>{
     <span class="hljs-comment">// dans notre cas on ne veut que travailler sur des règles</span>
     <span class="hljs-keyword">if</span> (rule.type !== <span class="hljs-string">"rule"</span>) <span class="hljs-keyword">return</span>
 
-    rule.declarations.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(declaration, index)</span> </span>{
+    rule.declarations.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">declaration, index</span>) </span>{
       <span class="hljs-keyword">if</span> (declaration.property === <span class="hljs-string">"color"</span>) {
         declaration.value = <span class="hljs-string">'#000'</span>
       }
@@ -562,7 +562,7 @@ $ <span class="hljs-built_in">mkdir</span> src &amp;&amp; <span class="hljs-buil
 }
 <span class="hljs-keyword">var</span> autoprefixer = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-autoprefixer"</span>)
 
-gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-comment">// ici on prend toutes les CSS à la racine</span>
   <span class="hljs-comment">// on considère que celles dans des sous dossiers sont à importer</span>
   <span class="hljs-keyword">return</span> gulp.src(<span class="hljs-string">"./src/styles/*.css"</span>)
@@ -584,7 +584,7 @@ gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"
     .pipe(gulp.dest(<span class="hljs-string">"./dist/styles"</span>))
 })
 
-gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
   gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, [<span class="hljs-string">"styles"</span>])
 })
 </code></pre>

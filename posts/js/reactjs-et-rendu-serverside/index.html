@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Quelques retours sur React et le rendu serveur</title><link rel="stylesheet" href="/index.63900337.css"><link rel="alternate" href="/feed.xml" title="Quelques retours sur React et le rendu serveur" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Quelques retours sur React et le rendu serveur"><meta name="twitter:creator" content="@b_lionel"><meta property="og:title" content="Quelques retours sur React et le rendu serveur"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Quelques retours sur React et le rendu serveur</title><link rel="stylesheet" href="/index.2e7e1495.css"><link rel="alternate" href="/feed.xml" title="Quelques retours sur React et le rendu serveur" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Quelques retours sur React et le rendu serveur"><meta name="twitter:creator" content="@b_lionel"><meta property="og:title" content="Quelques retours sur React et le rendu serveur"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -360,8 +360,8 @@ Voici un exemple de <em>middleware</em> pour faire marcher ça dans Express&nbsp
 <span class="hljs-comment">// notre template de page html</span>
 <span class="hljs-keyword">var</span> Html = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./src/html"</span>);
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reactView</span><span class="hljs-params">(req, res, next)</span> </span>{
-  Router.run(routes, req.url, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(Handler, state)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reactView</span>(<span class="hljs-params">req, res, next</span>) </span>{
+  Router.run(routes, req.url, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">Handler, state</span>) </span>{
     <span class="hljs-comment">// on récupère les données pour cette vue en fonction de la requête.</span>
     <span class="hljs-keyword">var</span> data = getViewData(req);
 
@@ -431,7 +431,7 @@ Le plus simple alors est de passer ces données au moteur de template,
 en plus du markup (par exemple sous la forme d’un nœud <code>&lt;script type=&quot;application/json&quot;&gt;JSON DATA&lt;/script&gt;</code>.
 Il ne reste plus qu’a récupérer ces données avant d’appeler <code>React.render( Application, document.getElementById(&quot;react-app&quot;))</code></p>
 <p>Par exemple&nbsp;: </p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"DOMContentLoaded"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"DOMContentLoaded"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
   <span class="hljs-comment">// getData() va récuperer et parser le contenu du tag script </span>
   <span class="hljs-comment">// qui contient nos données</span>
   <span class="hljs-keyword">var</span> storeData= getData(); 

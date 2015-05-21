@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Première application Ember. Suite et fin.</title><link rel="stylesheet" href="/index.63900337.css"><link rel="alternate" href="/feed.xml" title="Première application Ember. Suite et fin." type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Première application Ember. Suite et fin."><meta name="twitter:creator" content="@bmeurant"><meta property="og:title" content="Première application Ember. Suite et fin."><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Première application Ember. Suite et fin.</title><link rel="stylesheet" href="/index.2e7e1495.css"><link rel="alternate" href="/feed.xml" title="Première application Ember. Suite et fin." type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Première application Ember. Suite et fin."><meta name="twitter:creator" content="@bmeurant"><meta property="og:title" content="Première application Ember. Suite et fin."><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -319,9 +319,9 @@ on reconstruit uniquement la zone de la fiche et non l’application entière (e
       Routes imbriquées
     </h3><p>Commençons par définir une nouvelle route <code>edit</code>, sous-route de <code>seriesItem</code> : </p>
 <pre><code class="lang-js"><span class="hljs-comment">// /app/router.js</span>
-Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'series'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'seriesItem'</span>, { path: <span class="hljs-string">'/:seriesItem_id'</span> }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'series'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'seriesItem'</span>, { path: <span class="hljs-string">'/:seriesItem_id'</span> }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
       <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'edit'</span>);
     });
   });
@@ -420,17 +420,17 @@ au <em>binding</em> (cf. <a href="/posts/js/premiere-app-ember/#-em-bindings-em-
 <span class="hljs-keyword">import</span> Ember <span class="hljs-keyword">from</span> <span class="hljs-string">'ember'</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Ember.Route.extend({
-  model: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+  model: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.seriesItem'</span>);
   },
   actions: {
-    submit: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-      <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.seriesItem.edit'</span>).save().then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    submit: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.seriesItem.edit'</span>).save().then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">this</span>.transitionTo(<span class="hljs-string">'series.seriesItem'</span>);
       }.bind(<span class="hljs-keyword">this</span>));
     },
 
-    cancel: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    cancel: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
       <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.seriesItem.edit'</span>).rollback();
       <span class="hljs-keyword">this</span>.transitionTo(<span class="hljs-string">'series.seriesItem'</span>);
     }
@@ -461,7 +461,7 @@ routes (cf. <a href="http://emberjs.com/guides/routing/preventing-and-retrying-t
 <pre><code class="lang-js"><span class="hljs-comment">// app/routes/series/series-item/edit.js</span>
   actions: {
     ...
-    willTransition: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    willTransition: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
       <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.seriesItem.edit'</span>).rollback();
       <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
     }
@@ -486,7 +486,7 @@ série en question.</p>
   number              : DS.attr(<span class="hljs-string">'number'</span>),
   coverName           : DS.attr(<span class="hljs-string">'string'</span>, {defaultValue: <span class="hljs-string">'default.jpg'</span>}),
   series              : DS.belongsTo(<span class="hljs-string">'seriesItem'</span>),
-  coverUrl: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  coverUrl: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-string">'/assets/images/albums/covers/'</span> + <span class="hljs-keyword">this</span>.get(<span class="hljs-string">'coverName'</span>);
   }.property(<span class="hljs-string">'coverName'</span>)
 });
@@ -520,7 +520,7 @@ identifiants des albums à la série via <code>albums: [1, 2]</code> : </p>
 <span class="hljs-keyword">var</span> SeriesItem = DS.Model.extend({
     title               : DS.attr(<span class="hljs-string">'string'</span>, {defaultValue: <span class="hljs-string">'New Series'</span>}),
     ...
-    albums              : DS.hasMany(<span class="hljs-string">'album'</span>, {async: <span class="hljs-literal">true</span>})
+    albums              : DS.hasMany(<span class="hljs-string">'album'</span>, {<span class="hljs-keyword">async</span>: <span class="hljs-literal">true</span>})
 });
 
 SeriesItem.reopenClass({
@@ -574,9 +574,9 @@ d’insérer (d’afficher) un gabarit au sein d’une route existante via le <e
     </h2><p>Histoire de terminer en beauté on va ajouter vite fait la création d’une série.</p>
 <p>Comme on commence à avoir l’habitude, on fait ça en deux coups de cuillère à pot : </p>
 <pre><code class="lang-js"><span class="hljs-comment">// /app/router.js</span>
-Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'series'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'seriesItem'</span>, { path: <span class="hljs-string">'/:seriesItem_id'</span> }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'series'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'seriesItem'</span>, { path: <span class="hljs-string">'/:seriesItem_id'</span> }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
       <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'edit'</span>);
     });
     <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'create'</span>);
@@ -587,27 +587,27 @@ Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span
 <span class="hljs-keyword">import</span> Ember <span class="hljs-keyword">from</span> <span class="hljs-string">'ember'</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Ember.Route.extend({
-  model: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+  model: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.store.createRecord(<span class="hljs-string">'seriesItem'</span>);
   },
 
-  renderTemplate: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+  renderTemplate: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">this</span>.render(<span class="hljs-string">'series.seriesItem.edit'</span>);
   },
 
   actions: {
-    submit: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-      <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.create'</span>).save().then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    submit: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.create'</span>).save().then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">this</span>.transitionTo(<span class="hljs-string">'series.seriesItem'</span>, <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.create'</span>));
       }.bind(<span class="hljs-keyword">this</span>));
     },
 
-    cancel: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    cancel: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
       <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.create'</span>).rollback();
       <span class="hljs-keyword">this</span>.transitionTo(<span class="hljs-string">'series'</span>);
     },
 
-    willTransition: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    willTransition: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
       <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.create'</span>).rollback();
       <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
     }

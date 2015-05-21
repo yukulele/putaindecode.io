@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Première application Ember</title><link rel="stylesheet" href="/index.63900337.css"><link rel="alternate" href="/feed.xml" title="Première application Ember" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Première application Ember"><meta name="twitter:creator" content="@bmeurant"><meta property="og:title" content="Première application Ember"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Première application Ember</title><link rel="stylesheet" href="/index.2e7e1495.css"><link rel="alternate" href="/feed.xml" title="Première application Ember" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Première application Ember"><meta name="twitter:creator" content="@bmeurant"><meta property="og:title" content="Première application Ember"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -305,7 +305,7 @@ Je dis juste que c’est une caractéristique importante d’<a href="http://emb
     </h3><p>De base, avec <a href="http://emberjs.com" >Ember</a> on peut donc déclarer nos routes, contrôleurs, modèles, etc. dans un seul fichier JavaScript ou dans une balise <code>&lt;script&gt;</code>. On doit par contre impérativement respecter les <a href="http://emberjs.com/guides/concepts/naming-conventions/" >conventions de nommage</a> et enregistrer nos objets dans une variable globale : </p>
 <pre><code class="lang-js">App = Ember.Application.create();
 
-App.Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+App.Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
   ...
 });
 
@@ -396,7 +396,7 @@ et la conf sur <a href="https://github.com/bmeurant/ember-articles/tree/premiere
 </code></pre>
 <p><a href="http://www.ember-cli.com/" >Ember CLI</a> met à jour le routeur : </p>
 <pre><code class="lang-js"><span class="hljs-comment">// routeur app/router.js</span>
-Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'series'</span>);
 });
 </code></pre>
@@ -434,7 +434,7 @@ caractéristiques peuvent être trouvées dans la <a href="http://emberjs.com/gu
 <span class="hljs-keyword">import</span> Ember <span class="hljs-keyword">from</span> <span class="hljs-string">'ember'</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Ember.Route.extend({
-    redirect: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    redirect: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
         <span class="hljs-keyword">this</span>.transitionTo(<span class="hljs-string">'series'</span>);
     }
 });
@@ -478,7 +478,7 @@ où le pluriel et le singulier sont identiques (<em>serie</em> n’existe pas), 
     publisher           : DS.attr(<span class="hljs-string">'string'</span>),
     coverName           : DS.attr(<span class="hljs-string">'string'</span>, {defaultValue: <span class="hljs-string">'default.jpg'</span>}),
     summary             : DS.attr(<span class="hljs-string">'string'</span>),
-    coverUrl: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    coverUrl: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">return</span> <span class="hljs-string">'/assets/images/series/covers/'</span> + <span class="hljs-keyword">this</span>.get(<span class="hljs-string">'coverName'</span>);
     }.property(<span class="hljs-string">'coverName'</span>)
 });
@@ -513,7 +513,7 @@ SeriesItem.reopenClass({
 <span class="hljs-keyword">import</span> Ember <span class="hljs-keyword">from</span> <span class="hljs-string">'ember'</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Ember.Route.extend({
-    model: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    model: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.store.find(<span class="hljs-string">'seriesItem'</span>);
     }
 });
@@ -557,7 +557,7 @@ des notations équivalentes.</p>
   sortAscending: <span class="hljs-literal">true</span>,
 
   actions: {
-    sort: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    sort: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
       <span class="hljs-keyword">this</span>.toggleProperty(<span class="hljs-string">'sortAscending'</span>);
     }
   }
@@ -614,15 +614,15 @@ lorsque la valeur de <code>sortAscending</code> change. On note la notation <cod
 filter: <span class="hljs-string">""</span>,
 sortAscending: <span class="hljs-literal">true</span>,
 
-filteredModel: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+filteredModel: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">var</span> filter = <span class="hljs-keyword">this</span>.get(<span class="hljs-string">'filter'</span>);
 
-  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.get(<span class="hljs-string">'content'</span>).filter(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span></span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.get(<span class="hljs-string">'content'</span>).filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">item</span>)</span>{
     <span class="hljs-keyword">if</span> (item.get(<span class="hljs-string">'title'</span>) === <span class="hljs-literal">undefined</span>) {
       <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
     }
     <span class="hljs-keyword">return</span> item.get(<span class="hljs-string">'title'</span>).toLowerCase().match(<span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(filter.toLowerCase()));
-  }).sort(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a, b)</span> </span>{
+  }).sort(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a, b</span>) </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.get(<span class="hljs-string">'sortAscending'</span>) ? (b.get(<span class="hljs-string">'title'</span>) &lt; a.get(<span class="hljs-string">'title'</span>)) : (b.get(<span class="hljs-string">'title'</span>) &gt; a.get(<span class="hljs-string">'title'</span>));
   }.bind(<span class="hljs-keyword">this</span>));
 }.property(<span class="hljs-string">'filter'</span>, <span class="hljs-string">'sortAscending'</span>, <span class="hljs-string">'model.@each.title'</span>),
@@ -689,7 +689,7 @@ Je vous laisse découvrir par vous-même dans la <a href="http://emberjs.com/gui
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> User = Ember.Object.extend({
   firstName: <span class="hljs-literal">null</span>,
   lastName: <span class="hljs-literal">null</span>,
-  fullName: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  fullName: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.get(<span class="hljs-string">'firstName'</span>) + <span class="hljs-string">' '</span> + <span class="hljs-keyword">this</span>.get(<span class="hljs-string">'lastName'</span>);
   }.property(<span class="hljs-string">'firstName'</span>, <span class="hljs-string">'lastName'</span>)
 });
@@ -704,8 +704,8 @@ choses) en queue et n’effectue le rendu qu’une seule et unique fois, lorsque
 <li>Après ça, on va finir en douceur en ajoutant simplement ou nouvelle route pour afficher la série qu’on a sélectionné :</li>
 </ul>
 <pre><code class="lang-js"><span class="hljs-comment">// /app/router.js</span>
-Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'series'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'series'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'seriesItem'</span>, { path: <span class="hljs-string">'/:seriesItem_id'</span> });
   });
 });

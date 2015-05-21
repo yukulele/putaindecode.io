@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Flux, qu&#x27;est-ce que c&#x27;est ?</title><link rel="stylesheet" href="/index.63900337.css"><link rel="alternate" href="/feed.xml" title="Flux, qu&#x27;est-ce que c&#x27;est ?" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Flux, qu&#x27;est-ce que c&#x27;est ?"><meta name="twitter:creator" content="@bloodyowl"><meta property="og:title" content="Flux, qu&#x27;est-ce que c&#x27;est ?"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Flux, qu&#x27;est-ce que c&#x27;est ?</title><link rel="stylesheet" href="/index.2e7e1495.css"><link rel="alternate" href="/feed.xml" title="Flux, qu&#x27;est-ce que c&#x27;est ?" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Flux, qu&#x27;est-ce que c&#x27;est ?"><meta name="twitter:creator" content="@bloodyowl"><meta property="og:title" content="Flux, qu&#x27;est-ce que c&#x27;est ?"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -326,7 +326,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 <span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
 
 <span class="hljs-built_in">module</span>.exports = {
-  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(productId)</span></span>{
+  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">productId</span>)</span>{
     AppDispatcher.handleViewAction({
       type : ActionTypes.ADD_TO_BASKET,
       productId : productId
@@ -342,10 +342,10 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 <span class="hljs-keyword">var</span> Button = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./common/Button.jsx"</span>)
 
 <span class="hljs-keyword">var</span> Product = React.createClass({
-  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(productId)</span></span>{
+  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">productId</span>)</span>{
     BasketActions.addToBasket(productId)
   },
-  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+  render : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
     <span class="hljs-keyword">return</span> (
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"Product"</span>&gt;</span>
         {/* rest of the component*/}
@@ -379,7 +379,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
     ce qui signifie qu'on verra passer toutes les actions
     de l'app.
    */</span>
-  dispatchToken : AppDispatcher.register(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(payload)</span></span>{
+  dispatchToken : AppDispatcher.register(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">payload</span>)</span>{
     <span class="hljs-keyword">var</span> action = payload.action
     <span class="hljs-keyword">switch</span>(action.type) {
       <span class="hljs-keyword">case</span> ActionTypes.ADD_TO_BASKET:
@@ -412,35 +412,35 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 <span class="hljs-keyword">var</span> BasketActions = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../actions/BasketActions"</span>)
 <span class="hljs-keyword">var</span> BasketStore = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../stores/BasketStore"</span>)
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getState</span><span class="hljs-params">()</span></span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getState</span>(<span class="hljs-params"></span>)</span>{
   <span class="hljs-keyword">return</span> BasketStore.getStore()
 }
 
 <span class="hljs-keyword">var</span> Product = React.createClass({
-  getInitialState : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+  getInitialState : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
     <span class="hljs-keyword">return</span> getState()
   },
-  _onStoreChange : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+  _onStoreChange : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
     <span class="hljs-comment">/*
       À chaque changement du store, on update naïvement
       le component et on laisse le virtual DOM faire son job.
     */</span>
     <span class="hljs-keyword">this</span>.setState(getState())
   },
-  componentDidMount : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+  componentDidMount : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
     <span class="hljs-comment">/*
       On écoute le store uniquement lorsque le
       component est monté.
      */</span>
     BasketStore.addChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
   },
-  componentWillUnmount : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+  componentWillUnmount : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
     <span class="hljs-comment">/*
       Et on arrête d'écouter quand il ne l'est plus.
      */</span>
     BasketStore.removeChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
   },
-  render : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+  render : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
     <span class="hljs-keyword">return</span> (
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"Basket"</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"Basket-count"</span>&gt;</span>
