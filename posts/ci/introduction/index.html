@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Qu&#x27;est-ce que l&#x27;intégration continue ?</title><link rel="stylesheet" href="/index.2e7e1495.css"><link rel="alternate" href="/feed.xml" title="Qu&#x27;est-ce que l&#x27;intégration continue ?" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Qu&#x27;est-ce que l&#x27;intégration continue ?"><meta name="twitter:creator" content="@MoOx"><meta property="og:title" content="Qu&#x27;est-ce que l&#x27;intégration continue ?"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Qu&#x27;est-ce que l&#x27;intégration continue ?</title><link rel="stylesheet" href="/index.227a57b0.css"><link rel="alternate" href="/feed.xml" title="Qu&#x27;est-ce que l&#x27;intégration continue ?" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Qu&#x27;est-ce que l&#x27;intégration continue ?"><meta name="twitter:creator" content="@MoOx"><meta property="og:title" content="Qu&#x27;est-ce que l&#x27;intégration continue ?"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-all--5of12"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -286,20 +286,13 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 
 	C436.339,160.061,450.668,145.174,462,128.223z"/>
 
-</svg></span></a></nav></div></div></div><div class="putainde-Main"><article class="putainde-Post putainde-Post--customHeader"><header><div class="putainde-Post-header putainde-Post-header--custom putainde-Post-header--dark"><div class="putainde-Post-header-picture" style="background-color:#c33;background:#c33 url(&quot;index.jpg&quot;) no-repeat 50% 50% / cover;"></div><a class="putainde-Post-header-pictureCredit" href="https://www.flickr.com/photos/zunami/3780218641/">Crédit photo</a><h1 class="putainde-Title">Qu&#x27;est-ce que l&#x27;intégration continue ?</h1></div><div class="putainde-Post-metas"><span>Écrit par <span><a href="http://moox.io/">MoOx</a><span></span></span></span><span>, </span><span class="putainde-Date"> le 21 mai 2015</span>. <span class="r-Tooltip r-Tooltip--top putainde-Post-readingTime" data-r-tooltip="Temps de lecture approximatif, sur une base de 250 mots par minute">Temps de lecture : environ 5 minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">ci</li><li class="putainde-Tag">tests</li></ul></header><div class="r-Grid"><div class="r-Grid-cell r-all--8of12 putainde-Post-contents"><div class="putainde-Post-md"><div><p>Certains risquent d’être déçus puisque nous ne parlerons pas ici des fameux <code>3x8</code>,
+</svg></span></a></nav></div></div></div><div class="putainde-Main"><article class="putainde-Post putainde-Post--customHeader"><header><div class="putainde-Post-header putainde-Post-header--custom putainde-Post-header--dark"><div class="putainde-Post-header-picture" style="background-color:#c33;background:#c33 url(&quot;index.jpg&quot;) no-repeat 50% 50% / cover;"></div><a class="putainde-Post-header-pictureCredit" href="https://www.flickr.com/photos/zunami/3780218641/">Crédit photo</a><h1 class="putainde-Title">Qu&#x27;est-ce que l&#x27;intégration continue ?</h1></div><div class="putainde-Post-metas"><span>Écrit par <span><a href="http://moox.io/">MoOx</a><span></span></span></span><span>, </span><span class="putainde-Date"> le 21 mai 2015</span>. <span class="r-Tooltip r-Tooltip--top putainde-Post-readingTime" data-r-tooltip="Temps de lecture approximatif, sur une base de 250 mots par minute">Temps de lecture : environ 3 minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">ci</li><li class="putainde-Tag">tests</li></ul></header><div class="r-Grid"><div class="r-Grid-cell r-all--8of12 putainde-Post-contents"><div class="putainde-Post-md"><div><p>Certains risquent d’être déçus puisque nous ne parlerons pas ici des fameux <code>3x8</code>,
 technique qui consiste à faire tourner 3 équipes d’intégrateurs HTML en
 continu afin d’avoir du PSD &gt; HTML 24h sur 24.</p>
 <h2 id="le-principe-de-l-integration-continue">
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#le-principe-de-l-integration-continue">#</a>
       Le principe de l’intégration continue
-    </h2><p>Nous allons aborder un sujet qui permet d’avoir un site stable en production,
-ceci de manière automatisée et continue.</p>
-<p>Il faut comprendre par là sans passer par FTP avec Filezilla.
-Pas de bouton “Upload” ou “Sync” après avoir fait une modification de code.
-Pas de risque de péter tout votre site si vos modifications rentrent en conflit
-avec les modifications de votre collègue, qui lui aussi vient de pousser un
-bon gros patch bien sale.</p>
-<blockquote>
+    </h2><blockquote>
 <p>L’intégration continue est un ensemble de pratiques utilisées en génie
 logiciel consistant à vérifier à chaque modification de code source que le
 résultat des modifications ne produit pas de régression dans l’application
@@ -308,14 +301,6 @@ développée.</p>
 <p><small>
 <a href="https://fr.wikipedia.org/wiki/Int%C3%A9gration_continue" >Source: Wikipédia</a>
 </small></p>
-<p>Notez que dans cette définition, il manque un point assez important :
-le déploiement est automatisé à la suite des vérifications.</p>
-<p>La première conséquence est que les mises en
-productions ne sont plus stressantes, car très régulières.<br><a href="http://www.estcequonmetenprodaujourdhui.info/" >Certaines personnes ne recommandent pas les mises en production tous les jours
-</a> mais lorsque vous avez mis en
-place l’intégration continue, vous minimisez grandement les risques.</p>
-<p>La preuve est que certaines entreprises font des mises en productions plusieurs
-centaines de fois par jour ! (GitHub est un bon exemple).</p>
 <h2 id="pre-requis-pour-mettre-en-place-l-integration-continue">
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#pre-requis-pour-mettre-en-place-l-integration-continue">#</a>
       Pré-requis pour mettre en place l’intégration continue
@@ -382,11 +367,6 @@ testé automatiquement tout ses codes sources plus tôt.
 pour se prévenir soi-même ne serait pas de refus.</p>
 <p>Une fois la barrière franchie, on se dit vraiment qu’on était stupide de pas
 avoir essayé avant.</p>
-<p>Même chez <em>Putain de code !</em> (en date de cette article), notre couverture de
-tests est loin d’être bonne. Mais ce site étant un petit plaisir un peu risqué,
-nous faisons quand même du déploiement continu.
-On aime bien l’idée du <em><a href="http://zachholman.com/talk/move-fast-break-nothing" >move fast &amp; break nothing
-</a></em>.</p>
 <h2 id="une-commande-qui-execute-les-tests">
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#une-commande-qui-execute-les-tests">#</a>
       Une commande qui éxecute les tests
@@ -398,38 +378,17 @@ trouver un en adéquation avec votre language favori.</p>
 <p>Pour notre site, la commande est <code>npm test</code>. Simple, efficace.</p>
 <p>Elle exécute tout ce qui est nécessaire à compiler notre application et à jouer
 les tests tout en retournant un résultat lisible et un code d’erreur si besoin.</p>
-<h2 id="faire-un-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#faire-un-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">#</a>
-      Faire un script qui fait les choses qui vont bien quand les tests vont bien
-    </h2><p>Une fois qu’on a une commande qui peut jouer tous les tests et dire “y’a bon” ou
-“tatoukassé”, il nous faut prévoir les actions à réaliser quand nos tests sont OK.</p>
-<p>Un déploiement FTP, un déploiement git, ou plus compliqué via CDN, peu importe.
-<strong>Il faut juste une commande qui marche simplement.</strong></p>
-<p>Pour notre site, la command est <code>npm run deploy</code>. Cette commande pousse le site généré sur la
-branche <code>gh-pages</code>
-(puisqu’on se sert <a href="https://pages.github.com/" >des pages GitHub</a>).</p>
-<h2 id="automatiser-le-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#automatiser-le-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">#</a>
-      Automatiser le script qui fait les choses qui vont bien quand les tests vont bien
-    </h2><p>On peut ensuite éventuellement englober les précentes étapes dans une seule
-commande qui va se débrouiller s’il n’y a pas d’erreur. Mais bon, si vous n’avez
-que deux commandes (comme on a dans l’exemple de notre site), un simple appel de cette façon devrait
-faire l’affaire :</p>
-<pre><code class="lang-console">$ <span class="hljs-built_in">npm</span> test &amp;&amp; <span class="hljs-built_in">npm</span> run deploy
-</code></pre>
-<p>Si <code>npm test</code> retourne une erreur, la deuxième commande ne sera pas exécutée.</p>
-<h2 id="la-suite-au-prochaine-episode">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#la-suite-au-prochaine-episode">#</a>
-      La suite au prochaine épisode
+<h2 id="et-apres">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#et-apres">#</a>
+      Et après ?
     </h2><p>Là, si vous avez déjà mis tout ça en place, le bonheur ultime du développeur
 n’est pas loin : vous pouvez rapidement vérifier qu’il n’y a pas de régressions
 et agir en conséquence.</p>
-<p>La prochaine étape (dans un prochain article) sera de mettre ça en place sur un
-serveur d’intégration continue, nous y étudirons simplement ce que nous avons
-fait pour notre site.</p>
-<p>Si vous êtes trop curieux, vous pouvez déjà <a href="https://github.com/putaindecode/putaindecode.fr" >consulter le code source de notre
-site</a> et fouiller dans le
-<code>package.json</code> (section <code>scripts</code>) pour deviner la suite…</p>
+<p>Chez <em>Putain de code !</em> (en date de cette article), notre couverture de
+tests est loin d’être bonne. Mais ce site étant un petit plaisir un peu risqué,
+nous faisons quand même du
+<a href="/posts/ci/le-deploiement-continu" >déploiement continu</a>, l’étape d’après !<br>On aime bien l’idée du <em><a href="http://zachholman.com/talk/move-fast-break-nothing" >move fast &amp; break <del>no</del>thing
+</a></em>.</p>
 </div></div><footer class="putainde-Post-footer"><div><div class="putainde-Author undefined"><a href="http://moox.io/" class="putainde-Avatar putainde-Author-picture"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par </span><a class="putainde-Link" href="http://moox.io/">MoOx</a></h3><div class="putainde-Author-social"><a href="http://moox.io/" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Website"><span class="SVGIcon SVGIcon--cleaned putainde-Icon"><?xml version="1.0" encoding="utf-8"?>
 
 
@@ -544,7 +503,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 	C197,349.352,195.265,350.583,193.125,350.583z"/>
 
 </svg></span></a></div></div><p class="putainde-Author-bio">Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.  Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">3 contributeurs sur cette page</strong><div class="r-Grid putainde-Contributors-actions"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Contributors-action" href="http://github.com/putaindecode/putaindecode.fr/edit/master/content/posts/ci/introduction/index.md">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Contributors-action" href="http://github.com/putaindecode/putaindecode.fr/blame/master/content/posts/ci/introduction/index.md">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Contributors-action" href="http://github.com/putaindecode/putaindecode.fr/commits/master/content/posts/ci/introduction/index.md">Historique</a></div></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
-(4 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Macxim
+(5 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Macxim
 (1 commit)"><a href="https://github.com/Macxim" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1909957?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Nyalab
 (1 commit)"><a href="http://putaindecode.fr" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/721993?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-all--6of12"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="irc://irc.freenode.net/putaindecode">IRC</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><span class="SVGIcon SVGIcon--cleaned putainde-Icon"><?xml version="1.0" encoding="utf-8"?>
 
@@ -640,7 +599,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 
 	C436.339,160.061,450.668,145.174,462,128.223z"/>
 
-</svg></span></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script src="/index.ba5eb316.js"></script><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
+</svg></span></a></li></ul></div><div class="r-Grid-cell r-all--3of12"><p class="putainde-Footer-text putainde-Footer-text--small putainde-Footer-text--right">Made with ♥︎</p></div></div></div><script src="/index.f5a4b46a.js"></script><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
 var disqus_identifier = "http://putaindecode.fr/posts/ci/introduction/";
 var disqus_url = "http://putaindecode.fr/posts/ci/introduction/";
 var disqus_script = "embed.js";

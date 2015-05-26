@@ -5,10 +5,70 @@
         <description><![CDATA[Putain de code !]]></description>
         <link>http://putaindecode.fr</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Fri, 22 May 2015 07:28:58 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 26 May 2015 05:28:54 GMT</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"/>
         <language><![CDATA[fr]]></language>
         <category><![CDATA[code]]></category>
+        <item>
+            <title><![CDATA[Introduction au déploiement continu]]></title>
+            <description><![CDATA[<h1 id="deployer-en-continu">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/le-deploiement-continu/#deployer-en-continu">#</a>
+      Déployer en continu ?
+    </h1><p>Il s’agit d’avoir un site stable en production, ceci de manière automatisée et
+continue. Rien que ça.</p>
+<p>Il faut comprendre par là sans passer par FTP avec Filezilla.
+Pas de bouton “Upload” ou “Sync” après avoir fait une modification de code.
+Pas de risque de péter tout votre site si vos modifications rentrent en conflit
+avec les modifications de votre collègue, qui lui aussi vient de pousser un
+bon gros patch bien sale.</p>
+<p>La première conséquence est que les mises en
+productions ne sont plus stressantes, car très régulières.<br><a href="http://www.estcequonmetenprodaujourdhui.info/" >Certaines personnes ne recommandent pas les mises en production tous les jours
+</a> mais lorsque vous avez mis en
+place l’intégration continue, vous minimisez grandement les risques.</p>
+<p>La preuve est que certaines entreprises font des mises en productions plusieurs
+centaines de fois par jour ! (GitHub est un bon exemple).</p>
+<h2 id="pre-requis-au-deploiement-continu">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/le-deploiement-continu/#pre-requis-au-deploiement-continu">#</a>
+      Pré-requis au déploiement continu
+    </h2><p>Vous n’avez qu’une chose à faire avant de vous attaquer à la mise en place du
+déploiement continu : vous devez déjà avoir
+<a href="/posts/ci/introduction/" >l’intégration continue</a> en place.</p>
+<p>Une fois vous êtes bon à ce niveau, vous pouvez passer à l’étape suivante.</p>
+<h2 id="faire-un-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/le-deploiement-continu/#faire-un-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">#</a>
+      Faire un script qui fait les choses qui vont bien quand les tests vont bien
+    </h2><p>Une fois qu’on a une commande qui peut jouer tous les tests et dire “y’a bon” ou
+“tatoukassé”, il nous faut prévoir les actions à réaliser quand nos tests sont
+OK.</p>
+<p>Un déploiement FTP, un déploiement git, ou plus compliqué via CDN, peu importe.
+<strong>Il faut juste une commande qui marche simplement.</strong></p>
+<p>Pour notre site, la command est <code>npm run deploy</code>. Cette commande pousse le site
+généré sur la branche <code>gh-pages</code>
+(puisqu’on se sert <a href="https://pages.github.com/" >des pages GitHub</a>).</p>
+<h2 id="automatiser-le-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/le-deploiement-continu/#automatiser-le-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">#</a>
+      Automatiser le script qui fait les choses qui vont bien quand les tests vont bien
+    </h2><p>On peut ensuite éventuellement englober les précentes étapes dans une seule
+commande qui va se débrouiller s’il n’y a pas d’erreur. Mais bon, si vous n’avez
+que deux commandes (comme on a dans l’exemple de notre site), un simple appel de
+cette façon devrait faire l’affaire :</p>
+<pre><code class="lang-console">$ <span class="hljs-built_in">npm</span> test &amp;&amp; <span class="hljs-built_in">npm</span> run deploy
+</code></pre>
+<p>Si <code>npm test</code> retourne une erreur, la deuxième commande ne sera pas exécutée.</p>
+<h2 id="la-suite-au-prochaine-episode">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/le-deploiement-continu/#la-suite-au-prochaine-episode">#</a>
+      La suite au prochaine épisode
+    </h2><p>La prochaine étape (dans un prochain article) sera de mettre ça en place sur un
+serveur d’intégration continue, nous y étudirons simplement ce que nous avons
+fait pour notre site.</p>
+<p>Si vous êtes trop curieux, vous pouvez déjà <a href="https://github.com/putaindecode/putaindecode.fr" >consulter le code source de notre
+site</a> et fouiller dans le
+<code>package.json</code> (section <code>scripts</code>) pour deviner la suite…</p>
+]]></description>
+            <link>http://putaindecode.fr/posts/ci/le-deploiement-continu/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/ci/le-deploiement-continu/</guid>
+            <pubDate>Mon, 25 May 2015 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Qu'est-ce que l'intégration continue ?]]></title>
             <description><![CDATA[<p>Certains risquent d’être déçus puisque nous ne parlerons pas ici des fameux <code>3x8</code>,
@@ -17,14 +77,7 @@ continu afin d’avoir du PSD &gt; HTML 24h sur 24.</p>
 <h2 id="le-principe-de-l-integration-continue">
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#le-principe-de-l-integration-continue">#</a>
       Le principe de l’intégration continue
-    </h2><p>Nous allons aborder un sujet qui permet d’avoir un site stable en production,
-ceci de manière automatisée et continue.</p>
-<p>Il faut comprendre par là sans passer par FTP avec Filezilla.
-Pas de bouton “Upload” ou “Sync” après avoir fait une modification de code.
-Pas de risque de péter tout votre site si vos modifications rentrent en conflit
-avec les modifications de votre collègue, qui lui aussi vient de pousser un
-bon gros patch bien sale.</p>
-<blockquote>
+    </h2><blockquote>
 <p>L’intégration continue est un ensemble de pratiques utilisées en génie
 logiciel consistant à vérifier à chaque modification de code source que le
 résultat des modifications ne produit pas de régression dans l’application
@@ -33,14 +86,6 @@ développée.</p>
 <p><small>
 <a href="https://fr.wikipedia.org/wiki/Int%C3%A9gration_continue" >Source: Wikipédia</a>
 </small></p>
-<p>Notez que dans cette définition, il manque un point assez important :
-le déploiement est automatisé à la suite des vérifications.</p>
-<p>La première conséquence est que les mises en
-productions ne sont plus stressantes, car très régulières.<br><a href="http://www.estcequonmetenprodaujourdhui.info/" >Certaines personnes ne recommandent pas les mises en production tous les jours
-</a> mais lorsque vous avez mis en
-place l’intégration continue, vous minimisez grandement les risques.</p>
-<p>La preuve est que certaines entreprises font des mises en productions plusieurs
-centaines de fois par jour ! (GitHub est un bon exemple).</p>
 <h2 id="pre-requis-pour-mettre-en-place-l-integration-continue">
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#pre-requis-pour-mettre-en-place-l-integration-continue">#</a>
       Pré-requis pour mettre en place l’intégration continue
@@ -107,11 +152,6 @@ testé automatiquement tout ses codes sources plus tôt.
 pour se prévenir soi-même ne serait pas de refus.</p>
 <p>Une fois la barrière franchie, on se dit vraiment qu’on était stupide de pas
 avoir essayé avant.</p>
-<p>Même chez <em>Putain de code !</em> (en date de cette article), notre couverture de
-tests est loin d’être bonne. Mais ce site étant un petit plaisir un peu risqué,
-nous faisons quand même du déploiement continu.
-On aime bien l’idée du <em><a href="http://zachholman.com/talk/move-fast-break-nothing" >move fast &amp; break nothing
-</a></em>.</p>
 <h2 id="une-commande-qui-execute-les-tests">
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#une-commande-qui-execute-les-tests">#</a>
       Une commande qui éxecute les tests
@@ -123,38 +163,17 @@ trouver un en adéquation avec votre language favori.</p>
 <p>Pour notre site, la commande est <code>npm test</code>. Simple, efficace.</p>
 <p>Elle exécute tout ce qui est nécessaire à compiler notre application et à jouer
 les tests tout en retournant un résultat lisible et un code d’erreur si besoin.</p>
-<h2 id="faire-un-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#faire-un-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">#</a>
-      Faire un script qui fait les choses qui vont bien quand les tests vont bien
-    </h2><p>Une fois qu’on a une commande qui peut jouer tous les tests et dire “y’a bon” ou
-“tatoukassé”, il nous faut prévoir les actions à réaliser quand nos tests sont OK.</p>
-<p>Un déploiement FTP, un déploiement git, ou plus compliqué via CDN, peu importe.
-<strong>Il faut juste une commande qui marche simplement.</strong></p>
-<p>Pour notre site, la command est <code>npm run deploy</code>. Cette commande pousse le site généré sur la
-branche <code>gh-pages</code>
-(puisqu’on se sert <a href="https://pages.github.com/" >des pages GitHub</a>).</p>
-<h2 id="automatiser-le-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#automatiser-le-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">#</a>
-      Automatiser le script qui fait les choses qui vont bien quand les tests vont bien
-    </h2><p>On peut ensuite éventuellement englober les précentes étapes dans une seule
-commande qui va se débrouiller s’il n’y a pas d’erreur. Mais bon, si vous n’avez
-que deux commandes (comme on a dans l’exemple de notre site), un simple appel de cette façon devrait
-faire l’affaire :</p>
-<pre><code class="lang-console">$ <span class="hljs-built_in">npm</span> test &amp;&amp; <span class="hljs-built_in">npm</span> run deploy
-</code></pre>
-<p>Si <code>npm test</code> retourne une erreur, la deuxième commande ne sera pas exécutée.</p>
-<h2 id="la-suite-au-prochaine-episode">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#la-suite-au-prochaine-episode">#</a>
-      La suite au prochaine épisode
+<h2 id="et-apres">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/introduction/#et-apres">#</a>
+      Et après ?
     </h2><p>Là, si vous avez déjà mis tout ça en place, le bonheur ultime du développeur
 n’est pas loin : vous pouvez rapidement vérifier qu’il n’y a pas de régressions
 et agir en conséquence.</p>
-<p>La prochaine étape (dans un prochain article) sera de mettre ça en place sur un
-serveur d’intégration continue, nous y étudirons simplement ce que nous avons
-fait pour notre site.</p>
-<p>Si vous êtes trop curieux, vous pouvez déjà <a href="https://github.com/putaindecode/putaindecode.fr" >consulter le code source de notre
-site</a> et fouiller dans le
-<code>package.json</code> (section <code>scripts</code>) pour deviner la suite…</p>
+<p>Chez <em>Putain de code !</em> (en date de cette article), notre couverture de
+tests est loin d’être bonne. Mais ce site étant un petit plaisir un peu risqué,
+nous faisons quand même du
+<a href="/posts/ci/le-deploiement-continu" >déploiement continu</a>, l’étape d’après !<br>On aime bien l’idée du <em><a href="http://zachholman.com/talk/move-fast-break-nothing" >move fast &amp; break <del>no</del>thing
+</a></em>.</p>
 ]]></description>
             <link>http://putaindecode.fr/posts/ci/introduction/</link>
             <guid isPermaLink="true">http://putaindecode.fr/posts/ci/introduction/</guid>
@@ -3895,161 +3914,6 @@ $ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
             <link>http://putaindecode.fr/posts/windows/comment-coder-sous-windows/</link>
             <guid isPermaLink="true">http://putaindecode.fr/posts/windows/comment-coder-sous-windows/</guid>
             <pubDate>Wed, 15 Oct 2014 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Dépendances et premier projet en Ruby]]></title>
-            <description><![CDATA[<p><a href="http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/#tl-dr" >tl;dr</a></p>
-<p>Dans l’<a href="/posts/backend/premiers-pas-avec-ruby" >article précédent</a>
-nous avons installé Ruby. Désormais nous allons aborder les gems,
-les dépendances et commencer notre web service.</p>
-<p>Un gem en Ruby c’est une lib, comme un paquet NPM pour NodeJS. C’est
-d’ailleurs le système de rubygems qui a inspiré le système de NPM.
-Pour installer un gem, rien de plus simple que <code>gem install sass</code>,
-qui ici va installer la bibliothèque <code>sass</code>.</p>
-<p>Un projet Ruby nécessite la plupart du temps des bibliothèques afin
-de ne pas tout faire soi-même, il est donc nécessaire d’avoir une
-gestion des dépendances pour le projet.</p>
-<h2 id="bundler-le-gem-qui-gere-les-gems">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/#bundler-le-gem-qui-gere-les-gems">#</a>
-      Bundler, le gem qui gère les gems
-    </h2><p><a href="http://bundler.io" >Bundler</a> est un gem qui va vous permettre de créer un fichier Gemfile
-contenant vos dépendances, et qui vous installera les gems
-nécessaires avec la gestion des versions et de leurs propres
-dépendances. Un fichier Gemfile se présente comme ceci :</p>
-<pre><code class="lang-ruby">source <span class="hljs-string">'https://rubygems.org'</span>
-ruby <span class="hljs-string">'2.1.2'</span>
-gem <span class="hljs-string">'sinatra'</span>
-</code></pre>
-<p>L’instruction <code>source</code> permet de préciser l’url des dépôts de gems.
-La version de ruby n’est pas obligatoire mais j’aime la préciser pour
-ne pas me mélanger dans mes projets avec différentes versions de Ruby
-(voir le
-<a href="/posts/backend/premiers-pas-avec-ruby" >précédent article pour les versions du Ruby</a>
-et <a href="https://github.com/sstephenson/rbenv" >rbenv</a>). Et enfin, la
-déclaration de notre première bibliothèque de dépendance :
-<a href="http://www.sinatrarb.com" >Sinatra</a>.</p>
-<p>Il est possible d’être bien plus précis dans le Gemfile, comme…</p>
-<p>Préciser dans quel environnement charger les gems :</p>
-<pre><code class="lang-ruby">gem <span class="hljs-string">'sqlite3'</span>, <span class="hljs-symbol">group:</span> [<span class="hljs-symbol">:development</span>, <span class="hljs-symbol">:test</span>]
-</code></pre>
-<p>Une numéro de version :</p>
-<pre><code class="lang-ruby">gem <span class="hljs-string">'rails'</span>, <span class="hljs-string">'4.1.6'</span>         <span class="hljs-comment"># version 4.1.6</span>
-gem <span class="hljs-string">'sass-rails'</span>, <span class="hljs-string">'~&gt; 4.0.3'</span> <span class="hljs-comment"># &gt;= 4.0.3 mais &lt; 4.1.0</span>
-</code></pre>
-<p>Préciser la classe à charger :</p>
-<pre><code class="lang-ruby">gem <span class="hljs-string">'valid_email'</span>, <span class="hljs-symbol">require:</span> <span class="hljs-string">'valid_email/email_validator'</span>
-</code></pre>
-<p>Aller chercher directement sur Github :</p>
-<pre><code class="lang-ruby">gem <span class="hljs-string">'nokogiri'</span>, <span class="hljs-symbol">github:</span> <span class="hljs-string">'sparklemotion/nokogiri'</span>
-<span class="hljs-comment"># https://github.com/sparklemotion/nokogiri.git</span>
-
-gem <span class="hljs-string">'rails'</span>, <span class="hljs-symbol">github:</span> <span class="hljs-string">'rails'</span>
-<span class="hljs-comment"># https://github.com/rails/rails.git</span>
-
-gem <span class="hljs-string">'rails'</span>, <span class="hljs-symbol">github:</span> <span class="hljs-string">'rails'</span>, <span class="hljs-symbol">branch:</span> <span class="hljs-string">'4-1-stable'</span>
-<span class="hljs-comment"># https://github.com/rails/rails.git sur la branche 4-1-stable</span>
-</code></pre>
-<p>Il existe encore d’autres instructions, de quoi rendre sa gestion des
-dépendances vraiment fine et précise.</p>
-<p>Une fois le Gemfile prêt, bundler a plusieurs commandes de
-disponibles pour pouvoir les télécharger et utiliser.</p>
-<ul>
-<li><code>$ bundle install</code> installera les gems requis</li>
-<li><code>$ bundle update</code> mettra à jour vers les versions les plus récentes si possible les gems requis</li>
-<li><code>$ bundle exec</code> permettra de précéder une commande ruby afin de l’exécuter dans le contexte du Gemfile, très utile lorsque l’on a différentes versions de Ruby qui se baladent dans le terminal</li>
-</ul>
-<p>Bundler va générer un fichier <code>Gemfile.lock</code> qui est la description
-exhaustive des dépendances de votre application, chaque gem avec le
-numéro de sa version installée, chaque dépendance pour chaque gem,
-une jolie arborescence plus que précise.</p>
-<h2 id="commencons-notre-web-service">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/#commencons-notre-web-service">#</a>
-      Commençons notre web service
-    </h2><p>Assez parlé des outils qui existent, utilisons-les. Tout d’abord
-installons Bundler, sans oublier le <code>$ rbenv rehash</code> nécessaire si vous
-utilisez rbenv pour vos versions de Ruby afin de mettre à jour les
-commandes disponibles dans le terminal :</p>
-<pre><code><span class="hljs-variable">$ </span>gem install bundler
-<span class="hljs-variable">$ </span>rbenv rehash
-</code></pre><p>Pour notre première application, nous allons faire un web service
-avec Sinatra qui est un micro-framework web, ayant d’ailleurs
-clairement inspiré Express (“Sinatra inspired web development
-framework for node.js”). Notre Gemfile va donc être exactement
-comme notre premier exemple :</p>
-<pre><code class="lang-ruby">source <span class="hljs-string">'https://rubygems.org'</span>
-ruby <span class="hljs-string">'2.1.2'</span>
-gem <span class="hljs-string">'sinatra'</span>
-</code></pre>
-<p>Un petit <code>bundle install</code> et nous sommes prêts à démarrer !</p>
-<p>Pour ne pas brusquer les choses, nous allons faire la version la plus
-simple d’un web service avec Sinatra, ce qui nous permettra de
-constater la simplicité extrême de Ruby et du framework :</p>
-<pre><code class="lang-ruby"><span class="hljs-comment">########</span>
-<span class="hljs-comment"># app.rb</span>
-<span class="hljs-comment">#</span>
-
-<span class="hljs-keyword">require</span> <span class="hljs-string">'sinatra'</span>
-
-get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
-  <span class="hljs-string">'Hello World!'</span>
-<span class="hljs-keyword">end</span>
-</code></pre>
-<p>Qu’avons-nous fait là ? Pas grand chose, et en même temps tout juste
-ce qu’il faut. Nous avons inclus le gem à notre script et utilisé la
-méthode Sinatra <code>get</code> nous permettant de déclarer un point d’entrée
-en <code>GET</code> sur la route ‘/‘. Cette méthode prend également comme
-argument un <code>block</code> caractérisé par le <code>do</code> et le <code>end</code>. La dernière
-valeur du block étant la valeur de retour, nous renvoyons la seule
-chaîne de caractères “Hello World!”.</p>
-<p>Et maintenant : lancement ! <code>$ bundle exec ruby app.rb</code> va lancer
-l’application (mais <code>ruby app.rb</code> suffit), par défaut sur le port
-<code>4567</code>. Regardez vite <a href="http://localhost:4567" >http://localhost:4567</a>
-et là magie, “Hello World!” sur une magnifique page blanche, notre
-tout premier web service est fonctionnel.</p>
-<p>Alors oui, ce n’est pas une révolution. Mais tout de même, en
-réduisant la syntaxe du block on se retrouve avec un script de deux
-lignes qui crée un vrai web service web. Et vous allez vite voir
-qu’en quelques lignes de plus on peut vite complexifier le bousin.</p>
-<h2 id="au-prochain-episode">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/#au-prochain-episode">#</a>
-      Au prochain épisode
-    </h2><p>Dans l’article suivant nous allons ajouter des fonctionnalités à
-notre toute nouvelle application, de nouvelles routes, de la
-persistence et aussi des vues dans un format un peu plus utile.</p>
-<p>Stay tuned!</p>
-<h2 id="tl-dr">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/#tl-dr">#</a>
-      tl;dr
-    </h2><p>Voici la version abrégée de cet article :</p>
-<pre><code class="lang-ruby"><span class="hljs-comment"># Gemfile</span>
-source <span class="hljs-string">'https://rubygems.org'</span>
-ruby <span class="hljs-string">'2.1.2'</span>
-gem <span class="hljs-string">'sinatra'</span>
-</code></pre>
-<pre><code class="lang-ruby"><span class="hljs-comment"># app.rb</span>
-<span class="hljs-keyword">require</span> <span class="hljs-string">'sinatra'</span>
-get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
-  <span class="hljs-string">'Hello World!'</span>
-<span class="hljs-keyword">end</span>
-</code></pre>
-<pre><code class="lang-console"><span class="hljs-variable">$ </span>gem install bundler
-<span class="hljs-variable">$ </span>rbenv rehash
-<span class="hljs-variable">$ </span>bundle install
-<span class="hljs-variable">$ </span>ruby app.rb
-</code></pre>
-<h2 id="sources">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/#sources">#</a>
-      Sources
-    </h2><ul>
-<li><a href="https://rubygems.org" >RubyGems</a></li>
-<li><a href="http://bundler.io" >Bundler</a></li>
-<li><a href="https://github.com/sstephenson/rbenv" >rbenv</a></li>
-<li><a href="http://www.sinatrarb.com" >Sinatra</a> et surtout son <a href="http://www.sinatrarb.com/intro.html" >README</a></li>
-</ul>
-]]></description>
-            <link>http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/</link>
-            <guid isPermaLink="true">http://putaindecode.fr/posts/backend/ruby-dependances-et-projet/</guid>
-            <pubDate>Tue, 14 Oct 2014 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>
