@@ -5,10 +5,269 @@
         <description><![CDATA[Putain de code !]]></description>
         <link>http://putaindecode.fr</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Thu, 28 May 2015 09:30:25 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 02 Jun 2015 08:13:29 GMT</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"/>
         <language><![CDATA[fr]]></language>
         <category><![CDATA[code]]></category>
+        <item>
+            <title><![CDATA[Introduction à cssnext]]></title>
+            <description><![CDATA[<p>D’après le <a href="http://cssnext.io/" >site officiel</a>:</p>
+<blockquote>
+<p><strong>cssnext</strong> est un transpileur CSS qui vous permet d’utiliser dès aujourd’hui la syntaxe CSS de demain. Il transforme les spécifications CSS qui ne sont pas encore mises en œuvre sur les navigateurs les plus populaires en CSS compatible.</p>
+</blockquote>
+<h2 id="ca-veut-dire-quoi-exactement">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#ca-veut-dire-quoi-exactement">#</a>
+      Ça veut dire quoi exactement ?
+    </h2><p>Depuis CSS3, vous avez savez sans doute que CSS est divisé en plusieurs documents indépendants appelés “modules”. Ces modules peuvent avoir différents niveaux de stabilité et différents <a href="http://www.w3.org/Style/CSS/current-work#legend" >statuts</a>. La mise en œuvre de ces modules par les navigateurs peut prendre un certain temps et encore plus pour que le W3C les approuve comme <a href="http://www.w3.org/2005/10/Process-20051014/tr#RecsW3C" >Recommandation</a>.</p>
+<p>Avec <strong>cssnext</strong>, vous pouvez utiliser la syntaxe des <a href="http://www.xanthir.com/b4Ko0" >nouveaux modules CSS</a> tels que les <em>propriétés personnalisées (custom properties level 1)</em> ou les <em>media queries personnalisées (custom media queries level 1)</em>. <strong>cssnext</strong> va transformer ces nouvelles et étranges syntaxes en du CSS compréhensible par les navigateurs que vous voulez supporter.</p>
+<p>En clair, il vous donne un <strong>avant-goût du futur</strong>.</p>
+<p>Je ne sais pas vous mais étant quelqu’un qui aime expérimenter avec les dernières technologies de pointe, je trouve ça plutôt cool !</p>
+<p>Je vous conseille de jeter un oeil à la <a href="http://cssnext.io/features/" >liste des fonctionnalités</a>.</p>
+<h3 id="quid-de-mon-preprocesseur-actuel">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#quid-de-mon-preprocesseur-actuel">#</a>
+      Quid de mon préprocesseur actuel ?
+    </h3><p>Oubliez les risques liés à une abstraction trop élevée des CSS par les pré-processeurs actuels ; certes causés par une (sur-|mauvaise) utilisation de ces outils mais quand même.</p>
+<p>Devinez quoi, vous n’en avez pas forcément besoin.</p>
+<p>Essayez <strong>cssnext</strong> et retournez à ce bon <del>vieux</del> nouveau CSS. Et avec un zeste de <a href="/posts/css/petite-definition-bem/" >méthodologie BEM</a>, vous vous sentirez revivre.</p>
+<h2 id="exemples">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#exemples">#</a>
+      Exemples
+    </h2><p>Voyons voir quelles sont les fonctionnalités offertes par <strong>cssnext</strong> pour le moment.</p>
+<p>Avant toute chose, vous devriez aller faire un tour sur le <a href="http://cssnext.io/playground/" >playground du site officiel</a>.</p>
+<h3 id="prefixes-proprietaires-automatiques">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#prefixes-proprietaires-automatiques">#</a>
+      Préfixes propriétaires automatiques
+    </h3><pre><code class="lang-css"><span class="hljs-class">.h1</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> transform <span class="hljs-number">1s</span></span></span>;
+}</span>
+</code></pre>
+<p>Cela va être transformé par <strong>cssnext</strong> via Autoprefixer en :</p>
+<pre><code class="lang-css"><span class="hljs-class">.h1</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">-webkit-transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">-ms-transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
+          <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">-webkit-transition</span>:<span class="hljs-value"> -webkit-transform <span class="hljs-number">1s</span></span></span>;
+          <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> transform <span class="hljs-number">1s</span></span></span>;
+}</span>
+</code></pre>
+<h3 id="proprietes-personnalisees-et-var-limite-a-root">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#proprietes-personnalisees-et-var-limite-a-root">#</a>
+      Propriétés personnalisées et var() limité à <code>:root</code>
+    </h3><p>Aussi connues sous le nom des très attendues <a href="http://www.w3.org/TR/css-variables/" >variables CSS</a>.</p>
+<pre><code class="lang-css"><span class="hljs-pseudo">:root</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">--primary-Color</span>:<span class="hljs-value">                 <span class="hljs-hexcolor">#E86100</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">--secondary-Color</span>:<span class="hljs-value">               <span class="hljs-hexcolor">#2c3e50</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">--r-Grid-baseFontSize</span>:<span class="hljs-value">           <span class="hljs-number">1rem</span></span></span>;
+}</span>
+</code></pre>
+<p>À utiliser de cette façon :</p>
+<pre><code class="lang-css"><span class="hljs-class">.h1</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--primary-Color)</span></span>;
+}</span>
+<span class="hljs-class">.h1</span><span class="hljs-pseudo">:hover</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--secondary-Color)</span></span>;
+}</span>
+<span class="hljs-tag">body</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--r-Grid-baseFontSize)</span></span>;
+}</span>
+</code></pre>
+<h3 id="media-queries-personnalisees">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#media-queries-personnalisees">#</a>
+      Media Queries personnalisées
+    </h3><p>Pour créer des alias sémantiques, clairs et simples (<a href="http://dev.w3.org/csswg/mediaqueries/#custom-mq" >lisez la doc’</a>).</p>
+<pre><code class="lang-css"><span class="hljs-at_rule">@<span class="hljs-keyword">custom-media</span> --viewport-medium (width &lt;= <span class="hljs-number">40rem</span>)</span>;
+<span class="hljs-at_rule">@<span class="hljs-keyword">custom-media</span> --viewport-large (max-width: <span class="hljs-number">50em</span>)</span>;
+</code></pre>
+<p>Prenons par exemple :</p>
+<pre><code class="lang-css"><span class="hljs-pseudo">:root</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">--fontSize</span>:<span class="hljs-value"> <span class="hljs-number">1.2rem</span></span></span>;
+}</span>
+
+<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (--viewport-medium) </span>{
+  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--fontSize) * <span class="hljs-number">1.2</span>)</span></span>; }</span>
+}
+<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (--viewport-large) </span>{
+  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--fontSize) * <span class="hljs-number">1.4</span>)</span></span>; }</span>
+}
+</code></pre>
+<p>Le code généré sera alors :</p>
+<pre><code class="lang-css"><span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (max-width: <span class="hljs-number">40rem</span>) </span>{
+  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1.44rem</span></span></span>; }</span>
+}
+<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (max-width: <span class="hljs-number">50em</span>) </span>{
+  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1.68rem</span></span></span>; }</span>
+}
+</code></pre>
+<h3 id="selecteurs-personnalises">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#selecteurs-personnalises">#</a>
+      Sélecteurs personnalisés
+    </h3><p>Encore une fois, un petit tour sur les <a href="http://dev.w3.org/csswg/css-extensions/#custom-selectors" >specs</a> pour commencer. Disons qu’on veuille appliquer des styles à toutes les balises de titre.</p>
+<pre><code class="lang-css"><span class="hljs-at_rule">@<span class="hljs-keyword">custom-selector</span> :--heading h1, h2, h3, h4, h5, h6</span>;
+
+<span class="hljs-pseudo">:--heading</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+}</span>
+</code></pre>
+<p>Ce qui va générer le code suivant :</p>
+<pre><code class="lang-css">h1,
+h2,
+h3,
+h4,
+h5,
+h6 { margin-top; 0; }
+</code></pre>
+<h3 id="color">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#color">#</a>
+      <code>color()</code>
+    </h3><p>Une simple <a href="http://dev.w3.org/csswg/css-color/#modifying-colors" >fonction color</a> qui sert à appliquer des <em>réglages couleur</em> (teinte, luminosité, entre autres) à une couleur de base.</p>
+<p>Exemples :</p>
+<pre><code class="lang-css"><span class="hljs-class">.class</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">red</span>(+<span class="hljs-number">30</span>) <span class="hljs-function">green</span>(-<span class="hljs-number">50</span>) <span class="hljs-function">blue</span>(<span class="hljs-number">6%</span>) <span class="hljs-function">alpha</span>(.<span class="hljs-number">65</span>))</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-top-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">saturation</span>(-<span class="hljs-number">8%</span>) <span class="hljs-function">whiteness</span>(+<span class="hljs-number">50%</span>))</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-right-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">lightness</span>(<span class="hljs-number">5%</span>) <span class="hljs-function">blackness</span>(-<span class="hljs-number">25%</span>))</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-bottom-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">tint</span>(<span class="hljs-number">80%</span>))</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-left-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">shade</span>(<span class="hljs-number">75%</span>))</span></span>;
+}</span>
+</code></pre>
+<p>Le code ci-dessus sera transformé en…</p>
+<pre><code class="lang-css"><span class="hljs-class">.class</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">43</span>, <span class="hljs-number">136</span>, <span class="hljs-number">230</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">73</span>, <span class="hljs-number">86</span>, <span class="hljs-number">15</span>, <span class="hljs-number">0.65</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-top-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">181</span>, <span class="hljs-number">201</span>, <span class="hljs-number">222</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-right-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">3</span>, <span class="hljs-number">45</span>, <span class="hljs-number">87</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-bottom-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">213</span>, <span class="hljs-number">231</span>, <span class="hljs-number">250</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-left-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">11</span>, <span class="hljs-number">34</span>, <span class="hljs-number">58</span>)</span></span>;
+}</span>
+</code></pre>
+<p><strong>cssnext</strong> propose aussi les fonctionalités suivantes liées à la couleur.</p>
+<h4 id="hwb">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#hwb">#</a>
+      hwb()
+    </h4><p>D’après les <a href="http://dev.w3.org/csswg/css-color/#the-hwb-notation" >spécifications</a>, HWB (Hue-Whiteness-Blackness) est similaire à la notation HSL mais plus facile à utiliser pour les humains.</p>
+<pre><code class="lang-css"><span class="hljs-class">.title</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">hwb</span>(<span class="hljs-number">125</span>, <span class="hljs-number">32%</span>, <span class="hljs-number">47%</span>)</span></span>;
+}</span>
+</code></pre>
+<p>Rendu :</p>
+<pre><code class="lang-css"><span class="hljs-class">.title</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">33</span>, <span class="hljs-number">135</span>, <span class="hljs-number">42</span>)</span></span>;
+}</span>
+</code></pre>
+<h4 id="gray">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#gray">#</a>
+      gray()
+    </h4><p>Les gris sont <a href="http://dev.w3.org/csswg/css-color/#grays" >tellement cool</a> qu’ils ont une fonction rien que pour eux.</p>
+<pre><code class="lang-css"><span class="hljs-class">.section</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">gray</span>(<span class="hljs-number">120</span>, <span class="hljs-number">50%</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-color</span>:<span class="hljs-value"> <span class="hljs-function">gray</span>(<span class="hljs-number">17%</span>, <span class="hljs-number">25%</span>)</span></span>;
+}</span>
+</code></pre>
+<p>Ce qui donnera :</p>
+<pre><code class="lang-css"><span class="hljs-class">.section</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">120</span>, <span class="hljs-number">120</span>, <span class="hljs-number">120</span>, <span class="hljs-number">0.5</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">43</span>, <span class="hljs-number">43</span>, <span class="hljs-number">43</span>, <span class="hljs-number">0.25</span>)</span></span>;
+}</span>
+</code></pre>
+<h4 id="rrggbbaa">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#rrggbbaa">#</a>
+      #rrggbbaa
+    </h4><p><strong>cssnext</strong> transforme les <a href="http://dev.w3.org/csswg/css-color/#hex-notation" >notations hexadécimales</a> #RRGGBBAA et #RGBA en rgba().</p>
+<pre><code class="lang-css"><span class="hljs-tag">body</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#5c69</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#C73D5C59</span></span></span>;
+}</span>
+</code></pre>
+<p>Résultat :</p>
+<pre><code class="lang-css"><span class="hljs-tag">body</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">85</span>, <span class="hljs-number">204</span>, <span class="hljs-number">102</span>, <span class="hljs-number">0.6</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">199</span>, <span class="hljs-number">61</span>, <span class="hljs-number">92</span>, <span class="hljs-number">0.34902</span>)</span></span>;
+}</span>
+</code></pre>
+<h4 id="rebeccapurple">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#rebeccapurple">#</a>
+      rebeccapurple
+    </h4><p>Transforme simplement la couleur <a href="https://github.com/postcss/postcss-color-rebeccapurple#why-this-plugin-" ><code>rebeccapurple</code></a> en <code>rgb(102, 51, 153)</code>.</p>
+<h3 id="rem-units">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#rem-units">#</a>
+      rem units
+    </h3><p>Rien de bien extraordinaire ici, on génère un <strong><em>fallback</em> en pixels pour les unités en rem</strong>. Certaines personnes pourraient penser qu’un tel <em>fallback</em> est inutile de nos jours. Cependant, pour des projets bien spécifiques (compatibilité IE 7 et 8 requise), c’est encore une nécessité.
+Non mais vous n’avez quand même pas besoin d’un exemple pour ça ? Si ? Bon… d’accord. Allons-y !</p>
+<pre><code class="lang-css"><span class="hljs-class">.section-Highlight</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">2.5rem</span></span></span>;
+}</span>
+</code></pre>
+<p>Résultat :</p>
+<pre><code class="lang-css"><span class="hljs-class">.section-Highlight</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">40px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">2.5rem</span></span></span>;
+}</span>
+</code></pre>
+<h2 id="note-importante-sur-les-fonctionnalites">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#note-importante-sur-les-fonctionnalites">#</a>
+      Note importante sur les fonctionnalités
+    </h2><p>Vous pouvez manuellement activer ou désactiver certaines fonctionnalités si vous n’en ressentez pas le besoin.
+Cela étant dit, il vous est conseillé d’utiliser l’option <a href="http://cssnext.io/usage/#browsers" ><code>browsers</code></a>,
+qui permet de gérer automatiquement la liste des fonctionnalités à activer.
+Par exemple si vous spécifiez un environnement où IE 8 n’est pas supporté, l’option de transformation des <code>rem</code>
+en <code>px</code> ne sera pas activé. Tout comme Autoprefixer ne rajoutera pas les préfixes inutiles.</p>
+<h2 id="fonctionnalites-bonus">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#fonctionnalites-bonus">#</a>
+      Fonctionnalités bonus
+    </h2><p>Les deux fonctionnalités qui vont suivre ne sont pas vraiment en rapport avec les spécifications CSS. Cependant, elles méritent tout de même leur place dans cette brève présentation de l’outil.</p>
+<h3 id="import">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#import">#</a>
+      <code>import</code>
+    </h3><p>Et si vous pouviez importer des fichiers locaux et des modules (<code>node_modules</code> ou <code>web_modules</code>) pour produire un seul et même fichier CSS les contenant tous ? Oui, <a href="https://github.com/sass/sass/issues/193" >c’est à vous que je m’adresse, les utilisateurs de Sass</a>, hum. Eh bien, avec <strong>cssnext</strong>, c’est possible.</p>
+<h3 id="compress">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#compress">#</a>
+      <code>compress</code>
+    </h3><p>Comme vous l’avez sûrement deviné, c’est juste une option pour compresser <em>ou pas</em> votre fichier de sortie, et ceci grâce à <a href="https://github.com/ben-eb/cssnano" >cssnano</a>.</p>
+<h3 id="usage">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/introduction-a-cssnext/#usage">#</a>
+      Usage
+    </h3><p>Voici un exemple simple de ces deux fonctionnalités. J’ai ici utilisé <a href="https://github.com/cssnext/gulp-cssnext" >gulp-cssnext</a>, un des <a href="http://cssnext.io/setup/" >nombreux plugins</a> qui vous aident à démarrer avec <strong>cssnext</strong>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>),
+    cssnext = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-cssnext"</span>);
+
+gulp.task(<span class="hljs-string">'styles'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  gulp.src(<span class="hljs-string">"css/index.css"</span>)
+  .pipe(cssnext({
+    compress: <span class="hljs-literal">true</span>,  <span class="hljs-comment">// default is false</span>
+  }))
+  .pipe(gulp.dest(<span class="hljs-string">"./dist/"</span>))
+});
+</code></pre>
+<p>Ensuite, dans mon fichier <code>index.css</code>, j’ai ceci :</p>
+<pre><code class="lang-css"><span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"normalize.css"</span></span>; <span class="hljs-comment">/* == @import "./node_modules/normalize.css/index.css"; */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"cssrecipes-defaults"</span></span>; <span class="hljs-comment">/* == @import "./node_modules/cssrecipes-defaults/index.css"; */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"project-modules/partner"</span></span>; <span class="hljs-comment">/* relatif à css/ */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"typo"</span></span>; <span class="hljs-comment">/* même niveau que mon index.css principal situé dans css/ */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"highlight"</span> (min-width: <span class="hljs-number">25em</span>)</span>;
+</code></pre>
+<p>Et le rendu final sera :</p>
+<pre><code class="lang-css"><span class="hljs-comment">/* contenu de ./node_modules/normalize.css/index.css */</span>
+<span class="hljs-comment">/* contenu de ./node_modules/cssrecipes-defaults/index.css */</span>
+<span class="hljs-comment">/* contenu de project-modules/partner.css */</span>
+<span class="hljs-comment">/* contenu de typo.css */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (min-width: <span class="hljs-number">25em</span>) </span>{
+  <span class="hljs-comment">/* contenu de highlight.css */</span>
+}
+</code></pre>
+<p>Je sais ce que vous ressentez. Ce n’est peut-être pas le coup de foudre au premier coup d’œil (enfin, pour certains comme moi si, mais bon, passons). Vous ne l’acceptez pas encore mais il va falloir vous rendre à l’évidence, un jour ou l’autre vous coderez comme ça. Mieux vaut vous y mettre tout de suite, non ? :)</p>
+<p>Bref, pour résumer, disons simplement que le but principal de <strong>cssnext</strong> est de pouvoir développer selon les spécifications du W3C en gardant bien à l’esprit que, théoriquement, il sera possible de le supprimer plus tard (quand il ne sera plus utile).</p>
+<p>En effet, dans un futur proche, les fonctionnalités qu’offre cet outil ne seront plus gérées par <strong>cssnext</strong> lui-même mais directement par les navigateurs. Laissons-les s’adapter, chacun à leur vitesse et préparons-nous. Voilà tout l’intérêt du code <em>future-proof</em>, comme le permet <a href="http://babeljs.io/" >babeljs</a> pour le JavaScript.</p>
+<p>En attendant, il y a encore du boulot : voici une <a href="https://github.com/cssnext/cssnext/issues?q=is%3Aopen+is%3Aissue+label%3Afeature+label%3Aready" >liste des fonctionnalités à venir</a>.</p>
+<p>Maintenant, à vous de jouer. N’oubliez pas d’aller faire un tour sur le <a href="https://github.com/cssnext/cssnext" >repo GitHub</a>, n’hésitez pas à suivre <a href="https://twitter.com/cssnext" >@cssnext</a> sur Twitter pour être au courant des dernières news et rejoignez la <a href="https://gitter.im/cssnext/cssnext" >room cssnext sur Gitter</a> si vous avez des questions.</p>
+<ul>
+<li><a href="http://cssnext.io/" >Site officiel</a></li>
+</ul>
+]]></description>
+            <link>http://putaindecode.fr/posts/css/introduction-a-cssnext/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/css/introduction-a-cssnext/</guid>
+            <pubDate>Tue, 02 Jun 2015 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Introduction au déploiement continu]]></title>
             <description><![CDATA[<h1 id="deployer-en-continu">
@@ -2774,6 +3033,212 @@ Mais c’était sans compter que l’Internet, c’est un réseau mondial. Avec 
             <pubDate>Thu, 30 Oct 2014 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Flux, qu'est-ce que c'est ?]]></title>
+            <description><![CDATA[<p>Allez, tant pis, on saute l’intro et on entre directement dans le vif du sujet (on n’a pas que ça à foutre, après tout).</p>
+<h2 id="la-petite-histoire">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#la-petite-histoire">#</a>
+      La petite histoire
+    </h2><p>Il était une fois un gros site web <em>que s’apelorio</em> Facebook. Qui dit Facebook, dit webapp plus grosse que la plus grosse de tes copines (<em>no offense</em> <sup><a href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#foonote-1" >1</a></sup>) ; et du coup, propension à se retrouver submergé de bugs plus élevée.</p>
+<p>Les ingénieurs front-end de Facebook, confrontés à une codebase de plus en plus bordélique (personne ne voulant toucher certaines parties de celle-ci) ont dû repenser la structure des composants les plus cruciaux.</p>
+<p>Face à ce besoin, ces développeurs sont donc parvenus à deux solutions :</p>
+<ul>
+<li><a href="http://putaindecode.fr/posts/js/introduction-a-reactjs/" >ReactJS</a></li>
+<li>Flux</li>
+</ul>
+<p>Flux n’est pas un framework, mais simplement une architecture, une sorte de <em>guideline</em> qui résout pas mal de problèmes ayant pu apparaître avec les divers bibliothèques et frameworks MV* apparus lors des dernières années.</p>
+<h2 id="flux-l-explication-claire">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#flux-l-explication-claire">#</a>
+      Flux, l’explication claire
+    </h2><p>Flux comporte 4 concepts :</p>
+<ul>
+<li>les <strong>actions</strong>, qu’elles proviennent du serveur ou d’une interaction utilisateur ;</li>
+<li>le <strong>dispatcher</strong> dans lequel sont envoyées les actions que ce dernier transmet <em>à qui veut</em>, un peu comme un <code>EventEmitter</code> global ;</li>
+<li>les <strong>stores</strong>, qui sont l’équivalent du <code>model</code> de l’architecture MVC, ils contiennent les données, et réagissent aux actions que le dispatcher leur transmet ;</li>
+<li>les <strong>views</strong>, qui s’occupent du rendu des données dans le DOM, et de lancer des actions lorsque l’utilisateur effectue certaines actions.</li>
+</ul>
+<p>Jusque-là, rien de bien fou. C’est dans leur manière d’interagir que la particularité se dessine :</p>
+<figure>
+  <img src="http://cl.ly/YENt/flux.png" alt="">
+  <figcaption>Oh bah dis donc, ça va toujours dans le même sens</figcaption>
+</figure>
+
+<p>En effet, le <em>flux</em> en question est unidirectionnel. Pour faire simple, on procède ainsi :</p>
+<p>On définit une action via un <strong>action creator</strong> (on passera toujours par ces action-creators pour signaler une action) :</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// actions/BasketActions.js</span>
+<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispacher"</span>)
+<span class="hljs-comment">/*
+  On garde un dictionnaire des types d'actions
+  afin d'avoir un fichier donnant une vision
+  globale de toutes les interactions de l'app.
+ */</span>
+<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
+
+<span class="hljs-built_in">module</span>.exports = {
+  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">productId</span>)</span>{
+    AppDispatcher.handleViewAction({
+      type : ActionTypes.ADD_TO_BASKET,
+      productId : productId
+    })
+  }
+}
+</code></pre>
+<p>On lancera par la suite cette action lorsque l’utilisateur aura cliqué sur un certain bouton, dans la vue concernée.</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// components/Product.jsx</span>
+<span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">"react/addons"</span>)
+<span class="hljs-keyword">var</span> BasketActions = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../actions/BasketActions"</span>)
+
+<span class="hljs-keyword">var</span> Button = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./common/Button.jsx"</span>)
+
+<span class="hljs-keyword">var</span> Product = React.createClass({
+  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">productId</span>)</span>{
+    BasketActions.addToBasket(productId)
+  },
+  render : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"Product"</span>&gt;</span>
+        {/* rest of the component*/}
+        <span class="hljs-tag">&lt;<span class="hljs-title">Button</span>
+          <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.addToBasket.bind(this.props.productId)}</span>
+          <span class="hljs-attribute">label</span>=<span class="hljs-value">"Add to basket"</span>
+        /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    )</span>
+  }
+})
+
+<span class="hljs-built_in">module</span>.exports = Product
+</code></pre>
+<p>Dès lors, à chaque clic sur le bouton en question, l’action <code>ADD_TO_BASKET</code> sera passée au dispatcher, qui le signalera aux stores.</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// stores/BasketStore.js</span>
+<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispatcher"</span>)
+<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
+<span class="hljs-keyword">var</span> API = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../api"</span>)
+
+<span class="hljs-keyword">var</span> merge = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/merge"</span>)
+<span class="hljs-keyword">var</span> Store = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/store"</span>)
+
+<span class="hljs-keyword">var</span> _store = {
+  products : []
+}
+
+<span class="hljs-keyword">var</span> BasketStore = merge(Store, {
+  <span class="hljs-comment">/*
+    Ici, on `register` un callback sur l'AppDispatcher,
+    ce qui signifie qu'on verra passer toutes les actions
+    de l'app.
+   */</span>
+  dispatchToken : AppDispatcher.register(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">payload</span>)</span>{
+    <span class="hljs-keyword">var</span> action = payload.action
+    <span class="hljs-keyword">switch</span>(action.type) {
+      <span class="hljs-keyword">case</span> ActionTypes.ADD_TO_BASKET:
+          <span class="hljs-comment">/*
+             L'API va ajouter le produit et lancer une
+             action `BASKET_UPDATED` dès que le serveur a répondu.
+          */</span>
+        API.addToBasket(action.productId)
+        <span class="hljs-keyword">break</span>
+      <span class="hljs-keyword">case</span> ActionTypes.BASKET_UPDATED:
+          <span class="hljs-comment">/*
+            L'API a répondu, on peut stocker la réponse
+            et signaler le changement
+            aux vues récupérant ces données.
+          */</span>
+          _store = action.reponse
+          BasketStore.emitChange()
+        <span class="hljs-keyword">break</span>
+      <span class="hljs-keyword">default</span>:
+        <span class="hljs-keyword">break</span>
+    }
+  })
+})
+
+<span class="hljs-built_in">module</span>.exports = BasketStore
+</code></pre>
+<p>La vue, quant à elle, sera notifiée du changement, et effectuera un <code>render()</code> :</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// components/Basket.jsx</span>
+<span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">"react/addons"</span>)
+<span class="hljs-keyword">var</span> BasketActions = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../actions/BasketActions"</span>)
+<span class="hljs-keyword">var</span> BasketStore = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../stores/BasketStore"</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getState</span>(<span class="hljs-params"></span>)</span>{
+  <span class="hljs-keyword">return</span> BasketStore.getStore()
+}
+
+<span class="hljs-keyword">var</span> Product = React.createClass({
+  getInitialState : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-keyword">return</span> getState()
+  },
+  _onStoreChange : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-comment">/*
+      À chaque changement du store, on update naïvement
+      le component et on laisse le virtual DOM faire son job.
+    */</span>
+    <span class="hljs-keyword">this</span>.setState(getState())
+  },
+  componentDidMount : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-comment">/*
+      On écoute le store uniquement lorsque le
+      component est monté.
+     */</span>
+    BasketStore.addChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
+  },
+  componentWillUnmount : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-comment">/*
+      Et on arrête d'écouter quand il ne l'est plus.
+     */</span>
+    BasketStore.removeChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
+  },
+  render : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"Basket"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"Basket-count"</span>&gt;</span>
+          {this.state.products.length + " products"}
+        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        {/* rest of the component */}
+      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    )</span>
+  }
+})
+
+<span class="hljs-built_in">module</span>.exports = Product
+</code></pre>
+<p>Tout cela peut sembler relativement verbeux, mais il faut préciser deux choses :</p>
+<ul>
+<li>les exemples ici le sont volontairement pour la démonstration, et il est aisément faisable d’utiliser un <code>StoreMixin</code> simplifier la déclaration des <code>class</code> React ;</li>
+<li>pour ce qui est du reste, notamment stocker les noms d’actions dans un objet partagé dans l’app, c’est pour rendre plus idiomatique et cohérente la façon dont on code l’app, et pour simplifier ses <em>refactoring</em>.</li>
+</ul>
+<h2 id="ce-qu-il-faut-savoir-sur-l-alliance-flux-react">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#ce-qu-il-faut-savoir-sur-l-alliance-flux-react">#</a>
+      Ce qu’il faut savoir sur l’alliance Flux + React
+    </h2><p>Si React et Flux vont si bien ensemble, c’est que l’approche de rendu “naïf” de React (comprendre “React s’en fout de ce qui change, il appelle <code>render</code> à chaque changement”) permet de réduire la logique à écrire dans les Stores, et donc de simplifier très fortement la codebase de l’app.</p>
+<p>Lorsque qu’un ou plusieurs stores composent l’état d’un state React, alors à chaque changement de l’un de ces stores, tous les composants React concernés et leurs enfants vont appeler leur méthode <code>render()</code>. Afin d’éviter des appels superflus à ces méthodes, React donne la possibilité de tester soi-même s’il est nécessaire de mettre à jour le component en déclarant une méthode <code>shouldComponentUpdate</code> retournant un <code>boolean</code> qui stipulera si oui ou non il est nécessaire d’appeler <code>render()</code>.</p>
+<h2 id="tl-dr">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#tl-dr">#</a>
+      tl;dr
+    </h2><ul>
+<li>Flux, c’est comme du MVC en plus simple, et avec moins de bugs</li>
+<li>L’architecture est unidirectionnelle</li>
+<li>On raisonne en actions, qui sont déclenchées par la vue ou le serveur</li>
+<li>Toutes les actions passent par le dispatcher</li>
+<li>Seuls les stores signalent aux vues qu’il faut se mettre à jour</li>
+</ul>
+<p>Bisous bisous.</p>
+<p><img src="http://media.giphy.com/media/lxd2cZ2BkM4IE/giphy.gif" alt="angulol"></p>
+<p>Pour aller un peu plus loin :</p>
+<ul>
+<li><a href="https://gist.github.com/bloodyowl/b41532cf3627c560b57e" >Les sources des exemples</a> contenant le dispatcher et les constants ;</li>
+<li><a href="http://facebook.github.io/flux/docs/overview.html#content" >La doc de Flux</a> ;</li>
+<li><a href="https://github.com/facebook/flux" >Le repository Flux</a> et ses différents exemples.</li>
+</ul>
+<p><small>
+  <a id="foonote-1"></a>1: <a href="https://www.youtube.com/watch?v=jRzv9gep5Ng&amp;t=4m" >Référence utile (<code>ntm install reference</code>)</a>
+</small></p>
+]]></description>
+            <link>http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</guid>
+            <pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Première application Ember]]></title>
             <description><![CDATA[<p>Après l’<a href="/posts/js/debuter-avec-ember" >article précédent</a> qui a détaillé les principaux concepts d’<a href="http://emberjs.com" >Ember</a>, il est grand temps de
 se dégourdir les doigts. Comme on a peur de rien, on va même construire progressivement ensemble une application
@@ -3259,212 +3724,6 @@ vous piquer les yeux. Désolé :-)</p>
             <pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[Flux, qu'est-ce que c'est ?]]></title>
-            <description><![CDATA[<p>Allez, tant pis, on saute l’intro et on entre directement dans le vif du sujet (on n’a pas que ça à foutre, après tout).</p>
-<h2 id="la-petite-histoire">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#la-petite-histoire">#</a>
-      La petite histoire
-    </h2><p>Il était une fois un gros site web <em>que s’apelorio</em> Facebook. Qui dit Facebook, dit webapp plus grosse que la plus grosse de tes copines (<em>no offense</em> <sup><a href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#foonote-1" >1</a></sup>) ; et du coup, propension à se retrouver submergé de bugs plus élevée.</p>
-<p>Les ingénieurs front-end de Facebook, confrontés à une codebase de plus en plus bordélique (personne ne voulant toucher certaines parties de celle-ci) ont dû repenser la structure des composants les plus cruciaux.</p>
-<p>Face à ce besoin, ces développeurs sont donc parvenus à deux solutions :</p>
-<ul>
-<li><a href="http://putaindecode.fr/posts/js/introduction-a-reactjs/" >ReactJS</a></li>
-<li>Flux</li>
-</ul>
-<p>Flux n’est pas un framework, mais simplement une architecture, une sorte de <em>guideline</em> qui résout pas mal de problèmes ayant pu apparaître avec les divers bibliothèques et frameworks MV* apparus lors des dernières années.</p>
-<h2 id="flux-l-explication-claire">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#flux-l-explication-claire">#</a>
-      Flux, l’explication claire
-    </h2><p>Flux comporte 4 concepts :</p>
-<ul>
-<li>les <strong>actions</strong>, qu’elles proviennent du serveur ou d’une interaction utilisateur ;</li>
-<li>le <strong>dispatcher</strong> dans lequel sont envoyées les actions que ce dernier transmet <em>à qui veut</em>, un peu comme un <code>EventEmitter</code> global ;</li>
-<li>les <strong>stores</strong>, qui sont l’équivalent du <code>model</code> de l’architecture MVC, ils contiennent les données, et réagissent aux actions que le dispatcher leur transmet ;</li>
-<li>les <strong>views</strong>, qui s’occupent du rendu des données dans le DOM, et de lancer des actions lorsque l’utilisateur effectue certaines actions.</li>
-</ul>
-<p>Jusque-là, rien de bien fou. C’est dans leur manière d’interagir que la particularité se dessine :</p>
-<figure>
-  <img src="http://cl.ly/YENt/flux.png" alt="">
-  <figcaption>Oh bah dis donc, ça va toujours dans le même sens</figcaption>
-</figure>
-
-<p>En effet, le <em>flux</em> en question est unidirectionnel. Pour faire simple, on procède ainsi :</p>
-<p>On définit une action via un <strong>action creator</strong> (on passera toujours par ces action-creators pour signaler une action) :</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// actions/BasketActions.js</span>
-<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispacher"</span>)
-<span class="hljs-comment">/*
-  On garde un dictionnaire des types d'actions
-  afin d'avoir un fichier donnant une vision
-  globale de toutes les interactions de l'app.
- */</span>
-<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
-
-<span class="hljs-built_in">module</span>.exports = {
-  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">productId</span>)</span>{
-    AppDispatcher.handleViewAction({
-      type : ActionTypes.ADD_TO_BASKET,
-      productId : productId
-    })
-  }
-}
-</code></pre>
-<p>On lancera par la suite cette action lorsque l’utilisateur aura cliqué sur un certain bouton, dans la vue concernée.</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// components/Product.jsx</span>
-<span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">"react/addons"</span>)
-<span class="hljs-keyword">var</span> BasketActions = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../actions/BasketActions"</span>)
-
-<span class="hljs-keyword">var</span> Button = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./common/Button.jsx"</span>)
-
-<span class="hljs-keyword">var</span> Product = React.createClass({
-  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">productId</span>)</span>{
-    BasketActions.addToBasket(productId)
-  },
-  render : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-    <span class="hljs-keyword">return</span> (
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"Product"</span>&gt;</span>
-        {/* rest of the component*/}
-        <span class="hljs-tag">&lt;<span class="hljs-title">Button</span>
-          <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.addToBasket.bind(this.props.productId)}</span>
-          <span class="hljs-attribute">label</span>=<span class="hljs-value">"Add to basket"</span>
-        /&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    )</span>
-  }
-})
-
-<span class="hljs-built_in">module</span>.exports = Product
-</code></pre>
-<p>Dès lors, à chaque clic sur le bouton en question, l’action <code>ADD_TO_BASKET</code> sera passée au dispatcher, qui le signalera aux stores.</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// stores/BasketStore.js</span>
-<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispatcher"</span>)
-<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
-<span class="hljs-keyword">var</span> API = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../api"</span>)
-
-<span class="hljs-keyword">var</span> merge = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/merge"</span>)
-<span class="hljs-keyword">var</span> Store = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/store"</span>)
-
-<span class="hljs-keyword">var</span> _store = {
-  products : []
-}
-
-<span class="hljs-keyword">var</span> BasketStore = merge(Store, {
-  <span class="hljs-comment">/*
-    Ici, on `register` un callback sur l'AppDispatcher,
-    ce qui signifie qu'on verra passer toutes les actions
-    de l'app.
-   */</span>
-  dispatchToken : AppDispatcher.register(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">payload</span>)</span>{
-    <span class="hljs-keyword">var</span> action = payload.action
-    <span class="hljs-keyword">switch</span>(action.type) {
-      <span class="hljs-keyword">case</span> ActionTypes.ADD_TO_BASKET:
-          <span class="hljs-comment">/*
-             L'API va ajouter le produit et lancer une
-             action `BASKET_UPDATED` dès que le serveur a répondu.
-          */</span>
-        API.addToBasket(action.productId)
-        <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">case</span> ActionTypes.BASKET_UPDATED:
-          <span class="hljs-comment">/*
-            L'API a répondu, on peut stocker la réponse
-            et signaler le changement
-            aux vues récupérant ces données.
-          */</span>
-          _store = action.reponse
-          BasketStore.emitChange()
-        <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">default</span>:
-        <span class="hljs-keyword">break</span>
-    }
-  })
-})
-
-<span class="hljs-built_in">module</span>.exports = BasketStore
-</code></pre>
-<p>La vue, quant à elle, sera notifiée du changement, et effectuera un <code>render()</code> :</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// components/Basket.jsx</span>
-<span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">"react/addons"</span>)
-<span class="hljs-keyword">var</span> BasketActions = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../actions/BasketActions"</span>)
-<span class="hljs-keyword">var</span> BasketStore = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../stores/BasketStore"</span>)
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getState</span>(<span class="hljs-params"></span>)</span>{
-  <span class="hljs-keyword">return</span> BasketStore.getStore()
-}
-
-<span class="hljs-keyword">var</span> Product = React.createClass({
-  getInitialState : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-    <span class="hljs-keyword">return</span> getState()
-  },
-  _onStoreChange : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-    <span class="hljs-comment">/*
-      À chaque changement du store, on update naïvement
-      le component et on laisse le virtual DOM faire son job.
-    */</span>
-    <span class="hljs-keyword">this</span>.setState(getState())
-  },
-  componentDidMount : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-    <span class="hljs-comment">/*
-      On écoute le store uniquement lorsque le
-      component est monté.
-     */</span>
-    BasketStore.addChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
-  },
-  componentWillUnmount : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-    <span class="hljs-comment">/*
-      Et on arrête d'écouter quand il ne l'est plus.
-     */</span>
-    BasketStore.removeChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
-  },
-  render : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-    <span class="hljs-keyword">return</span> (
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"Basket"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"Basket-count"</span>&gt;</span>
-          {this.state.products.length + " products"}
-        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-        {/* rest of the component */}
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    )</span>
-  }
-})
-
-<span class="hljs-built_in">module</span>.exports = Product
-</code></pre>
-<p>Tout cela peut sembler relativement verbeux, mais il faut préciser deux choses :</p>
-<ul>
-<li>les exemples ici le sont volontairement pour la démonstration, et il est aisément faisable d’utiliser un <code>StoreMixin</code> simplifier la déclaration des <code>class</code> React ;</li>
-<li>pour ce qui est du reste, notamment stocker les noms d’actions dans un objet partagé dans l’app, c’est pour rendre plus idiomatique et cohérente la façon dont on code l’app, et pour simplifier ses <em>refactoring</em>.</li>
-</ul>
-<h2 id="ce-qu-il-faut-savoir-sur-l-alliance-flux-react">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#ce-qu-il-faut-savoir-sur-l-alliance-flux-react">#</a>
-      Ce qu’il faut savoir sur l’alliance Flux + React
-    </h2><p>Si React et Flux vont si bien ensemble, c’est que l’approche de rendu “naïf” de React (comprendre “React s’en fout de ce qui change, il appelle <code>render</code> à chaque changement”) permet de réduire la logique à écrire dans les Stores, et donc de simplifier très fortement la codebase de l’app.</p>
-<p>Lorsque qu’un ou plusieurs stores composent l’état d’un state React, alors à chaque changement de l’un de ces stores, tous les composants React concernés et leurs enfants vont appeler leur méthode <code>render()</code>. Afin d’éviter des appels superflus à ces méthodes, React donne la possibilité de tester soi-même s’il est nécessaire de mettre à jour le component en déclarant une méthode <code>shouldComponentUpdate</code> retournant un <code>boolean</code> qui stipulera si oui ou non il est nécessaire d’appeler <code>render()</code>.</p>
-<h2 id="tl-dr">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#tl-dr">#</a>
-      tl;dr
-    </h2><ul>
-<li>Flux, c’est comme du MVC en plus simple, et avec moins de bugs</li>
-<li>L’architecture est unidirectionnelle</li>
-<li>On raisonne en actions, qui sont déclenchées par la vue ou le serveur</li>
-<li>Toutes les actions passent par le dispatcher</li>
-<li>Seuls les stores signalent aux vues qu’il faut se mettre à jour</li>
-</ul>
-<p>Bisous bisous.</p>
-<p><img src="http://media.giphy.com/media/lxd2cZ2BkM4IE/giphy.gif" alt="angulol"></p>
-<p>Pour aller un peu plus loin :</p>
-<ul>
-<li><a href="https://gist.github.com/bloodyowl/b41532cf3627c560b57e" >Les sources des exemples</a> contenant le dispatcher et les constants ;</li>
-<li><a href="http://facebook.github.io/flux/docs/overview.html#content" >La doc de Flux</a> ;</li>
-<li><a href="https://github.com/facebook/flux" >Le repository Flux</a> et ses différents exemples.</li>
-</ul>
-<p><small>
-  <a id="foonote-1"></a>1: <a href="https://www.youtube.com/watch?v=jRzv9gep5Ng&amp;t=4m" >Référence utile (<code>ntm install reference</code>)</a>
-</small></p>
-]]></description>
-            <link>http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</link>
-            <guid isPermaLink="true">http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</guid>
-            <pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate>
-        </item>
-        <item>
             <title><![CDATA[À la conquête des bugs]]></title>
             <description><![CDATA[<p>Le Web, depuis sa création est un vaste champ de bataille. Que ce soit les problèmes de compatibilités, les formats ou les langages propriétaires, la volonté de faire du Web un monde ouvert ne date pas d’hier.</p>
 <h2 id="au-depart">
@@ -3684,236 +3943,6 @@ application <a href="http://emberjs.com" >Ember</a></strong>.</p>
             <link>http://putaindecode.fr/posts/js/debuter-avec-ember/</link>
             <guid isPermaLink="true">http://putaindecode.fr/posts/js/debuter-avec-ember/</guid>
             <pubDate>Mon, 20 Oct 2014 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Comment essayer de coder à peu près comme un chef (raté) sous Windows]]></title>
-            <description><![CDATA[<p>Oh oui, en voilà une belle question.</p>
-<p>Il n’est pas toujours évident d’avoir un Linux, Unix, BSD ou autre avec un petit shell bien sympa sous la main. Et parfois coder sous Windows est une nécessité voire un désir. (Ouais, je ne vous parlerai pas ici de changer de boulot si Windows vous est imposé(e). Je ne vous expliquerai pas non plus votre masochisme d’apprécier cet OS pour développer, ce n’est pas le sujet).</p>
-<p>Étant un homme de challenge, j’aime me mettre dans des contextes limités et voir comment je me débrouille pour sortir d’une situation pénible à une situation acceptable voire agréable. Je me suis alors lancé pour vous dans cette aventure.</p>
-<p>Oh mais pourquoi j’ai dû faire ça à la base ?</p>
-<p>Après avoir créé <a href="https://github.com/kud/my" >mon propre système de synchronisation de machines sous Mac OS X</a> (plus souvent communément appelé dotfiles mais faisant un peu plus), j’ai voulu faire de même sous Windows au cas où mon système crasherait et où je devrais tout réinstaller. On n’est jamais à l’abri.</p>
-<p>Pour cela, plusieurs outils vont vous être nécessaires. Un chef sans bons outils, c’est drôlement handicapant. (Déjà que l’OS en question n’aide pas).</p>
-<h2 id="chocolatey-la-base">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#chocolatey-la-base">#</a>
-      Chocolatey : la base
-    </h2><p><a href="http://chocolatey.org/" >Chocolatey</a>. Ouais, chocolatey, ce petit script vous permettra de télécharger tout et n’importe quoi en CLI (ligne de commandes). Pour ceux qui ont l’habitude de Mac ou Linux, c’est le brew / apt-get de Windows.</p>
-<p>Comment l’installer ?</p>
-<p>Lancez <code>cmd.exe</code> en mode administrateur (touche windows puis “cmd” puis shift+ctrl+enter) et exécutez ce code :</p>
-<pre><code class="lang-console">$ <span class="hljs-variable">@powershell</span> -NoProfile -ExecutionPolicy unrestricted -Command <span class="hljs-string">"iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))"</span> &amp;&amp; SET PATH=<span class="hljs-variable">%PATH</span><span class="hljs-variable">%;</span><span class="hljs-variable">%ALLUSERSPROFILE</span><span class="hljs-variable">%\</span>chocolatey\bin
-</code></pre>
-<p>Ou <code>PowerShell</code> en mode administrateur (touche windows puis “powershell” puis shift+ctrl+enter) et éxecutez :</p>
-<pre><code class="lang-console">$ iex ((new-<span class="hljs-tag">object</span> net.webclient).<span class="hljs-function"><span class="hljs-title">DownloadString</span><span class="hljs-params">(<span class="hljs-string">'https://chocolatey.org/install.ps1'</span>)</span></span>)
-</code></pre>
-<p>Une fois installé, vous pourrez installer n’importe quel logiciel listé sur <a href="http://chocolatey.org/packages" >leur site</a>.</p>
-<p>Passons à la suite.</p>
-<h2 id="logiciels-de-developpement">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#logiciels-de-developpement">#</a>
-      Logiciels de développement
-    </h2><p>Yes, on a donc Chocolatey qui va nous simplifier grandement l’installation de logiciels. Passons maintenant aux outils pour bien développer.</p>
-<h3 id="git">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#git">#</a>
-      Git
-    </h3><p>Lorsque tu joues à un jeu vidéo, tu sauvegardes régulièrement ton avancement non ? Bah là, c’est pareil mais pour le code.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> git.<span class="hljs-keyword">install</span>
-</code></pre>
-<ul>
-<li><a href="http://git-scm.com/" >site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/git.install" >lien du package</a></li>
-</ul>
-<h3 id="node-js">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#node-js">#</a>
-      Node.js
-    </h3><p>Faire du JavaScript côté serveur ou en shell, le pied. Surtout pour faire des scripts Windows, plutôt que de passer par Batch.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> nodejs.<span class="hljs-keyword">install</span>
-</code></pre>
-<ul>
-<li><a href="http://nodejs.org/" >site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/nodejs.install" >lien du package</a></li>
-</ul>
-<h3 id="editeur-de-texte">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#editeur-de-texte">#</a>
-      Éditeur de texte
-    </h3><p>Sublime Text, l’éditeur préféré des Franç… je m’égare. Bref, un bon éditeur.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> sublimetext3
-</code></pre>
-<ul>
-<li><a href="http://www.sublimetext.com/" >site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/sublimetext3" >lien du package</a></li>
-</ul>
-<p>Vous pouvez aussi installer <a href="https://atom.io/" >Atom</a> si vous préférez.</p>
-<h3 id="gestion-d-une-base-de-donnees">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#gestion-d-une-base-de-donnees">#</a>
-      Gestion d’une base de données
-    </h3><p>HeidiSQL, un logiciel avec une interface qui se rapproche de phpMyAdmin.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> HeidiSQL
-</code></pre>
-<ul>
-<li><a href="http://www.heidisql.com/" >site officiel</a></li>
-<li><a href="http://chocolatey.org/packages/HeidiSQL" >lien du package</a></li>
-</ul>
-<p>Ou encore MySQL Workbench un excellent soft pour gérer une base de données:</p>
-<ul>
-<li>Modélisation</li>
-<li>Édition</li>
-<li>Migration
-Par contre, il est un peu plus complexe à utiliser.</li>
-</ul>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> mysql.workbench
-</code></pre>
-<ul>
-<li><a href="http://dev.mysql.com/downloads/workbench/" >site officiel</a></li>
-<li><a href="http://chocolatey.org/packages/mysql.workbench" >lien du package</a></li>
-</ul>
-<h3 id="un-meilleur-shell">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#un-meilleur-shell">#</a>
-      Un meilleur shell
-    </h3><p>Cmder va vous permettre quelques fonctionnalités intéressantes que le shell de Windows n’a pas de base, comme taper <code>&lt;tab&gt;</code> pour l’autocomplétion, avoir un historique persistant entre 2 sessions, des onglets, le split de console, l’intégration de PuTTY et d’autres choses venu de la banquise. (le lieu de vie des pinguins)</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> Cmder
-</code></pre>
-<ul>
-<li><a href="https://bliker.github.io/cmder/" >site officiel</a></li>
-<li><a href="http://chocolatey.org/packages/Cmder" >lien du package</a></li>
-</ul>
-<h3 id="si-vous-avez-besoin-de-ssh">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#si-vous-avez-besoin-de-ssh">#</a>
-      Si vous avez besoin de SSH
-    </h3><p>Pour le SSH sous Windows c’est assez complexe, il faut quelques outils dont le principal, putty (un terminal et +).</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> putty
-</code></pre>
-<ul>
-<li><a href="http://chocolatey.org/packages/putty" >site officiel</a></li>
-<li><a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/" >lien du package</a></li>
-</ul>
-<p>Putty vient avec une suite de logiciels :</p>
-<ul>
-<li><a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html" >PuTTYgen</a> pour générer une clé SSH sous Windows</li>
-<li><a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html" >Plink</a> pour permettre à HeidiSQL de se connecter à une base de données via SSH.</li>
-<li><a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html" >Pageant</a> pour charger votre clé SSH dans Windows pour éviter qu’il demande sans cesse la clé ou le mot de passe.</li>
-</ul>
-<blockquote>
-<p>Pour que le ssh soit agréable, je vous recommande pageant et ensuite un terminal comme <em>Clink</em> ou encore <em>git bash</em> qui s’installe via <em>git</em>.</p>
-</blockquote>
-<h3 id="une-machine-virtuelle-pour-tester-ie-ou-meme-gnu-linux">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#une-machine-virtuelle-pour-tester-ie-ou-meme-gnu-linux">#</a>
-      Une machine virtuelle pour tester IE ou même GNU/Linux
-    </h3><p>On a toujours une intégration à tester sous IE pour ça Microsoft nous donne accès à des machines virtuelles gratuitement sur <a href="https://www.modern.ie/fr-fr" >ModernIE</a>. Il nous faut donc Virtualbox pour les lancer.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> virtualbox
-$ choco <span class="hljs-keyword">install</span> VirtualBox.ExtensionPack
-</code></pre>
-<blockquote>
-<p>l’Extension Pack est utile pour une intégration parfaite avec votre machine si vous installez votre propre VM GNU/Linux ou Windows.</p>
-</blockquote>
-<ul>
-<li><a href="hhttps://www.virtualbox.org/" >site officiel</a></li>
-<li><a href="http://chocolatey.org/packages/virtualbox" >lien du package</a></li>
-</ul>
-<h3 id="compresser-decompresser-comme-vous-le-voulez">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#compresser-decompresser-comme-vous-le-voulez">#</a>
-      Compresser / décompresser comme vous le voulez
-    </h3><p>7zip, le logiciel de référence pour ce genre de pratique.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> <span class="hljs-number">7</span>zip.<span class="hljs-keyword">install</span>
-</code></pre>
-<ul>
-<li><a href="http://www.7-zip.org/" >site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/7zip.install" >lien du package</a></li>
-</ul>
-<h3 id="gerer-les-pdf">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#gerer-les-pdf">#</a>
-      Gérer les pdf
-    </h3><p>Sumatra pour les lire. PDFCreator pour faire une imprimante virtuelle sortant des PDFs.</p>
-<h4 id="sumatra">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#sumatra">#</a>
-      Sumatra
-    </h4><ul>
-<li><a href="http://blog.kowalczyk.info/software/sumatrapdf/free-pdf-reader.html" >site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/sumatrapdf.install" >lien du package</a></li>
-</ul>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> sumatrapdf.<span class="hljs-keyword">install</span>
-</code></pre>
-<h4 id="pdfcreator">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#pdfcreator">#</a>
-      PDFCreator
-    </h4><ul>
-<li><a href="http://www.pdfforge.org/pdfcreator" >site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/pdfcreator" >lien du package</a></li>
-</ul>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> pdfcreator
-</code></pre>
-<h3 id="mettre-des-onglets-dans-l-explorateur-de-fichiers">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#mettre-des-onglets-dans-l-explorateur-de-fichiers">#</a>
-      Mettre des onglets dans l’explorateur de fichiers
-    </h3><p>Nous sommes en 2014 ça fait des années que Microsoft sait mais, ce n’est toujours pas disponible. C’est là que Clover rentre en jeu.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> Clover
-</code></pre>
-<ul>
-<li><a href="http://ejie.me/" >site officiel</a></li>
-<li><a href="http://chocolatey.org/packages/Clover" >lien du package</a></li>
-</ul>
-<h3 id="spaaaaaaaces">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#spaaaaaaaces">#</a>
-      Spaaaaaaaces
-    </h3><p>Parce qu’avoir plusieurs bureaux / espaces, c’est plus pratique pour gérer ses fenêtres, je vous propose VirtuaWin. Cela vous permettra de garder en plein écran vos logiciels et de zapper d’un logiciel à un autre sans passer par <code>alt+tab</code> mais en allant d’un bureau à un autre.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> virtuawin
-</code></pre>
-<ul>
-<li><a href="http://virtuawin.sourceforge.net/" >site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/virtuawin" >lien du package</a></li>
-</ul>
-<h3 id="launchy-le-alfred-like-sous-windows">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#launchy-le-alfred-like-sous-windows">#</a>
-      Launchy, le Alfred-like sous Windows
-    </h3><p>Je sais pas vous mais moi, les raccourcis qui me gâchent mon beau wallpaper choisi avec goût, ça m’énerve. Et puis le clickodrome, c’est lent et chiant. Du coup, lancer ses logiciels à partir d’un moteur de recherche, c’est quand même vachement bien. Ca permet aussi de faire des recherches de fichier, des calculs, et tout un tas d’autres choses. Voici alors Launchy.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> launchy-beta
-</code></pre>
-<ul>
-<li><a href="http://www.launchy.net/" >site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/launchy-beta" >lien du package</a></li>
-</ul>
-<h3 id="pipette-et-retouche">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#pipette-et-retouche">#</a>
-      Pipette et retouche
-    </h3><p>L’indispensable <a href="http://photofiltre.free.fr/frames.htm" >PhotoFiltre</a> qui, bien qu’il ne soit plus mis à jour depuis 2012, est très stable et efficace. Il fait peu mais, le fait bien.</p>
-<ul>
-<li>Édition rapide d’images</li>
-<li>Pipette</li>
-<li>etc.</li>
-</ul>
-<p>Et surtout, il est ultra léger et démarre en moins d’une seconde.</p>
-<h3 id="et-enfin-comment-ne-pas-se-niquer-les-yeux-toute-la-journee">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#et-enfin-comment-ne-pas-se-niquer-les-yeux-toute-la-journee">#</a>
-      Et enfin, comment ne pas se niquer les yeux toute la journée
-    </h3><h4 id="f-lux">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#f-lux">#</a>
-      f.lux
-    </h4><p>On va commencer par f.lux. Ce petit logiciel permettant de gérer la colorimétrie de votre écran en fonction de l’heure. Typiquement, les écrans rendent un blanc digne d’un soleil à midi. Sauf que le soir, on allume la lumière et celle-ci n’a pas du coup une couleur blanche mais souvent plutôt rouge. f.lux permet alors d’ajuster votre écran afin que la couleur soit identique à la lumière ambiante pour réduire les différences de couleurs et éviter de vous abimer les yeux. En plus, ça permet au cerveau de se préparer à aller se coucher. :D</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> f.lux
-</code></pre>
-<ul>
-<li><a href="https://justgetflux.com/" >site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/f.lux" >lien du package</a></li>
-</ul>
-<h4 id="mactype">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#mactype">#</a>
-      MacType
-    </h4><p>Et surtout, MacType. Oh oui MacType. Je pense que seule une personne venant de Mac OS X peut comprendre. Dieu sait que le font rendering sous Windows est vraiment pourri et que Steve Jobs depuis le départ de Mac a fait en sorte sur le rendering des fonts sous son OS soit de qualité.</p>
-<p>Pour réduire cette différence entre un Windows et un Mac OS X, je vous propose MacType qui permet de remplacer le font rendering de Windows et d’apprécier lire à nouveau sur cet OS.</p>
-<pre><code class="lang-console">$ choco <span class="hljs-keyword">install</span> mactype
-</code></pre>
-<p>Je vous conseille le profil <code>XMac.LCD.Default</code>.</p>
-<ul>
-<li><a href="https://code.google.com/p/mactype/" >site officiel</a></li>
-<li><a href="https://chocolatey.org/packages/mactype" >lien du package</a></li>
-</ul>
-<h2 id="vous-voila-pare-e">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/windows/comment-coder-sous-windows/#vous-voila-pare-e">#</a>
-      Vous voilà paré(e) !
-    </h2><p>On est bon, on a tous les outils nécessaires pour pouvoir coder correctement sur Windows.</p>
-<p>Si vous souhaitez en savoir plus et surtout vous tenir à jour d’éventuels logiciels que je pourrais installer, n’hésitez pas à vous rendre sur mon projet <a href="https://github.com/kud/my-unfortunately" >my-unfortunately</a> qui est le <em>synchroniser</em> dont je vous ai parlé tout à l’heure.</p>
-<p>Bon code !</p>
-]]></description>
-            <link>http://putaindecode.fr/posts/windows/comment-coder-sous-windows/</link>
-            <guid isPermaLink="true">http://putaindecode.fr/posts/windows/comment-coder-sous-windows/</guid>
-            <pubDate>Wed, 15 Oct 2014 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>
