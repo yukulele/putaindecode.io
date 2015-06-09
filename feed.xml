@@ -5,10 +5,144 @@
         <description><![CDATA[Putain de code !]]></description>
         <link>http://putaindecode.fr</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Tue, 02 Jun 2015 10:19:43 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 09 Jun 2015 09:10:26 GMT</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"/>
         <language><![CDATA[fr]]></language>
         <category><![CDATA[code]]></category>
+        <item>
+            <title><![CDATA[Les webhooks GitHub]]></title>
+            <description><![CDATA[<p>Vous avez pu lire récemment une <a href="/posts/ci/le-deploiement-continu/" >introduction sur l’intégration
+continue</a> qui mène vers <a href="/posts/ci/introduction/" >le déploiement
+continu</a>. Si vous utilisez GitHub pour héberger vos
+sources et que vous cherchez un moyen très simple (peut-être un peu trop) de
+mettre en place le déploiement continu <em>sans serveur d’intégration continue
+dédié</em>, alors les webhooks peuvent répondre parfaitement à votre besoin.</p>
+<h2 id="les-quoi">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/webhooks-github/#les-quoi">#</a>
+      Les quoi ?
+    </h2><p>Les webhooks permettent de lancer une action de façon automatique par
+l’intermédiaire d’un ou plusieurs événements depuis un dépôt
+<a href="http://github.com" >GitHub</a>. Concrètement, il va être possible de déployer son
+projet sur un serveur de production, sauvegarder son site Internet, ou même
+mettre à jour des stats dès qu’un commit sera envoyé ou même une issue ouverte.
+Il est possible de faire tout ce que l’on veut dans la limite de son imagination
+comme l’explique GitHub.</p>
+<h2 id="comment-ca-marche">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/webhooks-github/#comment-ca-marche">#</a>
+      Comment ça marche ?
+    </h2><p>Le fonctionnement est on ne peut plus simple, un événement (merge, push, release
+etc.) va déclencher une requête HTTP POST vers l’URL que vous avez configurée.
+Le reste de l’exécution se fera sur le serveur où pointe l’URL, libre à vous
+d’écrire le script que vous voulez pour effectuer les opérations que vous
+souhaitez.</p>
+<p>Il faut cependant être conscient que la simplification a un coût, à savoir que
+même si une PR ou un commit venaient à rendre inopérant votre projet l’événement
+se lancerait quand même.</p>
+<h2 id="la-mise-en-place">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/webhooks-github/#la-mise-en-place">#</a>
+      La mise en place
+    </h2><p>Seul le propriétaire d’un dépôt dispose des droits nécessaires pour configurer
+un webhook. Il suffit pour cela de se rendre dans <code>Settings</code> puis <code>Webhooks &amp;
+Services</code> :</p>
+<p><img src="http://putaindecode.fr/posts/ci/webhooks-github/setting_webhook.jpg" alt="Settings Webhooks GitHub"></p>
+<p>Un petit clic sur <code>Add webhook</code> et vous obtenez une interface encore une fois
+très simple :</p>
+<p><img src="http://putaindecode.fr/posts/ci/webhooks-github/configuration_webhook.jpg" alt="Configuration Webhooks GitHub"></p>
+<p>Cette interface se compose de trois parties :</p>
+<ol>
+<li>l’URL vers laquelle votre requête sera lancée</li>
+<li>une secret key pour sécuriser votre requête</li>
+<li>l’événement qui va déclencher votre requête</li>
+</ol>
+<p>La partie événement est relativement complète et là encore vous disposez de
+trois possibilités :</p>
+<ol>
+<li>se déclenche au push</li>
+<li>se déclenche à chaque événement</li>
+<li>à vous de choisir les événements (un ou plusieurs) qui vous conviennent</li>
+</ol>
+<p>Une fois le <em>Webhook</em> activé un premier test ou plus exactement un <code>ping</code> va se
+lancer. Il permettra de détecter que votre serveur répond bien à la requête :</p>
+<p><img src="http://putaindecode.fr/posts/ci/webhooks-github/test_webhook.jpg" alt="Test Webhooks request GitHub"></p>
+<p>La requête envoyée est très basique et embarque un JSON sur les informations de
+votre dépôt (description, URL) et une liste des API mises à disposition. Le
+reste du travail doit se faire sur votre serveur par l’intermédiaire de votre
+API/script, etc.</p>
+<p>Voici un petit exemple utilisant <code>express</code> :</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">"express"</span>)
+<span class="hljs-keyword">var</span> app = express()
+<span class="hljs-keyword">var</span> bodyParser = <span class="hljs-built_in">require</span>(<span class="hljs-string">"body-parser"</span>)
+<span class="hljs-keyword">var</span> xhub = <span class="hljs-built_in">require</span>(<span class="hljs-string">"express-x-hub"</span>)
+
+<span class="hljs-comment">//Const</span>
+<span class="hljs-keyword">var</span> xhubSecret = <span class="hljs-string">"MySecretKey"</span>
+<span class="hljs-keyword">var</span> port = <span class="hljs-string">"8085"</span>
+<span class="hljs-keyword">var</span> host = <span class="hljs-string">"localhost"</span>
+
+<span class="hljs-comment">//Secret key</span>
+app.use(xhub({ algorithm: <span class="hljs-string">"sha1"</span>, secret: xhubSecret }))
+
+<span class="hljs-comment">// Configure express json</span>
+app.use(bodyParser.json())
+
+<span class="hljs-comment">// Main : Start the express http server</span>
+<span class="hljs-keyword">var</span> server = app.listen(port, host, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">console</span>.log(
+    <span class="hljs-string">"App listening at http://%s:%s"</span>,
+    server.address().address,
+    server.address().port
+  )
+})
+
+<span class="hljs-comment">// Add default route</span>
+app.post(<span class="hljs-string">"/webhook"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{
+  <span class="hljs-keyword">if</span>(!req.isXHubValid()){
+    res.status(<span class="hljs-number">400</span>).send(<span class="hljs-string">'Invalid X-Hub Request'</span>)
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Secret key is invalid"</span>)
+    <span class="hljs-keyword">return</span>
+  }
+
+  <span class="hljs-keyword">var</span> command = req.headers[<span class="hljs-string">"x-github-event"</span>]
+
+  <span class="hljs-keyword">switch</span>(command) {
+
+    <span class="hljs-comment">//Event create (Branch, or tag created)</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-string">"create"</span>:
+      res.send(<span class="hljs-string">"Event create trigger"</span>)
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Create event"</span>)
+      <span class="hljs-keyword">break</span>
+
+    <span class="hljs-comment">//Event release (Release published in a repository)</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-string">"release"</span>:
+      res.send(<span class="hljs-string">"Event release trigger"</span>)
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Release Event"</span>)
+      <span class="hljs-keyword">break</span>
+
+    <span class="hljs-keyword">default</span>:
+      res.status(<span class="hljs-number">400</span>).send(<span class="hljs-string">"Event not supported : "</span> + command)
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Event not supported : "</span> + req.headers[<span class="hljs-string">"X-Github-Event"</span>])
+  }
+})
+</code></pre>
+<p>Pour vous donner une idée de ce que peut envoyer GitHub, voici deux gists :</p>
+<ul>
+<li><a href="http://putaindecode.fr/posts/ci/webhooks-github/header.txt" >Headers</a></li>
+<li><a href="http://putaindecode.fr/posts/ci/webhooks-github/payload.json" >Payload</a></li>
+</ul>
+<h2 id="this-is-just-the-beginning">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/webhooks-github/#this-is-just-the-beginning">#</a>
+      This is just the beginning
+    </h2><p>Cette solution est un début de piste pour le déploiement continu, mais elle ne
+doit pas se faire sans une solution de test que ce soit coté GitHub ou coté
+serveur.</p>
+<p>Si vous souhaitez plus d’informations ou même pousser un peu plus la mise en
+place des webhooks, GitHub a comme à son habitude publié un
+<a href="https://developer.github.com/webhooks/" >guide</a> très bien détaillé et complet.</p>
+]]></description>
+            <link>http://putaindecode.fr/posts/ci/webhooks-github/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/ci/webhooks-github/</guid>
+            <pubDate>Tue, 09 Jun 2015 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Introduction à cssnext]]></title>
             <description><![CDATA[<p>D’après le <a href="http://cssnext.io/" >site officiel</a>:</p>
@@ -3759,190 +3893,6 @@ vous piquer les yeux. Désolé :-)</p>
             <link>http://putaindecode.fr/posts/bug-webcompat/</link>
             <guid isPermaLink="true">http://putaindecode.fr/posts/bug-webcompat/</guid>
             <pubDate>Tue, 21 Oct 2014 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Débuter avec Ember]]></title>
-            <description><![CDATA[<p>Démarrer une <a href="http://en.wikipedia.org/wiki/Single-page_application" >Single Page Application</a> aujourd’hui ça commence souvent par : “mais quel putain de framework il 
-faut que je prenne ?” Et, vu que c’est pas ça qui manque, ça se complique !</p>
-<p>Parmi les multiples <a href="/posts/js/introduction-a-reactjs" >technos disponibles</a> il y a <a href="http://emberjs.com" >Ember</a>. Pour que le choix 
-ne se résume pas à prendre celui qui a le plus joli logo ou qui génère le plus de spam sur votre Twitter, on vous propose de découvrir 
-<a href="http://emberjs.com" >Ember</a>. Dans les posts à venir on verra comment construire concrètement une application avec ce framework.</p>
-<h2 id="les-fondamentaux">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#les-fondamentaux">#</a>
-      Les fondamentaux
-    </h2><p>Parce que l’approche “tête la première” c’est bien mais que comprendre un minimum ce qu’on fait c’est encore mieux, il me paraît sage de commencer
-par expliquer la philosophie et les principaux éléments du framework, sous peine de se prendre un bon vieux <a href="http://en.wikipedia.org/wiki/RTFM" >RTFM</a> 
-sur le coin du pif, comme ça, en passant.</p>
-<p><a href="http://emberjs.com" >Ember</a> se définit comme : “A framework for creating <strong>ambitious</strong> web applications” et ça, ça claque !
-Mais je vois bien que ça ne suffit pas à vous convaincre alors je vais détailler un peu. Bon alors, bien que ce soit le mot “ambitious”
-qui soit mis en gras, deux autres trucs me paraissent encore plus importants :</p>
-<ul>
-<li><p><strong>web</strong> : l’une des caractéristiques majeures d’<a href="http://emberjs.com" >Ember</a> est son attachement au web et aux URL en particulier. <strong>Les URL
-et donc le routeur sont au cœur d’Ember</strong> là ou bien d’autres frameworks les considèrent au mieux comme un addon important. </p>
-</li>
-<li><p><strong>framework</strong> : <a href="http://emberjs.com" >Ember</a> est réellement un framework. Pas une lib, pas une colonne vertébrale, pas une boîte à outils : 
-un framework ! <a href="http://emberjs.com" >Ember</a> propose un véritable modèle de développement que vous allez tout de suite adopter … ou rejeter
-(au moins ça aura le mérite d’être clair).</p>
-</li>
-</ul>
-<h3 id="conventions-de-nommage">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#conventions-de-nommage">#</a>
-      Conventions de nommage
-    </h3><p>Ce modèle de développement commence par les conventions de nommage. <a href="http://emberjs.com" >Ember</a>
-applique en effet le principe de “<em>conventions over configuration</em>“ et repose sur un nommage cohérent des différents composants 
-de votre application. Et finalement, quand on y réflechit bien, la cohérence, ça n’a pas que des mauvais côtés. </p>
-<p>Typiquement pour une URL <code>test</code>, <a href="http://emberjs.com" >Ember</a> s’attend à trouver une <code>TestRoute</code>, un <code>TestController</code>, un gabarit <code>test</code>.
-Jusqu’ici, tout va bien.</p>
-<p>Curieux ? -&gt; <a href="http://emberjs.com/guides/concepts/naming-conventions/" >doc officielle</a>.</p>
-<h3 id="modeles">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#modeles">#</a>
-      Modèles
-    </h3><p>Un modèle est un objet avec des propriétés contenant des données métier. Le modèle est ensuite passé au gabarit pour être rendu par lui
-en HTML. Typiquement, les modèles peuvent être récupérés d’un back end via une API REST JSON via <a href="https://github.com/emberjs/data" >Ember Data</a>
-mais pas que.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> Book = DS.Model.extend({
-    title               : DS.attr(<span class="hljs-string">'string'</span>),
-    publicationDate     : DS.attr(<span class="hljs-string">'date'</span>),
-    author              : DS.attr(<span class="hljs-string">'string'</span>),
-    publisher           : DS.attr(<span class="hljs-string">'string'</span>),
-    summary             : DS.attr(<span class="hljs-string">'string'</span>)
-});
-</code></pre>
-<p>Assoifé de connaissances ? -&gt; <a href="http://emberjs.com/guides/models/" >doc officielle</a>.</p>
-<h3 id="routeur">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#routeur">#</a>
-      Routeur
-    </h3><p>Le routeur permet de faire correspondre à une URL un ensemble de gabarits imbriqués permettant le rendu des modèles associés à 
-chacun de ces gabarits.</p>
-<p>L’exemple suivant permet le rendu des URLs : </p>
-<ul>
-<li><code>/books</code></li>
-<li><code>/books/:book_id</code></li>
-<li><code>/books/:book_id/edit</code></li>
-<li><code>/books/create</code></li>
-</ul>
-<pre><code class="lang-js">App.Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-  <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'books'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-      <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'book'</span>, { path: <span class="hljs-string">'/:book_id'</span> }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-          <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'edit'</span>);
-      });
-      <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'create'</span>);
-  });
-});
-</code></pre>
-<h3 id="routes">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#routes">#</a>
-      Routes
-    </h3><p>Les routes associent un modèle à un gabarit et sont également impliquées dans les transitions entre les différentes URL (et donc les différents
-états) de l’application. Elles gèrent notamment un certain nombre d’opérations sur un modèle lors de ces transitions.</p>
-<pre><code class="lang-js">App.BooksRoute = Ember.Route.extend({
-    model: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.store.find(<span class="hljs-string">'book'</span>);
-    }
-});
-</code></pre>
-<p>Intrigué ? -&gt; <a href="http://emberjs.com/guides/routing/" >doc officielle</a>.</p>
-<h3 id="controleurs">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#controleurs">#</a>
-      Contrôleurs
-    </h3><p>Le contrôleur gère l’état de l’application. Il est situé entre la route dont il récupère le modèle et le gabarit dont il répond aux appels.
-Les données du contrôleur sont accessibles au gabarit au même titre que le modèle.</p>
-<p>Le contrôleur est par exemple responsable du traitement des actions effectuées par l’utilisateur sur l’interface rendue par le gabarit : </p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">button</span> {{<span class="hljs-attribute">action</span> "<span class="hljs-attribute">sort</span>"}}&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-</code></pre>
-<pre><code class="lang-js">App.BooksController = Ember.ArrayController.extend({
-  actions: {
-    <span class="hljs-comment">// appelé lors du clic sur le bouton</span>
-    sort: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-        ...
-    }
-  }
-});
-</code></pre>
-<p>Perdu ? -&gt; <a href="http://emberjs.com/guides/controllers/" >doc officielle</a>.</p>
-<h3 id="vues">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#vues">#</a>
-      Vues
-    </h3><p>Il est très rare d’avoir à définir des vues en <a href="http://emberjs.com" >Ember</a> parce que les gabarits <a href="http://handlebarsjs.com/" >Handlebars</a>
-sont surpuissants et que les contrôleurs se chargent de la gestion de l’état de l’application.</p>
-<p>Vous en voulez quand même ? -&gt; <a href="http://emberjs.com/guides/views/" >doc officielle</a>.</p>
-<h3 id="gabarits">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#gabarits">#</a>
-      Gabarits
-    </h3><p>Un gabarit est un fragment de code HTML permettant, via des expressions, d’afficher les données du modèle associé. Les gabarits d’<a href="http://emberjs.com" >Ember</a>
-sont des gabarits <a href="http://handlebarsjs.com/" >Handlebars</a>. Les expressions Handlebars sont délimitées par <code>{{</code> et <code>}}</code>.</p>
-<p>L’exemple suivant permet d’afficher le titre d’une app composé d’un prénom et d’un nom pour peu que l’on ait passé au gabarit un
-modèle contenant les deux propriétés <code>firstname</code> et <code>lastname</code>.</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>{{firstname}} {{lastname}} Library<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
-</code></pre>
-<p><a href="http://handlebarsjs.com/" >Handlebars</a> vient avec de nombreux outils (helpers) permettant de dynamiser nos gabarits : <code>{{#if isActive}} ... {{/if}}</code>,
-<code>{{#each users}} ... {{/each}}</code>, etc.</p>
-<p>Dans <a href="http://emberjs.com" >Ember</a>, les gabarits peuvent contenir un élément très important : <code>{{outlet}}</code>. Cet outlet définit un emplacement
-pour un autre gabarit permettant ainsi de multiples imbrications à mesure que les routes de l’application sont activées.</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>{{firstname}} {{lastname}} Library<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-  {{outlet}}
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-</code></pre>
-<p>Tout élément de modèle injecté dans un gabarit sera <strong>automatiquement mis à jour</strong> (binding) par <a href="http://emberjs.com" >Ember</a> lorsque le modèle
-associé au gabarit sera modifié. Évidemment, seul cet élément sera rafraîchit et non le gabarit entier sinon c’est tricher.</p>
-<p>Envie de tester ? -&gt; <a href="http://emberjs.com/guides/templates/the-application-template/" >doc officielle</a>.</p>
-<h3 id="composants">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#composants">#</a>
-      Composants
-    </h3><p>Un composant <a href="http://emberjs.com" >Ember</a> permet de définir une balise HTML personnalisée, permettant ainsi de partager de puissants 
-éléments réutilisables au sein de votre application.</p>
-<p>Vous en avez toujours rêvé ? -&gt; <a href="http://emberjs.com/guides/components/" >doc officielle</a>.</p>
-<h3 id="generation-d-objets">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#generation-d-objets">#</a>
-      Géneration d’objets
-    </h3><p>Pour qu’un gabarit soit rendu lorsqu’une URL est demandée, il faut donc que le routeur définisse cette URL, qu’elle soit implémentée par 
-une route qui récupèrera un modèle qu’elle mettra à disposition du contrôleur et du gabarit. Le contrôleur écoutera les 
-évènements en provenance du gabarit et y apportera la réponse adaptée. À noter que l’évènement peut également remonter jusqu’à la route.
-Le gabarit est quant à lui encapsulé dans une vue gérée par Ember tout seul comme un grand.</p>
-<p>Il n’est cependant <strong>pas nécessaire de créer systématiquement tous ces objets</strong> si aucune logique spécifique n’a besoin d’y être définie.
-En effet, <a href="http://emberjs.com" >Ember</a> s’appuie sur les <a href="http://putaindecode.fr/posts/js/debuter-avec-ember/#conventions-de-nommage" >conventions de nommage</a> pour retrouver successivement,
-à partir d’une URL, la route, le contrôleur, la vue et le gabarit associés. Si l’un de ces objet n’est pas trouvé, <a href="http://emberjs.com" >Ember</a>
-va en générer un par défaut. </p>
-<p>Donc si l’on crée dans le routeur la route suivante sans créer aucun autre objet : </p>
-<pre><code class="lang-js">App.Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-  <span class="hljs-keyword">this</span>.route(<span class="hljs-string">"about"</span>, { path: <span class="hljs-string">"/about"</span> });
-});
-</code></pre>
-<p><a href="http://emberjs.com" >Ember</a> va générer les objets suivants :</p>
-<ul>
-<li><strong>route</strong> : <code>AboutRoute</code></li>
-<li><strong>contrôleur</strong> : <code>AboutController</code></li>
-<li><strong>gabarit</strong> : <code>about</code></li>
-</ul>
-<p>Dans une application <a href="http://emberjs.com" >Ember</a>, <strong>il est donc nécessaire de ne définir que ce dont on a besoin !</strong>. Et c’est bien connu, 
-moins il y a de boilerplate, plus il y a de plaisir !</p>
-<p>Envie d’en savoir plus ? -&gt; <a href="http://emberjs.com/guides/routing/generated-objects/" >doc officielle</a>.</p>
-<p>Un bon moyen de se rendre compte de ça consiste à installer le debugger Ember sur votre navigateur préféré (donc pas IE). Vous aurez, entre
-autres, la liste de l’ensemble des objets impliqués dans le rendu d’une URL donnée. Cette liste distingue de manière claire les objets
-créés par vous et ceux générés par Ember. </p>
-<p>Ce module s’appelle <strong>Ember Inspector</strong> et est disponible pour <a href="https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi?hl=en" >Chrome</a> 
-et <a href="https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/" >Firefox</a>. C’est absolument indispensable lorsqu’on développe en Ember.</p>
-<h2 id="conclusion-et-next-steps">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/debuter-avec-ember/#conclusion-et-next-steps">#</a>
-      Conclusion et next steps
-    </h2><p><a href="http://emberjs.com" >Ember</a> est donc un framework très riche et extrêmement plaisant à pratiquer. 
-<strong>Un vrai framework avec un vrai parti pris et des vrais choix structurants.</strong>
-Il est résolument tourné vers le web et les URL. Ses créateurs sont également ceux de son moteur de gabarit <a href="http://handlebarsjs.com/" >Handlebars</a>
-et sont très impliqués dans diverses initiatives autour de la standardisation et de l’évolution du web. Pour n’en citer que deux :
-<a href="http://jsonapi.org/" >JSON API</a> et <a href="https://gist.github.com/wycats/9144666b0c606d1838be" >Web Components</a>, notamment au travers du moteur
-de gabarits <a href="https://github.com/tildeio/htmlbars" >HTMLBars</a>. 
-Ils embrassent très rapidement les nouveaux standards tels que <a href="https://people.mozilla.org/~jorendorff/es6-draft.html" >ES6 Harmony</a> à l’image des travaux
-effectués autour d’<a href="http://www.ember-cli.com/" >ember-cli</a> qui sera abordé dans un prochain article.</p>
-<p>Enfin, contrairement aux <em>a priori</em>, la courbe d’apprentissage d’<a href="http://emberjs.com" >Ember</a>
-est progressive et il est très simple à prendre en main une fois les concepts de base appréhendés - c’est justement le but de cet
-article. Au prochain épisode, nous verrons justement - par la pratique cette fois, <strong>comment démarrer et construire progressivement une
-application <a href="http://emberjs.com" >Ember</a></strong>.</p>
-]]></description>
-            <link>http://putaindecode.fr/posts/js/debuter-avec-ember/</link>
-            <guid isPermaLink="true">http://putaindecode.fr/posts/js/debuter-avec-ember/</guid>
-            <pubDate>Mon, 20 Oct 2014 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>
