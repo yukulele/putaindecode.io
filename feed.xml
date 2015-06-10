@@ -5,10 +5,200 @@
         <description><![CDATA[Putain de code !]]></description>
         <link>http://putaindecode.fr</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Wed, 10 Jun 2015 09:18:22 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 10 Jun 2015 22:14:02 GMT</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"/>
         <language><![CDATA[fr]]></language>
         <category><![CDATA[code]]></category>
+        <item>
+            <title><![CDATA[Introduction à Docker]]></title>
+            <description><![CDATA[<p>Avant de vous parler de Docker je vais vous raconter une histoire que tout
+développeur a vécu au moins une fois.</p>
+<p>Il était une fois un jeune développeur qui codait tranquillement sur son
+ordinateur siglé d’une pomme. Il était pressé car comme tout étudiant qui se
+respecte il devait présenter son travail le lendemain matin. Après des heures de
+travail, l’application était là, et elle fonctionnait à merveille ! Le
+lendemain, notre codeur arriva tout fier pour sa présentation, avec son projet
+sur une clé usb. Il le transfère sur l’ordinateur manchot de son pote et là, ça
+ne fonctionne pas !</p>
+<h2 id="quel-est-le-probleme">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/docker/introduction-a-docker/#quel-est-le-probleme">#</a>
+      Quel est le problème ?
+    </h2><p>L’application de notre jeune développeur ne fonctionne pas sur l’ordinateur
+manchot de son ami à cause d’un problème d’environnement. Entre deux systèmes, il
+peut y avoir des différences de version sur les dépendances ou encore des
+bibliothèques manquantes.</p>
+<p>Ici, notre problème se limite à 2 systèmes, mais imaginez une équipe de 10
+personnes avec des ordinateurs sous OS X, Linux ou même Windows, un serveur de
+test sous Ubuntu 12.04, et un serveur de production sous CentOS 7.
+S’assurer que leur application fonctionne bien sur tous ces environnements peut
+s’avérer être un vrai cauchemar !</p>
+<p>Mais il existe des solutions et parmi l’une d’entre elles nous avons…</p>
+<h2 id="docker">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/docker/introduction-a-docker/#docker">#</a>
+      Docker
+    </h2><h3 id="c-est-quoi-docker">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/docker/introduction-a-docker/#c-est-quoi-docker">#</a>
+      C’est quoi Docker ?
+    </h3><p>Docker est une plateforme qui va vous permettre d’exécuter votre code à
+l’intérieur d’un conteneur indépendamment de la machine sur laquelle vous êtes !
+Un conteneur ressemble à une machine virtuelle sauf qu’il n’embarque pas tout un
+système d’exploitation avec lui ce qui lui permet de s’exécuter en quelque
+secondes et d’être beaucoup plus léger.</p>
+<p>Docker peut donc résoudre notre problème d’environnement, car quelle que soit la
+machine que nous utiliserons, le code s’exécutera de la même manière.</p>
+<p>La plateforme Docker est composée de deux éléments :</p>
+<ul>
+<li>Le démon Docker qui s’exécute en arrière-plan et qui s’occupe de gérer vos
+conteneurs</li>
+<li>Le client Docker qui vous permet d’interagir avec le démon par l’intermédiaire
+d’un outil en ligne de commande</li>
+</ul>
+<p>Si vous voulez plus d’informations sur le fonctionnement interne de Docker je
+vous redirige vers l’article du site officiel : <a href="https://docs.docker.com/introduction/understanding-docker" >Understanding
+Docker</a></p>
+<h3 id="comment-l-installer">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/docker/introduction-a-docker/#comment-l-installer">#</a>
+      Comment l’installer ?
+    </h3><p>Le client Docker fonctionne sur tous les systèmes d’exploitation. En revanche,
+le démon Docker utilise des fonctionnalités du noyau Linux afin de gérer
+les conteneurs. Il ne fonctionne donc que sur Linux. Heureusement la majorité des
+serveurs utilise Linux, et pour vos ordinateurs sous OS X, ou même Windows, il
+existe une solution.</p>
+<p>Si vous utilisez une machine avec une distribution Linux vous pourrez lancer le
+démon Docker directement sur cette dernière, par contre avec Windows ou OS X
+vous devrez lancer le démon dans une machine virtuelle, mais rassurez-vous,
+c’est très simple !</p>
+<p>Pour le guide d’installation de Docker en fonction de votre système je vous
+redirige de nouveau vers le site officiel : <a href="https://docs.docker.com/installation/#installation" >Guide
+d’installation</a></p>
+<h3 id="un-premier-exemple">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/docker/introduction-a-docker/#un-premier-exemple">#</a>
+      Un premier exemple
+    </h3><p>Avant de commencer, vous allez devoir télécharger une image Docker qui servira
+de base à vos prochains conteneurs.</p>
+<p>Pour cet exemple, on va partir d’une image Ubuntu :</p>
+<pre><code class="lang-console">$ docker pull <span class="hljs-string">ubuntu:</span>trusty
+<span class="hljs-string">trusty:</span> Pulling from ubuntu
+<span class="hljs-string">e9e06b06e14c:</span> Pull complete
+<span class="hljs-string">a82efea989f9:</span> Pull complete
+<span class="hljs-number">37</span><span class="hljs-string">bea4ee0c81:</span> Pull complete
+<span class="hljs-number">07</span><span class="hljs-string">f8e8c5e660:</span> Already exists
+<span class="hljs-string">ubuntu:</span><span class="hljs-string">trusty:</span> The image you are pulling has been verified. <span class="hljs-string">Important:</span> image verification is a tech preview feature and should not be relied on to provide security.
+<span class="hljs-string">Digest:</span> <span class="hljs-string">sha256:</span><span class="hljs-number">014</span>fa1d5b72b4fe0ec2b4642610fbbfdd52f502da8e14e80de07bd1dd774e4ef
+<span class="hljs-string">Status:</span> Downloaded newer image <span class="hljs-keyword">for</span> <span class="hljs-string">ubuntu:</span>trusty
+</code></pre>
+<p>Cette commande va télécharger depuis le Docker Hub l’image de la version 14.04
+(trusty) d’Ubuntu. Il existe bien d’autres images que vous pourrez trouver
+<a href="https://registry.hub.docker.com" >sur le registry Docker</a>.</p>
+<p>Pour voir les images que vous avez téléchargées, utilisez cette commande :</p>
+<pre><code class="lang-console">$ docker images
+REPOSITORY    TAG       IMAGE ID        CREATED       VIRTUAL SIZE
+ubuntu        trusty    <span class="hljs-number">07f</span>8e8c5e660    <span class="hljs-number">4</span> weeks ago   <span class="hljs-number">188.3</span> MB
+</code></pre>
+<p>Sur ma machine, l’image d’Ubuntu fais 188.3 MB, je vous avais dit que c’était
+léger en comparaison à une machine virtuelle !</p>
+<p>Maintenant, nous allons lancer un conteneur et rentrer à l’intérieur :</p>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>docker run -it <span class="hljs-symbol">ubuntu:</span>trusty bash
+root<span class="hljs-variable">@2cdceb5ff771</span><span class="hljs-symbol">:/</span><span class="hljs-comment">#</span>
+</code></pre>
+<p>Cette commande crée un conteneur à partir de l’image <code>ubuntu:trusty</code>, y lance le
+programme <code>bash</code> et y attache votre shell grâce aux options <code>-it</code></p>
+<p>Vous pouvez maintenant exécuter les commandes que vous voulez, elle
+s’exécuteront à l’intérieur du conteneur, par exemple :</p>
+<pre><code class="lang-console">root@<span class="hljs-number">2</span>cdceb5ff771:/<span class="hljs-comment">#</span>
+$ apt-<span class="hljs-keyword">get</span> moo
+                 (__)
+                 (oo)
+           /<span class="hljs-comment">------\/</span>
+          / |    ||
+         *  /\<span class="hljs-comment">---/\</span>
+            ~~   ~~
+...<span class="hljs-string">"Have you mooed today?"</span>...
+</code></pre>
+<p>Vous pouvez quitter le conteneur en faisant un <code>Ctrl-d</code></p>
+<p>Maintenant que vous êtes retourné sur votre machine, vous pouvez afficher la
+liste des conteneurs lancés avec cette commande :</p>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>docker ps
+<span class="hljs-constant">CONTAINER ID </span>   <span class="hljs-constant">IMAGE </span>  <span class="hljs-constant">COMMAND </span>  <span class="hljs-constant">CREATED </span>  <span class="hljs-constant">STATUS </span>   <span class="hljs-constant">PORTS </span>  <span class="hljs-constant">NAMES</span>
+</code></pre>
+<p>Il n’y a rien ? C’est normal ! En quittant le conteneur ce dernier s’est arrêté
+aussi. Pour l’afficher quand même, il suffit d’entrer cette commande :</p>
+<pre><code class="lang-console">$ docker ps -<span class="hljs-tag">a</span>
+CONTAINER ID    IMAGE           COMMAND   CREATED         STATUS                    PORTS   NAMES
+<span class="hljs-number">2</span>cdceb5ff771    ubuntu:trusty   <span class="hljs-string">"bash"</span>    <span class="hljs-number">12</span> minutes ago  Exited (<span class="hljs-number">0</span>) <span class="hljs-number">2</span> minutes ago          loving_newton
+</code></pre>
+<p>Et pour supprimer ce conteneur ?</p>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>docker rm <span class="hljs-number">2</span>cdc
+<span class="hljs-number">2</span>cdc
+</code></pre>
+<p>Évidemment, remplacez ‘2cdc’ par le <code>CONTAINER ID</code> approprié.</p>
+<p>Passons maintenant à un deuxième exemple plus concret avec une application web.</p>
+<h2 id="un-deuxieme-exemple-avec-node-js">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/docker/introduction-a-docker/#un-deuxieme-exemple-avec-node-js">#</a>
+      Un deuxième exemple avec Node.js
+    </h2><p>Pour commencer, vous allez récupérer l’image docker officiel de Node.js en
+faisant :</p>
+<pre><code class="lang-console">$ docker pull <span class="hljs-string">node:</span><span class="hljs-number">0.12</span>.4
+<span class="hljs-number">0.12</span>.4: Pulling from node
+<span class="hljs-number">7711</span><span class="hljs-string">db4bb553:</span> Pull complete
+<span class="hljs-string">d1744e6e9471:</span> Pull complete
+<span class="hljs-number">9332645</span><span class="hljs-string">b03a3:</span> Pull complete
+<span class="hljs-string">a52a290821b3:</span> Pull complete
+<span class="hljs-number">3575</span><span class="hljs-string">f1347ce7:</span> Already exists
+<span class="hljs-number">39</span><span class="hljs-string">bb80489af7:</span> Already exists
+<span class="hljs-string">df2a0347c9d0:</span> Already exists
+<span class="hljs-number">7</span><span class="hljs-string">a3871ba15f8:</span> Already exists
+<span class="hljs-string">a2703ed272d7:</span> Already exists
+<span class="hljs-string">c9e3effdd23a:</span> Already exists
+<span class="hljs-string">node:</span><span class="hljs-number">0.12</span>.4: The image you are pulling has been verified. <span class="hljs-string">Important:</span> image verification is a tech preview feature and should not be relied on to provide security.
+<span class="hljs-string">Digest:</span> <span class="hljs-string">sha256:</span><span class="hljs-number">81</span>fb0812dd5e81f768773a121c8a6daced36893210c5ed50b504c4abcb04e10c
+<span class="hljs-string">Status:</span> Downloaded newer image <span class="hljs-keyword">for</span> <span class="hljs-string">node:</span><span class="hljs-number">0.12</span>.4
+</code></pre>
+<p>Puis créez un fichier <code>server.js</code> avec le contenu suivant :</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>)
+
+<span class="hljs-keyword">var</span> server = http.createServer(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{
+  res.end(<span class="hljs-string">'Coucou depuis Docker'</span>)
+});
+
+server.listen(<span class="hljs-number">3000</span>)
+</code></pre>
+<p>Et maintenant, pour lancer notre application à l’intérieur d’un conteneur, vous
+devez faire :</p>
+<pre><code class="lang-console">$ docker <span class="hljs-keyword">run</span> -<span class="hljs-keyword">d</span> --name node-<span class="hljs-keyword">app</span> -p 3000:3000 -v $(<span class="hljs-keyword">pwd</span>):/<span class="hljs-keyword">app</span> node:0.12.4 node /<span class="hljs-keyword">app</span>/server.js
+e9ca3cd8f90b8554ca99ec8ba15a039f827005bd8fecbf80d72ce7267006a6df
+</code></pre>
+<p>Si vous vous rendez sur <code>localhost:3000</code> (ou l’IP de la VM si êtes sur Windows
+ou Mac), vous verrez : ‘Coucou depuis Docker’</p>
+<p>C’est beau, mais comment ça marche ? Examinons les options une par une :</p>
+<ul>
+<li><code>-d</code> : cette option permet de lancer le conteneur en mode démon et donc de
+tourner en tâche de fond à la différence de <code>-it</code> qui lançait le conteneur au
+premier plan et nous donnait un accès direct au conteneur.</li>
+<li><code>--name node-app</code> : cette option permet simplement de nommer notre conteneur,
+ce qui peut servir pour l’arrêter et le relancer plus simplement (et à d’autres
+choses plus complexes dont je parlerai dans un prochain article).</li>
+<li><code>-p 3000:3000</code> : cette option permet de partager le port de votre machine avec
+le port du conteneur. Le premier nombre est le port de votre machine et le
+deuxième le port dans le conteneur.</li>
+<li><code>-v $(pwd):/app</code> : cette option permet de partager un dossier avec votre
+conteneur, ici, nous partageons le dossier courant (où se trouve notre fichier
+<code>server.js</code>) avec le dossier <code>/app</code> dans le conteneur (attention si vous êtes
+sur Mac ou Windows uniquement votre ‘home’ est partagé).</li>
+<li><code>node:0.12.4</code> : l’image Docker que vous voulez utiliser.</li>
+<li><code>node /app/server.js</code> : la commande à exécuter dans le conteneur.</li>
+</ul>
+<p>Et maintenant ? Vous pouvez afficher le conteneur en faisant : <code>docker ps</code>, l’arrêter
+avec : <code>docker stop node-app</code> et le supprimer avec <code>docker rm node-app</code>.</p>
+<hr>
+<p>Voici la fin de ce premier article sur Docker. Pour le prochain article, nous
+verrons comment créer notre propre image avec un Dockerfile et comment lier des
+conteneurs afin de créer des applications plus complexes.</p>
+]]></description>
+            <link>http://putaindecode.fr/posts/docker/introduction-a-docker/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/docker/introduction-a-docker/</guid>
+            <pubDate>Thu, 11 Jun 2015 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Les webhooks GitHub]]></title>
             <description><![CDATA[<p>Vous avez pu lire récemment une <a href="/posts/ci/le-deploiement-continu/" >introduction sur l’intégration
@@ -3167,212 +3357,6 @@ Mais c’était sans compter que l’Internet, c’est un réseau mondial. Avec 
             <pubDate>Thu, 30 Oct 2014 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[Flux, qu'est-ce que c'est ?]]></title>
-            <description><![CDATA[<p>Allez, tant pis, on saute l’intro et on entre directement dans le vif du sujet (on n’a pas que ça à foutre, après tout).</p>
-<h2 id="la-petite-histoire">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#la-petite-histoire">#</a>
-      La petite histoire
-    </h2><p>Il était une fois un gros site web <em>que s’apelorio</em> Facebook. Qui dit Facebook, dit webapp plus grosse que la plus grosse de tes copines (<em>no offense</em> <sup><a href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#foonote-1" >1</a></sup>) ; et du coup, propension à se retrouver submergé de bugs plus élevée.</p>
-<p>Les ingénieurs front-end de Facebook, confrontés à une codebase de plus en plus bordélique (personne ne voulant toucher certaines parties de celle-ci) ont dû repenser la structure des composants les plus cruciaux.</p>
-<p>Face à ce besoin, ces développeurs sont donc parvenus à deux solutions :</p>
-<ul>
-<li><a href="http://putaindecode.fr/posts/js/introduction-a-reactjs/" >ReactJS</a></li>
-<li>Flux</li>
-</ul>
-<p>Flux n’est pas un framework, mais simplement une architecture, une sorte de <em>guideline</em> qui résout pas mal de problèmes ayant pu apparaître avec les divers bibliothèques et frameworks MV* apparus lors des dernières années.</p>
-<h2 id="flux-l-explication-claire">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#flux-l-explication-claire">#</a>
-      Flux, l’explication claire
-    </h2><p>Flux comporte 4 concepts :</p>
-<ul>
-<li>les <strong>actions</strong>, qu’elles proviennent du serveur ou d’une interaction utilisateur ;</li>
-<li>le <strong>dispatcher</strong> dans lequel sont envoyées les actions que ce dernier transmet <em>à qui veut</em>, un peu comme un <code>EventEmitter</code> global ;</li>
-<li>les <strong>stores</strong>, qui sont l’équivalent du <code>model</code> de l’architecture MVC, ils contiennent les données, et réagissent aux actions que le dispatcher leur transmet ;</li>
-<li>les <strong>views</strong>, qui s’occupent du rendu des données dans le DOM, et de lancer des actions lorsque l’utilisateur effectue certaines actions.</li>
-</ul>
-<p>Jusque-là, rien de bien fou. C’est dans leur manière d’interagir que la particularité se dessine :</p>
-<figure>
-  <img src="http://cl.ly/YENt/flux.png" alt="">
-  <figcaption>Oh bah dis donc, ça va toujours dans le même sens</figcaption>
-</figure>
-
-<p>En effet, le <em>flux</em> en question est unidirectionnel. Pour faire simple, on procède ainsi :</p>
-<p>On définit une action via un <strong>action creator</strong> (on passera toujours par ces action-creators pour signaler une action) :</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// actions/BasketActions.js</span>
-<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispacher"</span>)
-<span class="hljs-comment">/*
-  On garde un dictionnaire des types d'actions
-  afin d'avoir un fichier donnant une vision
-  globale de toutes les interactions de l'app.
- */</span>
-<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
-
-<span class="hljs-built_in">module</span>.exports = {
-  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">productId</span>)</span>{
-    AppDispatcher.handleViewAction({
-      type : ActionTypes.ADD_TO_BASKET,
-      productId : productId
-    })
-  }
-}
-</code></pre>
-<p>On lancera par la suite cette action lorsque l’utilisateur aura cliqué sur un certain bouton, dans la vue concernée.</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// components/Product.jsx</span>
-<span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">"react/addons"</span>)
-<span class="hljs-keyword">var</span> BasketActions = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../actions/BasketActions"</span>)
-
-<span class="hljs-keyword">var</span> Button = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./common/Button.jsx"</span>)
-
-<span class="hljs-keyword">var</span> Product = React.createClass({
-  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">productId</span>)</span>{
-    BasketActions.addToBasket(productId)
-  },
-  render : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-    <span class="hljs-keyword">return</span> (
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"Product"</span>&gt;</span>
-        {/* rest of the component*/}
-        <span class="hljs-tag">&lt;<span class="hljs-title">Button</span>
-          <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.addToBasket.bind(this.props.productId)}</span>
-          <span class="hljs-attribute">label</span>=<span class="hljs-value">"Add to basket"</span>
-        /&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    )</span>
-  }
-})
-
-<span class="hljs-built_in">module</span>.exports = Product
-</code></pre>
-<p>Dès lors, à chaque clic sur le bouton en question, l’action <code>ADD_TO_BASKET</code> sera passée au dispatcher, qui le signalera aux stores.</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// stores/BasketStore.js</span>
-<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispatcher"</span>)
-<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
-<span class="hljs-keyword">var</span> API = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../api"</span>)
-
-<span class="hljs-keyword">var</span> merge = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/merge"</span>)
-<span class="hljs-keyword">var</span> Store = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/store"</span>)
-
-<span class="hljs-keyword">var</span> _store = {
-  products : []
-}
-
-<span class="hljs-keyword">var</span> BasketStore = merge(Store, {
-  <span class="hljs-comment">/*
-    Ici, on `register` un callback sur l'AppDispatcher,
-    ce qui signifie qu'on verra passer toutes les actions
-    de l'app.
-   */</span>
-  dispatchToken : AppDispatcher.register(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">payload</span>)</span>{
-    <span class="hljs-keyword">var</span> action = payload.action
-    <span class="hljs-keyword">switch</span>(action.type) {
-      <span class="hljs-keyword">case</span> ActionTypes.ADD_TO_BASKET:
-          <span class="hljs-comment">/*
-             L'API va ajouter le produit et lancer une
-             action `BASKET_UPDATED` dès que le serveur a répondu.
-          */</span>
-        API.addToBasket(action.productId)
-        <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">case</span> ActionTypes.BASKET_UPDATED:
-          <span class="hljs-comment">/*
-            L'API a répondu, on peut stocker la réponse
-            et signaler le changement
-            aux vues récupérant ces données.
-          */</span>
-          _store = action.reponse
-          BasketStore.emitChange()
-        <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">default</span>:
-        <span class="hljs-keyword">break</span>
-    }
-  })
-})
-
-<span class="hljs-built_in">module</span>.exports = BasketStore
-</code></pre>
-<p>La vue, quant à elle, sera notifiée du changement, et effectuera un <code>render()</code> :</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// components/Basket.jsx</span>
-<span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">"react/addons"</span>)
-<span class="hljs-keyword">var</span> BasketActions = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../actions/BasketActions"</span>)
-<span class="hljs-keyword">var</span> BasketStore = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../stores/BasketStore"</span>)
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getState</span>(<span class="hljs-params"></span>)</span>{
-  <span class="hljs-keyword">return</span> BasketStore.getStore()
-}
-
-<span class="hljs-keyword">var</span> Product = React.createClass({
-  getInitialState : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-    <span class="hljs-keyword">return</span> getState()
-  },
-  _onStoreChange : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-    <span class="hljs-comment">/*
-      À chaque changement du store, on update naïvement
-      le component et on laisse le virtual DOM faire son job.
-    */</span>
-    <span class="hljs-keyword">this</span>.setState(getState())
-  },
-  componentDidMount : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-    <span class="hljs-comment">/*
-      On écoute le store uniquement lorsque le
-      component est monté.
-     */</span>
-    BasketStore.addChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
-  },
-  componentWillUnmount : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-    <span class="hljs-comment">/*
-      Et on arrête d'écouter quand il ne l'est plus.
-     */</span>
-    BasketStore.removeChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
-  },
-  render : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-    <span class="hljs-keyword">return</span> (
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"Basket"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"Basket-count"</span>&gt;</span>
-          {this.state.products.length + " products"}
-        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-        {/* rest of the component */}
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    )</span>
-  }
-})
-
-<span class="hljs-built_in">module</span>.exports = Product
-</code></pre>
-<p>Tout cela peut sembler relativement verbeux, mais il faut préciser deux choses :</p>
-<ul>
-<li>les exemples ici le sont volontairement pour la démonstration, et il est aisément faisable d’utiliser un <code>StoreMixin</code> simplifier la déclaration des <code>class</code> React ;</li>
-<li>pour ce qui est du reste, notamment stocker les noms d’actions dans un objet partagé dans l’app, c’est pour rendre plus idiomatique et cohérente la façon dont on code l’app, et pour simplifier ses <em>refactoring</em>.</li>
-</ul>
-<h2 id="ce-qu-il-faut-savoir-sur-l-alliance-flux-react">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#ce-qu-il-faut-savoir-sur-l-alliance-flux-react">#</a>
-      Ce qu’il faut savoir sur l’alliance Flux + React
-    </h2><p>Si React et Flux vont si bien ensemble, c’est que l’approche de rendu “naïf” de React (comprendre “React s’en fout de ce qui change, il appelle <code>render</code> à chaque changement”) permet de réduire la logique à écrire dans les Stores, et donc de simplifier très fortement la codebase de l’app.</p>
-<p>Lorsque qu’un ou plusieurs stores composent l’état d’un state React, alors à chaque changement de l’un de ces stores, tous les composants React concernés et leurs enfants vont appeler leur méthode <code>render()</code>. Afin d’éviter des appels superflus à ces méthodes, React donne la possibilité de tester soi-même s’il est nécessaire de mettre à jour le component en déclarant une méthode <code>shouldComponentUpdate</code> retournant un <code>boolean</code> qui stipulera si oui ou non il est nécessaire d’appeler <code>render()</code>.</p>
-<h2 id="tl-dr">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#tl-dr">#</a>
-      tl;dr
-    </h2><ul>
-<li>Flux, c’est comme du MVC en plus simple, et avec moins de bugs</li>
-<li>L’architecture est unidirectionnelle</li>
-<li>On raisonne en actions, qui sont déclenchées par la vue ou le serveur</li>
-<li>Toutes les actions passent par le dispatcher</li>
-<li>Seuls les stores signalent aux vues qu’il faut se mettre à jour</li>
-</ul>
-<p>Bisous bisous.</p>
-<p><img src="http://media.giphy.com/media/lxd2cZ2BkM4IE/giphy.gif" alt="angulol"></p>
-<p>Pour aller un peu plus loin :</p>
-<ul>
-<li><a href="https://gist.github.com/bloodyowl/b41532cf3627c560b57e" >Les sources des exemples</a> contenant le dispatcher et les constants ;</li>
-<li><a href="http://facebook.github.io/flux/docs/overview.html#content" >La doc de Flux</a> ;</li>
-<li><a href="https://github.com/facebook/flux" >Le repository Flux</a> et ses différents exemples.</li>
-</ul>
-<p><small>
-  <a id="foonote-1"></a>1: <a href="https://www.youtube.com/watch?v=jRzv9gep5Ng&amp;t=4m" >Référence utile (<code>ntm install reference</code>)</a>
-</small></p>
-]]></description>
-            <link>http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</link>
-            <guid isPermaLink="true">http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</guid>
-            <pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate>
-        </item>
-        <item>
             <title><![CDATA[Première application Ember]]></title>
             <description><![CDATA[<p>Après l’<a href="/posts/js/debuter-avec-ember" >article précédent</a> qui a détaillé les principaux concepts d’<a href="http://emberjs.com" >Ember</a>, il est grand temps de
 se dégourdir les doigts. Comme on a peur de rien, on va même construire progressivement ensemble une application
@@ -3858,41 +3842,210 @@ vous piquer les yeux. Désolé :-)</p>
             <pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[À la conquête des bugs]]></title>
-            <description><![CDATA[<p>Le Web, depuis sa création est un vaste champ de bataille. Que ce soit les problèmes de compatibilités, les formats ou les langages propriétaires, la volonté de faire du Web un monde ouvert ne date pas d’hier.</p>
-<h2 id="au-depart">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/bug-webcompat/#au-depart">#</a>
-      Au départ
-    </h2><p>Les débuts du Web furent compliqués. On assista à une guerre entre Netscape et Microsoft. Chacun voulant dominer le marché, en tentant d’imposer ses propres technologies. En 1996, Netscape propose au W3C JSSS (JavaScript-Based Style Sheets). Ce n’est d’ailleurs que depuis novembre 2000 que Netscape, basé sur le moteur Gecko (moteur de Mozilla Firefox), prend véritablement en charge le CSS. Microsoft pour sa part ne supportait par JavaScript à ses débuts et avait développé son propre langage JScript.</p>
-<p>Ces problèmes de compatibilités, de technologies et de respect des normes vont considérablement ralentir l’évolution du Web.</p>
-<h2 id="les-petits-nouveaux">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/bug-webcompat/#les-petits-nouveaux">#</a>
-      Les petits nouveaux
-    </h2><p>L’arrivée des nouveaux navigateurs tels que Firefox, Chrome ou même Opera va inverser cette tendance. Les parts de marchés d’Internet Explorer baissant, les développeurs prenant conscience du potentiel du Web, vont déclencher une montée en puissance du Web.</p>
-<p>On pourrait croire que cette concurrence ne va apporter que des points positifs, mais pas tant que ça. Les parts de marchés vont pousser les navigateurs (ou les développeurs) à supporter des propriétés non standardisées, à mettre en place des préfixes et à développer une monoculture.</p>
-<h2 id="le-debut-des-problemes">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/bug-webcompat/#le-debut-des-problemes">#</a>
-      Le début des problèmes
-    </h2><p>Les préfixes bien que partis d’une bonne idée, avaient pour objectif d’introduire les nouvelles propriétés CSS  toujours à l’état de proposition/discussion/standardisation. Cela a permis de pouvoir utiliser des propriétés telles que  <code>border-radius</code>, <code>transform</code>, <code>box-shadow</code> bien avant leurs finalisations. Le risque bien entendu, étant d’utiliser des propriétés qui pouvaient changer de spécification, comme ce fut le cas par exemple pour <code>flexbox</code>.</p>
-<p>L’effet pervers a été aussi de ne pas utiliser tous les préfixes d’une propriété. Cela a eu pour conséquence de créer un Web (notamment sur le mobile) à deux facettes. Nous avions d’un coté les sites <code>-webkit</code> compatibles iPhone/iPad et le reste du monde.</p>
-<p>Opera a d’ailleurs <a href="http://thenextweb.com/insider/2013/02/13/opera-300-million-users-webkit/" >abandonné</a> son moteur Presto en février 2013 au profit du moteur WebKit.</p>
-<p>Plusieurs discussions houleuses ont d’ailleurs eu lieu sur l’implémentation des propriétés <code>-webkit</code> dans les moteurs Gecko ou Presto. Idée abandonnée en cours de route.</p>
-<p>Coup de théatre <a href="http://blogs.msdn.com/b/ie/archive/2014/07/31/the-mobile-web-should-just-work-for-everyone.aspx" >récemment</a>, Microsoft a intégré dans son moteur certaines propriétés <code>-webkit</code> pour obtenir des sites Web mobiles (trop basés sur <code>-webkit</code>) compatibles avec Windows Phone 8.1.</p>
-<h2 id="un-debut-de-solution">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/bug-webcompat/#un-debut-de-solution">#</a>
-      Un début de solution ?
-    </h2><p>C’est dans ce contexte qu’est née l’initiative <a href="http://webcompat.com" >webcompat.com</a>. Lancée initialement par des développeurs de chez <a href="https://hacks.mozilla.org/2014/06/introducing-webcompat-com/" >Mozilla</a> et quelques autres <a href="https://github.com/webcompat/webcompat.com/graphs/contributors" >contributeurs</a> en juin 2014.</p>
-<p>Le site a un double objectif : rendre le Web le plus compatible possible et éliminer les bugs.</p>
-<p>Le site accepte toutes sortes de bugs, que ce soit un problème de compatibilité entre navigateurs (<code>prefixe</code>, <code>sniffing UA</code>, etc), ou tout simplement un bug d’affichage, que vous soyez propriétaires ou simple utilisateurs du site.</p>
-<p>Une fois le bug soumis, quiconque a la possibilité de proposer un diagnostic, de corriger le bug, voir de transmettre la solution aux équipes techniques du site en question (par Twitter, e-mail, GitHub, etc).</p>
-<p>Le projet est libre et appartient à sa communauté.</p>
-<p>Tout contributeur peut intervenir sur le site webcompat.com pour le <a href="https://github.com/webcompat/webcompat.com/issues?q=is%3Aopen+is%3Aissue+label%3Ahelp-wanted" >développement</a>, ou même le <a href="https://github.com/webcompat/webcompat.com/issues?q=is%3Aopen+is%3Aissue+label%3Adesign" >design</a>.  Mais bien sûr et surtout sur la correction de <a href="https://github.com/webcompat/web-bugs/issues?q=is%3Aopen+is%3Aissue" >bugs</a>.</p>
-<p>Microsoft vient d’ailleurs de <a href="http://blogs.msdn.com/b/ie/archive/2014/07/31/the-mobile-web-should-just-work-for-everyone.aspx" >rejoindre</a> Mozilla sur l’initiative webcompat.com. En lançant leur dernière version de Window Phone 8.1 ils ont constaté les <a href="https://github.com/webcompat/web-bugs/issues?q=is%3Aissue+is%3Aopen+is%3Aclosed+label%3Aie" >dégâts</a> de la monoculture des sites mobile.</p>
-<p>Si comme eux, vous souhaitez rendre le Web plus compatible, n’hésitez pas à proposer votre aide. En effet, il est de notre responsabilité d’éviter tout monopole ou monoculture. Car même si les navigateurs ont leur part de responsabilité, nous, développeurs en avons une aussi.</p>
+            <title><![CDATA[Flux, qu'est-ce que c'est ?]]></title>
+            <description><![CDATA[<p>Allez, tant pis, on saute l’intro et on entre directement dans le vif du sujet (on n’a pas que ça à foutre, après tout).</p>
+<h2 id="la-petite-histoire">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#la-petite-histoire">#</a>
+      La petite histoire
+    </h2><p>Il était une fois un gros site web <em>que s’apelorio</em> Facebook. Qui dit Facebook, dit webapp plus grosse que la plus grosse de tes copines (<em>no offense</em> <sup><a href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#foonote-1" >1</a></sup>) ; et du coup, propension à se retrouver submergé de bugs plus élevée.</p>
+<p>Les ingénieurs front-end de Facebook, confrontés à une codebase de plus en plus bordélique (personne ne voulant toucher certaines parties de celle-ci) ont dû repenser la structure des composants les plus cruciaux.</p>
+<p>Face à ce besoin, ces développeurs sont donc parvenus à deux solutions :</p>
+<ul>
+<li><a href="http://putaindecode.fr/posts/js/introduction-a-reactjs/" >ReactJS</a></li>
+<li>Flux</li>
+</ul>
+<p>Flux n’est pas un framework, mais simplement une architecture, une sorte de <em>guideline</em> qui résout pas mal de problèmes ayant pu apparaître avec les divers bibliothèques et frameworks MV* apparus lors des dernières années.</p>
+<h2 id="flux-l-explication-claire">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#flux-l-explication-claire">#</a>
+      Flux, l’explication claire
+    </h2><p>Flux comporte 4 concepts :</p>
+<ul>
+<li>les <strong>actions</strong>, qu’elles proviennent du serveur ou d’une interaction utilisateur ;</li>
+<li>le <strong>dispatcher</strong> dans lequel sont envoyées les actions que ce dernier transmet <em>à qui veut</em>, un peu comme un <code>EventEmitter</code> global ;</li>
+<li>les <strong>stores</strong>, qui sont l’équivalent du <code>model</code> de l’architecture MVC, ils contiennent les données, et réagissent aux actions que le dispatcher leur transmet ;</li>
+<li>les <strong>views</strong>, qui s’occupent du rendu des données dans le DOM, et de lancer des actions lorsque l’utilisateur effectue certaines actions.</li>
+</ul>
+<p>Jusque-là, rien de bien fou. C’est dans leur manière d’interagir que la particularité se dessine :</p>
+<figure>
+  <img src="http://cl.ly/YENt/flux.png" alt="">
+  <figcaption>Oh bah dis donc, ça va toujours dans le même sens</figcaption>
+</figure>
+
+<p>En effet, le <em>flux</em> en question est unidirectionnel. Pour faire simple, on procède ainsi :</p>
+<p>On définit une action via un <strong>action creator</strong> (on passera toujours par ces action-creators pour signaler une action) :</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// actions/BasketActions.js</span>
+<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispacher"</span>)
+<span class="hljs-comment">/*
+  On garde un dictionnaire des types d'actions
+  afin d'avoir un fichier donnant une vision
+  globale de toutes les interactions de l'app.
+ */</span>
+<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
+
+<span class="hljs-built_in">module</span>.exports = {
+  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">productId</span>)</span>{
+    AppDispatcher.handleViewAction({
+      type : ActionTypes.ADD_TO_BASKET,
+      productId : productId
+    })
+  }
+}
+</code></pre>
+<p>On lancera par la suite cette action lorsque l’utilisateur aura cliqué sur un certain bouton, dans la vue concernée.</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// components/Product.jsx</span>
+<span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">"react/addons"</span>)
+<span class="hljs-keyword">var</span> BasketActions = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../actions/BasketActions"</span>)
+
+<span class="hljs-keyword">var</span> Button = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./common/Button.jsx"</span>)
+
+<span class="hljs-keyword">var</span> Product = React.createClass({
+  addToBasket : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">productId</span>)</span>{
+    BasketActions.addToBasket(productId)
+  },
+  render : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"Product"</span>&gt;</span>
+        {/* rest of the component*/}
+        <span class="hljs-tag">&lt;<span class="hljs-title">Button</span>
+          <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.addToBasket.bind(this.props.productId)}</span>
+          <span class="hljs-attribute">label</span>=<span class="hljs-value">"Add to basket"</span>
+        /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    )</span>
+  }
+})
+
+<span class="hljs-built_in">module</span>.exports = Product
+</code></pre>
+<p>Dès lors, à chaque clic sur le bouton en question, l’action <code>ADD_TO_BASKET</code> sera passée au dispatcher, qui le signalera aux stores.</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// stores/BasketStore.js</span>
+<span class="hljs-keyword">var</span> AppDispatcher = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../AppDispatcher"</span>)
+<span class="hljs-keyword">var</span> ActionTypes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../constants"</span>).ActionTypes
+<span class="hljs-keyword">var</span> API = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../api"</span>)
+
+<span class="hljs-keyword">var</span> merge = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/merge"</span>)
+<span class="hljs-keyword">var</span> Store = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../utils/store"</span>)
+
+<span class="hljs-keyword">var</span> _store = {
+  products : []
+}
+
+<span class="hljs-keyword">var</span> BasketStore = merge(Store, {
+  <span class="hljs-comment">/*
+    Ici, on `register` un callback sur l'AppDispatcher,
+    ce qui signifie qu'on verra passer toutes les actions
+    de l'app.
+   */</span>
+  dispatchToken : AppDispatcher.register(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">payload</span>)</span>{
+    <span class="hljs-keyword">var</span> action = payload.action
+    <span class="hljs-keyword">switch</span>(action.type) {
+      <span class="hljs-keyword">case</span> ActionTypes.ADD_TO_BASKET:
+          <span class="hljs-comment">/*
+             L'API va ajouter le produit et lancer une
+             action `BASKET_UPDATED` dès que le serveur a répondu.
+          */</span>
+        API.addToBasket(action.productId)
+        <span class="hljs-keyword">break</span>
+      <span class="hljs-keyword">case</span> ActionTypes.BASKET_UPDATED:
+          <span class="hljs-comment">/*
+            L'API a répondu, on peut stocker la réponse
+            et signaler le changement
+            aux vues récupérant ces données.
+          */</span>
+          _store = action.reponse
+          BasketStore.emitChange()
+        <span class="hljs-keyword">break</span>
+      <span class="hljs-keyword">default</span>:
+        <span class="hljs-keyword">break</span>
+    }
+  })
+})
+
+<span class="hljs-built_in">module</span>.exports = BasketStore
+</code></pre>
+<p>La vue, quant à elle, sera notifiée du changement, et effectuera un <code>render()</code> :</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// components/Basket.jsx</span>
+<span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">"react/addons"</span>)
+<span class="hljs-keyword">var</span> BasketActions = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../actions/BasketActions"</span>)
+<span class="hljs-keyword">var</span> BasketStore = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../stores/BasketStore"</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getState</span>(<span class="hljs-params"></span>)</span>{
+  <span class="hljs-keyword">return</span> BasketStore.getStore()
+}
+
+<span class="hljs-keyword">var</span> Product = React.createClass({
+  getInitialState : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-keyword">return</span> getState()
+  },
+  _onStoreChange : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-comment">/*
+      À chaque changement du store, on update naïvement
+      le component et on laisse le virtual DOM faire son job.
+    */</span>
+    <span class="hljs-keyword">this</span>.setState(getState())
+  },
+  componentDidMount : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-comment">/*
+      On écoute le store uniquement lorsque le
+      component est monté.
+     */</span>
+    BasketStore.addChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
+  },
+  componentWillUnmount : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-comment">/*
+      Et on arrête d'écouter quand il ne l'est plus.
+     */</span>
+    BasketStore.removeChangeListener(<span class="hljs-keyword">this</span>._onStoreChange)
+  },
+  render : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"Basket"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"Basket-count"</span>&gt;</span>
+          {this.state.products.length + " products"}
+        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        {/* rest of the component */}
+      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    )</span>
+  }
+})
+
+<span class="hljs-built_in">module</span>.exports = Product
+</code></pre>
+<p>Tout cela peut sembler relativement verbeux, mais il faut préciser deux choses :</p>
+<ul>
+<li>les exemples ici le sont volontairement pour la démonstration, et il est aisément faisable d’utiliser un <code>StoreMixin</code> simplifier la déclaration des <code>class</code> React ;</li>
+<li>pour ce qui est du reste, notamment stocker les noms d’actions dans un objet partagé dans l’app, c’est pour rendre plus idiomatique et cohérente la façon dont on code l’app, et pour simplifier ses <em>refactoring</em>.</li>
+</ul>
+<h2 id="ce-qu-il-faut-savoir-sur-l-alliance-flux-react">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#ce-qu-il-faut-savoir-sur-l-alliance-flux-react">#</a>
+      Ce qu’il faut savoir sur l’alliance Flux + React
+    </h2><p>Si React et Flux vont si bien ensemble, c’est que l’approche de rendu “naïf” de React (comprendre “React s’en fout de ce qui change, il appelle <code>render</code> à chaque changement”) permet de réduire la logique à écrire dans les Stores, et donc de simplifier très fortement la codebase de l’app.</p>
+<p>Lorsque qu’un ou plusieurs stores composent l’état d’un state React, alors à chaque changement de l’un de ces stores, tous les composants React concernés et leurs enfants vont appeler leur méthode <code>render()</code>. Afin d’éviter des appels superflus à ces méthodes, React donne la possibilité de tester soi-même s’il est nécessaire de mettre à jour le component en déclarant une méthode <code>shouldComponentUpdate</code> retournant un <code>boolean</code> qui stipulera si oui ou non il est nécessaire d’appeler <code>render()</code>.</p>
+<h2 id="tl-dr">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/#tl-dr">#</a>
+      tl;dr
+    </h2><ul>
+<li>Flux, c’est comme du MVC en plus simple, et avec moins de bugs</li>
+<li>L’architecture est unidirectionnelle</li>
+<li>On raisonne en actions, qui sont déclenchées par la vue ou le serveur</li>
+<li>Toutes les actions passent par le dispatcher</li>
+<li>Seuls les stores signalent aux vues qu’il faut se mettre à jour</li>
+</ul>
+<p>Bisous bisous.</p>
+<p><img src="http://media.giphy.com/media/lxd2cZ2BkM4IE/giphy.gif" alt="angulol"></p>
+<p>Pour aller un peu plus loin :</p>
+<ul>
+<li><a href="https://gist.github.com/bloodyowl/b41532cf3627c560b57e" >Les sources des exemples</a> contenant le dispatcher et les constants ;</li>
+<li><a href="http://facebook.github.io/flux/docs/overview.html#content" >La doc de Flux</a> ;</li>
+<li><a href="https://github.com/facebook/flux" >Le repository Flux</a> et ses différents exemples.</li>
+</ul>
+<p><small>
+  <a id="foonote-1"></a>1: <a href="https://www.youtube.com/watch?v=jRzv9gep5Ng&amp;t=4m" >Référence utile (<code>ntm install reference</code>)</a>
+</small></p>
 ]]></description>
-            <link>http://putaindecode.fr/posts/bug-webcompat/</link>
-            <guid isPermaLink="true">http://putaindecode.fr/posts/bug-webcompat/</guid>
-            <pubDate>Tue, 21 Oct 2014 00:00:00 GMT</pubDate>
+            <link>http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/js/flux-qu-est-ce-c-est/</guid>
+            <pubDate>Mon, 27 Oct 2014 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>
