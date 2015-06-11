@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Responsive webdesign et structure du DOM</title><link rel="stylesheet" href="/index.b0b31339.css"><link rel="alternate" href="/feed.xml" title="Responsive webdesign et structure du DOM" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Responsive webdesign et structure du DOM"><meta name="twitter:creator" content="@_neemzy"><meta property="og:title" content="Responsive webdesign et structure du DOM"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Responsive webdesign et structure du DOM</title><link rel="stylesheet" href="/index.7f480d99.css"><link rel="alternate" href="/feed.xml" title="Responsive webdesign et structure du DOM" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Responsive webdesign et structure du DOM"><meta name="twitter:creator" content="@_neemzy"><meta property="og:title" content="Responsive webdesign et structure du DOM"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -339,7 +339,7 @@ s’agit des seules solutions que je connais pour ce type de cas. Si tu as mieux
 proposer, je te recommande chaudement de l’ouvrir dans les commentaires pour
 qu’on en bénéficie tous. C’est bon, on y va ? Je t’attends, moi !</p>
 <h2 id="a-l-ancienne-do-repeat-yourself">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/html/responsive-dom/#a-l-ancienne-do-repeat-yourself">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/html/responsive-dom/#a-l-ancienne-do-repeat-yourself">#</a>
       À l’ancienne : Do Repeat Yourself
     </h2><p>Imagine une page de blog, où apparaissent consécutivement le titre de l’article,
 la photo l’illustrant, et enfin le texte. Comme une photo, selon la qualité de
@@ -423,12 +423,12 @@ avec JavaScript :</p>
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
 }</span>
 </code></pre>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> handleImages = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> handleImages = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
   <span class="hljs-comment">// On charge les images ayant l'attribut data-src,</span>
   <span class="hljs-comment">// non encore chargées (attribut src indéfini)</span>
   <span class="hljs-comment">// et non masquées par CSS</span>
 
-  [].forEach.call(<span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'img[data-src]:not([src])'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el</span>) </span>{
+  [].forEach.call(<span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'img[data-src]:not([src])'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(el)</span> </span>{
     <span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.getComputedStyle(el).display != <span class="hljs-string">'none'</span>) {
       el.src = el.getAttribute(<span class="hljs-string">'data-src'</span>);
     }
@@ -446,18 +446,18 @@ chargée : je pars du principe qu’étant donné qu’on ne peut pas définir l
 des deux versions de l’image est la mieux adaptée pour lui, autant lui envoyer
 la plus légère.</p>
 <h2 id="js-powa-enquire-js">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/html/responsive-dom/#js-powa-enquire-js">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/html/responsive-dom/#js-powa-enquire-js">#</a>
       JS powa : enquire.js
     </h2><p>La seconde solution peut tout à fait être réalisée “à la main”, mais je vais te
 parler d’une petite librairie que j’aime beaucoup et que j’ai déjà utilisée dans
 ce genre de cas. Elle se nomme <a href="http://wicky.nillia.ms/enquire.js/" >enquire.js</a>
 et permet tout simplement d’affecter des callbacks à des media queries :</p>
 <pre><code class="lang-javascript">enquire.register(<span class="hljs-string">'screen and (min-width: 768px)'</span>, {
-  match: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  match: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-comment">// L'écran fait 768px de large ou plus...</span>
   },
 
-  unmatch: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  unmatch: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-comment">// ...et ici, 767px de large ou moins.</span>
     <span class="hljs-comment">// La librairie repose sur matchMedia et matchMedia.addListener</span>
   }
@@ -479,10 +479,10 @@ plus nécessaire) :</p>
 </code></pre>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> content = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'p'</span>),
 
-  switchImage = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">isMobile</span>) </span>{
+  switchImage = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(isMobile)</span> </span>{
     <span class="hljs-keyword">var</span> attr = isMobile ? <span class="hljs-string">'data-mobile-src'</span> : <span class="hljs-string">'data-src'</span>;
 
-    [].forEach.call(<span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'img['</span> + attr + <span class="hljs-string">']'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el</span>) </span>{
+    [].forEach.call(<span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'img['</span> + attr + <span class="hljs-string">']'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(el)</span> </span>{
       <span class="hljs-comment">// On affecte l'une ou l'autre source à notre image,</span>
       <span class="hljs-comment">// entraînant son chargement si nécessaire.</span>
       el.src = el.getAttribute(attr);
@@ -492,11 +492,11 @@ plus nécessaire) :</p>
     });
   };
 
-enquire.register(<span class="hljs-string">'screen and (min-width: 768px)'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+enquire.register(<span class="hljs-string">'screen and (min-width: 768px)'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
   switchImage(<span class="hljs-literal">false</span>);
 });
 
-enquire.register(<span class="hljs-string">'screen and (max-width: 767px)'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+enquire.register(<span class="hljs-string">'screen and (max-width: 767px)'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
   switchImage(<span class="hljs-literal">true</span>);
 });
 </code></pre>
@@ -507,12 +507,12 @@ fait bien son boulot au chargement aussi, dans tous les cas (les callbacks
 handler, l’image n’arrive donc jamais si on charge la page avec un écran d’une
 largeur inférieure à 768px).</p>
 <h2 id="that-s-all-you-ve-got-bitch">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/html/responsive-dom/#that-s-all-you-ve-got-bitch">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/html/responsive-dom/#that-s-all-you-ve-got-bitch">#</a>
       That’s all you’ve got, bitch?
     </h2><p>On peut également, puisque tu y tiens tant, évoquer d’autres solutions plus
 marginales mais qui méritent d’être citées.</p>
 <h3 id="foundation">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/html/responsive-dom/#foundation">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/html/responsive-dom/#foundation">#</a>
       Foundation
     </h3><p><a href="http://foundation.zurb.com/" >Foundation</a> propose, dans sa version 5 (et
 peut-être même avant, j’ai pas vérifié) un peu de sucre syntaxique HTML
@@ -538,7 +538,7 @@ on large display devices.</p>
 (c’est dans <a href="http://foundation.zurb.com/docs/components/interchange.html" >la doc</a>,
 toujours. J’insiste.)</p>
 <h3 id="flexbox-pas-toi-david">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/html/responsive-dom/#flexbox-pas-toi-david">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/html/responsive-dom/#flexbox-pas-toi-david">#</a>
       Flexbox (pas toi, David)
     </h3><p>On peut également, comme l’a très justement souligné <a href="/#crew" >lionelB</a>, se
 pencher (mais pas trop) sur le cas de Flexbox, qui est un nouveau type de
@@ -589,7 +589,7 @@ expliqueront ça en long, en large et en travers bien mieux que moi, notamment
 <a href="http://www.adobe.com/devnet/html5/articles/working-with-flexbox-the-new-spec.html" >cet article</a>
 sur lequel j’ai honteusement pompé les snippets de cette partie.</p>
 <h2 id="conclusion">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/html/responsive-dom/#conclusion">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/html/responsive-dom/#conclusion">#</a>
       Conclusion
     </h2><p>Comme tu l’as vu, rien de ce que je t’ai montré n’est réellement satisfaisant :
 pour pouvoir contrôler le positionnement d’un élément dans le DOM dans le cadre

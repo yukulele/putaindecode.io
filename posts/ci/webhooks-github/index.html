@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Les webhooks GitHub</title><link rel="stylesheet" href="/index.b0b31339.css"><link rel="alternate" href="/feed.xml" title="Les webhooks GitHub" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Les webhooks GitHub"><meta name="twitter:creator" content="@magsout"><meta property="og:title" content="Les webhooks GitHub"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Les webhooks GitHub</title><link rel="stylesheet" href="/index.7f480d99.css"><link rel="alternate" href="/feed.xml" title="Les webhooks GitHub" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Les webhooks GitHub"><meta name="twitter:creator" content="@magsout"><meta property="og:title" content="Les webhooks GitHub"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -316,7 +316,7 @@ sources et que vous cherchez un moyen très simple (peut-être un peu trop) de
 mettre en place le déploiement continu <em>sans serveur d’intégration continue
 dédié</em>, alors les webhooks peuvent répondre parfaitement à votre besoin.</p>
 <h2 id="les-quoi">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/webhooks-github/#les-quoi">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/ci/webhooks-github/#les-quoi">#</a>
       Les quoi ?
     </h2><p>Les webhooks permettent de lancer une action de façon automatique par
 l’intermédiaire d’un ou plusieurs événements depuis un dépôt
@@ -326,7 +326,7 @@ mettre à jour des stats dès qu’un commit sera envoyé ou même une issue ouv
 Il est possible de faire tout ce que l’on veut dans la limite de son imagination
 comme l’explique GitHub.</p>
 <h2 id="comment-ca-marche">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/webhooks-github/#comment-ca-marche">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/ci/webhooks-github/#comment-ca-marche">#</a>
       Comment ça marche ?
     </h2><p>Le fonctionnement est on ne peut plus simple, un événement (merge, push, release
 etc.) va déclencher une requête HTTP POST vers l’URL que vous avez configurée.
@@ -337,15 +337,15 @@ souhaitez.</p>
 même si une PR ou un commit venaient à rendre inopérant votre projet l’événement
 se lancerait quand même.</p>
 <h2 id="la-mise-en-place">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/webhooks-github/#la-mise-en-place">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/ci/webhooks-github/#la-mise-en-place">#</a>
       La mise en place
     </h2><p>Seul le propriétaire d’un dépôt dispose des droits nécessaires pour configurer
 un webhook. Il suffit pour cela de se rendre dans <code>Settings</code> puis <code>Webhooks &amp;
 Services</code> :</p>
-<p><img src="http://putaindecode.fr/posts/ci/webhooks-github/setting_webhook.jpg" alt="Settings Webhooks GitHub"></p>
+<p><img src="http://0.0.0.0:4242/posts/ci/webhooks-github/setting_webhook.jpg" alt="Settings Webhooks GitHub"></p>
 <p>Un petit clic sur <code>Add webhook</code> et vous obtenez une interface encore une fois
 très simple :</p>
-<p><img src="http://putaindecode.fr/posts/ci/webhooks-github/configuration_webhook.jpg" alt="Configuration Webhooks GitHub"></p>
+<p><img src="http://0.0.0.0:4242/posts/ci/webhooks-github/configuration_webhook.jpg" alt="Configuration Webhooks GitHub"></p>
 <p>Cette interface se compose de trois parties :</p>
 <ol>
 <li>l’URL vers laquelle votre requête sera lancée</li>
@@ -361,7 +361,7 @@ trois possibilités :</p>
 </ol>
 <p>Une fois le <em>Webhook</em> activé un premier test ou plus exactement un <code>ping</code> va se
 lancer. Il permettra de détecter que votre serveur répond bien à la requête :</p>
-<p><img src="http://putaindecode.fr/posts/ci/webhooks-github/test_webhook.jpg" alt="Test Webhooks request GitHub"></p>
+<p><img src="http://0.0.0.0:4242/posts/ci/webhooks-github/test_webhook.jpg" alt="Test Webhooks request GitHub"></p>
 <p>La requête envoyée est très basique et embarque un JSON sur les informations de
 votre dépôt (description, URL) et une liste des API mises à disposition. Le
 reste du travail doit se faire sur votre serveur par l’intermédiaire de votre
@@ -384,7 +384,7 @@ app.use(xhub({ algorithm: <span class="hljs-string">"sha1"</span>, secret: xhubS
 app.use(bodyParser.json())
 
 <span class="hljs-comment">// Main : Start the express http server</span>
-<span class="hljs-keyword">var</span> server = app.listen(port, host, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+<span class="hljs-keyword">var</span> server = app.listen(port, host, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
   <span class="hljs-built_in">console</span>.log(
     <span class="hljs-string">"App listening at http://%s:%s"</span>,
     server.address().address,
@@ -393,7 +393,7 @@ app.use(bodyParser.json())
 })
 
 <span class="hljs-comment">// Add default route</span>
-app.post(<span class="hljs-string">"/webhook"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{
+app.post(<span class="hljs-string">"/webhook"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, res)</span> </span>{
   <span class="hljs-keyword">if</span>(!req.isXHubValid()){
     res.status(<span class="hljs-number">400</span>).send(<span class="hljs-string">'Invalid X-Hub Request'</span>)
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Secret key is invalid"</span>)
@@ -424,11 +424,11 @@ app.post(<span class="hljs-string">"/webhook"</span>, <span class="hljs-function
 </code></pre>
 <p>Pour vous donner une idée de ce que peut envoyer GitHub, voici deux gists :</p>
 <ul>
-<li><a href="http://putaindecode.fr/posts/ci/webhooks-github/header.txt" >Headers</a></li>
-<li><a href="http://putaindecode.fr/posts/ci/webhooks-github/payload.json" >Payload</a></li>
+<li><a href="http://0.0.0.0:4242/posts/ci/webhooks-github/header.txt" >Headers</a></li>
+<li><a href="http://0.0.0.0:4242/posts/ci/webhooks-github/payload.json" >Payload</a></li>
 </ul>
 <h2 id="this-is-just-the-beginning">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/ci/webhooks-github/#this-is-just-the-beginning">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/ci/webhooks-github/#this-is-just-the-beginning">#</a>
       This is just the beginning
     </h2><p>Cette solution est un début de piste pour le déploiement continu, mais elle ne
 doit pas se faire sans une solution de test que ce soit coté GitHub ou coté

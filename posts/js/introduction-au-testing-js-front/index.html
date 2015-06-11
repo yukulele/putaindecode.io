@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Introduction au testing js front</title><link rel="stylesheet" href="/index.b0b31339.css"><link rel="alternate" href="/feed.xml" title="Introduction au testing js front" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Introduction au testing js front"><meta name="twitter:creator" content="@bloodyowl"><meta property="og:title" content="Introduction au testing js front"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Introduction au testing js front</title><link rel="stylesheet" href="/index.7f480d99.css"><link rel="alternate" href="/feed.xml" title="Introduction au testing js front" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Introduction au testing js front"><meta name="twitter:creator" content="@bloodyowl"><meta property="og:title" content="Introduction au testing js front"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -314,21 +314,21 @@ et le sont encore trop.</p>
 <p>Écrire des tests peut paraître chiant, mais le temps qu’ils rapportent
 compense largement celui que l’on passe à les écrire.</p>
 <h2 id="ecrire-du-js-testable">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/introduction-au-testing-js-front/#ecrire-du-js-testable">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/introduction-au-testing-js-front/#ecrire-du-js-testable">#</a>
       Écrire du js testable
     </h2><p>Prenons un exemple simple et moche :</p>
 <pre><code class="lang-javascript"><span class="hljs-comment">//app.js</span>
-;(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+;(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
 
   <span class="hljs-keyword">var</span> cart = $(<span class="hljs-string">"#cart"</span>)
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addToCart</span>(<span class="hljs-params">id</span>)</span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addToCart</span><span class="hljs-params">(id)</span></span>{
     <span class="hljs-keyword">var</span> element = $(<span class="hljs-string">"&lt;li&gt;&lt;/li&gt;"</span>)
     element.html(catalog[id])
     cart.append(element)
   }
 
   $(<span class="hljs-string">".js-updateCart"</span>)
-    .on(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">eventObject</span>)</span>{
+    .on(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span></span>{
       addToCart($(<span class="hljs-keyword">this</span>).data(<span class="hljs-string">"id"</span>))
     })
 
@@ -342,12 +342,12 @@ compense largement celui que l’on passe à les écrire.</p>
 <li>pour tester <code>addToCart</code> on doit aller regarder dans le DOM.</li>
 </ul>
 <h3 id="1-rendez-accessibles-vos-methodes-au-test-runner">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/introduction-au-testing-js-front/#1-rendez-accessibles-vos-methodes-au-test-runner">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/introduction-au-testing-js-front/#1-rendez-accessibles-vos-methodes-au-test-runner">#</a>
       1. Rendez accessibles vos méthodes au test runner
     </h3><p>Vous pouvez utiliser un namespace adéquat.</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> app = <span class="hljs-built_in">window</span>.app = {}
 app.cart = {}
-app.cart.addToCart = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{ <span class="hljs-comment">/* … */</span> }
+app.cart.addToCart = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{ <span class="hljs-comment">/* … */</span> }
 </code></pre>
 <p>Mais ne souhaitez probablement pas rendre vos méthodes accessibles à la console.</p>
 <p>Utilisez un module-system : <a href="http://browserify.org" >browserify</a> ou
@@ -360,14 +360,14 @@ pourrez même <code>require</code> depuis un module npm
 
 <span class="hljs-built_in">module</span>.exports = {
   element : $(<span class="hljs-string">"#cart"</span>),
-  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     <span class="hljs-comment">/* … */</span>
   }
 }
 </code></pre>
 <p>Vous pourrez ainsi séparer proprement votre application en modules et les tester individuellement.</p>
 <h3 id="2-oui-mais-les-modules-interdependants-alors">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/introduction-au-testing-js-front/#2-oui-mais-les-modules-interdependants-alors">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/introduction-au-testing-js-front/#2-oui-mais-les-modules-interdependants-alors">#</a>
       2. Oui, mais les modules interdépendants alors ?
     </h3><p>Là, ça devient un peu plus tricky.
 Ce que je conseille à titre personnel c’est d’utiliser des events
@@ -398,7 +398,7 @@ déclanchera bien <code>updateCart</code> :</p>
       listener : <span class="hljs-string">"addToCart"</span>
     }
   ],
-  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">eventObject</span>)</span>{
+  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span></span>{
     <span class="hljs-keyword">var</span> target = eventObject.currentTarget
     <span class="hljs-keyword">var</span> id = $(target).data(<span class="hljs-string">"id"</span>)
     eventbus.fire(<span class="hljs-string">"addToCart"</span>, {
@@ -413,14 +413,14 @@ déclanchera bien <code>updateCart</code> :</p>
 <span class="hljs-keyword">var</span> catalog = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../catalog"</span>)
 
 <span class="hljs-built_in">module</span>.exports = {
-  initialize : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+  initialize : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     <span class="hljs-keyword">this</span>._addToCart = <span class="hljs-keyword">this</span>.addToCart.bind(<span class="hljs-keyword">this</span>)
     eventbus.listen(<span class="hljs-string">"addToCart"</span>, <span class="hljs-keyword">this</span>._addToCart)
   },
-  release : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+  release : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     eventbus.stopListening(<span class="hljs-string">"addToCart"</span>, <span class="hljs-keyword">this</span>._addToCart)
   },
-  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">eventObject</span>)</span>{
+  addToCart : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span></span>{
     <span class="hljs-comment">// et on a eventObject.id</span>
     <span class="hljs-keyword">this</span>.products.push(catalog[eventObject.currentTarget.data(<span class="hljs-string">"id"</span>)])
   }
@@ -435,12 +435,12 @@ les deux modules.</p>
 <span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
 <span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"jquery"</span>)
 
-tape(<span class="hljs-string">"view"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">test</span>)</span>{
+tape(<span class="hljs-string">"view"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
   test.plan(<span class="hljs-number">1</span>)
   <span class="hljs-keyword">var</span> element = $(<span class="hljs-string">"&lt;div&gt;&lt;/div&gt;"</span>)
   element.data(<span class="hljs-string">"id"</span>, <span class="hljs-number">1</span>)
   <span class="hljs-comment">// on teste facilement l'envoi</span>
-  eventbus.listen(<span class="hljs-string">"addToCart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">eventObject</span>)</span>{
+  eventbus.listen(<span class="hljs-string">"addToCart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventObject)</span></span>{
     test.equal(eventObject.id, <span class="hljs-number">1</span>)
   })
   view.addToCart({
@@ -455,7 +455,7 @@ tape(<span class="hljs-string">"view"</span>, <span class="hljs-function"><span 
 <span class="hljs-keyword">var</span> eventbus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../eventbus"</span>)
 <span class="hljs-keyword">var</span> catalog = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../catalog"</span>)
 
-tape(<span class="hljs-string">"cart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">test</span>)</span>{
+tape(<span class="hljs-string">"cart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
   cart.initialize()
   eventbus.fireSync(<span class="hljs-string">"addToCart"</span>, {id:<span class="hljs-number">1</span>})
   test.deepEqual(
@@ -467,33 +467,33 @@ tape(<span class="hljs-string">"cart"</span>, <span class="hljs-function"><span 
 })
 </code></pre>
 <h2 id="tester-tous-les-cas-possibles">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/introduction-au-testing-js-front/#tester-tous-les-cas-possibles">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/introduction-au-testing-js-front/#tester-tous-les-cas-possibles">#</a>
       Tester tous les cas possibles
     </h2><p>Ce sont souvent les edge-cases qui nous font nous arracher les cheveux.
 Pour pallier ces soucis, tester en profondeur est essentiel.</p>
 <p>Prenons un exemple, une méthode qui teste si la valeur qu’on lui passe est
 une <code>string</code>.</p>
 <p>On serait tenté de simplement tester les résultats positifs de cette façon :</p>
-<pre><code class="lang-javascript">tape(<span class="hljs-string">"type.isString on strings"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">test</span>)</span>{
+<pre><code class="lang-javascript">tape(<span class="hljs-string">"type.isString on strings"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
   test.equal(type.isString(<span class="hljs-string">""</span>), <span class="hljs-literal">true</span>)
   test.end()
 })
 </code></pre>
 <p>Or, si par mégarde ma méthode <code>isString</code> se révèle être :</p>
-<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">value</span>) </span>{
+<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> value == <span class="hljs-string">"string"</span>
 }
 </code></pre>
 <p>on ne vérifie pas le cas <code>type.isString(new String(&quot;&quot;))</code>.</p>
 <p>Du coup, des tests complets :</p>
-<pre><code class="lang-javascript">tape(<span class="hljs-string">"type.isString on strings"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">test</span>)</span>{
+<pre><code class="lang-javascript">tape(<span class="hljs-string">"type.isString on strings"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(test)</span></span>{
   test.equal(type.isString(<span class="hljs-string">""</span>), <span class="hljs-literal">true</span>)
   test.equal(type.isString(<span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-string">""</span>)), <span class="hljs-literal">false</span>)
   test.end()
 })
 </code></pre>
 <p>permettent ici d’identifier qu’en réalité on a besoin de :</p>
-<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">value</span>) </span>{
+<pre><code class="lang-javascript">type.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
   <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(value) == <span class="hljs-string">"[object String]"</span>
 }
 </code></pre>
@@ -501,7 +501,7 @@ une <code>string</code>.</p>
 vous familiariserez à tous ces edge-cases.</p>
 <p>À chaque correctif de bug, ajoutez des tests (mais ça, vous le saviez déjà).</p>
 <h2 id="cross-browser-testing">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/introduction-au-testing-js-front/#cross-browser-testing">#</a>
+      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/introduction-au-testing-js-front/#cross-browser-testing">#</a>
       Cross-browser testing
     </h2><p>À l’heure actuelle, où l’on se trouve notamment très souvent avec du
 feature testing.
