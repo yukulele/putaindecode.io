@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Mise en place d’autoprefixer</title><link rel="stylesheet" href="/index.7f480d99.css"><link rel="alternate" href="/feed.xml" title="Mise en place d’autoprefixer" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Mise en place d’autoprefixer"><meta name="twitter:creator" content="@MoOx"><meta property="og:title" content="Mise en place d’autoprefixer"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Mise en place d’autoprefixer</title><link rel="stylesheet" href="/index.b0b31339.css"><link rel="alternate" href="/feed.xml" title="Mise en place d’autoprefixer" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Mise en place d’autoprefixer"><meta name="twitter:creator" content="@MoOx"><meta property="og:title" content="Mise en place d’autoprefixer"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -313,7 +313,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 certains sont restés sur leur faim.
 Voici donc de rapides exemples de mise en place de cette solution.</p>
 <h2 id="installation-d-autoprefixer">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/mise-en-place-autoprefixer/#installation-d-autoprefixer">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/#installation-d-autoprefixer">#</a>
       Installation d’autoprefixer
     </h2><p>Il vous faudra <a href="http://nodejs.org/" >Node.js</a> (qui embarque maintenant <a href="https://www.npmjs.org/" >Npm</a>) afin de pouvoir
 installer ce nouveau joujou.</p>
@@ -324,14 +324,14 @@ $ npm i -<span class="hljs-keyword">g</span> autoprefixer
 </code></pre>
 <p>Une fois ceci fait, vous devriez avoir la commande <code>autoprefixer</code> disponible.
 On vérifie de suite avec <code>autoprefixer -v</code>.</p>
-<pre><code class="lang-console"><span class="hljs-variable">$ </span>autoprefixer -v
-autoprefixer <span class="hljs-number">1.0</span>.<span class="hljs-number">20140203</span>
+<pre><code class="lang-console">$ autoprefixer -v
+autoprefixer <span class="hljs-number">1.0.201402</span>03
 </code></pre>
 <p>Vous remarquerez que le numéro de version est un peu spécial : il contient une
 date en place d’un numéro de patch. Cette date correspond à la dernière mise à
 jour de la base de données de <em>Can I Use</em>.</p>
 <h2 id="utilisation-d-autoprefixer">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/mise-en-place-autoprefixer/#utilisation-d-autoprefixer">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/#utilisation-d-autoprefixer">#</a>
       Utilisation d’autoprefixer
     </h2><pre><code class="lang-console"><span class="hljs-variable">$ </span>autoprefixer *.css
 </code></pre>
@@ -359,8 +359,8 @@ $ <span class="hljs-keyword">echo</span> <span class="hljs-string">"* { box-sizi
 </code></pre>
 <p>On peut donc essayer notre commande plus haut qui va remplir le fichier <code>prefixed.css</code></p>
 <p>Pour vérifier :</p>
-<pre><code class="lang-console">$ <span class="hljs-tag">cat</span> <span class="hljs-tag">prefixed</span><span class="hljs-class">.css</span>
-* <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">-webkit-box-sizing</span>:<span class="hljs-value">border-box</span></span>; <span class="hljs-rule"><span class="hljs-attribute">-moz-box-sizing</span>:<span class="hljs-value">border-box</span></span>; <span class="hljs-rule"><span class="hljs-attribute">box-sizing</span>:<span class="hljs-value">border-box}</span></span></span>
+<pre><code class="lang-console">$ cat prefixed.css
+* { -webkit-<span class="hljs-built_in">box</span>-sizing:border-<span class="hljs-built_in">box</span>; -moz-<span class="hljs-built_in">box</span>-sizing:border-<span class="hljs-built_in">box</span>; <span class="hljs-built_in">box</span>-sizing:border-<span class="hljs-built_in">box</span>}
 </code></pre>
 <p>On a bien eu des préfixes ajoutés en fonction de notre demande (bon rien pour IE
 qui n’est pas passé par une version préfixé)</p>
@@ -376,12 +376,12 @@ Faites un tour sur la <a href="http://caniuse.com/usage_table.php" >page dédié
 <li><a href="https://github.com/mikaeljorhult/brackets-autoprefixer" >plugin autoprefixer pour Brackets</a></li>
 </ul>
 <figure>
-  <img src="http://0.0.0.0:4242/posts/css/mise-en-place-autoprefixer/autoprefixer.gif" alt="sublime text autoprefixer preview">
+  <img src="http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/autoprefixer.gif" alt="sublime text autoprefixer preview">
   <figcaption>Intégration dans Sublime Text</figcaption>
 </figure>
 
 <h2 id="automatisation-d-autoprefixer-autoception">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/mise-en-place-autoprefixer/#automatisation-d-autoprefixer-autoception">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/#automatisation-d-autoprefixer-autoception">#</a>
       Automatisation d’autoprefixer (autoception)
     </h2><p>Bien entendu on va pas se taper la commande à la main tout le temps hein…
 Il nous faut automatiser nos processus. Sans quoi on perd du temps, et
@@ -404,7 +404,7 @@ suivantes:</p>
 implémentations.</p>
 <p>Cela dit, je vais vous montrer quelques cas d’utilisations:</p>
 <h3 id="make">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/mise-en-place-autoprefixer/#make">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/#make">#</a>
       Make
     </h3><p>Là c’est facile, tout bon développeur doit avoir <code>make</code> sur sa machine (sinon
 c’est que t’es pas développeur, je sais pas trop ce que tu fais ici du coup).</p>
@@ -439,7 +439,7 @@ vous n’avez pas encore <a href="http://www.24joursdeweb.fr/2013/automatisez-vo
 via des outils comme <a href="http://gulpjs.com/" >Gulp</a> ou <a href="http://gruntjs.com/" >Grunt</a>.</p>
 <p>Passons justement à ces solutions plus sérieuses.</p>
 <h3 id="autoprefixer-avec-gulp">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/mise-en-place-autoprefixer/#autoprefixer-avec-gulp">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/#autoprefixer-avec-gulp">#</a>
       Autoprefixer avec Gulp
     </h3><p>Je ne vais pas trop rentrer dans les détails de Gulp (ce n’est pas le sujet ici).
 Voici cependant une exemple assez bref et compréhensible pour commencer, avec
@@ -458,7 +458,7 @@ une seule écriture sur le système de fichier (contrairement à la solution Gru
 <span class="hljs-keyword">var</span> csso = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-csso"</span>)
 
 <span class="hljs-comment">// css task: sass, autoprefixer et csso si --production</span>
-gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
   gulp.src(<span class="hljs-string">"./src/css/*.scss"</span>)
     <span class="hljs-comment">// it’s me, Mario</span>
     .pipe(plumber())
@@ -482,8 +482,8 @@ gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"
     <span class="hljs-comment">//.pipe(livereload(livereloadServer))</span>
 })
 
-gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> </span>{
+gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"styles"</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  gulp.watch(<span class="hljs-string">"./src/css/**/*"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
     gulp.run(<span class="hljs-string">"styles"</span>)
   })
 })
@@ -498,10 +498,10 @@ gulp.task(<span class="hljs-string">"dev"</span>, [<span class="hljs-string">"st
 <span class="hljs-comment">// $ gulp dev</span>
 </code></pre>
 <h3 id="autoprefixer-avec-grunt">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/mise-en-place-autoprefixer/#autoprefixer-avec-grunt">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/#autoprefixer-avec-grunt">#</a>
       Autoprefixer avec Grunt
     </h3><p>Voici un petit Gruntfile avec la même configuration que ci dessus</p>
-<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(grunt)</span> </span>{
+<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">grunt</span>) </span>{
 <span class="hljs-pi">  "use strict"</span>;
 
   grunt.loadNpmTasks(<span class="hljs-string">"grunt-contrib-sass"</span>)
@@ -576,7 +576,7 @@ De plus la version Grunt sera plus longue car nous aurons 3 lectures / écriture
 <p><em>Notez que bien entendu dans notre exemple précédent, nous pouvons remplacer Sass
 par un autre pré / post-processeur.</em></p>
 <h3 id="autoprefixer-avec-stylus">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/mise-en-place-autoprefixer/#autoprefixer-avec-stylus">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/#autoprefixer-avec-stylus">#</a>
       Autoprefixer avec Stylus
     </h3><p>Dans les exemples précédents, j’ai montré une solution classique avec Sass.
 Mais voici complètement autre chose: <em>autoprefixer</em> peut s’utiliser en “plugin” Stylus.</p>
@@ -586,11 +586,11 @@ Voilà ce qu’on aurait en cli :</p>
 $ stylus -u autoprefixer-stylus -o <span class="hljs-keyword">index</span>.css <span class="hljs-keyword">index</span>.styl</span>
 </code></pre>
 <h4 id="avec-grunt">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/mise-en-place-autoprefixer/#avec-grunt">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/#avec-grunt">#</a>
       Avec Grunt
     </h4><p>Il suffira d’utiliser donc l’option <code>use</code> dans votre configuration.</p>
 <h4 id="avec-gulp">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/css/mise-en-place-autoprefixer/#avec-gulp">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/mise-en-place-autoprefixer/#avec-gulp">#</a>
       <del>Avec Gulp</del>
     </h4><p>La façon de faire de gulp, via des streams pour éviter la lecture / écriture multiple fait que le plugin
 <em>autoprefixer-stylus</em> est vide de sens.

@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Array.reduce par l&#x27;exemple</title><link rel="stylesheet" href="/index.7f480d99.css"><link rel="alternate" href="/feed.xml" title="Array.reduce par l&#x27;exemple" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Array.reduce par l&#x27;exemple"><meta name="twitter:creator" content="@b_lionel"><meta property="og:title" content="Array.reduce par l&#x27;exemple"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>Array.reduce par l&#x27;exemple</title><link rel="stylesheet" href="/index.b0b31339.css"><link rel="alternate" href="/feed.xml" title="Array.reduce par l&#x27;exemple" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Array.reduce par l&#x27;exemple"><meta name="twitter:creator" content="@b_lionel"><meta property="og:title" content="Array.reduce par l&#x27;exemple"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -323,7 +323,7 @@ fonction sur un accumulateur et chaque valeur d’une liste (de la gauche
 vers la droite) de sorte à le réduire à une seule valeur.</p>
 </blockquote>
 <h2 id="le-classique-operer-une-somme-sur-un-tableau">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/array-reduce/#le-classique-operer-une-somme-sur-un-tableau">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/array-reduce/#le-classique-operer-une-somme-sur-un-tableau">#</a>
       Le classique: Opérer une somme sur un tableau
     </h2><p>C’est souvent l’exemple qui illustre le plus les documentations. <code>Array#reduce</code>
 va permettre de parcourir le tableau, et pour chaque élément, appeler une fonction
@@ -334,7 +334,7 @@ avec les paramètres suivants :</p>
 <li>l’index de l’élément courant.</li>
 <li>le tableau sur lequel on est entrain d’itérer</li>
 </ul>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> sum = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>].reduce( <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">( memo, val)</span></span>{
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> sum = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>].reduce( <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> memo, val</span>)</span>{
   <span class="hljs-keyword">return</span> memo + val;
 });
 </code></pre>
@@ -342,7 +342,7 @@ avec les paramètres suivants :</p>
  Cet argument sera utilisé comme accumulateur lors de la première exécution.
  Et c’est justement cela qui est intéressant et qui rend le reduce plutôt pratique.</p>
 <h2 id="chercher-remplacer-avec-plusieurs-motifs">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/array-reduce/#chercher-remplacer-avec-plusieurs-motifs">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/array-reduce/#chercher-remplacer-avec-plusieurs-motifs">#</a>
       Chercher/remplacer avec plusieurs motifs
     </h2><p>Imaginons que vous souhaitiez appliquer plusieurs opérations de rechercher/remplacer
 sur une chaine de caractère. Si vous avez une liste de motifs et leur valeur correspondante,
@@ -350,12 +350,12 @@ sur une chaine de caractère. Si vous avez une liste de motifs et leur valeur co
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> input = <span class="hljs-string">"I'm %USER% and I live in %COUNTRY%"</span>
 <span class="hljs-keyword">var</span> data = [{token:<span class="hljs-string">'%USER%'</span>, value:<span class="hljs-string">'lionel'</span>}, {token:<span class="hljs-string">'%COUNTRY%'</span>, value: <span class="hljs-string">'France'</span>}]
 
-<span class="hljs-keyword">var</span> output = data.reduce( <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(memo, item)</span></span>{
+<span class="hljs-keyword">var</span> output = data.reduce( <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">memo, item</span>)</span>{
   <span class="hljs-keyword">return</span> memo.replace(item.token, item.value);
 }, input);
 </code></pre>
 <h2 id="realiser-un-groupby">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/array-reduce/#realiser-un-groupby">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/array-reduce/#realiser-un-groupby">#</a>
       Réaliser un groupBy
     </h2><p>Reduce peut aussi nous permettre d’effectuer des manipulations comme des groupBy
  sur un tableau (bon avec l’aide de petits helpers).</p>
@@ -371,13 +371,13 @@ site et par famille de navigateurs. Nous aimerions pouvoir grouper les résultat
   {<span class="hljs-string">"site"</span>:<span class="hljs-string">"microsoft.fr"</span>,<span class="hljs-string">"browser"</span>:<span class="hljs-string">"FireFox"</span>,<span class="hljs-string">"value"</span>:<span class="hljs-string">"20%"</span>},
 ];
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareSite</span><span class="hljs-params">(site, item)</span></span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareSite</span>(<span class="hljs-params">site, item</span>)</span>{
   <span class="hljs-keyword">return</span> site === item.site
 }
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">containSite</span><span class="hljs-params">(site, items)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">containSite</span>(<span class="hljs-params">site, items</span>) </span>{
   <span class="hljs-keyword">return</span> items.some( compareSite.bind(<span class="hljs-literal">null</span>, site) )
 }
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span><span class="hljs-params">(memo, item)</span></span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span>(<span class="hljs-params">memo, item</span>)</span>{
   <span class="hljs-keyword">var</span> site = memo.filter( containSite.bind(<span class="hljs-literal">null</span>, item.site) );
   <span class="hljs-keyword">if</span> (site.length &gt; <span class="hljs-number">0</span>) {
     site[<span class="hljs-number">0</span>].push(item)
@@ -393,7 +393,7 @@ site et par famille de navigateurs. Nous aimerions pouvoir grouper les résultat
  qui aurait le rôle d’accumulateur et un Array.forEach :</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> results = {};
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span><span class="hljs-params">( item)</span></span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupBySite</span>(<span class="hljs-params"> item</span>)</span>{
   <span class="hljs-keyword">var</span> site = results.filter( containSite.bind(<span class="hljs-literal">null</span>, item.site) );
   <span class="hljs-keyword">if</span> (site.length &gt; <span class="hljs-number">0</span>) {
     site[<span class="hljs-number">0</span>].push(item)
@@ -407,17 +407,17 @@ stats.forEach( groupBySite );
 <p>Mais ici, la fonction <code>groupBySite</code> devient bien moins ré-utilisable car elle
 dépend directement de la variable results, déclarée au dessus.</p>
 <h3 id="a-noter">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/array-reduce/#a-noter">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/array-reduce/#a-noter">#</a>
       À noter
     </h3><p>L’utilisation de  <code>Function.bind</code> nous permet de réutiliser les fonctions <code>compareSite</code>
 et <code>containSite</code> en fixant leur premier paramètre. Ainsi <code>compareSite.bind(null, &#39;mozilla.fr&#39;)</code> équivaut à :</p>
-<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareMozilla</span><span class="hljs-params">(item)</span></span>{
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareMozilla</span>(<span class="hljs-params">item</span>)</span>{
   <span class="hljs-keyword">return</span> <span class="hljs-string">"mozilla.fr"</span> === item.site;
 }
 </code></pre>
 <p>D’ailleurs, on pourrait assez simplement rendre <code>groupBySite</code> générique pour la réutiliser avec un <code>groupByBrowser</code>.</p>
 <h2 id="manipuler-la-structure-des-donnees">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/array-reduce/#manipuler-la-structure-des-donnees">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/array-reduce/#manipuler-la-structure-des-donnees">#</a>
       Manipuler la structure des données
     </h2><p><code>Array#reduce</code> peut aussi permettre de manipuler la structure de vos données et pouvoir la modifier.
 Par exemple, voici une liste de sites avec, pour chaque site, le pourcentage de visite par navigateur.
@@ -441,7 +441,7 @@ résultats par type de navigateur plutôt que par site. Là encore <code>Array#r
       ]
     };
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupByBrowser</span><span class="hljs-params">( site, memo, browser)</span></span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">groupByBrowser</span>(<span class="hljs-params"> site, memo, browser</span>)</span>{
   <span class="hljs-keyword">if</span> (!memo[browser.name]){
     memo[browser.name] = [];
   }
@@ -449,7 +449,7 @@ résultats par type de navigateur plutôt que par site. Là encore <code>Array#r
   <span class="hljs-keyword">return</span> memo
 }
 
-<span class="hljs-keyword">var</span> results = <span class="hljs-built_in">Object</span>.keys(data).reduce( <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(memo, site)</span> </span>{
+<span class="hljs-keyword">var</span> results = <span class="hljs-built_in">Object</span>.keys(data).reduce( <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">memo, site</span>) </span>{
   <span class="hljs-keyword">return</span> data[site].reduce(groupByBrowser.bind(<span class="hljs-literal">null</span>, site), memo)
 }, {});
 </code></pre>
@@ -571,9 +571,9 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 </svg></span></a></div></div><p class="putainde-Author-bio">Développeur front-end indépendant et un peu bricoleur, les mains blanches, dans le plâtre dès la maternelle, les mains noires, dans le cambouis du vélo très vite après, les mains propres depuis, dans le code informatique…Et quand il code pas, il rêve à son prochain voyage en vélo.</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">6 contributeurs sur cette page</strong><div class="r-Grid putainde-Contributors-actions"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Contributors-action" href="http://github.com/putaindecode/putaindecode.fr/edit/master/content/posts/js/array-reduce/index.md">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Contributors-action" href="http://github.com/putaindecode/putaindecode.fr/blame/master/content/posts/js/array-reduce/index.md">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Contributors-action" href="http://github.com/putaindecode/putaindecode.fr/commits/master/content/posts/js/array-reduce/index.md">Historique</a></div></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
 (4 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="lionelB
 (1 commit)"><a href="http://lumographe.fr/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/160320?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Agmagor
-(1 commit)"><a href="http://agmagor.be" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/470997?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Macxim
-(1 commit)"><a href="https://github.com/Macxim" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1909957?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="kud
-(1 commit)"><a href="http://kud.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/655838?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="quentint
+(1 commit)"><a href="http://agmagor.be" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/470997?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="kud
+(1 commit)"><a href="http://kud.io" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/655838?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Macxim
+(1 commit)"><a href="https://github.com/Macxim" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1909957?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="quentint
 (1 commit)"><a href="http://toki-woki.net" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/349104?v=3&amp;s=128" alt=""></a></div></div><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></footer></div></div></article></div><div class="putainde-Footer"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of4"><p class="putainde-Footer-text">© 1970 - 2015 Putain de code !</p></div><div class="r-Grid-cell r-minM--2of4"><ul class="putainde-Footer-list"><li><a href="/feed.xml">Flux RSS</a></li><li><a href="/projets">Projets</a></li><li><a href="https://github.com/putaindecode/forum/issues">Forum</a></li><li><a href="https://github.com/putaindecode/" data-r-tooltip="GitHub" class="r-Tooltip r-Tooltip--top"><span class="SVGIcon SVGIcon--cleaned putainde-Icon"><?xml version="1.0" encoding="utf-8"?>
 
 

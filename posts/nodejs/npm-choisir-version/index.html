@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>npm: choisir la bonne version de ses dépendances</title><link rel="stylesheet" href="/index.7f480d99.css"><link rel="alternate" href="/feed.xml" title="npm: choisir la bonne version de ses dépendances" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="npm: choisir la bonne version de ses dépendances"><meta name="twitter:creator" content="@_kud"><meta property="og:title" content="npm: choisir la bonne version de ses dépendances"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>npm: choisir la bonne version de ses dépendances</title><link rel="stylesheet" href="/index.b0b31339.css"><link rel="alternate" href="/feed.xml" title="npm: choisir la bonne version de ses dépendances" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="npm: choisir la bonne version de ses dépendances"><meta name="twitter:creator" content="@_kud"><meta property="og:title" content="npm: choisir la bonne version de ses dépendances"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -311,7 +311,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 	/>
 </svg></span></a></nav></div></div></div><div class="putainde-Main"><article class="putainde-Post"><header><div class="putainde-Post-header"><h1 class="putainde-Title">npm: choisir la bonne version de ses dépendances</h1></div><div class="putainde-Post-metas"><span>Écrit par <span><a href="http://kud.io">kud</a><span></span></span></span><span>, </span><span class="putainde-Date"> le 12 mai 2014</span>. <span class="r-Tooltip r-Tooltip--top putainde-Post-readingTime" data-r-tooltip="Temps de lecture approximatif, sur une base de 250 mots par minute">Temps de lecture : environ 3 minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">npm</li><li class="putainde-Tag">javascript</li><li class="putainde-Tag">nodejs</li></ul></header><div class="r-Grid"><div class="r-Grid-cell r-all--8of12 putainde-Post-contents"><div class="putainde-Post-md"><div><p>Pas plus tard qu’hier, alors que je travaillais tranquillement, apparu soudainement un bug dans mon <em>workflow</em> de <em>build</em>. Il ne m’était plus possible avec <a href="https://github.com/gruntjs/grunt-contrib-clean" >grunt-contrib-clean</a> de supprimer des fichiers. Hmmm, ballot, car sans la suppression, mon <em>workflow</em> devenait tout bancal. Bien. Il me fallut remonter la rivière - comme souvent, en tant que développeur - afin de constater où était le bug. Je suis alors tombé sur <a href="https://github.com/isaacs/rimraf" >rimraf</a> (bon c’était pas bien loin) qui s’était vu être mis à jour il y a à peine 12 heures, comprenant un bug.</p>
 <h2 id="contexte">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/nodejs/npm-choisir-version/#contexte">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/nodejs/npm-choisir-version/#contexte">#</a>
       Contexte
     </h2><p>Bon, vous voyez le topo ?</p>
 <pre><code>{
@@ -322,19 +322,19 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 </span>}
 </code></pre><p><a href="https://github.com/gruntjs/grunt-contrib-clean" >grunt-contrib-clean</a> qui contient en <em>dependencies</em> <a href="https://github.com/isaacs/rimraf" >rimraf</a> avec une version bugguée. Oh la belle affaire. Oui car <code>~2.2.1</code> veut dire “<a href="https://github.com/isaacs/node-semver#ranges" >Raisonnablement proche de 2.2.1</a>“, ce qui se traduit par télécharger la dernière version en <code>2.2.x</code>, soit la <code>2.2.7</code> (celle bugguée) lorsque je mis à jour le package <a href="https://github.com/gruntjs/grunt-contrib-clean" >grunt-contrib-clean</a>.</p>
 <h2 id="le-hic">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/nodejs/npm-choisir-version/#le-hic">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/nodejs/npm-choisir-version/#le-hic">#</a>
       Le hic
     </h2><p>Une question m’est venue : comment faire en sorte de figer la version de <a href="https://github.com/isaacs/rimraf" >rimraf</a> qui est une dépendance de dépendance ?</p>
 <p>Ha ! Pas évident comme ça.</p>
 <p>J’ai d’abord essayé sans trop d’espoir de télécharger <a href="https://github.com/isaacs/rimraf" >rimraf</a> lui-même en <code>2.2.6</code> mais vu que chaque dépendance à ses propres dépendances et qu’elles ne se les partagent pas… c’était peine perdue.</p>
 <p>J’ai donc cherché, cherché, et je suis tombé sur <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html" >npm-shrinkwrap</a>: “Lock down dependency versions”. Bingo !</p>
 <h2 id="npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/nodejs/npm-choisir-version/#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/nodejs/npm-choisir-version/#npm-shrinkwrap-la-solution-pour-figer-vos-dependances-toutes-vos-dependances">#</a>
       npm-shrinkwrap, la solution pour figer vos depéndances, toutes vos dépendances
     </h2><p><a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html" >npm-shrinkwrap</a> va vous permettre de définir avec précision chaque version de chaque dépendance.</p>
 <p>Pour cela, faites d’abord un <code>npm install</code> (si vous avez évidemment un <code>package.json</code>) afin d’installer vos <code>node_modules</code>. Une fois cela fait, lancez <code>npm shrinkwrap</code> qui créera le fichier <code>npm-shrinkwrap.json</code> qui comprendra toutes les définitions de chaque dépendance.</p>
 <h3 id="figer-une-dependance-de-dependance">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/nodejs/npm-choisir-version/#figer-une-dependance-de-dependance">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/nodejs/npm-choisir-version/#figer-une-dependance-de-dependance">#</a>
       Figer une dépendance de dépendance
     </h3><p>Simple, regardez :</p>
 <pre><code>{
@@ -358,7 +358,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 <p>Bon, je ne connais pas tout par coeur non plus, npm-shrinkwrap vous écrira la totalité du fichier avec toutes les définitions mais j’ai volontairement tout supprimé et gardé uniquement la partie <a href="https://github.com/gruntjs/grunt-contrib-clean" >grunt-contrib-clean</a> car seule cette partie est à figer. Quand je dis supprimer, je parle réellement dans le fichier final, pas juste ici dans l’article.</p>
 <p>Vous aurez toute l’explication de npm-shrinkwrap sur la <a href="https://www.npmjs.org/doc/cli/npm-shrinkwrap.html" >documentation officielle [en]</a>.</p>
 <h2 id="choisir-la-bonne-strategie-de-version">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/nodejs/npm-choisir-version/#choisir-la-bonne-strategie-de-version">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/nodejs/npm-choisir-version/#choisir-la-bonne-strategie-de-version">#</a>
       Choisir la bonne stratégie de version
     </h2><p>Parce qu’il est important de savoir quelle version exacte nous souhaitons installer dans notre projet, il faut définir avec précisions ces versions dans <code>package.json</code>.</p>
 <p>Vous pouvez avoir <code>1.2.1</code> ou encore <code>~1.4.6</code> ou bien encore <code>^2.3.1</code>. Mais que veulent dire <code>^</code> ou <code>~</code> ?</p>
@@ -372,7 +372,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 <p>Bon. C’est bon ? Vous avez tout compris ? Okay, vous pouvez passer à <a href="/posts/nodejs/napa-ou-comment-telecharger-package-napa-package-json/" ><strong>napa</strong></a> maintenant qui vous aidera grandement sur le téléchargement de projets n’ayant pas de <code>package.json</code>.</p>
 <p>En ce qui concerne npm, je m’arrête là, et vous propose une petite solution afin d’augmenter la vitesse de vos installations de node modules.</p>
 <h2 id="bonus">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/nodejs/npm-choisir-version/#bonus">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/nodejs/npm-choisir-version/#bonus">#</a>
       Bonus
     </h2><p>Envie d’accélérer vos installations npm ? Je vous conseille <a href="https://github.com/vvo/npm-pkgr" >npm-pkgr</a>.</p>
 <p>Il hashera votre <code>package.json</code> pour savoir s’il a été modifié ou non, et en fonction de ça, il lancera <code>npm install</code> ou non. Sacré gain de temps (surtout si vous faites des <code>npm install</code> à chaque <em>deploy</em>).</p>

@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>La puissance de dnsmasq</title><link rel="stylesheet" href="/index.7f480d99.css"><link rel="alternate" href="/feed.xml" title="La puissance de dnsmasq" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="La puissance de dnsmasq"><meta name="twitter:creator" content="@_kud"><meta property="og:title" content="La puissance de dnsmasq"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>La puissance de dnsmasq</title><link rel="stylesheet" href="/index.b0b31339.css"><link rel="alternate" href="/feed.xml" title="La puissance de dnsmasq" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="La puissance de dnsmasq"><meta name="twitter:creator" content="@_kud"><meta property="og:title" content="La puissance de dnsmasq"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -311,7 +311,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 	/>
 </svg></span></a></nav></div></div></div><div class="putainde-Main"><article class="putainde-Post"><header><div class="putainde-Post-header"><h1 class="putainde-Title">La puissance de dnsmasq</h1></div><div class="putainde-Post-metas"><span>Écrit par <span><a href="http://kud.io">kud</a><span></span></span></span><span>, </span><span class="putainde-Date"> le 20 fév. 2014</span>. <span class="r-Tooltip r-Tooltip--top putainde-Post-readingTime" data-r-tooltip="Temps de lecture approximatif, sur une base de 250 mots par minute">Temps de lecture : environ 6 minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">dnsmasq</li><li class="putainde-Tag">macosx</li><li class="putainde-Tag">test</li><li class="putainde-Tag">dns</li><li class="putainde-Tag">serveur</li></ul></header><div class="r-Grid"><div class="r-Grid-cell r-all--8of12 putainde-Post-contents"><div class="putainde-Post-md"><div><p>Dernièrement, j’ai voulu accéder avec mon Smartphone à ma machine virtuelle (<em>VM</em>) de développement qui se trouve sur mon poste de travail (<em>machine ou poste hôte</em>). Ma machine virtuelle me permet de reproduire à l’identique la production afin d’avoir le moins de marge d’erreur possible entre la phase de développement et la phase de mise en production.</p>
 <p>A ce moment là, j’accédais à ma machine virtuelle à partir de mon poste via le fichier <em>hosts</em> comprenant ceci :</p>
-<pre><code><span class="hljs-number">192.168</span>.1.145 monsite.<span class="hljs-built_in">dev</span>
+<pre><code>192<span class="hljs-class">.168</span><span class="hljs-class">.1</span><span class="hljs-class">.145</span> <span class="hljs-tag">monsite</span><span class="hljs-class">.dev</span>
 </code></pre><p>Le problème est que seul mon poste est au courant de la résolution du nom de domaine de par cette méthode.</p>
 <p>Étant donné qu’il est laborieux de changer des <em>hosts</em> sur un appareil comme un téléphone et que je n’ai pas non plus envie de dupliquer cette modification sur chaque appareil, il me fallait trouver une solution généralisée.</p>
 <p>C’est là que <strong><a href="http://fr.wikipedia.org/wiki/Dnsmasq" >dnsmasq</a></strong> entre en jeu.</p>
@@ -319,7 +319,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 <p>Dnsmasq est un serveur léger pour fournir les services DNS, DHCP, Bootstrap Protocol et TFTP pour un petit réseau, voire pour un poste de travail. Il permet d’offrir un service de nommage des machines du réseau interne non intégrées au service de nommage global (i.e. le service DNS d’Internet). Le service de nommage est associé au service d’adressage de telle manière que les machines dont le bail DHCP est fourni par Dnsmasq peuvent avoir automatiquement un nom DNS sur le réseau interne. Le logiciel offre un service DHCP statique ou dynamique.</p>
 </blockquote>
 <h2 id="dnsmasq-le-serveur-dns-tout-petit">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/#dnsmasq-le-serveur-dns-tout-petit">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#dnsmasq-le-serveur-dns-tout-petit">#</a>
       dnsmasq, le serveur dns tout petit
     </h2><p><strong>dnsmasq</strong> va me permettre de faire plusieurs choses :</p>
 <ul>
@@ -330,7 +330,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 </ul>
 <p>Cependant, tout n’est pas si rose, je vais vous montrer pourquoi après.</p>
 <h3 id="partage-de-connexion">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/#partage-de-connexion">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#partage-de-connexion">#</a>
       Partage de connexion
     </h3><p>Je vous propose dans un premier temps de partager votre connexion via le Wifi sous Mac OS X afin :</p>
 <ul>
@@ -338,7 +338,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 <li>d’utiliser le serveur dns (dnsmasq) que vous allez monter</li>
 </ul>
 <p>Pour cela, il suffit de faire : <code>System Preferences &gt; Sharing &gt; Internet Sharing</code> puis choisir <code>Ethernet</code> en source, et <code>Wifi</code> en sortie. (Je vous conseille d’ailleurs de protéger votre Wifi avec une clé WPA2).</p>
-<figure><img src="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/macosx-network-sharing.png" alt=""></figure>
+<figure><img src="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/macosx-network-sharing.png" alt=""></figure>
 
 <p><em>Ici, c’est USB Ethernet en source car je suis sur un Mac Book Air donc aucun port ethernet natif mais choisissez Ethernet si possible.</em></p>
 <p>Une fois que le partage de connexion via Wifi est activé, vous pouvez vous y connecter avec votre smartphone (ou tablette).</p>
@@ -346,15 +346,15 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 <p>C’est alors un autre réseau que le réseau interne à la boite en <code>192.168.1.x</code>.</p>
 <p>Notez aussi que la machine hôte, faisant bridge, donne les informations en cascade aux appareils connectés. Ce que vous spécifiez comme serveurs dns sur la machine hôte sera alors ceux utilisés par les appareils étant connectés à votre partage de réseau.</p>
 <h3 id="aaaah-dnsmasq">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/#aaaah-dnsmasq">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#aaaah-dnsmasq">#</a>
       Aaaah dnsmasq !
     </h3><p>On est sous Mac OS X, la vie est si simple, on installe <strong>dnsmasq</strong> via <strong>homebrew</strong>.</p>
 <h4 id="dnsmasq-via-homebrew">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/#dnsmasq-via-homebrew">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#dnsmasq-via-homebrew">#</a>
       dnsmasq via homebrew
-    </h4><pre><code>$ brew <span class="hljs-keyword">install</span> dnsmasq
+    </h4><pre><code>$ <span class="hljs-keyword">brew </span>install dnsmasq
 </code></pre><h4 id="configuration-de-dnsmasq">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/#configuration-de-dnsmasq">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#configuration-de-dnsmasq">#</a>
       configuration de dnsmasq
     </h4><p>Une fois installé, on copie la configuration :</p>
 <pre><code>$ cp <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/opt/</span>dnsmasq<span class="hljs-regexp">/dnsmasq.conf.example /u</span>sr<span class="hljs-regexp">/local/</span>etc<span class="hljs-regexp">/dnsmasq.conf</span>
@@ -381,13 +381,13 @@ no-hosts</span>
 </code></pre><p>Nous précisons dans un premier temps la résolution du nom de domaine <code>monsite.dev</code> (notez que c’est du wildcard, donc pas besoin de préciser les sous-domaines), puis nous indiquons que le serveur DNS marche sur toutes les IPs de la machine hôte et enfin nous indiquons que nous ne voulons pas prendre en compte le fichier <code>/etc/hosts</code> vu qu’on spécifie les résolutions via <code>address</code>.</p>
 <p>Cela permettra à terme de ne plus gérer le fichier <code>/etc/hosts</code> et de tout spécifier dans <code>dnsmasq.conf</code>.</p>
 <h4 id="lancer-dnsmasq-au-demarrage-de-la-machine">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/#lancer-dnsmasq-au-demarrage-de-la-machine">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#lancer-dnsmasq-au-demarrage-de-la-machine">#</a>
       lancer dnsmasq au démarrage de la machine
     </h4><p>On copie le fichier de démon dans le dossier qui va bien puis on lance le démon.</p>
-<pre><code><span class="hljs-variable">$ </span>sudo cp -fv /usr/local/opt/dnsmasq/*.plist /<span class="hljs-constant">Library/LaunchDaemons</span>
-<span class="hljs-variable">$ </span>sudo launchctl load /<span class="hljs-constant">Library/LaunchDaemons/</span>homebrew.mxcl.dnsmasq.plist
+<pre><code>$ sudo <span class="hljs-preprocessor">cp</span> -fv /usr/local/<span class="hljs-preprocessor">opt</span>/dnsmasq<span class="hljs-comment">/*.plist /Library/LaunchDaemons
+$ sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist</span>
 </code></pre><h4 id="utiliser-le-serveur-dnsmasq">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/#utiliser-le-serveur-dnsmasq">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#utiliser-le-serveur-dnsmasq">#</a>
       utiliser le serveur dnsmasq
     </h4><p>Etant donné que vous partagez votre connexion et que votre poste fait hôte, le serveur dns utilisé sera celui installé sur votre poste, donc rien à faire.</p>
 <p>Sinon :</p>
@@ -399,7 +399,7 @@ no-hosts</span>
 </ul>
 <p><em>(Sous Android)</em></p>
 <p><code>Wifi &gt; Press on the current connnection &gt; Modify network &gt; Show advanced options</code></p>
-<figure><img src="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/android-network-advanced.jpg" alt=""></figure>
+<figure><img src="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/android-network-advanced.jpg" alt=""></figure>
 
 <p>Mais quel intérêt car vous devrez faire cela sur tous vos appareils connectés</p>
 <ul>
@@ -455,7 +455,7 @@ no-hosts</span>
 </code></pre>
 <p><code>192.168.2.1</code> est l’adresse de votre machine hôte dans le réseau de partage.</p>
 <h2 id="oh-oui-j-oubliais-mac-os-x-peut-etre-lourd-parfois">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/env/la-puissance-de-dnsmasq/#oh-oui-j-oubliais-mac-os-x-peut-etre-lourd-parfois">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/env/la-puissance-de-dnsmasq/#oh-oui-j-oubliais-mac-os-x-peut-etre-lourd-parfois">#</a>
       Oh oui, j’oubliais, Mac OS X peut être lourd parfois
     </h2><p>Oui, quand vous créez un partage de connexion sur Mac OS X, il lance son propre serveur dns s’appelant <strong>_mdnsresponder</strong>. C’est le système <em>Bonjour</em> de iOS/Mac OS X permettant à n’importe quel appareil Apple de communiquer entre eux. Le problème c’est qu’il risque de marcher sur les pieds de <strong>dnsmasq</strong>.</p>
 <p>Faites donc un <code>$ sudo lsof -i :53</code> et vous pourrez éventuellement voir que <strong>_mdnsresponder</strong> est lancé aussi bien en ipv6 qu’en ipv4 sur le port 53. Cela vous empêchera de lancer <strong>dnsmasq</strong>.</p>

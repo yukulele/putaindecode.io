@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>ExternalInterface.call() de Flash (et Backbone), toute une histoire</title><link rel="stylesheet" href="/index.7f480d99.css"><link rel="alternate" href="/feed.xml" title="ExternalInterface.call() de Flash (et Backbone), toute une histoire" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="ExternalInterface.call() de Flash (et Backbone), toute une histoire"><meta name="twitter:creator" content="@_kud"><meta property="og:title" content="ExternalInterface.call() de Flash (et Backbone), toute une histoire"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui"><title>ExternalInterface.call() de Flash (et Backbone), toute une histoire</title><link rel="stylesheet" href="/index.b0b31339.css"><link rel="alternate" href="/feed.xml" title="ExternalInterface.call() de Flash (et Backbone), toute une histoire" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="ExternalInterface.call() de Flash (et Backbone), toute une histoire"><meta name="twitter:creator" content="@_kud"><meta property="og:title" content="ExternalInterface.call() de Flash (et Backbone), toute une histoire"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -309,13 +309,13 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 	c-4.952,6.024-11.06,10.275-18.323,12.751l-38.872,13.37l25.997,78.24l40.607-13.864
 	C427.67,242.795,431.468,242.134,435.099,242.134z M238.507,307.005l76.755-25.998l-25.998-77.993l-76.754,26.493L238.507,307.005z"
 	/>
-</svg></span></a></nav></div></div></div><div class="putainde-Main"><article class="putainde-Post"><header><div class="putainde-Post-header"><h1 class="putainde-Title">ExternalInterface.call() de Flash (et Backbone), toute une histoire</h1></div><div class="putainde-Post-metas"><span>Écrit par <span><a href="http://kud.io">kud</a><span></span></span></span><span>, </span><span class="putainde-Date"> le 5 déc. 2013</span>. <span class="r-Tooltip r-Tooltip--top putainde-Post-readingTime" data-r-tooltip="Temps de lecture approximatif, sur une base de 250 mots par minute">Temps de lecture : environ 3 minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">javascript</li><li class="putainde-Tag">backbone</li><li class="putainde-Tag">flash</li></ul></header><div class="r-Grid"><div class="r-Grid-cell r-all--8of12 putainde-Post-contents"><div class="putainde-Post-md"><div><figure class="putainde-Media putainde-Media--left"><img src="http://0.0.0.0:4242/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/occupyflash.png" alt=""></figure>
+</svg></span></a></nav></div></div></div><div class="putainde-Main"><article class="putainde-Post"><header><div class="putainde-Post-header"><h1 class="putainde-Title">ExternalInterface.call() de Flash (et Backbone), toute une histoire</h1></div><div class="putainde-Post-metas"><span>Écrit par <span><a href="http://kud.io">kud</a><span></span></span></span><span>, </span><span class="putainde-Date"> le 5 déc. 2013</span>. <span class="r-Tooltip r-Tooltip--top putainde-Post-readingTime" data-r-tooltip="Temps de lecture approximatif, sur une base de 250 mots par minute">Temps de lecture : environ 3 minutes</span></div><ul class="putainde-Tags putainde-Post-tags"><li class="putainde-Tag">javascript</li><li class="putainde-Tag">backbone</li><li class="putainde-Tag">flash</li></ul></header><div class="r-Grid"><div class="r-Grid-cell r-all--8of12 putainde-Post-contents"><div class="putainde-Post-md"><div><figure class="putainde-Media putainde-Media--left"><img src="http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/occupyflash.png" alt=""></figure>
 
 <p>Je voulais vous parler d’un bug qui m’a bien emmerdé récemment et comme j’aimerais que vous ne perdiez pas de temps avec cela, un article s’imposait.</p>
 <p><em>Note de la direction : j’y connais rien en Flash (et je ne crois pas avoir trop envie de connaître en fait).</em></p>
 <p>Dans la boite où je travaille, nous utilisons Flash en tant que lecteur vidéo étant donné qu’il est pour le moment très difficile de faire lire sur toutes les plateformes des vidéos au format <em>H.264</em> et/ou passant par du <em>HLS</em>. Longue histoire qui fera office d’un autre article. (Je dis ça à chaque fois, haha).</p>
 <h2 id="le-pitch">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/#le-pitch">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/#le-pitch">#</a>
       Le pitch
     </h2><p>Avec notre <em>flasheur</em> attitré, nous nous sommes mis en tête de créer un objet <em>event</em> qui permettrait au Flash de déclencher des évènements lorsqu’il le souhaite afin de communiquer avec l’application JavaScript et que celui-ci fasse en conséquence. Cet objet, nous l’avons appelé <code>App.FlashManager</code> et plus précisemment <code>App.FlashManager.Events</code> dans le cas des évènements. Nous utilisons <strong>Backbone.js</strong> pour gérer ce principe d’évènement mais vous en avez d’<a href="http://microjs.com/#event" >autres</a> de disponible. En pratique, voilà ce que ça donne :</p>
 <pre><code class="lang-javascript"><span class="hljs-comment">// on crée un objet vide</span>
@@ -326,7 +326,7 @@ _.extend(App.FlashManager.Events, Backbone.Events)
 </code></pre>
 <p>En soi, pas de souci, tout se passe bien à ce moment, nous avons un <a href="http://backbonejs.org/#Events" >objet d’évènement façon Backbone</a>. Il pourra alors s’écouter lui-même, écouter un autre objet, mais aussi déclencher des évènements.</p>
 <h2 id="cote-flash">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/#cote-flash">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/#cote-flash">#</a>
       Côté Flash
     </h2><p>La base est en place, maintenant on souhaite que le Flash déclenche un évènement. On passe par l’objet <code>ExternalInterface</code> :</p>
 <pre><code class="lang-javascript">ExternalInterface.call(<span class="hljs-string">"window.App.FlashManager.Events.trigger"</span>, <span class="hljs-string">"my-event"</span>)
@@ -334,11 +334,11 @@ _.extend(App.FlashManager.Events, Backbone.Events)
 </code></pre>
 <p>Et là, bug.</p>
 <h2 id="pourquoi-bug">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/#pourquoi-bug">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/#pourquoi-bug">#</a>
       Pourquoi bug ?
     </h2><p>Pour le moment, je ne sais pas vraiment. Je me pencherai plus sur le sujet dès que j’ai un peu de temps, mais ce que je sais, c’est que <code>ExtercalInterface.call()</code> ne s’attend pas à recevoir ce que <strong>Backbone.js</strong> lui propose. Lorsque vous faites <code>.trigger()</code>, <strong>Backbone.js</strong> renvoie l’<a href="https://github.com/jashkenas/backbone/blob/master/backbone.js#L144-L153" >objet en cours</a>, ce qui provoque un énooooorme bug dans le plugin Flash de votre navigateur.</p>
 <h2 id="la-solution-cote-javascript">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/#la-solution-cote-javascript">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/#la-solution-cote-javascript">#</a>
       La solution côté JavaScript
     </h2><p>Pour contrer cela, je vous propose la solution suivante qui est de ne pas utiliser directement l’objet <code>Backbone.Events|View</code> mais plutôt de passer par une interface, un objet proxy.</p>
 <p>Voici le schéma :</p>
@@ -357,7 +357,7 @@ App.InternalFlashManager.Events = {}
 
 _.extend(App.InternalFlashManager.Events, Backbone.Events)
 
-App.FlashManager.Events.trigger = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, opts)</span> </span>{
+App.FlashManager.Events.trigger = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">name, opts</span>) </span>{
     App.InternalFlashManager.Events.trigger(name, opts)
 
     <span class="hljs-comment">// Must return nothing not to loop JavaScript engine, important!</span>
@@ -365,11 +365,11 @@ App.FlashManager.Events.trigger = <span class="hljs-function"><span class="hljs-
 }
 </code></pre>
 <h2 id="oh-et">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/#oh-et">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/#oh-et">#</a>
       Oh et…
     </h2><p>…il existe une version ayant plus ou moins le même souci que moi disponible là : <a href="https://coderwall.com/p/e-8niw" >ExternalInterface#call in a deadly loop (<strong>flash</strong>toXML)</a>.</p>
 <h2 id="conclusion">
-      <a class="putainde-Title-anchor" href="http://0.0.0.0:4242/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/#conclusion">#</a>
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/externalinterface-call-flash-backbone-toute-une-histoire/#conclusion">#</a>
       Conclusion
     </h2><p>De manière générale (hors <strong>Backbone.js</strong>), lorsque vous utilisez <code>ExtercalInterface.call()</code>, faites en sorte que votre JavaScript retourne quelque chose de simple (un objet ayant que des attributs, pas de fonctions, ou encore un booléen ou un <em>integer</em>).</p>
 </div></div><footer class="putainde-Post-footer"><div><div class="putainde-Author undefined"><a href="http://kud.io" class="putainde-Avatar putainde-Author-picture"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/655838?v=3&amp;s=128" alt=""></a><div class="putainde-Author-description"><div class="putainde-Author-title"><h3 class="putainde-Author-name"><span class="putainde-WrittenBy">Écrit par </span><a class="putainde-Link" href="http://kud.io">kud</a></h3><div class="putainde-Author-social"><a href="http://kud.io" class="r-Tooltip r-Tooltip--top" data-r-tooltip="Website"><span class="SVGIcon SVGIcon--cleaned putainde-Icon"><?xml version="1.0" encoding="utf-8"?>
