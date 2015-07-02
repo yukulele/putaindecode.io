@@ -378,23 +378,22 @@ de fichiers</a>.</p>
 <h2 id="utilisation">
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/introduction-gulp/#utilisation">#</a>
       Utilisation
-    </h2><p>On part avec une tâche très simple : pré-processeur CSS <a href="http://www.myth.io" >Myth</a> et
-optimisation avec <a href="https://github.com/css/csso" >CSSO</a>.</p>
+    </h2><p>On part avec une tâche très simple : transpiler <a href="http://cssnext.io" >cssnext</a>.</p>
 <pre><code class="lang-console"><span class="hljs-variable">$ </span>mkdir putaindegulp &amp;&amp; cd putaindegulp
 <span class="hljs-variable">$ </span>npm init
-<span class="hljs-variable">$ </span>npm i -<span class="hljs-constant">D </span>gulp gulp-util gulp-plumber gulp-myth gulp-csso minimist
+<span class="hljs-variable">$ </span>npm i -<span class="hljs-constant">D </span>gulp gulp-util gulp-plumber gulp-cssnext gulp-csso minimist
 </code></pre>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp"</span>)
 <span class="hljs-keyword">var</span> gutil = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-util"</span>)
 <span class="hljs-keyword">var</span> plumber = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-plumber"</span>)
-<span class="hljs-keyword">var</span> myth = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-myth"</span>)
+<span class="hljs-keyword">var</span> cssnext = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-cssnext"</span>)
 <span class="hljs-keyword">var</span> csso = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-csso"</span>)
 <span class="hljs-keyword">var</span> options = <span class="hljs-built_in">require</span>(<span class="hljs-string">"minimist"</span>)(process.argv.slice(<span class="hljs-number">2</span>))
 
 gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
   gulp.src(<span class="hljs-string">"./src/css/*.css"</span>)
     .pipe(options.production ? plumber() : gutil.noop())
-    .pipe(myth({sourcemap: !options.production}))
+    .pipe(cssnext({sourcemap: !options.production}))
     .pipe(options.production ? csso() : gutil.noop())
     .pipe(gulp.dest(<span class="hljs-string">"./dist/css/"</span>))
 })
@@ -421,7 +420,7 @@ gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string"
 <span class="hljs-keyword">var</span> plumber = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-plumber"</span>)
 
   <span class="hljs-comment">// Ici, rien de magique, du plugin en veux-tu en voilà</span>
-<span class="hljs-keyword">var</span> myth = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-myth"</span>)
+<span class="hljs-keyword">var</span> cssnext = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-cssnext"</span>)
 <span class="hljs-keyword">var</span> csso = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-csso"</span>)
 
   <span class="hljs-comment">// ici on chope les options de la ligne de commande</span>
@@ -447,8 +446,10 @@ gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"
 
     <span class="hljs-comment">// Et là on pipe nos plugins</span>
     <span class="hljs-comment">// toujours en jouant avec les options si besoin</span>
-    .pipe(myth({sourcemap: !options.production}))
-    .pipe(options.production ? csso() : gutil.noop())
+    .pipe(cssnext({
+      compress: options.production,
+      sourcemap: !options.production
+    }))
 
     <span class="hljs-comment">// Super important, on convertit nos streams en fichiers</span>
     .pipe(gulp.dest(<span class="hljs-string">"./dist/css/"</span>))
@@ -465,42 +466,43 @@ gulp.task(<span class="hljs-string">"default"</span>, [<span class="hljs-string"
 
 <span class="hljs-comment">// Comme grunt, `gulp` sans argument lancera la tâche `default`.</span>
 </code></pre>
-<p>Bien entendu, vous avez déjà compris que si vous voulez remplacer Myth par Sass,
+<p>Bien entendu, vous avez déjà compris que si vous voulez remplacer cssnext par Sass,
 c’est l’histoire de 4 secondes.</p>
-<h2 id="_putain-de-code-_-approuve-gulp">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/introduction-gulp/#_putain-de-code-_-approuve-gulp">#</a>
-      <em>Putain de code !</em> approuve Gulp.
-    </h2><p>Ici on est carrément fan de Gulp. Il faut bien avouer que
+<p>Chez <em>Putain de code !</em> on a aimé Gulp. Il faut bien avouer que
 <a href="https://twitter.com/putaindecode/status/460868992396460032" >ça va vite</a>
-(encore plus appréciable lorsque l’on n’a pas de SSD) et que c’est plaisant à écrire.
+(encore plus appréciable lorsque l’on n’a pas de SSD) et que c’est plaisant à
+écrire comparé à Grunt.
 Pas de configurations pas spécialement verbeuse et trop espacée.
 Avec Gulp on se sent plus libre, moins contraint.
-Du coup, <strong>on a carrément fait notre site avec Gulp</strong>
+Du coup, on avait carrément refait notre site avec Gulp
 (puis au passage un petit refresh graphique tant qu’à faire).</p>
-<p>Pour aller plus loin, vous n’avez qu’à ouvrir notre <a href="https://github.com/putaindecode/putaindecode.fr/blob/master/gulpfile.js" >Gulpfile</a>
-et regarder nos <a href="https://github.com/putaindecode/putaindecode.fr/tree/master/tasks" >tasks</a>
-qui vont de <a href="https://github.com/putaindecode/putaindecode.fr/blob/master/tasks/clean.js" >la plus simple</a>
-à <a href="https://github.com/putaindecode/putaindecode.fr/blob/master/tasks/contributors.js" >la plus compliqué</a>.</p>
+<p><strong>Mise à jour: depuis nous avons simplifié encore simplifié notre process et nous
+nous sommes passé de Gulp.</strong></p>
+<p>Pour aller plus loin, vous n’avez qu’à ouvrir notre ancien
+<a href="https://github.com/putaindecode/putaindecode.fr/blob/6702dffed608cf6d03141f1dcdbb096a66ff7d8f/gulpfile.js" >Gulpfile</a>
+et regarder nos
+<a href="https://github.com/putaindecode/putaindecode.fr/tree/6702dffed608cf6d03141f1dcdbb096a66ff7d8f/tasks" >tasks</a>
+de l’époque qui vont de
+<a href="https://github.com/putaindecode/putaindecode.fr/blob/6702dffed608cf6d03141f1dcdbb096a66ff7d8f/tasks/clean.js" >la plus simple</a>
+à
+<a href="https://github.com/putaindecode/putaindecode.fr/blob/6702dffed608cf6d03141f1dcdbb096a66ff7d8f/tasks/contributors.js" >la plus compliqué</a>.</p>
 <p>Pour voir des tâches plus « real world example » je vous invite à regarder les tasks suivantes :</p>
 <ul>
-<li><a href="https://github.com/putaindecode/putaindecode.fr/blob/master/tasks/server.js" >server</a>,
+<li><a href="https://github.com/putaindecode/putaindecode.fr/blob/6702dffed608cf6d03141f1dcdbb096a66ff7d8f/tasks/server.js" >server</a>,
 le server de dev local avec livereload dedans ;</li>
-<li><a href="https://github.com/putaindecode/putaindecode.fr/blob/master/tasks/watch.js" >watch</a>,
+<li><a href="https://github.com/putaindecode/putaindecode.fr/blob/6702dffed608cf6d03141f1dcdbb096a66ff7d8f/tasks/watch.js" >watch</a>,
 le classique et si simple watcher ;</li>
-<li><a href="https://github.com/putaindecode/putaindecode.fr/blob/master/tasks/publish.js" >publish</a>,
+<li><a href="https://github.com/putaindecode/putaindecode.fr/blob/6702dffed608cf6d03141f1dcdbb096a66ff7d8f/tasks/deploy.js" >deploy</a>,
 la tâche pour publier le dossier <code>dist/</code> sur les <a href="https://pages.github.com/" >gh-pages</a> ;</li>
-<li><a href="https://github.com/putaindecode/putaindecode.fr/blob/master/tasks/icons.js" >icons</a>,
+<li><a href="https://github.com/putaindecode/putaindecode.fr/blob/6702dffed608cf6d03141f1dcdbb096a66ff7d8f/tasks/icons.js" >icons</a>,
 qui transforme des SVG en fontes d’icones avec le bout de CSS qui va bien ;</li>
-<li><a href="https://github.com/putaindecode/putaindecode.fr/blob/master/tasks/scripts-linting.js" >scripts-linting</a>,
+<li><a href="https://github.com/putaindecode/putaindecode.fr/blob/6702dffed608cf6d03141f1dcdbb096a66ff7d8f/tasks/scripts-linting.js" >scripts-linting</a>,
 qui vérifie la qualité du code ;</li>
-<li><a href="https://github.com/putaindecode/putaindecode.fr/blob/master/tasks/scripts.js" >scripts</a>,
+<li><a href="https://github.com/putaindecode/putaindecode.fr/blob/6702dffed608cf6d03141f1dcdbb096a66ff7d8f/tasks/scripts.js" >scripts</a>,
 du <a href="/posts/js/browserify-all-the-things/" >browserify</a> pour nos JS côté client ;</li>
-<li><a href="https://github.com/putaindecode/putaindecode.fr/blob/master/tasks/stylesheets.js" >stylesheets</a>,
-notre tâche qui mélange (pour l’instant) Stylus et Rework (suite à une rixe à la récré, on n’a pas réussi à se mettre d’accord, donc chacun à rajouté son morceau) ;</li>
+<li><a href="https://github.com/putaindecode/putaindecode.fr/blob/6702dffed608cf6d03141f1dcdbb096a66ff7d8f/tasks/stylesheets.js" >stylesheets</a>,
+notre tâche pour coder des css du futur ;</li>
 </ul>
-<p>Bien entendu, si vous ne comprenez pas certaines parties, n’hésitez pas à
-<a href="https://github.com/putaindecode/putaindecode.fr/issues/new" >ouvrir une issue</a>
-pour demander des explications.</p>
 <h2 id="vous-reprendrez-bien-un-peu-de-gulp-pardon">
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/introduction-gulp/#vous-reprendrez-bien-un-peu-de-gulp-pardon">#</a>
       Vous reprendrez bien un peu de… Gulp* ! Pardon.
@@ -638,7 +640,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 	C197,349.352,195.265,350.583,193.125,350.583z"/>
 
 </svg></span></a></div></div><p class="putainde-Author-bio">Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.  Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">5 contributeurs sur cette page</strong><div class="r-Grid putainde-Contributors-actions"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Contributors-action" href="http://github.com/putaindecode/putaindecode.fr/edit/master/content/posts/js/introduction-gulp/index.md">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Contributors-action" href="http://github.com/putaindecode/putaindecode.fr/blame/master/content/posts/js/introduction-gulp/index.md">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Contributors-action" href="http://github.com/putaindecode/putaindecode.fr/commits/master/content/posts/js/introduction-gulp/index.md">Historique</a></div></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
-(10 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Nickdouille
+(11 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Nickdouille
 (1 commit)"><a href="http://sojavascript.com" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/2188628?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="madx
 (1 commit)"><a href="http://madx.me/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/5723?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Macxim
 (1 commit)"><a href="http://macx.im" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1909957?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="nfroidure
