@@ -5,10 +5,494 @@
         <description><![CDATA[Putain de code !]]></description>
         <link>http://putaindecode.fr</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Thu, 16 Jul 2015 10:01:10 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 21 Jul 2015 15:49:02 GMT</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"/>
         <language><![CDATA[fr]]></language>
         <category><![CDATA[code]]></category>
+        <item>
+            <title><![CDATA[Premier exemple d'utilisation de Webpack]]></title>
+            <description><![CDATA[<p>Si vous êtes intéressé par
+<a href="/posts/webpack" >les problématiques que peut résoudre Webpack</a>,
+vous serez sûrement intéressé par cette petite configuration détaillée, qui vous
+permettra de faire vos premiers pas avec cet outil.</p>
+<p>Nous allons mettre en place une configuration assez basique qui
+va permettre :</p>
+<ul>
+<li>d’avoir une partie JavaScript pour votre application/site web,</li>
+<li>de consommer vos CSS en tant que modules,</li>
+<li>de consommer les assets de vos CSS en tant que module (images, fonts…),</li>
+<li>d’avoir un fichier JS, un fichier CSS et vos assets à côté.</li>
+</ul>
+<p><em>Note: si vous êtes sur une application JavaScript, vous ne serez pas obligé
+d’utiliser la partie pour l’extraction de la CSS en fichier.
+En effet, Webpack consomme tout ce qui est possible en JavaScript.
+Les styles peuvent être introduit via des balises <code>&lt;styles&gt;</code> dynamiquement
+(via le <code>style-loader</code>).
+L’extraction prend du sens si vous avez un rendu serveur et que vous souhaitez
+avoir des styles au plus tôt, via une CSS dediée.</em></p>
+<p>La configuration de Webpack se fait via un fichier JavaScript.
+Par défaut, il doit être nommé <code>webpack.config.js</code>.
+Ne tournons pas autour du pot et voyons un fichier de configuration
+correspondant à ce que nous venons de décrire.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">"path"</span>)
+<span class="hljs-keyword">var</span> webpack = <span class="hljs-built_in">require</span>(<span class="hljs-string">"webpack"</span>)
+<span class="hljs-keyword">var</span> ExtractTextPlugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">"extract-text-webpack-plugin"</span>)
+
+<span class="hljs-comment">// on peut passer à notre commande de build l'option --production</span>
+<span class="hljs-comment">// on récupère sa valeur ici en tant que booléen</span>
+<span class="hljs-keyword">var</span> production = process.argv.indexOf(<span class="hljs-string">"--production"</span>) &gt; -<span class="hljs-number">1</span>
+
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-comment">// nos points d'entrée, par clé</span>
+  <span class="hljs-comment">// (on peut en définir plusieurs)</span>
+  entry: {
+    index: [
+      <span class="hljs-string">"./src/index.js"</span>,
+    ],
+  },
+
+  <span class="hljs-comment">// description de nos sorties</span>
+  output: {
+    <span class="hljs-comment">// ./dist</span>
+    path: path.join(__dirname, <span class="hljs-string">"dist"</span>),
+    <span class="hljs-comment">// nous aurons (vu notre point d'entrée)</span>
+    <span class="hljs-comment">// - dist/index.js</span>
+    filename: <span class="hljs-string">"[name].js"</span>,
+    <span class="hljs-comment">// notre base url</span>
+    publicPath: <span class="hljs-string">"/"</span>,
+  },
+
+  resolve: {
+    <span class="hljs-comment">// ici, on peut ajouter nos extensions à résoudre lors d'un require()</span>
+    <span class="hljs-comment">// on va rester simple en n'autorisant rien, ou .js(on) (comme en nodejs et</span>
+    <span class="hljs-comment">// browserify)</span>
+    extensions: [
+      <span class="hljs-string">""</span>,
+      <span class="hljs-string">".js"</span>,
+      <span class="hljs-string">".json"</span>,
+    ],
+  },
+
+  <span class="hljs-built_in">module</span>: {
+    <span class="hljs-comment">// liste de nos loaders</span>
+    <span class="hljs-comment">// ! \\ à noter que les loaders sont exécutés en ordre inverse</span>
+    <span class="hljs-comment">// les premiers en dernier, en utilisant la sortie du suivant</span>
+    loaders: [
+      {
+        <span class="hljs-comment">// pour tous les fichiers qui finissent par .js</span>
+        test: <span class="hljs-regexp">/\.js$/</span>,
+        <span class="hljs-comment">// ... en prenant bien soin d'exclure les node_modules</span>
+        exclude: <span class="hljs-regexp">/node_modules/</span>,
+
+        <span class="hljs-comment">// on ajoute les loaders babel et eslint</span>
+        <span class="hljs-comment">// à vous de voir ce que vous aurez besoin</span>
+        <span class="hljs-comment">// ("rien" est une option tout à fait valable si vous codez en ES5</span>
+        <span class="hljs-comment">// sans linter)</span>
+        loaders: [
+          <span class="hljs-string">"babel"</span>,
+          <span class="hljs-string">"eslint"</span>,
+        ],
+
+        <span class="hljs-comment">// à noter que l'on peut définir les loaders de cette façon</span>
+        <span class="hljs-comment">// loader: "babel!eslint",</span>
+
+        <span class="hljs-comment">// à noter aussi, Webpack va tenter de loader des modules ayant dans</span>
+        <span class="hljs-comment">// leur nom "-loader". Si ce n'était pas le cas, ou que votre loader</span>
+        <span class="hljs-comment">// ne comporte pas -loader, vous pouvez spécifier le nom entier :</span>
+        <span class="hljs-comment">// loader: "babel-loader!eslint-loader",</span>
+      },
+      <span class="hljs-comment">// à l'inverse de node et browserify, Webpack ne gère pas les json</span>
+      <span class="hljs-comment">// nativement, il faut donc un loader pour que cela soit transparent</span>
+      {
+        test: <span class="hljs-regexp">/\.json$/</span>,
+        loaders: [
+          <span class="hljs-string">"json"</span>,
+        ],
+      },
+      {
+        <span class="hljs-comment">// pour nos CSS, on va utiliser un plugin un peu particulier</span>
+        <span class="hljs-comment">// qui va nous permettre de require() nos CSS comme un module</span>
+        <span class="hljs-comment">// mais qui va tout de même permettre de sortir tout cela dans un seul</span>
+        <span class="hljs-comment">// fichier .css pour la production</span>
+        <span class="hljs-comment">// (selon un paramètre qu'on définira ci-dessous)</span>
+        test: <span class="hljs-regexp">/\.css$/</span>,
+        <span class="hljs-comment">// cette méthode possède 2 paramètres :</span>
+        <span class="hljs-comment">// + loaders à utiliser si ce module est désactivé</span>
+        <span class="hljs-comment">// + loaders à utiliser dans tous les cas en amont</span>
+        loader: ExtractTextPlugin.extract(
+          <span class="hljs-comment">// si on extract pas, on utilisera le loader suivant</span>
+          <span class="hljs-comment">// (ce module chargera les styles dans des tags &lt;style&gt;, suffisant</span>
+          <span class="hljs-comment">// en mode dév)</span>
+          <span class="hljs-comment">// en production vous devrez vous charger d'utiliser un</span>
+          <span class="hljs-comment">// &lt;link rel="stylesheet" ...</span>
+          <span class="hljs-string">"style"</span>,
+          <span class="hljs-comment">// dans tous les cas, on utilisera cssnext ainsi que le loader CSS</span>
+          <span class="hljs-comment">// de base (celui-ci permet de gérer les ressources dans le CSS</span>
+          <span class="hljs-comment">// en temps que modules: images, font etc)</span>
+          <span class="hljs-string">"css!cssnext"</span>
+        ),
+        <span class="hljs-comment">// Si vous n'avez pas besoin d'avoir une CSS à part, vous pouvez</span>
+        <span class="hljs-comment">// simplement supprimer la partie "loader" ci-dessus et utiliser plutôt</span>
+        <span class="hljs-comment">// loaders: [</span>
+        <span class="hljs-comment">//  "style",</span>
+        <span class="hljs-comment">//  "css",</span>
+        <span class="hljs-comment">//  "cssnext",</span>
+        <span class="hljs-comment">// ],</span>
+        <span class="hljs-comment">// À noter que dans ce cas, il vous faudra supprimer le plugin</span>
+        <span class="hljs-comment">// ExtractTextPlugin dans la liste plus bas</span>
+      },
+      <span class="hljs-comment">// pour la suite, on va rester simple :</span>
+      <span class="hljs-comment">// un require() en utilisant le file-loader retournera une string avec</span>
+      <span class="hljs-comment">// le nom du fichier et (le plus important) copiera le fichier suivant</span>
+      <span class="hljs-comment">// le paramètre "name" dans l'output.path que nous avons défini tout</span>
+      <span class="hljs-comment">// au début de notre configuration.</span>
+      <span class="hljs-comment">// Notez qu'il dégagera la partie context du nom lors du retour en string</span>
+      <span class="hljs-comment">// et la remplacera par le l'output.path défini pour la copie.</span>
+      {
+        <span class="hljs-comment">// on chargera tous les formats d'images qui nous intéressent en tant</span>
+        <span class="hljs-comment">// que fichiers.</span>
+        test: <span class="hljs-regexp">/\.(ico|jpe?g|png|gif)$/</span>,
+        loaders: [
+          <span class="hljs-string">"file?name=[path][name].[ext]&amp;context=./src"</span>,
+          <span class="hljs-comment">// Vous remarquerez ici la méthode utilisée pour définir</span>
+          <span class="hljs-comment">// des options pour les loaders. Il en existe d'autres avec les</span>
+          <span class="hljs-comment">// versions les plus récentes en utilisant la clé "query"</span>
+        ],
+      },
+      {
+        <span class="hljs-comment">// idem pour les fonts</span>
+        test: <span class="hljs-regexp">/\.(woff|ttf|otf|eot\?#.+|svg#.+)$/</span>,
+        loaders: [
+          <span class="hljs-string">"file?name=[path][name].[ext]&amp;context=./src"</span>,
+        ],
+      },
+      {
+        <span class="hljs-comment">// ici on se permet de loader des fichiers html et txt tels quels</span>
+        test: <span class="hljs-regexp">/\.(html|txt)$/</span>,
+        loaders: [
+          <span class="hljs-string">"file?name=[path][name].[ext]&amp;context=./src"</span>,
+        ],
+      },
+    ],
+  },
+
+  <span class="hljs-comment">// en plus des loaders, qui premettent eux de modifier et/ou d'exploiter le</span>
+  <span class="hljs-comment">// contenu des modules, nous avons des plugins, plus globaux au processus</span>
+  plugins: (
+    [
+      <span class="hljs-comment">// une partie importante dans notre cas : on active l'extraction CSS (en</span>
+      <span class="hljs-comment">// production seulement)</span>
+      <span class="hljs-keyword">new</span> ExtractTextPlugin(<span class="hljs-string">"[name].css"</span>, {disable: !production}),
+
+      <span class="hljs-comment">// ce plugin permet de transformer les clés passés en dur dans les</span>
+      <span class="hljs-comment">// modules ainsi vous pourrez faire dans votre code js</span>
+      <span class="hljs-comment">// if (__PROD__) { ... }</span>
+      <span class="hljs-keyword">new</span> webpack.DefinePlugin({
+        __PROD__: production
+      }),
+    ]
+    <span class="hljs-comment">// en production, on peut rajouter des plugins pour optimiser</span>
+    .concat(
+      production
+      ? [
+        <span class="hljs-comment">// ici on rajoute uglify.js pour compresser nos sorties</span>
+        <span class="hljs-comment">// (vous remarquerez que certain plugins sont directement livrés dans</span>
+        <span class="hljs-comment">// le package webpack).</span>
+        <span class="hljs-keyword">new</span> webpack.optimize.UglifyJsPlugin({
+          compress: {
+            warnings: <span class="hljs-literal">false</span>,
+          },
+        }),
+      ]
+      : []
+    )
+  ),
+
+  <span class="hljs-comment">// certains modules permettent de définir des options en dehors de la</span>
+  <span class="hljs-comment">// définition des loaders</span>
+  cssnext: {
+    sourcemap: !production,
+    compress: production,
+  },
+}
+</code></pre>
+<p><em>Ce fichier est à peu près ce que nous utilisons pour notre site à l’heure où
+est écrit cet article.</em></p>
+<p>Une fois Webpack mis en place, vous aurez bien moins l’impression de bricoler
+surtout quand il s’agit de consommer des assets de modules tiers (par exemple
+Font Awesome).</p>
+<p>Sachez que vous pouvez très facilement écrire vos propres loaders pour wrapper
+l’utilisation d’un outil qui n’aurait pas encore de loader.
+<a href="https://github.com/cssnext/cssnext-loader/blob/master/index.js" >Exemple du loader cssnext</a>.</p>
+<h2 id="utilisation">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/webpack/premier-exemple/#utilisation">#</a>
+      Utilisation
+    </h2><p>Il y a plusieurs façon d’utiliser maintenant notre configuration, la plus simple
+étant surement via CLI :</p>
+<pre><code class="lang-console"><span class="hljs-variable">$ </span>npm install webpack
+<span class="hljs-variable">$ </span>webpack
+</code></pre>
+<p>Cela devrait suffire à s’occuper de notre configuration. Cette commande comporte
+bien entendu tout un tas d’options qui correspondent souvent à ce que nous
+avons défini juste avant.
+Cela étant dit, il parait plus maintenable de gérer une fichier plutôt qu’une
+ligne de commande de 3 km.</p>
+<p>Vous devriez avoir ainsi tout le résultat dans <code>dist/</code>.</p>
+<p><em>Note: Si vous rencontrez des erreurs du type
+<code>Error: Cannot resolve module &#39;file&#39;</code>, c’est tout simplement que vous n’avez pas
+installé les loaders nécessaire. En l’occurence il faudrait installer le
+<code>file-loader</code>.</em></p>
+<p>Pour avoir tous les loaders nécessaires comme dans l’exemple ci-dessus:</p>
+<pre><code class="lang-console">$ npm <span class="hljs-tag">i</span> -D babel-loader eslint-loader babel-eslint
+$ npm <span class="hljs-tag">i</span> -D json-loader
+$ npm <span class="hljs-tag">i</span> -D style-loader css-loader cssnext-loader
+$ npm <span class="hljs-tag">i</span> -D file-loader
+</code></pre>
+<p><em>Note à propos de babel et eslint: pour le moment, il vous faudra spécifier dans
+votre configuration eslint: <code>parser: babel-eslint</code>.</em></p>
+<p>Il y a tout un tas de façon d’utiliser Webpack via une tripotée de plugins
+(Gulp, Grunt, etc.) mais nous allons voir justement ici comment ne pas avoir
+recours à ces solutions, ce qui nous permettra ainsi de s’alléger.</p>
+<h3 id="utilisation-en-developpment">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/webpack/premier-exemple/#utilisation-en-developpment">#</a>
+      Utilisation en développment
+    </h3><p>Webpack CLI possède une option <code>--watch</code> qui va surveiller les sources et mettre
+à jour tout le nécessaire à la moindre modification.
+À la différence de browserify, cette fonctionnalité est dans le core et très
+bien intégré.
+De plus, le cache de Webpack est plutôt bien foutu. La première compilation peut
+paraître un peu lente, mais la suite est vraiment au top.</p>
+<pre><code class="lang-console">$ webpack <span class="hljs-comment">--watch -d</span>
+</code></pre>
+<p>L’option <code>-d</code> permet d’activer les source maps.</p>
+<p>À côté de ces options, Webpack va plus loin.</p>
+<p>En développement, nous avons besoin de servir toutes les ressources que notre
+processus va gérer.
+Plutôt que d’utiliser le système de fichier classique, abusé par Grunt et tout
+de même utilisé par Gulp &amp; co, Webpack fournit un <code>webpack-dev-server</code>.</p>
+<p>Ce petit serveur local permettra de servir tout ce dont nous avons besoin
+(nos JS, CSS, images, etc.) sans avoir recours au système de fichiers.</p>
+<p>Comme pour la commande <code>webpack</code>, le serveur de développement propose aussi
+une CLI basée sur l’option <code>--watch</code> mais sans l’inconvénient de l’écriture sur
+disque :</p>
+<pre><code class="lang-console">$ webpack-dev-server <span class="hljs-comment">--content-base dist/</span>
+</code></pre>
+<p><em>Source: <a href="http://webpack.github.io/docs/webpack-dev-server.html" >http://webpack.github.io/docs/webpack-dev-server.html</a></em></p>
+<p>Une fois que votre serveur est démarré, pourrez tester que votre point d’entrée
+marche avec <code>http://localhost:8080/index.js</code>.</p>
+<p>Il existe bien entendu une API, que nous utilisons à l’heure actuelle sur notre
+site, afin d’ajuster notre configuration Webpack en développement, pour
+d’ajouter des fonctionnalités comme le “hot loading”.</p>
+<p>Vous avez à votre disposition
+<a href="https://github.com/putaindecode/putaindecode.fr/blob/2c1a8f23ec05768960617625f592ea30ed6e2062/scripts/webpack-dev-server.js" >notre script dev-server</a>
+(écrit en ES6/7), ainsi que son utilisation
+<a href="https://github.com/putaindecode/putaindecode.fr/blob/2c1a8f23ec05768960617625f592ea30ed6e2062/scripts/build.js#L154-L159" >dans notre build</a>.</p>
+<p><em>Note : pour avoir une éventuelle version plus à jour, regardez l’historique de
+ces fichiers au cas où nous ayons poussé des ajustements (ou remplacer le hash
+par “master” dans l’url et priez).</em></p>
+<h4 id="hot-re-loading">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/webpack/premier-exemple/#hot-re-loading">#</a>
+      Hot (re)loading
+    </h4><p>Ce serveur possède bien entendu des fonctionnalités similaires au classique
+“livereload”, appelé <em>hot mode</em> (ou hot loading).</p>
+<p>Tout comme pour le livereload, il faut intégrer dans sa page un script
+particulier. Il y a plusieurs façons de faire :</p>
+<ul>
+<li>intégrer <code>http://localhost:8080/webpack-dev-server.js</code> via un tag script</li>
+<li>ajouter <code>webpack/hot/dev-server</code> dans les tableaux des points d’entrées</li>
+</ul>
+<p><em>Source: <a href="http://webpack.github.io/docs/webpack-dev-server.html#hot-mode" >http://webpack.github.io/docs/webpack-dev-server.html#hot-mode</a></em></p>
+<p>Notre script dev-server référencé juste avant s’occupe d’ajouter la ressource
+automatiquement en mode dev.</p>
+<p>À la différence d’un simple livereload, ce hot loading permet des choses qu’on
+aurait jusqu’alors pas vraiment imaginées, comme du hot reload de JavaScript de
+composant React (sans rafraichissment complet de page, donc sans perte d’état).</p>
+<p><strong>Vous êtes invité à regarder la vidéo que vous trouverez sur la page du
+<a href="https://github.com/gaearon/react-hot-loader" >react-hot-loader</a>.</strong></p>
+<p>Nous n’irons pas plus loin sur ce hot mode, car il nécessiterait un articlé dédié
+(non pas que ce soit compliqué mais plus parce que c’est un sujet à part).</p>
+<h3 id="utilisation-en-production">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/webpack/premier-exemple/#utilisation-en-production">#</a>
+      Utilisation en production
+    </h3><pre><code class="lang-console">$ webpack <span class="hljs-comment">--production</span>
+</code></pre>
+<p>Notre configuration détecte l’option <code>--production</code> et ajuste déjà en
+conséquence.
+Il faut éventuellement utiliser la variable prévue pour ajuster vos loaders s’il
+propose des options d’optimisation.</p>
+<p>Maintenant, il n’y aura plus qu’à voir tout le résultat dans <code>dist/</code>.</p>
+<hr>
+<p>Nous avons vu ici un exemple assez simple qui peut être utilisé pour un site web
+ou une appplication simple.</p>
+<p>Une question se pose alors :</p>
+<blockquote>
+<p>À la vue de ce que peut gérer Webpack et ses loaders, est-il pertinent de
+continuer à utiliser des task runners pour nos assets et compagnie ?</p>
+</blockquote>
+<p><strong>La réponse est non.</strong> 😱</p>
+<p>Vous verrez assez rapidement que vous devriez pourvoir tout jeter à la poubelle.
+Sans trop de regrets, puisque Webpack va vous permettre de consommer tout ce que
+nous avions l’habitude de bricoler / copier / ajuster…</p>
+<p>Nous l’avons fait pour notre site, pourquoi pas vous ?</p>
+<p>Et notre interface n’as pas changé d’un poil puisque nous utilisons toujours les
+mêmes commandes via les
+<a href="https://docs.npmjs.com/misc/scripts" >npm scripts</a>:</p>
+<ul>
+<li><code>npm start</code> pour dév</li>
+<li><code>npm run build --production</code> avant de déployer en production.</li>
+</ul>
+<p>Il existe encore beaucoup de leviers à toucher dans le cas
+d’applications full JavaScript afin d’améliorer bien des points.</p>
+<p>Vous trouverez facilement tout un tas de
+<a href="https://duckduckgo.com/?q=webpack+boilerplate" >boilerplates Webpack</a>
+avec des améliorations diverses et variées selon vos besoins.</p>
+<p>Soyez curieux !</p>
+]]></description>
+            <link>http://putaindecode.fr/posts/webpack/premier-exemple/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/webpack/premier-exemple/</guid>
+            <pubDate>Tue, 21 Jul 2015 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Webpack]]></title>
+            <description><![CDATA[<h1 id="pourquoi-webpack">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/webpack/#pourquoi-webpack">#</a>
+      Pourquoi Webpack ?
+    </h1><p>Webpack a pour objectif de vous faciliter la vie, notamment en vous aidant à
+organiser <a href="/posts/js/etat-lieux-js-modulaire-front/" >votre application JS en modules</a>.
+Le projet est déjà très populaire, notamment dans la communauté React, ce qui
+parait logique vu qu’il s’agit de développer des composants.</p>
+<p>Webpack apporte à ce niveau des fonctionnalités intéressantes :</p>
+<ul>
+<li>disposer de toutes les ressources statiques (CSS, images, fontes) en tant que
+module,</li>
+<li>intégrer et de consommer des bibliothèques tierces très simplement en tant
+que module,</li>
+<li>séparer votre <code>build</code> en plusieurs morceaux, chargés à la demande,</li>
+<li>garder un chargement initial très rapide si besoin,</li>
+<li>personnaliser la plupart des étapes du processus,</li>
+<li>adapté pour les gros projets.</li>
+</ul>
+<p>Avant Webpack, nous avions beau avoir des super task-runners comme
+<a href="/posts/js/premiers-pas-avec-grunt" >Grunt</a>
+ou
+<a href="/posts/js/introduction-gulp" >Gulp</a>,
+il faut avouer qu’on bricolait quand même pas mal.</p>
+<p>Et vous avez sûrement mieux à faire que de devoir ajuster des configurations ou
+des définitions de tâches pour ajuster les copies d’images ou de fontes, ou
+encore ajuster des URL générées.
+Il y avait avec ces solutions une grande partie de rafistolage, où l’on se
+devait de faire très attention à la moindre réorganisation de code, sous peine
+de casser une partie du rendu.</p>
+<p>Prenons par exemple une image de fond déclarée en CSS via un
+<code>background: url(...)</code>.
+Qui vous préviendra lorsque celle-ci aura été supprimée ou déplacée,
+et que la référence n’est donc plus bonne ?
+Peut-être vos logs de serveur web ? En recherchant les erreurs HTTP 404…</p>
+<p>Vous avez la responsabilité de gérer vos tâches et leurs résultats tout en vous
+assurant du bon fonctionnement car vous êtes la glu entre tout ces morceaux.</p>
+<h1 id="qu-est-ce-que-webpack">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/webpack/#qu-est-ce-que-webpack">#</a>
+      Qu’est-ce que Webpack ?
+    </h1><p>Pas besoin de s’appeler Einstein pour comprendre les intentions de Webpack en
+interprétant le nom : web + pack. Faire un pack prêt pour le web.</p>
+<p>Nativement, Webpack s’occupe uniquement de ressources JavaScript.
+Webpack propose un système de <em>loader</em> qui permet de transformer tout et
+n’importe quoi en JavaScript (mais pas que).
+Ainsi, tout est consommable en tant que module.</p>
+<p>Webpack prend à charge la fonction <code>require()</code> (connu et utilisé dans node.js et
+browserify) et permet de définir des nouveaux comportements).</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> myModule = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./my-module.js"</span>)
+<span class="hljs-comment">// "classique" pour ceux qui utilisent node.js/browserify</span>
+
+<span class="hljs-comment">// nouveauté avec Webpack</span>
+<span class="hljs-keyword">var</span> myStyles = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./my-module.css"</span>)
+<span class="hljs-comment">// si vous utilisez le css-loader par exemple, toutes les directives url()</span>
+<span class="hljs-comment">// se comporteront comme des require(), ainsi, vous pourrez appliquer</span>
+<span class="hljs-comment">// des loaders sur tous vos assets et vous aurez des erreurs à la compilation</span>
+<span class="hljs-comment">// si une ressource est manquante.</span>
+
+<span class="hljs-comment">// vous pourrez aussi consommer des SVG en tant que chaînes (eg: raw-loader)</span>
+<span class="hljs-keyword">var</span> mySVG = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./my-module.svg"</span>)
+
+<span class="hljs-comment">// ou inclure des fichiers dans votre build (via file-loader)</span>
+<span class="hljs-built_in">require</span>(<span class="hljs-string">"index.html"</span>)
+</code></pre>
+<p>C’est cette partie qui est aujourd’hui la plus intéressante et la plus flexible.</p>
+<figure>
+  <img src="http://putaindecode.fr/posts/webpack/index.jpg" alt="">
+  <figcaption>
+    Webpack transforme une multitude de fichiers en lots par responsabilité
+  </figcaption>
+</figure>
+
+<p>Webpack va donc pouvoir s’occuper aussi bien de vos modules JavaScript
+(CommonJS, AMD, UMD…),
+mais aussi de <a href="https://github.com/css-modules/css-modules" >vos modules CSS</a>,
+de vos fichiers SVG, gif, png, etc. ainsi que potentiellement n’importe quel
+type de fichier pour peu que vous preniez le temps d’écrire un <em>loader</em>
+(rassurez vous, il existe déjà un loader pour tous les fichiers que vous
+manipulez couramment).</p>
+<p>En plus de cela, il a été pensé afin de permettre la séparation de votre pack
+(votre gros fichier JavaScript compilé) en plusieurs morceaux, selon vos
+besoins : vous pourrez ainsi ajuster la balance entre performance et lazy
+loading.</p>
+<p>Avec les solutions existantes, il n’est actuellement pas possible d’arriver
+facilement à ce que propose Webpack, pour ne pas dire difficilement.</p>
+<p>Il est possible d’avoir l’équivalent avec
+<a href="/posts/js/browserify-all-the-things" >browserify</a> comme l’a indiqué son auteur
+dans un post
+<a href="https://gist.github.com/substack/68f8d502be42d5cd4942" >browserify for Webpack users</a>
+(qui est une réponse à la ressource
+<a href="https://github.com/webpack/docs/wiki/webpack-for-browserify-users" >Webpack for browserify users</a>
+).</p>
+<p>Il est clair que cela n’est pas aussi simple qu’avec Webpack qui est beaucoup
+plus flexible de par sa conception et ses objectifs initiaux.</p>
+<p>Par exemple, browserify ne va pouvoir appliquer d’éventuelles transformations
+qu’au code local et donc pas dans <code>node_modules/*</code>.
+Cela peut être problématique et nous conduit forcément à finir par du
+bricolage si on veut consommer des assets de modules de manière transparente.</p>
+<p>Ne parlons pas du
+<a href="http://webpack.github.io/docs/hot-module-replacement-with-webpack.html" >hot loading</a>
+(remplacement de code à la volée)
+qui n’est pas du tout facile à mettre en place (pour le moment) avec
+autre chose que Webpack.</p>
+<h1 id="comment-integrer-webpack-dans-votre-workflow">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/webpack/#comment-integrer-webpack-dans-votre-workflow">#</a>
+      Comment intégrer Webpack dans votre workflow ?
+    </h1><p>Dans un premier temps vous pourrez facilement intégrer Webpack en replacement de
+<a href="/posts/js/browserify-all-the-things/" >browserify</a> ou d’une éventuelle
+concaténation via des plugins Gulp, Grunt, etc.</p>
+<p>Dans un second temps, vous pourrez très certainement remplacer une partie de vos
+autres tâches pour ajuster/copier/déplacer vos assets (CSS, images…) et
+ainsi réduire le code dédié à votre workflow. Il se pourrait alors que votre
+utilisation d’un task-runner soit maintenant si réduite que vous pourriez vous
+en passez en utilisant simplement
+<a href="http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/" >des scripts npm</a>.</p>
+<p>Si jamais vous êtes limité, <a href="/posts/shell/utilitaires-ligne-commande/" >vous pourrez bien entendu créer votre propre
+ commande</a>, qui sera réutilisable dans
+n’importe quel contexte.</p>
+<h1 id="webpack-en-pratique">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/webpack/#webpack-en-pratique">#</a>
+      Webpack en pratique
+    </h1><p>Quelques ressources pour vous y mettre :</p>
+<ul>
+<li>Un premier <a href="/posts/webpack/premier-exemple" >exemple détaillé de configuration et d’utilisation</a>
+basé sur notre retour d’expérience.</li>
+</ul>
+<p>En anglais :</p>
+<ul>
+<li><a href="http://webpack.github.io/docs/tutorials/getting-started/" >Tutoriel officiel</a></li>
+<li><a href="http://okonet.ru/viennajs-webpack-introduction/" >Slides d’introduction</a></li>
+<li><a href="https://github.com/petehunt/webpack-howto" >“How to” webpack</a></li>
+</ul>
+<p><a href="http://webpack.github.io/docs" >Webpack possède une documentation</a>
+assez fournie, mais pas vraiment facile à aborder lorsqu’on découvre le projet.
+Aussi n’hésitez pas à nous poser vos questions en commentaires.</p>
+]]></description>
+            <link>http://putaindecode.fr/posts/webpack/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/webpack/</guid>
+            <pubDate>Mon, 20 Jul 2015 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Les Dockerfiles]]></title>
             <description><![CDATA[<p>Dans <a href="/posts/docker/introduction-a-docker" >l’article précédent</a>, je vous ai
@@ -3284,391 +3768,6 @@ des configurations explicites afin d’aller plus loin que les conventions par d
             <link>http://putaindecode.fr/posts/php/injection-dependances/</link>
             <guid isPermaLink="true">http://putaindecode.fr/posts/php/injection-dependances/</guid>
             <pubDate>Wed, 05 Nov 2014 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Laissez-vous pousser la barbe, apprenez à écrire des Makefiles]]></title>
-            <description><![CDATA[<p>À l’heure où tout le monde se rue sur des outils comme <a href="/posts/js/introduction-gulp/" >Gulp</a>,
-<a href="/posts/js/premiers-pas-avec-grunt/" >Grunt</a> ou autres <a href="https://rubygems.org/gems/rake" >Rake</a>, certains irréductibles (dont je
-fais partie) ont fait le choix d’employer un des outils les plus standards et
-emblématiques dont tout développeur a entendu parler au moins une fois dans sa
-vie : <em>Make</em>.</p>
-<p>Si de prime abord on a l’impression d’un système assez archaïque (ce qui n’est
-pas toujours forcément faux), on se rend rapidement compte que <em>Make</em>, couplé à
-une petite dose de scripting shell permet rapidement de mettre en place un moyen
-de compiler ses fichiers et de lancer des tâches.</p>
-<p>Les fichiers de configuration de <em>Make</em> sont appellés <em>Makefiles</em> (oui, ce sont
-eux qui ont donné leurs noms aux <code>(Gulp|Grunt|Rake)files</code>). Les instructions
-qu’ils contiennent sont exécutées grâce à la commande <code>make</code> dans votre
-terminal.</p>
-<h1 id="hello-world">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#hello-world">#</a>
-      Hello World
-    </h1><p>Je vous propose de commencer en douceur par un classique <em>Hello World</em>. On va
-simplement définir une tâche <code>hello-world</code> dont l’action va être d’afficher
-<em>“Hello, world”</em> à l’écran (boooring).</p>
-<pre><code class="lang-make">hello-world:
-    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello, world"</span>
-</code></pre>
-<p>Première remarque importante, les indentations dans un <em>Makefile</em> <strong>doivent</strong>
-être faites avec des tabulations. Oui, je sais, c’est moche, on dirait du
-Python, mais c’est comme ça.</p>
-<p>Voilà le genre d’erreurs qu’on se prend si on met des espaces à la place des
-tabulations :</p>
-<pre><code>Makefile:2: <span class="hljs-keyword">*</span><span class="hljs-keyword">*</span><span class="hljs-keyword">*</span> séparateur manquant . Arrêt.
-</code></pre><p>Pour exécuter notre commande, il nous suffit de lancer <code>make hello-world</code> dans
-un terminal :</p>
-<pre><code class="lang-console">$ <span class="hljs-keyword">make</span> hello-world
-<span class="hljs-keyword">echo</span> <span class="hljs-string">"Hello, world"</span>
-Hello, world
-</code></pre>
-<p>Décortiquons un peu cette exécution. Pour chaque commande qu’il exécute, <em>Make</em>
-affiche la commande complète avant d’afficher la sortie standard de ladite
-commande. C’est souvent très pratique car toutes les variables (on va revenir là dessus)
-qu’on met dans la commande sont résolues, et on voit clairement ce que <em>Make</em>
-exécute. Par contre, dans certains cas on s’en fout un peu, on peut alors
-préfixer la ligne à rendre silencieuse par un <code>@</code>, comme ça :</p>
-<pre><code class="lang-make">hello-world:
-    @ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello, world"</span>
-</code></pre>
-<pre><code class="lang-console"><span class="hljs-variable">$ </span>make hello-world
-<span class="hljs-constant">Hello,</span> world
-</code></pre>
-<h1 id="regles-cibles-recettes-et-pre-requis">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#regles-cibles-recettes-et-pre-requis">#</a>
-      Règles, cibles, recettes et pré-requis
-    </h1><p>OK, jusque là c’est génial, on a un super outil pour lancer des commandes qu’on
-pourrait déjà stocker dans un bête script shell. Pas super utile finalement.</p>
-<p>Bon, on va corser un peu les choses et commencer par définir un peu de
-terminologie avant que vous soyez totalement largués.</p>
-<p>Un <em>Makefile</em> est une collection de <strong>règles</strong>, chacune étant composée d’une
-<strong>cible</strong>, de <strong>pré-requis</strong> (ou pas) et d’une <strong>recette</strong>. Dans notre exemple
-précédent, <code>hello-world</code> est la cible et <code>@ echo &quot;Hello, world&quot;</code> est la recette
-de la règle. Elle ne spécifie par contre pas de pré-requis.</p>
-<p>Relisez trois ou quatre fois le paragraphe précédent jusqu’à ce que ce soit bien
-imprimé.</p>
-<p>Vous l’aurez compris, on invoque une règle depuis la ligne de commande en
-spécifiant le nom de sa cible après la commande <code>make</code>. Si on ne précise rien,
-c’est la première règle trouvée qui est exécutée (donc dans notre cas,
-<code>hello-world</code>).</p>
-<p>Les pré-requis sont déclarés après la cible. On pourrait par exemple ajouter un
-<code>sauter-une-ligne</code> comme pré-requis à notre cible <code>hello-world</code> :</p>
-<pre><code class="lang-make">hello-world: sauter-une-ligne
-    @ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello, world"</span>
-
-sauter-une-ligne:
-    @ <span class="hljs-built_in">echo</span>
-</code></pre>
-<pre><code class="lang-console"><span class="hljs-variable">$ </span>make hello-world
-
-<span class="hljs-constant">Hello,</span> world
-</code></pre>
-<p>Facile, non ? Ok alors on peut <em>vraiment</em> attaquer les choses sérieuses.</p>
-<h1 id="construire-des-fichiers">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#construire-des-fichiers">#</a>
-      Construire des fichiers
-    </h1><p>Les pré-requis sont particulièrement pratiques quand on veut construire un
-fichier depuis un autre, ce qui est la principale action d’à peu près tout
-processus de compilation (paraît même que c’est grosso modo la définition de la
-compilation).</p>
-<p>On peut par exemple écrire un <em>Makefile</em> nous permettant de compiler un fichier
-<em>Markdown</em> en <em>HTML</em> :</p>
-<pre><code class="lang-make"><span class="hljs-tag">article</span><span class="hljs-class">.html</span>: <span class="hljs-tag">article</span><span class="hljs-class">.md</span>
-    marked <span class="hljs-tag">article</span><span class="hljs-class">.html</span> &gt; <span class="hljs-tag">article</span>.md
-</code></pre>
-<p>Cette règle spécifie simplement que pour construire le fichier <code>article.html</code>
-j’ai besoin du fichier <code>article.md</code> et que j’utilise la commande
-<a href="https://www.npmjs.org/package/marked" ><code>marked</code></a> pour construire le fichier. Essayez, vous verrez, c’est
-magique.</p>
-<p>Là où ça devient intéressant, c’est que si je lance de nouveau <code>make
-article.html</code>, rien ne se passe. Eh oui, <em>Make</em> vérifie les dates de
-modification des pré-requis et les compare avec la date de modification de la
-cible pour savoir s’il doit où non reconstruire la cible.</p>
-<p>On peut bien sûr aller plus loin en ayant des fichiers qui dépendent de
-fichiers, qui à leur tour dépendent de fichiers, …</p>
-<p><a name="ref-phony-target"></a></p>
-<p>On peut aussi avoir une cible factice qui ne représente pas un fichier et qui
-elle-même dépend de plusieurs fichiers (<code>website: index.html apropos.html
-contact.html</code>).</p>
-<h1 id="variables-et-substitutions">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#variables-et-substitutions">#</a>
-      Variables et substitutions
-    </h1><p>La syntaxe des variables dans un <em>Makefile</em> ressemblent beaucoup aux variables
-de votre Shell, <em>mais pas tout à fait</em>.</p>
-<pre><code class="lang-make">SOURCE = <span class="hljs-keyword">index</span>.md
-DESTINATION = <span class="hljs-keyword">index</span>.html
-
-<span class="hljs-variable">${DESTINATION}</span>: <span class="hljs-variable">${SOURCE}</span>
-  marked <span class="hljs-variable">${SOURCE}</span> &gt; <span class="hljs-variable">${DESTINATION}</span>
-</code></pre>
-<p>On peut aussi utiliser une substitution pour s’éviter de tout retaper. La
-syntaxe pour ça est assez simple et se passe d’explications :</p>
-<pre><code class="lang-make"><span class="hljs-variable">SOURCE =</span> index.md
-<span class="hljs-variable">DESTINATION =</span> ${SOURCE:.<span class="hljs-variable">md=</span>.html}
-</code></pre>
-<p>Là où ça devient beaucoup plus intéressant c’est qu’on peut stocker des listes
-dans une variable. Pour ça, pas vraiment d’effort à faire, il suffit de rajouter
-des noms à la suite :</p>
-<pre><code class="lang-make">SOURCE = index.<span class="hljs-built_in">md</span> article.<span class="hljs-built_in">md</span>
-DESTINATION = ${SOURCE:.<span class="hljs-built_in">md</span>=.html}
-</code></pre>
-<p>Attention par contre ! En faisant ça si vous utilisez <code>${SOURCE}</code> comme cible
-d’une règle, vous allez définir plusieurs règles d’un coup, ce qui n’est peut
-être pas ce que vous voulez.</p>
-<p>On peut contourner ça assez simplement en utilisant une substitution au niveau
-de la règle. La syntaxe est un poil différente :</p>
-<pre><code class="lang-make"><span class="hljs-preprocessor">%</span>.html: <span class="hljs-preprocessor">%</span>.md
-  [...]
-</code></pre>
-<p>Vous l’aurez compris, <code>%</code> est identique dans la cible et dans la dépendance,
-donc avec cette règle si vous faites un <code>make index.html</code>, <em>Make</em> va tenter de
-construire la dépendance <code>index.md</code> avant tout.</p>
-<p>Un problème se pose à nous avec cette syntaxe : « Bah merde, comment je récupère
-les noms de fichiers là ? »</p>
-<h1 id="variables-speciales">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#variables-speciales">#</a>
-      Variables spéciales
-    </h1><p>Superbe transition étant donné qu’on va parler ici de quelques variables
-spéciales bien pratiques !</p>
-<ul>
-<li><code>$@</code> contient le nom de la cible de la règle en cours d’exécution ;</li>
-<li><code>$^</code> contient la liste des dépendances de la règle (la flèche pointe vers la
-liste de dépendances) ;</li>
-<li><code>$&lt;</code> contient la première dépendance de la règle (la flèche pointe à gauche,
-là où est la dépendance).</li>
-</ul>
-<p>À l’aide de celles-ci on peut du coup compléter notre exemple précédent :</p>
-<pre><code class="lang-make"><span class="hljs-variable">%.</span>html: <span class="hljs-variable">%.</span>md
-  marked <span class="hljs-variable">$&lt;</span> &gt; <span class="hljs-variable">$@</span>
-  [...]
-</code></pre>
-<h1 id="fonctions">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#fonctions">#</a>
-      Fonctions
-    </h1><p>Pour faciliter quelques opérations, <em>Make</em> fournit un ensemble de fonctions de
-base. Appeler ces fonctions rappelle un peu la façon dont on lance une commande
-dans un sous-shell en Bash : <code>$(fonction argument1 argument2)</code>.</p>
-<p>Voici une petite démonstration de <code>wildcard</code>, <code>addsuffix</code> et <code>basename</code> dont
-vous vous doutez sans doute les effets :</p>
-<pre><code class="lang-make">SOURCES = <span class="hljs-variable">$(</span>wildcard <span class="hljs-variable">*.</span>md)
-DESTINATIONS = <span class="hljs-variable">$(</span>addsuffix .html,<span class="hljs-variable">$(</span><span class="hljs-keyword">basename</span> <span class="hljs-variable">${SOURCES}</span>))
-
-all: <span class="hljs-variable">${DESTINATIONS}</span>
-
-<span class="hljs-variable">%.</span>html: <span class="hljs-variable">%.</span>md
-  marked <span class="hljs-variable">$&lt;</span> &gt; <span class="hljs-variable">$@</span>
-</code></pre>
-<p>L’exemple construit dynamiquement la liste des fichiers HTML à produire à partir
-de la liste des fichiers <em>Markdown</em> disponibles puis définit une règle <code>all</code>
-permettant de tout construire d’un coup, et une règle définissant compiler
-unitairement un fichier <em>Markdown</em> vers HTML.</p>
-<p>Vous noterez qu’<code>addsuffix</code>/<code>basename</code> peut être remplacé par une substitution
-simple comme on a vu précédemment.</p>
-<p>Je vous invite à fouiller
-<a href="https://www.gnu.org/software/make/manual/make.html#Functions" >le chapitre sur les fonctions du manuel</a>.</p>
-<h1 id="la-cible-phony">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#la-cible-phony">#</a>
-      La cible <code>.PHONY</code>
-    </h1><p>Dans certains cas la cible d’une règle ne représente pas un fichier (c’était le
-cas de notre cible <code>website</code> <a href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#ref-phony-target" >un peu plus haut</a>).</p>
-<p>Dans ces cas-là, on va vouloir exécuter la règle quoi qu’il arrive, comme si la
-cible était tout le temps périmée.</p>
-<p>Une cible particulière existe pour ça : <code>.PHONY</code>. Toutes les dépendances de
-cette cible seront marquées comme (traduction pourrie) imposteurs (<em>phony</em>
-donc).</p>
-<p>Pour reprendre l’exemple précédent, on déclarera donc :</p>
-<pre><code class="lang-make"><span class="hljs-class">.PHONY</span>: website
-
-website: index<span class="hljs-class">.html</span> apropos<span class="hljs-class">.html</span> contact<span class="hljs-class">.html</span>
-  [...]
-</code></pre>
-<p>Désormais, chaque appel à <code>make website</code> tentera de construire les dépendances
-et exécutera les commandes de la recette de la règle.</p>
-<h1 id="un-exemple-complet">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#un-exemple-complet">#</a>
-      Un exemple complet
-    </h1><p>L’exemple suivant permet de compiler un site Web depuis un ensemble de fichiers
-<em>Markdown</em>.</p>
-<pre><code class="lang-make"><span class="hljs-constant">SOURCES</span> = <span class="hljs-variable">$(</span>wildcard src/*.md)
-<span class="hljs-constant">DESTINATIONS</span> = <span class="hljs-variable">${</span><span class="hljs-constant">SOURCES</span><span class="hljs-symbol">:src/%</span>.md=build/%.html}
-
-<span class="hljs-symbol">all:</span> <span class="hljs-variable">${</span><span class="hljs-constant">DESTINATIONS</span>}
-
-<span class="hljs-symbol">info:</span>
-    @ echo <span class="hljs-constant">Will</span> build <span class="hljs-variable">${</span><span class="hljs-constant">DESTINATIONS</span>} from <span class="hljs-variable">${</span><span class="hljs-constant">SOURCES</span>}
-
-<span class="hljs-symbol">clean:</span>
-    rm -f <span class="hljs-variable">${</span><span class="hljs-constant">DESTINATIONS</span>}
-
-build/%.<span class="hljs-symbol">html:</span> src/%.md
-    mkdir -p build
-    marked <span class="hljs-variable">$&lt;</span> &gt; <span class="hljs-variable">$@</span>
-
-.<span class="hljs-constant">PHONY</span><span class="hljs-symbol">:</span> all info clean
-</code></pre>
-<p>Vous noterez que comme on stocke nos résultats dans le dossier <code>build</code>, il faut
-potentiellement le créer quand on compile un fichier dedans.</p>
-<h1 id="pour-aller-plus-loin">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/apprendre-les-makefiles/#pour-aller-plus-loin">#</a>
-      Pour aller plus loin
-    </h1><p>Il existe bien d’autres fonctionnalités dans <em>Make</em> (du moins dans <em>GNU Make</em>),
-avec notamment :</p>
-<ul>
-<li>Les <a href="https://www.gnu.org/software/make/manual/make.html#Canned-Recipes" ><em>canned recipes</em></a> (recettes en boîte), permettant de
-définir un bout de règle réutilisable à plusieurs endroits.</li>
-<li>Des <a href="https://www.gnu.org/software/make/manual/make.html#Functions" >expressions conditionnelles</a> pour avoir des tests
-dans votre <em>Makefile</em> et effectuer des traitements différents selon
-l’environnement.</li>
-<li>Les <a href="https://www.gnu.org/software/make/manual/make.html##Prerequisite-Types" >règles en <em>order only</em></a> qui permettent d’indiquer une
-dépendance dont la date de modification ne doit pas être prise en compte (on
-peut s’en servir pour éviter le <code>mkdir</code> dans l’exemple complet).</li>
-<li>Et <a href="https://www.gnu.org/software/make/manual/make.html#Functions" >plein d’autres fonctions</a> bien pratiques !</li>
-</ul>
-<p>Je vous invite aussi à jeter un coup d’œil au <a href="https://github.com/madx/veil/" ><em>Makefile</em> de Veil</a>, un outil que
-j’utilise pour générer des sites statiques à partir de fichiers <em>Markdown</em>
-(ah bah tiens, comme dans mes exemples, c’est rigolo). Il y a plein de
-fonctionnalités de <em>Make</em> utilisées dans ce projet et je pense que ça peut être
-source d’idées.</p>
-<p>Voilà pour cette premier introduction à <em>Make</em>, j’espère que ça vous a plu et
-que vous êtes fin prêts à affronter tous ces bouseux avec leur système de build
-à base de streams, de brocolis et autres râteaux.</p>
-]]></description>
-            <link>http://putaindecode.fr/posts/shell/apprendre-les-makefiles/</link>
-            <guid isPermaLink="true">http://putaindecode.fr/posts/shell/apprendre-les-makefiles/</guid>
-            <pubDate>Mon, 03 Nov 2014 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[L'auto-entrepreneuriat : retour d'expériences]]></title>
-            <description><![CDATA[<p>L’auto-entreprenariat, voilà la belle idée. Un statut facile qui permet à n’importe qui de créer sa propre entreprise. Une belle opportunité pour se lancer facilement et sans trop de risque à l’indépendance.</p>
-<p>Chômeur ? Cela vous permet de créer votre propre travail et de toucher tout de même vos aides sociales (en soustrayant certes vos gains).</p>
-<p>En CDI ? Cela permet de vous aventurer en dehors de votre travail principal sur des tâches que vous n’avez pas forcément l’occasion de faire comme gérer un client, effectuer des factures, échanger avec l’administration (ah quel plaisir, ça).</p>
-<p>Étudiant(e) ? Cela peut sérieusement vous aider à financer (malheureusement ?) vos études ou à être plus indépendant(e) de vos parents.</p>
-<p>Tant de raisons qui peuvent vous pousser à vous ouvrir à l’auto-entreprise. Et pour ça, <a href="http://kud.io/" >_kud</a> et <a href="http://moox.io/" >MoOx</a> ont vécu cette expérience et vous proposent de répondre à quelques questions pour vous faire une petite idée.</p>
-<h2 id="pourquoi-avez-vous-cree-votre-entreprise">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#pourquoi-avez-vous-cree-votre-entreprise">#</a>
-      Pourquoi avez-vous créé votre entreprise ?
-    </h2><h5 id="_kud">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud">#</a>
-      <strong>_kud</strong>
-    </h5><p>Étant déjà en CDI et étant souvent sollicité pour créer des petits sites à droite à gauche, je voulais m’initier à plusieurs choses comme la création d’entreprise, l’indépendance, me confronter à l’administration et surtout gérer un client.</p>
-<p>Et puis bon, cela me permettait aussi d’avoir un petit bonus non désagréable en fin de mois.</p>
-<h5 id="moox">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox">#</a>
-      <strong>MoOx</strong>
-    </h5><p><em>Travailler plus pour gagner plus</em>, au départ ça devait être pour cette raison. Je n’avais pas de quoi frimer à la sortie de l’école, et je pouvais encore moins me payer de la blanche. Il me fallait donc une solution (rires). Plus sérieusement, dans le fond, tout comme Erwann, j’avais sûrement envie de tester un modèle plus indépendant que le CDI, en attendant que <a href="http://revenudebase.info/comprendre-le-revenu-de-base/" >le revenu de base</a> vienne bien démolir le modèle actuel.</p>
-<h2 id="comment-s-inscrire">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#comment-s-inscrire">#</a>
-      Comment s’inscrire ?
-    </h2><p>C’est relativement simple. Il faut aller sur le <a href="http://www.lautoentrepreneur.fr/" >site de l’auto-entrepreneur</a> et remplir le formulaire.</p>
-<h5 id="_kud-2">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud-2">#</a>
-      <strong>_kud</strong>
-    </h5><p>En ce qui me concerne, j’ai choisi “Prestations de services informatiques”, ce qui me permettait d’être plutôt libre sur mes actions :</p>
-<ul>
-<li>donner des cours d’informatique ;</li>
-<li>créer des sites web ;</li>
-<li>faire de la réparation (même si ce n’est pas vraiment un cas que je souhaitais envisager).</li>
-</ul>
-<h5 id="moox-2">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox-2">#</a>
-      <strong>MoOx</strong>
-    </h5><p>Dans la pratique, l’inscription peut en effet être très rapide. Cela dit, je me rappelle m’être pris la tête avec le choix des mutuelles (choix qui, si tu as déjà un CDI, ne sert pas vraiment à grand-chose à ce que j’ai fini par comprendre).
-Pour ce qui est du code, j’avais pris “Programmation informatique” (6201Z)  car je ne regardais pas vraiment plus loin que le bout de mon nez à l’époque (2010). Après, on n’ira pas vous ennuyer avec ça, je pense.</p>
-<h2 id="qu-avez-vous-fait-avec">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#qu-avez-vous-fait-avec">#</a>
-      Qu’avez vous fait avec ?
-    </h2><h5 id="_kud-3">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud-3">#</a>
-      <strong>_kud</strong>
-    </h5><p>C’est une bonne question.</p>
-<p>J’ai passé quelques soirées et week-end à faire des sites en urgence, chose pas forcément agréable car peu d’apprentissage côté technologie… Mais par contre gérer le client était très passionnant.</p>
-<p>J’ai aussi, à ma surprise, réussi à donner des cours. Deux fois. Une fois une semaine avec des licences sur le thème de la création de sites mobiles en <em>single page</em> avec du <a href="http://backbonejs.org/" >backbone.js</a> entre autres. Une autre fois à des gens en reconversion. Le but était de leur apprendre à créer leur propre site web (statique) ainsi qu’à comprendre (brièvement) comment marchaient Internet et le Web. J’ai tout bonnement <strong>adoré</strong>.</p>
-<p>(Je sens que MoOx va encore dire “pareil qu’Erwann”…)</p>
-<h5 id="moox-3">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox-3">#</a>
-      <strong>MoOx</strong>
-    </h5><p>Pareil qu’Erwann (<strong>_kud</strong>: <em>bingo</em>), au début c’était forfait soir et week-end de temps en temps. J’ai pris quelques petits projets sur mesure ou “du WordPress pour manger” (2 fois seulement je le jure).
-Ensuite ça m’a fatigué mine de rien, puis j’avais d’autres priorités même si mon seul salaire en CDI pour nourrir 2 bouches était juste. J’ai donc arrêté un moment, sans pour autant fermer l’AE (étant donné qu’au début, 0 CA = 0 charge).
-Mais c’est là où mon expérience avec l’AE est intéressante. J’ai laissé dormir le truc.</p>
-<p>Puis par la suite, <a href="http://viserlalune.com/blog/et-si-le-cdi-etait-une-connerie/" >le CDI étant ce qu’il est</a> avec ses bons et surtout ses mauvais côtés, un jour après que le projet sur lequel j’ai été embauché soit jeté à la poubelle et que je doive me rabattre sur d’autres tâches qui ne m’amusaient plus du tout, j’ai décidé de démissionner.
-Mais bon, c’était une situation un peu tendue, car je n’avais rien en plan B. Qui dit démission, dit “démerde-toi”. Et à Toulouse, des boulots intéressants dans le web, si tu veux faire autre chose que du PHP, c’est un peu tendu du <code>string</code>.</p>
-<p>En cherchant, j’ai découvert un truc sympa : la <a href="http://travail-emploi.gouv.fr/informations-pratiques,89/les-fiches-pratiques-du-droit-du,91/rupture-conventionnelle-du-contrat,1208/la-rupture-conventionnelle-du,8383.html" >rupture conventionnelle</a>.
-Pour faire simple, c’est une démission à l’amiable avec ton patron. Il faut son accord et tout le tralala administratif, mais à partir du moment où tu es en bons termes avec ton patron (et s’il n’est pas assez stupide pour dire des choses du genre “si tu veux te barrer, barre-toi, je ne lâcherai pas un sou”), c’est une façon de partir et d’avoir droit aux indemnités chômage (pour peu que tu aies assez cotisé, bien entendu).
-Avec cette solution, je pouvais partir, en sachant que mes cotisations pour Pôle Emploi n’étaient pas inutiles.
-Clairement, mon but n’était pas de vivre de ça (avec même pas 60 % de mon salaire qui était déjà juste, je vous laisse imaginer la misère) mais c’était plus d’avoir un parachute, pour éviter d’aller pleurer à papa et maman pour pouvoir payer le loyer et le crédit de mon A3 (sans quoi j’aurais été forcé de ne manger que des pâtes achetées par sachet de 20 kg). Blague à part, je partais en ayant une botte de paille en bas de ma chute, histoire de pas me casser toutes les côtes si je ne trouvais rien où m’accrocher au passage.</p>
-<p>Je me lance donc dans une recherche effrénée, principalement pour du télétravail (car ça marchait pour moi depuis un moment, même si en France faut s’accrocher pour trouver des entreprises ouvertes à ce mode de travail). Et cette fois-ci (car je démissionnais souvent, par ennui :/), j’ai eu du mal à trouver chaussure à mon pied. Beaucoup de mal. Et j’étais mal.
-Mais c’était sans compter que l’Internet, c’est un réseau mondial. Avec un peu de bonne volonté, j’avais trouvé de quoi bénéficier d’une visibilité mondiale (no shit). Une fois via <a href="http://gun.io" >gun.io</a> et une fois via Twitter (pour trouver du boulot en fait c’est pas mal, via quelques tweets et retweets). Finalement, j’ai rapidement pu bosser pour des entreprises situées aux USA (no shit²).</p>
-<p>Le fait de ne pas avoir fermé l’AE a simplifié beaucoup de choses : je pouvais faire des factures là, de suite. Puis aux États-Unis, ça ne rigole pas, ça ne paye pas comme en France à 30 ou 45 jours, ça payait tous les 15 jours, le jour où tu envoies la facture. BONHEUR.</p>
-<p>Bon, par contre attention, quand tu bosses avec des gens qui considèrent bien ton travail, et qui te mettent sur un piédestal (tu es en position de force cher développeur, je te laisse à l’étymologie du nom de métier) plutôt que de te prendre pour la dernière roue du carrosse, tu vas vite dépasser le plafond imposé par l’AE (no shit³).
-<a href="https://gist.github.com/tibastral/8301072" >Et il n’y a pas que mon expérience qui vous le dira</a>.</p>
-<p>Pour l’anecdote, je n’ai demandé les indemnités de chômage que deux mois seulement sur près d’un an en situation freestyle (avant que je change pour un vrai statut).</p>
-<p>Du coup, pour moi l’AE aura été une bonne transition entre CDI, situation précaire et ma situation actuelle de freelance. J’ai bien entendu changé rapidement de statut depuis (pour passer simplement à l’AE Level 2, l’<a href="http://www.apce.com/pid1628/l-entreprise-individuelle.html?espace=1&amp;tp=1" >entreprise individuelle</a>.</p>
-<h2 id="que-deviez-vous-declarer">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#que-deviez-vous-declarer">#</a>
-      Que deviez-vous déclarer ?
-    </h2><p>Oui, parce que c’est bien beau tout ça mais qui dit statut administratif dit déclaration.</p>
-<h5 id="_kud-4">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud-4">#</a>
-      <strong>_kud</strong>
-    </h5><p>Tous les trimestres, je me devais de <a href="http://www.net-entreprises.fr/" >déclarer</a> ce que je facturais à mes clients et je payais directement mes impôts via le versement libératoire.</p>
-<p>Bon, je vous avoue que j’ai mis du temps à comprendre où je devais déclarer car vous avez trois champs à remplir, et quand vous ne comprenez rien au charabia administratif, c’est pas super facile.</p>
-<p>Bref, une fois que vous avez déclaré vos revenus, un impôt se calcule automatiquement et vous êtes débité(e) à la date indiquée.</p>
-<p>Plutôt simple dans l’idée.</p>
-<h5 id="moox-4">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox-4">#</a>
-      <strong>MoOx</strong>
-    </h5><p>J’avais choisi aussi le versement libératoire, même constat. Il ne faut pas hésiter à prendre le téléphone pour obtenir une réponse pertinente au plus vite sans perdre de temps. Se rendre sur place dans le lieu adéquat est encore une meilleure idée pour être sûr de ne pas se tromper.</p>
-<h2 id="avez-vous-eu-des-surprises">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#avez-vous-eu-des-surprises">#</a>
-      Avez-vous eu des surprises ?
-    </h2><h5 id="_kud-5">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud-5">#</a>
-      <strong>_kud</strong>
-    </h5><p>Tout d’abord, ce qui est quelque peu déstabilisant, c’est la quantité de courriers reçus. Prévoyances, mutuelles, maaaaaass papiers. En fait, c’est pas tant la quantité qui déstabilise, ce sont plutôt les propos. “Vous avez créé une entreprise, c’est bien. Savez-vous que vous êtes dans l’obligation de souscrire à une mutuelle/prévoyance ?!”.</p>
-<p>Si vous n’êtes pas un tant soit peu renseigné(e), vous tomberez dans le piège et vous souscrirez à des choses dont vous n’avez pas du tout besoin.</p>
-<p>En effet, lorsque vous vous inscrivez à l’URSSAF, celle-ci met par la suite à disposition son fichier d’entreprises à différents organismes et ces derniers n’hésitent pas à vous mettre le grappin dessus afin que vous souscriviez à leurs formules pour qu’ils se fassent de la thune. Oui, car quand vous avez une entreprise, vous avez la plupart du temps des employés et dans ce cas, vous devez souscrire à certaines obligations pour couvrir vos employés. Sauf que ce que ne précise pas l’URSSAF dans son fichier, c’est que vous êtes une entreprise d’auto-entrepreneur, et ça, ça change tout. Ouaip, vu que vous n’avez pas d’employé(e), vous avez un statut différent des autres boîtes et il n’est pas du tout question de souscrire à quoi que ce soit. Surtout des mutuelles ou prévoyances qui couvrent des employés inexistants. Vous avez tout à fait le droit de souscrire à une mutuelle pour vous mais nullement pour votre entreprise.</p>
-<p>Pour ma part, une fois que j’eus compris ceci, j’ai tout jeté à la poubelle. :) (bande de vautours va).</p>
-<p>Passons à un autre domaine en terme de surprise : l’impôt sur votre revenu d’auto-entrepreneur.</p>
-<p>Moi qui pensais être tranquille en payant directement par versement libératoire, foutaise !</p>
-<p>Alors oui, vous payez vos impôts directement dès que vous déclarez ce que vous avez facturé. Ça, okay.</p>
-<p>Cependant, la chose que je n’avais pas calculée et dont personne ne m’avait prévenu : il n’est pas du tout pareil d’être auto-entrepreneur sans et avec un travail à côté.</p>
-<p>Certes, on vous demandera de déclarer vos revenus annexes sur les impôts sur le revenu seulement <strong>à titre informatif</strong>. Oui, vous ne paierez pas d’impôts dessus en plus. Mais par contre cela fera augmenter votre quotient familial.</p>
-<p>Explication. Si vous étiez de base à 10 % sur le revenu en impôts sur votre CDI, le fait que vous soyez en auto-entrepreneur et que vous gagniez de l’argent fait que votre quotient familial sera plus important et donc vous augmenterez le taux d’imposition sur votre CDI qui sera par exemple à 13,5 %, au lieu de 10 % initiaux. Ce qui ne vous fera finalement pas un impôt à 23,5 % sur votre activité d’AE (que vous payez directement chaque trimestre) mais plutôt 30 % du fait d’avoir un travail à côté.</p>
-<p>C’est tout à fait normal me direz-vous vu qu’il doit bien y avoir une différence entre une personne qui n’a que l’AE et une personne ayant déjà un job. Mais c’est juste que ce n’était pas du tout prévu dans mes calculs et en connaissance de cause, j’aurais sûrement augmenté mes tarifs AE.</p>
-<h5 id="moox-5">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox-5">#</a>
-      <strong>MoOx</strong>
-    </h5><p>Ce qui m’a le plus surpris aussi c’est l’impression de me transformer en fichier vendu : je me suis aussi retrouvé à recevoir plein de courriers d’entreprise en tout sens. C’est d’un pénible…</p>
-<p>J’avais choisi aussi le versement libératoire, et mon faible revenu pour 2 parts à l’époque n’avait pas eu d’impact puisque je ne payais même pas d’impôts.</p>
-<h2 id="si-vous-l-avez-arrete-pourquoi">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#si-vous-l-avez-arrete-pourquoi">#</a>
-      Si vous l’avez arrêté, pourquoi ?
-    </h2><h5 id="_kud-6">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#_kud-6">#</a>
-      <strong>_kud</strong>
-    </h5><p>Je n’avais plus assez de temps pour moi. Les démarches m’ont un peu saoulé (même s’il y en avait vraiment pas beaucoup mais devoir constamment déclarer même si vous êtes à 0 € sous peine d’avoir une amende, ça fait chier).</p>
-<p>Je n’ai pas non plus apprécié voir mon taux d’impôts sur le revenu augmenter, c’était pas ce qui était “vendu” lorsque ce statut m’a été présenté.</p>
-<p>Et puis, je risquais de payer <a href="http://vosdroits.service-public.fr/professionnels-entreprises/F23547.xhtml" >la taxe CFE</a> d’ici l’année prochaine. Chose d’ailleurs qui n’est toujours pas claire d’après ce que je peux lire sur Internet : les AE ne savent toujours pas si la CFE va devoir être payée ou non.</p>
-<p>J’ai surtout constaté que je souhaitais avant tout donner des cours et à ce sujet, on m’a proposé une offre plus avantageuse que le statut d’AE, donc…</p>
-<h5 id="moox-6">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#moox-6">#</a>
-      <strong>MoOx</strong>
-    </h5><p>Comme indiqué plus tôt, j’ai été limité par le plafond, j’ai donc passé la vitesse supérieure via une EI !</p>
-<h2 id="comment-arreter">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#comment-arreter">#</a>
-      Comment arrêter
-    </h2><p>Aller sur le site de l’<a href="https://www.cfe.urssaf.fr/autoentrepreneur/CFE_Bienvenue" >AE</a> puis cliquer sur “Cesser définitivement votre activité” tout en bas. Un formulaire vous sera proposé où vous rentrerez vos informations puis il vous sera demandé de l’imprimer. Signez-le et envoyez-le à l’adresse uniquement (avec accusé de réception vivement conseillé).</p>
-<p>Vous recevrez dans les jours suivants un courrier de l’URSSAF vous indiquant que vous avez bien été radié(e).</p>
-<p>Oh et vous recevrez aussi du courrier de mutuelles ou prévoyances, comme d’habitude, à jeter. Du début à la fin, ils vous feront chier.</p>
-<h2 id="conclusion">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/#conclusion">#</a>
-      Conclusion
-    </h2><p>L’AE reste un très bon moyen de s’initier au freelance, à la création d’entreprise sans trop de risque. Les démarches sont plutôt simples, vous n’avez pas besoin de comptable, et l’impôt est de l’ordre de 23 % à 35 % en fonction de votre situation professionnelle initiale, ce qui est tout reste tout de même bien moins important que freelance ou une “vraie” entreprise.</p>
-<p>N’hésitez pas à vous en servir pour sortir de votre zone de confort !</p>
-<p>Dans tous les cas, si vous souhaitez en savoir plus, n’hésitez pas à aller sur <a href="http://www.economie.gouv.fr/cedef/auto-entrepreneur" >le site du gouvernement</a>.</p>
-]]></description>
-            <link>http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</link>
-            <guid isPermaLink="true">http://putaindecode.fr/posts/entreprendre/auto-entrepreneuriat-retour-experiences/</guid>
-            <pubDate>Thu, 30 Oct 2014 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>
