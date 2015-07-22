@@ -392,7 +392,7 @@ de fichiers</a>.</p>
 
 gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
   gulp.src(<span class="hljs-string">"./src/css/*.css"</span>)
-    .pipe(options.production ? plumber() : gutil.noop())
+    .pipe(!options.production ? plumber() : gutil.noop())
     .pipe(cssnext({sourcemap: !options.production}))
     .pipe(options.production ? csso() : gutil.noop())
     .pipe(gulp.dest(<span class="hljs-string">"./dist/css/"</span>))
@@ -442,7 +442,7 @@ gulp.task(<span class="hljs-string">"styles"</span>, <span class="hljs-function"
 
     <span class="hljs-comment">// On utilise plumber que si on build en dev, sinon faut que ça pête, qu'on</span>
     <span class="hljs-comment">// soit prévenu lors d'un build pour la prod</span>
-    .pipe(options.production ? plumber() : gutil.noop())
+    .pipe(!options.production ? plumber() : gutil.noop())
 
     <span class="hljs-comment">// Et là on pipe nos plugins</span>
     <span class="hljs-comment">// toujours en jouant avec les options si besoin</span>
@@ -640,7 +640,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 	C197,349.352,195.265,350.583,193.125,350.583z"/>
 
 </svg></span></a></div></div><p class="putainde-Author-bio">Open source addict vivant dans la campagne près de Toulouse, Maxime est développeur web front-end le jour, et justicier du code la nuit.  Il aime faire des calins à HTML, CSS et JavaScript en tant que freelance.</p></div></div></div><div class="putainde-Contributors"><strong class="putainde-Contributors-label">5 contributeurs sur cette page</strong><div class="r-Grid putainde-Contributors-actions"><div class="r-Grid-cell r-all--1of3"><a class="putainde-Contributors-action" href="http://github.com/putaindecode/putaindecode.fr/edit/master/content/posts/js/introduction-gulp/index.md">Modifier</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Contributors-action" href="http://github.com/putaindecode/putaindecode.fr/blame/master/content/posts/js/introduction-gulp/index.md">Tracer les changements</a></div><div class="r-Grid-cell r-all--1of3"><a class="putainde-Contributors-action" href="http://github.com/putaindecode/putaindecode.fr/commits/master/content/posts/js/introduction-gulp/index.md">Historique</a></div></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="MoOx
-(11 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Nickdouille
+(12 commits)"><a href="http://moox.io/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/157534?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Nickdouille
 (1 commit)"><a href="http://sojavascript.com" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/2188628?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="madx
 (1 commit)"><a href="http://madx.me/" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/5723?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="Macxim
 (1 commit)"><a href="http://macx.im" class="putainde-Avatar putainde-Contributor-avatar"><img class="js-AnimateLoad" src="https://avatars.githubusercontent.com/u/1909957?v=3&amp;s=128" alt=""></a></div><div class="putainde-Contributor r-Tooltip r-Tooltip--bottom r-Tooltip--allowNewLines" data-r-tooltip="nfroidure
