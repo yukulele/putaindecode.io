@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Introduction à Docker</title><link rel="stylesheet" href="/index.b2da0313.css"><link rel="alternate" href="/feed.xml" title="Introduction à Docker" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Introduction à Docker"><meta name="twitter:creator" content="@Uhsac0"><meta property="og:title" content="Introduction à Docker"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Introduction à Docker</title><link rel="stylesheet" href="/index.c7804bf0.css"><link rel="alternate" href="/feed.xml" title="Introduction à Docker" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Introduction à Docker"><meta name="twitter:creator" content="@Uhsac0"><meta property="og:title" content="Introduction à Docker"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -420,12 +420,12 @@ liste des conteneurs lancés avec cette commande :</p>
 </code></pre>
 <p>Il n’y a rien ? C’est normal ! En quittant le conteneur ce dernier s’est arrêté
 aussi. Pour l’afficher quand même, il suffit d’entrer cette commande :</p>
-<pre><code class="lang-console">$ docker ps -<span class="hljs-tag">a</span>
+<pre><code class="lang-console">$ docker ps -a
 CONTAINER ID    IMAGE           COMMAND   CREATED         STATUS                    PORTS   NAMES
-<span class="hljs-number">2</span>cdceb5ff771    ubuntu:trusty   <span class="hljs-string">"bash"</span>    <span class="hljs-number">12</span> minutes ago  Exited (<span class="hljs-number">0</span>) <span class="hljs-number">2</span> minutes ago          loving_newton
+<span class="hljs-number">2</span>cdceb5ff771    ubuntu:trusty   <span class="hljs-string">"bash"</span>    <span class="hljs-number">12</span> <span class="hljs-function">minutes ago  <span class="hljs-title">Exited</span> <span class="hljs-params">(<span class="hljs-number">0</span>)</span> 2 minutes ago          loving_newton</span>
 </code></pre>
 <p>Et pour supprimer ce conteneur ?</p>
-<pre><code class="lang-console"><span class="hljs-variable">$ </span>docker rm <span class="hljs-number">2</span>cdc
+<pre><code class="lang-console">$ docker rm <span class="hljs-number">2</span>cdc
 <span class="hljs-number">2</span>cdc
 </code></pre>
 <p>Évidemment, remplacez ‘2cdc’ par le <code>CONTAINER ID</code> approprié.</p>
@@ -435,21 +435,21 @@ CONTAINER ID    IMAGE           COMMAND   CREATED         STATUS                
       Un deuxième exemple avec Node.js
     </h2><p>Pour commencer, vous allez récupérer l’image docker officiel de Node.js en
 faisant :</p>
-<pre><code class="lang-console">$ docker pull <span class="hljs-string">node:</span><span class="hljs-number">0.12</span>.4
-<span class="hljs-number">0.12</span>.4: Pulling from node
-<span class="hljs-number">7711</span><span class="hljs-string">db4bb553:</span> Pull complete
-<span class="hljs-string">d1744e6e9471:</span> Pull complete
-<span class="hljs-number">9332645</span><span class="hljs-string">b03a3:</span> Pull complete
-<span class="hljs-string">a52a290821b3:</span> Pull complete
-<span class="hljs-number">3575</span><span class="hljs-string">f1347ce7:</span> Already exists
-<span class="hljs-number">39</span><span class="hljs-string">bb80489af7:</span> Already exists
-<span class="hljs-string">df2a0347c9d0:</span> Already exists
-<span class="hljs-number">7</span><span class="hljs-string">a3871ba15f8:</span> Already exists
-<span class="hljs-string">a2703ed272d7:</span> Already exists
-<span class="hljs-string">c9e3effdd23a:</span> Already exists
-<span class="hljs-string">node:</span><span class="hljs-number">0.12</span>.4: The image you are pulling has been verified. <span class="hljs-string">Important:</span> image verification is a tech preview feature and should not be relied on to provide security.
-<span class="hljs-string">Digest:</span> <span class="hljs-string">sha256:</span><span class="hljs-number">81</span>fb0812dd5e81f768773a121c8a6daced36893210c5ed50b504c4abcb04e10c
-<span class="hljs-string">Status:</span> Downloaded newer image <span class="hljs-keyword">for</span> <span class="hljs-string">node:</span><span class="hljs-number">0.12</span>.4
+<pre><code class="lang-console">$ docker pull node:<span class="hljs-operator">0.<span class="hljs-number">12.4</span>
+<span class="hljs-number">0.12</span><span class="hljs-number">.4</span>: Pulling <span class="hljs-keyword">from</span> node
+<span class="hljs-number">7711</span>db4bb553: Pull <span class="hljs-keyword">complete</span>
+d1744e6e9471: Pull <span class="hljs-keyword">complete</span>
+<span class="hljs-number">9332645</span>b03a3: Pull <span class="hljs-keyword">complete</span>
+a52a290821b3: Pull <span class="hljs-keyword">complete</span>
+<span class="hljs-number">3575</span>f1347ce7: Already <span class="hljs-keyword">exists</span>
+<span class="hljs-number">39</span>bb80489af7: Already <span class="hljs-keyword">exists</span>
+df2a0347c9d0: Already <span class="hljs-keyword">exists</span>
+<span class="hljs-number">7</span>a3871ba15f8: Already <span class="hljs-keyword">exists</span>
+a2703ed272d7: Already <span class="hljs-keyword">exists</span>
+c9e3effdd23a: Already <span class="hljs-keyword">exists</span>
+node:<span class="hljs-number">0.12</span><span class="hljs-number">.4</span>: The image you <span class="hljs-keyword">are</span> pulling has been verified. Important: image verification <span class="hljs-keyword">is</span> a tech preview feature <span class="hljs-keyword">and</span> should <span class="hljs-keyword">not</span> be relied <span class="hljs-keyword">on</span> <span class="hljs-keyword">to</span> provide <span class="hljs-keyword">security</span>.
+Digest: sha256:<span class="hljs-number">81</span>fb0812dd5e81f768773a121c8a6daced36893210c5ed50b504c4abcb04e10c
+<span class="hljs-keyword">Status</span>: Downloaded newer image <span class="hljs-keyword">for</span> node:<span class="hljs-number">0.12</span><span class="hljs-number">.4</span></span>
 </code></pre>
 <p>Puis créez un fichier <code>server.js</code> avec le contenu suivant :</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>)

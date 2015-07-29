@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Quelques retours sur React et le rendu serveur</title><link rel="stylesheet" href="/index.b2da0313.css"><link rel="alternate" href="/feed.xml" title="Quelques retours sur React et le rendu serveur" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Quelques retours sur React et le rendu serveur"><meta name="twitter:creator" content="@b_lionel"><meta property="og:title" content="Quelques retours sur React et le rendu serveur"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Quelques retours sur React et le rendu serveur</title><link rel="stylesheet" href="/index.c7804bf0.css"><link rel="alternate" href="/feed.xml" title="Quelques retours sur React et le rendu serveur" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Quelques retours sur React et le rendu serveur"><meta name="twitter:creator" content="@b_lionel"><meta property="og:title" content="Quelques retours sur React et le rendu serveur"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -341,29 +341,29 @@ et c’est celle là : <a href="https://github.com/rackt/react-router" >react-ro
 Le routeur est fortement inspiré par celui d’Ember au sens où les URL et leurs routes 
 sont au cœur du dispositif. Le routeur se présente sous forme de composant React 
 et ça donne ça.</p>
-<pre><code class="lang-jsx">//routes.js
+<pre><code class="lang-jsx"><span class="hljs-comment">//routes.js</span>
 
-var <span class="hljs-variable">React =</span> require(<span class="hljs-string">"react"</span>);
-var <span class="hljs-variable">Router =</span> require(<span class="hljs-string">"react-router"</span>);
+<span class="hljs-built_in">var</span> React = <span class="hljs-keyword">require</span>(<span class="hljs-string">"react"</span>);
+<span class="hljs-built_in">var</span> Router = <span class="hljs-keyword">require</span>(<span class="hljs-string">"react-router"</span>);
 
-var <span class="hljs-variable">Route =</span> Router.Route;
-var <span class="hljs-variable">DefaultRoute =</span> Router.DefaultRoute;
-var <span class="hljs-variable">NotFoundRoute =</span> Router.NotFoundRoute;
+<span class="hljs-built_in">var</span> Route = Router<span class="hljs-built_in">.</span>Route;
+<span class="hljs-built_in">var</span> DefaultRoute = Router<span class="hljs-built_in">.</span>DefaultRoute;
+<span class="hljs-built_in">var</span> NotFoundRoute = Router<span class="hljs-built_in">.</span>NotFoundRoute;
 
-var <span class="hljs-variable">App =</span> require(<span class="hljs-string">"./app"</span>);
-var <span class="hljs-variable">Home =</span> require(<span class="hljs-string">"./home/homePage"</span>);
-var <span class="hljs-variable">Project =</span> require(<span class="hljs-string">"./project/projectPage"</span>);
-var <span class="hljs-variable">NotFound =</span> require(<span class="hljs-string">"./notFound"</span>);
+<span class="hljs-built_in">var</span> App = <span class="hljs-keyword">require</span>(<span class="hljs-string">"./app"</span>);
+<span class="hljs-built_in">var</span> Home = <span class="hljs-keyword">require</span>(<span class="hljs-string">"./home/homePage"</span>);
+<span class="hljs-built_in">var</span> Project = <span class="hljs-keyword">require</span>(<span class="hljs-string">"./project/projectPage"</span>);
+<span class="hljs-built_in">var</span> NotFound = <span class="hljs-keyword">require</span>(<span class="hljs-string">"./notFound"</span>);
 
-var <span class="hljs-variable">routes =</span> (
-  &lt;Route <span class="hljs-variable">path=</span><span class="hljs-string">"/"</span> <span class="hljs-variable">handler=</span>{App}&gt;
-    &lt;DefaultRoute <span class="hljs-variable">name=</span><span class="hljs-string">"index"</span> <span class="hljs-variable">handler=</span>{Home} /&gt;
-    &lt;Route <span class="hljs-variable">name=</span><span class="hljs-string">"project"</span> <span class="hljs-variable">path=</span><span class="hljs-string">"/projects/:url"</span> <span class="hljs-variable">handler=</span>{Project} /&gt;
-    &lt;NotFoundRoute <span class="hljs-variable">name=</span><span class="hljs-string">"404"</span> <span class="hljs-variable">handler=</span>{NotFound} /&gt;
+<span class="hljs-built_in">var</span> routes = (
+  &lt;Route path=<span class="hljs-string">"/"</span> handler={App}&gt;
+    &lt;DefaultRoute name=<span class="hljs-string">"index"</span> handler={Home} /&gt;
+    &lt;Route name=<span class="hljs-string">"project"</span> path=<span class="hljs-string">"/projects/:url"</span> handler={Project} /&gt;
+    &lt;NotFoundRoute name=<span class="hljs-string">"404"</span> handler={NotFound} /&gt;
   &lt;/Route&gt;
 );
 
-module.<span class="hljs-variable">exports =</span> routes;
+module<span class="hljs-built_in">.</span>exports = routes;
 </code></pre>
 <p>À mon sens, l’aspect déclaratif apporte de la clarté et améliore la compréhension 
 du système. On voit rapidement quel composant est utilisé en fonction de l’URL. 

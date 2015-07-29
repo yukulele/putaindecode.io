@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Versionner avec Git</title><link rel="stylesheet" href="/index.b2da0313.css"><link rel="alternate" href="/feed.xml" title="Versionner avec Git" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Versionner avec Git"><meta name="twitter:creator" content="@madx"><meta property="og:title" content="Versionner avec Git"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Versionner avec Git</title><link rel="stylesheet" href="/index.c7804bf0.css"><link rel="alternate" href="/feed.xml" title="Versionner avec Git" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Versionner avec Git"><meta name="twitter:creator" content="@madx"><meta property="og:title" content="Versionner avec Git"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -459,10 +459,10 @@ Windows) ou retrousser vos poils de barbe et sortir le bon vieux <code>git log</
 de votre dépôt, avec des options en veux-tu en voilà pour personnaliser
 l’affichage.</p>
 <p>Un <code>git log</code> basique ça ressemble à ça :</p>
-<pre><code class="lang-console">$ git log
+<pre><code class="lang-console">$ git <span class="hljs-built_in">log</span>
 commit <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
-<span class="hljs-label">Author:</span> madx &lt;madx+github@yapok<span class="hljs-preprocessor">.org</span>&gt;
-<span class="hljs-label">Date:</span>   Mon Nov <span class="hljs-number">4</span> <span class="hljs-number">23</span>:<span class="hljs-number">28</span>:<span class="hljs-number">11</span> <span class="hljs-number">2013</span> +<span class="hljs-number">0100</span>
+Author: madx &lt;madx+github@yapok.org&gt;
+Date:   Mon Nov <span class="hljs-number">4</span> <span class="hljs-number">23</span>:<span class="hljs-number">28</span>:<span class="hljs-number">11</span> <span class="hljs-number">2013</span> +<span class="hljs-number">0100</span>
 
     Premier commit
 </code></pre>
@@ -470,20 +470,20 @@ commit <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
 j’en suis sûr ? Car je peux utiliser <code>git show</code> pour afficher les détails d’un
 objet Git (il n’y a pas que des commits, mais on verra ça une prochaine fois).</p>
 <p><code>git show</code> prend en argument le fameux <code>SHA1</code> du commit :</p>
-<pre><code class="lang-console">$ git <span class="hljs-operator"><span class="hljs-keyword">show</span> <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
-<span class="hljs-keyword">commit</span> <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
+<pre><code class="lang-console">$ git show <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
+commit <span class="hljs-number">8120</span>de7b7139e46b9cbc1c3ee89a02962dbc198e
 Author: madx &lt;madx+github@yapok.org&gt;
-<span class="hljs-built_in">Date</span>:   Mon Nov <span class="hljs-number">4</span> <span class="hljs-number">23</span>:<span class="hljs-number">28</span>:<span class="hljs-number">11</span> <span class="hljs-number">2013</span> +<span class="hljs-number">0100</span>
+Date:   Mon Nov <span class="hljs-number">4</span> <span class="hljs-number">23</span>:<span class="hljs-number">28</span>:<span class="hljs-number">11</span> <span class="hljs-number">2013</span> +<span class="hljs-number">0100</span>
 
-    Premier <span class="hljs-keyword">commit</span>
+    Premier commit
 
-diff <span class="hljs-comment">--git a/putain_de_hello_world.rb b/putain_de_hello_world.rb</span>
-new file <span class="hljs-keyword">mode</span> <span class="hljs-number">100644</span>
-<span class="hljs-keyword">index</span> <span class="hljs-number">0000000.</span>.ded37dc
-<span class="hljs-comment">--- /dev/null</span>
+diff --git a/putain_de_hello_world.rb b/putain_de_hello_world.rb
+<span class="hljs-keyword">new</span> file mode <span class="hljs-number">100644</span>
+index <span class="hljs-number">0000000.</span>.ded37dc
+--- /dev/null
 +++ b/putain_de_hello_world.rb
 @@ -<span class="hljs-number">0</span>,<span class="hljs-number">0</span> +<span class="hljs-number">1</span> @@
-+puts <span class="hljs-string">"Hello, putain de codeur !!!"</span></span>
++<span class="hljs-built_in">puts</span> <span class="hljs-string">"Hello, putain de codeur !!!"</span>
 </code></pre>
 <p>Dit comme ça, ça a pas l’air de casser trois pattes à un canard, mais c’est la
 base de la base de la praticité. Je vous fais pas l’insulte de vous expliquer les

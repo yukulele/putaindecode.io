@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Maîtriser les redirections shell</title><link rel="stylesheet" href="/index.b2da0313.css"><link rel="alternate" href="/feed.xml" title="Maîtriser les redirections shell" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Maîtriser les redirections shell"><meta name="twitter:creator" content="@madx"><meta property="og:title" content="Maîtriser les redirections shell"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Maîtriser les redirections shell</title><link rel="stylesheet" href="/index.c7804bf0.css"><link rel="alternate" href="/feed.xml" title="Maîtriser les redirections shell" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Maîtriser les redirections shell"><meta name="twitter:creator" content="@madx"><meta property="og:title" content="Maîtriser les redirections shell"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -415,7 +415,7 @@ descripteur source et <em>Y</em> l’identifiant du descripteur sur lequel on ve
 rediriger.</p>
 <p>L’exemple suivant montre comment rediriger la sortie standard sur la sortie
 d’erreur (c’est comme ça qu’on écrit sur la sortie d’erreur dans un script).</p>
-<pre><code class="lang-console">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Error"</span> <span class="hljs-number">1</span>&gt;&amp;<span class="hljs-number">2</span>
+<pre><code class="lang-console">$ echo <span class="hljs-string">"Error"</span> <span class="hljs-number">1</span>&gt;&amp;<span class="hljs-number">2</span>
 </code></pre>
 <p>Plus généralement, on peut omettre la partie avant le <code>&gt;&amp;</code>, elle prendra la
 valeur 1 par défaut. On aura donc le script suivant :</p>
@@ -477,7 +477,7 @@ utilisant <code>&gt;&amp;</code> comme vu précédemment.</p>
 sortie sur le fichier pointé par <code>1</code> au moment où on écrit la redirection, donc
 avant qu’il soit redirigé sur <code>/dev/null</code>.</p>
 <p>Pour bien faire, il faut écrire les redirections dans l’autre ordre :</p>
-<pre><code class="lang-console"><span class="hljs-variable">$ </span>programme &gt;<span class="hljs-regexp">/dev/null</span> <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span>
+<pre><code class="lang-console">$ programme &gt;/dev/null <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span>
 </code></pre>
 <p>On lira ceci : Rediriger la sortie standard vers <code>/dev/null</code>, puis rediriger la
 sortie d’erreur vers la sortie standard.</p>
