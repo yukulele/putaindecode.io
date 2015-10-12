@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Les Dockerfiles</title><link rel="stylesheet" href="/index.dc0f4660.css"><link rel="alternate" href="/feed.xml" title="Les Dockerfiles" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Les Dockerfiles"><meta name="twitter:creator" content="@Uhsac0"><meta property="og:title" content="Les Dockerfiles"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
+<!doctype html><html lang="fr" class="r-VerticalRhythm"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Les Dockerfiles</title><link rel="stylesheet" href="/index.366a2d47.css"><link rel="alternate" href="/feed.xml" title="Les Dockerfiles" type="application/atom+xml"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@putaindecode"><meta name="twitter:title" content="Les Dockerfiles"><meta name="twitter:creator" content="@Uhsac0"><meta property="og:title" content="Les Dockerfiles"><meta property="og:type" content="article"><meta property="og:site_name" content="Putain de code !"></head><body><div class="putainde-Header"><div class="r-Grid"><div class="r-Grid-cell r-minM--1of3"><a class="putainde-SiteTitle" href="/"><span class="SVGIcon SVGIcon--cleaned putainde-Logo"><?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg class="SVGIcon-svg SVGIcon--cleaned-svg putainde-Logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -334,13 +334,13 @@ une fois dans un Dockerfile.</p>
 nous devons commencer par installer Node.js. Pour ce faire, on va télécharger
 l’archive Node.js directement depuis le site officiel à l’aide de curl que nous
 allons aussi devoir installer.</p>
-<pre><code><span class="hljs-built_in">RUN</span> <span class="bash">apt-get update \
+<pre><code><span class="hljs-constant">RUN</span> apt-get update \
 &amp;&amp; apt-get install -y curl \
-&amp;&amp; rm -rf /var/lib/apt/lists/*
-</span>
-<span class="hljs-built_in">RUN</span> <span class="bash">curl -LO <span class="hljs-string">"https://nodejs.org/dist/v0.12.5/node-v0.12.5-linux-x64.tar.gz"</span> \
-&amp;&amp; tar -xzf node-v0.<span class="hljs-number">12.5</span>-linux-x64.tar.gz -C /usr/<span class="hljs-built_in">local</span> --strip-components=<span class="hljs-number">1</span> \
-&amp;&amp; rm node-v0.<span class="hljs-number">12.5</span>-linux-x64.tar.gz</span>
+&amp;&amp; rm -rf /var/<span class="hljs-class"><span class="hljs-keyword">lib</span>/<span class="hljs-title">apt</span>/<span class="hljs-title">lists</span>/*</span>
+
+<span class="hljs-constant">RUN</span> curl -<span class="hljs-constant">LO</span> <span class="hljs-string">"https://nodejs.org/dist/v0.12.5/node-v0.12.5-linux-x64.tar.gz"</span> \
+&amp;&amp; tar -xzf node-v0.<span class="hljs-number">12.5</span>-linux-x64.tar.gz -<span class="hljs-constant">C</span> /usr/local --strip-components=<span class="hljs-number">1</span> \
+&amp;&amp; rm node-v0.<span class="hljs-number">12.5</span>-linux-x64.tar.gz
 </code></pre><p><code>RUN</code> permet d’exécuter une commande à l’intérieur de votre image comme si vous
 étiez devant un shell unix. </p>
 <p>La première commande nous permet d’installer curl et de nettoyer ensuite le
@@ -383,9 +383,9 @@ retélécharger les dépendances à chaque changement dans le code est un réel 
 de temps !</p>
 <p>Maintenant, nous allons indiquer quel port et dossier nous souhaitons partager
 avec l’extérieur du conteneur.</p>
-<pre><code>EXPOSE 3000
+<pre><code><span class="hljs-built_in">EXPOSE</span> <span class="hljs-number">3000</span>
 
-<span class="hljs-title">VOLUME /app/log</span>
+<span class="hljs-built_in">VOLUME</span> <span class="bash">/app/<span class="hljs-built_in">log</span></span>
 </code></pre><p><code>EXPOSE</code> et <code>VOLUME</code> permettent respectivement d’indiquer quel port et quel
 dossier nous souhaitons partager.</p>
 <p>Et pour finir, nous pouvons indiquer quelle instruction doit s’exécuter au
@@ -714,7 +714,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 	c-4.952,6.024-11.06,10.275-18.323,12.751l-38.872,13.37l25.997,78.24l40.607-13.864
 	C427.67,242.795,431.468,242.134,435.099,242.134z M238.507,307.005l76.755-25.998l-25.998-77.993l-76.754,26.493L238.507,307.005z"
 	/>
-</svg></span></a></li></ul></div><div class="r-Grid-cell r-minM--1of4 putainde-Footer-text--right"><span class="putainde-Footer-text putainde-Footer-text--small">Made with ♥︎</span></div></div></div><script src="/index.0e9bcf38.js"></script><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
+</svg></span></a></li></ul></div><div class="r-Grid-cell r-minM--1of4 putainde-Footer-text--right"><span class="putainde-Footer-text putainde-Footer-text--small">Made with ♥︎</span></div></div></div><script src="/index.c2495c3a.js"></script><script>var _gaq=[["_setAccount","UA-43771806-1"],["_trackPageview"]];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s)}(document,"script"));</script><script>var disqus_shortname = "putaindecode";
 var disqus_identifier = "http://putaindecode.fr/posts/docker/les-dockerfiles/";
 var disqus_url = "http://putaindecode.fr/posts/docker/les-dockerfiles/";
 var disqus_script = "embed.js";

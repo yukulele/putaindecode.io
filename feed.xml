@@ -5,7 +5,7 @@
         <description><![CDATA[Putain de code !]]></description>
         <link>http://putaindecode.fr</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Sat, 22 Aug 2015 10:44:47 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 12 Oct 2015 06:29:38 GMT</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"/>
         <language><![CDATA[fr]]></language>
         <category><![CDATA[code]]></category>
@@ -729,13 +729,13 @@ une fois dans un Dockerfile.</p>
 nous devons commencer par installer Node.js. Pour ce faire, on va télécharger
 l’archive Node.js directement depuis le site officiel à l’aide de curl que nous
 allons aussi devoir installer.</p>
-<pre><code><span class="hljs-built_in">RUN</span> <span class="bash">apt-get update \
+<pre><code><span class="hljs-constant">RUN</span> apt-get update \
 &amp;&amp; apt-get install -y curl \
-&amp;&amp; rm -rf /var/lib/apt/lists/*
-</span>
-<span class="hljs-built_in">RUN</span> <span class="bash">curl -LO <span class="hljs-string">"https://nodejs.org/dist/v0.12.5/node-v0.12.5-linux-x64.tar.gz"</span> \
-&amp;&amp; tar -xzf node-v0.<span class="hljs-number">12.5</span>-linux-x64.tar.gz -C /usr/<span class="hljs-built_in">local</span> --strip-components=<span class="hljs-number">1</span> \
-&amp;&amp; rm node-v0.<span class="hljs-number">12.5</span>-linux-x64.tar.gz</span>
+&amp;&amp; rm -rf /var/<span class="hljs-class"><span class="hljs-keyword">lib</span>/<span class="hljs-title">apt</span>/<span class="hljs-title">lists</span>/*</span>
+
+<span class="hljs-constant">RUN</span> curl -<span class="hljs-constant">LO</span> <span class="hljs-string">"https://nodejs.org/dist/v0.12.5/node-v0.12.5-linux-x64.tar.gz"</span> \
+&amp;&amp; tar -xzf node-v0.<span class="hljs-number">12.5</span>-linux-x64.tar.gz -<span class="hljs-constant">C</span> /usr/local --strip-components=<span class="hljs-number">1</span> \
+&amp;&amp; rm node-v0.<span class="hljs-number">12.5</span>-linux-x64.tar.gz
 </code></pre><p><code>RUN</code> permet d’exécuter une commande à l’intérieur de votre image comme si vous
 étiez devant un shell unix. </p>
 <p>La première commande nous permet d’installer curl et de nettoyer ensuite le
@@ -778,9 +778,9 @@ retélécharger les dépendances à chaque changement dans le code est un réel 
 de temps !</p>
 <p>Maintenant, nous allons indiquer quel port et dossier nous souhaitons partager
 avec l’extérieur du conteneur.</p>
-<pre><code>EXPOSE 3000
+<pre><code><span class="hljs-built_in">EXPOSE</span> <span class="hljs-number">3000</span>
 
-<span class="hljs-title">VOLUME /app/log</span>
+<span class="hljs-built_in">VOLUME</span> <span class="bash">/app/<span class="hljs-built_in">log</span></span>
 </code></pre><p><code>EXPOSE</code> et <code>VOLUME</code> permettent respectivement d’indiquer quel port et quel
 dossier nous souhaitons partager.</p>
 <p>Et pour finir, nous pouvons indiquer quelle instruction doit s’exécuter au
@@ -1133,7 +1133,7 @@ $ apt-<span class="hljs-keyword">get</span> moo
 <p>Maintenant que vous êtes retourné sur votre machine, vous pouvez afficher la
 liste des conteneurs lancés avec cette commande :</p>
 <pre><code class="lang-console"><span class="hljs-variable">$ </span>docker ps
-<span class="hljs-constant">CONTAINER ID </span>   <span class="hljs-constant">IMAGE </span>  <span class="hljs-constant">COMMAND </span>  <span class="hljs-constant">CREATED </span>  <span class="hljs-constant">STATUS </span>   <span class="hljs-constant">PORTS </span>  <span class="hljs-constant">NAMES</span>
+<span class="hljs-constant">CONTAINER</span> <span class="hljs-constant">ID</span>    <span class="hljs-constant">IMAGE</span>   <span class="hljs-constant">COMMAND</span>   <span class="hljs-constant">CREATED</span>   <span class="hljs-constant">STATUS</span>    <span class="hljs-constant">PORTS</span>   <span class="hljs-constant">NAMES</span>
 </code></pre>
 <p>Il n’y a rien ? C’est normal ! En quittant le conteneur ce dernier s’est arrêté
 aussi. Pour l’afficher quand même, il suffit d’entrer cette commande :</p>
@@ -1152,21 +1152,21 @@ CONTAINER ID    IMAGE           COMMAND   CREATED         STATUS                
       Un deuxième exemple avec Node.js
     </h2><p>Pour commencer, vous allez récupérer l’image docker officiel de Node.js en
 faisant :</p>
-<pre><code class="lang-console">$ docker pull node:<span class="hljs-operator">0.<span class="hljs-number">12.4</span>
-<span class="hljs-number">0.12</span><span class="hljs-number">.4</span>: Pulling <span class="hljs-keyword">from</span> node
-<span class="hljs-number">7711</span>db4bb553: Pull <span class="hljs-keyword">complete</span>
-d1744e6e9471: Pull <span class="hljs-keyword">complete</span>
-<span class="hljs-number">9332645</span>b03a3: Pull <span class="hljs-keyword">complete</span>
-a52a290821b3: Pull <span class="hljs-keyword">complete</span>
-<span class="hljs-number">3575</span>f1347ce7: Already <span class="hljs-keyword">exists</span>
-<span class="hljs-number">39</span>bb80489af7: Already <span class="hljs-keyword">exists</span>
-df2a0347c9d0: Already <span class="hljs-keyword">exists</span>
-<span class="hljs-number">7</span>a3871ba15f8: Already <span class="hljs-keyword">exists</span>
-a2703ed272d7: Already <span class="hljs-keyword">exists</span>
-c9e3effdd23a: Already <span class="hljs-keyword">exists</span>
-node:<span class="hljs-number">0.12</span><span class="hljs-number">.4</span>: The image you <span class="hljs-keyword">are</span> pulling has been verified. Important: image verification <span class="hljs-keyword">is</span> a tech preview feature <span class="hljs-keyword">and</span> should <span class="hljs-keyword">not</span> be relied <span class="hljs-keyword">on</span> <span class="hljs-keyword">to</span> provide <span class="hljs-keyword">security</span>.
-Digest: sha256:<span class="hljs-number">81</span>fb0812dd5e81f768773a121c8a6daced36893210c5ed50b504c4abcb04e10c
-<span class="hljs-keyword">Status</span>: Downloaded newer image <span class="hljs-keyword">for</span> node:<span class="hljs-number">0.12</span><span class="hljs-number">.4</span></span>
+<pre><code class="lang-console">$ docker pull <span class="hljs-string">node:</span><span class="hljs-number">0.12</span><span class="hljs-number">.4</span>
+<span class="hljs-number">0.12</span><span class="hljs-number">.4</span>: Pulling from node
+<span class="hljs-number">7711</span><span class="hljs-string">db4bb553:</span> Pull complete
+<span class="hljs-string">d1744e6e9471:</span> Pull complete
+<span class="hljs-number">9332645</span><span class="hljs-string">b03a3:</span> Pull complete
+<span class="hljs-string">a52a290821b3:</span> Pull complete
+<span class="hljs-number">3575</span><span class="hljs-string">f1347ce7:</span> Already exists
+<span class="hljs-number">39</span><span class="hljs-string">bb80489af7:</span> Already exists
+<span class="hljs-string">df2a0347c9d0:</span> Already exists
+<span class="hljs-number">7</span><span class="hljs-string">a3871ba15f8:</span> Already exists
+<span class="hljs-string">a2703ed272d7:</span> Already exists
+<span class="hljs-string">c9e3effdd23a:</span> Already exists
+<span class="hljs-string">node:</span><span class="hljs-number">0.12</span><span class="hljs-number">.4</span>: The image you are pulling has been verified. <span class="hljs-string">Important:</span> image verification is a tech preview feature and should not be relied on to provide security.
+<span class="hljs-string">Digest:</span> <span class="hljs-string">sha256:</span><span class="hljs-number">81</span>fb0812dd5e81f768773a121c8a6daced36893210c5ed50b504c4abcb04e10c
+<span class="hljs-string">Status:</span> Downloaded newer image <span class="hljs-keyword">for</span> <span class="hljs-string">node:</span><span class="hljs-number">0.12</span><span class="hljs-number">.4</span>
 </code></pre>
 <p>Puis créez un fichier <code>server.js</code> avec le contenu suivant :</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>)
@@ -3154,18 +3154,18 @@ pour ce composant mais on pourrait très bien imaginer retourner la liste d’ac
 <p>Ensuite, lorsque le callback fourni à <code>Router.run()</code> est appelé, il suffit de parcourir 
 les <em>Handler</em> pour récupérer les informations contenues dans les blocs <code>statics</code>, 
 les traiter et enfin faire <code>React.render()</code>.</p>
-<pre><code class="lang-Javascript">// On renvoie une promesse qui sera résolue lorsque que toutes les données démandées via fetchData seront reçues.
-Router.run(routes, Router.HistoryLocation, function (Handler, <span class="hljs-keyword">state</span>) {
-  var p = Promise.<span class="hljs-literal">all</span>(<span class="hljs-keyword">state</span>.routes
-    .filter(route =&gt; route.handler.fetchData)  // définit fetchData
+<pre><code class="lang-Javascript"><span class="hljs-comment">// On renvoie une promesse qui sera résolue lorsque que toutes les données démandées via fetchData seront reçues.</span>
+Router.run(routes, Router.HistoryLocation, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">Handler, state</span>) </span>{
+  <span class="hljs-keyword">var</span> p = <span class="hljs-built_in">Promise</span>.all(state.routes
+    .filter(route =&gt; route.handler.fetchData)  <span class="hljs-comment">// définit fetchData</span>
     .map(route =&gt; {
-      return route.handler.fetchData(<span class="hljs-keyword">state</span>.params);
+      <span class="hljs-keyword">return</span> route.handler.fetchData(state.params);
     })
   );
   p.then( x =&gt; {
-    React.render(<span class="hljs-variable">&lt;Handler {...state} /&gt;</span>, document.getElementById(<span class="hljs-string">"react-app"</span>))
+    React.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Handler</span> {<span class="hljs-attribute">...state</span>} /&gt;</span>, document.getElementById("react-app"))
   });
-});
+});</span>
 </code></pre>
 <p>Le principe est simple et peut être facilement encapsulé dans un module pour 
 être partagé entre le client et le serveur.  J’espère que cet article vous a permis 
