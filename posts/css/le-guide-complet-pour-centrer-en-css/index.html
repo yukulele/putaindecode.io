@@ -354,13 +354,13 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
   <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
 }</span>
 
-<span class="hljs-rule"><span class="hljs-attribute">.parent</span>:<span class="hljs-value">before {
-  content: <span class="hljs-string">''</span></span></span>;
+<span class="hljs-class">.parent</span><span class="hljs-pseudo">:before</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">content</span>:<span class="hljs-value"> <span class="hljs-string">''</span></span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> -<span class="hljs-number">0.25em</span></span></span>; <span class="hljs-comment">/* space width */</span>
-}
+}</span>
 
 <span class="hljs-class">.child</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
@@ -397,16 +397,16 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 }</span>
 </code></pre>
 <p>La technique du <code>left: 50%; + margin négative en unités</code> est à utiliser sur les blocs dont vous connaissez la taille à l’avance. Le principe consiste à expliquer au navigateur qu’on place un bloc en <code>position: absolute;</code>. Celui-ci va donc chercher à se placer par rapport à son élément parent le plus proche qui est en <code>position: relative;</code>. Il faut donc ne pas oublier d’attribuer cette propriété sur le <code>.parent</code>. Il suffit ensuite d’indiquer qu’on place le bloc à <code>left: 50%;</code>. Le bloc se place donc à 50% vers la gauche par rapport à la taille totale du bloc conteneur. Il ne nous reste plus qu’à décaler vers la droite le bloc <code>.child</code> en lui donnant une valeur de margin négative vers la gauche. Celle-ci doit être égale à la moitié de la <code>width</code>(en pixels, em, rems, pourcentages, …).</p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
-}</span>
+<pre><code class="lang-css">.parent {
+  position: relative;
+}
 
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> {X}em</span></span>; <span class="hljs-comment">/* remplacer {X} par votre valeur */</span>
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">margin-left</span>:<span class="hljs-value"> -{X/<span class="hljs-number">2</span>}em</span></span>; <span class="hljs-comment">/* remplacer {X/2} par la moitié de votre width */</span>
-}</span>
+.child {
+  width: {X}em; /* remplacer {X} par votre valeur */
+  position: absolute;
+  left: 50%;
+  margin-left: -{X/2}em; /* remplacer {X/2} par la moitié de votre width */
+}
 </code></pre>
 <p>En combinant la technique précédente et des propriétés css modernes, on arrive à la technique du <code>transform: translate; négatif</code>. Même principe que la technique précédente, sauf qu’à la fin, on indique au bloc enfant d’effectuer une translation sur lui-même, en suivant l’axe X (l’axe horizontal) de -50%, donc 50% vers la droite. Sauf que ce 50% s’applique sur le bloc enfant directement. Vous n’avez donc pas besoin de connaitre la <code>width</code> de l’élément enfant à l’avance. Le <code>transform-style: preserve-3d;</code> sur le bloc <code>.parent</code> est là pour régler des problèmes de flou sur certains navigateurs lors de transitions.</p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
@@ -426,16 +426,16 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/le-guide-complet-pour-centrer-en-css/#centrage-vertical">#</a>
       Centrage vertical
     </h4><p>Même principe que la technique <code>left: 50%; + margin négative en unités</code>, sauf qu’on applique le principe aux propriétés css relatives à la hauteur. Vous avez donc besoin de connaitre à l’avance la hauteur de votre bloc.</p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
-}</span>
+<pre><code class="lang-css">.parent {
+  position: relative;
+}
 
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> {Y}em</span></span>; <span class="hljs-comment">/* remplacer {Y} par votre valeur */</span>
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> -{Y/<span class="hljs-number">2</span>}em</span></span>; <span class="hljs-comment">/* remplacer {Y/2} par la moitié de votre height */</span>
-}</span>
+.child {
+  height: {Y}em; /* remplacer {Y} par votre valeur */
+  position: absolute;
+  top: 50%;
+  margin-top: -{Y/2}em; /* remplacer {Y/2} par la moitié de votre height */
+}
 </code></pre>
 <p>Ici on réutilise le principe expliqué dans la technique <code>transform: translate; négatif</code>, mais appliqué à la hauteur. Notez que le nom de la <a href="http://apps.workflower.fi/vocabs/css/fr" >valeur de la propriété</a> css passe de <code>translateX</code> à <code>translateY</code>.</p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
@@ -460,13 +460,13 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
   <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
 }</span>
 
-<span class="hljs-rule"><span class="hljs-attribute">.parent</span>:<span class="hljs-value">before {
-  content: <span class="hljs-string">''</span></span></span>;
+<span class="hljs-class">.parent</span><span class="hljs-pseudo">:before</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">content</span>:<span class="hljs-value"> <span class="hljs-string">''</span></span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> -<span class="hljs-number">0.25em</span></span></span>;
-}
+}</span>
 
 <span class="hljs-class">.child</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
@@ -474,19 +474,19 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 }</span>
 </code></pre>
 <p>Technique des <code>position: absolute; + marges négatives</code> avec tailles connues à l’avance</p>
-<pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
-}</span>
+<pre><code class="lang-css">.parent {
+  position: relative;
+}
 
-<span class="hljs-class">.child</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> {X}em</span></span>; <span class="hljs-comment">/* remplacer {X} par votre valeur */</span>
-  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> {Y}em</span></span>; <span class="hljs-comment">/* remplacer {Y} par votre valeur */</span>
-  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">margin-left</span>:<span class="hljs-value"> -{X/<span class="hljs-number">2</span>}em</span></span>; <span class="hljs-comment">/* remplacer {X/2} par la moitié de votre height */</span>
-  <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> -{Y/<span class="hljs-number">2</span>}em</span></span>; <span class="hljs-comment">/* remplacer {Y/2} par la moitié de votre height */</span>
-}</span>
+.child {
+  width: {X}em; /* remplacer {X} par votre valeur */
+  height: {Y}em; /* remplacer {Y} par votre valeur */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -{X/2}em; /* remplacer {X/2} par la moitié de votre height */
+  margin-top: -{Y/2}em; /* remplacer {Y/2} par la moitié de votre height */
+}
 </code></pre>
 <p>Technique des <code>position: absolute; + marges négatives</code> avec tailles inconnues</p>
 <pre><code class="lang-css"><span class="hljs-class">.parent</span> <span class="hljs-rules">{
@@ -528,10 +528,10 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 }</span>
 </code></pre>
 <p>Une autre technique consiste à utiliser les propriétés css de <code>mise en tableaux</code>. On est obligé de créer un <a href="https://developer.mozilla.org/fr/docs/Web/CSS/Pseudo-%C3%A9l%C3%A9ments" >pseudo-élément</a> pour gérer la mise en page par tableau. On créée tout simplement un tableau, puis une cellule de tableau, qu’on positionne grâce à un <code>vertical-align: middle;</code>. Les éléments <code>.child</code> s’alignent automatiquement dans leur conteneur.</p>
-<pre><code class="lang-css"><span class="hljs-rule"><span class="hljs-attribute">.parent</span>:<span class="hljs-value">before {
-  display: table</span></span>;
+<pre><code class="lang-css"><span class="hljs-class">.parent</span><span class="hljs-pseudo">:before</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> table</span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
-}
+}</span>
 
 <span class="hljs-class">.parent</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> table-cell</span></span>;
@@ -556,10 +556,10 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 }</span>
 </code></pre>
 <p>On peut aussir réutiliser la méthode à base de <code>display: table-cell</code> et l’adapter pour qu’elle centre horizontalement et verticalement.</p>
-<pre><code class="lang-css"><span class="hljs-rule"><span class="hljs-attribute">.parent</span>:<span class="hljs-value">before {
-  display: table</span></span>;
+<pre><code class="lang-css"><span class="hljs-class">.parent</span><span class="hljs-pseudo">:before</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> table</span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
-}
+}</span>
 
 <span class="hljs-class">.parent</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> table-cell</span></span>;
@@ -577,13 +577,13 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
   <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
 }</span>
 
-<span class="hljs-rule"><span class="hljs-attribute">.parent</span>:<span class="hljs-value">before {
-  content: <span class="hljs-string">''</span></span></span>;
+<span class="hljs-class">.parent</span><span class="hljs-pseudo">:before</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">content</span>:<span class="hljs-value"> <span class="hljs-string">''</span></span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> -<span class="hljs-number">0.25em</span></span></span>;
-}
+}</span>
 
 <span class="hljs-class">.child</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;

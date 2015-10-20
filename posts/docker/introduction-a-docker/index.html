@@ -462,7 +462,7 @@ server.listen(<span class="hljs-number">3000</span>)
 </code></pre>
 <p>Et maintenant, pour lancer notre application à l’intérieur d’un conteneur, vous
 devez faire :</p>
-<pre><code class="lang-console">$ docker <span class="hljs-keyword">run</span> -<span class="hljs-keyword">d</span> --name node-<span class="hljs-keyword">app</span> -p 3000:3000 -v $(<span class="hljs-keyword">pwd</span>):/<span class="hljs-keyword">app</span> node:0.12.4 node /<span class="hljs-keyword">app</span>/server.js
+<pre><code class="lang-console">$ docker run -d --name <span class="hljs-keyword">node</span><span class="hljs-identifier"></span><span class="hljs-title">-app</span> -p <span class="hljs-number">3000</span>:<span class="hljs-number">3000</span> -v $(pwd):/app <span class="hljs-keyword">node</span><span class="hljs-identifier"></span><span class="hljs-title">:0</span>.<span class="hljs-number">12.4</span> <span class="hljs-keyword">node</span><span class="hljs-identifier"> </span><span class="hljs-title">/app</span>/server.js
 e9ca3cd8f90b8554ca99ec8ba15a039f827005bd8fecbf80d72ce7267006a6df
 </code></pre>
 <p>Si vous vous rendez sur <code>localhost:3000</code> (ou l’IP de la VM si êtes sur Windows

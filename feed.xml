@@ -1,14 +1,261 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title><![CDATA[Putain de code !]]></title>
         <description><![CDATA[Putain de code !]]></description>
         <link>http://putaindecode.fr</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Mon, 12 Oct 2015 06:29:38 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 20 Oct 2015 04:59:28 GMT</lastBuildDate>
         <atom:link href="http://putaindecode.fr/feed.xml" rel="self" type="application/rss+xml"/>
         <language><![CDATA[fr]]></language>
         <category><![CDATA[code]]></category>
+        <item>
+            <title><![CDATA[Gérer son thème WordPress avec Webpack]]></title>
+            <description><![CDATA[<h1 id="pourquoi-webpack-pour-gerer-son-theme-wordpress">
+      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/wordpress/webpack/#pourquoi-webpack-pour-gerer-son-theme-wordpress">#</a>
+      Pourquoi Webpack pour gérer son thème WordPress ?
+    </h1><p>La réponse est la même qu’à la simple question
+<a href="/posts/webpack/" >“pourquoi Webpack ?”</a>.
+L’intérêt principal est d’obtenir des rapports d’erreurs liés à
+la gestion des assets (images, fonts, etc).</p>
+<p>Qu’y a-t-il de si particulier à savoir pour utiliser Webpack pour gérer un thème
+WordPress ? Pas grand chose, mais voici de quoi vous faire gagner (peut-être)
+un peu de temps.</p>
+<p>Il y a certainement plusieurs façons de gérer son thème WordPress
+avec Webpack. Celle que je vous propose va se limiter à des choses
+simples en concentrant le code dans le répertoire du thème pour plus de
+modularité.</p>
+<p>Pour commencer, deux choses importantes à savoir :</p>
+<ul>
+<li>Ne mettez pas de CSS dans le fameux <code>style.css</code> à la racine de votre thème,
+laissez juste le cartouche en commentaire (sans lequel WordPress ne détectera
+pas votre thème…) ;</li>
+<li>créez un dossier <code>src</code> dans votre thème, où nous
+mettrons nos “sources”, la partie du thème “compilé” sera dans un dossier
+<code>dist</code> et n’aura donc pas besoin d’être versionnée.</li>
+</ul>
+<p>La seule petite chose à laquelle il faut faire attention finalement, c’est de
+bien configurer le <code>publicPath</code> de Webpack afin que les fichiers qu’il génère
+soient bien dans le bon chemin, et que les ressources liées (dans les fichiers CSS
+par exemple) comportent les bons chemins relatifs (à la racine du site).</p>
+<p>Avec l’arborescence suivante, nous n’aurons pas de difficulté à faire une
+configuration portable :</p>
+<pre><code>-<span class="ruby"> htdocs
+</span>  -<span class="ruby"> wp-content
+</span>    -<span class="ruby"> themes
+</span>      -<span class="ruby"> putaindetheme
+</span>        -<span class="ruby"> node_modules
+</span>        -<span class="ruby"> src
+</span>          -<span class="ruby"> index.js
+</span>          -<span class="ruby"> index.css
+</span>          -<span class="ruby"> images/*
+</span>          -<span class="ruby"> fonts/*
+</span>        -<span class="ruby"> style.css
+</span>        -<span class="ruby"> webpack.config.babel.json
+</span>        -<span class="ruby"> package.json
+</span>-<span class="ruby"> package.json</span>
+</code></pre><p>En plus de cela, nous pouvons ajouter une sorte de raccourci via un
+<code>package.json</code> supplémentaire à la racine de notre projet :</p>
+<pre><code class="lang-json">{
+  "<span class="hljs-attribute">private</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+  "<span class="hljs-attribute">scripts</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">start</span>": <span class="hljs-value"><span class="hljs-string">"cd htdocs/wp-content/themes/putaindetheme &amp;&amp; npm start"</span></span>,
+    "<span class="hljs-attribute">build</span>": <span class="hljs-value"><span class="hljs-string">"cd htdocs/wp-content/themes/putaindetheme &amp;&amp; npm run build"</span>
+  </span>}
+</span>}
+</code></pre>
+<p>Ce petit raccourci nous évitera de devoir nous taper en CLI tout le chemin du
+thème et nous pourrions même, pourquoi pas, rajouter un
+<code>&quot;prestart&quot;: &quot;open http://yourlocalhost.tld&quot;</code> afin d’ouvrir automatiquement
+le projet dans le navigateur lorsque nous démarrerons notre développement via
+<code>$ npm start</code>.</p>
+<p>Voyons rapidement donc le <code>package.json</code> du thème ainsi que la config Webpack.</p>
+<p><code>package.json</code></p>
+<pre><code class="lang-json">{
+  "<span class="hljs-attribute">private</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+  "<span class="hljs-attribute">scripts</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">start</span>": <span class="hljs-value"><span class="hljs-string">"webpack --config=webpack.config.babel.js --watch"</span></span>,
+    "<span class="hljs-attribute">build</span>": <span class="hljs-value"><span class="hljs-string">"webpack --config=webpack.config.babel.js -p"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">devDependencies</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">babel</span>": <span class="hljs-value"><span class="hljs-string">"^5.8.12"</span></span>,
+    "<span class="hljs-attribute">babel-core</span>": <span class="hljs-value"><span class="hljs-string">"^5.8.12"</span></span>,
+    "<span class="hljs-attribute">babel-loader</span>": <span class="hljs-value"><span class="hljs-string">"^5.3.2"</span></span>,
+    "<span class="hljs-attribute">css-loader</span>": <span class="hljs-value"><span class="hljs-string">"^0.15.6"</span></span>,
+    "<span class="hljs-attribute">eslint</span>": <span class="hljs-value"><span class="hljs-string">"^0.24.1"</span></span>,
+    "<span class="hljs-attribute">eslint-loader</span>": <span class="hljs-value"><span class="hljs-string">"^0.14.2"</span></span>,
+    "<span class="hljs-attribute">extract-text-webpack-plugin</span>": <span class="hljs-value"><span class="hljs-string">"^0.8.2"</span></span>,
+    "<span class="hljs-attribute">file-loader</span>": <span class="hljs-value"><span class="hljs-string">"^0.8.4"</span></span>,
+    "<span class="hljs-attribute">json-loader</span>": <span class="hljs-value"><span class="hljs-string">"^0.5.2"</span></span>,
+    "<span class="hljs-attribute">postcss-cssnext</span>": <span class="hljs-value"><span class="hljs-string">"^2.1.0"</span></span>,
+    "<span class="hljs-attribute">postcss-import</span>": <span class="hljs-value"><span class="hljs-string">"^7.0.0"</span></span>,
+    "<span class="hljs-attribute">postcss-loader</span>": <span class="hljs-value"><span class="hljs-string">"^0.6.0"</span></span>,
+    "<span class="hljs-attribute">postcss-url</span>": <span class="hljs-value"><span class="hljs-string">"^5.0.2"</span></span>,
+    "<span class="hljs-attribute">style-loader</span>": <span class="hljs-value"><span class="hljs-string">"^0.12.3"</span></span>,
+    "<span class="hljs-attribute">webpack</span>": <span class="hljs-value"><span class="hljs-string">"^1.10.5"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">dependencies</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">normalize.css</span>": <span class="hljs-value"><span class="hljs-string">"^3.0.3"</span>
+  </span>}
+</span>}
+</code></pre>
+<p>Quelques petites notes sur ce contenu :</p>
+<ul>
+<li><code>private</code> sert à éviter la publication de votre “paquet” sur npm, ainsi qu’à
+devoir remplir certains champs tels que <code>name</code> et compagnie ;</li>
+<li>nous mettrons dans <code>devDependencies</code> les dépendances pour le développement et
+dans <code>dependencies</code> les dépendances qui seront dans le build final. Ici, j’ai
+simplement mis <code>normalize.css</code> pour exemple, mais vous pourriez très bien avoir
+aussi jQuery (:trollface:) ou React ;</li>
+<li>les scripts utilisent <code>webpack.config.babel.js</code> afin de pouvoir définir la
+configuration en es6/7 via <em>babel</em>.</li>
+</ul>
+<p>Voyons maintenant la config <code>webpack.config.babel.js</code> :</p>
+<pre><code class="lang-js"><span class="hljs-comment">// <span class="hljs-doctag">Note:</span> le code ci-dessous est mal rendu</span>
+<span class="hljs-comment">// Une issue est ouverte à ce propos</span>
+<span class="hljs-comment">// https://github.com/isagalaev/highlight.js/issues/958</span>
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">"babel/polyfill"</span>
+<span class="hljs-keyword">import</span> path <span class="hljs-keyword">from</span> <span class="hljs-string">"path"</span>
+<span class="hljs-keyword">import</span> ExtractTextPlugin <span class="hljs-keyword">from</span> <span class="hljs-string">"extract-text-webpack-plugin"</span>
+<span class="hljs-keyword">import</span> postcssImport <span class="hljs-keyword">from</span> <span class="hljs-string">"postcss-import"</span>
+<span class="hljs-keyword">import</span> postcssUrl <span class="hljs-keyword">from</span> <span class="hljs-string">"postcss-url"</span>
+<span class="hljs-keyword">import</span> postcssCssnext <span class="hljs-keyword">from</span> <span class="hljs-string">"postcss-cssnext"</span>
+
+const production = process.argv.includes(`-p`)
+
+const theme = path.basename(__dirname)
+const src = path.join(__dirname, `src`)
+
+export default {
+  entry: {
+    index: [`${ src }/index.js<span class="hljs-string">`],
+  },
+
+  output: {
+    path: path.join(__dirname, `</span>dist<span class="hljs-string">`),
+    filename: `</span>[name].js<span class="hljs-string">`,
+    publicPath: `</span>wp-content/themes/${ theme }/dist/<span class="hljs-string">`,
+  },
+  resolve: {
+    extensions: [
+      `</span><span class="hljs-string">`,
+      `</span>.js<span class="hljs-string">`,
+      `</span>.json<span class="hljs-string">`,
+    ],
+  },
+
+  module: {
+    loaders: [
+      {
+        test: /\.json$/,
+        loader: `</span>json-loader<span class="hljs-string">`,
+      },
+      {
+        test: /\.js$/,
+        loaders: [
+          `</span>babel-loader<span class="hljs-string">`,
+          `</span>eslint-loader<span class="hljs-string">`,
+        ],
+        include: src,
+      },
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract(
+          `</span>style-loader<span class="hljs-string">`,
+          [
+            `</span>css-loader<span class="hljs-string">`,
+            `</span>postcss-loader<span class="hljs-string">`,
+          ].join(`</span>!<span class="hljs-string">`)
+        ),
+      },
+      {
+        test: /\.(ico|jpe?g|png|gif)$/,
+        loader: `</span>file-loader?name=[path][name].[ext]&amp;context=${ src }/<span class="hljs-string">`,
+      },
+    ],
+  },
+
+  plugins: [
+    new ExtractTextPlugin(`</span>[name].css<span class="hljs-string">`, {disable: !production}),
+  ],
+
+  postcss: function() {
+    // https://github.com/postcss/postcss-loader/issues/31
+    const webpack = this
+
+    return [
+      postcssImport({
+        onImport: (files) =&gt; files.forEach(webpack.addDependency),
+      }),
+      postcssUrl(),
+      postcssCssnext({
+        browsers: `</span>last <span class="hljs-number">2</span> versions<span class="hljs-string">`,
+      }),
+    ]
+  },
+}</span>
+</code></pre>
+<p><em>Bien entendu, libre à vous d’adapter les loaders Webpack à utiliser, ainsi que
+la configuration PostCSS par exemple.</em> Faites un tour sur notre article de
+<a href="/posts/webpack/premier-exemple/" >premier exemple de configuration Webpack</a> afin
+d’y voir plus clair.</p>
+<p>Il nous reste maintenant à ajouter dans notre thème WordPress les
+références à nos points d’entrées CSS et JavaScript que sont <code>index.css</code> et
+<code>index.js</code>.</p>
+<p>Pour faire simplement, dans votre fichier <code>functions.php</code> (oui, le fichier qui a un nom
+qui n’indique pas du tout ce pour quoi tout le monde se sert du fichier, c’est à
+dire la configuration du thème au runtime…), on va ajouter une petite constante
+qui servira à adapter votre thème en fonction de l’environnement :</p>
+<pre><code class="lang-php"><span class="hljs-comment">// ENV est à définir dans votre configuration Apache par exemple.</span>
+<span class="hljs-comment">// Si vous ne voulez pas y toucher, vous pouvez plutôt définir d'une autre façon</span>
+<span class="hljs-comment">// en testant le SERVER_NAME par exemple</span>
+define(<span class="hljs-string">'ENV'</span>, getenv(<span class="hljs-string">'ENV'</span>));
+
+<span class="hljs-comment">// en local, on pourrait définir ENV à "development"</span>
+</code></pre>
+<p><em>Nous pourrions dans ce fichier utiliser l’API de Wordpress pour enregister nos
+<code>index.css</code> et <code>index.js</code> via les méthodes <code>wp_(de)register_</code>, mais nous
+resterons simples pour l’exemple.</em></p>
+<p>Vu qu’on utilise le <code>style-loader</code> de Webpack en développement, on ne va ajouter
+notre feuille de style qu’en production (dans le <code>&lt;head&gt;</code>).</p>
+<pre><code class="lang-php"><span class="hljs-preprocessor">&lt;?php</span> <span class="hljs-keyword">if</span> (ENV != <span class="hljs-string">"development"</span>): <span class="hljs-preprocessor">?&gt;</span>
+  &lt;link rel=<span class="hljs-string">"stylesheet"</span> href=<span class="hljs-string">"&lt;?php echo get_bloginfo('template_directory') ?&gt;/dist/index.css"</span> /&gt;
+<span class="hljs-preprocessor">&lt;?php</span> <span class="hljs-keyword">endif</span>; <span class="hljs-preprocessor">?&gt;</span>
+</code></pre>
+<p>Pensez aussi à supprimer la référence à <code>style.css</code> dans <code>header.php</code>.</p>
+<p>Dans la même idée mais en plus simple, on va ajouter dans notre <code>footer.php</code>.</p>
+<pre><code class="lang-php">&lt;script src=<span class="hljs-string">"&lt;?php echo get_bloginfo('template_directory') ?&gt;/dist/index.js"</span>&gt;&lt;/script&gt;
+</code></pre>
+<p>Rien de bien compliqué finalement.</p>
+<p><em>Attention si votre thème hérite d’un autre,
+<code>get_bloginfo(&#39;template_directory&#39;)</code> ne pointera pas vers votre thème mais le
+thème parent. Il vous faudra donc ajuster le code 😑.</em></p>
+<hr>
+<p>Pour le test vous pouvez mettre dans les CSS et JS :</p>
+<p><code>index.css</code></p>
+<pre><code class="lang-css"><span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"normalize.css"</span></span>;
+<span class="hljs-tag">body</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> red</span></span>;
+}</span>
+</code></pre>
+<p>Notez ici que par la façon dont nous avons défini Webpack ci-dessus, vous
+devriez placer et référencer vos assets (images &amp; co), depuis <code>src</code>. Exemple :</p>
+<pre><code class="lang-css"><span class="hljs-tag">html</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(./images/background.jpg)
+  <span class="hljs-comment">/* =&gt; wp-content/themes/putaindetheme/src/images/background.jpg */</span>
+</span></span></span>}
+</code></pre>
+<p>Ensuite, dans <code>index.js</code>, je vous laisse vous débrouiller :)</p>
+<pre><code class="lang-js"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Hey !"</span>)
+</code></pre>
+<p>Libre à vous maintenant d’ajouter vos dépendances favorites et de remplir vos
+<code>index.css</code> et <code>index.js</code> avec une gestion d’erreurs autre que des requêtes HTTP 
+en 404 !</p>
+]]></description>
+            <link>http://putaindecode.fr/posts/wordpress/webpack/</link>
+            <guid isPermaLink="true">http://putaindecode.fr/posts/wordpress/webpack/</guid>
+            <pubDate>Tue, 20 Oct 2015 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Créer un site web gratuitement avec GitHub Pages]]></title>
             <description><![CDATA[<p>Pour une fois, on ne va pas trop parler de code dans cet article, mais
@@ -722,7 +969,7 @@ projet.</p>
 vous héritez. Pour cet exemple, je vous propose d’utiliser une image de Debian
 comme base (ce qui est une bonne pratique, car cette image
 est plutôt légère en comparaison avec celle d’Ubuntu par exemple).</p>
-<pre><code><span class="hljs-tag">FROM</span> <span class="hljs-rule"><span class="hljs-attribute">debian</span>:<span class="hljs-value">jessie</span></span>
+<pre><code><span class="hljs-tag">FROM</span> <span class="hljs-tag">debian</span><span class="hljs-pseudo">:jessie</span>
 </code></pre><p><code>FROM</code> permet de définir notre image de base, vous pouvez l’utiliser uniquement
 une fois dans un Dockerfile.</p>
 <p>Comme nous voulons créer une image pour une application JavaScript full-stack,
@@ -785,7 +1032,7 @@ avec l’extérieur du conteneur.</p>
 dossier nous souhaitons partager.</p>
 <p>Et pour finir, nous pouvons indiquer quelle instruction doit s’exécuter au
 lancement de votre conteneur grâce à l’instruction <code>CMD</code>.</p>
-<pre><code><span class="hljs-built_in">CMD</span> <span class="bash">node server.js</span>
+<pre><code>CMD <span class="hljs-keyword">node</span><span class="hljs-identifier"> </span><span class="hljs-title">server</span>.js
 </code></pre><p>Voici un résumé de notre Dockerfile :</p>
 <pre><code><span class="hljs-comment"># Image de base</span>
 <span class="hljs-built_in">FROM</span> debian:jessie
@@ -1179,7 +1426,7 @@ server.listen(<span class="hljs-number">3000</span>)
 </code></pre>
 <p>Et maintenant, pour lancer notre application à l’intérieur d’un conteneur, vous
 devez faire :</p>
-<pre><code class="lang-console">$ docker <span class="hljs-keyword">run</span> -<span class="hljs-keyword">d</span> --name node-<span class="hljs-keyword">app</span> -p 3000:3000 -v $(<span class="hljs-keyword">pwd</span>):/<span class="hljs-keyword">app</span> node:0.12.4 node /<span class="hljs-keyword">app</span>/server.js
+<pre><code class="lang-console">$ docker run -d --name <span class="hljs-keyword">node</span><span class="hljs-identifier"></span><span class="hljs-title">-app</span> -p <span class="hljs-number">3000</span>:<span class="hljs-number">3000</span> -v $(pwd):/app <span class="hljs-keyword">node</span><span class="hljs-identifier"></span><span class="hljs-title">:0</span>.<span class="hljs-number">12.4</span> <span class="hljs-keyword">node</span><span class="hljs-identifier"> </span><span class="hljs-title">/app</span>/server.js
 e9ca3cd8f90b8554ca99ec8ba15a039f827005bd8fecbf80d72ce7267006a6df
 </code></pre>
 <p>Si vous vous rendez sur <code>localhost:3000</code> (ou l’IP de la VM si êtes sur Windows
@@ -1964,12 +2211,12 @@ console.log(<span class="hljs-string">"Hello world"</span>)
 <p>Lorsque la commande <code>putaindecode-cli</code> sera exécutée, le shell va chercher le fichier exécutable en utilisant les répertoires listés dans la variable PATH.</p>
 <p>Si on suit ce raisonnement, l’installation d’un script écrasera automatiquement l’ancienne version ou tout script de même nom.</p>
 <p>Pour s’assurer qu’il n’existe pas d’autres commandes portant le même nom, il est conseillé d’utiliser la commande : <code>which putaindecode-cli</code> qui ne retournera rien s’il n’y a aucun résultat :</p>
-<pre><code class="lang-console">#putaindecode-<span class="hljs-keyword">cli</span> ne retourne aucun résultat
-$ <span class="hljs-keyword">which</span> putaindecode-<span class="hljs-keyword">cli</span>
+<pre><code class="lang-console"><span class="hljs-comment">#putaindecode-cli ne retourne aucun résultat</span>
+$ which putaindecode-cli
 
-#node <span class="hljs-keyword">est</span> installé et accessible au path suivant
-$ <span class="hljs-keyword">which</span> node
-  /usr/<span class="hljs-keyword">local</span>/bin/node
+<span class="hljs-comment">#node est installé et accessible au path suivant</span>
+$ which <span class="hljs-keyword">node</span><span class="hljs-identifier">
+  </span><span class="hljs-title">/usr</span>/local/bin/<span class="hljs-keyword">node</span><span class="hljs-identifier"></span><span class="hljs-title"></span>
 </code></pre>
 <h2 id="installation-du-script">
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/shell/utilitaires-ligne-commande/#installation-du-script">#</a>
@@ -3401,372 +3648,6 @@ Je n’estime pas être un expert du sujet, il y a sûrement beaucoup de choses 
             <link>http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/</link>
             <guid isPermaLink="true">http://putaindecode.fr/posts/js/etat-lieux-js-modulaire-front/</guid>
             <pubDate>Mon, 15 Dec 2014 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Première application Ember. Suite et fin.]]></title>
-            <description><![CDATA[<p>L’<a href="/posts/js/premiere-app-ember" >article précédent</a> vous a accompagné pour la création d’une première application <a href="http://emberjs.com" >Ember</a>. 
-Mais il faut bien reconnaître que l’exemple était très simple et que, du coup, le mérite est faible. 
-Pour se  rattraper, on va complexifier un peu les choses.</p>
-<p>Tout comme dans l’article précédent, nous détaillerons régulièrement les concepts mis en œuvre. Parce que vous le valez bien.</p>
-<h2 id="sommaire">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#sommaire">#</a>
-      Sommaire
-    </h2><ul>
-<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#edition-d-une-serie" >Édition d’une série</a><ul>
-<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#routes-imbriquees" >Routes imbriquées</a></li>
-<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#-code-outlets-code-" >Outlets</a></li>
-<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#liens-entre-routes" >Liens entre routes</a></li>
-<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#enregistrement-des-modifications" >Enregistrement des modifications</a></li>
-<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#actions-sur-les-transitions" >Actions sur les transitions</a></li>
-</ul>
-</li>
-<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#relations-avec-ember-data" >Relations avec Ember Data</a></li>
-<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#insertion-d-un-gabarit" >Insertion d’un gabarit</a></li>
-<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#creation-d-une-nouvelle-serie" >Création d’une nouvelle série</a></li>
-<li><a href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#conclusion" >Conclusion</a></li>
-</ul>
-<h2 id="edition-d-une-serie">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#edition-d-une-serie">#</a>
-      Édition d’une série
-    </h2><p>On veut pouvoir basculer depuis la fiche d’une série vers son édition en mode <em>in place</em>. C’est-à-dire
-en <strong>remplaçant</strong> la zone de visualisation de cette fiche par sa zone d’édition.</p>
-<p>On accède à la fiche en mode visualisation à l’URL <code>/series/{id}/</code> et en mode édition à l’URL <code>/series/{id}/edit</code>. Évidemment, 
-on reconstruit uniquement la zone de la fiche et non l’application entière (et donc ni l’en-tête ni la liste des séries).</p>
-<h3 id="routes-imbriquees">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#routes-imbriquees">#</a>
-      Routes imbriquées
-    </h3><p>Commençons par définir une nouvelle route <code>edit</code>, sous-route de <code>seriesItem</code> : </p>
-<pre><code class="lang-js"><span class="hljs-comment">// /app/router.js</span>
-Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-  <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'series'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'seriesItem'</span>, { path: <span class="hljs-string">'/:seriesItem_id'</span> }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-      <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'edit'</span>);
-    });
-  });
-});
-</code></pre>
-<p>Pour que notre nouvelle route affiche la fiche en mode édition, on doit - <a href="/posts/js/debuter-avec-ember/#les-fondamentaux" >rappelez-vous</a> - impérativement suivre les 
-<a href="http://emberjs.com/guides/concepts/naming-conventions/" >conventions de nommage</a> et créer un gabarit <code>edit.hbs</code> dans le 
-répertoire <code>/app/templates/series/series-item/</code> :</p>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- /app/templates/series/series-item/edit.hbs` --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"series-details"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"submit"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"submit"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"cancel"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"cancel"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"title"</span>&gt;</span>{{input id="title" type="text" value=title}}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> {{<span class="hljs-attribute">bind-attr</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"coverUrl"</span><span class="hljs-value">}}</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"Series's first album cover"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"cover"</span>/&gt;</span>
-
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"description"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"scriptwriter"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">label</span> <span class="hljs-attribute">for</span>=<span class="hljs-value">"scriptwriter"</span>&gt;</span>Scriptwriter<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"control"</span>&gt;</span>{{input id="scriptwriter" type="text" value=scriptwriter required="required"}}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"illustrator"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">label</span> <span class="hljs-attribute">for</span>=<span class="hljs-value">"illustrator"</span>&gt;</span>Illustrator<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"control"</span>&gt;</span>{{input id="illustrator" type="text" value=illustrator}}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"publisher"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">label</span> <span class="hljs-attribute">for</span>=<span class="hljs-value">"publisher"</span>&gt;</span>Publisher<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"control"</span>&gt;</span>{{input id="publisher" type="text" value=publisher}}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"summary"</span>&gt;</span>{{textarea value=summary rows="10"}}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
-</code></pre>
-<p>À ce stade, naviguer sur <code>/series/{@id}/edit</code> ne lève pas d’erreur mais n’a aucun effet. En effet, on a
-défini une route imbriquée mais conservé le gabarit <code>/app/templates/series/series-item.hbs</code> inchangé. L’activation de la route <code>series.seriesItem</code> 
-affiche donc toujours ce gabarit, même dans le cas d’une sous-route telle que <code>series.seriesItem.edit</code>. </p>
-<h3 id="outlets">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#outlets">#</a>
-      <code>outlets</code>
-    </h3><p>La solution est à aller chercher du côté du concept d’<code>{{outlet}}</code> défini dans l’<a href="/posts/js/premiere-app-ember/#-code-outlet-code-et-routes-imbriquees" >article précédent</a>.
-Un <code>{{outlet}}</code> est nécessaire <strong>à chaque fois qu’on définit un niveau d’imbrication.</strong> Mais comme on veut quand même continuer à afficher la série à 
-l’URL <code>/series/{@id}/</code>, on va utiliser la <strong>route implicite</strong> <code>series.seriesItem.index</code> (cf. <a href="/posts/js/premiere-app-ember/#routes-et-controleurs-implicites" >article précédent</a>) 
-et son gabarit, dans lequel on va copier l’ancien contenu de <code>series-item.hbs</code>.</p>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- /app/templates/series/series-item/index.hbs --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"series-details"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>{{title}}<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> {{<span class="hljs-attribute">bind-attr</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"coverUrl"</span><span class="hljs-value">}}</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"Series's first album cover"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"cover"</span>/&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">dl</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"description"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">dt</span>&gt;</span>scriptwriter<span class="hljs-tag">&lt;/<span class="hljs-title">dt</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">dd</span>&gt;</span>{{scriptwriter}} <span class="hljs-tag">&lt;/<span class="hljs-title">dd</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">dt</span>&gt;</span>illustrator<span class="hljs-tag">&lt;/<span class="hljs-title">dt</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">dd</span>&gt;</span>{{illustrator}}<span class="hljs-tag">&lt;/<span class="hljs-title">dd</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">dt</span>&gt;</span>publisher<span class="hljs-tag">&lt;/<span class="hljs-title">dt</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">dd</span>&gt;</span>{{publisher}}<span class="hljs-tag">&lt;/<span class="hljs-title">dd</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">dl</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"summary"</span>&gt;</span>
-      {{summary}}
-    <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-</code></pre>
-<p>Le gabarit <code>series-item.hbs</code> est quant à lui modifié car il doit changer en fonction de la sous-route activée.
-Et puisqu’on ne veut rien afficher de plus, son contenu se résume à un <code>{{outlet}}</code> :</p>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- /app/templates/series-item.hbs --&gt;</span>
-{{outlet}}
-</code></pre>
-<p>Et voilà ! L’affichage de l’URL <code>/series/{@id}/</code> est inchangé alors que l’URL <code>/series/{@id}/edit</code> 
-affiche désormais le formulaire d’édition.</p>
-<h3 id="liens-entre-routes">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#liens-entre-routes">#</a>
-      Liens entre routes
-    </h3><p>Pour pouvoir plus facilement basculer en mode édition, on ajoute un lien vers la route correspondante grâce à <code>link-to</code> 
-(cf. <a href="http://emberjs.com/guides/templates/links/" >doc officielle</a>).</p>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- /app/templates/series/series-item/index.hbs --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"series-details"</span>&gt;</span>
-    {{#link-to 'series.seriesItem.edit' id class="edit"}}edit{{/link-to}}
-    <span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>{{title}}<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
-    ...
-</code></pre>
-<p>On note que la route vers laquelle le lien pointe est préfixée par <code>series</code> parce qu’on a défini une route et non une resource.
-En effet, une ressource réinitialise l’espace de nommage et permet donc des noms de routes plus courts. Pour pouvoir pointer vers <code>seriesItem.edit</code> on aurait donc dû
-remplacer <code>this.route(&#39;seriesItem&#39;, ...</code> par <code>this.resource(&#39;seriesItem&#39;, ...</code>.</p>
-<p>On peut désormais éditer notre série. On remarque au passage que la modification du titre de la série le met également à jour en temps réel dans la liste des séries grâce
-au <em>binding</em> (cf. <a href="/posts/js/premiere-app-ember/#-em-bindings-em-et-mise-a-jour-des-gabarits" >article précédent</a>).</p>
-<h3 id="enregistrement-des-modifications">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#enregistrement-des-modifications">#</a>
-      Enregistrement des modifications
-    </h3><p>Nous allons maintenant rendre opérationnels nos deux boutons d’édition <em>annuler</em> et <em>valider</em>. Pour cela, on commence par associer des actions à nos boutons :</p>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- /app/templates/series/series-item/edit.hbs` --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"series-details"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"submit"</span> {{<span class="hljs-attribute">action</span> "<span class="hljs-attribute">submit</span>"}} <span class="hljs-attribute">class</span>=<span class="hljs-value">"submit"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"reset"</span> {{<span class="hljs-attribute">action</span> "<span class="hljs-attribute">cancel</span>"}} <span class="hljs-attribute">class</span>=<span class="hljs-value">"cancel"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-...
-</code></pre>
-<p>Comme il s’agit de manipulations sur le modèle et de transitions entre routes, les actions correspondantes seront traitées par la route.</p>
-<pre><code class="lang-js"><span class="hljs-comment">// app/routes/series/series-item/edit.js</span>
-<span class="hljs-keyword">import</span> Ember <span class="hljs-keyword">from</span> <span class="hljs-string">'ember'</span>;
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Ember.Route.extend({
-  model: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.seriesItem'</span>);
-  },
-  actions: {
-    submit: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-      <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.seriesItem.edit'</span>).save().then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-        <span class="hljs-keyword">this</span>.transitionTo(<span class="hljs-string">'series.seriesItem'</span>);
-      }.bind(<span class="hljs-keyword">this</span>));
-    },
-
-    cancel: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-      <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.seriesItem.edit'</span>).rollback();
-      <span class="hljs-keyword">this</span>.transitionTo(<span class="hljs-string">'series.seriesItem'</span>);
-    }
-  }
-});
-</code></pre>
-<p>Quelques mots sur ces quelques lignes : </p>
-<ul>
-<li>Dans une <code>route</code>, le modèle courant est récupéré via <code>this.modelFor(&#39;nomRoute&#39;)</code>. Ici, on récupère explicitement le modèle chargé automatiquement 
-(par convention) par la route mère <code>seriesItem</code>. Notez qu’on aurait pu omettre la récupération du modèle complètement car la route mère s’en occupe pour nous.</li>
-<li>Une fois le modèle récupéré, on peut invoquer les méthodes apportées par <a href="https://github.com/emberjs/data" >Ember Data</a>.</li>
-<li>Pour un <code>cancel</code>, on invoque <code>rollback()</code> : toutes les modifications effectuées sont annulées et le modèle est réinitialisé.</li>
-<li>Pour un <code>submit</code>, on invoque un <code>save()</code> qui enregistre les modifications apportées au modèle dans le <em>magasin</em> 
-(<a href="http://emberjs.com/api/data/classes/DS.Store.html" >Store</a>) d’<a href="https://github.com/emberjs/data" >Ember Data</a>.</li>
-<li>Les opérations effectuées sur les modèles sont bien souvent asynchrones puisque, dans le cas nominal, elles font 
-intervenir des API REST pour enregistrer ou mettre à jour les données depuis un serveur. Dans le cas où l’on souhaite
-attendre la fin du traitement pour effectuer une action (comme ici dans le cas du <code>save</code>), il est nécessaire d’utiliser
-les <em>promesses</em> (<code>promises</code>) qu’<a href="https://github.com/emberjs/data" >Ember Data</a> renvoie (<code>.then(...)</code>). Dans le cas contraire, le code serait
-exécuté avant la fin du traitement et ne permettrait pas de proposer un retour utilisateur propre (gestion des cas d’erreurs notamment).</li>
-<li>Les transitions entre routes sont possibles via <code>this.transitionTo(&#39;nomRoute&#39;)</code>.</li>
-</ul>
-<h3 id="actions-sur-les-transitions">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#actions-sur-les-transitions">#</a>
-      Actions sur les transitions
-    </h3><p>Mais je voudrais encore ajouter une dernière petite cerise sur ce gâteau : annuler automatiquement toutes les modifications effectuées
-sur la série dès que l’on quitte la route. <a href="http://emberjs.com" >Ember</a> prévoit en effet des mécanismes avancés pour travailler sur les transitions entre 
-routes (cf. <a href="http://emberjs.com/guides/routing/preventing-and-retrying-transitions/" >doc officielle</a>). En particulier <code>willTransition</code> : </p>
-<pre><code class="lang-js"><span class="hljs-comment">// app/routes/series/series-item/edit.js</span>
-  actions: {
-    ...
-    willTransition: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-      <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.seriesItem.edit'</span>).rollback();
-      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
-    }
-  }
-</code></pre>
-<p>L’action est très simple ici mais on imagine facilement comment on pourrait ajouter une confirmation et déterminer, en fonction
-de la réponse, si l’on doit continuer la transition ou l’abandonner.</p>
-<h2 id="relations-avec-ember-data-ember-data">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#relations-avec-ember-data-ember-data">#</a>
-      Relations avec <a href="https://github.com/emberjs/data" >Ember Data</a>
-    </h2><p><a href="https://github.com/emberjs/data" >Ember Data</a> permet de définir des relations entre nos modèles. Ajoutons donc des albums à nos séries :</p>
-<p>On définit d’abord une nouvelle entité <code>Album</code> et ses propriétés et on indique que cet album était associé à une série via la propriété <code>series</code> 
-et à la méthode <code>DS.belongsTo</code> (cf. <a href="http://emberjs.com/api/data/#method_belongsTo" >doc officielle</a>). 
-Ce qui se traduit plus loin, dans l’initialisation des données par <code>series: 1</code> où 1 est l’identifiant de la 
-série en question.</p>
-<pre><code class="lang-js"><span class="hljs-comment">// /app/models/album.js</span>
-<span class="hljs-keyword">import</span> DS <span class="hljs-keyword">from</span> <span class="hljs-string">'ember-data'</span>;
-
-<span class="hljs-keyword">var</span> Album = DS.Model.extend({
-  title               : DS.attr(<span class="hljs-string">'string'</span>),
-  publicationDate     : DS.attr(<span class="hljs-string">'date'</span>),
-  number              : DS.attr(<span class="hljs-string">'number'</span>),
-  coverName           : DS.attr(<span class="hljs-string">'string'</span>, {defaultValue: <span class="hljs-string">'default.jpg'</span>}),
-  series              : DS.belongsTo(<span class="hljs-string">'seriesItem'</span>),
-  coverUrl: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">return</span> <span class="hljs-string">'/assets/images/albums/covers/'</span> + <span class="hljs-keyword">this</span>.get(<span class="hljs-string">'coverName'</span>);
-  }.property(<span class="hljs-string">'coverName'</span>)
-});
-
-Album.reopenClass({
-  FIXTURES: [{
-    id: <span class="hljs-number">1</span>,
-    title: <span class="hljs-string">'Somewhere Within the Shadows'</span>,
-    publicationDate: <span class="hljs-string">'Nov 2000'</span>,
-    number: <span class="hljs-number">1</span>,
-    coverName: <span class="hljs-string">'blacksad-1.jpg'</span>,
-    series: <span class="hljs-number">1</span>
-  }, {
-    id: <span class="hljs-number">2</span>,
-    title: <span class="hljs-string">'Arctic-Nation'</span>,
-    publicationDate: <span class="hljs-string">'Mar 2003'</span>,
-    number: <span class="hljs-number">2</span>,
-    coverName: <span class="hljs-string">'blacksad-2.jpg'</span>,
-    series: <span class="hljs-number">1</span>
-  }]
-});
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Album;
-</code></pre>
-<p>On modifie ensuite le modèle <code>SeriesItem</code> pour indiquer une relation inverse grâce à la propriété <code>albums</code> et à 
-la méthode <code>DS.hasMany</code> (cf. <a href="http://emberjs.com/api/data/#method_hasMany" >doc officielle</a>) puis affecter la liste des 
-identifiants des albums à la série via <code>albums: [1, 2]</code> : </p>
-<pre><code class="lang-js"><span class="hljs-comment">// /app/models/series-item.js</span>
-<span class="hljs-keyword">import</span> DS <span class="hljs-keyword">from</span> <span class="hljs-string">'ember-data'</span>;
-
-<span class="hljs-keyword">var</span> SeriesItem = DS.Model.extend({
-    title               : DS.attr(<span class="hljs-string">'string'</span>, {defaultValue: <span class="hljs-string">'New Series'</span>}),
-    ...
-    albums              : DS.hasMany(<span class="hljs-string">'album'</span>, {<span class="hljs-keyword">async</span>: <span class="hljs-literal">true</span>})
-});
-
-SeriesItem.reopenClass({
-    FIXTURES: [{
-    id: <span class="hljs-number">1</span>,
-    ...
-    albums: [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]
-    }, ...
-]});
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> SeriesItem;
-</code></pre>
-<h2 id="insertion-d-un-gabarit">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#insertion-d-un-gabarit">#</a>
-      Insertion d’un gabarit
-    </h2><p>Maintenant qu’on a des albums pour nos séries, on serait bien intéressé de les voir s’afficher. Seulement voilà, on veut juste les
-afficher à côté de la visualisation d’une série. On ne veut rien proposer d’autre pour ces albums que le <em>binding</em> des propriétés et
-leur affichage. Pas besoin de route ou de contrôleur. On va pour cela utiliser un outil particulier permettant simplement
-d’insérer (d’afficher) un gabarit au sein d’une route existante via le <em>helper</em> : <code>render</code> (cf. 
-<a href="http://emberjs.com/guides/templates/rendering-with-helpers/#toc_the-code-view-code-helper" >doc officielle</a>).</p>
-<p>On modifie donc le gabarit <code>/series/series-item.hbs</code> pour qu’à côté de la fiche d’une série soit affichée la liste de ses albums : </p>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- /app/templates/series/series-item.hbs --&gt;</span>
-
-{{outlet}}
-
-<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"series-albums"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
-        {{#each album in albums}}
-            {{render 'partials/albumItem' album}}
-        {{/each}}
-    <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-</code></pre>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- /app/templates/partials/album-item.hbs --&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-title">li</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"album"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> {{<span class="hljs-attribute">bind-attr</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"coverUrl"</span><span class="hljs-value">}}</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"Album cover"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"cover"</span>/&gt;</span>
-
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"description"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">h4</span>&gt;</span>{{title}}<span class="hljs-tag">&lt;/<span class="hljs-title">h4</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">dl</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">dt</span>&gt;</span>volume<span class="hljs-tag">&lt;/<span class="hljs-title">dt</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">dd</span>&gt;</span>{{number}}<span class="hljs-tag">&lt;/<span class="hljs-title">dd</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">dt</span>&gt;</span>date<span class="hljs-tag">&lt;/<span class="hljs-title">dt</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">dd</span>&gt;</span>{{publicationDate}}<span class="hljs-tag">&lt;/<span class="hljs-title">dd</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-title">dl</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
-</code></pre>
-<h2 id="creation-d-une-nouvelle-serie">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#creation-d-une-nouvelle-serie">#</a>
-      Création d’une nouvelle série
-    </h2><p>Histoire de terminer en beauté on va ajouter vite fait la création d’une série.</p>
-<p>Comme on commence à avoir l’habitude, on fait ça en deux coups de cuillère à pot : </p>
-<pre><code class="lang-js"><span class="hljs-comment">// /app/router.js</span>
-Router.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-  <span class="hljs-keyword">this</span>.resource(<span class="hljs-string">'series'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'seriesItem'</span>, { path: <span class="hljs-string">'/:seriesItem_id'</span> }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-      <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'edit'</span>);
-    });
-    <span class="hljs-keyword">this</span>.route(<span class="hljs-string">'create'</span>);
-  });
-});
-</code></pre>
-<pre><code class="lang-js"><span class="hljs-comment">// /app/routes/series/create.js</span>
-<span class="hljs-keyword">import</span> Ember <span class="hljs-keyword">from</span> <span class="hljs-string">'ember'</span>;
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Ember.Route.extend({
-  model: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.store.createRecord(<span class="hljs-string">'seriesItem'</span>);
-  },
-
-  renderTemplate: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">this</span>.render(<span class="hljs-string">'series.seriesItem.edit'</span>);
-  },
-
-  actions: {
-    submit: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-      <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.create'</span>).save().then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-        <span class="hljs-keyword">this</span>.transitionTo(<span class="hljs-string">'series.seriesItem'</span>, <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.create'</span>));
-      }.bind(<span class="hljs-keyword">this</span>));
-    },
-
-    cancel: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-      <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.create'</span>).rollback();
-      <span class="hljs-keyword">this</span>.transitionTo(<span class="hljs-string">'series'</span>);
-    },
-
-    willTransition: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-      <span class="hljs-keyword">this</span>.modelFor(<span class="hljs-string">'series.create'</span>).rollback();
-      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
-    }
-  }
-});
-</code></pre>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- /app/templates/series.hbs --&gt;</span>
-    ...
-      {{/each}}
-        <span class="hljs-tag">&lt;<span class="hljs-title">li</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"series-item"</span>&gt;</span>
-          {{#link-to 'series.create' class="add"}}add{{/link-to}}
-        <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
-    ...
-</code></pre>
-<p>Les points importants à noter : </p>
-<ul>
-<li>Le modèle est, cette fois-ci, créé à l’activation de la route via <code>this.store.createRecord(...)</code>.</li>
-<li>Comme on ne souhaite pas proposer de gabarit propre pour cette route, on utilise <code>renderTemplate</code> pour indiquer à <a href="http://emberjs.com" >Ember</a> quel
-gabarit il doit utiliser. </li>
-<li>Les actions <code>submit</code>, <code>cancel</code> et <code>willTransition</code> sont sensiblement les mêmes que pour l’édition mais travaillent sur un modèle différent et 
-renvoient vers d’autres routes.</li>
-<li>On note le passage du modèle lors de la transition en cas de <code>submit</code>.</li>
-<li>Il serait légitime de se poser la question de réutilisation de code entre ces deux routes, compte tenu des similarités. Ce n’est pas l’objet 
-de l’article mais pourrait être envisagé à l’aide d’un <code>mixin</code> partagé (cf. <a href="http://emberjs.com/api/classes/Ember.Mixin.html" >doc officielle</a>).  </li>
-</ul>
-<h2 id="conclusion">
-      <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/js/premiere-app-ember-suite/#conclusion">#</a>
-      Conclusion
-    </h2><p>Au travers de cet article et des précédents, j’espère vous avoir donné un aperçu du modèle de développement que propose
-<a href="http://emberjs.com" >Ember</a>. Vous avez compris, j’espère, qu’<a href="http://emberjs.com" >Ember</a> est un véritable framework avec des opinions fortes et qu’il doit être pris comme
-tel ou laissé de côté pour une solution plus légère selon vos besoins.</p>
-<p>Mais j’ai également essayé d’aller plus en profondeur sur certains aspects et de montrer des cas d’utilisation concrets. 
-Ce dernier article montre qu’il est également possible de fournir à <a href="http://emberjs.com" >Ember</a> 
-des configurations explicites afin d’aller plus loin que les conventions par défaut.</p>
-<p>Maintenant, vous n’avez plus d’excuses… Vous ne pourrez pas dire que vous ne connaissiez pas. </p>
-<p><em>Note: les sources de l’application exemple sont <a href="https://github.com/bmeurant/ember-articles/tree/premiere-app-ember-suite" >disponibles sur github</a>.</em></p>
-]]></description>
-            <link>http://putaindecode.fr/posts/js/premiere-app-ember-suite/</link>
-            <guid isPermaLink="true">http://putaindecode.fr/posts/js/premiere-app-ember-suite/</guid>
-            <pubDate>Tue, 09 Dec 2014 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>

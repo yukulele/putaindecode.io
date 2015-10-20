@@ -327,7 +327,7 @@ projet.</p>
 vous héritez. Pour cet exemple, je vous propose d’utiliser une image de Debian
 comme base (ce qui est une bonne pratique, car cette image
 est plutôt légère en comparaison avec celle d’Ubuntu par exemple).</p>
-<pre><code><span class="hljs-tag">FROM</span> <span class="hljs-rule"><span class="hljs-attribute">debian</span>:<span class="hljs-value">jessie</span></span>
+<pre><code><span class="hljs-tag">FROM</span> <span class="hljs-tag">debian</span><span class="hljs-pseudo">:jessie</span>
 </code></pre><p><code>FROM</code> permet de définir notre image de base, vous pouvez l’utiliser uniquement
 une fois dans un Dockerfile.</p>
 <p>Comme nous voulons créer une image pour une application JavaScript full-stack,
@@ -390,7 +390,7 @@ avec l’extérieur du conteneur.</p>
 dossier nous souhaitons partager.</p>
 <p>Et pour finir, nous pouvons indiquer quelle instruction doit s’exécuter au
 lancement de votre conteneur grâce à l’instruction <code>CMD</code>.</p>
-<pre><code><span class="hljs-built_in">CMD</span> <span class="bash">node server.js</span>
+<pre><code>CMD <span class="hljs-keyword">node</span><span class="hljs-identifier"> </span><span class="hljs-title">server</span>.js
 </code></pre><p>Voici un résumé de notre Dockerfile :</p>
 <pre><code><span class="hljs-comment"># Image de base</span>
 <span class="hljs-built_in">FROM</span> debian:jessie

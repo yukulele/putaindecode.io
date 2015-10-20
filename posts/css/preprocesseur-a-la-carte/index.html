@@ -339,11 +339,11 @@ de nos feuilles de styles par les navigateurs.</p>
 incompréhensibles par le navigateur (ex: <code>@if</code>, <code>@foreach</code>…).</p>
 <p>Note: Je case Stylus dans le langage spécifique car il n’est pas vraiment compatible,
 ne tolérant pas l’indentation :</p>
-<pre><code class="lang-css"><span class="hljs-class">.Block</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">prop</span>:<span class="hljs-value"> value }
+<pre><code class="lang-css"><span class="hljs-class">.Block</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">prop</span>:<span class="hljs-value"> value </span></span></span>}
 
-  .Block-element { prop: value }
+  <span class="hljs-class">.Block-element</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">prop</span>:<span class="hljs-value"> value </span></span></span>}
 
-<span class="hljs-comment">/* 💥 BOOM ! CA PAS MARCHER EN STYLUS */</span></span></span></span>
+<span class="hljs-comment">/* 💥 BOOM ! CA PAS MARCHER EN STYLUS */</span>
 </code></pre>
 <h3 id="preprocessing-futureproof-fallback">
       <a class="putainde-Title-anchor" href="http://putaindecode.fr/posts/css/preprocesseur-a-la-carte/#preprocessing-futureproof-fallback">#</a>
@@ -632,10 +632,10 @@ Il ne reste plus grand chose à faire si ce n’est ajouter livereload en plus p
     <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
     <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> @width</span></span>;
     <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--fontSize)
-}
+</span></span></span>}
 
-p {
-    margin: <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--lineHeight) / <span class="hljs-number">2</span>) <span class="hljs-number">0</span></span></span>;
+<span class="hljs-tag">p</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--lineHeight) / <span class="hljs-number">2</span>) <span class="hljs-number">0</span></span></span>;
 }</span>
 
 <span class="hljs-tag">a</span> <span class="hljs-rules">{
@@ -667,10 +667,10 @@ p {
   <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> all <span class="hljs-number">500ms</span> <span class="hljs-function">cubic-bezier</span>(<span class="hljs-number">0.175</span>, <span class="hljs-number">0.885</span>, <span class="hljs-number">0.320</span>, <span class="hljs-number">1.275</span>)</span></span>;
 }</span>
 
-<span class="hljs-rule"><span class="hljs-attribute">a</span>:<span class="hljs-value">hover {
-  color: <span class="hljs-function">rgba</span>(<span class="hljs-number">204</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.8</span>)</span></span>;
+<span class="hljs-tag">a</span><span class="hljs-pseudo">:hover</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">204</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.8</span>)</span></span>;
   <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">rotate</span>(<span class="hljs-number">1deg</span>)</span></span>;
-}
+}</span>
 </code></pre>
 <p>Gardez bien en tête qu’avec le code CSS d’origine, vous avez (en majeur partie) un code futureproof.
 D’ici quelques temps on pourra supprimer une grande partie des plugins et les navigateurs prendront le relais 😉.</p>

@@ -359,25 +359,25 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
     </h4><p>Une fois installé, on copie la configuration :</p>
 <pre><code>$ cp <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/opt/</span>dnsmasq<span class="hljs-regexp">/dnsmasq.conf.example /u</span>sr<span class="hljs-regexp">/local/</span>etc<span class="hljs-regexp">/dnsmasq.conf</span>
 </code></pre><p>puis on édite le comme ceci :</p>
-<pre><code># <span class="hljs-keyword">Add</span> domains which you want <span class="hljs-keyword">to</span> force <span class="hljs-keyword">to</span> an IP address here.
-# The example below send any host <span class="hljs-keyword">in</span> double-click.net <span class="hljs-keyword">to</span> a local
-# web-server.
-#address=/double-click.net/<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>
-address=/monsite.dev/<span class="hljs-number">192.168</span>.<span class="hljs-number">1.145</span>
+<pre><code><span class="hljs-comment"># Add domains which you want to force to an IP address here.</span>
+<span class="hljs-comment"># The example below send any host in double-click.net to a local</span>
+<span class="hljs-comment"># web-server.</span>
+<span class="hljs-comment">#address=/double-click.net/127.0.0.1</span>
+address=<span class="hljs-regexp">/monsite.dev/</span><span class="hljs-number">192.168</span>.<span class="hljs-number">1.145</span>
 
-# <span class="hljs-keyword">If</span> you want dnsmasq <span class="hljs-keyword">to</span> listen <span class="hljs-keyword">for</span> DHCP <span class="hljs-keyword">and</span> DNS requests only <span class="hljs-keyword">on</span>
-# specified interfaces (<span class="hljs-keyword">and</span> the loopback) give the name <span class="hljs-keyword">of</span> the
-# <span class="hljs-keyword">interface</span> (eg eth0) here.
-# <span class="hljs-keyword">Repeat</span> the line <span class="hljs-keyword">for</span> more than one <span class="hljs-keyword">interface</span>.
-#<span class="hljs-keyword">interface</span>=
-# <span class="hljs-keyword">Or</span> you can specify which <span class="hljs-keyword">interface</span> _not_ <span class="hljs-keyword">to</span> listen <span class="hljs-keyword">on</span>
-#<span class="hljs-keyword">except</span>-<span class="hljs-keyword">interface</span>=
-# <span class="hljs-keyword">Or</span> which <span class="hljs-keyword">to</span> listen <span class="hljs-keyword">on</span> <span class="hljs-keyword">by</span> address (remember <span class="hljs-keyword">to</span> include <span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span> <span class="hljs-keyword">if</span>
-# you use this.)
-listen-address=<span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>
-# <span class="hljs-keyword">If</span> you don<span class="hljs-string">'t want dnsmasq to read /etc/hosts, uncomment the
-# following line.
-no-hosts</span>
+<span class="hljs-comment"># If you want dnsmasq to listen for DHCP and DNS requests only on</span>
+<span class="hljs-comment"># specified interfaces (and the loopback) give the name of the</span>
+<span class="hljs-comment"># interface (eg eth0) here.</span>
+<span class="hljs-comment"># Repeat the line for more than one interface.</span>
+<span class="hljs-comment">#interface=</span>
+<span class="hljs-comment"># Or you can specify which interface _not_ to listen on</span>
+<span class="hljs-comment">#except-interface=</span>
+<span class="hljs-comment"># Or which to listen on by address (remember to include 127.0.0.1 if</span>
+<span class="hljs-comment"># you use this.)</span>
+<span class="hljs-keyword">listen</span>-address=<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>
+<span class="hljs-comment"># If you don't want dnsmasq to read /etc/hosts, uncomment the</span>
+<span class="hljs-comment"># following line.</span>
+<span class="hljs-keyword">no</span>-hosts
 </code></pre><p>Nous précisons dans un premier temps la résolution du nom de domaine <code>monsite.dev</code> (notez que c’est du wildcard, donc pas besoin de préciser les sous-domaines), puis nous indiquons que le serveur DNS marche sur toutes les IPs de la machine hôte et enfin nous indiquons que nous ne voulons pas prendre en compte le fichier <code>/etc/hosts</code> vu qu’on spécifie les résolutions via <code>address</code>.</p>
 <p>Cela permettra à terme de ne plus gérer le fichier <code>/etc/hosts</code> et de tout spécifier dans <code>dnsmasq.conf</code>.</p>
 <h4 id="lancer-dnsmasq-au-demarrage-de-la-machine">
