@@ -1,4 +1,153 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Fri, 13 Nov 2015 07:38:00 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[Gérer son thème WordPress avec Webpack]]></title><description><![CDATA[<h1 id="pourquoi-webpack-pour-g-rer-son-th-me-wordpress"><a class="markdownIt-Anchor" href="#pourquoi-webpack-pour-g-rer-son-th-me-wordpress">#</a> Pourquoi Webpack pour gérer son thème WordPress ?</h1>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Tue, 17 Nov 2015 08:11:16 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[Un favicon vite fait bien fait]]></title><description><![CDATA[<p>Oublions un instant CSS et JavaScript pour parler d’un sujet vraiment
+important : le favicon.</p>
+<p>Alors d’accord, le favicon n’est que le petit détail qu’on expédie en fin de
+projet. Mais oubliez-le et votre client comprendra tout de suite qu’il manque
+quelque chose.</p>
+<p>Dans ce post, nous allons voir comment s’acquitter de cette tâche dans les temps
+et les règles de l’art. Et nous ferons intervenir un outil dont je suis l’heureux
+auteur.</p>
+<h2 id="vite-fait"><a class="markdownIt-Anchor" href="#vite-fait">#</a> Vite fait</h2>
+<p>Pourquoi vite fait ? Parce qu’on ne peut pas consacrer trop de temps au favicon.
+L’optimisation pour les smartphones, l’amélioration du score PageSpeed ou
+encore l’augmentation du taux de conversion, voilà des sujets sur lesquels on
+peut plancher des heures, des jours ou bien plus. Mais le favicon, franchement,
+est-ce vraiment la raison à invoquer pour expliquer le retard d’un projet ? Un
+détail qu’on vous dit !</p>
+<p>Pour créer un favicon vite fait :</p>
+<ul>
+<li>Créez un <code>favicon.ico</code> avec n’importe quel générateur trouvé sur le net.
+Déclarez-le avec <code>&lt;link rel=&quot;icon&quot; href=&quot;favicon.ico&quot; type=&quot;image/x-icon&quot;&gt;</code>.
+Ou peut-être <code>&lt;link rel=&quot;shortcut icon&quot; href=&quot;favicon.ico&quot; type=&quot;image/x-icon&quot;&gt;</code> ? Non parce qu’on trouve les deux. Dans le doute,
+déclarez-le deux fois.</li>
+<li>Créez une Touch icon (pour iOS et les autres). Si on en croit les résultats
+pour “apple touch icon size” sur Google, la taille maximale est 144x144.</li>
+</ul>
+<p>Voilà. Si vous faites tout ça, vous vous serez acquitté de la tâche rapidement.
+Bon, ça sera mal fait, mais fait. C’est un début.</p>
+<h2 id="bien-fait"><a class="markdownIt-Anchor" href="#bien-fait">#</a> Bien fait</h2>
+<p>À présent, penchons-nous sur les difficultés qui nous attendent.</p>
+<h3 id="c-est-la-taille-qui-compte"><a class="markdownIt-Anchor" href="#c-est-la-taille-qui-compte">#</a> C’est la taille qui compte</h3>
+<p>Ça ne fait pas plaisir à entendre et pourtant nous sommes au cœur du problème
+(nous parlons bien de favicon).</p>
+<p><code>favicon.ico</code> devrait-il être en 16x16 ou 32x32 ? <a href="https://msdn.microsoft.com/library/gg491740(v=vs.85).aspx">Les deux, selon
+Microsoft</a>. Quelle
+est la taille de la Touch icon d’Apple ? <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/MobileHIG/IconMatrix.html#//apple_ref/doc/uid/TP40006556-CH27-SW2">180x180 depuis iOS 8</a>.
+La tuile <code>square70x70logo</code> pour Windows 8 et 10, c’est… du 70x70, hein ?
+Moui, mais <a href="https://msdn.microsoft.com/library/dn455106(v=vs.85).aspx">idéalement, 128x128</a>.</p>
+<p>Ça n’est pas tout : encore faut-il trouver ces informations. Google est
+assez variable sur ce point. Il met dans le mille pour une recherche concernant
+le favicon classique (16x16 <em>et</em> 32x32), mais échoue, on l’a vu, pour la
+Touch icon. Les éditeurs ne sont pas en reste. Si <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/MobileHIG/IconMatrix.html#//apple_ref/doc/uid/TP40006556-CH27-SW2">Apple indique bien les
+dimensions attendues pour l’iPhone 6</a>,
+il a en revanche <a href="https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html">oublié de mettre à jour sa page qui sort pourtant en premier résultat pour la recherche “apple touch icon”</a> (152x152 d’après elle).</p>
+<p>Le <a href="https://github.com/audreyr/favicon-cheat-sheet">favicon cheat sheet</a> est une
+ressource intéressante à ce titre, quoique pas à jour à l’heure où ces lignes
+sont écrites.</p>
+<p>Bref, le temps de rassembler toutes ces informations et l’après-midi s’est envolé. Oups.</p>
+<p>Ce que je décris ici est le premier problème auquel je me suis frotté il y
+a un peu plus de deux ans, alors que j’achevais mon premier site responsive et
+que je voulais une icône digne de ce nom.</p>
+<h3 id="le-design-vraiment"><a class="markdownIt-Anchor" href="#le-design-vraiment">#</a> Le design. Vraiment.</h3>
+<p>Allez, j’ai fait dans l’anxiogène avec ces histoires de taille mais en réalité
+ce problème a été largement amoindri ces derniers mois avec l’arrivée de
+générateurs de favicon de nouvelle génération. Et vous en aurez pour votre
+argent (d’autant qu’ils sont gratuits) : envoyez votre image et vous vous
+retrouverez avec plus d’une vingtaine d’images. C’est beaucoup, presque trop
+diront certains.</p>
+<p>Mais cette solution cache un problème presque plus grave. Si votre image
+originale passera bien sur une platforme, elle risque fort de ne pas
+correspondre à une autre.</p>
+<p>Prenons l’exemple des icônes pour Android et iOS. Elles servent surtout au <em>Add
+to homescreen</em>, lorsque votre visiteur vous fait l’honneur d’ajouter un lien
+vers votre site sur l’écran de son smartphone. Pas vraiment le moment de le
+décevoir. Sur Android, beaucoup d’icônes ne sont pas carrées mais exploitent
+la transparence, notamment les applications natives de Google.</p>
+<p><img src="google_apps.png" alt=""></p>
+<p>Bonne idée, donc, de suivre ce principe pour notre propre icône. C’est cette
+voie qu’a choisie mon cerveau auxilière, je veux parler de StackOverflow, et sa
+Touch icône transparente.</p>
+<p><img src="so_android.png" alt=""></p>
+<p>Sur iOS et son univers tout de parallélépipèdes aux coins arrondis, point de
+transparence en revanche. L’icône de StackOverflow se voit affublée d’un fond
+noir. Le résultat n’est pas si mauvais, mais était-ce vraiment voulu ?</p>
+<p><img src="so_ios.png" alt=""></p>
+<p>Passer son image à la moulinette pour en tirer une vingtaine d’icônes est une
+fausse bonne idée. Elle donne la dangereuse illusion d’un travail bien fait
+alors qu’en réalité vous n’avez pas de réel moyen de savoir ce que vous venez
+de faire. Sauf à tester vos icônes sur différents appareils et navigateurs, mais
+là ce sont encore quelques heures qui partent en fumée.</p>
+<p>Et voilà quel était le second problème que j’ai découvert dans ma quête d’une
+icône correcte. Un <code>-resize</code> d’ImageMagick et un script bash un peu brutal ne
+suffisent pas.</p>
+<p>Cela a donné le coup d’envoi à
+<a href="https://realfavicongenerator.net/">RealFaviconGenerator.net</a>, un générateur de
+favicon qui devait vraiment solutionner le problème.</p>
+<p>Il n’y a pas grand chose à dire sur le sujet, et c’est le but: n’oublions pas
+que nous n’avons que peu de temps. Rendez-vous sur <a href="http://RealFaviconGenerator.net">RealFaviconGenerator.net</a>,
+postez votre image, éditez vos icônes plate-forme par plate-forme et vous voilà
+avec ce qu’il faut d’images, de fichiers annexes et de code HTML pour
+configurer votre favicon.</p>
+<p><img src="favicon_editor.png" alt=""></p>
+<p>Voilà, c’est terminé.</p>
+<h3 id="se-mettre-la-page"><a class="markdownIt-Anchor" href="#se-mettre-la-page">#</a> Se mettre à la page</h3>
+<p>Ou presque.</p>
+<p>Il y a encore quelques années, il était normal de télécharger un framework
+JavaScript à la main puis de le déposer tel quel dans un projet Web.
+Aujourd’hui, cela est considéré comme une mauvaise pratique et on préférera
+utiliser un package manager.</p>
+<p>Est-il souhaitable d’industrialiser le favicon de la même manière ? Voyons voir
+ce qu’il s’est passé en un an :</p>
+<ul>
+<li>L’Iphone 6 est sorti, et avec lui la touch icon en 180x180 (avant c’était
+152x152).</li>
+<li>Android Chrome a cessé d’utiliser l’icône en 196x196 qui était autrefois
+spécifiée. À la place, il utilise une icône en 192x192 (et snobe la précédente
+quoi qu’il arrive).</li>
+<li>Oubliez cette histoire d’icône en 192x192, Android Chrome utilise désormais
+un manifeste et plusieurs versions d’icônes pour les différentes densités
+d’écran.</li>
+<li>Apple a sorti une nouvelle icône au format SVG pour les “pinned tabs” de
+Safari pour Mac OS X El Capitan.</li>
+</ul>
+<p>Autrement dit, si vous avez créé un favicon il y a un peu plus d’un an, il y a
+fort à parier qu’il rende mal sur un iPad de dernière génération et le résultat
+sur Android pourrait être assez aléatoire (Chrome utilisera une icône PNG qui
+n’est pas pour lui ou bien une Touch icon).</p>
+<p>À cet effet,
+<a href="https://realfavicongenerator.net/api">RealFaviconGenerator propose une API</a>.
+Tout ce qu’il est possible de faire via l’UI peut être reproduit via l’API.
+Hum… une API… de la doc à lire… Manifestement, ce n’est pas de cette
+façon qu’on va accélérer les choses. Mais tout n’est pas perdu car le code peut
+être généré automatiquement.</p>
+<p>Actuellement, RealFaviconGenerator supporte Grunt et Gulp. Par exemple, après
+avoir créé votre favicon, cliquez sur l’onglet “Gulp”. Vous avez le fragment de
+Gulpfile ainsi que les instructions pour intégrer votre favicon à votre
+processus de build, au même titre que la minification des CSS ou le processing
+des Coffee scripts.</p>
+<p><img src="gulp_instructions.png" alt=""></p>
+<p>Les règles :</p>
+<ul>
+<li><code>generate-favicon</code> : génère les icônes. Elle prend quelques
+secondes et c’est le genre de règle qu’on n’exécute qu’une fois de temps en
+temps, lorsqu’il y a du changement dans le paysage des favicons.</li>
+<li><code>inject-favicon-markups</code> : injecte les déclarations d’icônes
+dans les pages HTML. À exécuter à chaque modification de page, autant dire
+qu’elle va souvent servir.</li>
+<li><code>check-for-favicon-update</code> : vérifie s’il y a du nouveau sur
+RealFaviconGenerator. Si c’est le cas, elle fera échouer votre build bien
+comme il faut. Un peu brutal mais ça a le mérite d’être clair. Si vous
+avez un système d’intégration continue, arrangez-vous pour ajouter cette règle
+à votre radar.</li>
+</ul>
+<p>La favicon a toujours été un parent pauvre des projets web, à juste titre.
+Avec la prolifération des plates-formes, le négliger est de plus en plus hasardeux.
+J’ai conçu RealFaviconGenerator pour apporter un peu d’ordre à tout cela. Ce
+n’est pas la seule initiative. Hayden Bleasel développe
+<a href="https://github.com/haydenbleasel/favicons">favicons</a> qui ambitionne d’être
+<a href="https://github.com/google/web-starter-kit/issues/599">intégré au Web Starter Kit de Google</a>.</p>
+<p>Et maintenant, c’est à vous : que pensez-vous de la formule “génération de
+Gulp/Grunt/autre” ? Quelles sont les technos que vous aimeriez trouver ?</p>
+]]></description><link>http://putaindecode.io/fr/articles/favicon/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/favicon/</guid><pubDate>Tue, 17 Nov 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Gérer son thème WordPress avec Webpack]]></title><description><![CDATA[<h1 id="pourquoi-webpack-pour-g-rer-son-th-me-wordpress"><a class="markdownIt-Anchor" href="#pourquoi-webpack-pour-g-rer-son-th-me-wordpress">#</a> Pourquoi Webpack pour gérer son thème WordPress ?</h1>
 <p>La réponse est la même qu’à la simple question
 <a href="/fr/articles/js/webpack/">“pourquoi Webpack ?”</a>.
 L’intérêt principal est d’obtenir des rapports d’erreurs liés à
@@ -776,7 +925,7 @@ browserify) et permet de définir des nouveaux comportements.</p>
 <span class="hljs-built_in">require</span>(<span class="hljs-string">"index.html"</span>)</code></pre>
 <p>C’est cette partie qui est aujourd’hui la plus intéressante et la plus flexible.</p>
 <figure>
-  ![](index.jpg)
+  <img src="index.jpg" alt="" />
   <figcaption>
     Webpack transforme une multitude de fichiers en lots par responsabilité
   </figcaption>
@@ -2244,7 +2393,7 @@ d’interface utilisateur dynamiques ? Qui peut le plus peut le moins (quoi qu�
 fait, des templates, c’est un peu des composants d’interface).</p>
 <h2 id="exemple-de-template-react-jsx"><a class="markdownIt-Anchor" href="#exemple-de-template-react-jsx">#</a> Exemple de template React/JSX</h2>
 <p>Si vous ne savez pas trop ce qu’est React, nous vous recommandons de lire
-notre <a href="/fr/articles/js/react//">introduction à React</a>.</p>
+notre <a href="/fr/articles/js/react/">introduction à React</a>.</p>
 <p>Dans notre cas, on ne va pas spécialement bénéficier de certaines de ses forces,
 mais ça fera très bien le job pour notre besoin.</p>
 <p>Nous n’aborderons pas dans le détail la syntaxe React/JSX, ni ES6, pour rester
@@ -3004,203 +3153,4 @@ ce qui permet de créer de nouvelles fonctionnalités simplement. Et même du co
 <blockquote>
 <p>:q^C:wq</p>
 </blockquote>
-]]></description><link>http://putaindecode.io/fr/articles/vim/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/vim/</guid><pubDate>Tue, 03 Mar 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Quelques retours sur React et le rendu serveur]]></title><description><![CDATA[<p>On entend souvent parler d’applications JavaScript isomorphiques, et même si le
-nom ne <a href="https://news.ycombinator.com/item?id=8237449">fait</a> <a href="https://twitter.com/wycats/status/566857009836724224">pas</a>
-<a href="https://medium.com/the-thinkmill/making-the-case-for-progressive-javascript-a98dfa82b9d7">l’unanimité</a>,
-ce qu’il y a derrière, le concept de <em>server side rendered JavaScript</em> est en
-passe de devenir  un sujet plutôt tendance pour 2015 grâce à la monté en puissance
-de <a href="http://facebook.github.io/react/">Reactjs</a>.  Faire du rendu d’application
-JavaScript coté serveur permet de réconcilier enfin le développeur de
-<em>Single Page App</em> (SPA) avec l’amélioration progressive, l’accessibilité et le
-SEO ; quoique Google comme les lecteurs d’écran ont plutôt bien évolué sur
-ce point. L’autre avantage non négligeable à mon sens, est qu’on améliore les
-performances perçues par rapport
-à une SPA classique puisque :</p>
-<ul>
-<li>On supprime une requête <em>ajax</em> au démarrage pour récupérer le contenu
-initial.</li>
-<li>On améliore la vitesse de rendu initial de page.</li>
-<li>On bénéficie de la fluidité de navigation d’une SPA.</li>
-</ul>
-<p>Pour plus d’info sur les avantages, il y a <a href="http://tech.m6web.fr/isomorphic-single-page-app-parfaite-react-flux/">cet article</a> sur le blog de M6Tech.</p>
-<p>Afin de me familiariser avec React et son écosystème, rien de mieux que mettre
-les mains dedans ! C’est un peu pour toutes ces raisons que j’ai décidé de
-l’utiliser pour mon site web (un site statique).</p>
-<p><strong>Inutile et donc totalement justifié pour le développeur que je suis</strong>.
-Une des premières briques que j’ai mises en place a été le routeur.</p>
-<p>##react-router
-Pour une fois dans la communauté JavaScript, il y a une bibliothèque de référence
-et c’est celle là : <a href="https://github.com/rackt/react-router">react-router</a>.
-Le routeur est fortement inspiré par celui d’Ember au sens où les URL et leurs routes
-sont au cœur du dispositif. Le routeur se présente sous forme de composant React
-et ça donne ça.</p>
-<pre><code class="language-jsx"><span class="hljs-comment">//routes.js</span>
-
-<span class="hljs-built_in">var</span> React = <span class="hljs-keyword">require</span>(<span class="hljs-string">"react"</span>);
-<span class="hljs-built_in">var</span> Router = <span class="hljs-keyword">require</span>(<span class="hljs-string">"react-router"</span>);
-
-<span class="hljs-built_in">var</span> Route = Router<span class="hljs-built_in">.</span>Route;
-<span class="hljs-built_in">var</span> DefaultRoute = Router<span class="hljs-built_in">.</span>DefaultRoute;
-<span class="hljs-built_in">var</span> NotFoundRoute = Router<span class="hljs-built_in">.</span>NotFoundRoute;
-
-<span class="hljs-built_in">var</span> App = <span class="hljs-keyword">require</span>(<span class="hljs-string">"./app"</span>);
-<span class="hljs-built_in">var</span> Home = <span class="hljs-keyword">require</span>(<span class="hljs-string">"./home/homePage"</span>);
-<span class="hljs-built_in">var</span> Project = <span class="hljs-keyword">require</span>(<span class="hljs-string">"./project/projectPage"</span>);
-<span class="hljs-built_in">var</span> NotFound = <span class="hljs-keyword">require</span>(<span class="hljs-string">"./notFound"</span>);
-
-<span class="hljs-built_in">var</span> routes = (
-  &lt;Route path=<span class="hljs-string">"/"</span> handler={App}&gt;
-    &lt;DefaultRoute name=<span class="hljs-string">"index"</span> handler={Home} /&gt;
-    &lt;Route name=<span class="hljs-string">"project"</span> path=<span class="hljs-string">"/projects/:url"</span> handler={Project} /&gt;
-    &lt;NotFoundRoute name=<span class="hljs-string">"404"</span> handler={NotFound} /&gt;
-  &lt;/Route&gt;
-);
-
-module<span class="hljs-built_in">.</span>exports = routes;</code></pre>
-<p>À mon sens, l’aspect déclaratif apporte de la clarté et améliore la compréhension
-du système. On voit rapidement quel composant est utilisé en fonction de l’URL.
-L’autre avantage du déclaratif, c’est qu’il permet de manière assez simple,
-d’imbriquer les routes en imbriquant les nœuds <code>&lt;Route&gt;</code>.</p>
-<p>En plus des composants, on a aussi à disposition des <em>mixins</em> pour naviguer
-programmatiquement ou accéder aux infos du routeur (chemin, paramètres, …)</p>
-<p>Et le gros plus de cette bibliothèque : elle peut aussi s’utiliser coté serveur,
-pour la génération des vues et éviter ainsi de dupliquer du code puisqu’on va
-pouvoir carrément utiliser tel quel le fichier précédent. Plutôt cool !
-Voici un exemple de <em>middleware</em> pour faire marcher ça dans Express :</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">"react"</span>);
-<span class="hljs-keyword">var</span> Router = <span class="hljs-built_in">require</span>(<span class="hljs-string">"react-router"</span>);
-
-<span class="hljs-comment">// notre fichier routes.js</span>
-<span class="hljs-keyword">var</span> routes = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./src/routes"</span>);
-<span class="hljs-comment">// notre template de page html</span>
-<span class="hljs-keyword">var</span> Html = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./src/html"</span>);
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reactView</span>(<span class="hljs-params">req, res, next</span>) </span>{
-  Router.run(routes, req.url, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">Handler, state</span>) </span>{
-    <span class="hljs-comment">// on récupère les données pour cette vue en fonction de la requête.</span>
-    <span class="hljs-keyword">var</span> data = getViewData(req);
-
-    <span class="hljs-comment">// on génère la soupe au tag avec nos données dedans</span>
-    <span class="hljs-keyword">var</span> markup = React.renderToString(React.createElement(Handler), data);
-
-    <span class="hljs-comment">// on utilise React comme moteur de template</span>
-    <span class="hljs-keyword">var</span> HtmlElement = React.createElement(Html, {markup: markup});
-    res.send(<span class="hljs-string">"&lt;!DOCTYPE html&gt;"</span> +  React.renderToStaticMarkup(HtmlElement));
-  });
-}</code></pre>
-<p>Et voici le composant <code>Html.jsx</code> que l’on utilise comme <em>template</em> pour notre page principale.</p>
-<pre><code class="language-jsx">var React = require('react');
-
-var Html = React.createClass({
-  render: function() {
-    return (
-      <span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charSet</span>=<span class="hljs-value">"utf-8"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">meta</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Mon site perso<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/app.js"</span> /&gt;</span><span class="handlebars"><span class="xml">
-        <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"react-app"</span> <span class="hljs-attribute">dangerouslySetInnerHTML</span>=</span></span><span class="hljs-expression">{{__<span class="hljs-variable">html</span>: <span class="hljs-variable">this.props.markup</span>}}</span><span class="xml"><span class="hljs-tag"> /&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
-    );
-  }
-
-});
-
-module.exports = Html;</span></span></code></pre>
-<p>Une fois que le code HTML a été généré via<code>React.renderToString(React.createElement(Handler), data);</code>,
-on pourrait utiliser n’importe quel moteur de template (lodash.template, handlebars, ejs, jade, PHP…)
-pour générer le HTML de la page à renvoyer. Dans un souci de rationalisation des outils,
-j’ai préféré utiliser React.</p>
-<p>Vous avez dû vous apercevoir qu’on utilise 2 méthodes différentes pour générer
-du HTML avec React :</p>
-<ul>
-<li><code>React.renderToString(React.createElement(Handler), data);</code></li>
-<li><code>React.renderToStaticMarkup(React.createElement(Handler), data);</code></li>
-</ul>
-<p>La différence entre les deux méthodes est simple. Dans la première, React annote
-les nœuds HTML avec des <code>data-reactid</code> dans le but de pouvoir ensuite reprendre
-la main lorsque votre l’application s’exécutera dans le navigateur. De cette manière,
-React sait que vous l’initialisez avec un contenu généré depuis le serveur.
-Et si il détecte une différence entre le code existant et celui qu’il génère,
-vous aurez droit à un <a href="https://github.com/facebook/react/blob/2aeb8a2a6beb00617a4217f7f8284924fa2ad819/src/browser/ui/__tests__/ReactRenderDocument-test.js#L205-L215">petit warning</a>.
-La deuxième méthode permet de générer du code HTML sans annotations,
-comme n’importe quel moteur de <em>template</em>.</p>
-<p>Les plus attentifs auront remarqué qu’on passe les données initiales lors de
-la création de l’application via des <em>props</em> React. Quid de l’utilisation
-de flux dans tout ça ?</p>
-<h2 id="flux-et-le-rendu-serveur"><a class="markdownIt-Anchor" href="#flux-et-le-rendu-serveur">#</a> Flux et le rendu serveur</h2>
-<p>Avec <a href="http://facebook.github.io/flux/">Flux</a>, ce sont les stores qui maintiennent
-l’état de notre application. Si l’on ne veut pas afficher notre application
-sans aucune données, nous allons devoir préalablement peupler nos stores
-avant d’appeler <code>React.renderToString()</code>.</p>
-<p>Là où ça se corse un peu, c’est qu’il va falloir remplir nos stores avant de démarrer
-notre application sous peine de voir le message d’alerte dont je parlais plus haut.
-Le plus simple alors est de passer ces données au moteur de template,
-en plus du markup (par exemple sous la forme d’un nœud <code>&lt;script type=&quot;application/json&quot;&gt;JSON DATA&lt;/script&gt;</code>.
-Il ne reste plus qu’a récupérer ces données avant d’appeler <code>React.render( Application, document.getElementById(&quot;react-app&quot;))</code></p>
-<p>Par exemple :</p>
-<pre><code class="language-javascript"><span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"DOMContentLoaded"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
-  <span class="hljs-comment">// getData() va récuperer et parser le contenu du tag script</span>
-  <span class="hljs-comment">// qui contient nos données</span>
-  <span class="hljs-keyword">var</span> storeData= getData();
-
-  <span class="hljs-comment">// on déclenche une actions</span>
-  actions.init( storeData);
-
-  <span class="hljs-comment">// on lance le rendu</span>
-  React.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">App</span> /&gt;</span>, document.getElementById("react-app"));
-});</span></code></pre>
-<h2 id="le-mot-de-la-fin"><a class="markdownIt-Anchor" href="#le-mot-de-la-fin">#</a> Le mot de la fin</h2>
-<p>Penser son application React pour qu’elle puisse être rendue coté serveur
-introduit de nouvelles problématiques, notamment avec l’ajout du <em>pattern</em> Flux.
-En fonction des pages que l’on souhaite afficher, on devra initialiser différents <em>stores</em>.
-À nous de déterminer, en fonction de l’URL et du composant à afficher,
-lequel initialiser, et cela, que l’on soit sur le client ou le serveur.
-De la même manière, il faudra être capable de charger nos données, indépendamment
-de l’environnement d’exécution (coucou XHR).</p>
-<p>Un début de réponse se trouve dans les exemples fournis avec react-router.
-L’idée est de passer par une propriété <code>statics</code> lors de la création des composants React
-qui seront associés à une <code>&lt;Route/&gt;</code>.</p>
-<pre><code class="language-jsx"><span class="hljs-keyword">var</span> ProjectPage = React.createClass({
-  statics: {
-    fetchData: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(params)</span></span>{
-      <span class="hljs-keyword">return</span> api.getPageData(params.url)
-        .then( actions.initProject)
-        .<span class="hljs-keyword">catch</span>( actions.loadProjectError);
-    }
-  }
- ...
- });</code></pre>
-<p>Dans ce bloc <code>statics</code>, on définit une fonction qui servira à récupérer les données
-pour ce composant mais on pourrait très bien imaginer retourner la liste d’actions
-à lancer ou encore les <em>stores</em> à initialiser voire même un descripteur des données nécessaires
-à la vue (<a href="https://www.youtube.com/watch?v=9sc8Pyc51uU">cf Relay / GraphQL</a>)</p>
-<p>Ensuite, lorsque le callback fourni à <code>Router.run()</code> est appelé, il suffit de parcourir
-les <em>Handler</em> pour récupérer les informations contenues dans les blocs <code>statics</code>,
-les traiter et enfin faire <code>React.render()</code>.</p>
-<pre><code class="language-Javascript"><span class="hljs-comment">// On renvoie une promesse qui sera résolue lorsque que toutes les données démandées via fetchData seront reçues.</span>
-Router.run(routes, Router.HistoryLocation, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">Handler, state</span>) </span>{
-  <span class="hljs-keyword">var</span> p = <span class="hljs-built_in">Promise</span>.all(state.routes
-    .filter(route =&gt; route.handler.fetchData)  <span class="hljs-comment">// définit fetchData</span>
-    .map(route =&gt; {
-      <span class="hljs-keyword">return</span> route.handler.fetchData(state.params);
-    })
-  );
-  p.then( x =&gt; {
-    React.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Handler</span> {<span class="hljs-attribute">...state</span>} /&gt;</span>, document.getElementById("react-app"))
-  });
-});</span></code></pre>
-<p>Le principe est simple et peut être facilement encapsulé dans un module pour
-être partagé entre le client et le serveur.  J’espère que cet article vous a permis
-d’appréhender un peu mieux le rendu coté serveur d’une application React.
-N’hésitez pas à laisser des commentaires si vous avez des questions où
-si vous souhaitez partager vos expériences dans ce domaine.</p>
-<p>Et quelques liens vidéo des sessions de la #reactjsconf :</p>
-<ul>
-<li><a href="https://www.youtube.com/watch?v=XZfvW1a8Xac">React.js Conf 2015 - react-router increases your productivity </a></li>
-<li><a href="https://www.youtube.com/watch?v=z5e7kWSHWTg">React.js Conf 2015 - Hype!</a> : un aperçu des possibilités de react-router</li>
-</ul>
-]]></description><link>http://putaindecode.io/fr/articles/js/react/cote-serveur/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/js/react/cote-serveur/</guid><pubDate>Mon, 23 Feb 2015 00:00:00 GMT</pubDate></item></channel></rss>
+]]></description><link>http://putaindecode.io/fr/articles/vim/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/vim/</guid><pubDate>Tue, 03 Mar 2015 00:00:00 GMT</pubDate></item></channel></rss>
