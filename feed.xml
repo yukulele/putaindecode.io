@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Wed, 18 Nov 2015 08:57:16 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[Un favicon vite fait bien fait]]></title><description><![CDATA[<p>Oublions un instant CSS et JavaScript pour parler d’un sujet vraiment
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Sat, 21 Nov 2015 07:08:24 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[Un favicon vite fait bien fait]]></title><description><![CDATA[<p>Oublions un instant CSS et JavaScript pour parler d’un sujet vraiment
 important : le favicon.</p>
 <p>Alors d’accord, le favicon n’est que le petit détail qu’on expédie en fin de
 projet. Mais oubliez-le et votre client comprendra tout de suite qu’il manque
@@ -1783,7 +1783,216 @@ gulp.task(<span class="hljs-string">'styles'</span>, <span class="hljs-function"
 <ul>
 <li><a href="http://cssnext.io/">Official website</a></li>
 </ul>
-]]></description><link>http://putaindecode.io/en/articles/css/preprocessors/cssnext/</link><guid isPermaLink="true">http://putaindecode.io/en/articles/css/preprocessors/cssnext/</guid><pubDate>Tue, 02 Jun 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Introduction à cssnext]]></title><description><![CDATA[<p>D’après le <a href="http://cssnext.io/">site officiel</a>:</p>
+]]></description><link>http://putaindecode.io/en/articles/css/preprocessors/cssnext/</link><guid isPermaLink="true">http://putaindecode.io/en/articles/css/preprocessors/cssnext/</guid><pubDate>Tue, 02 Jun 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Introducción a cssnext]]></title><description><![CDATA[<p>Según la <a href="http://cssnext.io/">página oficial</a>:</p>
+<blockquote>
+<p><strong>cssnext</strong> es un <em>transpiler</em> que permite utilizar desde hoy la sintaxis CSS del mañana y transformar las especificaciones CSS que aún no están implementadas en los navegadores más populares en CSS compatible.</p>
+</blockquote>
+<h2 id="qu-significa-esto-exactamente"><a class="markdownIt-Anchor" href="#qu-significa-esto-exactamente">#</a> ¿Qué significa esto exactamente?</h2>
+<p>Desde que apareció CSS3, quizás hayas escuchado que el CSS se divide en varios documentos independientes llamados “módulos”. Estos módulos pueden tener diferentes niveles de estabilidad y <a href="http://www.w3.org/Style/CSS/current-work#legend">estados</a>. A los navegadores les puede requirir bastante tiempo poner en práctica dichos módulos y aún más al W3C atribuirles el estado final de <a href="http://www.w3.org/2005/10/Process-20051014/tr#RecsW3C">Recomendación</a>.</p>
+<p>Con <strong>cssnext</strong> se puede usar la sintaxis de los <a href="http://www.xanthir.com/b4Ko0">módulos CSS Nivel 4</a>, tales como <em>propiedades personalizadas (custom properties)</em> o <em>media queries personalizados</em>. <strong>cssnext</strong> va a transformar esta nueva y curiosa sintaxis en algo que el navegador será capaz de entender.</p>
+<p>En resumen, se <strong>adelanta al futuro</strong>.</p>
+<p>No sé vosotros, pero yo me considero alguien a quien le gusta experimentar con las últimas technologías y me parece que ¡esto mola bastante!</p>
+<p>No dejéis de echar un vistazo a la <a href="http://cssnext.io/features/">lista de funciones</a>.</p>
+<h3 id="y-qu-pasa-con-el-preprocesador-css-que-estoy-utilizando-ahora"><a class="markdownIt-Anchor" href="#y-qu-pasa-con-el-preprocesador-css-que-estoy-utilizando-ahora">#</a> ¿Y qué pasa con el preprocesador CSS que estoy utilizando ahora?</h3>
+<p>No os preocupéis más por los peligros de los mixins, @extend y el <em>nesting</em> infinito, en gran parte causados por el uso indebido e innecesario de estas herramientas.</p>
+<p>¿Adivinad qué? No necesitáis nada de esto.</p>
+<p>Deberiáis probar <strong>cssnext</strong> y volver al Vanilla CSS de toda la vida. Además, con una buena pizca de <a href="https://github.com/sturobson/BEM-resources">metodología BEM</a>, os sentiréis <a href="http://philipwalton.com/articles/side-effects-in-css/">vivos otra vez</a>.</p>
+<h2 id="ejemplos"><a class="markdownIt-Anchor" href="#ejemplos">#</a> Ejemplos</h2>
+<p>Echemos un vistazo a las funciones que <strong>cssnext</strong> nos ofrece por el momento.</p>
+<p>Ante todo, es conveniente consultar el <a href="http://cssnext.io/playground/">playground en la página oficial</a>.</p>
+<h3 id="prefijos-de-navegadores-vendor-prefixes-autom-ticos"><a class="markdownIt-Anchor" href="#prefijos-de-navegadores-vendor-prefixes-autom-ticos">#</a> Prefijos de navegadores (vendor prefixes) automáticos</h3>
+<pre><code class="language-css"><span class="hljs-class">.h1</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> transform <span class="hljs-number">1s</span></span></span>;
+}</span></code></pre>
+<p>Esto será transformado por <strong>cssnext</strong> gracias a Autoprefixer en:</p>
+<pre><code class="language-css"><span class="hljs-class">.h1</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">-webkit-transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">-ms-transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
+          <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">-webkit-transition</span>:<span class="hljs-value"> -webkit-transform <span class="hljs-number">1s</span></span></span>;
+          <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> transform <span class="hljs-number">1s</span></span></span>;
+}</span></code></pre>
+<h3 id="propiedades-personalizadas-y-var-limitadas-a-root"><a class="markdownIt-Anchor" href="#propiedades-personalizadas-y-var-limitadas-a-root">#</a> Propiedades personalizadas y var() limitadas a <code>:root</code></h3>
+<p>También conocidas como las tan esperadas <a href="http://www.w3.org/TR/css-variables/">variables CSS</a>.</p>
+<pre><code class="language-css"><span class="hljs-pseudo">:root</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">--primary-Color</span>:<span class="hljs-value">                 <span class="hljs-hexcolor">#E86100</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">--secondary-Color</span>:<span class="hljs-value">               <span class="hljs-hexcolor">#2c3e50</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">--r-Grid-baseFontSize</span>:<span class="hljs-value">           <span class="hljs-number">1rem</span></span></span>;
+}</span></code></pre>
+<p>Podéis usarlas de esta manera:</p>
+<pre><code class="language-css"><span class="hljs-class">.h1</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--primary-Color)</span></span>;
+}</span>
+<span class="hljs-class">.h1</span><span class="hljs-pseudo">:hover</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--secondary-Color)</span></span>;
+}</span>
+<span class="hljs-tag">body</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--r-Grid-baseFontSize)</span></span>;
+}</span></code></pre>
+<h3 id="media-queries-personalizadas"><a class="markdownIt-Anchor" href="#media-queries-personalizadas">#</a> Media Queries personalizadas</h3>
+<p>Para crear alias semánticos, claros y sencillos (<a href="http://dev.w3.org/csswg/mediaqueries/#custom-mq">aquí tenéis la documentación</a>).</p>
+<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">custom-media</span> --viewport-medium (width &lt;= <span class="hljs-number">40rem</span>)</span>;
+<span class="hljs-at_rule">@<span class="hljs-keyword">custom-media</span> --viewport-large (max-width: <span class="hljs-number">50em</span>)</span>;</code></pre>
+<p>Uso:</p>
+<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (--viewport-medium) </span>{
+  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--fontSize) * <span class="hljs-number">1.2</span>)</span></span>; }</span>
+}
+<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (--viewport-large) </span>{
+  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--fontSize) * <span class="hljs-number">1.4</span>)</span></span>; }</span>
+}</code></pre>
+<p>Por ejemplo, digamos que:</p>
+<pre><code class="language-css"><span class="hljs-pseudo">:root</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">--fontSize</span>:<span class="hljs-value"> <span class="hljs-number">1.2rem</span></span></span>;
+}</span></code></pre>
+<p>El código generado sera el siguiente:</p>
+<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (max-width: <span class="hljs-number">40rem</span>) </span>{
+  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1.44rem</span></span></span>; }</span>
+}
+<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (max-width: <span class="hljs-number">50em</span>) </span>{
+  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1.68rem</span></span></span>; }</span>
+}</code></pre>
+<h3 id="selectores-personalizados"><a class="markdownIt-Anchor" href="#selectores-personalizados">#</a> Selectores personalizados</h3>
+<p>Primero, podéis echar un ojo a las <a href="http://dev.w3.org/csswg/css-extensions/#custom-selectors">especificaciones</a>.
+Pongamos que queremos aplicar estilos a todos los títulos:</p>
+<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">custom-selector</span> :--heading h1, h2, h3, h4, h5, h6</span>;
+
+<span class="hljs-pseudo">:--heading</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+}</span></code></pre>
+<p>Esto va a generar el código siguiente:</p>
+<pre><code class="language-css">h1,
+h2,
+h3,
+h4,
+h5,
+h6 { margin-top; 0; }</code></pre>
+<h3 id="color"><a class="markdownIt-Anchor" href="#color">#</a> <code>color()</code></h3>
+<p>Una sencilla <a href="http://dev.w3.org/csswg/css-color/#modifying-colors">función color</a> para aplicar unos <em>ajustes de color</em> (tono, luminosidad, saturación, entre otros) a un color base.</p>
+<p>Ejemplos:</p>
+<pre><code class="language-css"><span class="hljs-class">.class</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">red</span>(+<span class="hljs-number">30</span>) <span class="hljs-function">green</span>(-<span class="hljs-number">50</span>) <span class="hljs-function">blue</span>(<span class="hljs-number">6%</span>) <span class="hljs-function">alpha</span>(.<span class="hljs-number">65</span>))</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-top-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">saturation</span>(-<span class="hljs-number">8%</span>) <span class="hljs-function">whiteness</span>(+<span class="hljs-number">50%</span>))</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-right-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">lightness</span>(<span class="hljs-number">5%</span>) <span class="hljs-function">blackness</span>(-<span class="hljs-number">25%</span>))</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-bottom-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">tint</span>(<span class="hljs-number">80%</span>))</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-left-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">shade</span>(<span class="hljs-number">75%</span>))</span></span>;
+}</span></code></pre>
+<p>Este código de arriba será transformado en:</p>
+<pre><code class="language-css"><span class="hljs-class">.class</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">43</span>, <span class="hljs-number">136</span>, <span class="hljs-number">230</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">73</span>, <span class="hljs-number">86</span>, <span class="hljs-number">15</span>, <span class="hljs-number">0.65</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-top-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">181</span>, <span class="hljs-number">201</span>, <span class="hljs-number">222</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-right-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">3</span>, <span class="hljs-number">45</span>, <span class="hljs-number">87</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-bottom-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">213</span>, <span class="hljs-number">231</span>, <span class="hljs-number">250</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-left-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">11</span>, <span class="hljs-number">34</span>, <span class="hljs-number">58</span>)</span></span>;
+}</span></code></pre>
+<p><strong>cssnext</strong> también ofrece las siguientes funciones relacionadas con los colores:</p>
+<h4 id="hwb"><a class="markdownIt-Anchor" href="#hwb">#</a> hwb()</h4>
+<p>Según las <a href="http://dev.w3.org/csswg/css-color/#the-hwb-notation">especificaciones</a>, HWB (Tono-Blancura-Negrura - <em>Hue-Whiteness-Blackness</em>) es similar a HSL, pero resulta más fácil de uso para los humanos.</p>
+<pre><code class="language-css"><span class="hljs-class">.title</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">hwb</span>(<span class="hljs-number">125</span>, <span class="hljs-number">32%</span>, <span class="hljs-number">47%</span>)</span></span>;
+}</span></code></pre>
+<p>Resultado:</p>
+<pre><code class="language-css"><span class="hljs-class">.title</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">33</span>, <span class="hljs-number">135</span>, <span class="hljs-number">42</span>)</span></span>;
+}</span></code></pre>
+<h4 id="gray"><a class="markdownIt-Anchor" href="#gray">#</a> gray()</h4>
+<p>Los grises son tan <a href="http://dev.w3.org/csswg/css-color/#grays">guays</a> que tienen incluso una función dedicada.</p>
+<pre><code class="language-css"><span class="hljs-class">.section</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">gray</span>(<span class="hljs-number">120</span>, <span class="hljs-number">50%</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-color</span>:<span class="hljs-value"> <span class="hljs-function">gray</span>(<span class="hljs-number">17%</span>, <span class="hljs-number">25%</span>)</span></span>;
+}</span></code></pre>
+<p>Esto dará como resultado:</p>
+<pre><code class="language-css"><span class="hljs-class">.section</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">120</span>, <span class="hljs-number">120</span>, <span class="hljs-number">120</span>, <span class="hljs-number">0.5</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">43</span>, <span class="hljs-number">43</span>, <span class="hljs-number">43</span>, <span class="hljs-number">0.25</span>)</span></span>;
+}</span></code></pre>
+<h4 id="rrggbbaa"><a class="markdownIt-Anchor" href="#rrggbbaa">#</a> #rrggbbaa</h4>
+<p><strong>cssnext</strong> transforma la <a href="http://dev.w3.org/csswg/css-color/#hex-notation">notación hexadecimal</a> #RRGGBBAA y #RGBA en rgba().</p>
+<pre><code class="language-css"><span class="hljs-tag">body</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#5c69</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#C73D5C59</span></span></span>;
+}</span></code></pre>
+<p>Resultado:</p>
+<pre><code class="language-css"><span class="hljs-tag">body</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">85</span>, <span class="hljs-number">204</span>, <span class="hljs-number">102</span>, <span class="hljs-number">0.6</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">199</span>, <span class="hljs-number">61</span>, <span class="hljs-number">92</span>, <span class="hljs-number">0.34902</span>)</span></span>;
+}</span></code></pre>
+<h4 id="rebeccapurple"><a class="markdownIt-Anchor" href="#rebeccapurple">#</a> rebeccapurple</h4>
+<p>Transforma el color <a href="https://github.com/postcss/postcss-color-rebeccapurple#why-this-plugin-"><code>rebeccapurple</code></a> en <code>rgb(102, 51, 153)</code>.</p>
+<h3 id="propiedades-de-filtros"><a class="markdownIt-Anchor" href="#propiedades-de-filtros">#</a> Propiedades de filtros</h3>
+<p>¡Un <em>nuevo</em> mundo de <a href="http://www.w3.org/TR/filter-effects/">modificaciones de imágenes</a> se abre ante vosotros!</p>
+<pre><code class="language-css"><span class="hljs-class">.awesome-Image</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">filter</span>:<span class="hljs-value"> <span class="hljs-function">sepia</span>(.<span class="hljs-number">7</span>) <span class="hljs-function">hue-rotate</span>(<span class="hljs-number">23deg</span>)</span></span>;
+}</span>
+
+<span class="hljs-class">.awesome-Picture</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">filter</span>:<span class="hljs-value"> <span class="hljs-function">blur</span>(<span class="hljs-number">8px</span>)</span></span>;
+}</span></code></pre>
+<p>Lo anterior será transformado en:</p>
+<pre><code class="language-css"><span class="hljs-class">.awesome-Image</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">filter</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(<span class="hljs-string">'data:image/svg+xml;charset=utf-8,&lt;svg xmlns="http://www.w3.org/2000/svg"&gt;&lt;filter id="filter"&gt;&lt;feColorMatrix type="matrix" color-interpolation-filters="sRGB" values="0.5751000000000001 0.5383 0.1323 0 0 0.24429999999999996 0.7802000000000001 0.11760000000000001 0 0 0.1904 0.3738 0.39170000000000005 0 0 0 0 0 1 0" /&gt;&lt;feColorMatrix type="hueRotate" color-interpolation-filters="sRGB" values="23" /&gt;&lt;/filter&gt;&lt;/svg&gt;#filter'</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">-webkit-filter</span>:<span class="hljs-value"> <span class="hljs-function">sepia</span>(.<span class="hljs-number">7</span>) <span class="hljs-function">hue-rotate</span>(<span class="hljs-number">23deg</span>)</span></span>;
+          <span class="hljs-rule"><span class="hljs-attribute">filter</span>:<span class="hljs-value"> <span class="hljs-function">sepia</span>(.<span class="hljs-number">7</span>) <span class="hljs-function">hue-rotate</span>(<span class="hljs-number">23deg</span>)</span></span>;
+}</span>
+
+<span class="hljs-class">.awesome-Picture</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">filter</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(<span class="hljs-string">'data:image/svg+xml;charset=utf-8,&lt;svg xmlns="http://www.w3.org/2000/svg"&gt;&lt;filter id="filter"&gt;&lt;feGaussianBlur stdDeviation="8" /&gt;&lt;/filter&gt;&lt;/svg&gt;#filter'</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">-webkit-filter</span>:<span class="hljs-value"> <span class="hljs-function">blur</span>(<span class="hljs-number">8px</span>)</span></span>;
+          <span class="hljs-rule"><span class="hljs-attribute">filter</span>:<span class="hljs-value"> <span class="hljs-function">blur</span>(<span class="hljs-number">8px</span>)</span></span>;
+}</span></code></pre>
+<h3 id="unidades-rem"><a class="markdownIt-Anchor" href="#unidades-rem">#</a> Unidades rem</h3>
+<p>Nada extraordinario aquí, se genera un <strong><em>fallback</em> en píxeles para las unidades en rem</strong>.
+Oh, ¡por favor! ¿De verdad necesitáis un ejemplo para esto? Venga, aquí tenéis.</p>
+<pre><code class="language-css"><span class="hljs-class">.section-Highlight</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">2.5rem</span></span></span>;
+}</span></code></pre>
+<p>Resultado:</p>
+<pre><code class="language-css"><span class="hljs-class">.section-Highlight</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">40px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">2.5rem</span></span></span>;
+}</span></code></pre>
+<h2 id="funciones-adicionales"><a class="markdownIt-Anchor" href="#funciones-adicionales">#</a> Funciones adicionales</h2>
+<p>Las dos siguientes funciones no tienen mucho que ver con las especificaciones CSS. Sin embargo, merecen ser mencionadas en esta introducción.</p>
+<h3 id="import"><a class="markdownIt-Anchor" href="#import">#</a> <code>import</code></h3>
+<p>¿Y si pudiérais importar archivos locales y módulos (<code>node_modules</code> o <code>web_modules</code>) para generar un solo y único archivo CSS que los contendría todos? Sí, <a href="https://github.com/sass/sass/issues/193">es a vosotros a quién estoy mirando, utilizadores de Sass</a>, ejem. Bueno pues, con <strong>cssnext</strong> es possible.</p>
+<h3 id="compress"><a class="markdownIt-Anchor" href="#compress">#</a> <code>compress</code></h3>
+<p>Como ya habréis adivinado, se trata solo una opción para comprimir <em>o no</em> vuestro archivo de salida. Y esto es gracias a <a href="https://github.com/ben-eb/cssnano">cssnano</a>.</p>
+<h3 id="uso"><a class="markdownIt-Anchor" href="#uso">#</a> Uso</h3>
+<p>Debajo os dejo un ejemplo básico de estas dos funciones. He usado <a href="https://github.com/cssnext/gulp-cssnext">gulp-cssnext</a>, uno de los <a href="http://cssnext.io/setup/">numerosos plugins</a> que os puede ayudar a empezar con <strong>cssnext</strong>.</p>
+<pre><code class="language-js"><span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>),
+    cssnext = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-cssnext"</span>);
+
+gulp.task(<span class="hljs-string">'styles'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  gulp.src(<span class="hljs-string">"css/index.css"</span>)
+  .pipe(cssnext({
+    compress: <span class="hljs-literal">true</span>,  <span class="hljs-comment">// false por defecto</span>
+  }))
+  .pipe(gulp.dest(<span class="hljs-string">"./dist/"</span>))
+});</code></pre>
+<p>Después, en mi archivo <code>index.css</code>, obtendría lo siguiente:</p>
+<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"normalize.css"</span></span>; <span class="hljs-comment">/* == @import "./node_modules/normalize.css/index.css"; */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"cssrecipes-defaults"</span></span>; <span class="hljs-comment">/* == @import "./node_modules/cssrecipes-defaults/index.css"; */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"project-modules/partner"</span></span>; <span class="hljs-comment">/* relativo a css/ */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"typo"</span></span>; <span class="hljs-comment">/* mismo nivel que mi index.css principal, situado en css/ */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"highlight"</span> (min-width: <span class="hljs-number">25em</span>)</span>;</code></pre>
+<p>Y el resultado final es:</p>
+<pre><code class="language-css"><span class="hljs-comment">/* contenido de ./node_modules/normalize.css/index.css */</span>
+<span class="hljs-comment">/* contenido de ./node_modules/cssrecipes-defaults/index.css */</span>
+<span class="hljs-comment">/* contenido de project-modules/partner.css */</span>
+<span class="hljs-comment">/* contenido de typo.css */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (min-width: <span class="hljs-number">25em</span>) </span>{
+  <span class="hljs-comment">/* contenido de highlight.css */</span>
+}</code></pre>
+<p>Conozco esa sensación. Vosotros también os habéis enamorado. :)</p>
+<p>Bueno, para concluir, digamos que el propósito principal de <strong>cssnext</strong> es el de poder codificar según las especificaciones del W3C, siempre teniendo en cuenta que, teóricamente, será posible quitarlo (cuando ya no sea necesario).</p>
+<p>Mientras tanto, sigue habiendo mucho trabajo. Aquí os dejo una <a href="https://github.com/cssnext/cssnext/issues?q=is%3Aopen+is%3Aissue+label%3Afeature+label%3Aready">lista de futuras funciones</a>.</p>
+<p>Ahora os toca jugar a vosotros. No os olvidáis de pasaros por el <a href="https://github.com/cssnext/cssnext">repository GitHub</a>, seguir a <a href="https://twitter.com/cssnext">@cssnext</a> en Twitter para obtener las últimas noticias al respecto y uniros a la <a href="https://gitter.im/cssnext/cssnext">room cssnext en Gitter</a> si tenéis cualquier pregunta.</p>
+<ul>
+<li><a href="http://cssnext.io/">Página oficial</a></li>
+</ul>
+]]></description><link>http://putaindecode.io/es/articulos/css/procesadores/cssnext/</link><guid isPermaLink="true">http://putaindecode.io/es/articulos/css/procesadores/cssnext/</guid><pubDate>Tue, 02 Jun 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Introduction à cssnext]]></title><description><![CDATA[<p>D’après le <a href="http://cssnext.io/">site officiel</a>:</p>
 <blockquote>
 <p><strong>cssnext</strong> est un transpileur CSS qui vous permet d’utiliser dès aujourd’hui la syntaxe CSS de demain. Il transforme les spécifications CSS qui ne sont pas encore mises en œuvre sur les navigateurs les plus populaires en CSS compatible.</p>
 </blockquote>
@@ -3061,96 +3270,4 @@ On atteint alors un double objectif : en plus d’être accessible en supprimant
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span></code></pre>
 <p>Avant d’hurler au blasphème ou au scandale, il est nécessaire de mettre en adéquation cette idée avec les contraintes rencontrées lors du développement d’une application utilisant principalement du <code>JavaScript</code>.</p>
 <p>Si vous souhaitez un peu plus d’informations sur le sujet, je vous invite à lire la <a href="https://speakerdeck.com/vjeux/react-css-in-js">présentation</a> de <a href="https://twitter.com/Vjeux">@Vjeux</a>, front-end engineer chez Facebook. Il explique les problèmes rencontrés avec le <code>CSS</code> et les solutions mises en place par les développeurs de Facebook ou plus exactement de <code>ReactJS</code>.</p>
-]]></description><link>http://putaindecode.io/fr/articles/css/bem/maintenance-evolutivite/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/css/bem/maintenance-evolutivite/</guid><pubDate>Tue, 10 Mar 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Il démarre Vim par erreur, ce qui se passe ensuite est tout simplement bluffant]]></title><description><![CDATA[<blockquote>
-<p>À première vue, vous allez éprouver de la tristesse, mais ce qui se passe ensuite est tout simplement incroyable…</p>
-</blockquote>
-<blockquote>
-<p>Alors qu’il était en train d’effectuer une mise en production,
-ce développeur s’est confronté à une situation qui aurait pu complètement déraper.
-Une intervention directement sur le serveur de production était obligatoire afin d’éditer la base de données au format .txt.</p>
-</blockquote>
-<blockquote>
-<p>Après avoir passé plusieurs heures pour se connecter à distance via une connexion sécurisée,
-Maxime est tombé nez à nez avec une console d’administration en ligne de commande !
-Il était complètement désemparé par l’absence de fenêtre.</p>
-</blockquote>
-<blockquote>
-<p>Ce qui s’est passé ensuite est tout simplement incroyable :
-fort de sa persévérance, Maxime décide tout de même de se rapprocher du clavier !
-Après une rapide recherche sur les Internets,
-il tape la première commande qu’il trouve :</p>
-</blockquote>
-<blockquote>
-<pre><code class="language-console"><span class="hljs-variable">$ </span>vim</code></pre>
-</blockquote>
-<blockquote>
-<p>Alors qu’on pourrait imaginer un drame, comme il arrive souvent quand <a href="https://duckduckgo.com/?q=I+am+stuck+in+VIM">une personne tombe dans ce piège</a>,
-Maxime ne s’est pas laissé abattre et a persisté dans sa démarche…</p>
-</blockquote>
-<p>Bon, assez plaisanté.</p>
-<h2 id="pourquoi-j-essayerais-vim"><a class="markdownIt-Anchor" href="#pourquoi-j-essayerais-vim">#</a> <em>Pourquoi j’essayerais Vim ?</em></h2>
-<p>J’ai commencé par Eclipse. Qu’il fallait réinstaller assez souvent sans quoi on perdait 10 minutes de sa vie à chaque ouverture d’autocomplete.
-Je suis passé par NetBeans, WebStorm… Sans être convaincu. Plus récemment, j’étais assez content sous Sublime Text avant d’essayer Atom
-(car en gros Atom est quasiment la même chose, en technologie web, open source et fait par GitHub).
-Mais j’ai toujours eu envie de me la péter devant 2 écrans tout noir,
-en ligne de commande, comme dans les super productions américaines.</p>
-<p>Plus sérieusement, je passe de plus en plus de temps devant ma console…
-Enfin vous savez, le terminal, pas l’autre truc un peu plus fun (et encore que).</p>
-<p>J’ai toujours eu envie de comprendre pourquoi autant de gens (car mine de rien il y en a un paquet) utilisaient Vim,
-et se moquaient un bon coup à chaque sortie d’un nouvel éditeur.
-Car bon faut avouer, se moquer c’est facile.
-Du coup un jour, j’ai démarré Vim.</p>
-<h2 id="pourquoi-j-ai-rien-compris-quand-je-me-suis-retrouv-dans-vim"><a class="markdownIt-Anchor" href="#pourquoi-j-ai-rien-compris-quand-je-me-suis-retrouv-dans-vim">#</a> <em>Pourquoi j’ai rien compris quand je me suis retrouvé dans Vim ?</em></h2>
-<p>Le truc le plus déroutant dans Vim, c’est les modes.
-Et quand on ouvre Vim, on ne se retrouve pas dans le mode le plus logique (à première vue).</p>
-<p>En fait, ce qu’on dit pas trop, c’est que Vim est toujours utilisé aujourd’hui car on peut l’utiliser uniquement au clavier.
-Vous allez me répondre qu’on peut en faire de même avec tous les éditeurs de texte.</p>
-<p>Mais <strong>Vim a clairement été développé pour minimiser les déplacements des mains</strong>.</p>
-<p>C’est pour moi la chose la plus importante à retenir. Et la chose la plus attractive.
-Les bons développeurs ont tous une bonne flemme au fond d’eux, c’est bien connu.</p>
-<p>Pour un peu plus sur l’histoire de Vim, direction <a href="https://fr.wikipedia.org/wiki/Vim">wikipedia.org/wiki/Vim</a>.</p>
-<h2 id="commencer-avec-vim"><a class="markdownIt-Anchor" href="#commencer-avec-vim">#</a> Commencer avec Vim</h2>
-<p>Du coup, quand je suis dans Vim, comment ça se passe ?</p>
-<p>Je passerai plus tard assez rapidement sur les différents points, vu que d’autres ressources,
-dont notamment le livre <a href="https://vimebook.com/">Vim pour les humains</a>, le font très bien en douceur.</p>
-<p>C’est d’ailleur grâce à ce livre que je me suis lancé.
-Je tiens donc à remercier <a href="http://viserlalune.com/">Vincent Jousse</a> pour avoir pris le temps d’écrire cet ouvrage.</p>
-<p>Profitez de cet ouvrage, en plus <a href="http://ploum.net/le-prix-libre-une-impossible-utopie/">le prix est libre</a>.
-Et puis quand on pense au prix des licences de certains IDE…</p>
-<p>Ce livre est fait pour n’importe qui, débutant ou pas.
-Vraiment, mangez-en si vous souhaitez essayer Vim (oui je sais, manger un e-book comme ça, ça paraît pas évident).</p>
-<p>J’ai essayé plusieurs fois sans trop savoir où commencer, sans succès.
-Ce livre m’a aidé et se dévore en quelques dizaines de minutes (deux ou trois heures grand max),
-clavier sous les mains (bah oui rien de mieux pour se lancer).</p>
-<p>J’ai essayé et me voilà conquis, une fois que j’ai compris sa valeur ajoutée.</p>
-<p>Pour bien s’y prendre, forcez-vous à travailler avec Vim au moins une journée en suivant les conseils que vous trouverez dans cet ouvrage.
-Cela a fonctionné pour moi : je gagne déjà du temps au bout de quelques semaines d’utilisation.</p>
-<p>Pourquoi pas vous ?</p>
-<h2 id="pour-apprendre-vim"><a class="markdownIt-Anchor" href="#pour-apprendre-vim">#</a> Pour apprendre Vim</h2>
-<p>Vous pouvez donc :</p>
-<ul>
-<li>lire l’e-book <a href="http://vimebook.com">Vim pour les humains</a></li>
-<li>lancer la commande <code>vimtutor</code></li>
-<li>jouer à <a href="http://vim-adventures.com/">Vim Adventures</a></li>
-<li>vous entraîner sur des exemples concrets avec <a href="http://vimgolf.com/">VimGolf</a></li>
-</ul>
-<p>Voici aussi un cheatsheet indispensable qui permet de bien mémoriser le pourquoi des touches
-(b = begin, w = word, e = end, r = replace, i = insert, a = append, o = open, ctrl f = forward, ctrl b = backward, etc).</p>
-<p><img src="../vim-cheatsheet.gif" alt="cheatsheet VIM"></p>
-<p>Vous remarquerez que souvent les commandes en majuscules font la même chose mais dans le sens inverse (f/F, o/O), ou de manière plus catégorique (d/D, y/Y).</p>
-<h2 id="passer-vim-est-un-investissement"><a class="markdownIt-Anchor" href="#passer-vim-est-un-investissement">#</a> Passer à Vim est un investissement</h2>
-<p>Point important : il faut avoir envie.
-Il ne s’agit pas de changer simplement d’éditeur, car on doit complètement changer ses habitudes.
-Plus aucun raccourci clavier que vous avez l’habitude d’utiliser ne va fonctionner.
-Je me répète mais il faut se forcer un minimum avant d’imaginer les possibilités de cet éditeur.</p>
-<p>Cela dit, on peut rapidement voir la puissance de Vim après quelques heures d’utilisation
-(même si on peut aussi un peu rager en cherchant des commandes simples qu’on arrive pas à faire).</p>
-<p>Sachez aussi que beaucoup d’éditeurs ont des modes Vim (Sublime Text, Atom et d’autres). Il doit bien y avoir une raison, non ?
-Notez aussi que Vim est installé par défaut sur beaucoup d’environnement de type Unix.</p>
-<p>Vim est configurable à souhait (via le fichier <code>.vimrc</code>) et possède même son propre language de scripts (Vim Script ou viml)
-ce qui permet de créer de nouvelles fonctionnalités simplement. Et même du coup d’en faire des “plugins”.</p>
-<p>Je vous prépare un prochain post pour vous faire un petit mémo condensé de ce qu’on peut faire avec, et surtout comment.</p>
-<blockquote>
-<p>:q^C:wq</p>
-</blockquote>
-]]></description><link>http://putaindecode.io/fr/articles/vim/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/vim/</guid><pubDate>Tue, 03 Mar 2015 00:00:00 GMT</pubDate></item></channel></rss>
+]]></description><link>http://putaindecode.io/fr/articles/css/bem/maintenance-evolutivite/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/css/bem/maintenance-evolutivite/</guid><pubDate>Tue, 10 Mar 2015 00:00:00 GMT</pubDate></item></channel></rss>
