@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Tue, 24 Nov 2015 08:21:15 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[Tester unitairement des composants React]]></title><description><![CDATA[<p>L’équipe de React a implémenté une fonctionnalité appelé
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Tue, 24 Nov 2015 09:05:49 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[Tester unitairement des composants React]]></title><description><![CDATA[<p>L’équipe de React a implémenté une fonctionnalité appelée
 <a href="http://facebook.github.io/react/docs/test-utils.html#shallow-rendering">shallow rendering</a>
 (rendu peu profond),
 qui permet de rendre un composant avec un seul niveau de profondeur de rendu.</p>
-<p>Cela permet du coup de vérifier ce que le rendu retourne sans avoir à ce
+<p>Cela permet du coup de vérifier ce que le rendu retourne sans avoir à se
 soucier du comportement des composants enfants, qui ne sont pas instanciés ni
 rendus. Cela ne nécessite pas de DOM.</p>
 <p>Intéressant, n’est-ce pas ? Et d’ailleurs, le <em>shallow rendering</em> est
@@ -11,7 +11,7 @@ actuellement
 <p>Comme vous pourrez le voir dans un article listé à la fin de celui-ci,
 le code permettant de tester des composants avec cette technique n’est pas
 forcément très concis, contrairement à ce qu’on pourrait attendre.</p>
-<p>Heureusement, <a href="https://github.com/vvo">quelqu’un</a> a codé un truc plutôt cool:
+<p>Heureusement, <a href="https://github.com/vvo">quelqu’un</a> a codé un truc plutôt cool :
 <a href="https://github.com/algolia/react-element-to-jsx-string">react-element-to-jsx-string</a>.
 Comme le nom l’indique, cette librairie permet de rendre un composant React en
 tant que chaîne JSX.</p>
@@ -143,13 +143,13 @@ test(<span class="hljs-string">"PageContainer is properly rendered"</span>, (t) 
 
   t.end()
 })</code></pre>
-<p>Ces tests sont une couverture minimal pour vous assurer que vous ne cassez rien
+<p>Ces tests sont une couverture minimale pour vous assurer que vous ne cassez rien
 lorsque vous travaillez sur votre composant.</p>
-<p>Comme vous pouvez le constater, les tests sont assez simple à écrire et vont
+<p>Comme vous pouvez le constater, les tests sont assez simples à écrire et vont
 droit au but.
 <strong>Ce qui est intéressant ici, c’est que nous ne comparons pas à l’aide de
 simples chaînes. Nous utilisons directement des composants React.</strong></p>
-<p>Vous pouvez tranquillement éxecuter l’exemple complet et le récupérant depuis le
+<p>Vous pouvez tranquillement exécuter l’exemple complet et le récupérer depuis le
 repository :</p>
 <p><a href="https://github.com/MoOx/react-component-unit-testing-example">github.com/MoOx/react-component-unit-testing-example</a></p>
 <p>Cet exemple contient les commandes et dépendances
@@ -158,9 +158,9 @@ dont vous aurez besoin.</p>
 <h1 id="et-comment-tester-les-v-nements-comme-onclick"><a class="markdownIt-Anchor" href="#et-comment-tester-les-v-nements-comme-onclick">#</a> Et comment tester les évènements comme <code>onClick</code> ?</h1>
 <p>Vous n’avez pas à reproduire le clic complètement.</p>
 <p><strong>Vos tests n’ont pas besoin de vérifier que la prop <code>onClick</code> va bien être
-éxecutée lorsque vous cliquerez sur un élement du DOM.</strong>
+exécutée lorsque vous cliquerez sur un élément du DOM.</strong>
 <em>React couvre probablement cela dans sa suite de tests.</em></p>
-<p>Ce que vous avez besoin de tester, c’est que la valeur que vous passer au
+<p>Ce que vous avez besoin de tester, c’est que la valeur que vous passez au
 <code>onClick</code> fait bien ce que vous voulez.
 En gros, si vous avez un bout de code qui ressemble à
 <code>onClick={ yourCallback }</code>, vous n’avez tout simplement qu’à appeler directement
