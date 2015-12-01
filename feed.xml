@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Tue, 01 Dec 2015 16:57:14 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[Avantages à diviser ses storyboards sur iOS/OS X]]></title><description><![CDATA[<p>Aujourd’hui, on va parler d’un sujet qui parle à tous les devs iOS : les
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Tue, 01 Dec 2015 22:13:29 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[Avantages à diviser ses storyboards sur iOS/OS X]]></title><description><![CDATA[<p>Aujourd’hui, on va parler d’un sujet qui parle à tous les devs iOS : les
 <strong>storyboards</strong>.</p>
 <blockquote>
 <p>Pour faire court :  les storyboards sont les fichiers d’interface sous iOS/OS X.
@@ -114,8 +114,8 @@ meilleur choix !</p>
 <p><code>let</code> vous permet de faire pareil que <code>const</code> mais sans la contrainte
 d’assignation unique. Vous devriez donc instinctivement voir que les cas
 d’utilisation pour <code>let</code> sont les mêmes que ceux de <code>var</code>, son ancêtre.
-D’ailleurs, vous entendrez souvent : <code>let</code> est le nouveau <code>var</code> (<code>let</code> is the
-new <code>var</code>). C’est en partie vrai car il est capable de faire les mêmes choses,
+D’ailleurs, vous entendrez souvent : <code>let</code> est le nouveau <code>var</code> (<em><code>let</code> is the
+new <code>var</code></em>). C’est en partie vrai car il est capable de faire les mêmes choses,
 mais en mieux, car il a cette caractéristique d’être scopé au bloc courant.</p>
 <pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">let</span> foo = <span class="hljs-string">"bar"</span>
@@ -162,20 +162,20 @@ n’est donc pas utilisable.</p>
 de grande place pour <code>var</code>. À mon avis, le seul cas d’utilisation valable pour
 <code>var</code> est lors de l’utilisation de <code>try</code>/<code>catch</code>, et ce n’est pas dans le cadre
 d’un bug, mais juste de syntaxe et de préférence
-(<a href="https://twitter.com/getify/status/658662478528643072">exemple</a>)</p>
-<h1 id="pi-ge-du-hoisting-et-de-la-tdz-temporal-dead-zone"><a class="markdownIt-Anchor" href="#pi-ge-du-hoisting-et-de-la-tdz-temporal-dead-zone">#</a> Piège du hoisting et de la TDZ (Temporal Dead Zone)</h1>
-<p>Pour rappel, javascript possède un mécanisme de hoisting, par exemple, vous
+(<a href="https://twitter.com/getify/status/658662478528643072">exemple</a>).</p>
+<h1 id="pi-ge-du-hoisting-et-de-la-tdz-temporal-dead-zone"><a class="markdownIt-Anchor" href="#pi-ge-du-hoisting-et-de-la-tdz-temporal-dead-zone">#</a> Piège du hoisting et de la TDZ (<em>Temporal Dead Zone</em>)</h1>
+<p>Pour rappel, JavaScript possède un mécanisme de hoisting, par exemple, vous
 pouvez écrire :</p>
 <pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-built_in">console</span>.log(foo) <span class="hljs-comment">// "bar"</span>
   <span class="hljs-keyword">var</span> foo = <span class="hljs-string">"bar"</span>
 }</code></pre>
-<p>Concrètement, le moteur d’exécution javascript va lire toutes les déclarations
-et remonter les déclarations avec <code>var</code> au début du scope de votre fonction.</p>
+<p>Concrètement, le moteur d’exécution JavaScript va lire toutes les déclarations
+et remonter celles avec <code>var</code> au début du scope de votre fonction.</p>
 <p><code>let</code> et <code>const</code> ne bénéficient pas de ce mécanisme de hoisting, ce qui peut
-mener à des problèmes de TDZ (Temporal Dead Zone). Vu que la déclaration de
+mener à des problèmes de TDZ (<em>Temporal Dead Zone</em>). Vu que la déclaration de
 votre variable n’est pas remontée au scope de la fonction, il existe un moment
-où votre variable n’existe pas. Ce moment, c’est la TDZ</p>
+où votre variable n’existe pas. Ce moment, c’est la TDZ.</p>
 <pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-built_in">console</span>.log(foo)
   <span class="hljs-comment">// ReferenceError, on est dans la TDZ pour la variable foo</span>
