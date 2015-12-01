@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Tue, 01 Dec 2015 06:55:52 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[Avantages à diviser ses storyboards sur iOS/OS X]]></title><description><![CDATA[<p>Aujourd’hui, on va parler d’un sujet qui parle à tous les devs iOS : les
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Tue, 01 Dec 2015 16:57:14 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[Avantages à diviser ses storyboards sur iOS/OS X]]></title><description><![CDATA[<p>Aujourd’hui, on va parler d’un sujet qui parle à tous les devs iOS : les
 <strong>storyboards</strong>.</p>
 <blockquote>
 <p>Pour faire court :  les storyboards sont les fichiers d’interface sous iOS/OS X.
@@ -72,181 +72,124 @@ votre storyboard (dans <em>storyboard</em>) et remplissez <em>Reference ID</em> 
 <em>Storyboard Reference</em> voulus.</li>
 </ul>
 <p>Plus long à lire qu’à faire !</p>
-]]></description><link>http://putaindecode.io/fr/articles/xcode/storyboards/diviser/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/xcode/storyboards/diviser/</guid><pubDate>Tue, 01 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Unit testing React components]]></title><description><![CDATA[<p>The React team has implemented a feature called
-<a href="http://facebook.github.io/react/docs/test-utils.html#shallow-rendering">shallow rendering</a>,
-which</p>
-<blockquote>
-<p>lets you render a component “one level deep” and assert facts about
-what its render method returns, without worrying about the behavior of child
-components, which are not instantiated or rendered.
-This does not require a DOM.</p>
-</blockquote>
-<p>Sounds good, right? And guess what, shallow rendering is currently the
-<a href="https://discuss.reactjs.org/t/whats-the-prefered-way-to-test-react-js-components/26">preferred way to test your React components</a>.</p>
-<p>As you can see in the post mentioned at the end of this one, the
-actual code to test some components might seem a bit longer that what you could
-expect.</p>
-<p>Hopefully, <a href="https://github.com/vvo">someone</a> created something pretty cool:
-<a href="https://github.com/algolia/react-element-to-jsx-string">react-element-to-jsx-string</a>.
-As the name of the package says, this library helps to render a react component
-into a JSX string.</p>
-<p>Now things start to become interesting:
-with those two things in mind (shallow render and react components as JSX strings),
-we can easily add some basic unit tests to some components.</p>
-<p><em>There are others techniques to test React components, and most of those
-involve the DOM. This means you will need to run your tests in the browser (or
-using jsdom): your tests will be slower than the following method
-(which is more real unit testing since you execute less code and do not require
-a huge environment).</em></p>
-<h2 id="easy-unit-testing-react-components-without-a-dom"><a class="markdownIt-Anchor" href="#easy-unit-testing-react-components-without-a-dom">#</a> Easy unit testing React components (without a DOM)</h2>
-<p>Let’s do this with the following (dumb) component:</p>
-<pre><code class="language-js"><span class="hljs-comment">// web_modules/Picture/index.js</span>
+]]></description><link>http://putaindecode.io/fr/articles/xcode/storyboards/diviser/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/xcode/storyboards/diviser/</guid><pubDate>Tue, 01 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[ES6, ES2015 : la déclaration de variables avec const, let et var]]></title><description><![CDATA[<p>ES6 (aussi appelé ES2015) vous apporte de nouvelles façons de déclarer vos
+variables grâce à <code>let</code> et <code>const</code> mais garde aussi la déclaration par <code>var</code>
+dans la spécification du langage.</p>
+<p>Première étape, on oublie tout ce qu’on sait sur <code>var</code>.</p>
+<h1 id="d-clarations"><a class="markdownIt-Anchor" href="#d-clarations">#</a> Déclarations</h1>
+<h2 id="const"><a class="markdownIt-Anchor" href="#const">#</a> const</h2>
+<p><code>const</code> vous permet de déclarer une variable à assignation unique bindée
+lexicalement. Bon, ça fait un peu pompeux, alors pour les devs au fond de la
+salle à côté du radiateur, ça veut simplement dire que vous pouvez déclarer une
+variable qui ne contiendra qu’une valeur et qui sera scopée au niveau du bloc.</p>
+<p>Si vous avez déjà lu des posts ou des ressources parlant de <code>const</code>, méfiez-vous
+: ce ne sont pas des vraies constantes au sens <em>valeur</em> de variable. Ce sont des
+constantes au niveau référence. C’est à dire que le contenu d’un tableau ou d’un
+objet déclaré avec <code>const</code> bloque la réassignation de la variable, mais ne rend
+pas la valeur immutable.</p>
+<pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> foo = <span class="hljs-string">"bar"</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">const</span> foo <span class="hljs-comment">// SyntaxError, la variable a besoin d'être assignée</span>
+    <span class="hljs-keyword">const</span> foo = <span class="hljs-string">"qux"</span>
+    foo = <span class="hljs-string">"norf"</span> <span class="hljs-comment">// SyntaxError, la variable ne peut pas être réassignée</span>
+    <span class="hljs-built_in">console</span>.log(foo)
+    <span class="hljs-comment">// "qux", la variable appartient au scope de son bloc (le "if")</span>
+  }
+  <span class="hljs-built_in">console</span>.log(foo)
+  <span class="hljs-comment">// "bar", la variable appartient au scope de la fonction "fn"</span>
+}</code></pre>
+<p>Le fonctionnement <code>const</code> peut être utilisé de manière cool dans le cas
+d’itérables :</p>
+<pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> el <span class="hljs-keyword">of</span> arr) {
+    <span class="hljs-built_in">console</span>.log(el)
+  }
+}</code></pre>
+<p>En effet, on pourrait croire qu’un <code>let</code> doit être utilisé ici, mais la
+déclaration est évaluée à chaque passage de l’itérateur, <code>const</code> est donc un
+meilleur choix !</p>
+<h2 id="let"><a class="markdownIt-Anchor" href="#let">#</a> let</h2>
+<p><code>let</code> vous permet de faire pareil que <code>const</code> mais sans la contrainte
+d’assignation unique. Vous devriez donc instinctivement voir que les cas
+d’utilisation pour <code>let</code> sont les mêmes que ceux de <code>var</code>, son ancêtre.
+D’ailleurs, vous entendrez souvent : <code>let</code> est le nouveau <code>var</code> (<code>let</code> is the
+new <code>var</code>). C’est en partie vrai car il est capable de faire les mêmes choses,
+mais en mieux, car il a cette caractéristique d’être scopé au bloc courant.</p>
+<pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">let</span> foo = <span class="hljs-string">"bar"</span>
+  <span class="hljs-keyword">var</span> foo2 = <span class="hljs-string">"bar"</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">let</span> foo <span class="hljs-comment">// pas d'erreur, foo === undefined</span>
+    <span class="hljs-keyword">var</span> foo2
+    <span class="hljs-comment">// Attention, les déclarations "var" ne sont pas scopées au niveau bloc</span>
+    <span class="hljs-comment">// foo2 est en réalité écrasé !</span>
+    foo = <span class="hljs-string">"qux"</span>
+    foo2 = <span class="hljs-string">"qux"</span>
+    <span class="hljs-built_in">console</span>.log(foo)
+    <span class="hljs-comment">// "qux", la variable appartient au scope de son blocs (le "if")</span>
+    <span class="hljs-built_in">console</span>.log(foo2)
+    <span class="hljs-comment">// "qux"</span>
+  }
+  <span class="hljs-built_in">console</span>.log(foo)
+  <span class="hljs-comment">// "bar", la variable appartient au scope de son bloc (la fonction "fn")</span>
+  <span class="hljs-built_in">console</span>.log(foo2)
+  <span class="hljs-comment">// "qux"</span>
+}</code></pre>
+<p>Vous pouvez par exemple utiliser <code>let</code> pour vos boucles, la variable servant à
+l’itération est désormais scopée au niveau de cette boucle et n’entrera pas en
+conflit avec votre code autour. Plus de problème de <code>i</code> déjà pris !</p>
+<pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn2</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i=i; i&lt;<span class="hljs-number">10</span>; i++) {
+    <span class="hljs-built_in">console</span>.log(i)
+  }
+  <span class="hljs-built_in">console</span>.log(i)
+  <span class="hljs-comment">// 0</span>
 
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
-<span class="hljs-keyword">import</span> { PropTypes } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
-
-const Component = ({
-  img,
-  title,
-  Loader,
-  Title,
-}) =&gt; (
-  &lt;div&gt;
-    {
-      (!img || !img.src) &amp;&amp; Loader &amp;&amp;
-      &lt;Loader /&gt;
-    }
-    {
-      img &amp;&amp; img.src &amp;&amp;
-      &lt;img src={ img.src } alt={ img.alt }/&gt;
-    }
-    {
-      title &amp;&amp; Title &amp;&amp;
-      &lt;Title text={ title } /&gt;
-    }
-  &lt;/div&gt;
-)
-
-Component.propTypes = {
-  img: PropTypes.object,
-  title: PropTypes.string,
-  Loader: PropTypes.func.isRequired,
-  Title: PropTypes.func.isRequired,
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> j=i; j&lt;<span class="hljs-number">10</span>; j++) {}
+  <span class="hljs-built_in">console</span>.log(j)
+  <span class="hljs-comment">// j is not defined</span>
 }
-
-Component.displayName = <span class="hljs-string">"Picture"</span>
-
-export default Component</code></pre>
-<p>This component displays an image with a title component.
-If the image data are not ready yet, it can display a loader component.</p>
-<p>Now let’s write some simple test for it. For the example we will use
-<a href="https://medium.com/javascript-scene/why-i-use-tape-instead-of-mocha-so-should-you-6aa105d8eaf4">tape</a>
-with the help of <a href="https://github.com/atabel/tape-jsx-equals">tape-jsx-equals</a>,
-but you will find
-<a href="https://www.npmjs.com/search?q=expect+jsx">all kind of flavors on npm</a>.</p>
-<pre><code class="language-js"><span class="hljs-comment">// web_modules/Picture/__tests__/index.js</span>
-
-<span class="hljs-keyword">import</span> tape <span class="hljs-keyword">from</span> <span class="hljs-string">"tape"</span>
-<span class="hljs-keyword">import</span> addAssertions <span class="hljs-keyword">from</span> <span class="hljs-string">"extend-tape"</span>
-<span class="hljs-keyword">import</span> jsxEquals <span class="hljs-keyword">from</span> <span class="hljs-string">"tape-jsx-equals"</span>
-const test = addAssertions(tape, { jsxEquals })
-
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
-<span class="hljs-keyword">import</span> { createRenderer } <span class="hljs-keyword">from</span> <span class="hljs-string">"react-addons-test-utils"</span>
-
-<span class="hljs-keyword">import</span> Picture <span class="hljs-keyword">from</span> <span class="hljs-string">".."</span>
-
-// fixtures (empty and stateless react components)
-const Loader = () =&gt; {}
-const Title = () =&gt; {}
-
-test(<span class="hljs-string">"PageContainer is properly rendered"</span>, (t) =&gt; {
-  const renderer = createRenderer()
-
-  renderer.render(
-    &lt;Picture
-      Loader={ Loader }
-      Title={ Title }
-    /&gt;
-  )
-  t.jsxEquals(
-    renderer.getRenderOutput(),
-    &lt;div&gt;
-      &lt;Loader /&gt;
-    &lt;/div&gt;,
-    <span class="hljs-string">"can render a Loader component if no image data are passed"</span>
-  )
-
-  renderer.render(
-    &lt;Picture
-      Loader={ Loader }
-      Title={ Title }
-      img={ {
-        src: <span class="hljs-string">"SRC"</span>,
-        alt: <span class="hljs-string">"ALT"</span>,
-      } }
-    /&gt;
-  )
-  t.jsxEquals(
-    renderer.getRenderOutput(),
-    &lt;div&gt;
-      &lt;img src=<span class="hljs-string">"SRC"</span> alt=<span class="hljs-string">"ALT"</span> /&gt;
-    &lt;/div&gt;,
-    <span class="hljs-string">"should render an image if data are passed"</span>
-  )
-
-  renderer.render(
-    &lt;Picture
-      Loader={ Loader }
-      Title={ Title }
-      img={ {
-        src: <span class="hljs-string">"SRC"</span>,
-        alt: <span class="hljs-string">"ALT"</span>,
-      } }
-      title={ <span class="hljs-string">"TITLE"</span> }
-    /&gt;
-  )
-  t.jsxEquals(
-    renderer.getRenderOutput(),
-    &lt;div&gt;
-      &lt;img src=<span class="hljs-string">"SRC"</span> alt=<span class="hljs-string">"ALT"</span> /&gt;
-      &lt;Title text=<span class="hljs-string">"TITLE"</span> /&gt;
-    &lt;/div&gt;,
-    <span class="hljs-string">"can render a Title if data are passed"</span>
-  )
-
-  t.end()
-})</code></pre>
-<p>These tests are the minimum coverage to ensure you don’t break anything when you work
-on your component.</p>
-<p>As you can see, tests here are pretty easy to write &amp; straightforward.<br>
-<strong>The interesting part is that you don’t compare using strings.
-You can use real React components.</strong></p>
-<p>You can easily run this full example by getting it from this repository:</p>
-<p><a href="https://github.com/MoOx/react-component-unit-testing-example">github.com/MoOx/react-component-unit-testing-example</a></p>
-<p>This example contains all the commands and dependencies
-(defined in the <code>package.json</code>)
-that you might need.</p>
-<h1 id="what-about-testing-events-like-onclick"><a class="markdownIt-Anchor" href="#what-about-testing-events-like-onclick">#</a> What about testing events like <code>onClick</code>?</h1>
-<p>You don’t need to reproduce the entire click.</p>
-<p><strong>Your tests don’t need to check that your <code>onClick</code> prop will be executed when
-you click on a DOM element.</strong>
-<em>React probably have tests to cover this.</em></p>
-<p>You only need to test that the <code>onClick</code> prop value will do what you want.
-So if you have something like <code>onClick={ yourCallback }</code>,
-just call directly <code>yourCallback()</code> in your test just before your comparison.
-That’s enough!</p>
-<p>If you want to go deeper, you might also read:</p>
+fn2() <span class="hljs-comment">// 0, 1, 2, 3, 4, 5, 6, 7, 8, 9</span></code></pre>
+<p>Note : l’exemple avec <code>const</code> dans une boucle <code>for ... of</code> ne peut être
+reproduit ici. En effet, la boucle <code>for</code> classique est impérative, et la
+déclaration n’est effectuée qu’une seule fois au début de la boucle. Un <code>const</code>
+n’est donc pas utilisable.</p>
+<h2 id="var"><a class="markdownIt-Anchor" href="#var">#</a> var</h2>
+<p>On a vu <code>const</code>, on a vu <code>let</code>. Avec ces deux nouveaux outils, il ne reste pas
+de grande place pour <code>var</code>. À mon avis, le seul cas d’utilisation valable pour
+<code>var</code> est lors de l’utilisation de <code>try</code>/<code>catch</code>, et ce n’est pas dans le cadre
+d’un bug, mais juste de syntaxe et de préférence
+(<a href="https://twitter.com/getify/status/658662478528643072">exemple</a>)</p>
+<h1 id="pi-ge-du-hoisting-et-de-la-tdz-temporal-dead-zone"><a class="markdownIt-Anchor" href="#pi-ge-du-hoisting-et-de-la-tdz-temporal-dead-zone">#</a> Piège du hoisting et de la TDZ (Temporal Dead Zone)</h1>
+<p>Pour rappel, javascript possède un mécanisme de hoisting, par exemple, vous
+pouvez écrire :</p>
+<pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">console</span>.log(foo) <span class="hljs-comment">// "bar"</span>
+  <span class="hljs-keyword">var</span> foo = <span class="hljs-string">"bar"</span>
+}</code></pre>
+<p>Concrètement, le moteur d’exécution javascript va lire toutes les déclarations
+et remonter les déclarations avec <code>var</code> au début du scope de votre fonction.</p>
+<p><code>let</code> et <code>const</code> ne bénéficient pas de ce mécanisme de hoisting, ce qui peut
+mener à des problèmes de TDZ (Temporal Dead Zone). Vu que la déclaration de
+votre variable n’est pas remontée au scope de la fonction, il existe un moment
+où votre variable n’existe pas. Ce moment, c’est la TDZ</p>
+<pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">console</span>.log(foo)
+  <span class="hljs-comment">// ReferenceError, on est dans la TDZ pour la variable foo</span>
+  <span class="hljs-keyword">let</span> foo = <span class="hljs-string">"bar"</span>
+}</code></pre>
+<h1 id="outro"><a class="markdownIt-Anchor" href="#outro">#</a> Outro</h1>
+<p>Comment choisir quelle déclaration de variable utiliser ? C’est très simple :</p>
 <ul>
-<li><a href="https://simonsmith.io/unit-testing-react-components-without-a-dom/"><em>Unit testing React components without a DOM</em></a>,
-by Simon Smith, that covers the same topic without the simplicity of the JSX
-comparisons,</li>
-<li><a href="https://blog.algolia.com/how-we-unit-test-react-components-using-expect-jsx/"><em>How we unit test React components using expect-jsx</em></a>
-on Algolia blog, that explains why they choose and create tools for this approach.</li>
+<li>Utilisez une déclaration par <code>const</code> (99% du temps, c’est le bon choix)</li>
+<li>Si au fil de votre code vous changez sa valeur, modifiez pour un <code>let</code> (1%)</li>
+<li>Si vous avez trouvé le pire cas d’utilisation du monde, changez pour un <code>var</code>
+(je vous laisse faire le calcul)</li>
 </ul>
-<p>With all those examples, we hope you will stop being afraid to test your code
-and will not hesitate to cover all your React components with tests 😍.</p>
-]]></description><link>http://putaindecode.io/en/articles/js/react/unit-testing/</link><guid isPermaLink="true">http://putaindecode.io/en/articles/js/react/unit-testing/</guid><pubDate>Tue, 24 Nov 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Tester unitairement des composants React]]></title><description><![CDATA[<p>L’équipe de React a implémenté une fonctionnalité appelée
+]]></description><link>http://putaindecode.io/fr/articles/js/es2015/const-let-var/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/js/es2015/const-let-var/</guid><pubDate>Tue, 01 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Tester unitairement des composants React]]></title><description><![CDATA[<p>L’équipe de React a implémenté une fonctionnalité appelée
 <a href="http://facebook.github.io/react/docs/test-utils.html#shallow-rendering">shallow rendering</a>
 (rendu peu profond),
 qui permet de rendre un composant avec un seul niveau de profondeur de rendu.</p>
@@ -426,7 +369,181 @@ pour cette approche.</li>
 <p>Avec ces exemples, nous espérons vraiment que vous n’aurez plus peur de tester
 votre code et que vous n’hésiterez plus à couvrir tous vos composants React de
 tests 😍.</p>
-]]></description><link>http://putaindecode.io/fr/articles/js/react/test-unitaires/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/js/react/test-unitaires/</guid><pubDate>Tue, 24 Nov 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Un favicon vite fait bien fait]]></title><description><![CDATA[<p>Oublions un instant CSS et JavaScript pour parler d’un sujet vraiment
+]]></description><link>http://putaindecode.io/fr/articles/js/react/test-unitaires/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/js/react/test-unitaires/</guid><pubDate>Tue, 24 Nov 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Unit testing React components]]></title><description><![CDATA[<p>The React team has implemented a feature called
+<a href="http://facebook.github.io/react/docs/test-utils.html#shallow-rendering">shallow rendering</a>,
+which</p>
+<blockquote>
+<p>lets you render a component “one level deep” and assert facts about
+what its render method returns, without worrying about the behavior of child
+components, which are not instantiated or rendered.
+This does not require a DOM.</p>
+</blockquote>
+<p>Sounds good, right? And guess what, shallow rendering is currently the
+<a href="https://discuss.reactjs.org/t/whats-the-prefered-way-to-test-react-js-components/26">preferred way to test your React components</a>.</p>
+<p>As you can see in the post mentioned at the end of this one, the
+actual code to test some components might seem a bit longer that what you could
+expect.</p>
+<p>Hopefully, <a href="https://github.com/vvo">someone</a> created something pretty cool:
+<a href="https://github.com/algolia/react-element-to-jsx-string">react-element-to-jsx-string</a>.
+As the name of the package says, this library helps to render a react component
+into a JSX string.</p>
+<p>Now things start to become interesting:
+with those two things in mind (shallow render and react components as JSX strings),
+we can easily add some basic unit tests to some components.</p>
+<p><em>There are others techniques to test React components, and most of those
+involve the DOM. This means you will need to run your tests in the browser (or
+using jsdom): your tests will be slower than the following method
+(which is more real unit testing since you execute less code and do not require
+a huge environment).</em></p>
+<h2 id="easy-unit-testing-react-components-without-a-dom"><a class="markdownIt-Anchor" href="#easy-unit-testing-react-components-without-a-dom">#</a> Easy unit testing React components (without a DOM)</h2>
+<p>Let’s do this with the following (dumb) component:</p>
+<pre><code class="language-js"><span class="hljs-comment">// web_modules/Picture/index.js</span>
+
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
+<span class="hljs-keyword">import</span> { PropTypes } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
+
+const Component = ({
+  img,
+  title,
+  Loader,
+  Title,
+}) =&gt; (
+  &lt;div&gt;
+    {
+      (!img || !img.src) &amp;&amp; Loader &amp;&amp;
+      &lt;Loader /&gt;
+    }
+    {
+      img &amp;&amp; img.src &amp;&amp;
+      &lt;img src={ img.src } alt={ img.alt }/&gt;
+    }
+    {
+      title &amp;&amp; Title &amp;&amp;
+      &lt;Title text={ title } /&gt;
+    }
+  &lt;/div&gt;
+)
+
+Component.propTypes = {
+  img: PropTypes.object,
+  title: PropTypes.string,
+  Loader: PropTypes.func.isRequired,
+  Title: PropTypes.func.isRequired,
+}
+
+Component.displayName = <span class="hljs-string">"Picture"</span>
+
+export default Component</code></pre>
+<p>This component displays an image with a title component.
+If the image data are not ready yet, it can display a loader component.</p>
+<p>Now let’s write some simple test for it. For the example we will use
+<a href="https://medium.com/javascript-scene/why-i-use-tape-instead-of-mocha-so-should-you-6aa105d8eaf4">tape</a>
+with the help of <a href="https://github.com/atabel/tape-jsx-equals">tape-jsx-equals</a>,
+but you will find
+<a href="https://www.npmjs.com/search?q=expect+jsx">all kind of flavors on npm</a>.</p>
+<pre><code class="language-js"><span class="hljs-comment">// web_modules/Picture/__tests__/index.js</span>
+
+<span class="hljs-keyword">import</span> tape <span class="hljs-keyword">from</span> <span class="hljs-string">"tape"</span>
+<span class="hljs-keyword">import</span> addAssertions <span class="hljs-keyword">from</span> <span class="hljs-string">"extend-tape"</span>
+<span class="hljs-keyword">import</span> jsxEquals <span class="hljs-keyword">from</span> <span class="hljs-string">"tape-jsx-equals"</span>
+const test = addAssertions(tape, { jsxEquals })
+
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
+<span class="hljs-keyword">import</span> { createRenderer } <span class="hljs-keyword">from</span> <span class="hljs-string">"react-addons-test-utils"</span>
+
+<span class="hljs-keyword">import</span> Picture <span class="hljs-keyword">from</span> <span class="hljs-string">".."</span>
+
+// fixtures (empty and stateless react components)
+const Loader = () =&gt; {}
+const Title = () =&gt; {}
+
+test(<span class="hljs-string">"PageContainer is properly rendered"</span>, (t) =&gt; {
+  const renderer = createRenderer()
+
+  renderer.render(
+    &lt;Picture
+      Loader={ Loader }
+      Title={ Title }
+    /&gt;
+  )
+  t.jsxEquals(
+    renderer.getRenderOutput(),
+    &lt;div&gt;
+      &lt;Loader /&gt;
+    &lt;/div&gt;,
+    <span class="hljs-string">"can render a Loader component if no image data are passed"</span>
+  )
+
+  renderer.render(
+    &lt;Picture
+      Loader={ Loader }
+      Title={ Title }
+      img={ {
+        src: <span class="hljs-string">"SRC"</span>,
+        alt: <span class="hljs-string">"ALT"</span>,
+      } }
+    /&gt;
+  )
+  t.jsxEquals(
+    renderer.getRenderOutput(),
+    &lt;div&gt;
+      &lt;img src=<span class="hljs-string">"SRC"</span> alt=<span class="hljs-string">"ALT"</span> /&gt;
+    &lt;/div&gt;,
+    <span class="hljs-string">"should render an image if data are passed"</span>
+  )
+
+  renderer.render(
+    &lt;Picture
+      Loader={ Loader }
+      Title={ Title }
+      img={ {
+        src: <span class="hljs-string">"SRC"</span>,
+        alt: <span class="hljs-string">"ALT"</span>,
+      } }
+      title={ <span class="hljs-string">"TITLE"</span> }
+    /&gt;
+  )
+  t.jsxEquals(
+    renderer.getRenderOutput(),
+    &lt;div&gt;
+      &lt;img src=<span class="hljs-string">"SRC"</span> alt=<span class="hljs-string">"ALT"</span> /&gt;
+      &lt;Title text=<span class="hljs-string">"TITLE"</span> /&gt;
+    &lt;/div&gt;,
+    <span class="hljs-string">"can render a Title if data are passed"</span>
+  )
+
+  t.end()
+})</code></pre>
+<p>These tests are the minimum coverage to ensure you don’t break anything when you work
+on your component.</p>
+<p>As you can see, tests here are pretty easy to write &amp; straightforward.<br>
+<strong>The interesting part is that you don’t compare using strings.
+You can use real React components.</strong></p>
+<p>You can easily run this full example by getting it from this repository:</p>
+<p><a href="https://github.com/MoOx/react-component-unit-testing-example">github.com/MoOx/react-component-unit-testing-example</a></p>
+<p>This example contains all the commands and dependencies
+(defined in the <code>package.json</code>)
+that you might need.</p>
+<h1 id="what-about-testing-events-like-onclick"><a class="markdownIt-Anchor" href="#what-about-testing-events-like-onclick">#</a> What about testing events like <code>onClick</code>?</h1>
+<p>You don’t need to reproduce the entire click.</p>
+<p><strong>Your tests don’t need to check that your <code>onClick</code> prop will be executed when
+you click on a DOM element.</strong>
+<em>React probably have tests to cover this.</em></p>
+<p>You only need to test that the <code>onClick</code> prop value will do what you want.
+So if you have something like <code>onClick={ yourCallback }</code>,
+just call directly <code>yourCallback()</code> in your test just before your comparison.
+That’s enough!</p>
+<p>If you want to go deeper, you might also read:</p>
+<ul>
+<li><a href="https://simonsmith.io/unit-testing-react-components-without-a-dom/"><em>Unit testing React components without a DOM</em></a>,
+by Simon Smith, that covers the same topic without the simplicity of the JSX
+comparisons,</li>
+<li><a href="https://blog.algolia.com/how-we-unit-test-react-components-using-expect-jsx/"><em>How we unit test React components using expect-jsx</em></a>
+on Algolia blog, that explains why they choose and create tools for this approach.</li>
+</ul>
+<p>With all those examples, we hope you will stop being afraid to test your code
+and will not hesitate to cover all your React components with tests 😍.</p>
+]]></description><link>http://putaindecode.io/en/articles/js/react/unit-testing/</link><guid isPermaLink="true">http://putaindecode.io/en/articles/js/react/unit-testing/</guid><pubDate>Tue, 24 Nov 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Un favicon vite fait bien fait]]></title><description><![CDATA[<p>Oublions un instant CSS et JavaScript pour parler d’un sujet vraiment
 important : le favicon.</p>
 <p>Alors d’accord, le favicon n’est que le petit détail qu’on expédie en fin de
 projet. Mais oubliez-le et votre client comprendra tout de suite qu’il manque
@@ -2002,201 +2119,7 @@ serveur.</p>
 <p>Si vous souhaitez plus d’informations ou même pousser un peu plus la mise en
 place des webhooks, GitHub a comme à son habitude publié un
 <a href="https://developer.github.com/webhooks/">guide</a> très bien détaillé et complet.</p>
-]]></description><link>http://putaindecode.io/fr/articles/github/webhooks/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/github/webhooks/</guid><pubDate>Tue, 09 Jun 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Introduction à cssnext]]></title><description><![CDATA[<p>D’après le <a href="http://cssnext.io/">site officiel</a>:</p>
-<blockquote>
-<p><strong>cssnext</strong> est un transpileur CSS qui vous permet d’utiliser dès aujourd’hui la syntaxe CSS de demain. Il transforme les spécifications CSS qui ne sont pas encore mises en œuvre sur les navigateurs les plus populaires en CSS compatible.</p>
-</blockquote>
-<h2 id="a-veut-dire-quoi-exactement"><a class="markdownIt-Anchor" href="#a-veut-dire-quoi-exactement">#</a> Ça veut dire quoi exactement ?</h2>
-<p>Depuis CSS3, vous avez savez sans doute que CSS est divisé en plusieurs documents indépendants appelés “modules”. Ces modules peuvent avoir différents niveaux de stabilité et différents <a href="http://www.w3.org/Style/CSS/current-work#legend">statuts</a>. La mise en œuvre de ces modules par les navigateurs peut prendre un certain temps et encore plus pour que le W3C les approuve comme <a href="http://www.w3.org/2005/10/Process-20051014/tr#RecsW3C">Recommandation</a>.</p>
-<p>Avec <strong>cssnext</strong>, vous pouvez utiliser la syntaxe des <a href="http://www.xanthir.com/b4Ko0">nouveaux modules CSS</a> tels que les <em>propriétés personnalisées (custom properties level 1)</em> ou les <em>media queries personnalisées (custom media queries level 1)</em>. <strong>cssnext</strong> va transformer ces nouvelles et étranges syntaxes en du CSS compréhensible par les navigateurs que vous voulez supporter.</p>
-<p>En clair, il vous donne un <strong>avant-goût du futur</strong>.</p>
-<p>Je ne sais pas vous mais étant quelqu’un qui aime expérimenter avec les dernières technologies de pointe, je trouve ça plutôt cool !</p>
-<p>Je vous conseille de jeter un oeil à la <a href="http://cssnext.io/features/">liste des fonctionnalités</a>.</p>
-<h3 id="quid-de-mon-pr-processeur-actuel"><a class="markdownIt-Anchor" href="#quid-de-mon-pr-processeur-actuel">#</a> Quid de mon préprocesseur actuel ?</h3>
-<p>Oubliez les risques liés à une abstraction trop élevée des CSS par les pré-processeurs actuels ; certes causés par une (sur-|mauvaise) utilisation de ces outils mais quand même.</p>
-<p>Devinez quoi, vous n’en avez pas forcément besoin.</p>
-<p>Essayez <strong>cssnext</strong> et retournez à ce bon <s>vieux</s> nouveau CSS. Et avec un zeste de <a href="/fr/articles/css/bem/">méthodologie BEM</a>, vous vous sentirez revivre.</p>
-<h2 id="exemples"><a class="markdownIt-Anchor" href="#exemples">#</a> Exemples</h2>
-<p>Voyons voir quelles sont les fonctionnalités offertes par <strong>cssnext</strong> pour le moment.</p>
-<p>Avant toute chose, vous devriez aller faire un tour sur le <a href="http://cssnext.io/playground/">playground du site officiel</a>.</p>
-<h3 id="pr-fixes-propri-taires-automatiques"><a class="markdownIt-Anchor" href="#pr-fixes-propri-taires-automatiques">#</a> Préfixes propriétaires automatiques</h3>
-<pre><code class="language-css"><span class="hljs-class">.h1</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> transform <span class="hljs-number">1s</span></span></span>;
-}</span></code></pre>
-<p>Cela va être transformé par <strong>cssnext</strong> via Autoprefixer en :</p>
-<pre><code class="language-css"><span class="hljs-class">.h1</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">-webkit-transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
-      <span class="hljs-rule"><span class="hljs-attribute">-ms-transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
-          <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">-webkit-transition</span>:<span class="hljs-value"> -webkit-transform <span class="hljs-number">1s</span></span></span>;
-          <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> transform <span class="hljs-number">1s</span></span></span>;
-}</span></code></pre>
-<h3 id="propri-t-s-personnalis-es-et-var-limit-root"><a class="markdownIt-Anchor" href="#propri-t-s-personnalis-es-et-var-limit-root">#</a> Propriétés personnalisées et var() limité à <code>:root</code></h3>
-<p>Aussi connues sous le nom des très attendues <a href="http://www.w3.org/TR/css-variables/">variables CSS</a>.</p>
-<pre><code class="language-css"><span class="hljs-pseudo">:root</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">--primary-Color</span>:<span class="hljs-value">                 <span class="hljs-hexcolor">#E86100</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">--secondary-Color</span>:<span class="hljs-value">               <span class="hljs-hexcolor">#2c3e50</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">--r-Grid-baseFontSize</span>:<span class="hljs-value">           <span class="hljs-number">1rem</span></span></span>;
-}</span></code></pre>
-<p>À utiliser de cette façon :</p>
-<pre><code class="language-css"><span class="hljs-class">.h1</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--primary-Color)</span></span>;
-}</span>
-<span class="hljs-class">.h1</span><span class="hljs-pseudo">:hover</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--secondary-Color)</span></span>;
-}</span>
-<span class="hljs-tag">body</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--r-Grid-baseFontSize)</span></span>;
-}</span></code></pre>
-<h3 id="media-queries-personnalis-es"><a class="markdownIt-Anchor" href="#media-queries-personnalis-es">#</a> Media Queries personnalisées</h3>
-<p>Pour créer des alias sémantiques, clairs et simples (<a href="http://dev.w3.org/csswg/mediaqueries/#custom-mq">lisez la doc’</a>).</p>
-<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">custom-media</span> --viewport-medium (width &lt;= <span class="hljs-number">40rem</span>)</span>;
-<span class="hljs-at_rule">@<span class="hljs-keyword">custom-media</span> --viewport-large (max-width: <span class="hljs-number">50em</span>)</span>;</code></pre>
-<p>Prenons par exemple :</p>
-<pre><code class="language-css"><span class="hljs-pseudo">:root</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">--fontSize</span>:<span class="hljs-value"> <span class="hljs-number">1.2rem</span></span></span>;
-}</span>
-
-<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (--viewport-medium) </span>{
-  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--fontSize) * <span class="hljs-number">1.2</span>)</span></span>; }</span>
-}
-<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (--viewport-large) </span>{
-  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--fontSize) * <span class="hljs-number">1.4</span>)</span></span>; }</span>
-}</code></pre>
-<p>Le code généré sera alors :</p>
-<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (max-width: <span class="hljs-number">40rem</span>) </span>{
-  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1.44rem</span></span></span>; }</span>
-}
-<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (max-width: <span class="hljs-number">50em</span>) </span>{
-  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1.68rem</span></span></span>; }</span>
-}</code></pre>
-<h3 id="s-lecteurs-personnalis-s"><a class="markdownIt-Anchor" href="#s-lecteurs-personnalis-s">#</a> Sélecteurs personnalisés</h3>
-<p>Encore une fois, un petit tour sur les <a href="http://dev.w3.org/csswg/css-extensions/#custom-selectors">specs</a> pour commencer. Disons qu’on veuille appliquer des styles à toutes les balises de titre.</p>
-<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">custom-selector</span> :--heading h1, h2, h3, h4, h5, h6</span>;
-
-<span class="hljs-pseudo">:--heading</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-}</span></code></pre>
-<p>Ce qui va générer le code suivant :</p>
-<pre><code class="language-css">h1,
-h2,
-h3,
-h4,
-h5,
-h6 { margin-top; 0; }</code></pre>
-<h3 id="color"><a class="markdownIt-Anchor" href="#color">#</a> <code>color()</code></h3>
-<p>Une simple <a href="http://dev.w3.org/csswg/css-color/#modifying-colors">fonction color</a> qui sert à appliquer des <em>réglages couleur</em> (teinte, luminosité, entre autres) à une couleur de base.</p>
-<p>Exemples :</p>
-<pre><code class="language-css"><span class="hljs-class">.class</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">red</span>(+<span class="hljs-number">30</span>) <span class="hljs-function">green</span>(-<span class="hljs-number">50</span>) <span class="hljs-function">blue</span>(<span class="hljs-number">6%</span>) <span class="hljs-function">alpha</span>(.<span class="hljs-number">65</span>))</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-top-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">saturation</span>(-<span class="hljs-number">8%</span>) <span class="hljs-function">whiteness</span>(+<span class="hljs-number">50%</span>))</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-right-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">lightness</span>(<span class="hljs-number">5%</span>) <span class="hljs-function">blackness</span>(-<span class="hljs-number">25%</span>))</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-bottom-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">tint</span>(<span class="hljs-number">80%</span>))</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-left-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">shade</span>(<span class="hljs-number">75%</span>))</span></span>;
-}</span></code></pre>
-<p>Le code ci-dessus sera transformé en…</p>
-<pre><code class="language-css"><span class="hljs-class">.class</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">43</span>, <span class="hljs-number">136</span>, <span class="hljs-number">230</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">73</span>, <span class="hljs-number">86</span>, <span class="hljs-number">15</span>, <span class="hljs-number">0.65</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-top-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">181</span>, <span class="hljs-number">201</span>, <span class="hljs-number">222</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-right-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">3</span>, <span class="hljs-number">45</span>, <span class="hljs-number">87</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-bottom-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">213</span>, <span class="hljs-number">231</span>, <span class="hljs-number">250</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-left-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">11</span>, <span class="hljs-number">34</span>, <span class="hljs-number">58</span>)</span></span>;
-}</span></code></pre>
-<p><strong>cssnext</strong> propose aussi les fonctionalités suivantes liées à la couleur.</p>
-<h4 id="hwb"><a class="markdownIt-Anchor" href="#hwb">#</a> hwb()</h4>
-<p>D’après les <a href="http://dev.w3.org/csswg/css-color/#the-hwb-notation">spécifications</a>, HWB (Hue-Whiteness-Blackness) est similaire à la notation HSL mais plus facile à utiliser pour les humains.</p>
-<pre><code class="language-css"><span class="hljs-class">.title</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">hwb</span>(<span class="hljs-number">125</span>, <span class="hljs-number">32%</span>, <span class="hljs-number">47%</span>)</span></span>;
-}</span></code></pre>
-<p>Rendu :</p>
-<pre><code class="language-css"><span class="hljs-class">.title</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">33</span>, <span class="hljs-number">135</span>, <span class="hljs-number">42</span>)</span></span>;
-}</span></code></pre>
-<h4 id="gray"><a class="markdownIt-Anchor" href="#gray">#</a> gray()</h4>
-<p>Les gris sont <a href="http://dev.w3.org/csswg/css-color/#grays">tellement cool</a> qu’ils ont une fonction rien que pour eux.</p>
-<pre><code class="language-css"><span class="hljs-class">.section</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">gray</span>(<span class="hljs-number">120</span>, <span class="hljs-number">50%</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-color</span>:<span class="hljs-value"> <span class="hljs-function">gray</span>(<span class="hljs-number">17%</span>, <span class="hljs-number">25%</span>)</span></span>;
-}</span></code></pre>
-<p>Ce qui donnera :</p>
-<pre><code class="language-css"><span class="hljs-class">.section</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">120</span>, <span class="hljs-number">120</span>, <span class="hljs-number">120</span>, <span class="hljs-number">0.5</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">43</span>, <span class="hljs-number">43</span>, <span class="hljs-number">43</span>, <span class="hljs-number">0.25</span>)</span></span>;
-}</span></code></pre>
-<h4 id="rrggbbaa"><a class="markdownIt-Anchor" href="#rrggbbaa">#</a> #rrggbbaa</h4>
-<p><strong>cssnext</strong> transforme les <a href="http://dev.w3.org/csswg/css-color/#hex-notation">notations hexadécimales</a> #RRGGBBAA et #RGBA en rgba().</p>
-<pre><code class="language-css"><span class="hljs-tag">body</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#5c69</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#C73D5C59</span></span></span>;
-}</span></code></pre>
-<p>Résultat :</p>
-<pre><code class="language-css"><span class="hljs-tag">body</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">85</span>, <span class="hljs-number">204</span>, <span class="hljs-number">102</span>, <span class="hljs-number">0.6</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">199</span>, <span class="hljs-number">61</span>, <span class="hljs-number">92</span>, <span class="hljs-number">0.34902</span>)</span></span>;
-}</span></code></pre>
-<h4 id="rebeccapurple"><a class="markdownIt-Anchor" href="#rebeccapurple">#</a> rebeccapurple</h4>
-<p>Transforme simplement la couleur <a href="https://github.com/postcss/postcss-color-rebeccapurple#why-this-plugin-"><code>rebeccapurple</code></a> en <code>rgb(102, 51, 153)</code>.</p>
-<h3 id="rem-units"><a class="markdownIt-Anchor" href="#rem-units">#</a> rem units</h3>
-<p>Rien de bien extraordinaire ici, on génère un <strong><em>fallback</em> en pixels pour les unités en rem</strong>. Certaines personnes pourraient penser qu’un tel <em>fallback</em> est inutile de nos jours. Cependant, pour des projets bien spécifiques (compatibilité IE 7 et 8 requise), c’est encore une nécessité.
-Non mais vous n’avez quand même pas besoin d’un exemple pour ça ? Si ? Bon… d’accord. Allons-y !</p>
-<pre><code class="language-css"><span class="hljs-class">.section-Highlight</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">2.5rem</span></span></span>;
-}</span></code></pre>
-<p>Résultat :</p>
-<pre><code class="language-css"><span class="hljs-class">.section-Highlight</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">40px</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">2.5rem</span></span></span>;
-}</span></code></pre>
-<h2 id="note-importante-sur-les-fonctionnalit-s"><a class="markdownIt-Anchor" href="#note-importante-sur-les-fonctionnalit-s">#</a> Note importante sur les fonctionnalités</h2>
-<p>Vous pouvez manuellement activer ou désactiver certaines fonctionnalités si vous n’en ressentez pas le besoin.
-Cela étant dit, il vous est conseillé d’utiliser l’option <a href="http://cssnext.io/usage/#browsers"><code>browsers</code></a>,
-qui permet de gérer automatiquement la liste des fonctionnalités à activer.
-Par exemple si vous spécifiez un environnement où IE 8 n’est pas supporté, l’option de transformation des <code>rem</code>
-en <code>px</code> ne sera pas activé. Tout comme Autoprefixer ne rajoutera pas les préfixes inutiles.</p>
-<h2 id="fonctionnalit-s-bonus"><a class="markdownIt-Anchor" href="#fonctionnalit-s-bonus">#</a> Fonctionnalités bonus</h2>
-<p>Les deux fonctionnalités qui vont suivre ne sont pas vraiment en rapport avec les spécifications CSS. Cependant, elles méritent tout de même leur place dans cette brève présentation de l’outil.</p>
-<h3 id="import"><a class="markdownIt-Anchor" href="#import">#</a> <code>import</code></h3>
-<p>Et si vous pouviez importer des fichiers locaux et des modules (<code>node_modules</code> ou <code>web_modules</code>) pour produire un seul et même fichier CSS les contenant tous ? Oui, <a href="https://github.com/sass/sass/issues/193">c’est à vous que je m’adresse, les utilisateurs de Sass</a>, hum. Eh bien, avec <strong>cssnext</strong>, c’est possible.</p>
-<h3 id="compress"><a class="markdownIt-Anchor" href="#compress">#</a> <code>compress</code></h3>
-<p>Comme vous l’avez sûrement deviné, c’est juste une option pour compresser <em>ou pas</em> votre fichier de sortie, et ceci grâce à <a href="https://github.com/ben-eb/cssnano">cssnano</a>.</p>
-<h3 id="usage"><a class="markdownIt-Anchor" href="#usage">#</a> Usage</h3>
-<p>Voici un exemple simple de ces deux fonctionnalités. J’ai ici utilisé <a href="https://github.com/cssnext/gulp-cssnext">gulp-cssnext</a>, un des <a href="http://cssnext.io/setup/">nombreux plugins</a> qui vous aident à démarrer avec <strong>cssnext</strong>.</p>
-<pre><code class="language-js"><span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>),
-    cssnext = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-cssnext"</span>);
-
-gulp.task(<span class="hljs-string">'styles'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-  gulp.src(<span class="hljs-string">"css/index.css"</span>)
-  .pipe(cssnext({
-    compress: <span class="hljs-literal">true</span>,  <span class="hljs-comment">// default is false</span>
-  }))
-  .pipe(gulp.dest(<span class="hljs-string">"./dist/"</span>))
-});</code></pre>
-<p>Ensuite, dans mon fichier <code>index.css</code>, j’ai ceci :</p>
-<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"normalize.css"</span></span>; <span class="hljs-comment">/* == @import "./node_modules/normalize.css/index.css"; */</span>
-<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"cssrecipes-defaults"</span></span>; <span class="hljs-comment">/* == @import "./node_modules/cssrecipes-defaults/index.css"; */</span>
-<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"project-modules/partner"</span></span>; <span class="hljs-comment">/* relatif à css/ */</span>
-<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"typo"</span></span>; <span class="hljs-comment">/* même niveau que mon index.css principal situé dans css/ */</span>
-<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"highlight"</span> (min-width: <span class="hljs-number">25em</span>)</span>;</code></pre>
-<p>Et le rendu final sera :</p>
-<pre><code class="language-css"><span class="hljs-comment">/* contenu de ./node_modules/normalize.css/index.css */</span>
-<span class="hljs-comment">/* contenu de ./node_modules/cssrecipes-defaults/index.css */</span>
-<span class="hljs-comment">/* contenu de project-modules/partner.css */</span>
-<span class="hljs-comment">/* contenu de typo.css */</span>
-<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (min-width: <span class="hljs-number">25em</span>) </span>{
-  <span class="hljs-comment">/* contenu de highlight.css */</span>
-}</code></pre>
-<p>Je sais ce que vous ressentez. Ce n’est peut-être pas le coup de foudre au premier coup d’œil (enfin, pour certains comme moi si, mais bon, passons). Vous ne l’acceptez pas encore mais il va falloir vous rendre à l’évidence, un jour ou l’autre vous coderez comme ça. Mieux vaut vous y mettre tout de suite, non ? :)</p>
-<p>Bref, pour résumer, disons simplement que le but principal de <strong>cssnext</strong> est de pouvoir développer selon les spécifications du W3C en gardant bien à l’esprit que, théoriquement, il sera possible de le supprimer plus tard (quand il ne sera plus utile).</p>
-<p>En effet, dans un futur proche, les fonctionnalités qu’offre cet outil ne seront plus gérées par <strong>cssnext</strong> lui-même mais directement par les navigateurs. Laissons-les s’adapter, chacun à leur vitesse et préparons-nous. Voilà tout l’intérêt du code <em>future-proof</em>, comme le permet <a href="http://babeljs.io/">babeljs</a> pour le JavaScript.</p>
-<p>En attendant, il y a encore du boulot : voici une <a href="https://github.com/cssnext/cssnext/issues?q=is%3Aopen+is%3Aissue+label%3A%22type%3A+feature+request%22">liste des fonctionnalités à venir</a>.</p>
-<p>Maintenant, à vous de jouer. N’oubliez pas d’aller faire un tour sur le <a href="https://github.com/cssnext/cssnext">repo GitHub</a>, n’hésitez pas à suivre <a href="https://twitter.com/cssnext">@cssnext</a> sur Twitter pour être au courant des dernières news et rejoignez la <a href="https://gitter.im/cssnext/cssnext">room cssnext sur Gitter</a> si vous avez des questions.</p>
-<ul>
-<li><a href="http://cssnext.io/">Site officiel</a></li>
-</ul>
-]]></description><link>http://putaindecode.io/fr/articles/css/preprocesseurs/cssnext/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/css/preprocesseurs/cssnext/</guid><pubDate>Tue, 02 Jun 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Introduction to cssnext]]></title><description><![CDATA[<p>From <a href="http://cssnext.io/">the official website</a>:</p>
+]]></description><link>http://putaindecode.io/fr/articles/github/webhooks/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/github/webhooks/</guid><pubDate>Tue, 09 Jun 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Introduction to cssnext]]></title><description><![CDATA[<p>From <a href="http://cssnext.io/">the official website</a>:</p>
 <blockquote>
 <p><strong>cssnext</strong> is a CSS transpiler that allows you to use tomorrow’s CSS syntax today. It transforms CSS specs that are not yet implemented in popular browsers into more compatible CSS.</p>
 </blockquote>
@@ -2614,7 +2537,201 @@ gulp.task(<span class="hljs-string">'styles'</span>, <span class="hljs-function"
 <ul>
 <li><a href="http://cssnext.io/">Página oficial</a></li>
 </ul>
-]]></description><link>http://putaindecode.io/es/articulos/css/procesadores/cssnext/</link><guid isPermaLink="true">http://putaindecode.io/es/articulos/css/procesadores/cssnext/</guid><pubDate>Tue, 02 Jun 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Introduction au déploiement continu]]></title><description><![CDATA[<h1 id="d-ployer-en-continu"><a class="markdownIt-Anchor" href="#d-ployer-en-continu">#</a> Déployer en continu ?</h1>
+]]></description><link>http://putaindecode.io/es/articulos/css/procesadores/cssnext/</link><guid isPermaLink="true">http://putaindecode.io/es/articulos/css/procesadores/cssnext/</guid><pubDate>Tue, 02 Jun 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Introduction à cssnext]]></title><description><![CDATA[<p>D’après le <a href="http://cssnext.io/">site officiel</a>:</p>
+<blockquote>
+<p><strong>cssnext</strong> est un transpileur CSS qui vous permet d’utiliser dès aujourd’hui la syntaxe CSS de demain. Il transforme les spécifications CSS qui ne sont pas encore mises en œuvre sur les navigateurs les plus populaires en CSS compatible.</p>
+</blockquote>
+<h2 id="a-veut-dire-quoi-exactement"><a class="markdownIt-Anchor" href="#a-veut-dire-quoi-exactement">#</a> Ça veut dire quoi exactement ?</h2>
+<p>Depuis CSS3, vous avez savez sans doute que CSS est divisé en plusieurs documents indépendants appelés “modules”. Ces modules peuvent avoir différents niveaux de stabilité et différents <a href="http://www.w3.org/Style/CSS/current-work#legend">statuts</a>. La mise en œuvre de ces modules par les navigateurs peut prendre un certain temps et encore plus pour que le W3C les approuve comme <a href="http://www.w3.org/2005/10/Process-20051014/tr#RecsW3C">Recommandation</a>.</p>
+<p>Avec <strong>cssnext</strong>, vous pouvez utiliser la syntaxe des <a href="http://www.xanthir.com/b4Ko0">nouveaux modules CSS</a> tels que les <em>propriétés personnalisées (custom properties level 1)</em> ou les <em>media queries personnalisées (custom media queries level 1)</em>. <strong>cssnext</strong> va transformer ces nouvelles et étranges syntaxes en du CSS compréhensible par les navigateurs que vous voulez supporter.</p>
+<p>En clair, il vous donne un <strong>avant-goût du futur</strong>.</p>
+<p>Je ne sais pas vous mais étant quelqu’un qui aime expérimenter avec les dernières technologies de pointe, je trouve ça plutôt cool !</p>
+<p>Je vous conseille de jeter un oeil à la <a href="http://cssnext.io/features/">liste des fonctionnalités</a>.</p>
+<h3 id="quid-de-mon-pr-processeur-actuel"><a class="markdownIt-Anchor" href="#quid-de-mon-pr-processeur-actuel">#</a> Quid de mon préprocesseur actuel ?</h3>
+<p>Oubliez les risques liés à une abstraction trop élevée des CSS par les pré-processeurs actuels ; certes causés par une (sur-|mauvaise) utilisation de ces outils mais quand même.</p>
+<p>Devinez quoi, vous n’en avez pas forcément besoin.</p>
+<p>Essayez <strong>cssnext</strong> et retournez à ce bon <s>vieux</s> nouveau CSS. Et avec un zeste de <a href="/fr/articles/css/bem/">méthodologie BEM</a>, vous vous sentirez revivre.</p>
+<h2 id="exemples"><a class="markdownIt-Anchor" href="#exemples">#</a> Exemples</h2>
+<p>Voyons voir quelles sont les fonctionnalités offertes par <strong>cssnext</strong> pour le moment.</p>
+<p>Avant toute chose, vous devriez aller faire un tour sur le <a href="http://cssnext.io/playground/">playground du site officiel</a>.</p>
+<h3 id="pr-fixes-propri-taires-automatiques"><a class="markdownIt-Anchor" href="#pr-fixes-propri-taires-automatiques">#</a> Préfixes propriétaires automatiques</h3>
+<pre><code class="language-css"><span class="hljs-class">.h1</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> transform <span class="hljs-number">1s</span></span></span>;
+}</span></code></pre>
+<p>Cela va être transformé par <strong>cssnext</strong> via Autoprefixer en :</p>
+<pre><code class="language-css"><span class="hljs-class">.h1</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">-webkit-transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">-ms-transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
+          <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">-webkit-transition</span>:<span class="hljs-value"> -webkit-transform <span class="hljs-number">1s</span></span></span>;
+          <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> transform <span class="hljs-number">1s</span></span></span>;
+}</span></code></pre>
+<h3 id="propri-t-s-personnalis-es-et-var-limit-root"><a class="markdownIt-Anchor" href="#propri-t-s-personnalis-es-et-var-limit-root">#</a> Propriétés personnalisées et var() limité à <code>:root</code></h3>
+<p>Aussi connues sous le nom des très attendues <a href="http://www.w3.org/TR/css-variables/">variables CSS</a>.</p>
+<pre><code class="language-css"><span class="hljs-pseudo">:root</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">--primary-Color</span>:<span class="hljs-value">                 <span class="hljs-hexcolor">#E86100</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">--secondary-Color</span>:<span class="hljs-value">               <span class="hljs-hexcolor">#2c3e50</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">--r-Grid-baseFontSize</span>:<span class="hljs-value">           <span class="hljs-number">1rem</span></span></span>;
+}</span></code></pre>
+<p>À utiliser de cette façon :</p>
+<pre><code class="language-css"><span class="hljs-class">.h1</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--primary-Color)</span></span>;
+}</span>
+<span class="hljs-class">.h1</span><span class="hljs-pseudo">:hover</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--secondary-Color)</span></span>;
+}</span>
+<span class="hljs-tag">body</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--r-Grid-baseFontSize)</span></span>;
+}</span></code></pre>
+<h3 id="media-queries-personnalis-es"><a class="markdownIt-Anchor" href="#media-queries-personnalis-es">#</a> Media Queries personnalisées</h3>
+<p>Pour créer des alias sémantiques, clairs et simples (<a href="http://dev.w3.org/csswg/mediaqueries/#custom-mq">lisez la doc’</a>).</p>
+<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">custom-media</span> --viewport-medium (width &lt;= <span class="hljs-number">40rem</span>)</span>;
+<span class="hljs-at_rule">@<span class="hljs-keyword">custom-media</span> --viewport-large (max-width: <span class="hljs-number">50em</span>)</span>;</code></pre>
+<p>Prenons par exemple :</p>
+<pre><code class="language-css"><span class="hljs-pseudo">:root</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">--fontSize</span>:<span class="hljs-value"> <span class="hljs-number">1.2rem</span></span></span>;
+}</span>
+
+<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (--viewport-medium) </span>{
+  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--fontSize) * <span class="hljs-number">1.2</span>)</span></span>; }</span>
+}
+<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (--viewport-large) </span>{
+  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--fontSize) * <span class="hljs-number">1.4</span>)</span></span>; }</span>
+}</code></pre>
+<p>Le code généré sera alors :</p>
+<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (max-width: <span class="hljs-number">40rem</span>) </span>{
+  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1.44rem</span></span></span>; }</span>
+}
+<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (max-width: <span class="hljs-number">50em</span>) </span>{
+  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1.68rem</span></span></span>; }</span>
+}</code></pre>
+<h3 id="s-lecteurs-personnalis-s"><a class="markdownIt-Anchor" href="#s-lecteurs-personnalis-s">#</a> Sélecteurs personnalisés</h3>
+<p>Encore une fois, un petit tour sur les <a href="http://dev.w3.org/csswg/css-extensions/#custom-selectors">specs</a> pour commencer. Disons qu’on veuille appliquer des styles à toutes les balises de titre.</p>
+<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">custom-selector</span> :--heading h1, h2, h3, h4, h5, h6</span>;
+
+<span class="hljs-pseudo">:--heading</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+}</span></code></pre>
+<p>Ce qui va générer le code suivant :</p>
+<pre><code class="language-css">h1,
+h2,
+h3,
+h4,
+h5,
+h6 { margin-top; 0; }</code></pre>
+<h3 id="color"><a class="markdownIt-Anchor" href="#color">#</a> <code>color()</code></h3>
+<p>Une simple <a href="http://dev.w3.org/csswg/css-color/#modifying-colors">fonction color</a> qui sert à appliquer des <em>réglages couleur</em> (teinte, luminosité, entre autres) à une couleur de base.</p>
+<p>Exemples :</p>
+<pre><code class="language-css"><span class="hljs-class">.class</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">red</span>(+<span class="hljs-number">30</span>) <span class="hljs-function">green</span>(-<span class="hljs-number">50</span>) <span class="hljs-function">blue</span>(<span class="hljs-number">6%</span>) <span class="hljs-function">alpha</span>(.<span class="hljs-number">65</span>))</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-top-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">saturation</span>(-<span class="hljs-number">8%</span>) <span class="hljs-function">whiteness</span>(+<span class="hljs-number">50%</span>))</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-right-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">lightness</span>(<span class="hljs-number">5%</span>) <span class="hljs-function">blackness</span>(-<span class="hljs-number">25%</span>))</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-bottom-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">tint</span>(<span class="hljs-number">80%</span>))</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-left-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">shade</span>(<span class="hljs-number">75%</span>))</span></span>;
+}</span></code></pre>
+<p>Le code ci-dessus sera transformé en…</p>
+<pre><code class="language-css"><span class="hljs-class">.class</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">43</span>, <span class="hljs-number">136</span>, <span class="hljs-number">230</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">73</span>, <span class="hljs-number">86</span>, <span class="hljs-number">15</span>, <span class="hljs-number">0.65</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-top-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">181</span>, <span class="hljs-number">201</span>, <span class="hljs-number">222</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-right-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">3</span>, <span class="hljs-number">45</span>, <span class="hljs-number">87</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-bottom-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">213</span>, <span class="hljs-number">231</span>, <span class="hljs-number">250</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-left-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">11</span>, <span class="hljs-number">34</span>, <span class="hljs-number">58</span>)</span></span>;
+}</span></code></pre>
+<p><strong>cssnext</strong> propose aussi les fonctionalités suivantes liées à la couleur.</p>
+<h4 id="hwb"><a class="markdownIt-Anchor" href="#hwb">#</a> hwb()</h4>
+<p>D’après les <a href="http://dev.w3.org/csswg/css-color/#the-hwb-notation">spécifications</a>, HWB (Hue-Whiteness-Blackness) est similaire à la notation HSL mais plus facile à utiliser pour les humains.</p>
+<pre><code class="language-css"><span class="hljs-class">.title</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">hwb</span>(<span class="hljs-number">125</span>, <span class="hljs-number">32%</span>, <span class="hljs-number">47%</span>)</span></span>;
+}</span></code></pre>
+<p>Rendu :</p>
+<pre><code class="language-css"><span class="hljs-class">.title</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">33</span>, <span class="hljs-number">135</span>, <span class="hljs-number">42</span>)</span></span>;
+}</span></code></pre>
+<h4 id="gray"><a class="markdownIt-Anchor" href="#gray">#</a> gray()</h4>
+<p>Les gris sont <a href="http://dev.w3.org/csswg/css-color/#grays">tellement cool</a> qu’ils ont une fonction rien que pour eux.</p>
+<pre><code class="language-css"><span class="hljs-class">.section</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">gray</span>(<span class="hljs-number">120</span>, <span class="hljs-number">50%</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-color</span>:<span class="hljs-value"> <span class="hljs-function">gray</span>(<span class="hljs-number">17%</span>, <span class="hljs-number">25%</span>)</span></span>;
+}</span></code></pre>
+<p>Ce qui donnera :</p>
+<pre><code class="language-css"><span class="hljs-class">.section</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">120</span>, <span class="hljs-number">120</span>, <span class="hljs-number">120</span>, <span class="hljs-number">0.5</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">43</span>, <span class="hljs-number">43</span>, <span class="hljs-number">43</span>, <span class="hljs-number">0.25</span>)</span></span>;
+}</span></code></pre>
+<h4 id="rrggbbaa"><a class="markdownIt-Anchor" href="#rrggbbaa">#</a> #rrggbbaa</h4>
+<p><strong>cssnext</strong> transforme les <a href="http://dev.w3.org/csswg/css-color/#hex-notation">notations hexadécimales</a> #RRGGBBAA et #RGBA en rgba().</p>
+<pre><code class="language-css"><span class="hljs-tag">body</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#5c69</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#C73D5C59</span></span></span>;
+}</span></code></pre>
+<p>Résultat :</p>
+<pre><code class="language-css"><span class="hljs-tag">body</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">85</span>, <span class="hljs-number">204</span>, <span class="hljs-number">102</span>, <span class="hljs-number">0.6</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">199</span>, <span class="hljs-number">61</span>, <span class="hljs-number">92</span>, <span class="hljs-number">0.34902</span>)</span></span>;
+}</span></code></pre>
+<h4 id="rebeccapurple"><a class="markdownIt-Anchor" href="#rebeccapurple">#</a> rebeccapurple</h4>
+<p>Transforme simplement la couleur <a href="https://github.com/postcss/postcss-color-rebeccapurple#why-this-plugin-"><code>rebeccapurple</code></a> en <code>rgb(102, 51, 153)</code>.</p>
+<h3 id="rem-units"><a class="markdownIt-Anchor" href="#rem-units">#</a> rem units</h3>
+<p>Rien de bien extraordinaire ici, on génère un <strong><em>fallback</em> en pixels pour les unités en rem</strong>. Certaines personnes pourraient penser qu’un tel <em>fallback</em> est inutile de nos jours. Cependant, pour des projets bien spécifiques (compatibilité IE 7 et 8 requise), c’est encore une nécessité.
+Non mais vous n’avez quand même pas besoin d’un exemple pour ça ? Si ? Bon… d’accord. Allons-y !</p>
+<pre><code class="language-css"><span class="hljs-class">.section-Highlight</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">2.5rem</span></span></span>;
+}</span></code></pre>
+<p>Résultat :</p>
+<pre><code class="language-css"><span class="hljs-class">.section-Highlight</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">40px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">2.5rem</span></span></span>;
+}</span></code></pre>
+<h2 id="note-importante-sur-les-fonctionnalit-s"><a class="markdownIt-Anchor" href="#note-importante-sur-les-fonctionnalit-s">#</a> Note importante sur les fonctionnalités</h2>
+<p>Vous pouvez manuellement activer ou désactiver certaines fonctionnalités si vous n’en ressentez pas le besoin.
+Cela étant dit, il vous est conseillé d’utiliser l’option <a href="http://cssnext.io/usage/#browsers"><code>browsers</code></a>,
+qui permet de gérer automatiquement la liste des fonctionnalités à activer.
+Par exemple si vous spécifiez un environnement où IE 8 n’est pas supporté, l’option de transformation des <code>rem</code>
+en <code>px</code> ne sera pas activé. Tout comme Autoprefixer ne rajoutera pas les préfixes inutiles.</p>
+<h2 id="fonctionnalit-s-bonus"><a class="markdownIt-Anchor" href="#fonctionnalit-s-bonus">#</a> Fonctionnalités bonus</h2>
+<p>Les deux fonctionnalités qui vont suivre ne sont pas vraiment en rapport avec les spécifications CSS. Cependant, elles méritent tout de même leur place dans cette brève présentation de l’outil.</p>
+<h3 id="import"><a class="markdownIt-Anchor" href="#import">#</a> <code>import</code></h3>
+<p>Et si vous pouviez importer des fichiers locaux et des modules (<code>node_modules</code> ou <code>web_modules</code>) pour produire un seul et même fichier CSS les contenant tous ? Oui, <a href="https://github.com/sass/sass/issues/193">c’est à vous que je m’adresse, les utilisateurs de Sass</a>, hum. Eh bien, avec <strong>cssnext</strong>, c’est possible.</p>
+<h3 id="compress"><a class="markdownIt-Anchor" href="#compress">#</a> <code>compress</code></h3>
+<p>Comme vous l’avez sûrement deviné, c’est juste une option pour compresser <em>ou pas</em> votre fichier de sortie, et ceci grâce à <a href="https://github.com/ben-eb/cssnano">cssnano</a>.</p>
+<h3 id="usage"><a class="markdownIt-Anchor" href="#usage">#</a> Usage</h3>
+<p>Voici un exemple simple de ces deux fonctionnalités. J’ai ici utilisé <a href="https://github.com/cssnext/gulp-cssnext">gulp-cssnext</a>, un des <a href="http://cssnext.io/setup/">nombreux plugins</a> qui vous aident à démarrer avec <strong>cssnext</strong>.</p>
+<pre><code class="language-js"><span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>),
+    cssnext = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-cssnext"</span>);
+
+gulp.task(<span class="hljs-string">'styles'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  gulp.src(<span class="hljs-string">"css/index.css"</span>)
+  .pipe(cssnext({
+    compress: <span class="hljs-literal">true</span>,  <span class="hljs-comment">// default is false</span>
+  }))
+  .pipe(gulp.dest(<span class="hljs-string">"./dist/"</span>))
+});</code></pre>
+<p>Ensuite, dans mon fichier <code>index.css</code>, j’ai ceci :</p>
+<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"normalize.css"</span></span>; <span class="hljs-comment">/* == @import "./node_modules/normalize.css/index.css"; */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"cssrecipes-defaults"</span></span>; <span class="hljs-comment">/* == @import "./node_modules/cssrecipes-defaults/index.css"; */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"project-modules/partner"</span></span>; <span class="hljs-comment">/* relatif à css/ */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"typo"</span></span>; <span class="hljs-comment">/* même niveau que mon index.css principal situé dans css/ */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"highlight"</span> (min-width: <span class="hljs-number">25em</span>)</span>;</code></pre>
+<p>Et le rendu final sera :</p>
+<pre><code class="language-css"><span class="hljs-comment">/* contenu de ./node_modules/normalize.css/index.css */</span>
+<span class="hljs-comment">/* contenu de ./node_modules/cssrecipes-defaults/index.css */</span>
+<span class="hljs-comment">/* contenu de project-modules/partner.css */</span>
+<span class="hljs-comment">/* contenu de typo.css */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (min-width: <span class="hljs-number">25em</span>) </span>{
+  <span class="hljs-comment">/* contenu de highlight.css */</span>
+}</code></pre>
+<p>Je sais ce que vous ressentez. Ce n’est peut-être pas le coup de foudre au premier coup d’œil (enfin, pour certains comme moi si, mais bon, passons). Vous ne l’acceptez pas encore mais il va falloir vous rendre à l’évidence, un jour ou l’autre vous coderez comme ça. Mieux vaut vous y mettre tout de suite, non ? :)</p>
+<p>Bref, pour résumer, disons simplement que le but principal de <strong>cssnext</strong> est de pouvoir développer selon les spécifications du W3C en gardant bien à l’esprit que, théoriquement, il sera possible de le supprimer plus tard (quand il ne sera plus utile).</p>
+<p>En effet, dans un futur proche, les fonctionnalités qu’offre cet outil ne seront plus gérées par <strong>cssnext</strong> lui-même mais directement par les navigateurs. Laissons-les s’adapter, chacun à leur vitesse et préparons-nous. Voilà tout l’intérêt du code <em>future-proof</em>, comme le permet <a href="http://babeljs.io/">babeljs</a> pour le JavaScript.</p>
+<p>En attendant, il y a encore du boulot : voici une <a href="https://github.com/cssnext/cssnext/issues?q=is%3Aopen+is%3Aissue+label%3A%22type%3A+feature+request%22">liste des fonctionnalités à venir</a>.</p>
+<p>Maintenant, à vous de jouer. N’oubliez pas d’aller faire un tour sur le <a href="https://github.com/cssnext/cssnext">repo GitHub</a>, n’hésitez pas à suivre <a href="https://twitter.com/cssnext">@cssnext</a> sur Twitter pour être au courant des dernières news et rejoignez la <a href="https://gitter.im/cssnext/cssnext">room cssnext sur Gitter</a> si vous avez des questions.</p>
+<ul>
+<li><a href="http://cssnext.io/">Site officiel</a></li>
+</ul>
+]]></description><link>http://putaindecode.io/fr/articles/css/preprocesseurs/cssnext/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/css/preprocesseurs/cssnext/</guid><pubDate>Tue, 02 Jun 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Introduction au déploiement continu]]></title><description><![CDATA[<h1 id="d-ployer-en-continu"><a class="markdownIt-Anchor" href="#d-ployer-en-continu">#</a> Déployer en continu ?</h1>
 <p>Il s’agit d’avoir un site stable en production, ceci de manière automatisée et
 continue. Rien que ça.</p>
 <p>Il faut comprendre par là sans passer par FTP avec Filezilla.
@@ -2997,231 +3114,4 @@ program.parse(process.argv)
 </ul>
 <p>Je vous invite également à visionner la <a href="http://blog.clement.delafargue.name/posts/2015-02-25-declarative-cli-parsing-in-js.html">vidéo</a> de <a href="https://twitter.com/clementd">Clement Delafargue</a> qui a fait une présentation sur le sujet en début d’année.</p>
 <p>À partir de là on dispose d’une bonne base pour refaire le monde et accroître la flemme du développeur que l’on est en automatisant tout plein de tâches.</p>
-]]></description><link>http://putaindecode.io/fr/articles/npm/utilitaire-cli/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/npm/utilitaire-cli/</guid><pubDate>Tue, 12 May 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Utiliser React en moteur de templates]]></title><description><![CDATA[<p>Vous connaissez probablement tous des moteurs de templates.
-En JavaScript nous avons Handlebars, Jade, EJS, Slim…
-Tous ces projets partent de bonnes intentions mais à l’utilisation,
-on peut sentir des limitations et donc de l’insatisfaction.</p>
-<p>Utiliser Handlebars par exemple, c’est un peu devoir coder tout un tas de helpers
-pour gérer une partie de votre affichage, ça peut vite devenir lourd.
-Être restreint à une syntaxe limitée par choix est un peu frustrant.
-Quand c’est pas ça, c’est la syntaxe du moteur qui va être lourde.</p>
-<p>On peut en venir à regretter PHP. Faut avouer que ce langage était plutôt simple
-à utiliser en tant que moteur de template.
-Efficace et pas de restrictions. On trouve même parfois des <code>mysql_query()</code>
-dans des templates…</p>
-<p>Blague à part, nous cherchions des langages pour refaire une partie de notre site
-puisque nous n’étions pas vraiment satisfaits du processus actuel
-(anciennement Handlebars, puis Jade).</p>
-<p>Mais finalement, pourquoi ne pas rester avec du JavaScript, purement et simplement ?</p>
-<p>C’est ce que nous avons fait avec React et JSX qui sont de plus en plus utilisés.
-La syntaxe est plutôt libératrice.</p>
-<p>Pour ceux qui ne connaissent pas JSX, il s’agit d’un superset de JavaScript qui
-supporte une syntaxe XML transformé en appel de fonctions JavaScript.
-Il faut dire que le XML a beau être verbeux, pour définir des
-éléments ayant des propriétés et des enfants, on a pas vraiment fait plus
-lisible et clair sur ce point. Le HTML est plutôt simple à prendre en main c’est
-certain. Les méthodes de rendu de React (ce qui va nous intéresser) sont très proches
-de l’HTML.</p>
-<p>Ceux qui ont utilisé JSX (bien qu’ayant pu avoir des nausées au premier contact)
-avouent souvent qu’ils ont fini par aimer cette petite syntaxe créée par Facebook qui
-fonctionne très bien avec React.</p>
-<p>Du coup, si on utilisait ça pour faire de simple templates et non pas des composants
-d’interface utilisateur dynamiques ? Qui peut le plus peut le moins (quoi qu’en
-fait, des templates, c’est un peu des composants d’interface).</p>
-<h2 id="exemple-de-template-react-jsx"><a class="markdownIt-Anchor" href="#exemple-de-template-react-jsx">#</a> Exemple de template React/JSX</h2>
-<p>Si vous ne savez pas trop ce qu’est React, nous vous recommandons de lire
-notre <a href="/fr/articles/js/react/">introduction à React</a>.</p>
-<p>Dans notre cas, on ne va pas spécialement bénéficier de certaines de ses forces,
-mais ça fera très bien le job pour notre besoin.</p>
-<p>Nous n’aborderons pas dans le détail la syntaxe React/JSX, ni ES6, pour rester
-focalisés sur la finalité (on a prévu des articles à ce propos, en attendant
-<a href="http://babeljs.io/docs/learn-es6/">voici de quoi vous occuper avec ES6</a>).</p>
-<p><em>Attention, pour ceux qui sont encore sur des plugins jQuery, ça risque de vous
-piquer les yeux</em> 😭.</p>
-<p><a name="es6-class"></a></p>
-<pre><code class="language-js"><span class="hljs-keyword">import</span> React, {Component} <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
-
-export default class PostTemplate extends Component {
-
-  render() {
-    return (
-      &lt;html&gt;
-        &lt;head&gt;
-          &lt;title&gt;{this.props.pageTitle}&lt;/title&gt;
-        &lt;/head&gt;
-        &lt;body&gt;
-          &lt;article className=<span class="hljs-string">"org-Post"</span>&gt;
-            &lt;header className=<span class="hljs-string">"org-Post-header"</span>&gt;
-              &lt;h1&gt;{this.props.pageTitle}&lt;/h1&gt;
-            &lt;/header&gt;
-            &lt;div
-              className=<span class="hljs-string">"org-Post-content"</span>
-              dangerouslySetInnerHTML={{__html: this.props.pageContent}}
-            /&gt;
-          &lt;/article&gt;
-        &lt;/body&gt;
-      &lt;/html&gt;
-    )
-  }
-}</code></pre>
-<p>Ce que vous voyez c’est bien du JavaScript. Un peu amélioré via JSX, on ne va
-pas le nier (dans notre cas, on gère tout ça de manière transparente avec
-<a href="http://babeljs.io/">babel(-node)</a>).</p>
-<p>Ça ressemble drôlement à de l’HTML et c’est ça qui est appréciable pour nous.
-Vous noterez que l’attribut pour définir une classe HTML est <code>className</code> puisque
-React est en JavaScript et que le mot <code>class</code> est réservé
-(cf. <a href="#es6-class">la définition en ES6 de la classe</a>).</p>
-<p>En même temps ce qui est cool, c’est qu’on reste dans du JavaScript.</p>
-<p>On peut donc utiliser toutes nos bibliothèques préférées via <em>npm</em> pour l’affichage
-(exemple : <code>momentjs</code>), ou simplement des boucles via les méthodes de parcours de
-tableau tel que <code>forEach()</code> ou <code>map()</code> en appelant d’autres composants.</p>
-<p>Ci-dessous vous trouverez un exemple plus complexe avec une page pour la liste
-des posts et quelques composants.
-Les balises qui ressemblent à du HTML et qui commencent par une majuscule sont liées à des
-composants qui doivent être définis (dans notre cas importés).
-C’est une particularité de React.</p>
-<pre><code class="language-js"><span class="hljs-keyword">import</span> React, {Component} <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
-
-<span class="hljs-keyword">import</span> Html <span class="hljs-keyword">from</span> <span class="hljs-string">"../Html"</span>
-<span class="hljs-keyword">import</span> Head <span class="hljs-keyword">from</span> <span class="hljs-string">"../Head"</span>
-<span class="hljs-keyword">import</span> Body <span class="hljs-keyword">from</span> <span class="hljs-string">"../Body"</span>
-<span class="hljs-keyword">import</span> PostsList <span class="hljs-keyword">from</span> <span class="hljs-string">"../PostsList"</span>
-
-export default class Posts extends Component {
-
-  render() {
-    return (
-      &lt;Html&gt;
-        &lt;Head title={head.title} /&gt;
-        &lt;Body&gt;
-          &lt;h1&gt;{head.title}&lt;/h1&gt;
-          &lt;PostsList
-            posts={
-              this.props.collection
-                .filter((item) =&gt; {
-                  /*
-                    ce que vous voulez pour filtrer votre collection
-                    eg:
-                    return !item.draft
-                  */
-                }
-              }
-          /&gt;
-        &lt;/Body&gt;
-      &lt;/Html&gt;
-    )
-  }
-}</code></pre>
-<p>Voici deux exemples de composants utilisés ci-dessus :</p>
-<h3 id="head"><a class="markdownIt-Anchor" href="#head">#</a> Head</h3>
-<pre><code class="language-js"><span class="hljs-keyword">import</span> React, {Component} <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
-
-export default class Head extends Component {
-
-  render() {
-    return (
-      &lt;head&gt;
-        &lt;meta charSet=<span class="hljs-string">"utf-8"</span> /&gt;
-        &lt;meta httpEquiv=<span class="hljs-string">"X-UA-Compatible"</span> content=<span class="hljs-string">"IE=Edge"</span> /&gt;
-        &lt;meta
-          name=<span class="hljs-string">"viewport"</span>
-          content=<span class="hljs-string">"width=device-width, initial-scale=1.0"</span>
-        /&gt;
-        &lt;title&gt;{this.props.title}&lt;/title&gt;
-        &lt;link
-          rel=<span class="hljs-string">"stylesheet"</span>
-          href=<span class="hljs-string">"/index.css"</span>
-        /&gt;
-        &lt;link
-          rel=<span class="hljs-string">"alternate"</span>
-          href=<span class="hljs-string">"/feed.xml"</span>
-          title={this.props.title}
-          type=<span class="hljs-string">"application/atom+xml"</span>
-        /&gt;
-        {this.props.children}
-      &lt;/head&gt;
-    )
-  }
-}</code></pre>
-<h3 id="body"><a class="markdownIt-Anchor" href="#body">#</a> Body</h3>
-<pre><code class="language-js"><span class="hljs-keyword">import</span> React, {Component, PropTypes} <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
-
-<span class="hljs-keyword">import</span> Header <span class="hljs-keyword">from</span> <span class="hljs-string">"../Header"</span>
-<span class="hljs-keyword">import</span> Footer <span class="hljs-keyword">from</span> <span class="hljs-string">"../Footer"</span>
-<span class="hljs-keyword">import</span> GoogleAnalytics <span class="hljs-keyword">from</span> <span class="hljs-string">"../Analytics"</span>
-
-export default class Body extends Component {
-
-  render() {
-    return (
-      &lt;body&gt;
-
-        &lt;Header /&gt;
-
-        &lt;div className=<span class="hljs-string">"Main"</span>&gt;
-          {this.props.children}
-        &lt;/div&gt;
-
-        &lt;Footer /&gt;
-
-        &lt;script src={<span class="hljs-string">"/index.js"</span>}&gt;&lt;/script&gt;
-
-        &lt;GoogleAnalytics /&gt;
-
-      &lt;/body&gt;
-    )
-  }
-}</code></pre>
-<p>Bon c’est bien beau mais comment je gère l’affichage du composant initial
-finalement (le parent) ?</p>
-<h2 id="comment-utiliser-un-template-react-jsx"><a class="markdownIt-Anchor" href="#comment-utiliser-un-template-react-jsx">#</a> Comment utiliser un template React/JSX ?</h2>
-<p>C’est bien simple. Dans notre cas, pas besoin de React côté client. On doit gérer
-ça côté « serveur » (je mets ça entre guillemets puisque dans notre cas précis, c’est
-pour générer un site statique, et c’est donc sur une machine quelconque que la
-génération se fait).</p>
-<p>Voilà de quoi effectuer le rendu de nos composants vers du bon vieux HTML (car c’est la finalité
-d’un <em>moteur de template</em>).</p>
-<pre><code class="language-js">import react from "react"
-import markdownify from "./markdown-parser"
-// je vous conseille marked pour rendre du markdown
-// c'est ce que nous utilisons pour rendre nos pages à l'heure où j'écris ce post
-
-const reactClass = require("./template/PostTemplate")
-const component = new (react.createFactory(reactClass))({
-  // ici on passe nos "props" react
-  pageTitle: "Test",
-  pageContent: markdownify("Imaginons du **markdown** parsé"),
-  // vous pouvez bien entendu rajouter d'autres choses
-  collections: {
-    posts: [
-      //...
-    ]
-  }
-})
-
-let html
-try {
-  html = react.renderToStaticMarkup(component)
-}
-catch (err) {
-  // Vous devrez gérer votre exception selon votre environnement
-  // si c'est pour un test on peut simplement ne pas utiliser
-  // try/catch, ça nous pètera à la gueule et c'est tant mieux
-  throw err
-}
-
-// maintenant vous faites ce que vous voulez de votre string html !
-// ex: require("fs").writeFile(...)</code></pre>
-<p>La méthode intéressante de React est dans notre cas <code>renderToStaticMarkup()</code> qui
-va nous générer un HTML qui va bien.</p>
-<p>Pour aller plus loin on pourrait décider d’utiliser <code>renderToString()</code> plutôt que
-<code>renderToStaticMarkup()</code> afin de pouvoir faire prendre le relais à ReactJS côté client
-mais là <a href="/fr/articles/js/react/cote-serveur/">le niveau de complexité est différent</a>.</p>
-<p>Pour la petite anecdote, notre site utilise actuellement <a href="http://www.metalsmith.io/">metalsmith</a>,
-une petite bibliothèque simple mais qui permet par son API de faire des choses sympas.</p>
-<p>J’ai donc codé <a href="https://github.com/search?q=user%3AMoOx+metalsmith">quelques plugins metalsmith</a>
-dont un <a href="https://github.com/MoOx/metalsmith-react">metalsmith-react</a> à l’occasion.</p>
-<p>N’hésitez pas à consulter
-<a href="https://github.com/putaindecode/putaindecode.io">le code source de notre site</a>
-pour faire des découvertes sympas.</p>
-]]></description><link>http://putaindecode.io/fr/articles/js/react/utiliser-en-moteur-de-templates/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/js/react/utiliser-en-moteur-de-templates/</guid><pubDate>Thu, 07 May 2015 00:00:00 GMT</pubDate></item></channel></rss>
+]]></description><link>http://putaindecode.io/fr/articles/npm/utilitaire-cli/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/npm/utilitaire-cli/</guid><pubDate>Tue, 12 May 2015 00:00:00 GMT</pubDate></item></channel></rss>
