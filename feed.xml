@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Wed, 02 Dec 2015 12:54:44 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[ES6, ES2015 : le destructuring]]></title><description><![CDATA[<h2 id="le-principe"><a class="markdownIt-Anchor" href="#le-principe">#</a> Le principe</h2>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Wed, 02 Dec 2015 13:19:45 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[ES6, ES2015 : le destructuring]]></title><description><![CDATA[<h2 id="le-principe"><a class="markdownIt-Anchor" href="#le-principe">#</a> Le principe</h2>
 <p>Le destructuring consiste à assigner des variables provenant d’un objet ou tableau en reposant sur leur structure.</p>
 <pre><code class="language-javascript"><span class="hljs-comment">// partons d'un objet `myObject`</span>
 <span class="hljs-keyword">var</span> myObject = {
@@ -62,7 +62,81 @@ myFunction({ title: <span class="hljs-string">"foo"</span>, text: <span class="h
 <span class="hljs-keyword">const</span> { foo: { bar } } = myObject
 bar <span class="hljs-comment">// 1</span></code></pre>
 <p>Attention cependant, si le destructuring au premier niveau ne fera que retourner <code>undefined</code> si la valeur n’existe pas, vous aurez bel et bien une erreur avec le nesting, puisqu’il essaiera d’aller chercher une propriété d’<code>undefined</code>. Pour pallier ces soucis, rendez-vous pour l’article sur les <em>defaults</em>.</p>
-]]></description><link>http://putaindecode.io/fr/articles/js/es2015/destructuring/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/js/es2015/destructuring/</guid><pubDate>Wed, 02 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[ES6, ES2015 : la déclaration de variables avec const, let et var]]></title><description><![CDATA[<p>ES6 (aussi appelé ES2015) vous apporte de nouvelles façons de déclarer vos
+]]></description><link>http://putaindecode.io/fr/articles/js/es2015/destructuring/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/js/es2015/destructuring/</guid><pubDate>Wed, 02 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Avantages à diviser ses storyboards sur iOS/OS X]]></title><description><![CDATA[<p>Aujourd’hui, on va parler d’un sujet qui parle à tous les devs iOS : les
+<strong>storyboards</strong>.</p>
+<blockquote>
+<p>Pour faire court :  les storyboards sont les fichiers d’interface sous iOS/OS X.
+C’est là où vous placer vos <code>vues</code> dans vos <code>scenes</code>, vous les positionnez
+entre elles, vous pouvez créer des interactions entre les <code>scenes</code> pour passer
+de l’une à l’autre. C’est proche des XAML de Visual ou des Layouts d’Android,
+mais avec la notion de relation entre les <code>scenes</code> en plus. Ça permet de créer
+graphiquement et simplement le workflow de l’application.</p>
+</blockquote>
+<h2 id="pourquoi-d-couper-son-storyboard"><a class="markdownIt-Anchor" href="#pourquoi-d-couper-son-storyboard">#</a> Pourquoi découper son storyboard</h2>
+<p>Pouvoir relier aussi facilement toutes les <code>scenes</code> dans un même storyboard,
+c’est génial. Mais alors pourquoi les diviser ?</p>
+<h3 id="viter-des-conflits"><a class="markdownIt-Anchor" href="#viter-des-conflits">#</a> Éviter des conflits</h3>
+<p>Si vous travaillez à plusieurs, vous avez sûrement déjà rencontré des
+conflits lors de merges où tout le monde a décidé d’éditer le <code>storyboard</code> en
+même temps. Le storyboard est donc corrompu et le seul moyen de le récupérer
+est de prendre celui de quelqu’un et refaire les changements ou de corriger les
+sources en croisant les doigts. Accompagné de 4 L de café.<br>
+Avec plusieurs <code>storyboards</code> : chacun bosse sur sa partie graphique. Si <em>Bob</em>
+travaille sur les <em>vues de comptes</em> et <em>Joe</em> sur les <em>settings</em> de l’app,
+chacun a un storyboard et ne change pas ceux des autres. Ça fait beaucoup moins
+de chance d’avoir des conflits, voire aucun si tout le monde se met d’accord !</p>
+<h3 id="les-gros-projets-plus-faciles-diter-comprendre"><a class="markdownIt-Anchor" href="#les-gros-projets-plus-faciles-diter-comprendre">#</a> Les gros projets plus faciles à éditer/comprendre</h3>
+<p>Pour les gros projets, avec beaucoup de <code>scenes</code>, ranger ces <code>scenes</code> par
+groupes dans différents <code>storyboards</code> peut être un bon moyen de s’y retrouver
+facilement. Vous n’avez pas à dézoomer à chaque fois que vous voulez chercher
+une <code>scene</code> à l’autre bout du storyboard.</p>
+<h3 id="augmenter-la-vitesse-de-compilation"><a class="markdownIt-Anchor" href="#augmenter-la-vitesse-de-compilation">#</a> Augmenter la vitesse de compilation</h3>
+<p>Recompiler tout le storyboard juste pour un label changé ça ne sert pas à
+grand chose et certains <code>storyboards</code> peuvent être long à compiler. Donc moins
+d’éléments vous avez à recompiler, plus vite ça ira.</p>
+<h3 id="r-utilisation-de-code"><a class="markdownIt-Anchor" href="#r-utilisation-de-code">#</a> Réutilisation de code</h3>
+<p>Imaginons que vous bossez dans une boîte qui fait souvent les mêmes apps
+pour les clients, vous pouvez vous faire des petits storyboards que vous
+réutiliserez et customiserez grâce aux contrôleurs (couleur, font, etc). Ça peut
+faire gagner du temps, mais aussi beaucoup en perdre si vous en abusez ⚠️.</p>
+<h2 id="comment-faire"><a class="markdownIt-Anchor" href="#comment-faire">#</a> Comment faire</h2>
+<p>Rentrons dans le vif du sujet, le côté technique. En quelques lignes de code :</p>
+<pre><code class="language-swift"><span class="hljs-comment">// *** Swift ***</span>
+<span class="hljs-comment">// Aller chercher le storyboard</span>
+<span class="hljs-keyword">let</span> storyboardSettings = <span class="hljs-type">UIStoryboard</span>(name: <span class="hljs-string">"settings"</span>, bundle: <span class="hljs-literal">nil</span>)
+<span class="hljs-comment">// Aller chercher le contrôleur qui est dans le storybard</span>
+<span class="hljs-keyword">let</span> controllerSettings =
+storyboardSettings.instantiateViewControllerWithIdentifier(<span class="hljs-string">"settingsController"</span>)
+<span class="hljs-comment">// Présenter</span>
+<span class="hljs-keyword">self</span>.presentViewController(controllerSettings,animated: <span class="hljs-literal">true</span>, completion: <span class="hljs-literal">nil</span>)</code></pre>
+<pre><code class="language-objc"><span class="hljs-comment">// *** Objective C ***</span>
+<span class="hljs-comment">// Aller chercher le sotyboard</span>
+<span class="hljs-built_in">UIStoryboard</span> * storyboardSettings = [<span class="hljs-built_in">UIStoryboard</span> storyboardWithName:<span class="hljs-string">@"settings"</span>
+bundle:<span class="hljs-literal">nil</span>];
+<span class="hljs-comment">// Aller chercher le contrôleur qui est dans le storybard</span>
+<span class="hljs-built_in">UIViewController</span>* controllerSettings = [storyboardSettings
+instantiateViewControllerWithIdentifier:<span class="hljs-string">@"settingsController"</span>];
+<span class="hljs-comment">// Présenter</span>
+[<span class="hljs-keyword">self</span> presentViewController:controllerSettings animated:<span class="hljs-literal">YES</span> completion:<span class="hljs-literal">nil</span>];</code></pre>
+<p>Rien de plus simple ! Mais c’est bien connu, les développeurs iOS sont des
+fainéants, alors il y a encore plus simple, sans taper une seule ligne de code :</p>
+<ul>
+<li>créez un nouveau storyboard pour votre <em>secteur</em>
+(File→New→File→[OS]→User Interface),</li>
+<li>ajoutez une <code>scene</code> (<code>UIViewController</code>), mettre l’une en <code>vue initial</code>
+(sinon le compilateur n’aime pas),</li>
+<li>nommez les <code>storyboardID</code> de chacune de ces <code>scenes</code> dans le menu
+<code>Utilies&gt;Identity Inspector</code>,</li>
+<li>dans votre storyboard original, dans le menu <code>Utilies&gt;Object Library</code> cherchez
+<code>storyboard</code> et ajoutez une <strong><code>Storyboard References</code></strong>,</li>
+<li>sur la référence dans <code>Utilises&gt;Attributes Inspector</code> rentrez le nom dans
+votre storyboard (dans <em>storyboard</em>) et remplissez <em>Reference ID</em> avec le
+<em>storyboardID</em> de la <code>scene</code>,</li>
+<li>pour finir, ajoutez une <code>segue</code>, à partir d’un bouton (par exemple) vers les
+<em>Storyboard Reference</em> voulus.</li>
+</ul>
+<p>Plus long à lire qu’à faire !</p>
+]]></description><link>http://putaindecode.io/fr/articles/xcode/storyboards/diviser/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/xcode/storyboards/diviser/</guid><pubDate>Tue, 01 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[ES6, ES2015 : la déclaration de variables avec const, let et var]]></title><description><![CDATA[<p>ES6 (aussi appelé ES2015) vous apporte de nouvelles façons de déclarer vos
 variables grâce à <code>let</code> et <code>const</code> mais garde aussi la déclaration par <code>var</code>
 dans la spécification du langage.</p>
 <p>Première étape, on oublie tout ce qu’on sait sur <code>var</code>.</p>
@@ -180,81 +254,7 @@ où votre variable n’existe pas. Ce moment, c’est la TDZ.</p>
 <li>Si vous avez trouvé le pire cas d’utilisation du monde, changez pour un <code>var</code>
 (je vous laisse faire le calcul)</li>
 </ul>
-]]></description><link>http://putaindecode.io/fr/articles/js/es2015/const-let-var/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/js/es2015/const-let-var/</guid><pubDate>Tue, 01 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Avantages à diviser ses storyboards sur iOS/OS X]]></title><description><![CDATA[<p>Aujourd’hui, on va parler d’un sujet qui parle à tous les devs iOS : les
-<strong>storyboards</strong>.</p>
-<blockquote>
-<p>Pour faire court :  les storyboards sont les fichiers d’interface sous iOS/OS X.
-C’est là où vous placer vos <code>vues</code> dans vos <code>scenes</code>, vous les positionnez
-entre elles, vous pouvez créer des interactions entre les <code>scenes</code> pour passer
-de l’une à l’autre. C’est proche des XAML de Visual ou des Layouts d’Android,
-mais avec la notion de relation entre les <code>scenes</code> en plus. Ça permet de créer
-graphiquement et simplement le workflow de l’application.</p>
-</blockquote>
-<h2 id="pourquoi-d-couper-son-storyboard"><a class="markdownIt-Anchor" href="#pourquoi-d-couper-son-storyboard">#</a> Pourquoi découper son storyboard</h2>
-<p>Pouvoir relier aussi facilement toutes les <code>scenes</code> dans un même storyboard,
-c’est génial. Mais alors pourquoi les diviser ?</p>
-<h3 id="viter-des-conflits"><a class="markdownIt-Anchor" href="#viter-des-conflits">#</a> Éviter des conflits</h3>
-<p>Si vous travaillez à plusieurs, vous avez sûrement déjà rencontré des
-conflits lors de merges où tout le monde a décidé d’éditer le <code>storyboard</code> en
-même temps. Le storyboard est donc corrompu et le seul moyen de le récupérer
-est de prendre celui de quelqu’un et refaire les changements ou de corriger les
-sources en croisant les doigts. Accompagné de 4 L de café.<br>
-Avec plusieurs <code>storyboards</code> : chacun bosse sur sa partie graphique. Si <em>Bob</em>
-travaille sur les <em>vues de comptes</em> et <em>Joe</em> sur les <em>settings</em> de l’app,
-chacun a un storyboard et ne change pas ceux des autres. Ça fait beaucoup moins
-de chance d’avoir des conflits, voire aucun si tout le monde se met d’accord !</p>
-<h3 id="les-gros-projets-plus-faciles-diter-comprendre"><a class="markdownIt-Anchor" href="#les-gros-projets-plus-faciles-diter-comprendre">#</a> Les gros projets plus faciles à éditer/comprendre</h3>
-<p>Pour les gros projets, avec beaucoup de <code>scenes</code>, ranger ces <code>scenes</code> par
-groupes dans différents <code>storyboards</code> peut être un bon moyen de s’y retrouver
-facilement. Vous n’avez pas à dézoomer à chaque fois que vous voulez chercher
-une <code>scene</code> à l’autre bout du storyboard.</p>
-<h3 id="augmenter-la-vitesse-de-compilation"><a class="markdownIt-Anchor" href="#augmenter-la-vitesse-de-compilation">#</a> Augmenter la vitesse de compilation</h3>
-<p>Recompiler tout le storyboard juste pour un label changé ça ne sert pas à
-grand chose et certains <code>storyboards</code> peuvent être long à compiler. Donc moins
-d’éléments vous avez à recompiler, plus vite ça ira.</p>
-<h3 id="r-utilisation-de-code"><a class="markdownIt-Anchor" href="#r-utilisation-de-code">#</a> Réutilisation de code</h3>
-<p>Imaginons que vous bossez dans une boîte qui fait souvent les mêmes apps
-pour les clients, vous pouvez vous faire des petits storyboards que vous
-réutiliserez et customiserez grâce aux contrôleurs (couleur, font, etc). Ça peut
-faire gagner du temps, mais aussi beaucoup en perdre si vous en abusez ⚠️.</p>
-<h2 id="comment-faire"><a class="markdownIt-Anchor" href="#comment-faire">#</a> Comment faire</h2>
-<p>Rentrons dans le vif du sujet, le côté technique. En quelques lignes de code :</p>
-<pre><code class="language-swift"><span class="hljs-comment">// *** Swift ***</span>
-<span class="hljs-comment">// Aller chercher le storyboard</span>
-<span class="hljs-keyword">let</span> storyboardSettings = <span class="hljs-type">UIStoryboard</span>(name: <span class="hljs-string">"settings"</span>, bundle: <span class="hljs-literal">nil</span>)
-<span class="hljs-comment">// Aller chercher le contrôleur qui est dans le storybard</span>
-<span class="hljs-keyword">let</span> controllerSettings =
-storyboardSettings.instantiateViewControllerWithIdentifier(<span class="hljs-string">"settingsController"</span>)
-<span class="hljs-comment">// Présenter</span>
-<span class="hljs-keyword">self</span>.presentViewController(controllerSettings,animated: <span class="hljs-literal">true</span>, completion: <span class="hljs-literal">nil</span>)</code></pre>
-<pre><code class="language-objc"><span class="hljs-comment">// *** Objective C ***</span>
-<span class="hljs-comment">// Aller chercher le sotyboard</span>
-<span class="hljs-built_in">UIStoryboard</span> * storyboardSettings = [<span class="hljs-built_in">UIStoryboard</span> storyboardWithName:<span class="hljs-string">@"settings"</span>
-bundle:<span class="hljs-literal">nil</span>];
-<span class="hljs-comment">// Aller chercher le contrôleur qui est dans le storybard</span>
-<span class="hljs-built_in">UIViewController</span>* controllerSettings = [storyboardSettings
-instantiateViewControllerWithIdentifier:<span class="hljs-string">@"settingsController"</span>];
-<span class="hljs-comment">// Présenter</span>
-[<span class="hljs-keyword">self</span> presentViewController:controllerSettings animated:<span class="hljs-literal">YES</span> completion:<span class="hljs-literal">nil</span>];</code></pre>
-<p>Rien de plus simple ! Mais c’est bien connu, les développeurs iOS sont des
-fainéants, alors il y a encore plus simple, sans taper une seule ligne de code :</p>
-<ul>
-<li>créez un nouveau storyboard pour votre <em>secteur</em>
-(File→New→File→[OS]→User Interface),</li>
-<li>ajoutez une <code>scene</code> (<code>UIViewController</code>), mettre l’une en <code>vue initial</code>
-(sinon le compilateur n’aime pas),</li>
-<li>nommez les <code>storyboardID</code> de chacune de ces <code>scenes</code> dans le menu
-<code>Utilies&gt;Identity Inspector</code>,</li>
-<li>dans votre storyboard original, dans le menu <code>Utilies&gt;Object Library</code> cherchez
-<code>storyboard</code> et ajoutez une <strong><code>Storyboard References</code></strong>,</li>
-<li>sur la référence dans <code>Utilises&gt;Attributes Inspector</code> rentrez le nom dans
-votre storyboard (dans <em>storyboard</em>) et remplissez <em>Reference ID</em> avec le
-<em>storyboardID</em> de la <code>scene</code>,</li>
-<li>pour finir, ajoutez une <code>segue</code>, à partir d’un bouton (par exemple) vers les
-<em>Storyboard Reference</em> voulus.</li>
-</ul>
-<p>Plus long à lire qu’à faire !</p>
-]]></description><link>http://putaindecode.io/fr/articles/xcode/storyboards/diviser/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/xcode/storyboards/diviser/</guid><pubDate>Tue, 01 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[ES6, ES2015: declaring variables with const, let and var]]></title><description><![CDATA[<p>ES6 (also known as ES2015) brings you new ways to declare your variables thanks
+]]></description><link>http://putaindecode.io/fr/articles/js/es2015/const-let-var/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/js/es2015/const-let-var/</guid><pubDate>Tue, 01 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[ES6, ES2015: declaring variables with const, let and var]]></title><description><![CDATA[<p>ES6 (also known as ES2015) brings you new ways to declare your variables thanks
 to <code>let</code> and <code>const</code>, but also keeps <code>var</code> in the language specification.</p>
 <p>The first thing you need to do: forget everything you know about <code>var</code>.</p>
 <h1 id="declarations"><a class="markdownIt-Anchor" href="#declarations">#</a> Declarations</h1>
@@ -364,7 +364,181 @@ exist yet.</p>
 variable, switch to <code>let</code> (that might happen 1% of the time)</li>
 <li>If you are in the worst use-case of the world, use <code>var</code> (you can do the math)</li>
 </ul>
-]]></description><link>http://putaindecode.io/en/articles/js/es2015/const-let-var/</link><guid isPermaLink="true">http://putaindecode.io/en/articles/js/es2015/const-let-var/</guid><pubDate>Tue, 01 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Tester unitairement des composants React]]></title><description><![CDATA[<p>L’équipe de React a implémenté une fonctionnalité appelée
+]]></description><link>http://putaindecode.io/en/articles/js/es2015/const-let-var/</link><guid isPermaLink="true">http://putaindecode.io/en/articles/js/es2015/const-let-var/</guid><pubDate>Tue, 01 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Unit testing React components]]></title><description><![CDATA[<p>The React team has implemented a feature called
+<a href="http://facebook.github.io/react/docs/test-utils.html#shallow-rendering">shallow rendering</a>,
+which</p>
+<blockquote>
+<p>lets you render a component “one level deep” and assert facts about
+what its render method returns, without worrying about the behavior of child
+components, which are not instantiated or rendered.
+This does not require a DOM.</p>
+</blockquote>
+<p>Sounds good, right? And guess what, shallow rendering is currently the
+<a href="https://discuss.reactjs.org/t/whats-the-prefered-way-to-test-react-js-components/26">preferred way to test your React components</a>.</p>
+<p>As you can see in the post mentioned at the end of this one, the
+actual code to test some components might seem a bit longer that what you could
+expect.</p>
+<p>Hopefully, <a href="https://github.com/vvo">someone</a> created something pretty cool:
+<a href="https://github.com/algolia/react-element-to-jsx-string">react-element-to-jsx-string</a>.
+As the name of the package says, this library helps to render a react component
+into a JSX string.</p>
+<p>Now things start to become interesting:
+with those two things in mind (shallow render and react components as JSX strings),
+we can easily add some basic unit tests to some components.</p>
+<p><em>There are others techniques to test React components, and most of those
+involve the DOM. This means you will need to run your tests in the browser (or
+using jsdom): your tests will be slower than the following method
+(which is more real unit testing since you execute less code and do not require
+a huge environment).</em></p>
+<h2 id="easy-unit-testing-react-components-without-a-dom"><a class="markdownIt-Anchor" href="#easy-unit-testing-react-components-without-a-dom">#</a> Easy unit testing React components (without a DOM)</h2>
+<p>Let’s do this with the following (dumb) component:</p>
+<pre><code class="language-js"><span class="hljs-comment">// web_modules/Picture/index.js</span>
+
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
+<span class="hljs-keyword">import</span> { PropTypes } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
+
+const Component = ({
+  img,
+  title,
+  Loader,
+  Title,
+}) =&gt; (
+  &lt;div&gt;
+    {
+      (!img || !img.src) &amp;&amp; Loader &amp;&amp;
+      &lt;Loader /&gt;
+    }
+    {
+      img &amp;&amp; img.src &amp;&amp;
+      &lt;img src={ img.src } alt={ img.alt }/&gt;
+    }
+    {
+      title &amp;&amp; Title &amp;&amp;
+      &lt;Title text={ title } /&gt;
+    }
+  &lt;/div&gt;
+)
+
+Component.propTypes = {
+  img: PropTypes.object,
+  title: PropTypes.string,
+  Loader: PropTypes.func.isRequired,
+  Title: PropTypes.func.isRequired,
+}
+
+Component.displayName = <span class="hljs-string">"Picture"</span>
+
+export default Component</code></pre>
+<p>This component displays an image with a title component.
+If the image data are not ready yet, it can display a loader component.</p>
+<p>Now let’s write some simple test for it. For the example we will use
+<a href="https://medium.com/javascript-scene/why-i-use-tape-instead-of-mocha-so-should-you-6aa105d8eaf4">tape</a>
+with the help of <a href="https://github.com/atabel/tape-jsx-equals">tape-jsx-equals</a>,
+but you will find
+<a href="https://www.npmjs.com/search?q=expect+jsx">all kind of flavors on npm</a>.</p>
+<pre><code class="language-js"><span class="hljs-comment">// web_modules/Picture/__tests__/index.js</span>
+
+<span class="hljs-keyword">import</span> tape <span class="hljs-keyword">from</span> <span class="hljs-string">"tape"</span>
+<span class="hljs-keyword">import</span> addAssertions <span class="hljs-keyword">from</span> <span class="hljs-string">"extend-tape"</span>
+<span class="hljs-keyword">import</span> jsxEquals <span class="hljs-keyword">from</span> <span class="hljs-string">"tape-jsx-equals"</span>
+const test = addAssertions(tape, { jsxEquals })
+
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
+<span class="hljs-keyword">import</span> { createRenderer } <span class="hljs-keyword">from</span> <span class="hljs-string">"react-addons-test-utils"</span>
+
+<span class="hljs-keyword">import</span> Picture <span class="hljs-keyword">from</span> <span class="hljs-string">".."</span>
+
+// fixtures (empty and stateless react components)
+const Loader = () =&gt; {}
+const Title = () =&gt; {}
+
+test(<span class="hljs-string">"PageContainer is properly rendered"</span>, (t) =&gt; {
+  const renderer = createRenderer()
+
+  renderer.render(
+    &lt;Picture
+      Loader={ Loader }
+      Title={ Title }
+    /&gt;
+  )
+  t.jsxEquals(
+    renderer.getRenderOutput(),
+    &lt;div&gt;
+      &lt;Loader /&gt;
+    &lt;/div&gt;,
+    <span class="hljs-string">"can render a Loader component if no image data are passed"</span>
+  )
+
+  renderer.render(
+    &lt;Picture
+      Loader={ Loader }
+      Title={ Title }
+      img={ {
+        src: <span class="hljs-string">"SRC"</span>,
+        alt: <span class="hljs-string">"ALT"</span>,
+      } }
+    /&gt;
+  )
+  t.jsxEquals(
+    renderer.getRenderOutput(),
+    &lt;div&gt;
+      &lt;img src=<span class="hljs-string">"SRC"</span> alt=<span class="hljs-string">"ALT"</span> /&gt;
+    &lt;/div&gt;,
+    <span class="hljs-string">"should render an image if data are passed"</span>
+  )
+
+  renderer.render(
+    &lt;Picture
+      Loader={ Loader }
+      Title={ Title }
+      img={ {
+        src: <span class="hljs-string">"SRC"</span>,
+        alt: <span class="hljs-string">"ALT"</span>,
+      } }
+      title={ <span class="hljs-string">"TITLE"</span> }
+    /&gt;
+  )
+  t.jsxEquals(
+    renderer.getRenderOutput(),
+    &lt;div&gt;
+      &lt;img src=<span class="hljs-string">"SRC"</span> alt=<span class="hljs-string">"ALT"</span> /&gt;
+      &lt;Title text=<span class="hljs-string">"TITLE"</span> /&gt;
+    &lt;/div&gt;,
+    <span class="hljs-string">"can render a Title if data are passed"</span>
+  )
+
+  t.end()
+})</code></pre>
+<p>These tests are the minimum coverage to ensure you don’t break anything when you work
+on your component.</p>
+<p>As you can see, tests here are pretty easy to write &amp; straightforward.<br>
+<strong>The interesting part is that you don’t compare using strings.
+You can use real React components.</strong></p>
+<p>You can easily run this full example by getting it from this repository:</p>
+<p><a href="https://github.com/MoOx/react-component-unit-testing-example">github.com/MoOx/react-component-unit-testing-example</a></p>
+<p>This example contains all the commands and dependencies
+(defined in the <code>package.json</code>)
+that you might need.</p>
+<h1 id="what-about-testing-events-like-onclick"><a class="markdownIt-Anchor" href="#what-about-testing-events-like-onclick">#</a> What about testing events like <code>onClick</code>?</h1>
+<p>You don’t need to reproduce the entire click.</p>
+<p><strong>Your tests don’t need to check that your <code>onClick</code> prop will be executed when
+you click on a DOM element.</strong>
+<em>React probably have tests to cover this.</em></p>
+<p>You only need to test that the <code>onClick</code> prop value will do what you want.
+So if you have something like <code>onClick={ yourCallback }</code>,
+just call directly <code>yourCallback()</code> in your test just before your comparison.
+That’s enough!</p>
+<p>If you want to go deeper, you might also read:</p>
+<ul>
+<li><a href="https://simonsmith.io/unit-testing-react-components-without-a-dom/"><em>Unit testing React components without a DOM</em></a>,
+by Simon Smith, that covers the same topic without the simplicity of the JSX
+comparisons,</li>
+<li><a href="https://blog.algolia.com/how-we-unit-test-react-components-using-expect-jsx/"><em>How we unit test React components using expect-jsx</em></a>
+on Algolia blog, that explains why they choose and create tools for this approach.</li>
+</ul>
+<p>With all those examples, we hope you will stop being afraid to test your code
+and will not hesitate to cover all your React components with tests 😍.</p>
+]]></description><link>http://putaindecode.io/en/articles/js/react/unit-testing/</link><guid isPermaLink="true">http://putaindecode.io/en/articles/js/react/unit-testing/</guid><pubDate>Tue, 24 Nov 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Tester unitairement des composants React]]></title><description><![CDATA[<p>L’équipe de React a implémenté une fonctionnalité appelée
 <a href="http://facebook.github.io/react/docs/test-utils.html#shallow-rendering">shallow rendering</a>
 (rendu peu profond),
 qui permet de rendre un composant avec un seul niveau de profondeur de rendu.</p>
@@ -544,181 +718,7 @@ pour cette approche.</li>
 <p>Avec ces exemples, nous espérons vraiment que vous n’aurez plus peur de tester
 votre code et que vous n’hésiterez plus à couvrir tous vos composants React de
 tests 😍.</p>
-]]></description><link>http://putaindecode.io/fr/articles/js/react/test-unitaires/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/js/react/test-unitaires/</guid><pubDate>Tue, 24 Nov 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Unit testing React components]]></title><description><![CDATA[<p>The React team has implemented a feature called
-<a href="http://facebook.github.io/react/docs/test-utils.html#shallow-rendering">shallow rendering</a>,
-which</p>
-<blockquote>
-<p>lets you render a component “one level deep” and assert facts about
-what its render method returns, without worrying about the behavior of child
-components, which are not instantiated or rendered.
-This does not require a DOM.</p>
-</blockquote>
-<p>Sounds good, right? And guess what, shallow rendering is currently the
-<a href="https://discuss.reactjs.org/t/whats-the-prefered-way-to-test-react-js-components/26">preferred way to test your React components</a>.</p>
-<p>As you can see in the post mentioned at the end of this one, the
-actual code to test some components might seem a bit longer that what you could
-expect.</p>
-<p>Hopefully, <a href="https://github.com/vvo">someone</a> created something pretty cool:
-<a href="https://github.com/algolia/react-element-to-jsx-string">react-element-to-jsx-string</a>.
-As the name of the package says, this library helps to render a react component
-into a JSX string.</p>
-<p>Now things start to become interesting:
-with those two things in mind (shallow render and react components as JSX strings),
-we can easily add some basic unit tests to some components.</p>
-<p><em>There are others techniques to test React components, and most of those
-involve the DOM. This means you will need to run your tests in the browser (or
-using jsdom): your tests will be slower than the following method
-(which is more real unit testing since you execute less code and do not require
-a huge environment).</em></p>
-<h2 id="easy-unit-testing-react-components-without-a-dom"><a class="markdownIt-Anchor" href="#easy-unit-testing-react-components-without-a-dom">#</a> Easy unit testing React components (without a DOM)</h2>
-<p>Let’s do this with the following (dumb) component:</p>
-<pre><code class="language-js"><span class="hljs-comment">// web_modules/Picture/index.js</span>
-
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
-<span class="hljs-keyword">import</span> { PropTypes } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
-
-const Component = ({
-  img,
-  title,
-  Loader,
-  Title,
-}) =&gt; (
-  &lt;div&gt;
-    {
-      (!img || !img.src) &amp;&amp; Loader &amp;&amp;
-      &lt;Loader /&gt;
-    }
-    {
-      img &amp;&amp; img.src &amp;&amp;
-      &lt;img src={ img.src } alt={ img.alt }/&gt;
-    }
-    {
-      title &amp;&amp; Title &amp;&amp;
-      &lt;Title text={ title } /&gt;
-    }
-  &lt;/div&gt;
-)
-
-Component.propTypes = {
-  img: PropTypes.object,
-  title: PropTypes.string,
-  Loader: PropTypes.func.isRequired,
-  Title: PropTypes.func.isRequired,
-}
-
-Component.displayName = <span class="hljs-string">"Picture"</span>
-
-export default Component</code></pre>
-<p>This component displays an image with a title component.
-If the image data are not ready yet, it can display a loader component.</p>
-<p>Now let’s write some simple test for it. For the example we will use
-<a href="https://medium.com/javascript-scene/why-i-use-tape-instead-of-mocha-so-should-you-6aa105d8eaf4">tape</a>
-with the help of <a href="https://github.com/atabel/tape-jsx-equals">tape-jsx-equals</a>,
-but you will find
-<a href="https://www.npmjs.com/search?q=expect+jsx">all kind of flavors on npm</a>.</p>
-<pre><code class="language-js"><span class="hljs-comment">// web_modules/Picture/__tests__/index.js</span>
-
-<span class="hljs-keyword">import</span> tape <span class="hljs-keyword">from</span> <span class="hljs-string">"tape"</span>
-<span class="hljs-keyword">import</span> addAssertions <span class="hljs-keyword">from</span> <span class="hljs-string">"extend-tape"</span>
-<span class="hljs-keyword">import</span> jsxEquals <span class="hljs-keyword">from</span> <span class="hljs-string">"tape-jsx-equals"</span>
-const test = addAssertions(tape, { jsxEquals })
-
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>
-<span class="hljs-keyword">import</span> { createRenderer } <span class="hljs-keyword">from</span> <span class="hljs-string">"react-addons-test-utils"</span>
-
-<span class="hljs-keyword">import</span> Picture <span class="hljs-keyword">from</span> <span class="hljs-string">".."</span>
-
-// fixtures (empty and stateless react components)
-const Loader = () =&gt; {}
-const Title = () =&gt; {}
-
-test(<span class="hljs-string">"PageContainer is properly rendered"</span>, (t) =&gt; {
-  const renderer = createRenderer()
-
-  renderer.render(
-    &lt;Picture
-      Loader={ Loader }
-      Title={ Title }
-    /&gt;
-  )
-  t.jsxEquals(
-    renderer.getRenderOutput(),
-    &lt;div&gt;
-      &lt;Loader /&gt;
-    &lt;/div&gt;,
-    <span class="hljs-string">"can render a Loader component if no image data are passed"</span>
-  )
-
-  renderer.render(
-    &lt;Picture
-      Loader={ Loader }
-      Title={ Title }
-      img={ {
-        src: <span class="hljs-string">"SRC"</span>,
-        alt: <span class="hljs-string">"ALT"</span>,
-      } }
-    /&gt;
-  )
-  t.jsxEquals(
-    renderer.getRenderOutput(),
-    &lt;div&gt;
-      &lt;img src=<span class="hljs-string">"SRC"</span> alt=<span class="hljs-string">"ALT"</span> /&gt;
-    &lt;/div&gt;,
-    <span class="hljs-string">"should render an image if data are passed"</span>
-  )
-
-  renderer.render(
-    &lt;Picture
-      Loader={ Loader }
-      Title={ Title }
-      img={ {
-        src: <span class="hljs-string">"SRC"</span>,
-        alt: <span class="hljs-string">"ALT"</span>,
-      } }
-      title={ <span class="hljs-string">"TITLE"</span> }
-    /&gt;
-  )
-  t.jsxEquals(
-    renderer.getRenderOutput(),
-    &lt;div&gt;
-      &lt;img src=<span class="hljs-string">"SRC"</span> alt=<span class="hljs-string">"ALT"</span> /&gt;
-      &lt;Title text=<span class="hljs-string">"TITLE"</span> /&gt;
-    &lt;/div&gt;,
-    <span class="hljs-string">"can render a Title if data are passed"</span>
-  )
-
-  t.end()
-})</code></pre>
-<p>These tests are the minimum coverage to ensure you don’t break anything when you work
-on your component.</p>
-<p>As you can see, tests here are pretty easy to write &amp; straightforward.<br>
-<strong>The interesting part is that you don’t compare using strings.
-You can use real React components.</strong></p>
-<p>You can easily run this full example by getting it from this repository:</p>
-<p><a href="https://github.com/MoOx/react-component-unit-testing-example">github.com/MoOx/react-component-unit-testing-example</a></p>
-<p>This example contains all the commands and dependencies
-(defined in the <code>package.json</code>)
-that you might need.</p>
-<h1 id="what-about-testing-events-like-onclick"><a class="markdownIt-Anchor" href="#what-about-testing-events-like-onclick">#</a> What about testing events like <code>onClick</code>?</h1>
-<p>You don’t need to reproduce the entire click.</p>
-<p><strong>Your tests don’t need to check that your <code>onClick</code> prop will be executed when
-you click on a DOM element.</strong>
-<em>React probably have tests to cover this.</em></p>
-<p>You only need to test that the <code>onClick</code> prop value will do what you want.
-So if you have something like <code>onClick={ yourCallback }</code>,
-just call directly <code>yourCallback()</code> in your test just before your comparison.
-That’s enough!</p>
-<p>If you want to go deeper, you might also read:</p>
-<ul>
-<li><a href="https://simonsmith.io/unit-testing-react-components-without-a-dom/"><em>Unit testing React components without a DOM</em></a>,
-by Simon Smith, that covers the same topic without the simplicity of the JSX
-comparisons,</li>
-<li><a href="https://blog.algolia.com/how-we-unit-test-react-components-using-expect-jsx/"><em>How we unit test React components using expect-jsx</em></a>
-on Algolia blog, that explains why they choose and create tools for this approach.</li>
-</ul>
-<p>With all those examples, we hope you will stop being afraid to test your code
-and will not hesitate to cover all your React components with tests 😍.</p>
-]]></description><link>http://putaindecode.io/en/articles/js/react/unit-testing/</link><guid isPermaLink="true">http://putaindecode.io/en/articles/js/react/unit-testing/</guid><pubDate>Tue, 24 Nov 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Un favicon vite fait bien fait]]></title><description><![CDATA[<p>Oublions un instant CSS et JavaScript pour parler d’un sujet vraiment
+]]></description><link>http://putaindecode.io/fr/articles/js/react/test-unitaires/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/js/react/test-unitaires/</guid><pubDate>Tue, 24 Nov 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Un favicon vite fait bien fait]]></title><description><![CDATA[<p>Oublions un instant CSS et JavaScript pour parler d’un sujet vraiment
 important : le favicon.</p>
 <p>Alors d’accord, le favicon n’est que le petit détail qu’on expédie en fin de
 projet. Mais oubliez-le et votre client comprendra tout de suite qu’il manque
