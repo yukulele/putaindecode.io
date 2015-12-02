@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Tue, 01 Dec 2015 22:13:29 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[Avantages à diviser ses storyboards sur iOS/OS X]]></title><description><![CDATA[<p>Aujourd’hui, on va parler d’un sujet qui parle à tous les devs iOS : les
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Wed, 02 Dec 2015 06:00:59 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[Avantages à diviser ses storyboards sur iOS/OS X]]></title><description><![CDATA[<p>Aujourd’hui, on va parler d’un sujet qui parle à tous les devs iOS : les
 <strong>storyboards</strong>.</p>
 <blockquote>
 <p>Pour faire court :  les storyboards sont les fichiers d’interface sous iOS/OS X.
@@ -167,11 +167,12 @@ d’un bug, mais juste de syntaxe et de préférence
 <p>Pour rappel, JavaScript possède un mécanisme de hoisting, par exemple, vous
 pouvez écrire :</p>
 <pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn</span>(<span class="hljs-params"></span>) </span>{
-  <span class="hljs-built_in">console</span>.log(foo) <span class="hljs-comment">// "bar"</span>
+  <span class="hljs-built_in">console</span>.log(foo) <span class="hljs-comment">// undefined (au lieu de ReferenceError)</span>
   <span class="hljs-keyword">var</span> foo = <span class="hljs-string">"bar"</span>
 }</code></pre>
 <p>Concrètement, le moteur d’exécution JavaScript va lire toutes les déclarations
-et remonter celles avec <code>var</code> au début du scope de votre fonction.</p>
+et remonter celles avec <code>var</code> au début du scope de votre fonction (attention,
+cela concerne les déclarations, pas les affectations).</p>
 <p><code>let</code> et <code>const</code> ne bénéficient pas de ce mécanisme de hoisting, ce qui peut
 mener à des problèmes de TDZ (<em>Temporal Dead Zone</em>). Vu que la déclaration de
 votre variable n’est pas remontée au scope de la fonction, il existe un moment
