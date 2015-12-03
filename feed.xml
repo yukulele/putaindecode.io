@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Thu, 03 Dec 2015 06:43:32 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[ES6, ES2015 : valeurs par défaut des arguments]]></title><description><![CDATA[<p>Fatigués de taper <code>if (typeof x === 'undefined') x = defaultValue</code> ? Là encore
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Thu, 03 Dec 2015 07:01:50 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[ES6, ES2015 : les valeurs par défaut des arguments]]></title><description><![CDATA[<p>Fatigués de taper <code>if (typeof x === 'undefined') x = defaultValue</code> ? Là encore
 ES6 va nous apporter une solution élégante.</p>
 <h1 id="valeurs-par-d-faut"><a class="markdownIt-Anchor" href="#valeurs-par-d-faut">#</a> Valeurs par défaut</h1>
 <p>L’opérateur <code>=</code> permet maintenant en plus d’affecter une valeur à une variable
@@ -54,11 +54,13 @@ devrait <a href="http://dmitrysoshnikov.com/ecmascript/es6-notes-default-values-
 <p>On est bien, dès l’évaluation des valeurs par défaut, dans le scope de la
 fonction, et dans ce scope <code>x</code> fait référence au paramètre (pas encore défini)
 et pas à la variable du dessus.</p>
-<p><strong>#protip ne réutilisez pas 3 fois le même nom de variable</strong> (ça pourra aussi
-aider à la compréhension)</p>
+<p><strong>ProTip:  ne réutilisez pas 3 fois le même nom de variable</strong>
+(ça pourra aussi aider à la compréhension).</p>
 <h2 id="d-composition"><a class="markdownIt-Anchor" href="#d-composition">#</a> Décomposition</h2>
 <p>De la même manière que pour les paramètres de fonction, les affectations par
-décomposition peuvent bénéficier de valeurs par défaut.</p>
+décomposition
+(<a href="/fr/articles/js/es2015/destructuring/">destructuring</a>)
+peuvent bénéficier de valeurs par défaut.</p>
 <pre><code class="language-js">obj <span class="hljs-comment">// {z: 42}</span>
 <span class="hljs-keyword">const</span> { x = <span class="hljs-number">1</span>, y = x + <span class="hljs-number">1</span>, z, w } = obj
 w <span class="hljs-comment">// undefined</span>
@@ -76,10 +78,164 @@ manière en ES5 :</p>
 votre code une fois passé à ES6.</p>
 <p>Un petit mot sur la compatibilité (à la date de cet article) : seul Firefox ≥ 43
 implémente les valeurs par défaut, et encore seulement pour les paramètres de
-fonctions. Il faudra donc utiliser Babel ou Traceur pour en profiter.</p>
-]]></description><link>http://putaindecode.io/fr/articles/js/es2015/defaults/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/js/es2015/defaults/</guid><pubDate>Thu, 03 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[ES6, ES2015 : le destructuring]]></title><description><![CDATA[<h2 id="le-principe"><a class="markdownIt-Anchor" href="#le-principe">#</a> Le principe</h2>
-<p>Le destructuring consiste à assigner des variables provenant d’un objet ou tableau en reposant sur leur structure.</p>
-<pre><code class="language-javascript"><span class="hljs-comment">// partons d'un objet `myObject`</span>
+fonctions.
+Il faudra donc utiliser <a href="http://babeljs.io">Babel</a> ou Traceur pour en profiter.</p>
+]]></description><link>http://putaindecode.io/fr/articles/js/es2015/defaults/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/js/es2015/defaults/</guid><pubDate>Thu, 03 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[ES6, ES2015 : default values for arguments]]></title><description><![CDATA[<p>Tired of typing <code>if (typeof x === 'undefined') x = defaultValue</code>? Again, ES6
+will brings us a elegant solution.</p>
+<h1 id="default-values"><a class="markdownIt-Anchor" href="#default-values">#</a> Default values</h1>
+<p>The <code>=</code> operator can now help to define a default value to a parameter.</p>
+<h2 id="function-parameters"><a class="markdownIt-Anchor" href="#function-parameters">#</a> Function parameters</h2>
+<p>You can now specify a default value for a parameter of a function.
+This value will be used if the parameter is not defined, or explicitly set to
+<em>undefined</em>.</p>
+<pre><code class="language-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">incr</span> (<span class="hljs-params">value, step = 1</span>) </span>{
+  <span class="hljs-keyword">return</span> value + step
+}
+
+incr(<span class="hljs-number">41</span>) <span class="hljs-comment">// 42</span>
+incr(<span class="hljs-number">41</span>, <span class="hljs-literal">undefined</span>) <span class="hljs-comment">// 42</span>
+incr(<span class="hljs-number">33</span>, <span class="hljs-number">9</span>) <span class="hljs-comment">// 42</span></code></pre>
+<h3 id="dynamic-default-values"><a class="markdownIt-Anchor" href="#dynamic-default-values">#</a> Dynamic default values</h3>
+<p>We can specify an expression as a default value.
+This expression will be evalued <strong>during the function call</strong>, not during the
+function declaration.</p>
+<pre><code class="language-js"><span class="hljs-keyword">let</span> defaultWho = <span class="hljs-string">'world!'</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hello</span> (<span class="hljs-params">who = defaultWho.toUpperCase(</span>)) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Hello '</span> + who
+}
+
+hello() <span class="hljs-comment">// 'Hello WORLD!'</span>
+defaultWho = <span class="hljs-string">'Anyone?'</span>
+hello() <span class="hljs-comment">// 'Hello ANYONE?'</span></code></pre>
+<h3 id="reusing-previous-parameters"><a class="markdownIt-Anchor" href="#reusing-previous-parameters">#</a> Reusing previous parameters</h3>
+<p>In the default value expression, you can reuse <strong>previous</strong> function parameters:</p>
+<pre><code class="language-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span> (<span class="hljs-params">x = 1, y = x + 1</span>) </span>{
+  <span class="hljs-keyword">return</span> x + y
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bar</span> (<span class="hljs-params">x = y + 1, y = 1</span>) </span>{
+  <span class="hljs-keyword">return</span> x + y
+}
+
+foo() <span class="hljs-comment">// 1 + (1 + 1) → 3</span>
+bar() <span class="hljs-comment">// (undefined + 1) + 1 → NaN</span></code></pre>
+<h3 id="particular-case-tdz-temporal-dead-zone"><a class="markdownIt-Anchor" href="#particular-case-tdz-temporal-dead-zone">#</a> Particular case : TDZ (Temporal Dead Zone)</h3>
+<p>A <em>temporal dead zone</em> is a area of your program where a variable exist, but is
+not available yet while it didn’t get its value.</p>
+<p>The following example is obviously invalid :</p>
+<pre><code class="language-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span> (<span class="hljs-params">x = x</span>) </span>{ <span class="hljs-comment">// throws ReferenceError?</span>
+}</code></pre>
+<p>In fact, during the call of the function, <code>x</code> has not been defined yet,
+so cannot be used as a default value.
+This example should trigger an
+<a href="http://dmitrysoshnikov.com/ecmascript/es6-notes-default-values-of-parameters/#tdz-temporal-dead-zone-for-parameters">error</a></p>
+<p>However, scope rules will make this example invalid :</p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> x = <span class="hljs-number">1</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span> (<span class="hljs-params">x = x</span>) </span>{ <span class="hljs-comment">// 'x' used here is the parameter itself</span>
+}</code></pre>
+<p>After the evaluation of the default values, we are in the scope of the function
+and in this scope, <code>x</code> corresponds to the parameter (not defined yet) and not
+the value defined above.</p>
+<p><strong>ProTip: do not reuse a variable name 3 times</strong>
+(that might helps to read and understand your code).</p>
+<h2 id="destructuring"><a class="markdownIt-Anchor" href="#destructuring">#</a> Destructuring</h2>
+<p>Like for the function arguments, assignments using
+<a href="/fr/articles/js/es2015/destructuring/">destructuring</a>
+can have a default value.</p>
+<pre><code class="language-js">obj <span class="hljs-comment">// {z: 42}</span>
+<span class="hljs-keyword">const</span> { x = <span class="hljs-number">1</span>, y = x + <span class="hljs-number">1</span>, z, w } = obj
+w <span class="hljs-comment">// undefined</span>
+x <span class="hljs-comment">// 1</span>
+y <span class="hljs-comment">// 2</span>
+z <span class="hljs-comment">// 42</span></code></pre>
+<p>As a reminder, the assignation in the previous example would have been written
+this way using ES5 :</p>
+<pre><code class="language-js"><span class="hljs-keyword">var</span> x = (obj.x === <span class="hljs-literal">undefined</span>) ? obj.x : <span class="hljs-number">1</span>
+<span class="hljs-keyword">var</span> y = (obj.y === <span class="hljs-literal">undefined</span>) ? obj.y : x + <span class="hljs-number">1</span>
+<span class="hljs-keyword">var</span> z = obj.z
+<span class="hljs-keyword">var</span> w = obj.w</code></pre>
+<h1 id="enjoy"><a class="markdownIt-Anchor" href="#enjoy">#</a> Enjoy!</h1>
+<p>There is no more reasons <em>a priori</em> to see an <code>undefined</code> in a ES6 codebase.</p>
+<p>About the compatibility (at the time of the writing): only Firefox ≥ 43
+support this feature (and just for function…).
+So you will need <a href="http://babeljs.io">Babel</a> or Traceur to be able to use it.</p>
+]]></description><link>http://putaindecode.io/en/articles/js/es2015/defaults/</link><guid isPermaLink="true">http://putaindecode.io/en/articles/js/es2015/defaults/</guid><pubDate>Thu, 03 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[ES6, ES2015 : the destructuring]]></title><description><![CDATA[<p>The destructuring is a feature that helps you assign variables from an object or
+an array based on their structure.</p>
+<pre><code class="language-js"><span class="hljs-comment">// Let's consider this object `myObject`</span>
+<span class="hljs-keyword">var</span> myObject = {
+  foo: <span class="hljs-number">1</span>,
+  bar: <span class="hljs-number">2</span>,
+}
+
+<span class="hljs-comment">// With ES5, you need to do</span>
+<span class="hljs-keyword">var</span> foo = myObject.foo
+<span class="hljs-keyword">var</span> bar = myObject.bar
+
+foo <span class="hljs-comment">// 1</span>
+bar <span class="hljs-comment">// 2</span>
+
+<span class="hljs-comment">// With ES6, you can write the same with</span>
+<span class="hljs-keyword">const</span> { foo, bar } = myObject
+foo <span class="hljs-comment">// 1</span>
+bar <span class="hljs-comment">// 2</span>
+
+<span class="hljs-comment">// We can even destructure the value returned by a function (if this one</span>
+<span class="hljs-comment">// returns a function or an array)</span>
+<span class="hljs-keyword">const</span> getMyObject = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> {
+    foo: <span class="hljs-number">1</span>,
+    bar: <span class="hljs-number">2</span>,
+  }
+}
+<span class="hljs-keyword">const</span> { foo, bar } = getMyObject()
+foo <span class="hljs-comment">// 1</span>
+bar <span class="hljs-comment">// 2</span></code></pre>
+<h2 id="different-syntaxes"><a class="markdownIt-Anchor" href="#different-syntaxes">#</a> Different syntaxes</h2>
+<h3 id="array"><a class="markdownIt-Anchor" href="#array">#</a> Array</h3>
+<pre><code class="language-js"><span class="hljs-comment">// For an array, we can use a syntax that is similar to a literale declaration</span>
+<span class="hljs-comment">// of an array</span>
+<span class="hljs-comment">// You might notice that you can ignore an item by just put nothing between the</span>
+<span class="hljs-comment">// commas</span>
+<span class="hljs-keyword">const</span> [ first, second, , fourth ] = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]
+first <span class="hljs-comment">// 1</span>
+second <span class="hljs-comment">// 2</span>
+fourth <span class="hljs-comment">// 4</span></code></pre>
+<h3 id="use-a-different-name-for-the-key"><a class="markdownIt-Anchor" href="#use-a-different-name-for-the-key">#</a> Use a different name for the key</h3>
+<p>For an object, the default behavior is that the name of a variable will match
+the name of the key.
+So if you have already a variable with this name, you can choose another one.</p>
+<pre><code class="language-js"><span class="hljs-keyword">var</span> myObject = {
+  foo: <span class="hljs-number">1</span>,
+  bar: <span class="hljs-number">2</span>
+}
+<span class="hljs-keyword">const</span> { foo: renamedFoo } = myObject
+renamedFoo <span class="hljs-comment">// 1</span></code></pre>
+<p>This syntax doesn’t offer a good readability.</p>
+<h3 id="function-arguments"><a class="markdownIt-Anchor" href="#function-arguments">#</a> Function arguments</h3>
+<pre><code class="language-js"><span class="hljs-comment">// We can use destructuring directing in a function declaration</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">myFunction</span>(<span class="hljs-params">{ title, text }</span>) </span>{
+	<span class="hljs-keyword">return</span> title + <span class="hljs-string">": "</span> + text
+}
+
+myFunction({ title: <span class="hljs-string">"foo"</span>, text: <span class="hljs-string">"bar"</span> }) <span class="hljs-comment">// "foo: bar"</span></code></pre>
+<h3 id="nested-destructuring"><a class="markdownIt-Anchor" href="#nested-destructuring">#</a> Nested destructuring</h3>
+<p>We can also nest the assignments.</p>
+<pre><code class="language-js"><span class="hljs-keyword">var</span> myObject = {
+  foo: {
+    bar: <span class="hljs-number">1</span>,
+  },
+}
+<span class="hljs-keyword">const</span> { foo: { bar } } = myObject
+bar <span class="hljs-comment">// 1</span></code></pre>
+<p>Be careful, if the destructuring of the first level should return <code>undefined</code>
+(if the value doesn’t exist), be sure that you will have a nesting error, since
+a value will try to be retrieved from an <code>undefined</code> property.
+To prevent this issue, you will need to define
+<a href="/en/articles/js/es2015/defaults/">defaults</a> values.</p>
+]]></description><link>http://putaindecode.io/en/articles/js/es2015/destructuring/</link><guid isPermaLink="true">http://putaindecode.io/en/articles/js/es2015/destructuring/</guid><pubDate>Wed, 02 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[ES6, ES2015 : le destructuring]]></title><description><![CDATA[<h2 id="le-principe"><a class="markdownIt-Anchor" href="#le-principe">#</a> Le principe</h2>
+<p>Le destructuring consiste à assigner des variables provenant d’un objet ou
+tableau en reposant sur leur structure.</p>
+<pre><code class="language-js"><span class="hljs-comment">// Partons d'un objet `myObject`</span>
 <span class="hljs-keyword">var</span> myObject = {
   foo: <span class="hljs-number">1</span>,
   bar: <span class="hljs-number">2</span>,
@@ -97,7 +253,7 @@ bar <span class="hljs-comment">// 2</span>
 foo <span class="hljs-comment">// 1</span>
 bar <span class="hljs-comment">// 2</span>
 
-<span class="hljs-comment">// on peut bien entendu destructurer la valeur retournée par une</span>
+<span class="hljs-comment">// On peut bien entendu destructurer la valeur retournée par une</span>
 <span class="hljs-comment">// fonction, pour peu qu'il s'agisse d'un objet ou d'un tableau</span>
 <span class="hljs-keyword">const</span> getMyObject = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">return</span> {
@@ -110,14 +266,18 @@ foo <span class="hljs-comment">// 1</span>
 bar <span class="hljs-comment">// 2</span></code></pre>
 <h2 id="les-diff-rentes-syntaxes"><a class="markdownIt-Anchor" href="#les-diff-rentes-syntaxes">#</a> Les différentes syntaxes</h2>
 <h3 id="tableau"><a class="markdownIt-Anchor" href="#tableau">#</a> Tableau</h3>
-<pre><code class="language-javascript"><span class="hljs-comment">// pour un tableau, on utilise une forme proche de la déclaration litérale de tableau, vous remarquerez que pour ignorer un item, il suffit de ne rien placer entre les virgules</span>
+<pre><code class="language-js"><span class="hljs-comment">// Pour un tableau, on utilise une forme proche de la déclaration litérale de</span>
+<span class="hljs-comment">// tableau, vous remarquerez que pour ignorer un item, il suffit de ne rien</span>
+<span class="hljs-comment">// placer entre les virgules</span>
 <span class="hljs-keyword">const</span> [ first, second, , fourth ] = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]
 first <span class="hljs-comment">// 1</span>
 second <span class="hljs-comment">// 2</span>
 fourth <span class="hljs-comment">// 4</span></code></pre>
 <h3 id="utiliser-un-nom-diff-rent-de-la-cl"><a class="markdownIt-Anchor" href="#utiliser-un-nom-diff-rent-de-la-cl">#</a> Utiliser un nom différent de la clé</h3>
-<p>Pour un objet, par défaut, le nom de la variable correspond au nom de la clé. Si, par exemple, vous avez déjà une variable portant le nom de la clé dans le scope, vous pouvez choisir de nommer différemment votre variable.</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">var</span> myObject = {
+<p>Pour un objet, par défaut, le nom de la variable correspond au nom de la clé.
+Si, par exemple, vous avez déjà une variable portant le nom de la clé dans le
+scope, vous pouvez choisir de nommer différemment votre variable.</p>
+<pre><code class="language-js"><span class="hljs-keyword">var</span> myObject = {
   foo: <span class="hljs-number">1</span>,
   bar: <span class="hljs-number">2</span>
 }
@@ -125,22 +285,27 @@ fourth <span class="hljs-comment">// 4</span></code></pre>
 renamedFoo <span class="hljs-comment">// 1</span></code></pre>
 <p>Cette syntaxe est, il faut tout de même le noter, peu lisible.</p>
 <h3 id="arguments-de-fonctions"><a class="markdownIt-Anchor" href="#arguments-de-fonctions">#</a> Arguments de fonctions</h3>
-<pre><code class="language-javascript"><span class="hljs-comment">// on peut directement utiliser le destructuring dans une déclaration de fonction</span>
+<pre><code class="language-js"><span class="hljs-comment">// On peut directement utiliser le destructuring dans une déclaration de</span>
+<span class="hljs-comment">// fonction</span>
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">myFunction</span>(<span class="hljs-params">{ title, text }</span>) </span>{
 	<span class="hljs-keyword">return</span> title + <span class="hljs-string">": "</span> + text
 }
 
 myFunction({ title: <span class="hljs-string">"foo"</span>, text: <span class="hljs-string">"bar"</span> }) <span class="hljs-comment">// "foo: bar"</span></code></pre>
 <h3 id="nested-destructuring"><a class="markdownIt-Anchor" href="#nested-destructuring">#</a> Nested destructuring</h3>
-<p>On peut aussi “nester” les assignements.</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">var</span> myObject = {
+<p>On peut aussi imbriquer les assignements.</p>
+<pre><code class="language-js"><span class="hljs-keyword">var</span> myObject = {
   foo: {
     bar: <span class="hljs-number">1</span>,
   },
 }
 <span class="hljs-keyword">const</span> { foo: { bar } } = myObject
 bar <span class="hljs-comment">// 1</span></code></pre>
-<p>Attention cependant, si le destructuring au premier niveau ne fera que retourner <code>undefined</code> si la valeur n’existe pas, vous aurez bel et bien une erreur avec le nesting, puisqu’il essaiera d’aller chercher une propriété d’<code>undefined</code>. Pour pallier ces soucis, rendez-vous pour l’article sur les <em>defaults</em>.</p>
+<p>Attention cependant, si le destructuring au premier niveau ne fera que retourner
+<code>undefined</code> si la valeur n’existe pas, vous aurez bel et bien une erreur avec le
+nesting, puisqu’il essaiera d’aller chercher une propriété d’<code>undefined</code>.
+Pour pallier ces soucis, rendez-vous pour l’article sur les
+<a href="/fr/articles/js/es2015/defaults/">defaults</a>.</p>
 ]]></description><link>http://putaindecode.io/fr/articles/js/es2015/destructuring/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/js/es2015/destructuring/</guid><pubDate>Wed, 02 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Avantages à diviser ses storyboards sur iOS/OS X]]></title><description><![CDATA[<p>Aujourd’hui, on va parler d’un sujet qui parle à tous les devs iOS : les
 <strong>storyboards</strong>.</p>
 <blockquote>
@@ -2776,256 +2941,4 @@ gulp.task(<span class="hljs-string">'styles'</span>, <span class="hljs-function"
 <ul>
 <li><a href="http://cssnext.io/">Official website</a></li>
 </ul>
-]]></description><link>http://putaindecode.io/en/articles/css/preprocessors/cssnext/</link><guid isPermaLink="true">http://putaindecode.io/en/articles/css/preprocessors/cssnext/</guid><pubDate>Tue, 02 Jun 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Introducción a cssnext]]></title><description><![CDATA[<p>Según la <a href="http://cssnext.io/">página oficial</a>:</p>
-<blockquote>
-<p><strong>cssnext</strong> es un <em>transpiler</em> que permite utilizar desde hoy la sintaxis CSS del mañana y transformar las especificaciones CSS que aún no están implementadas en los navegadores más populares en CSS compatible.</p>
-</blockquote>
-<h2 id="qu-significa-esto-exactamente"><a class="markdownIt-Anchor" href="#qu-significa-esto-exactamente">#</a> ¿Qué significa esto exactamente?</h2>
-<p>Desde que apareció CSS3, quizás hayas escuchado que el CSS se divide en varios documentos independientes llamados “módulos”. Estos módulos pueden tener diferentes niveles de estabilidad y <a href="http://www.w3.org/Style/CSS/current-work#legend">estados</a>. A los navegadores les puede requirir bastante tiempo poner en práctica dichos módulos y aún más al W3C atribuirles el estado final de <a href="http://www.w3.org/2005/10/Process-20051014/tr#RecsW3C">Recomendación</a>.</p>
-<p>Con <strong>cssnext</strong> se puede usar la sintaxis de los <a href="http://www.xanthir.com/b4Ko0">módulos CSS Nivel 4</a>, tales como <em>propiedades personalizadas (custom properties)</em> o <em>media queries personalizados</em>. <strong>cssnext</strong> va a transformar esta nueva y curiosa sintaxis en algo que el navegador será capaz de entender.</p>
-<p>En resumen, se <strong>adelanta al futuro</strong>.</p>
-<p>No sé vosotros, pero yo me considero alguien a quien le gusta experimentar con las últimas technologías y me parece que ¡esto mola bastante!</p>
-<p>No dejéis de echar un vistazo a la <a href="http://cssnext.io/features/">lista de funciones</a>.</p>
-<h3 id="y-qu-pasa-con-el-preprocesador-css-que-estoy-utilizando-ahora"><a class="markdownIt-Anchor" href="#y-qu-pasa-con-el-preprocesador-css-que-estoy-utilizando-ahora">#</a> ¿Y qué pasa con el preprocesador CSS que estoy utilizando ahora?</h3>
-<p>No os preocupéis más por los peligros de los mixins, @extend y el <em>nesting</em> infinito, en gran parte causados por el uso indebido e innecesario de estas herramientas.</p>
-<p>¿Adivinad qué? No necesitáis nada de esto.</p>
-<p>Deberiáis probar <strong>cssnext</strong> y volver al Vanilla CSS de toda la vida. Además, con una buena pizca de <a href="https://github.com/sturobson/BEM-resources">metodología BEM</a>, os sentiréis <a href="http://philipwalton.com/articles/side-effects-in-css/">vivos otra vez</a>.</p>
-<h2 id="ejemplos"><a class="markdownIt-Anchor" href="#ejemplos">#</a> Ejemplos</h2>
-<p>Echemos un vistazo a las funciones que <strong>cssnext</strong> nos ofrece por el momento.</p>
-<p>Ante todo, es conveniente consultar el <a href="http://cssnext.io/playground/">playground en la página oficial</a>.</p>
-<h3 id="prefijos-de-navegadores-vendor-prefixes-autom-ticos"><a class="markdownIt-Anchor" href="#prefijos-de-navegadores-vendor-prefixes-autom-ticos">#</a> Prefijos de navegadores (vendor prefixes) automáticos</h3>
-<pre><code class="language-css"><span class="hljs-class">.h1</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> transform <span class="hljs-number">1s</span></span></span>;
-}</span></code></pre>
-<p>Esto será transformado por <strong>cssnext</strong> gracias a Autoprefixer en:</p>
-<pre><code class="language-css"><span class="hljs-class">.h1</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">-webkit-transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
-      <span class="hljs-rule"><span class="hljs-attribute">-ms-transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
-          <span class="hljs-rule"><span class="hljs-attribute">transform</span>:<span class="hljs-value"> <span class="hljs-function">skewX</span>(<span class="hljs-number">25deg</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">-webkit-transition</span>:<span class="hljs-value"> -webkit-transform <span class="hljs-number">1s</span></span></span>;
-          <span class="hljs-rule"><span class="hljs-attribute">transition</span>:<span class="hljs-value"> transform <span class="hljs-number">1s</span></span></span>;
-}</span></code></pre>
-<h3 id="propiedades-personalizadas-y-var-limitadas-a-root"><a class="markdownIt-Anchor" href="#propiedades-personalizadas-y-var-limitadas-a-root">#</a> Propiedades personalizadas y var() limitadas a <code>:root</code></h3>
-<p>También conocidas como las tan esperadas <a href="http://www.w3.org/TR/css-variables/">variables CSS</a>.</p>
-<pre><code class="language-css"><span class="hljs-pseudo">:root</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">--primary-Color</span>:<span class="hljs-value">                 <span class="hljs-hexcolor">#E86100</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">--secondary-Color</span>:<span class="hljs-value">               <span class="hljs-hexcolor">#2c3e50</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">--r-Grid-baseFontSize</span>:<span class="hljs-value">           <span class="hljs-number">1rem</span></span></span>;
-}</span></code></pre>
-<p>Podéis usarlas de esta manera:</p>
-<pre><code class="language-css"><span class="hljs-class">.h1</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--primary-Color)</span></span>;
-}</span>
-<span class="hljs-class">.h1</span><span class="hljs-pseudo">:hover</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--secondary-Color)</span></span>;
-}</span>
-<span class="hljs-tag">body</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">var</span>(--r-Grid-baseFontSize)</span></span>;
-}</span></code></pre>
-<h3 id="media-queries-personalizadas"><a class="markdownIt-Anchor" href="#media-queries-personalizadas">#</a> Media Queries personalizadas</h3>
-<p>Para crear alias semánticos, claros y sencillos (<a href="http://dev.w3.org/csswg/mediaqueries/#custom-mq">aquí tenéis la documentación</a>).</p>
-<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">custom-media</span> --viewport-medium (width &lt;= <span class="hljs-number">40rem</span>)</span>;
-<span class="hljs-at_rule">@<span class="hljs-keyword">custom-media</span> --viewport-large (max-width: <span class="hljs-number">50em</span>)</span>;</code></pre>
-<p>Uso:</p>
-<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (--viewport-medium) </span>{
-  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--fontSize) * <span class="hljs-number">1.2</span>)</span></span>; }</span>
-}
-<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (--viewport-large) </span>{
-  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-function">calc</span>(<span class="hljs-function">var</span>(--fontSize) * <span class="hljs-number">1.4</span>)</span></span>; }</span>
-}</code></pre>
-<p>Por ejemplo, digamos que:</p>
-<pre><code class="language-css"><span class="hljs-pseudo">:root</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">--fontSize</span>:<span class="hljs-value"> <span class="hljs-number">1.2rem</span></span></span>;
-}</span></code></pre>
-<p>El código generado sera el siguiente:</p>
-<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (max-width: <span class="hljs-number">40rem</span>) </span>{
-  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1.44rem</span></span></span>; }</span>
-}
-<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (max-width: <span class="hljs-number">50em</span>) </span>{
-  <span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1.68rem</span></span></span>; }</span>
-}</code></pre>
-<h3 id="selectores-personalizados"><a class="markdownIt-Anchor" href="#selectores-personalizados">#</a> Selectores personalizados</h3>
-<p>Primero, podéis echar un ojo a las <a href="http://dev.w3.org/csswg/css-extensions/#custom-selectors">especificaciones</a>.
-Pongamos que queremos aplicar estilos a todos los títulos:</p>
-<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">custom-selector</span> :--heading h1, h2, h3, h4, h5, h6</span>;
-
-<span class="hljs-pseudo">:--heading</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-}</span></code></pre>
-<p>Esto va a generar el código siguiente:</p>
-<pre><code class="language-css">h1,
-h2,
-h3,
-h4,
-h5,
-h6 { margin-top; 0; }</code></pre>
-<h3 id="color"><a class="markdownIt-Anchor" href="#color">#</a> <code>color()</code></h3>
-<p>Una sencilla <a href="http://dev.w3.org/csswg/css-color/#modifying-colors">función color</a> para aplicar unos <em>ajustes de color</em> (tono, luminosidad, saturación, entre otros) a un color base.</p>
-<p>Ejemplos:</p>
-<pre><code class="language-css"><span class="hljs-class">.class</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">red</span>(+<span class="hljs-number">30</span>) <span class="hljs-function">green</span>(-<span class="hljs-number">50</span>) <span class="hljs-function">blue</span>(<span class="hljs-number">6%</span>) <span class="hljs-function">alpha</span>(.<span class="hljs-number">65</span>))</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-top-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">saturation</span>(-<span class="hljs-number">8%</span>) <span class="hljs-function">whiteness</span>(+<span class="hljs-number">50%</span>))</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-right-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">lightness</span>(<span class="hljs-number">5%</span>) <span class="hljs-function">blackness</span>(-<span class="hljs-number">25%</span>))</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-bottom-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">tint</span>(<span class="hljs-number">80%</span>))</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-left-color</span>:<span class="hljs-value"> <span class="hljs-function">color</span>(<span class="hljs-hexcolor">#2B88E6</span> <span class="hljs-function">shade</span>(<span class="hljs-number">75%</span>))</span></span>;
-}</span></code></pre>
-<p>Este código de arriba será transformado en:</p>
-<pre><code class="language-css"><span class="hljs-class">.class</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">43</span>, <span class="hljs-number">136</span>, <span class="hljs-number">230</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">73</span>, <span class="hljs-number">86</span>, <span class="hljs-number">15</span>, <span class="hljs-number">0.65</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-top-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">181</span>, <span class="hljs-number">201</span>, <span class="hljs-number">222</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-right-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">3</span>, <span class="hljs-number">45</span>, <span class="hljs-number">87</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-bottom-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">213</span>, <span class="hljs-number">231</span>, <span class="hljs-number">250</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-left-color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">11</span>, <span class="hljs-number">34</span>, <span class="hljs-number">58</span>)</span></span>;
-}</span></code></pre>
-<p><strong>cssnext</strong> también ofrece las siguientes funciones relacionadas con los colores:</p>
-<h4 id="hwb"><a class="markdownIt-Anchor" href="#hwb">#</a> hwb()</h4>
-<p>Según las <a href="http://dev.w3.org/csswg/css-color/#the-hwb-notation">especificaciones</a>, HWB (Tono-Blancura-Negrura - <em>Hue-Whiteness-Blackness</em>) es similar a HSL, pero resulta más fácil de uso para los humanos.</p>
-<pre><code class="language-css"><span class="hljs-class">.title</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">hwb</span>(<span class="hljs-number">125</span>, <span class="hljs-number">32%</span>, <span class="hljs-number">47%</span>)</span></span>;
-}</span></code></pre>
-<p>Resultado:</p>
-<pre><code class="language-css"><span class="hljs-class">.title</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgb</span>(<span class="hljs-number">33</span>, <span class="hljs-number">135</span>, <span class="hljs-number">42</span>)</span></span>;
-}</span></code></pre>
-<h4 id="gray"><a class="markdownIt-Anchor" href="#gray">#</a> gray()</h4>
-<p>Los grises son tan <a href="http://dev.w3.org/csswg/css-color/#grays">guays</a> que tienen incluso una función dedicada.</p>
-<pre><code class="language-css"><span class="hljs-class">.section</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">gray</span>(<span class="hljs-number">120</span>, <span class="hljs-number">50%</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-color</span>:<span class="hljs-value"> <span class="hljs-function">gray</span>(<span class="hljs-number">17%</span>, <span class="hljs-number">25%</span>)</span></span>;
-}</span></code></pre>
-<p>Esto dará como resultado:</p>
-<pre><code class="language-css"><span class="hljs-class">.section</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">120</span>, <span class="hljs-number">120</span>, <span class="hljs-number">120</span>, <span class="hljs-number">0.5</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">border-color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">43</span>, <span class="hljs-number">43</span>, <span class="hljs-number">43</span>, <span class="hljs-number">0.25</span>)</span></span>;
-}</span></code></pre>
-<h4 id="rrggbbaa"><a class="markdownIt-Anchor" href="#rrggbbaa">#</a> #rrggbbaa</h4>
-<p><strong>cssnext</strong> transforma la <a href="http://dev.w3.org/csswg/css-color/#hex-notation">notación hexadecimal</a> #RRGGBBAA y #RGBA en rgba().</p>
-<pre><code class="language-css"><span class="hljs-tag">body</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#5c69</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#C73D5C59</span></span></span>;
-}</span></code></pre>
-<p>Resultado:</p>
-<pre><code class="language-css"><span class="hljs-tag">body</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">85</span>, <span class="hljs-number">204</span>, <span class="hljs-number">102</span>, <span class="hljs-number">0.6</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">199</span>, <span class="hljs-number">61</span>, <span class="hljs-number">92</span>, <span class="hljs-number">0.34902</span>)</span></span>;
-}</span></code></pre>
-<h4 id="rebeccapurple"><a class="markdownIt-Anchor" href="#rebeccapurple">#</a> rebeccapurple</h4>
-<p>Transforma el color <a href="https://github.com/postcss/postcss-color-rebeccapurple#why-this-plugin-"><code>rebeccapurple</code></a> en <code>rgb(102, 51, 153)</code>.</p>
-<h3 id="propiedades-de-filtros"><a class="markdownIt-Anchor" href="#propiedades-de-filtros">#</a> Propiedades de filtros</h3>
-<p>¡Un <em>nuevo</em> mundo de <a href="http://www.w3.org/TR/filter-effects/">modificaciones de imágenes</a> se abre ante vosotros!</p>
-<pre><code class="language-css"><span class="hljs-class">.awesome-Image</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">filter</span>:<span class="hljs-value"> <span class="hljs-function">sepia</span>(.<span class="hljs-number">7</span>) <span class="hljs-function">hue-rotate</span>(<span class="hljs-number">23deg</span>)</span></span>;
-}</span>
-
-<span class="hljs-class">.awesome-Picture</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">filter</span>:<span class="hljs-value"> <span class="hljs-function">blur</span>(<span class="hljs-number">8px</span>)</span></span>;
-}</span></code></pre>
-<p>Lo anterior será transformado en:</p>
-<pre><code class="language-css"><span class="hljs-class">.awesome-Image</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">filter</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(<span class="hljs-string">'data:image/svg+xml;charset=utf-8,&lt;svg xmlns="http://www.w3.org/2000/svg"&gt;&lt;filter id="filter"&gt;&lt;feColorMatrix type="matrix" color-interpolation-filters="sRGB" values="0.5751000000000001 0.5383 0.1323 0 0 0.24429999999999996 0.7802000000000001 0.11760000000000001 0 0 0.1904 0.3738 0.39170000000000005 0 0 0 0 0 1 0" /&gt;&lt;feColorMatrix type="hueRotate" color-interpolation-filters="sRGB" values="23" /&gt;&lt;/filter&gt;&lt;/svg&gt;#filter'</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">-webkit-filter</span>:<span class="hljs-value"> <span class="hljs-function">sepia</span>(.<span class="hljs-number">7</span>) <span class="hljs-function">hue-rotate</span>(<span class="hljs-number">23deg</span>)</span></span>;
-          <span class="hljs-rule"><span class="hljs-attribute">filter</span>:<span class="hljs-value"> <span class="hljs-function">sepia</span>(.<span class="hljs-number">7</span>) <span class="hljs-function">hue-rotate</span>(<span class="hljs-number">23deg</span>)</span></span>;
-}</span>
-
-<span class="hljs-class">.awesome-Picture</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">filter</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(<span class="hljs-string">'data:image/svg+xml;charset=utf-8,&lt;svg xmlns="http://www.w3.org/2000/svg"&gt;&lt;filter id="filter"&gt;&lt;feGaussianBlur stdDeviation="8" /&gt;&lt;/filter&gt;&lt;/svg&gt;#filter'</span>)</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">-webkit-filter</span>:<span class="hljs-value"> <span class="hljs-function">blur</span>(<span class="hljs-number">8px</span>)</span></span>;
-          <span class="hljs-rule"><span class="hljs-attribute">filter</span>:<span class="hljs-value"> <span class="hljs-function">blur</span>(<span class="hljs-number">8px</span>)</span></span>;
-}</span></code></pre>
-<h3 id="unidades-rem"><a class="markdownIt-Anchor" href="#unidades-rem">#</a> Unidades rem</h3>
-<p>Nada extraordinario aquí, se genera un <strong><em>fallback</em> en píxeles para las unidades en rem</strong>.
-Oh, ¡por favor! ¿De verdad necesitáis un ejemplo para esto? Venga, aquí tenéis.</p>
-<pre><code class="language-css"><span class="hljs-class">.section-Highlight</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">2.5rem</span></span></span>;
-}</span></code></pre>
-<p>Resultado:</p>
-<pre><code class="language-css"><span class="hljs-class">.section-Highlight</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">40px</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">2.5rem</span></span></span>;
-}</span></code></pre>
-<h2 id="funciones-adicionales"><a class="markdownIt-Anchor" href="#funciones-adicionales">#</a> Funciones adicionales</h2>
-<p>Las dos siguientes funciones no tienen mucho que ver con las especificaciones CSS. Sin embargo, merecen ser mencionadas en esta introducción.</p>
-<h3 id="import"><a class="markdownIt-Anchor" href="#import">#</a> <code>import</code></h3>
-<p>¿Y si pudiérais importar archivos locales y módulos (<code>node_modules</code> o <code>web_modules</code>) para generar un solo y único archivo CSS que los contendría todos? Sí, <a href="https://github.com/sass/sass/issues/193">es a vosotros a quién estoy mirando, utilizadores de Sass</a>, ejem. Bueno pues, con <strong>cssnext</strong> es possible.</p>
-<h3 id="compress"><a class="markdownIt-Anchor" href="#compress">#</a> <code>compress</code></h3>
-<p>Como ya habréis adivinado, se trata solo una opción para comprimir <em>o no</em> vuestro archivo de salida. Y esto es gracias a <a href="https://github.com/ben-eb/cssnano">cssnano</a>.</p>
-<h3 id="uso"><a class="markdownIt-Anchor" href="#uso">#</a> Uso</h3>
-<p>Debajo os dejo un ejemplo básico de estas dos funciones. He usado <a href="https://github.com/cssnext/gulp-cssnext">gulp-cssnext</a>, uno de los <a href="http://cssnext.io/setup/">numerosos plugins</a> que os puede ayudar a empezar con <strong>cssnext</strong>.</p>
-<pre><code class="language-js"><span class="hljs-keyword">var</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>),
-    cssnext = <span class="hljs-built_in">require</span>(<span class="hljs-string">"gulp-cssnext"</span>);
-
-gulp.task(<span class="hljs-string">'styles'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-  gulp.src(<span class="hljs-string">"css/index.css"</span>)
-  .pipe(cssnext({
-    compress: <span class="hljs-literal">true</span>,  <span class="hljs-comment">// false por defecto</span>
-  }))
-  .pipe(gulp.dest(<span class="hljs-string">"./dist/"</span>))
-});</code></pre>
-<p>Después, en mi archivo <code>index.css</code>, obtendría lo siguiente:</p>
-<pre><code class="language-css"><span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"normalize.css"</span></span>; <span class="hljs-comment">/* == @import "./node_modules/normalize.css/index.css"; */</span>
-<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"cssrecipes-defaults"</span></span>; <span class="hljs-comment">/* == @import "./node_modules/cssrecipes-defaults/index.css"; */</span>
-<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"project-modules/partner"</span></span>; <span class="hljs-comment">/* relativo a css/ */</span>
-<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"typo"</span></span>; <span class="hljs-comment">/* mismo nivel que mi index.css principal, situado en css/ */</span>
-<span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"highlight"</span> (min-width: <span class="hljs-number">25em</span>)</span>;</code></pre>
-<p>Y el resultado final es:</p>
-<pre><code class="language-css"><span class="hljs-comment">/* contenido de ./node_modules/normalize.css/index.css */</span>
-<span class="hljs-comment">/* contenido de ./node_modules/cssrecipes-defaults/index.css */</span>
-<span class="hljs-comment">/* contenido de project-modules/partner.css */</span>
-<span class="hljs-comment">/* contenido de typo.css */</span>
-<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> (min-width: <span class="hljs-number">25em</span>) </span>{
-  <span class="hljs-comment">/* contenido de highlight.css */</span>
-}</code></pre>
-<p>Conozco esa sensación. Vosotros también os habéis enamorado. :)</p>
-<p>Bueno, para concluir, digamos que el propósito principal de <strong>cssnext</strong> es el de poder codificar según las especificaciones del W3C, siempre teniendo en cuenta que, teóricamente, será posible quitarlo (cuando ya no sea necesario).</p>
-<p>Mientras tanto, sigue habiendo mucho trabajo. Aquí os dejo una <a href="https://github.com/cssnext/cssnext/issues?q=is%3Aopen+is%3Aissue+label%3Afeature+label%3Aready">lista de futuras funciones</a>.</p>
-<p>Ahora os toca jugar a vosotros. No os olvidáis de pasaros por el <a href="https://github.com/cssnext/cssnext">repository GitHub</a>, seguir a <a href="https://twitter.com/cssnext">@cssnext</a> en Twitter para obtener las últimas noticias al respecto y uniros a la <a href="https://gitter.im/cssnext/cssnext">room cssnext en Gitter</a> si tenéis cualquier pregunta.</p>
-<ul>
-<li><a href="http://cssnext.io/">Página oficial</a></li>
-</ul>
-]]></description><link>http://putaindecode.io/es/articulos/css/procesadores/cssnext/</link><guid isPermaLink="true">http://putaindecode.io/es/articulos/css/procesadores/cssnext/</guid><pubDate>Tue, 02 Jun 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Introduction au déploiement continu]]></title><description><![CDATA[<h1 id="d-ployer-en-continu"><a class="markdownIt-Anchor" href="#d-ployer-en-continu">#</a> Déployer en continu ?</h1>
-<p>Il s’agit d’avoir un site stable en production, ceci de manière automatisée et
-continue. Rien que ça.</p>
-<p>Il faut comprendre par là sans passer par FTP avec Filezilla.
-Pas de bouton “Upload” ou “Sync” après avoir fait une modification de code.
-Pas de risque de péter tout votre site si vos modifications rentrent en conflit
-avec les modifications de votre collègue, qui lui aussi vient de pousser un
-bon gros patch bien sale.</p>
-<p>La première conséquence est que les mises en
-production ne sont plus stressantes, car très régulières.
-<a href="http://www.estcequonmetenprodaujourdhui.info/">Certaines personnes ne recommandent pas les mises en production tous les jours
-</a> mais lorsque vous avez mis en
-place l’intégration continue, vous minimisez grandement les risques.</p>
-<p>La preuve en est que certaines entreprises font des mises en productions plusieurs
-centaines de fois par jour ! (GitHub est un bon exemple).</p>
-<h2 id="pr-requis-au-d-ploiement-continu"><a class="markdownIt-Anchor" href="#pr-requis-au-d-ploiement-continu">#</a> Pré-requis au déploiement continu</h2>
-<p>Vous n’avez qu’une chose à faire avant de vous attaquer à la mise en place du
-déploiement continu : vous devez déjà avoir
-<a href="/fr/articles/ci/">l’intégration continue</a> en place.</p>
-<p>Une fois vous êtes bon à ce niveau, vous pouvez passer à l’étape suivante.</p>
-<h2 id="faire-un-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien"><a class="markdownIt-Anchor" href="#faire-un-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">#</a> Faire un script qui fait les choses qui vont bien quand les tests vont bien</h2>
-<p>Une fois qu’on a une commande qui peut jouer tous les tests et dire “y’a bon” ou
-“tatoukassé”, il nous faut prévoir les actions à réaliser quand nos tests sont
-OK.</p>
-<p>Un déploiement FTP, un déploiement git, ou plus compliqué via CDN, peu importe.
-<strong>Il faut juste une commande qui marche simplement.</strong></p>
-<p>Pour notre site, la commande est <code>npm run deploy</code>. Cette commande pousse le site
-généré sur la branche <code>gh-pages</code>
-(puisqu’on se sert <a href="https://pages.github.com/">des pages GitHub</a>).</p>
-<h2 id="automatiser-le-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien"><a class="markdownIt-Anchor" href="#automatiser-le-script-qui-fait-les-choses-qui-vont-bien-quand-les-tests-vont-bien">#</a> Automatiser le script qui fait les choses qui vont bien quand les tests vont bien</h2>
-<p>On peut ensuite éventuellement englober les précédentes étapes dans une seule
-commande qui va se débrouiller s’il n’y a pas d’erreur. Mais bon, si vous n’avez
-que deux commandes (comme on a dans l’exemple de notre site), un simple appel de
-cette façon devrait faire l’affaire :</p>
-<pre><code class="language-console">$ <span class="hljs-built_in">npm</span> test &amp;&amp; <span class="hljs-built_in">npm</span> run deploy</code></pre>
-<p>Si <code>npm test</code> retourne une erreur, la deuxième commande ne sera pas exécutée.</p>
-<h2 id="la-suite-au-prochaine-pisode"><a class="markdownIt-Anchor" href="#la-suite-au-prochaine-pisode">#</a> La suite au prochaine épisode</h2>
-<p>La prochaine étape (dans un prochain article) sera de mettre ça en place sur un
-serveur d’intégration continue, nous y étudierons simplement ce que nous avons
-fait pour notre site.</p>
-<p>Si vous êtes trop curieux, vous pouvez déjà <a href="https://github.com/putaindecode/putaindecode.io">consulter le code source de notre
-site</a> et fouiller dans le
-<code>package.json</code> (section <code>scripts</code>) pour deviner la suite…</p>
-]]></description><link>http://putaindecode.io/fr/articles/ci/deploiement-continu/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/ci/deploiement-continu/</guid><pubDate>Mon, 25 May 2015 00:00:00 GMT</pubDate></item></channel></rss>
+]]></description><link>http://putaindecode.io/en/articles/css/preprocessors/cssnext/</link><guid isPermaLink="true">http://putaindecode.io/en/articles/css/preprocessors/cssnext/</guid><pubDate>Tue, 02 Jun 2015 00:00:00 GMT</pubDate></item></channel></rss>
