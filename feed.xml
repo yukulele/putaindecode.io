@@ -1,4 +1,83 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Thu, 03 Dec 2015 06:05:49 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[ES6, ES2015 : le destructuring]]></title><description><![CDATA[<h2 id="le-principe"><a class="markdownIt-Anchor" href="#le-principe">#</a> Le principe</h2>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Thu, 03 Dec 2015 06:43:32 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[ES6, ES2015 : valeurs par défaut des arguments]]></title><description><![CDATA[<p>Fatigués de taper <code>if (typeof x === 'undefined') x = defaultValue</code> ? Là encore
+ES6 va nous apporter une solution élégante.</p>
+<h1 id="valeurs-par-d-faut"><a class="markdownIt-Anchor" href="#valeurs-par-d-faut">#</a> Valeurs par défaut</h1>
+<p>L’opérateur <code>=</code> permet maintenant en plus d’affecter une valeur à une variable
+de définir une valeur par défaut à un paramètre.</p>
+<h2 id="param-tres-de-fonction"><a class="markdownIt-Anchor" href="#param-tres-de-fonction">#</a> Paramètres de fonction</h2>
+<p>Il est maintenant possible de spécifier une valeur par défaut à un paramètre de
+fonction. Cette valeur sera utilisée si le paramètre n’est pas fourni, ou qu’il
+est explicitement défini à <em>undefined</em>.</p>
+<pre><code class="language-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">incr</span> (<span class="hljs-params">value, step = 1</span>) </span>{
+  <span class="hljs-keyword">return</span> value + step
+}
+
+incr(<span class="hljs-number">41</span>) <span class="hljs-comment">// 42</span>
+incr(<span class="hljs-number">41</span>, <span class="hljs-literal">undefined</span>) <span class="hljs-comment">// 42</span>
+incr(<span class="hljs-number">33</span>, <span class="hljs-number">9</span>) <span class="hljs-comment">// 42</span></code></pre>
+<h3 id="valeurs-par-d-faut-dynamiques"><a class="markdownIt-Anchor" href="#valeurs-par-d-faut-dynamiques">#</a> Valeurs par défaut dynamiques</h3>
+<p>On peut spécifier une expression en tant que valeur par défaut. Cette expression
+sera évaluée <strong>à l’appel de la fonction</strong>, pas lors de sa déclaration.</p>
+<pre><code class="language-js"><span class="hljs-keyword">let</span> defaultWho = <span class="hljs-string">'world!'</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hello</span> (<span class="hljs-params">who = defaultWho.toUpperCase(</span>)) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Hello '</span> + who
+}
+
+hello() <span class="hljs-comment">// 'Hello WORLD!'</span>
+defaultWho = <span class="hljs-string">'Anyone?'</span>
+hello() <span class="hljs-comment">// 'Hello ANYONE?'</span></code></pre>
+<h3 id="r-utilisation-des-param-tres-pr-c-dents"><a class="markdownIt-Anchor" href="#r-utilisation-des-param-tres-pr-c-dents">#</a> Réutilisation des paramètres précédents</h3>
+<p>Dans l’expression d’une valeur par défaut, on peut réutiliser les paramètres
+<strong>précédents</strong> de la fonction :</p>
+<pre><code class="language-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span> (<span class="hljs-params">x = 1, y = x + 1</span>) </span>{
+  <span class="hljs-keyword">return</span> x + y
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bar</span> (<span class="hljs-params">x = y + 1, y = 1</span>) </span>{
+  <span class="hljs-keyword">return</span> x + y
+}
+
+foo() <span class="hljs-comment">// 1 + (1 + 1) → 3</span>
+bar() <span class="hljs-comment">// (undefined + 1) + 1 → NaN</span></code></pre>
+<h3 id="cas-particulier-tdz-temporal-dead-zone"><a class="markdownIt-Anchor" href="#cas-particulier-tdz-temporal-dead-zone">#</a> Cas particulier : TDZ (Temporal Dead Zone)</h3>
+<p>Une <em>temporal dead zone</em> désigne une zone du programme où une variable “existe”
+mais n’est pas encore accessible tant qu’elle n’a pas reçu de valeur.</p>
+<p>L’exemple suivant semble très logiquement invalide :</p>
+<pre><code class="language-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span> (<span class="hljs-params">x = x</span>) </span>{ <span class="hljs-comment">// throws ReferenceError?</span>
+}</code></pre>
+<p>En effet, au moment de l’appel à la fonction, <code>x</code> n’a pas encore été défini,
+et ne peut donc être utilisé comme valeur par défaut. Il semble que cet exemple
+devrait <a href="http://dmitrysoshnikov.com/ecmascript/es6-notes-default-values-of-parameters/#tdz-temporal-dead-zone-for-parameters">lever une erreur</a>.</p>
+<p>Néanmoins, les règles de portée font que ce programme est également invalide :</p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> x = <span class="hljs-number">1</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span> (<span class="hljs-params">x = x</span>) </span>{ <span class="hljs-comment">// Le 'x' référencé ici est le paramètre</span>
+}</code></pre>
+<p>On est bien, dès l’évaluation des valeurs par défaut, dans le scope de la
+fonction, et dans ce scope <code>x</code> fait référence au paramètre (pas encore défini)
+et pas à la variable du dessus.</p>
+<p><strong>#protip ne réutilisez pas 3 fois le même nom de variable</strong> (ça pourra aussi
+aider à la compréhension)</p>
+<h2 id="d-composition"><a class="markdownIt-Anchor" href="#d-composition">#</a> Décomposition</h2>
+<p>De la même manière que pour les paramètres de fonction, les affectations par
+décomposition peuvent bénéficier de valeurs par défaut.</p>
+<pre><code class="language-js">obj <span class="hljs-comment">// {z: 42}</span>
+<span class="hljs-keyword">const</span> { x = <span class="hljs-number">1</span>, y = x + <span class="hljs-number">1</span>, z, w } = obj
+w <span class="hljs-comment">// undefined</span>
+x <span class="hljs-comment">// 1</span>
+y <span class="hljs-comment">// 2</span>
+z <span class="hljs-comment">// 42</span></code></pre>
+<p>Pour rappel, l’affectation de l’exemple précédent aurait été écrit de cette
+manière en ES5 :</p>
+<pre><code class="language-js"><span class="hljs-keyword">var</span> x = (obj.x === <span class="hljs-literal">undefined</span>) ? obj.x : <span class="hljs-number">1</span>
+<span class="hljs-keyword">var</span> y = (obj.y === <span class="hljs-literal">undefined</span>) ? obj.y : x + <span class="hljs-number">1</span>
+<span class="hljs-keyword">var</span> z = obj.z
+<span class="hljs-keyword">var</span> w = obj.w</code></pre>
+<h1 id="enjoy"><a class="markdownIt-Anchor" href="#enjoy">#</a> Enjoy!</h1>
+<p>Il n’y a <em>a priori</em> plus aucune raison de croiser un test sur <code>undefined</code> dans
+votre code une fois passé à ES6.</p>
+<p>Un petit mot sur la compatibilité (à la date de cet article) : seul Firefox ≥ 43
+implémente les valeurs par défaut, et encore seulement pour les paramètres de
+fonctions. Il faudra donc utiliser Babel ou Traceur pour en profiter.</p>
+]]></description><link>http://putaindecode.io/fr/articles/js/es2015/defaults/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/js/es2015/defaults/</guid><pubDate>Thu, 03 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[ES6, ES2015 : le destructuring]]></title><description><![CDATA[<h2 id="le-principe"><a class="markdownIt-Anchor" href="#le-principe">#</a> Le principe</h2>
 <p>Le destructuring consiste à assigner des variables provenant d’un objet ou tableau en reposant sur leur structure.</p>
 <pre><code class="language-javascript"><span class="hljs-comment">// partons d'un objet `myObject`</span>
 <span class="hljs-keyword">var</span> myObject = {
@@ -2949,96 +3028,4 @@ fait pour notre site.</p>
 <p>Si vous êtes trop curieux, vous pouvez déjà <a href="https://github.com/putaindecode/putaindecode.io">consulter le code source de notre
 site</a> et fouiller dans le
 <code>package.json</code> (section <code>scripts</code>) pour deviner la suite…</p>
-]]></description><link>http://putaindecode.io/fr/articles/ci/deploiement-continu/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/ci/deploiement-continu/</guid><pubDate>Mon, 25 May 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[Qu'est-ce que l'intégration continue ?]]></title><description><![CDATA[<p>Certains risquent d’être déçus puisque nous ne parlerons pas ici des fameux <code>3x8</code>,
-technique qui consiste à faire tourner 3 équipes d’intégrateurs HTML en
-continu afin d’avoir du PSD &gt; HTML 24h sur 24.</p>
-<h2 id="le-principe-de-l-int-gration-continue"><a class="markdownIt-Anchor" href="#le-principe-de-l-int-gration-continue">#</a> Le principe de l’intégration continue</h2>
-<blockquote>
-<p>L’intégration continue est un ensemble de pratiques utilisées en génie
-logiciel consistant à vérifier à chaque modification de code source que le
-résultat des modifications ne produit pas de régression dans l’application
-développée.</p>
-</blockquote>
-<small>
-[Source: Wikipédia](https://fr.wikipedia.org/wiki/Int%C3%A9gration_continue)
-</small>
-<h2 id="pr-requis-pour-mettre-en-place-l-int-gration-continue"><a class="markdownIt-Anchor" href="#pr-requis-pour-mettre-en-place-l-int-gration-continue">#</a> Pré-requis pour mettre en place l’intégration continue</h2>
-<p>Avant de rentrer dans le vif du sujet, assurez-vous d’avoir déjà de bonne bases,
-pour maintenir une base de code saine en
-<a href="/fr/articles/git/">versionnant avec git</a>.
-Nous sommes en 2015, l’année où l’on était censé avoir les voitures
-volantes, nous n’allons donc pas expliquer ici à quoi sert de versionner du
-code.</p>
-<p>Du code versionné ne suffit pas, il faut avoir des tests automatisés bien
-entendu.
-<a href="/fr/articles/js/tests/frontend/">Front</a> et back, il en faut de tous
-les côtés.</p>
-<p>Ensuite, il nous faudra choisir un serveur qui va gérer l’intégration continue.
-Il existe des services tels que:</p>
-<ul>
-<li><a href="http://travis-ci.org/">Travis</a></li>
-<li><a href="https://circleci.com/">CircleCI</a></li>
-<li><a href="https://www.atlassian.com/software/bamboo/">Bamboo</a></li>
-<li><a href="https://codeship.com/">Codeship</a></li>
-<li><a href="http://jenkins-ci.org/">Jenkins</a></li>
-</ul>
-<h2 id="l-int-gration-continue-en-pratique"><a class="markdownIt-Anchor" href="#l-int-gration-continue-en-pratique">#</a> L’intégration continue en pratique</h2>
-<p>Un fois qu’on a notre code testé et versionné et qu’on a configuré son serveur
-de <em>CI</em>, chaque modification va déclencher des actions sur ce serveur, puis,
-en fonction des résultats, va déclencher d’autres actions tout en vous notifiant
-si besoin.</p>
-<p>Un exemple classique serait le suivant : une fois les dernières modifications de
-code poussées sur la branche principale sur votre dépôt de code, le serveur
-d’intégration continue va jouer tous les tests et déployer le tout en production si
-tout a marché sur des roulettes.</p>
-<p>Si des problèmes surviennent, rien ne sera déployé et vous serez notifié sur
-les services que vous avez configurés (email, IRC, webhook, etc).</p>
-<p>Nous pouvons imaginer que votre serveur vienne vous insulter sur
-votre logiciel de chat interne, en vous montrant du doigt.
-On pourrait aussi imaginer une synthèse vocale crier votre nom et préciser à
-toute l’équipe que
-<a href="https://www.youtube.com/watch?v=mbDcnUH6rOc">vous avez merté</a> :
-<em>“MoOx, you just fucked up the build by breaking 42 tests!
-Fix that please”</em>.
-Pour finir dans les exemples farfelus, nous pourrions avoir une petite tourelle
-type <em>Nerf</em> qui vous met un petit headshot qui va bien.
-Des équipes font vraiment ça, et vous vous en doutez, y’a de la grosse marrade au
-programme.</p>
-<p>L’idée est vraiment de pousser le plus souvent possible, les plus petites
-modifications possibles avec la meilleure couverture de tests possible.
-Ceci afin de minimiser les risques. De plus, cela aide à rester focalisé.</p>
-<p>Tout ce processus (versionné aussi tant qu’à faire), qui permet de jouer tous
-les tests <strong>rapidement</strong> (dans un environnement similaire à la production), doit
-être transparent et accessible localement, afin que les développeurs aient une
-bonne visibilité et une bonne compréhension du système en place.</p>
-<h2 id="faire-des-tests-automatis-s-c-est-la-vie"><a class="markdownIt-Anchor" href="#faire-des-tests-automatis-s-c-est-la-vie">#</a> Faire des tests automatisés, c’est la vie</h2>
-<p>J’ai mis un titre pour ça car c’est important. Vraiment.
-Tout développeur qui n’a pas encore écrit ses premiers tests a peur.
-Puis avec le temps, il se dit que finalement, il ne fallait pas
-avoir autant d’appréhension et qu’il était très con de ne pas avoir
-testé automatiquement tout ses codes sources plus tôt.
-À tel point qu’une
-<a href="http://the--kyza.deviantart.com/art/What-the-Flux-511691704">DeLorean modifiée</a>
-pour se prévenir soi-même ne serait pas de refus.</p>
-<p>Une fois la barrière franchie, on se dit vraiment qu’on était stupide de pas
-avoir essayé avant.</p>
-<h2 id="une-commande-qui-xecute-les-tests"><a class="markdownIt-Anchor" href="#une-commande-qui-xecute-les-tests">#</a> Une commande qui éxecute les tests</h2>
-<p>Un fois qu’on a écrit des tests, ou même souvent avant, on automatise
-l’exécution des tests. En général c’est rapide, étant donné qu’une simple
-commande ou un simple script suffit.
-Beaucoup de <em>test runners</em> existent et vous n’aurez aucune difficulté à en
-trouver un en adéquation avec votre language favori.</p>
-<p>Pour notre site, la commande est <code>npm test</code>. Simple, efficace.</p>
-<p>Elle exécute tout ce qui est nécessaire à compiler notre application et à jouer
-les tests tout en retournant un résultat lisible et un code d’erreur si besoin.</p>
-<h2 id="et-apr-s"><a class="markdownIt-Anchor" href="#et-apr-s">#</a> Et après ?</h2>
-<p>Là, si vous avez déjà mis tout ça en place, le bonheur ultime du développeur
-n’est pas loin : vous pouvez rapidement vérifier qu’il n’y a pas de régressions
-et agir en conséquence.</p>
-<p>Chez <em>Putain de code !</em> (en date de cet article), notre couverture de
-tests est loin d’être bonne. Mais ce site étant un petit plaisir un peu risqué,
-nous faisons quand même du
-<a href="/fr/articles/ci/deploiement-continu/">déploiement continu</a>, l’étape d’après !
-On aime bien l’idée du <em><a href="http://zachholman.com/talk/move-fast-break-nothing">move fast &amp; break <s>no</s>thing
-</a></em>.</p>
-]]></description><link>http://putaindecode.io/fr/articles/ci/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/ci/</guid><pubDate>Thu, 21 May 2015 00:00:00 GMT</pubDate></item></channel></rss>
+]]></description><link>http://putaindecode.io/fr/articles/ci/deploiement-continu/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/ci/deploiement-continu/</guid><pubDate>Mon, 25 May 2015 00:00:00 GMT</pubDate></item></channel></rss>
