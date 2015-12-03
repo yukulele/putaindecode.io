@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Thu, 03 Dec 2015 09:37:09 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[ES6, ES2015 : les valeurs par défaut des arguments]]></title><description><![CDATA[<p>Fatigués de taper <code>if (typeof x === 'undefined') x = defaultValue</code> ? Là encore
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Thu, 03 Dec 2015 10:31:35 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[ES6, ES2015 : les valeurs par défaut des arguments]]></title><description><![CDATA[<p>Fatigués de taper <code>if (typeof x === 'undefined') x = defaultValue</code> ? Là encore
 ES6 va nous apporter une solution élégante.</p>
 <h1 id="valeurs-par-d-faut"><a class="markdownIt-Anchor" href="#valeurs-par-d-faut">#</a> Valeurs par défaut</h1>
 <p>L’opérateur <code>=</code> permet maintenant en plus d’affecter une valeur à une variable
@@ -69,8 +69,8 @@ y <span class="hljs-comment">// 2</span>
 z <span class="hljs-comment">// 42</span></code></pre>
 <p>Pour rappel, l’affectation de l’exemple précédent aurait été écrit de cette
 manière en ES5 :</p>
-<pre><code class="language-js"><span class="hljs-keyword">var</span> x = (obj.x === <span class="hljs-literal">undefined</span>) ? obj.x : <span class="hljs-number">1</span>
-<span class="hljs-keyword">var</span> y = (obj.y === <span class="hljs-literal">undefined</span>) ? obj.y : x + <span class="hljs-number">1</span>
+<pre><code class="language-js"><span class="hljs-keyword">var</span> x = (obj.x === <span class="hljs-literal">undefined</span>) ? <span class="hljs-number">1</span> : obj.x 
+<span class="hljs-keyword">var</span> y = (obj.y === <span class="hljs-literal">undefined</span>) ?  x + <span class="hljs-number">1</span> : obj.y
 <span class="hljs-keyword">var</span> z = obj.z
 <span class="hljs-keyword">var</span> w = obj.w</code></pre>
 <h1 id="enjoy"><a class="markdownIt-Anchor" href="#enjoy">#</a> Enjoy!</h1>
@@ -150,8 +150,8 @@ y <span class="hljs-comment">// 2</span>
 z <span class="hljs-comment">// 42</span></code></pre>
 <p>As a reminder, the assignation in the previous example would have been written
 this way using ES5 :</p>
-<pre><code class="language-js"><span class="hljs-keyword">var</span> x = (obj.x === <span class="hljs-literal">undefined</span>) ? obj.x : <span class="hljs-number">1</span>
-<span class="hljs-keyword">var</span> y = (obj.y === <span class="hljs-literal">undefined</span>) ? obj.y : x + <span class="hljs-number">1</span>
+<pre><code class="language-js"><span class="hljs-keyword">var</span> x = (obj.x === <span class="hljs-literal">undefined</span>) ? <span class="hljs-number">1</span> : obj.x 
+<span class="hljs-keyword">var</span> y = (obj.y === <span class="hljs-literal">undefined</span>) ? x + <span class="hljs-number">1</span> : obj.y 
 <span class="hljs-keyword">var</span> z = obj.z
 <span class="hljs-keyword">var</span> w = obj.w</code></pre>
 <h1 id="enjoy"><a class="markdownIt-Anchor" href="#enjoy">#</a> Enjoy!</h1>
