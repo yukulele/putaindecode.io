@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Fri, 04 Dec 2015 08:08:35 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[ES6, ES2015 : Object.assign]]></title><description><![CDATA[<p>You probably know underscore or lodash <code>extend</code> method (at leat lodash right)?
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[putaindecode.io]]></title><description><![CDATA[putaindecode.io]]></description><link>http://putaindecode.io</link><generator>RSS for Node</generator><lastBuildDate>Fri, 04 Dec 2015 08:53:22 GMT</lastBuildDate><atom:link href="http://putaindecode.io/feed.xml" rel="self" type="application/rss+xml"/><item><title><![CDATA[ES6, ES2015 : Object.assign]]></title><description><![CDATA[<p>You probably know underscore or lodash <code>extend</code> method (at leat lodash right)?
 Like most of these utilities functions, those are deprecated by an ES6 (ES2015)
 feature.</p>
 <h1 id="object-assign"><a class="markdownIt-Anchor" href="#object-assign">#</a> Object.assign</h1>
@@ -77,19 +77,19 @@ browsers (IE is not considered as modern until 12) :</p>
 or one of many users implementations.</li>
 </ul>
 ]]></description><link>http://putaindecode.io/en/articles/js/es2015/object-assign/</link><guid isPermaLink="true">http://putaindecode.io/en/articles/js/es2015/object-assign/</guid><pubDate>Mon, 07 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[ES6, ES2015 : Object.assign]]></title><description><![CDATA[<p>Vous connaissez les méthodes <code>extend</code> d’underscore ou lodash (mais plutôt
-lodash quand-même) ? Comme la plupart de ces fonctions utilitaires, elles sont
+lodash quand même) ? Comme la plupart de ces fonctions utilitaires, elles sont
 rendues obsolètes par une fonctionnalité d’ES6 (aka ES2015).</p>
 <h1 id="object-assign"><a class="markdownIt-Anchor" href="#object-assign">#</a> Object.assign</h1>
 <p>La nouvelle méthode statique <code>Object.assign</code> prend en paramètres une série
 d’objets :</p>
 <ul>
-<li>Le premier objet est la “cible” des copies ;</li>
-<li>Les suivants sont les sources ;</li>
-<li>Toutes les clés propres (<em>own properties</em>, soit les clés énumérables et non
+<li>le premier objet est la “cible” des copies ;</li>
+<li>les suivants sont les sources ;</li>
+<li>toutes les clés propres (<em>own properties</em>, soit les clés énumérables et non
 héritées, même celles dont la valeur est <code>undefined</code>) des sources sont
 copiées vers la cible (les suivantes écrasant les précédentes) ;</li>
-<li><strong>L’objet cible est donc modifié</strong> (il doit être mutable) ;</li>
-<li>Puis on retourne l’objet cible.</li>
+<li><strong>l’objet cible est donc modifié</strong> (il doit être mutable) ;</li>
+<li>puis on retourne l’objet cible.</li>
 </ul>
 <pre><code class="language-js"><span class="hljs-keyword">const</span> o = { y: <span class="hljs-number">0</span> }
 <span class="hljs-keyword">const</span> o1 = { x: <span class="hljs-number">1</span>, y: <span class="hljs-number">2</span> }
@@ -129,14 +129,14 @@ o <span class="hljs-comment">// { val: 42, x: 1 }</span></code></pre>
 <p>Les clés déjà copiées avant la levée d’erreur sont conservées dans la cible,
 ainsi dans notre exemple <code>x</code> a été copiée mais pas <code>y</code>.</p>
 <p>Note : ça c’est la théorie, lors de mes tests ce comportement a été le plus
-variable, en fonction de la plateforme et du contexte, l’erreur n’est pas
+variable, en fonction de la plate-forme et du contexte, l’erreur n’est pas
 toujours levée. Le mieux est de travailler en mode <em>strict</em> pour s’assurer d’un
 comportement prédictible.</p>
 <h3 id="sources-scalaires"><a class="markdownIt-Anchor" href="#sources-scalaires">#</a> Sources scalaires</h3>
 <p>Lorsque les sources sont des valeurs scalaires (nombre, booléen, etc.)
 <code>Object.keys</code> ne listera généralement aucune clé et ces valeurs seront donc
 ignorées. Les valeurs <code>null</code> et <code>undefined</code> également.</p>
-<p>Cas particulier : les chaîne des caractères sont traitées comme des tableaux.</p>
+<p>Cas particulier : les chaînes de caractères sont traitées comme des tableaux.</p>
 <pre><code class="language-js"><span class="hljs-keyword">const</span> o = {}
 <span class="hljs-built_in">Object</span>.assign(o, <span class="hljs-number">1</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">null</span>, <span class="hljs-string">"toto"</span>, [<span class="hljs-string">"b"</span>, <span class="hljs-string">"a"</span>], <span class="hljs-literal">undefined</span>)
 <span class="hljs-comment">// 1, true, null, undefined sont ignorées</span>
@@ -152,7 +152,7 @@ par les navigateurs modernes (donc pas IE) :</p>
 <li>Chrome stable (46) ;</li>
 <li>Firefox stable (42) ;</li>
 <li>Node ≥ 4 ;</li>
-<li>Et si vous devez supporter IE, il y a bien sûr <a href="http://babeljs.io/">Babel</a>
+<li>et si vous devez supporter IE, il y a bien sûr <a href="http://babeljs.io/">Babel</a>
 ou les nombreuses implémentations utilisateur.</li>
 </ul>
 ]]></description><link>http://putaindecode.io/fr/articles/js/es2015/object-assign/</link><guid isPermaLink="true">http://putaindecode.io/fr/articles/js/es2015/object-assign/</guid><pubDate>Mon, 07 Dec 2015 00:00:00 GMT</pubDate></item><item><title><![CDATA[ES6, ES2015 : les valeurs par défaut des arguments]]></title><description><![CDATA[<p>Fatigués de taper <code>if (typeof x === 'undefined') x = defaultValue</code> ? Là encore
